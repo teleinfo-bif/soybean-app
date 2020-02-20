@@ -1,1 +1,50 @@
 /* pages/statistics/statistics.wxss */
+/* .container {
+  color: white
+} */
+
+.container .title {
+  width: 375px;
+  height: 44px;
+  background-color: #ffffff;
+}
+
+.container .title .image {
+  width: 20px;
+  height: 21px;
+  padding: 12px 2px 12px 5px;
+  float: left
+}
+
+.container .title .text {
+  width: 70px;
+  height: 15px;
+  float: left;
+  font-family: "PingFangSC-Regular";
+  font-size: 15;
+  padding: 15px 2px 15px 5px;
+  line-height: 15px;
+  color: #333333
+}
+
+
+.container .dashboard {
+  width: 345px;
+  height: 124px;
+}
+
+.container .dashboard .show {
+  width: 345px;
+  height: 124px;
+  float: left;
+}
+
+.container .dashboard .show .data {
+  width: 70px;
+  height: 15px;
+}
+
+.container .dashboard .show .text {
+  width: 345px;
+  height: 15px;
+}

@@ -1,25 +1,70 @@
 <view class="container">
   <!-- 统计信息 -->
-  <view>
-    <image src="{{title.image}}"></image>
-    <text>{{title.text}}</text>
+  <view class="title">
+    <image class="image" src="{{title.image}}"></image>
+    <text class="text" >{{title.text}}</text>
   </view>
 
   <!-- 看板 -->
+  <view class="dashboard">
+    <view class="show">
+      <text class="data">{{dashboard.should}}</text>
+      <text class="text">{{dashboard.shouldText}}</text>
+    </view>
+
+    <view class="show">
+      <text class="data">{{dashboard.filledIn}}</text>
+      <text class="text">{{dashboard.filledInText}}</text>
+    </view>
+
+    <view class="show">
+      <text class="data">{{dashboard.unfilledIn}}</text>
+      <text class="text">{{dashboard.unfilledInText}}</text>
+    </view>
+  </view>
+
+  <!-- 健康状况 -->
   <view>
     <view>
-      <text>{{dashboard.should}}</text>
-      <text>{{dashboard.shouldText}}</text>
+      <view>健康情况</view>
+      <view>
+        <view>总人数</view>
+        <view>{{health.total}}人</view>
+      </view>
     </view>
-
     <view>
-      <text>{{dashboard.filledIn}}</text>
-      <text>{{dashboard.filledInText}}</text>
-    </view>
-
-    <view>
-      <text>{{dashboard.unfilledIn}}</text>
-      <text>{{dashboard.unfilledInText}}</text>
+      <view>饼图</view>
+      <view>
+        <view> <!-- table -->
+          <view>分布情况</view>
+          <view>
+            <view>
+              <view>健康</view><view>{{health.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{health.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            </view>
+          </view>
+        </view>
+         <view>
+          <view>占比率
+          </view>
+          <view>
+            <view>
+              <view>健康</view><view>{{health.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{health.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 
@@ -38,9 +83,32 @@
         <view>
           <view>分布情况
           </view>
-          <view></view>
+          <view>
+            <view>
+              <view>健康</view><view>{{health.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{health.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            </view>
+          </view>
         </view>
-        <view>占比率
+         <view>
+          <view>占比率
+          </view>
+          <view>
+            <view>
+              <view>健康</view><view>{{health.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{health.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            </view>
+          </view>
         </view>
       </view>
     </view>
@@ -48,6 +116,48 @@
 
   <!-- 地区统计 -->
   <view>
+    <view>
+      <view>所在地区分布情况</view>
+      <view>
+        <view>总人数</view>
+        <view>{{health.total}}人</view>
+      </view>
+    </view>
+    <view>
+      <view>饼图</view>
+      <view>
+        <view>
+          <view>分布情况
+          </view>
+          <view>
+            <view>
+              <view>健康</view><view>{{area.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{area.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{area.feverAndCough}}人</view>
+            </view>
+          </view>
+        </view>
+         <view>
+          <view>占比率
+          </view>
+          <view>
+            <view>
+              <view>健康</view><view>{{area.health}}人</view>
+            </view>
+            <view>
+              <view>其它症状</view><view>{{area.other}}人</view>
+            </view>
+            <view>
+              <view>咳嗽、发烧</view><view>{{area.feverAndCough}}人</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 
 </view>
