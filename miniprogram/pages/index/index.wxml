@@ -1,5 +1,4 @@
 <!--index.wxml-->
-<<<<<<< Updated upstream
 <view class="headerblock">
     <image 
       class="headerimage"
@@ -7,68 +6,29 @@
       mode="scaleToFill"
     ></image> 
   <view class="head_title">泰尔通
-=======
-<view class="container">
-
-  <!-- 用户 openid -->
-  <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-      size="default"
-    ></button>
-  </view>
-
-  <!-- 个人信息登记 -->
-  <view class="uploader">
-    <navigator url="../personalInfo/personalInfo" open-type="navigate" class="uploader-text">
-      <text>个人信息登记</text>
-    </navigator>
->>>>>>> Stashed changes
   </view>
   <view class="putuserinfobutton">
-    
+    <!--
     <view 
       class="userinfo-img"
       style="background-image: url({{avatarUrl}})"
     ></view>
+    -->
+    <view 
+      class="userinfo-img"
+      style="background-image: url(../../images/userinfo.png)"
+    ></view>
 
-<<<<<<< Updated upstream
-    <view class="userinfo-put">录入用户信息
-=======
-    <!-- 健康打卡 -->
-    <view class="uploader">
-      <navigator url="../healthySubmit/healthySubmit" open-type="navigate" class="uploader-text">
-        <text>健康打卡</text>
-      </navigator>
-    </view>
-
-    <!-- 健康码 -->
-    <view class="uploader">
-      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
-        <text>健康码</text>
-      </navigator>
-    </view>
-
-
-    <!-- 统计信息 -->
-    <view class="uploader">
-      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
-        <text>统计信息</text>
-      </navigator>
->>>>>>> Stashed changes
+    <view class="userinfo-put" bindtap="userInfoPut">录入用户信息
     </view>
 
   </view>
 </view>
 
-
 <view class="page__hd">
         <view class="page__title" style="margin-left:5%;margin-button:5px;">我所在的部门</view>
         <view class="weui-grids" >
-            <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+            <navigator url="../healthySubmit/healthySubmit" class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
                     <view class="weui-grid__label">健康打卡</view>
               </navigator>

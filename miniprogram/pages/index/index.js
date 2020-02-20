@@ -10,7 +10,9 @@ Page({
     requestResult: ''
   },
 
-  onLoad: function() {
+  onLoad: function () {
+    var that = this;
+
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -25,9 +27,17 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+              console.info("用户信息为：" + JSON.stringify(res.userInfo, null, 2));
+              app.globalData.nickName = res.userInfo.nickName
+              app.globalData.avatarUrl = res.userInfo.avatarUrl
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
+                nickName: res.userInfo.nickName,
               })
             }
           })
@@ -35,6 +45,23 @@ Page({
       }
     })
   },
+
+
+  /**用户信息提交 */
+  userInfoPut: function (e) {
+    if (app.globalData.nickName == null) {
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '../personalInfo/personalInfo',
+    })
+  },
+
+
+
 
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
