@@ -12,81 +12,33 @@
 	"appid": "wx5236affef117da53",
 	"projectname": "soybean-app",
 	"libVersion": "2.8.1",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"compileType": "miniprogram",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": 0,
-					"name": "statistics",
-					"pathName": "pages/statistics/statistics",
-					"query": "",
-					"scene": null
-        },
-				
-				{
-					"id": -1,
-					"name": "pages/healthySubmit/healthySubmit",
-					"pathName": "pages/healthySubmit/healthySubmit",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-<<<<<<< Updated upstream
-=======
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "pages/healthySubmit/healthySubmit",
-					"pathName": "pages/healthySubmit/healthySubmit",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
->>>>>>> Stashed changes
-					"name": "pages/personalInfo/personalInfo",
-					"pathName": "pages/personalInfo/personalInfo",
-					"query": "",
-					"scene": null
-<<<<<<< Updated upstream
-=======
-				},
-				{
-					"id": -1,
-					"name": "pages/healthySubmit/healthySubmit",
-					"pathName": "pages/healthySubmit/healthySubmit",
-					"scene": null
->>>>>>> Stashed changes
-				}
-				
-			]
-		}
-	}
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "miniprogram": {
+      "current": 0,
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide"
+        }
+      ]
+    }
+  }
 }
