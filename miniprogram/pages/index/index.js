@@ -18,7 +18,7 @@ Page({
 
   onLoad: function () {
     qqmapsdk = new QQMapWX({
-      key: 'xxxxxxxxxxxxxx'
+      key: 'xxxxxxxxxxxx'
     });
     var that = this;
     if (!wx.cloud) {
