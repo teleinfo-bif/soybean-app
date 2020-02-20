@@ -14,6 +14,7 @@
 	"libVersion": "2.8.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"compileType": "miniprogram",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -43,7 +44,48 @@
 					"pathName": "pages/statistics/statistics",
 					"query": "",
 					"scene": null
+        },
+				
+				{
+					"id": -1,
+					"name": "pages/healthySubmit/healthySubmit",
+					"pathName": "pages/healthySubmit/healthySubmit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+<<<<<<< Updated upstream
+=======
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "pages/healthySubmit/healthySubmit",
+					"pathName": "pages/healthySubmit/healthySubmit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+>>>>>>> Stashed changes
+					"name": "pages/personalInfo/personalInfo",
+					"pathName": "pages/personalInfo/personalInfo",
+					"query": "",
+					"scene": null
+<<<<<<< Updated upstream
+=======
+				},
+				{
+					"id": -1,
+					"name": "pages/healthySubmit/healthySubmit",
+					"pathName": "pages/healthySubmit/healthySubmit",
+					"scene": null
+>>>>>>> Stashed changes
 				}
+				
 			]
 		}
 	}

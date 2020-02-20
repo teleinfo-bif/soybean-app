@@ -1,0 +1,88 @@
+<!--miniprogram/pages/healthySubmit/healthySubmit.wxml-->
+<view class="healthy">
+  <view class="base-info">
+    <text>基本信息</text>
+  </view>
+
+  <view class="healthy-submit">
+    <form bindsubmit="healthySubmit">
+      <view class="healthy-hd">
+        <text>姓名</text>
+      </view>
+      <view class="healthy-td">
+        <input name="name" placeholder="{{name}}" disabled="disabled"></input>
+      </view>
+
+      <view class="healthy-hd">
+        <text>手机号码</text>
+      </view>
+      <view class="healthy-td">
+        <input name="phone" placeholder="{{phone}}" disabled="disabled"></input>
+      </view>
+
+      <view class="healthy-hd">
+        <text>打卡地点</text>
+      </view>
+      <view class="healthy-td">
+        <input name="location" placeholder="请选择单位或部门"></input>
+      </view>
+
+      <view class="healthy-hd">
+        <text>体温</text>
+      </view>
+      <view class="healthy-td">
+        <input name="temperature" placeholder="请输入温度"></input>
+      </view>
+
+      <view class="healthy-hd">
+        <text>是否咳嗽</text>
+      </view>
+      <view class="healthy-td">
+        <radio-group class="healthy-radio" bindchange="coughChange">
+          <view class="healthy-radio" wx:for="{{status}}" wx:key="index">
+            <radio value="{{item.id}}" checked="{{item.checked}}">{{item.content}}</radio>
+          </view>
+        </radio-group>
+      </view>
+
+      <view class="healthy-hd">
+        <text>是否乏力</text>
+      </view>
+      <view class="healthy-td">
+        <radio-group class="healthy-radio" bindchange="weakChange">
+          <view class="healthy-radio" wx:for="{{status}}" wx:key="index">
+            <radio value="{{item.id}}" checked="{{item.checked}}">{{item.content}}</radio>
+          </view>
+        </radio-group>
+      </view>
+
+      <view class="healthy-hd">
+        <text>是否腹泻</text>
+      </view>
+      <view class="healthy-td">
+        <radio-group class="healthy-radio" bindchange="diarrheaChange">
+          <view class="healthy-radio" wx:for="{{status}}" wx:key="index">
+            <radio value="{{item.id}}" checked="{{item.checked}}">{{item.content}}</radio>
+          </view>
+        </radio-group>
+      </view>
+
+      <view class="healthy-hd">
+        <text>是否肌肉酸痛</text>
+      </view>
+      <view class="healthy-td">
+        <radio-group class="healthy-radio" bindchange="muscleSoreChange">
+          <view class="healthy-radio" wx:for="{{status}}" wx:key="index">
+            <radio value="{{item.id}}" checked="{{item.checked}}">{{item.content}}</radio>
+          </view>
+        </radio-group>
+      </view>
+
+      <view class="healthy-buttons">
+        <button type="primary" form-type="reset">重置</button>
+        <button type="primary" form-type="submit">打卡</button>
+      </view>
+    </form>
+  </view>
+
+</view>

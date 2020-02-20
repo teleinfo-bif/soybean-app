@@ -1,0 +1,15 @@
+/* miniprogram/pages/healthySubmit/healthySubmit.wxss */
+
+.healthy-buttons{
+  margin-top: 100rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.healthy-radio {
+  margin-left: 100rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

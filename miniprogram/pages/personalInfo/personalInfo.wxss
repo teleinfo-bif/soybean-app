@@ -1,0 +1,21 @@
+/* pages/personalInfo/personalInfo.wxss */
+
+.personal-info-view{
+  margin-top: 20rpx; 
+}
+
+.personal-info-hd {
+  margin-top: 10rpx;
+
+}
+
+.info-name-label{
+  size: 10rpx;
+}
+
+.personal-buttons{
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
