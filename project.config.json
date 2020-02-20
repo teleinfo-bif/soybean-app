@@ -22,7 +22,7 @@
 		},
 		"nodeModules": false
 	},
-	"appid": "wx981c51592be1d70c",
+	"appid": "wx5236affef117da53",
 	"projectname": "soybean-app",
 	"libVersion": "2.8.1",
 	"simulatorType": "wechat",
@@ -51,10 +51,15 @@
 			"current": 0,
 			"list": [
 				{
-					"id": 0,
-					"name": "statistics",
-					"pathName": "pages/statistics/statistics",
-					"query": "",
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "pages/personalInfo/personalInfo",
+					"pathName": "pages/personalInfo/personalInfo",
 					"scene": null
 				}
 			]
