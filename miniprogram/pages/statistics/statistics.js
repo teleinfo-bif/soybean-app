@@ -6,13 +6,16 @@ Page({
    */
   data: {
     title:{
-      image: "https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg",
+      image: "../../images/tongjixinxi.png",
       text: "统计信息"
     },
     dashboard:{
       should : 42,
+      shouldText: "应填写人数",
       filledIn: 26,
-      unfilledIn: 16
+      filledInText: "已填写人数",
+      unfilledIn: 16,
+      unfilledInText: "未填写人数"
     },
     health:{
       total: 42,
