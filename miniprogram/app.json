@@ -1,9 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-<<<<<<< Updated upstream
     "pages/statistics/statistics",
-=======
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -16,7 +14,6 @@
     "pages/openapi/cloudid/cloudid",
     "pages/im/im",
     "pages/im/room/room",
->>>>>>> Stashed changes
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
     "pages/submitSuccess/submitSuccess"
