@@ -1,0 +1,23 @@
+
+<view class="container">
+<!-- 统计信息 -->
+<view>
+<image src="{{title.image}}"></image>
+<text>统计信息</text>
+</view>
+
+<!-- 看板 -->
+<view>
+<view>
+</view>
+</view>
+
+<!-- 健康统计 -->
+<view>
+</view>
+
+<!-- 地区统计 -->
+<view>
+</view>
+
+</view>

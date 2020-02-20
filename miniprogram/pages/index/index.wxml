@@ -36,7 +36,7 @@
 
     <!-- 统计信息 -->
     <view class="uploader">
-      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+      <navigator url="../statistics/statistics" open-type="navigate" class="uploader-text">
         <text>统计信息</text>
       </navigator>
     </view>
