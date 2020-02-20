@@ -1,0 +1,59 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+      size="default"
+    ></button>
+    <view class="userinfo-nickname-wrapper">
+      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
+    </view>
+  </view>
+
+  <!-- 个人信息登记 -->
+  <view class="uploader">
+    <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+      <text>个人信息登记</text>
+    </navigator>
+  </view>
+
+    <!-- 健康打卡 -->
+    <view class="uploader">
+      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+        <text>健康打卡</text>
+      </navigator>
+    </view>
+
+    <!-- 健康码 -->
+    <view class="uploader">
+      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+        <text>健康码</text>
+      </navigator>
+    </view>
+
+
+    <!-- 统计信息 -->
+    <view class="uploader">
+      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+        <text>统计信息</text>
+      </navigator>
+    </view>
+
+
+
+    <!-- 详细信息 -->
+    <view class="uploader">
+      <navigator url="../healthyPunchClock/healthyPunchClock" open-type="navigate" class="uploader-text">
+        <text>详细信息</text>
+      </navigator>
+    </view>
+
+
+
+
+</view>
