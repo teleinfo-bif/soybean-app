@@ -4,10 +4,23 @@
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"enhance": true
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"nodeModules": false
 	},
 	"appid": "wx981c51592be1d70c",
 	"projectname": "soybean-app",

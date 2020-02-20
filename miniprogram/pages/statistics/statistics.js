@@ -1,9 +1,48 @@
-// pages/statistics/statistics.js
-Page({
+import F2 from '../../components/f2-canvas/lib/f2';
 
-  /**
-   * 页面的初始数据
-   */
+let chart = null;
+
+function initChart(canvas, width, height) {
+  const { Util, G } = F2;
+  const { Group } = G;
+
+  const data = [
+    { type: '健康', data: 38, a: '1' },
+    { type: '其它症状'  , data: 3, a: '1' },
+    { type: '咳嗽、发烧', data: 1, a: '1' }
+  ];
+
+  let sum = 0;
+  data.map(obj => {
+    sum += obj.data;
+  });
+  chart = new F2.Chart({
+    el: canvas,
+    width,
+    height
+  });
+  chart.source(data);
+  chart.legend({
+    position: 'right',
+    offsetX: -1000
+  });
+  chart.coord('polar', {
+    transposed: true,
+    innerRadius: 0.75,
+    radius: 2
+  });
+  chart.axis(false);
+  chart.tooltip(false);
+  chart.interval()
+    .position('a*data')
+    .color('type', ['#1890FF', '#13C2C2', '#2FC25B'])
+    .adjust('stack');
+
+  chart.render();
+  return chart;
+}
+
+Page({
   data: {
     title:{
       image: "../../images/tongjixinxi.png",
@@ -34,6 +73,9 @@ Page({
       otherPercent: 3,
       feverAndCough: 1,
       feverAndCoughPercent: 1
+    },
+    opts: {
+      onInit: initChart
     }
   },
 

@@ -1,112 +1,64 @@
-<view class="container">
+<view class="page-container">
   <!-- 统计信息 -->
   <view class="title">
-    <image class="image" src="{{title.image}}"></image>
-    <text class="text" >{{title.text}}</text>
+    <image class="title-image" src="{{title.image}}"></image>
+    <text class="title-text">{{title.text}}</text>
   </view>
 
   <!-- 看板 -->
   <view class="dashboard">
-    <view class="show">
-      <text class="data">{{dashboard.should}}</text>
-      <text class="text">{{dashboard.shouldText}}</text>
+    <view class="dashboard-show">
+      <text class="dashboard-show-data">{{dashboard.should}}</text>
+      <text class="dashboard-show-text">{{dashboard.shouldText}}</text>
     </view>
 
-    <view class="show">
-      <text class="data">{{dashboard.filledIn}}</text>
-      <text class="text">{{dashboard.filledInText}}</text>
+    <view class="dashboard-show">
+      <text class="dashboard-show-data">{{dashboard.filledIn}}</text>
+      <text class="dashboard-show-text">{{dashboard.filledInText}}</text>
     </view>
 
-    <view class="show">
-      <text class="data">{{dashboard.unfilledIn}}</text>
-      <text class="text">{{dashboard.unfilledInText}}</text>
+    <view class="dashboard-show">
+      <text class="dashboard-show-data">{{dashboard.unfilledIn}}</text>
+      <text class="dashboard-show-text">{{dashboard.unfilledInText}}</text>
     </view>
   </view>
 
   <!-- 健康状况 -->
-  <view>
-    <view>
-      <view>健康情况</view>
-      <view>
-        <view>总人数</view>
-        <view>{{health.total}}人</view>
-      </view>
+  <view class="template">
+    <view class="template-title">
+      <view class="template-title-text">健康情况</view>
+      <view class="template-title-total">总人数 {{health.total}}人</view>
     </view>
-    <view>
-      <view>饼图</view>
-      <view>
-        <view> <!-- table -->
-          <view>分布情况</view>
-          <view>
-            <view>
-              <view>健康</view><view>{{health.health}}人</view>
+    <view class="template-show">
+      <view class="template-show-ring container">
+        <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts }}"></ff-canvas>
+      </view>
+      <view class="template-show-table">
+        <view class="table-col-2">
+          <view class="table-col-title">分布情况</view>
+          <view class="table-row">
+            <view class="table-row-content">
+              <view>健康 {{health.health}}人</view>
             </view>
-            <view>
-              <view>其它症状</view><view>{{health.other}}人</view>
+            <view class="table-row-content">
+              <view>其它症状 {{health.other}}人</view>
             </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            <view class="table-row-content">
+              <view>咳嗽、发烧 {{health.feverAndCough}}人</view>
             </view>
           </view>
         </view>
-         <view>
-          <view>占比率
-          </view>
-          <view>
-            <view>
-              <view>健康</view><view>{{health.health}}人</view>
+        <view class="table-col-2">
+          <view class="table-col-title">占比率</view>
+          <view class="table-row">
+            <view class="table-row-content">
+              <view>{{health.healthPercent}}%</view>
             </view>
-            <view>
-              <view>其它症状</view><view>{{health.other}}人</view>
+            <view class="table-row-content">
+              <view>{{health.otherPercent}}%</view>
             </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 健康状况 -->
-  <view>
-    <view>
-      <view>健康情况</view>
-      <view>
-        <view>总人数</view>
-        <view>{{health.total}}人</view>
-      </view>
-    </view>
-    <view>
-      <view>饼图</view>
-      <view>
-        <view>
-          <view>分布情况
-          </view>
-          <view>
-            <view>
-              <view>健康</view><view>{{health.health}}人</view>
-            </view>
-            <view>
-              <view>其它症状</view><view>{{health.other}}人</view>
-            </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
-            </view>
-          </view>
-        </view>
-         <view>
-          <view>占比率
-          </view>
-          <view>
-            <view>
-              <view>健康</view><view>{{health.health}}人</view>
-            </view>
-            <view>
-              <view>其它症状</view><view>{{health.other}}人</view>
-            </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{health.feverAndCough}}人</view>
+            <view class="table-row-content">
+              <view>{{health.feverAndCoughPercent}}%</view>
             </view>
           </view>
         </view>
@@ -115,49 +67,45 @@
   </view>
 
   <!-- 地区统计 -->
-  <view>
-    <view>
-      <view>所在地区分布情况</view>
-      <view>
-        <view>总人数</view>
-        <view>{{health.total}}人</view>
-      </view>
+  <view class="template">
+    <view class="template-title">
+      <view class="template-title-text">所在地区分布情况</view>
+      <view class="template-title-total">总人数 {{area.total}}人</view>
     </view>
-    <view>
-      <view>饼图</view>
-      <view>
-        <view>
-          <view>分布情况
-          </view>
-          <view>
-            <view>
-              <view>健康</view><view>{{area.health}}人</view>
+    <view class="template-show">
+      <view class="template-show-ring container">
+        <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts }}"></ff-canvas>
+      </view>
+      <view class="template-show-table">
+        <view class="table-col-2">
+          <view class="table-col-title">分布情况</view>
+          <view class="table-row">
+            <view class="table-row-content">
+              <view>健康 {{area.health}}人</view>
             </view>
-            <view>
-              <view>其它症状</view><view>{{area.other}}人</view>
+            <view class="table-row-content">
+              <view>其它症状 {{area.other}}人</view>
             </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{area.feverAndCough}}人</view>
+            <view class="table-row-content">
+              <view>咳嗽、发烧 {{area.feverAndCough}}人</view>
             </view>
           </view>
         </view>
-         <view>
-          <view>占比率
-          </view>
-          <view>
-            <view>
-              <view>健康</view><view>{{area.health}}人</view>
+        <view class="table-col-2">
+          <view class="table-col-title">占比率</view>
+          <view class="table-row">
+            <view class="table-row-content">
+              <view>{{area.healthPercent}}%</view>
             </view>
-            <view>
-              <view>其它症状</view><view>{{area.other}}人</view>
+            <view class="table-row-content">
+              <view>{{area.otherPercent}}%</view>
             </view>
-            <view>
-              <view>咳嗽、发烧</view><view>{{area.feverAndCough}}人</view>
+            <view class="table-row-content">
+              <view>{{area.feverAndCoughPercent}}%</view>
             </view>
           </view>
         </view>
       </view>
     </view>
   </view>
-
 </view>

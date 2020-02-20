@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "ff-canvas": "../../components/f2-canvas/f2-canvas"
+  }
 }
