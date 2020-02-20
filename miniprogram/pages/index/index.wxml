@@ -7,7 +7,7 @@
     ></image> 
   <view class="head_title">泰尔通
   </view>
-  <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="onShow"  >
+  <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut"  >
     <!--
     <view 
       class="userinfo-img"
