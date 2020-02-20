@@ -1,5 +1,7 @@
 //index.js
 const app = getApp()
+var QQMapWX = require('qqmap-wx-jssdk.js');
+var qqmapsdk;
 
 Page({
   data: {
@@ -7,12 +9,18 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    address: '',
+    // 展示列表
+    locationList: [],
+    // 默认当前坐标附近的列表
+    poiList: [],
   },
 
   onLoad: function () {
+    qqmapsdk = new QQMapWX({
+      key: 'xxxxxxxxxxxxxx'
+    });
     var that = this;
-
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -39,6 +47,7 @@ Page({
                 avatarUrl: res.userInfo.avatarUrl,
                 nickName: res.userInfo.nickName,
               })
+              that.getSessionCode();
             }
           })
         }
@@ -46,6 +55,67 @@ Page({
     })
   },
 
+  /**获取sessionCode和openid */
+  getSessionCode: function (e) {
+    let that = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          console.log(res)
+          //发起网络请求
+          app.globalData.sessionCode = res.code
+          that.onGetOpenid();
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  },
+
+
+
+  onShow: function () {
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      altitude: 'true',
+      success: function (res) {
+        console.log(res)
+        //2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: res.latitude,
+            longitude: res.longitude
+          }, //坐标
+          get_poi: 1, //是否获取坐标对应附近列表
+          poi_options: 'policy=2;radius=3000;page_size=10;page_index=1', //poi 参数
+          success: function (res) {
+            console.log(res)
+            var address = res.result.address;
+            var poiList = res.result.pois;
+            that.setData({
+              address: address,
+              poiList: poiList,
+              locationList: poiList
+            })
+          }
+        })
+      }
+    });
+  },
+
+
+  onReady: function () {
+    const _this = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success(res) {
+        const latitude = res.latitude
+        const longitude = res.longitude
+        console.log("当前用户位置信息为：" + JSON.stringify(res, null, 2));
+      }
+    })
+  },
 
   /**用户信息提交 */
   userInfoPut: function (e) {
@@ -60,7 +130,42 @@ Page({
     })
   },
 
+  getPhoneNumber: function (e) {
+    var that = this;
+    if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
+      wx.showModal({
+        content: '不能获取手机号码',
+        showCancel: false
+      })
+      return;
+    }
+    wx.showLoading({
+      title: '获取手机号中...',
+    })
 
+    wx.cloud.callFunction({
+      name: 'getToken',  // 对应云函数名
+      data: {
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv,
+        sessionCode: app.globalData.sessionCode    // 这个通过wx.login获取，去了解一下就知道。这不多描述
+      },
+      success: res => {
+        wx.hideLoading()
+        // 成功拿到手机号，跳转首页
+        console.log(res.result.data);
+        app.globalData.phoneNumber = res.result.data.phoneNumber
+      },
+      fail: err => {
+        console.error(err);
+        wx.showToast({
+          title: '获取手机号失败',
+          icon: 'none'
+        })
+      }
+    })
+
+  },
 
 
   onGetUserInfo: function(e) {
@@ -81,14 +186,12 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
+        wx.showToast({
+          icon: 'none',
+          title: '登录失败',
         })
       }
     })

@@ -35,14 +35,14 @@ page {
 .userinfo-put {
   font-size: 32rpx;
   color: #000;
-  background-color: white;
-  background-size: cover;
   text-align: left;
   padding-left: 0;
   margin-left: 10px;
-  line-height: 40rpx;
-  margin-top:15px;
-  width:130px;
+  margin-top:12px;
+}
+
+.userinfo-put_active {
+  background-color: #ccc;
 }
 
 .userinfo-img {
@@ -51,7 +51,8 @@ page {
   border-radius: 50%;
   background-size: cover;
   background-color: white;
-  margin-left:20rpx;
+  margin-left:10rpx;
+  margin-top:2px;
 }
 
 

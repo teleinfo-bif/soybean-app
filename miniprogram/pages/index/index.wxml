@@ -7,7 +7,7 @@
     ></image> 
   <view class="head_title">泰尔通
   </view>
-  <view class="putuserinfobutton">
+  <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="onShow"  >
     <!--
     <view 
       class="userinfo-img"
@@ -18,8 +18,9 @@
       class="userinfo-img"
       style="background-image: url(../../images/userinfo.png)"
     ></view>
-
-    <view class="userinfo-put" bindtap="userInfoPut">录入用户信息
+    <!--
+<button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
+    <view class="userinfo-put" hover-class="userinfo-put_active">录入用户信息
     </view>
 
   </view>
