@@ -34,15 +34,6 @@
             </view>
         </view>
 
-        <view class="weui-cells__title">是否在京</view>
-        <view>
-            <radio-group class="radio-group" bindchange="workPlaceRadioChange">
-                <label wx:for="{{radioItems}}" wx:key="{{index}}">
-                    <radio value="{{item.value}}" />{{item.name}}
-                </label>
-            </radio-group>
-        </view>
-
 <view wx:if="{{isGoBackFlag == '1'}}"> <!--未返京开始-->
         <view class="weui-cells__title">未返京原因</view>
         <view>
@@ -165,7 +156,7 @@
         </view>
 
         <view class="weui-btn-area" style="margin: 28px 16px 8px;padding-bottom: 20px;">
-            <button class="weui-btn"  hover-class="weui-btn_active" wx:if="{{todayClickFlag == '0'}}" type="primary" form-type="submit" style="background-color: #1E90FF;">提交</button>
+            <button class="weui-btn"  hover-class="weui-btn_active" wx:if="{{todayClickFlag == '0'}}" type="primary" form-type="submit" style="background-color: #4169E1;">提交</button>
             <button class="weui-btn" wx:if="{{todayClickFlag == '1'}}" type="primary" style="background-color: #ccc;">今日已打卡</button>
             
         </view>

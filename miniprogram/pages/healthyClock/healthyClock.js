@@ -1,5 +1,3 @@
-// pages/databaseGuide/databaseGuide.js
-
 const app = getApp()
 var QQMapWX = require('qqmap-wx-jssdk.js');
 var qqmapsdk;
@@ -127,7 +125,19 @@ Page({
               poiList: poiList,
               locationList: poiList,
               place: res.result.ad_info.name
-            })
+            });
+            var currentProvince = res.result.ad_info.adcode;
+            //是否在京   1-未返京   0-已返京
+            if (currentProvince == '110101'){
+              that.setData({
+                isGoBackFlag : '0'
+              });
+            }else{
+              that.setData({
+                isGoBackFlag : '1'
+              });
+            }
+              
           }
         })
       }, 
@@ -294,17 +304,7 @@ Page({
   goHBRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHBFlag = e.detail.value
-    this.radioChange(e)
-  },
-
-  //是否返京
-  workPlaceRadioChange: function (e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value);
-    this.workPlaceFlag = e.detail.value
-    this.setData({
-      isGoBackFlag: e.detail.value
-    });
-    this.radioChange(e)
+   // this.radioChange(e)
   },
 
   //14天内是否离开北京
@@ -314,14 +314,14 @@ Page({
     this.setData({
       isLeaveBjFlag: e.detail.value
     });
-    this.radioChange(e)
+  //  this.radioChange(e)
   },
   
   //未返京原因
   noGoBackRadioChange: function(e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.noGoBackFlag = e.detail.value
-    this.radioChange(e)
+    //this.radioChange(e)
   },
 
   //目前健康状况
@@ -331,14 +331,14 @@ Page({
     this.setData({
       bodyStatusFlag: e.detail.value
     })
-    this.radioChange(e)
+  //  this.radioChange(e)
   },
 
   //是否就诊住院
   goHospitalRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
-    this.radioChange(e)
+  //  this.radioChange(e)
   },
 
   //计划返京日期

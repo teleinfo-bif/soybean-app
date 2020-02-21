@@ -67,6 +67,6 @@ radio .wx-radio-input.wx-radio-input-checked::before{
     text-align: center;
     font-size: 26rpx;   
     color:#fff;
-    background-color: #0000CD;
-    border-color: #0000CD;
+    background-color: #4169E1;
+    border-color: #4169E1;
 }
