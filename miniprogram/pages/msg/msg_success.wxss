@@ -1,0 +1,26 @@
+page{
+    background-color: #FFFFFF;
+}
+page,.page{height:100%;}
+
+
+
+.eg-image {
+  height: 50px;
+  width: 100%;
+}
+
+.foot{ width:100%; 
+      margin:0px auto; 
+      font-size:38rpx; 
+      color:#666; 
+      bottom:0px; 
+      position:fixed; 
+      background:#e6e6e6; 
+      height:55px;
+      max-width:640px; 
+      min-width:320px;  
+      margin-left:auto; 
+      margin-right:auto; 
+      text-align:center;
+    }

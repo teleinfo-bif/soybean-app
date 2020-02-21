@@ -29,7 +29,7 @@
 <view class="page__hd">
         <view class="page__title" style="margin-left:5%;margin-button:5px;">我所在的部门</view>
         <view class="weui-grids" >
-            <navigator url="../healthySubmit/healthySubmit" class="weui-grid" hover-class="weui-grid_active">
+            <navigator url="../healthyClock/healthyClock" class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
                     <view class="weui-grid__label">健康打卡</view>
               </navigator>
