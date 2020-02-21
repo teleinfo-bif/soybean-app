@@ -4,94 +4,91 @@
   <form class="personal-form" bindsubmit="submitUserInfo">
     <view class="personal-info-view">
       <view class="personal-info-hd">
-        <text class="info-name-label">姓名</text>
+        <text class="info-label">姓名</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="name" type="text" placeholder="请输入姓名" ></input>
+        <input class="info-input" name="name" type="text" placeholder-class="placeholder-style" placeholder="请输入姓名" ></input>
       </view>
 
       <view class="personal-info-hd">
-        <text class="info-name-label">手机号码</text>
+        <text class="info-label">手机号码</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="phone" type="number" placeholder="请输入手机号码" ></input>
+        <input class="info-input" name="phone" type="number"   placeholder-class="placeholder-style" placeholder="请输入手机号码" ></input>
       </view>
 
       <view class="personal-info-picker">
         <picker bindchange="bindCertificatePickerChange" value="{{index}}" range="{{certificate_type}}">
-          <view>证件类型</view>
-          <view class="picker">
-            <input type="text" placeholder="选择证件类型" name="certificate_type" value="{{certificate_type_choose}}"></input>
+          <view class="personal-info-hd">
+            <text class="info-label">证件类型</text>
+            <text class="info-choice"> 选择</text>
+          </view>
+          <view class="personal-info-td">
+            <input class="info-input" type="text" placeholder-class="placeholder-style" placeholder="选择证件类型" name="certificate_type" value="{{certificate_type_choose}}" disabled="disabled"></input>
           </view>
         </picker>
     
       </view>
 
       <view class="personal-info-hd">
-        <text class="info-name-label">证件号码</text>
+        <text class="info-label">证件号码</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="certificate_number" type="text" placeholder="证件号码" ></input>
+        <input class="info-input" name="certificate_number" type="idcard" placeholder-class="placeholder-style" placeholder="证件号码" ></input>
       </view>
 
       <view class="personal-info-picker">
         <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-          <view ><text>单位名称 </text><text> 选择</text></view>
-          <input placeholder="请选择单位及部门" name="company_name" value="{{company_department_choose}}"></input>
+          <view class="personal-info-hd"><text class="info-label">单位名称 </text><text class="info-choice"> 选择</text></view>
+          <view class="personal-info-td">
+          <input class="info-input" placeholder-class="placeholder-style" placeholder="请选择单位及部门" name="company_name" value="{{company_department_choose}}" disabled="disabled"></input>
+          </view>
         </picker>
       </view>
 
       <view class="personal-info-picker">
           <picker mode="region" bindchange="bindCompanyRegionChange" value="{{company_region}}" custom-item="{{customItem}}">
-            <view class="picker-hd">
-              <text class="company-location">单位所在地区</text><text class="company-choice"> 选择</text>
+            <view class="personal-info-hd">
+              <text class="info-label">单位所在区及街道、社区</text><text class="info-choice"> 选择</text>
             </view>
-
-            <input class="picker-td" placeholder="请选择单位所在地区" name="company_location" value="{{company_district}}"></input>
-            <!-- <view class="picker-td" name="company_district">
-              {{company_region[0]}} {{company_region[1]}} {{company_region[2]}}
-            </view> -->
+            <view class="personal-info-td">
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="请选择单位所在区及街道、社区" name="company_location" value="{{company_district}}" disabled="disabled"></input>
+            </view>
           </picker>
+          
       </view>
 
       <view class="personal-info-hd">
-        <text class="info-name-label">单位详细地址</text>
+        <text class="info-label">单位详细地址</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="company_detail" placeholder="请输入单位详细地址" ></input>
+        <input class="info-input" name="company_detail" placeholder-class="placeholder-style" placeholder="请输入单位详细地址" ></input>
       </view>
 
       <view class="personal-info-picker">
           <picker mode="region" bindchange="bindHomeRegionChange" value="{{home_region}}" custom-item="{{customItem}}">
-            <view class="picker-hd">
-              <text class="company-location">家庭所在地区</text><text class="company-choice"> 选择</text>
+            <view class="personal-info-hd">
+              <text class="info-label">家庭所在区街道及社区</text><text class="info-choice"> 选择</text>
             </view>
-
-            <input class="picker-td" placeholder="请选择家庭所在地区" name="home_location" value="{{home_district}}"></input>
+             <view class="personal-info-td">
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="请选择家庭所在区及街道、社区" name="home_location" value="{{home_district}}" disabled="disabled"></input>
+            </view>
             <!-- <view class="picker-td" name="home_district">
               {{home_region[0]}} {{home_region[1]}} {{home_region[2]}}
             </view> -->
           </picker>
       </view>
 
-    <!-- <view class="personal-info-hd">
-        <text class="info-name-label">家庭所在地区</text>
-        <text class="info-name-choose"> 选择</text>
-      </view>
-      <view class="personal-info-td">
-        <input class="info-input" name="home_district" placeholder="请选择家庭所在区及街道、社区" ></input>
-      </view> -->
-
     <view class="personal-info-hd">
-        <text class="info-name-label">家庭详细地址</text>
+        <text class="info-label">家庭详细地址</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="home_detail" placeholder="请输入家庭详细地址" ></input>
+        <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="请输入家庭详细地址" ></input>
       </view>
 
       <view class="personal-buttons">
-        <button type="primary" form-type="reset">重置</button>
-        <button type="primary" form-type="submit">提交</button>
+        <button class="button-reset" form-type="reset">重置</button>
+        <button class="button-submit" form-type="submit">提交</button>
       </view>
     </view>
   </form>

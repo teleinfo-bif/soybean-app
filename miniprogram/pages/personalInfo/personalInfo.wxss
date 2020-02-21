@@ -1,21 +1,92 @@
 /* pages/personalInfo/personalInfo.wxss */
 
+.personal{
+  margin-top: 50rpx;
+  margin-left: 30rpx;
+}
+
+.personal-form {
+  margin-left: 30rpx;
+}
+
 .personal-info-view{
   margin-top: 20rpx; 
 }
 
 .personal-info-hd {
   margin-top: 10rpx;
+  width: 100%;
 
 }
 
-.info-name-label{
-  size: 10rpx;
+/* .personal-info-td {
+  margin-bottom: 5rpx;
+} */
+
+/* .personal-info-picker {
+  margin-top: 10rpx;
+} */
+
+.info-label{
+  color: #444444;
+  font-size: 25rpx;
+  font-weight: 350;
+  /* font-family: STFangSong; */
+}
+
+.info-choice{
+  color: #4169E1;
+  font-size: 25rpx;
+  font-weight: 500;
+  /* font-family: STFangSong; */
+  float: right;
+  margin-right: 30rpx;
+}
+
+.info-input{
+  font-size: 30rpx;
+}
+
+.placeholder-style {
+  color: #999999;
+  /* font-family: STFangsong; */
+  margin-left: 5rpx;
+  font-weight: 300;
+  font-size: 30rpx;
 }
 
 .personal-buttons{
-  margin-top: 50rpx;
+  margin-top: 100rpx;
+  margin-right: 60rpx;
+  margin-left: 30rpx;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+
+  /* flex-wrap: wrap; */
 }
+
+.button-reset {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  padding-left: 20rpx;
+  width: 280rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 25rpx;
+  text-align: center;
+  
+}
+
+.button-submit {
+  background:  #4169E1;
+  display: block;
+  width: 280rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 25rpx;
+  color: white;
+  text-align: center;
+  
+}
+
