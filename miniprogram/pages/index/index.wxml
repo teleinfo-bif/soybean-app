@@ -40,6 +40,7 @@
               </navigator>
         </view>
 
+<view wx:if="{{isManagerFlag == '1'}}">
         <view class="page__title" style="margin-left:5%;margin-top:10px;">我管理的部门</view>
         <view class="weui-grids" >
             <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">
@@ -52,4 +53,5 @@
                     <view class="weui-grid__label">详细信息</view>
               </navigator>
         </view>
+</view>
 </view>
