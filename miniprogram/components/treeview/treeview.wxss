@@ -1,0 +1,105 @@
+.tree {
+  font-family: PingFangSC-Regular;
+}
+
+.tree-body {
+
+}
+
+.tree-item {
+  margin: 10rpx auto;
+}
+
+.tree-parent {
+  width: 720rpx;
+  height: 90rpx;
+  background-color: #ffffff;
+  margin: auto;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}
+
+.tree-parent-text {
+  width: 230rpx;
+  height: 30rpx;
+  padding-left: 20rpx;
+  font-size: 30rpx;
+  line-height: 90rpx;
+  color: #333333;
+  float: left;
+}
+
+.tree-parent-time {
+  width: 260rpx;
+  height: 30rpx;
+  font-size: 30rpx;
+  line-height: 90rpx;
+  color: #4f7ef2;
+  
+  display: flex;
+  flex-wrap: wrap;
+  float: right;
+}
+
+.tree-children {
+  width: 700rpx;
+  height: 100rpx;
+  background-color: #ffffff;
+  font-size: 30rpx;
+  margin: 5rpx 5rpx 5rpx 25rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}
+
+.tree-children-table {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.table-col-4 {
+  flex: 10rpx 0rpx auto;
+  width: 25%;
+  text-align: center;
+}
+
+.table-row {
+  width: 170rpx;
+  height: 100rpx;
+  margin: 0rpx 5rpx 0rpx 5rpx;
+  line-height: 100rpx;
+}
+
+.tree-children-name {
+
+}
+
+.tree-children-clockin {
+
+}
+
+.tree-children-detail {
+  color: #4f7ef2;
+}
+
+.tree-children-status {
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}
+
+.tree-children-status-boll {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background: red;
+  margin: 8rpx auto;
+}
+
+.tree-children-status-text {
+  height: 40rpx;
+  line-height: 40rpx;
+}

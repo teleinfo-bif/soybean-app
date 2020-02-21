@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/login/login",
     "pages/statistics/statistics",
+    "pages/memberDetail/memberDetail",
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
     "pages/submitSuccess/submitSuccess"
