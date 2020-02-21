@@ -1,5 +1,12 @@
 <view class="page">
-    <view class="weui-msg">
+  <view class="continer">
+    <view class="continer-info">
+      <icon class="success-icon" type="success" size="165" color="#4169E1"/>
+      <view class="success-text">提交成功</view>
+    </view> 
+  </view>
+
+    <!-- <view class="weui-msg">
         <view class="weui-msg__icon-area" style="margin-top:100px;">
             <button   class="userinfo-avatar"
       style="background-image: url(../../yidaka3x.png);margin:auto;width:85px;height:85px;"
@@ -7,7 +14,7 @@
         </view>
         <view class="weui-msg__text-area" stye="margin-top:50px;">
             <view class="weui-msg__title">提交成功</view>
-        </view>
+        </view> -->
 
 
         <!--
@@ -23,7 +30,7 @@
     <table>
         <tr>
             <td>
-                <button class="weui-btn" style="background-color:#1E90FF;color:#fff;height:55px;line-height:55px;margin-top:0px;" bindtap="goHome">返回主页</button>
+                <button class="weui-btn" style="background-color:#4169E1;color:#fff;height:55px;line-height:55px;margin-top:0px;" bindtap="goHome">返回主页</button>
             </td>
         </tr>
     </table>
@@ -33,5 +40,5 @@
 
 
 
-    </view>
+    <!-- </view> -->
 </view>

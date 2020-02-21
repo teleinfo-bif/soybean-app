@@ -51,15 +51,45 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
-					"query": ""
+					"id": 0,
+					"name": "statistics",
+					"pathName": "pages/statistics/statistics",
+					"query": "",
+					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
+					"name": "memberDetail",
+					"pathName": "pages/memberDetail/memberDetail",
+					"query": "",
+					"scene": null
+				},
+        {
+          "id": 2,
+          "name": "clockInRecord",
+          "pathName": "pages/clockInRecord/clockInRecord",
+          "query": "",
+          "scene": null,
+        },
+				{
+					"id": 3,
 					"name": "pages/personalInfo/personalInfo",
 					"pathName": "pages/personalInfo/personalInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/submitSuccess/submitSuccess",
+					"pathName": "pages/submitSuccess/submitSuccess",
+          "query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/msg/msg_success",
+					"pathName": "pages/msg/msg_success",
+          "query": "",
 					"scene": null
 				}
 			]
