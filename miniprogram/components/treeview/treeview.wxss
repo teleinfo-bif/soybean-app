@@ -15,14 +15,11 @@
   height: 90rpx;
   background-color: #ffffff;
   margin: auto;
-
-  /* border-style: dotted;
-  border-width: 2rpx; */
 }
 
 .tree-parent-text {
   width: 230rpx;
-  height: 30rpx;
+  height: 90rpx;
   padding-left: 20rpx;
   font-size: 30rpx;
   line-height: 90rpx;
@@ -31,8 +28,8 @@
 }
 
 .tree-parent-time {
-  width: 260rpx;
-  height: 30rpx;
+  width: 240rpx;
+  height: 90rpx;
   font-size: 30rpx;
   line-height: 90rpx;
   color: #4f7ef2;
@@ -42,15 +39,26 @@
   float: right;
 }
 
+.tree-parent-time-icon {
+  width: 40rpx;
+  height: 40rpx;
+  float: left;
+  margin: 25rpx auto;
+}
+
+.tree-parent-time-text {
+  width: 180rpx;
+  height: 90rpx;
+  float: left;
+  margin-left: 10rpx;
+}
+
 .tree-children {
   width: 700rpx;
   height: 100rpx;
   background-color: #ffffff;
   font-size: 30rpx;
   margin: 5rpx 5rpx 5rpx 25rpx;
-
-  /* border-style: dotted;
-  border-width: 2rpx; */
 }
 
 .tree-children-table {

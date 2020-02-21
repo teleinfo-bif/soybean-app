@@ -6,7 +6,8 @@
         <view class="tree-parent-time section">
           <picker mode="date" value="{{model.date}}" start="2019-05-01" bindchange="bindDateChange">
             <view class="picker">
-              日期: {{model.date}}
+              <image class="tree-parent-time-icon" src="../../images/jiankangdaka.png"></image>
+              <view class="tree-parent-time-text">{{model.date}}</view>
             </view>
           </picker>
         </view>

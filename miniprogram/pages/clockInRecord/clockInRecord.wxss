@@ -1,0 +1,117 @@
+.page-container .template {
+  width: 720rpx;
+  height: 320rpx;
+  margin:15rpx;
+  font-family: PingFangSC-Regular;
+  background-color: #ffffff;
+  border-radius: 6rpx;
+}
+
+.template-title {
+  width: 720rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  float: left;
+}
+
+.red-dot {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 30rpx;
+  background-color: red;
+  margin-right: 10rpx;
+
+  float: left;
+}
+
+.red-green {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 30rpx;
+  background-color: green;
+  margin-right: 10rpx;
+
+  float: left;
+}
+
+.template-title-text {
+  width: 260rpx;
+  height: 30rpx;
+  margin: 15rpx 0rpx 0rpx 20rpx;
+  font-size: 30rpx;
+  line-height: 30rpx;
+  color: #333333;
+  float: left;
+}
+
+.template-title-date {
+  width: 380rpx;
+  height: 30rpx;
+  margin: 15rpx 5rpx 5rpx 20rpx;
+  font-size: 24rpx;
+  line-height: 30rpx;
+  text-align: right;
+  padding-right: 20rpx;
+  float: right;
+  color: #666666;
+}
+
+.template-show {
+  width: 720rpx;
+  height: 250rpx;
+  float: left;
+  margin: 5rpx;
+  text-align: center;
+}
+
+.template-show-temperature {
+  width: 320rpx;
+  height: 62rpx;
+  float: left;
+}
+
+.template-show-temperature-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-top: 40rpx;
+}
+
+.template-show-icon {
+  height: 100rpx;
+}
+
+.template-show-data {
+  font-family: PingFangSC-Medium;
+  font-size: 36rpx;
+  line-height: 60rpx;
+  color: #333333;
+  margin-top: 20rpx;
+}
+
+.template-show-data-split {
+  height: 60rpx;
+  float: right;
+  border-style: solid;
+  border-width: 1rpx;
+}
+
+.template-show-text {
+  font-size: 24rpx;
+  line-height: 40rpx;
+  color: #999999;
+}
+
+.template-show-status-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-top: 40rpx;
+}
+
+.template-show-status {
+  width: 390rpx;
+  height: 62rpx;
+  float: right;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}

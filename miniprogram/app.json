@@ -4,6 +4,7 @@
     "pages/login/login",
     "pages/statistics/statistics",
     "pages/memberDetail/memberDetail",
+    "pages/clockInRecord/clockInRecord",
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
     "pages/submitSuccess/submitSuccess"
