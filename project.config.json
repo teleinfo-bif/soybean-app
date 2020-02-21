@@ -68,6 +68,12 @@
 					"name": "pages/submitSuccess/submitSuccess",
 					"pathName": "pages/submitSuccess/submitSuccess",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/msg/msg_success",
+					"pathName": "pages/msg/msg_success",
+					"scene": null
 				}
 			]
 		}
