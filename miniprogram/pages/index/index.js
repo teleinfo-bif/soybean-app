@@ -68,6 +68,106 @@ Page({
     })
   },
 
+  
+  //查询用户基本信息
+  qryUserInfo: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        that.userinfo = res.data;
+        that.setData({
+          name: res.data[0].name,
+          phone: res.data[0].phone,
+          userinfo: res.data
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+  //跳转打卡记录页面
+  gotoHealthyClick: function (e) {
+    console.log("跳转到健康打卡页面")
+    if (app.globalData.nickName == null) {
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return;
+    }
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0){
+          wx.navigateTo({
+            url: '../healthyClock/healthyClock'
+          })
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }  
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+  //跳转打卡记录页面
+  gotomemberDetailClick: function (e) {
+    if (app.globalData.nickName == null) {
+      wx.navigateTo({
+        url: '../login/login',
+      })
+      return;
+    }
+    console.log("跳转详细信息页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          wx.navigateTo({
+            url: '../memberDetail/memberDetail'
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+  
+
   /**用户信息提交 */
   userInfoPut: function (e) {
     if (app.globalData.nickName == null) {

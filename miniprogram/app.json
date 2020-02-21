@@ -21,9 +21,9 @@
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#CCC",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "泰尔通",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
 }

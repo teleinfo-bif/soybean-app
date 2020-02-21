@@ -60,6 +60,7 @@ Page({
             todayClickFlag: '1',
           })
         }
+        
         that.qryUserInfo();
       },
       fail: err => {
@@ -95,6 +96,14 @@ Page({
         })
         console.log(err)
       }
+    })
+  },
+
+  //跳转打卡记录页面
+  clickRecord: function(e) {
+    console.log("跳转到打卡记录页面")
+    wx.navigateTo({
+      url: '../clockInRecord/clockInRecord'
     })
   },
 
@@ -170,6 +179,10 @@ Page({
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
     var name = e.detail.value.name
+    var temperature = e.detail.value.temperature
+    var bodyStatusFlag = this.bodyStatusFlag
+    var goHospitalFlag = this.goHospitalFlag
+    var goHBFlag = this.goHBFlag
     if (name == null || name == '') {
       wx.showToast({
         icon: 'none',
@@ -177,6 +190,47 @@ Page({
       });
       return;
     }
+    if (temperature == null || temperature == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '体温不能为空'
+      });
+      return;
+    }
+    if (bodyStatusFlag == null || bodyStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '目前健康状态不能为空'
+      });
+      return;
+    }
+
+    if (bodyStatusFlag == '3'){
+      var bodystatusotherremark = e.detail.value.bodystatusotherremark
+      if (bodystatusotherremark == null || bodystatusotherremark == ''){
+        wx.showToast({
+          icon: 'none',
+          title: '身体健康状态为其他原因不能为空'
+        });
+        return;
+      }
+    }
+
+    if (goHospitalFlag == null || goHospitalFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '是否就诊住院不能为空'
+      });
+      return;
+    }
+    if (goHBFlag == null || goHBFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '是否有武汉相关接触史不能为空'
+      });
+      return;
+    }
+
 
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)
@@ -245,6 +299,7 @@ Page({
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '  ';
+    var DD = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
     var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
@@ -268,7 +323,7 @@ Page({
         bodyStatusFlag: bodyStatusFlag,
         goHospitalFlag: goHospitalFlag,
         remark: remark,
-        date:that.date,
+        date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
         userinfo: that.userinfo
       },
