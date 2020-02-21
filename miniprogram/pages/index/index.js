@@ -1,7 +1,5 @@
 //index.js
 const app = getApp()
-var QQMapWX = require('qqmap-wx-jssdk.js');
-var qqmapsdk;
 
 Page({
   data: {
@@ -17,9 +15,7 @@ Page({
   },
 
   onLoad: function () {
-    qqmapsdk = new QQMapWX({
-      key: 'xxxxxxxxxxxx'
-    });
+
     var that = this;
     if (!wx.cloud) {
       wx.redirectTo({
@@ -68,51 +64,6 @@ Page({
         } else {
           console.log('登录失败！' + res.errMsg)
         }
-      }
-    })
-  },
-
-
-
-  onShow: function () {
-    var that = this;
-    wx.getLocation({
-      type: 'gcj02',
-      altitude: 'true',
-      success: function (res) {
-        console.log(res)
-        //2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: res.latitude,
-            longitude: res.longitude
-          }, //坐标
-          get_poi: 1, //是否获取坐标对应附近列表
-          poi_options: 'policy=2;radius=3000;page_size=10;page_index=1', //poi 参数
-          success: function (res) {
-            console.log(res)
-            var address = res.result.address;
-            var poiList = res.result.pois;
-            that.setData({
-              address: address,
-              poiList: poiList,
-              locationList: poiList
-            })
-          }
-        })
-      }
-    });
-  },
-
-
-  onReady: function () {
-    const _this = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success(res) {
-        const latitude = res.latitude
-        const longitude = res.longitude
-        console.log("当前用户位置信息为：" + JSON.stringify(res, null, 2));
       }
     })
   },

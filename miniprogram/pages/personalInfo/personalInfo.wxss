@@ -1,42 +1,64 @@
 /* pages/personalInfo/personalInfo.wxss */
 
 .personal{
-  margin-top: 50rpx;
+  margin-top: 20rpx;
   margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.personal-title{
+  width: 750rpx;
+  height: 60rpx;
+  margin-top: 10rpx;
+  margin-right: 30rpx;
+  /* background-color: #ffffff; */
+}
+
+.personal-icon{
+  width: 3rpx;
+  height: 40rpx;
+  padding: 5rpx 4rpx 10rpx 10rpx;
+  float: left;
+  background: #4169E1
+}
+.personal-info{
+  width: 300rpx;
+  height: 60rpx;
+  float: left;
+  font-size: 45rpx;
+  padding: 0rpx 10rpx 20rpx 20rpx;
+  line-height: 60rpx;
+  color: #333333
 }
 
 .personal-form {
   margin-left: 30rpx;
 }
 
-.personal-info-view{
-  margin-top: 20rpx; 
-}
-
 .personal-info-hd {
-  margin-top: 10rpx;
+  margin-top: 30rpx;
   width: 100%;
 
 }
 
-/* .personal-info-td {
-  margin-bottom: 5rpx;
-} */
+.personal-info-td {
+  margin-top: 20rpx;
+}
 
 /* .personal-info-picker {
   margin-top: 10rpx;
 } */
 
 .info-label{
-  color: #444444;
-  font-size: 25rpx;
+  color: #777777;
+  font-size: 30rpx;
   font-weight: 350;
   /* font-family: STFangSong; */
 }
 
 .info-choice{
   color: #4169E1;
-  font-size: 25rpx;
+  font-size: 30rpx;
   font-weight: 500;
   /* font-family: STFangSong; */
   float: right;
@@ -44,20 +66,23 @@
 }
 
 .info-input{
-  font-size: 30rpx;
+  width: 100%;
+  font-size: 35rpx;
+  border-bottom: 1px solid #bbbbbb;
+  
 }
 
 .placeholder-style {
-  color: #999999;
+  color: #bbbbbb;
   /* font-family: STFangsong; */
   margin-left: 5rpx;
   font-weight: 300;
-  font-size: 30rpx;
+  font-size: 35rpx;
 }
 
 .personal-buttons{
   margin-top: 100rpx;
-  margin-right: 60rpx;
+  margin-right: 30rpx;
   margin-left: 30rpx;
   display: flex;
   flex-direction: row;
@@ -67,26 +92,26 @@
 
 .button-reset {
   background: white;
-  display: block;
+  display: flex;
   margin: 0 auto;
-  padding-left: 20rpx;
-  width: 280rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 25rpx;
+  width: 300rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 35rpx;
   text-align: center;
+  justify-content: center;
   
 }
 
 .button-submit {
   background:  #4169E1;
-  display: block;
-  width: 280rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 25rpx;
+  display: flex;
+  width: 300rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 35rpx;
   color: white;
   text-align: center;
-  
+  justify-content: center;
 }
 

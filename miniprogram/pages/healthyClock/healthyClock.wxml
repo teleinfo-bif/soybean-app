@@ -1,0 +1,165 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+<form bindsubmit="onAdd" style="width:100%">
+    <view class="page__bd" style="width: 90%;margin: auto;background-color: #FFF;border-radius: 16px;">
+
+        <view class="weui-cells__title" style="height:3px;"></view>
+        <view class="weui-cells__title">姓名</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">手机号</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">
+            <view style="width:85%;display:inline;float:left;">打卡地点</view>
+            <view style="align:right;width:10%;display:inline;"><a bindtap="onShow">获取</a></view>
+            
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="place" value="{{place}}"  placeholder="请获取打卡地点" />
+                </view>
+            </view>
+        </view>
+
+<view wx:if="{{isGoBackFlag == '1'}}"> <!--未返京开始-->
+        <view class="weui-cells__title">未返京原因</view>
+        <view>
+            <radio-group class="radio-group" bindchange="noGoBackRadioChange">
+                <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+        <view class="weui-cells__title">计划返京日期</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020.12.29" bindchange="gobackDateChange">
+                        <view class="weui-input">{{gobackdate}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+</view> <!--未返京结束-->
+
+<view wx:if="{{isGoBackFlag == '0'}}"><!--已返京开始-->
+        <view class="weui-cells__title">14天内是否离京</view>
+        <view>
+            <radio-group class="radio-group"   bindchange="LeaveBjChange">
+                <label wx:for="{{radioItems}}"  wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+  <view wx:if="{{isLeaveBjFlag == '0'}}"><!--14天内离京开始-->
+
+        <view class="weui-cells__title">离京日期</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{leavedate}}" bindchange="leaveDateChange">
+                        <view class="weui-input">{{leavedate}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">返京日期</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{suregobackdate}}" bindchange="suregobackDateChange">
+                        <view class="weui-input">{{suregobackdate}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">返京所乘车次/航班/车牌</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="trainnumber" placeholder="请输入车次/航班/车牌" />
+                </view>
+            </view>
+        </view>
+  </view><!--14天内离京结束-->
+</view><!--已返京结束-->
+
+        <view class="weui-cells__title">当日体温</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="temperature" placeholder="请输入当日体温" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">目前健康状况</view>
+        <view>
+            <radio-group class="radio-group"   bindchange="bodyStatusRadioChange">
+                <label wx:for="{{radioHealthyStatusItems}}"  wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+        <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells__title">健康状况为其他的原因</view>
+        <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
+            <view class="weui-cell ">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="bodystatusotherremark" placeholder="请输入信息" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">是否就诊住院</view>
+        <view>
+            <radio-group class="radio-group"   bindchange="goHospitalRadioChange">
+                <label wx:for="{{radioItems}}"  wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+        <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉</view>
+        <view>
+            <radio-group class="radio-group"   bindchange="goHBRadioChange">
+                <label wx:for="{{radioItems}}"  wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+        <view class="weui-cells__title">16.其他</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" name="remark" placeholder="请输入信息" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-btn-area" style="margin: 28px 16px 8px;padding-bottom: 20px;">
+            <button class="weui-btn"  hover-class="weui-btn_active" wx:if="{{todayClickFlag == '0'}}" type="primary" form-type="submit" style="background-color: #4169E1;">提交</button>
+            <button class="weui-btn" wx:if="{{todayClickFlag == '1'}}" type="primary" style="background-color: #ccc;">今日已打卡</button>
+            
+        </view>
+    </view>
+     </form>
+</view>

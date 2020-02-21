@@ -64,11 +64,32 @@
 					"query": "",
 					"scene": null
 				},
+        {
+          "id": 2,
+          "name": "clockInRecord",
+          "pathName": "pages/clockInRecord/clockInRecord",
+          "query": "",
+          "scene": null,
+        },
 				{
-					"id": -1,
-					"name": "clockInRecord",
-					"pathName": "pages/clockInRecord/clockInRecord",
+					"id": 3,
+					"name": "pages/personalInfo/personalInfo",
+					"pathName": "pages/personalInfo/personalInfo",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/submitSuccess/submitSuccess",
+					"pathName": "pages/submitSuccess/submitSuccess",
+          "query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/msg/msg_success",
+					"pathName": "pages/msg/msg_success",
+          "query": "",
 					"scene": null
 				}
 			]
