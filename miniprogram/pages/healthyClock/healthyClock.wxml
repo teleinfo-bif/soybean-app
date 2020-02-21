@@ -1,6 +1,20 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+
+<view class="todayClicked" wx:if="{{todayClickFlag == '1'}}">
+  <view class="weui-msg__icon-area" style="margin-top:0rpx;margin-bottom:20rpx;">
+    <view bindtap="clickRecord" style="color:#ccc;text-align: right;margin-right:30rpx;">
+        打卡记录
+    </view>
+    <view style="margin-top:0rpx;height:175rpx;">
+       <image  class="userinfo-avatar"  src="../../images/yidaka3x.png" mode="scaleToFill" style="width:160rpx;height:160rpx;" ></image> 
+    </view>
+        </view>
+            <view style="color:#000;margin:auto;text-align: center;">今日已打卡</view>
+</view>
+
+
 <form bindsubmit="onAdd" style="width:100%">
-    <view class="page__bd" style="width: 90%;margin: auto;background-color: #FFF;border-radius: 16px;">
+    <view class="page__bd" style="width: 100%;margin: auto;background-color: #FFF;border-radius:22px;">
 
         <view class="weui-cells__title" style="height:3px;"></view>
         <view class="weui-cells__title">姓名</view>
@@ -23,7 +37,7 @@
 
         <view class="weui-cells__title">
             <view style="width:85%;display:inline;float:left;">打卡地点</view>
-            <view style="align:right;width:10%;display:inline;"><a bindtap="onShow">获取</a></view>
+            <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="onShow">获取</a></view>
             
         </view>
         <view class="weui-cells weui-cells_after-title">
@@ -48,7 +62,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020.12.29" bindchange="gobackDateChange">
+                    <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
                         <view class="weui-input">{{gobackdate}}</view>
                     </picker>
                 </view>
@@ -72,7 +86,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{leavedate}}" bindchange="leaveDateChange">
+                    <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
                         <view class="weui-input">{{leavedate}}</view>
                     </picker>
                 </view>
@@ -83,7 +97,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{suregobackdate}}" bindchange="suregobackDateChange">
+                    <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
                         <view class="weui-input">{{suregobackdate}}</view>
                     </picker>
                 </view>
@@ -156,8 +170,8 @@
         </view>
 
         <view class="weui-btn-area" style="margin: 28px 16px 8px;padding-bottom: 20px;">
-            <button class="weui-btn"  hover-class="weui-btn_active" wx:if="{{todayClickFlag == '0'}}" type="primary" form-type="submit" style="background-color: #4169E1;">提交</button>
-            <button class="weui-btn" wx:if="{{todayClickFlag == '1'}}" type="primary" style="background-color: #ccc;">今日已打卡</button>
+            <button class="weui-btn" hover-class="weui-btn-hover" wx:if="{{todayClickFlag == '0'}}" form-type="submit" style="color:#fff">提交</button>
+            <button class="weui-btn" wx:if="{{todayClickFlag == '1'}}"  style="background-color: #ccc;">提交</button>
             
         </view>
     </view>

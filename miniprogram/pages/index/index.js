@@ -12,6 +12,7 @@ Page({
     locationList: [],
     // 默认当前坐标附近的列表
     poiList: [],
+    isManagerFlag: '0',
   },
 
   onLoad: function () {
@@ -23,7 +24,7 @@ Page({
       })
       return
     }
-
+    that.getSessionCode();
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -43,13 +44,21 @@ Page({
                 avatarUrl: res.userInfo.avatarUrl,
                 nickName: res.userInfo.nickName,
               })
-              that.getSessionCode();
             }
           })
         }
       }
     })
   },
+
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+      this.onGetOpenid()
+  },
+
 
   /**获取sessionCode和openid */
   getSessionCode: function (e) {
@@ -60,7 +69,7 @@ Page({
           console.log(res)
           //发起网络请求
           app.globalData.sessionCode = res.code
-          that.onGetOpenid();
+          that.getUserManagerFlag();
         } else {
           console.log('登录失败！' + res.errMsg)
         }
@@ -68,14 +77,126 @@ Page({
     })
   },
 
+  /**获取管理员标志 */
+  getUserManagerFlag: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid,
+      usertype : '1'
+    }).get({
+      success: res => {
+        console.log("管理员信息返回结果：" + res);
+        console.info("管理员信息返回结果：" + JSON.stringify(res, null, 2));
+        if (res.data.length > 0) {
+          this.setData({
+            isManagerFlag: '1'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+
+
+
+  },
+
+  
+  //查询用户基本信息
+  qryUserInfo: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        that.userinfo = res.data;
+        that.setData({
+          name: res.data[0].name,
+          phone: res.data[0].phone,
+          userinfo: res.data
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+  //跳转打卡记录页面
+  gotoHealthyClick: function (e) {
+    console.log("跳转到健康打卡页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0){
+          wx.navigateTo({
+            url: '../healthyClock/healthyClock'
+          })
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }  
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+  //跳转打卡记录页面
+  gotomemberDetailClick: function (e) {
+    console.log("跳转详细信息页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          wx.navigateTo({
+            url: '../memberDetail/memberDetail'
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+  
+
   /**用户信息提交 */
   userInfoPut: function (e) {
-    if (app.globalData.nickName == null) {
-      wx.navigateTo({
-        url: '../login/login',
-      })
-      return;
-    }
     wx.navigateTo({
       url: '../personalInfo/personalInfo',
     })
@@ -146,56 +267,6 @@ Page({
         })
       }
     })
-  },
-
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
-  },
+  }
 
 })

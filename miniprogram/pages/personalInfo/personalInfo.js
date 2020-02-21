@@ -19,8 +19,10 @@ Page({
     certificate_type_index: 0,
     certificate_number:"",
     
-    multiArray: [["单位1", "单位2"], ["研发部", "财务部", "行政部", "市场部", "人力部"]],
+    multiArray: [["工业互联网与物联网研究所", "安全研究所"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
+    companies: [],
+    departments: [],
     company_department_choose: "",
   },
 
@@ -187,19 +189,23 @@ Page({
       multiIndex: this.data.multiIndex
     };
 
+    data.multiArray[0] = this.data.companies
     data.multiIndex[e.detail.column] = e.detail.value;
 
     switch(e.detail.column) {
       case 0:
-        switch(data.multiIndex[0]){
-          case 0:
-            data.multiArray[1] = ["研发部", "财务部", "行政部", "市场部"]
-            break
-          case 1:
-            data.multiArray[1] = ["研发部", "财务部", "行政部", "市场部", "其他部门"]
-            break
-        }
+        data.multiArray[1] = this.data.departments[data.multiIndex[0]]
+
+        // switch(i){
+        //   for (var i = 0; i < this.data.departments.length;) {
+
+        //     case i:
+        //       data.multiArray[1] = this.data.departments[i]
+        //       break
+        //   }
+        // }
         break
+
     }
 
     this.setData(data)
@@ -237,6 +243,49 @@ Page({
 
     return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s
   },
+
+  /**
+   *  从数据库中获取各单位及相应部门名称
+   */
+
+  getCompanyDepartments: function(e) {
+    db.collection("company_info").get({
+      success: res => {
+        console.log(res.data)
+        var first = []
+        var second = []
+      
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i]
+          first.push(item.name)
+          second.push(item.departments)
+        }
+
+        this.setData({
+          companies: first,
+          departments: second,
+        })
+
+      //   console.log("first: " + first)
+      //   console.log("second: " + second)
+
+      //   for (var i in first) {
+      //     console.log(i)
+      //     console.log(first[i])
+      //   }
+
+      //   for (var i in second) {
+      //     console.log(i)
+      //     console.log(second[i])
+      //   }
+      },
+
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
+
 
   submitUserInfo: function(e) {
 
@@ -327,6 +376,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.getCompanyDepartments()
+    // this.data.multiArray[0] = this.data.companies
     
   },
 

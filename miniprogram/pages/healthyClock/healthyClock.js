@@ -41,6 +41,9 @@ Page({
     var date = date.getDate();
     that.data = date;
     console.log("当前时间：" + Y + M + D);
+    this.setData({
+      date: Y + M + D,
+    })
     this.qryHealthyTodayInfo()
   },
 
@@ -55,11 +58,12 @@ Page({
       success: res => {
         console.log(res)
         //今日已打卡
-        if(res.data.length > 10){
+        if(res.data.length > 0){
           that.setData({
             todayClickFlag: '1',
           })
         }
+        
         that.qryUserInfo();
       },
       fail: err => {
@@ -95,6 +99,14 @@ Page({
         })
         console.log(err)
       }
+    })
+  },
+
+  //跳转打卡记录页面
+  clickRecord: function(e) {
+    console.log("跳转到打卡记录页面")
+    wx.navigateTo({
+      url: '../clockInRecord/clockInRecord'
     })
   },
 
@@ -150,6 +162,9 @@ Page({
 
   //输入信息验证，敏感字符检测
   onAdd: function (e) {
+    wx.showLoading({
+      title: '信息提交中',
+    })
     console.log("姓名:" + e.detail.value.name);
     console.log("手机号" + e.detail.value.phone);
     console.log("打卡地点" + e.detail.value.place);
@@ -167,6 +182,10 @@ Page({
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
     var name = e.detail.value.name
+    var temperature = e.detail.value.temperature
+    var bodyStatusFlag = this.bodyStatusFlag
+    var goHospitalFlag = this.goHospitalFlag
+    var goHBFlag = this.goHBFlag
     if (name == null || name == '') {
       wx.showToast({
         icon: 'none',
@@ -174,6 +193,47 @@ Page({
       });
       return;
     }
+    if (temperature == null || temperature == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '体温不能为空'
+      });
+      return;
+    }
+    if (bodyStatusFlag == null || bodyStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '目前健康状态不能为空'
+      });
+      return;
+    }
+
+    if (bodyStatusFlag == '3'){
+      var bodystatusotherremark = e.detail.value.bodystatusotherremark
+      if (bodystatusotherremark == null || bodystatusotherremark == ''){
+        wx.showToast({
+          icon: 'none',
+          title: '身体健康状态为其他原因不能为空'
+        });
+        return;
+      }
+    }
+
+    if (goHospitalFlag == null || goHospitalFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '是否就诊住院不能为空'
+      });
+      return;
+    }
+    if (goHBFlag == null || goHBFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '是否有武汉相关接触史不能为空'
+      });
+      return;
+    }
+
 
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)
@@ -242,13 +302,11 @@ Page({
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '  ';
+    var DD = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
     var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-    wx.showLoading({
-      title: '信息提交中',
-    })
     const db = wx.cloud.database()
     db.collection('user_healthy').add({
       data: {
@@ -268,7 +326,7 @@ Page({
         bodyStatusFlag: bodyStatusFlag,
         goHospitalFlag: goHospitalFlag,
         remark: remark,
-        date:that.date,
+        date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
         userinfo: that.userinfo
       },
@@ -276,7 +334,7 @@ Page({
         wx.hideLoading()
         console.log('返程信息登记成功，记录 _id: ', res._id)
         wx.reLaunch({
-          url: '../msg/healthy_success',
+          url: '../msg/msg_success',
         })
         console.log('返程信息登记成功，记录 _id: ', res._id)
       },

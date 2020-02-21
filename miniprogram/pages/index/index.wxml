@@ -14,10 +14,10 @@
       style="background-image: url({{avatarUrl}})"
     ></view>
     -->
-    <view 
-      class="userinfo-img"
-      style="background-image: url(../../images/userinfo.png)"
-    ></view>
+    <view  class="userinfo-img" >
+        <image  class="userinfo-img"  src="../../images/userinfo.png" mode="scaleToFill" ></image> 
+    </view>
+
     <!--
 <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
     <view class="userinfo-put" hover-class="userinfo-put_active">录入用户信息
@@ -29,7 +29,7 @@
 <view class="page__hd">
         <view class="page__title" style="margin-left:5%;margin-button:5px;">我所在的部门</view>
         <view class="weui-grids" >
-            <navigator url="../healthyClock/healthyClock" class="weui-grid" hover-class="weui-grid_active">
+            <navigator url="" class="weui-grid" hover-class="weui-grid_active" bindtap="gotoHealthyClick">
                     <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
                     <view class="weui-grid__label">健康打卡</view>
               </navigator>
@@ -40,6 +40,7 @@
               </navigator>
         </view>
 
+<view wx:if="{{isManagerFlag == '1'}}">
         <view class="page__title" style="margin-left:5%;margin-top:10px;">我管理的部门</view>
         <view class="weui-grids" >
             <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">
@@ -47,9 +48,10 @@
                     <view class="weui-grid__label">统计信息</view>
               </navigator>
 
-              <navigator url="../memberDetail/memberDetail" class="weui-grid" hover-class="weui-grid_active" style="margin-left:5%;">
+              <navigator url="" bindtap="gotomemberDetailClick" class="weui-grid" hover-class="weui-grid_active" style="margin-left:5%;">
                     <image class="weui-grid__icon" src="../../images/xiangqingxinxi3x.png" />
                     <view class="weui-grid__label">详细信息</view>
               </navigator>
         </view>
+</view>
 </view>
