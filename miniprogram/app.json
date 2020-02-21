@@ -20,6 +20,5 @@
     "navigationBarTitleText": "泰尔通",
     "navigationBarTextStyle": "white"
   },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "sitemapLocation": "sitemap.json"
 }
