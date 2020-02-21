@@ -28,7 +28,7 @@
 }
 
 .tree-parent-time {
-  width: 240rpx;
+  width: 260rpx;
   height: 90rpx;
   font-size: 30rpx;
   line-height: 90rpx;

@@ -19,7 +19,7 @@
 }
 
 .title-text {
-  width: 140rpx;
+  width: 160rpx;
   height: 30rpx;
   float: left;
   font-size: 20;
@@ -29,7 +29,7 @@
 }
 
 .title-time {
-  width: 240rpx;
+  width: 280rpx;
   height: 90rpx;
   font-size: 30rpx;
   line-height: 90rpx;
@@ -49,7 +49,7 @@
 }
 
 .title-time-text {
-  width: 180rpx;
+  width: 200rpx;
   height: 90rpx;
   float: left;
   margin-left: 10rpx;
