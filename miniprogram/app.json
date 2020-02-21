@@ -9,8 +9,7 @@
     "pages/healthySubmit/healthySubmit",
     "pages/healthyClock/healthyClock",
     "pages/msg/msg_fail",
-    "pages/msg/msg_success",
-    "pages/submitSuccess/submitSuccess"
+    "pages/msg/msg_success"
   ],
   "permission": {
     "scope.userLocation": {

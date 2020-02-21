@@ -1,16 +1,24 @@
 /* pages/personalInfo/personalInfo.wxss */
 
 .personal{
-  margin-top: 20rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+  margin-top: 40rpx;
+  background: white;
+}
+
+.personal-divide {
+  width: 100%;
+  height: 3rpx;
+  background: #DDDDDD;
+  margin-top: 10rpx;
 }
 
 .personal-title{
   width: 750rpx;
   height: 60rpx;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   margin-right: 30rpx;
+  margin-left: 30rpx;
+
   /* background-color: #ffffff; */
 }
 
@@ -31,8 +39,9 @@
   color: #333333
 }
 
-.personal-form {
+.personal-view{
   margin-left: 30rpx;
+  margin-right: 30rpx;
 }
 
 .personal-info-hd {
@@ -62,13 +71,12 @@
   font-weight: 500;
   /* font-family: STFangSong; */
   float: right;
-  margin-right: 30rpx;
 }
 
 .info-input{
   width: 100%;
   font-size: 35rpx;
-  border-bottom: 1px solid #bbbbbb;
+  border-bottom: 1px solid #F5F5F5;
   
 }
 
@@ -81,21 +89,22 @@
 }
 
 .personal-buttons{
-  margin-top: 100rpx;
-  margin-right: 30rpx;
-  margin-left: 30rpx;
+  width: 100%;
+  height: 160rpx;
+  background: #F5F5F5;
+  margin-top: 60rpx;
   display: flex;
   flex-direction: row;
-
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
 }
 
 .button-reset {
   background: white;
   display: flex;
-  margin: 0 auto;
   width: 300rpx;
   height: 100rpx;
+  margin-top: 30rpx;
+  margin-right: 10rpx;
   line-height: 100rpx;
   font-size: 35rpx;
   text-align: center;
@@ -108,6 +117,8 @@
   display: flex;
   width: 300rpx;
   height: 100rpx;
+  margin-top: 30rpx;
+  margin-left: 10rpx;
   line-height: 100rpx;
   font-size: 35rpx;
   color: white;

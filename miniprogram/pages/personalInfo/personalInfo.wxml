@@ -1,11 +1,21 @@
 <!--miniprogram/pages/personalnfo.wxml-->
 <view class="personal">
+
+  <!-- 基本信息 -->
   <view class="personal-title">
    <image class="personal-icon"></image>
    <text class="personal-info"> 基本信息</text>
   </view>
+
+  <!-- 分割线 -->
+  <view class="personal-divide"></view>
+
+  <!-- 报表 -->
   <form class="personal-form" bindsubmit="submitUserInfo">
-    <view class="personal-info-view">
+  <view class="personal-view">
+    
+
+      <!-- 姓名 -->
       <view class="personal-info-hd">
         <text class="info-label">姓名:</text>
       </view>
@@ -13,6 +23,7 @@
         <input class="info-input" name="name" type="text" placeholder-class="placeholder-style" placeholder="请输入姓名" ></input>
       </view>
 
+      <!-- 手机号码 -->
       <view class="personal-info-hd">
         <text class="info-label">手机号码:</text>
       </view>
@@ -20,6 +31,7 @@
         <input class="info-input" name="phone" type="number"   placeholder-class="placeholder-style" placeholder="请输入手机号码" ></input>
       </view>
 
+      <!-- 证件类型 -->
       <view class="personal-info-picker">
         <picker bindchange="bindCertificatePickerChange" value="{{index}}" range="{{certificate_type}}">
           <view class="personal-info-hd">
@@ -30,9 +42,9 @@
             <input class="info-input" type="text" placeholder-class="placeholder-style" placeholder="选择证件类型" name="certificate_type" value="{{certificate_type_choose}}" disabled="disabled"></input>
           </view>
         </picker>
-    
       </view>
 
+      <!-- 证件号码 -->
       <view class="personal-info-hd">
         <text class="info-label">证件号码:</text>
       </view>
@@ -40,6 +52,7 @@
         <input class="info-input" name="certificate_number" type="text" placeholder-class="placeholder-style" placeholder="证件号码" ></input>
       </view>
 
+      <!-- 单位名称 -->
       <view class="personal-info-picker">
         <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
           <view class="personal-info-hd"><text class="info-label">单位名称 :</text><text class="info-choice"> 选择</text></view>
@@ -49,6 +62,7 @@
         </picker>
       </view>
 
+      <!-- 单位所在地区 -->
       <view class="personal-info-picker">
           <picker mode="region" bindchange="bindCompanyRegionChange" value="{{company_region}}" custom-item="{{customItem}}">
             <view class="personal-info-hd">
@@ -58,9 +72,9 @@
               <input class="info-input" placeholder-class="placeholder-style" placeholder="请选择单位所在区及街道、社区" name="company_location" value="{{company_district}}" disabled="disabled"></input>
             </view>
           </picker>
-          
       </view>
 
+      <!-- 单位详细地址 -->
       <view class="personal-info-hd">
         <text class="info-label">单位详细地址:</text>
       </view>
@@ -68,6 +82,7 @@
         <input class="info-input" name="company_detail" placeholder-class="placeholder-style" placeholder="请输入单位详细地址" ></input>
       </view>
 
+      <!-- 家庭所在地区 -->
       <view class="personal-info-picker">
           <picker mode="region" bindchange="bindHomeRegionChange" value="{{home_region}}" custom-item="{{customItem}}">
             <view class="personal-info-hd">
@@ -82,17 +97,23 @@
           </picker>
       </view>
 
-    <view class="personal-info-hd">
+      <!-- 家庭详细地址 -->
+      <view class="personal-info-hd">
         <text class="info-label">家庭详细地址:</text>
       </view>
       <view class="personal-info-td">
         <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="请输入家庭详细地址" ></input>
       </view>
-
+      
+    </view>
       <view class="personal-buttons">
         <button class="button-reset" form-type="reset">重置</button>
         <button class="button-submit" form-type="submit">提交</button>
       </view>
-    </view>
   </form>
+
+  
+ 
+
+  
 </view>

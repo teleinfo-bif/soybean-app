@@ -1,7 +1,0 @@
-<!--pages/submitSuccess/submitSuccess.wxml-->
-<view class="continer">
-  <view class="continer-info">
-    <icon class="success-icon" type="success" size="165" color="#4169E1"/>
-    <view class="success-text">提交成功</view>
-  </view> 
-</view>
