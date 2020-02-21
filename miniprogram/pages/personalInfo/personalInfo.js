@@ -281,7 +281,7 @@ Page({
         console.log(res)
         
         wx.navigateTo({
-          url: '/pages/submitSuccess/submitSuccess',
+          url: '../../pages/msg/msg_success',
         })
         
 
@@ -289,6 +289,10 @@ Page({
 
       fail: err => {
         console.log(err)
+        wx.navigateTo({
+          url: '../../pages/msg/msg_fail',
+        })
+
       }      
     })
 

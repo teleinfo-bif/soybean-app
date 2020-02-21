@@ -60,6 +60,13 @@
 					"id": -1,
 					"name": "pages/personalInfo/personalInfo",
 					"pathName": "pages/personalInfo/personalInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/submitSuccess/submitSuccess",
+					"pathName": "pages/submitSuccess/submitSuccess",
 					"scene": null
 				}
 			]
