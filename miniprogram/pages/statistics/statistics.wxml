@@ -3,23 +3,41 @@
   <view class="title">
     <image class="title-image" src="{{title.image}}"></image>
     <text class="title-text">{{title.text}}</text>
+
+    <view class="title-time section">
+      <picker mode="date" value="{{title.date}}" start="2019-05-01" bindchange="bindDateChange">
+        <view class="picker">
+          <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
+          <view class="title-time-text">{{title.date}}</view>
+        </view>
+      </picker>
+    </view>
   </view>
 
   <!-- 看板 -->
   <view class="dashboard">
     <view class="dashboard-show">
-      <text class="dashboard-show-data">{{dashboard.should}}</text>
-      <text class="dashboard-show-text">{{dashboard.shouldText}}</text>
+      <view class="dashboard-show-data">{{dashboard.health.should}}</view>
+      <view class="dashboard-show-text">{{dashboard.health.shouldText}}</view>
+
+      <view class="dashboard-show-data">{{dashboard.area.should}}</view>
+      <view class="dashboard-show-text">{{dashboard.area.shouldText}}</view>
     </view>
 
     <view class="dashboard-show">
-      <text class="dashboard-show-data">{{dashboard.filledIn}}</text>
-      <text class="dashboard-show-text">{{dashboard.filledInText}}</text>
+      <view class="dashboard-show-data">{{dashboard.health.filledIn}}</view>
+      <view class="dashboard-show-text">{{dashboard.health.filledInText}}</view>
+
+      <view class="dashboard-show-data">{{dashboard.area.filledIn}}</view>
+      <view class="dashboard-show-text">{{dashboard.area.filledInText}}</view>
     </view>
 
     <view class="dashboard-show">
-      <text class="dashboard-show-data">{{dashboard.unfilledIn}}</text>
-      <text class="dashboard-show-text">{{dashboard.unfilledInText}}</text>
+      <view class="dashboard-show-data">{{dashboard.health.unfilledIn}}</view>
+      <view class="dashboard-show-text">{{dashboard.health.unfilledInText}}</view>
+
+      <view class="dashboard-show-data">{{dashboard.area.unfilledIn}}</view>
+      <view class="dashboard-show-text">{{dashboard.area.unfilledInText}}</view>
     </view>
   </view>
 
@@ -38,13 +56,16 @@
           <view class="table-col-title">分布情况</view>
           <view class="table-row">
             <view class="table-row-content">
-              <view>健康 {{health.health}}人</view>
+              <view class="icon-green"></view>
+              <view class="table-row-content-text">健康 {{health.health}}人</view>
             </view>
             <view class="table-row-content">
-              <view>其它症状 {{health.other}}人</view>
+              <view class="icon-orange"></view>
+              <view class="table-row-content-text">其它症状 {{health.other}}人</view>
             </view>
             <view class="table-row-content">
-              <view>咳嗽、发烧 {{health.feverAndCough}}人</view>
+              <view class="icon-orange2"></view>
+              <view class="table-row-content-text">咳嗽、发烧 {{health.feverAndCough}}人</view>
             </view>
           </view>
         </view>
@@ -52,13 +73,16 @@
           <view class="table-col-title">占比率</view>
           <view class="table-row">
             <view class="table-row-content">
-              <view>{{health.healthPercent}}%</view>
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{health.healthPercent}}%</view>
+            </view>
+            <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{health.otherPercent}}%</view>
             </view>
             <view class="table-row-content">
-              <view>{{health.otherPercent}}%</view>
-            </view>
-            <view class="table-row-content">
-              <view>{{health.feverAndCoughPercent}}%</view>
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{health.feverAndCoughPercent}}%</view>
             </view>
           </view>
         </view>
@@ -81,13 +105,16 @@
           <view class="table-col-title">分布情况</view>
           <view class="table-row">
             <view class="table-row-content">
-              <view>健康 {{area.health}}人</view>
+              <view class="icon-green"></view>
+              <view class="table-row-content-text">返京 {{area.health}}人</view>
             </view>
             <view class="table-row-content">
-              <view>其它症状 {{area.other}}人</view>
+              <view class="icon-orange"></view>
+              <view class="table-row-content-text">离京未返京 {{area.other}}人</view>
             </view>
             <view class="table-row-content">
-              <view>咳嗽、发烧 {{area.feverAndCough}}人</view>
+              <view class="icon-orange2"></view>
+              <view class="table-row-content-text">身体异常 {{area.feverAndCough}}人</view>
             </view>
           </view>
         </view>
@@ -95,17 +122,22 @@
           <view class="table-col-title">占比率</view>
           <view class="table-row">
             <view class="table-row-content">
-              <view>{{area.healthPercent}}%</view>
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{area.healthPercent}}%</view>
+            </view>
+            <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{area.otherPercent}}%</view>
             </view>
             <view class="table-row-content">
-              <view>{{area.otherPercent}}%</view>
-            </view>
-            <view class="table-row-content">
-              <view>{{area.feverAndCoughPercent}}%</view>
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{area.feverAndCoughPercent}}%</view>
             </view>
           </view>
         </view>
       </view>
     </view>
   </view>
+
+  <view class="operator " hidden="true " ><button class="export-btn ">导出数据</button></view>
 </view>

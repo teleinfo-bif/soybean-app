@@ -24,7 +24,7 @@ function initChart(canvas, width, height) {
   chart.source(data);
   chart.legend({
     position: 'right',
-    offsetX: -1000
+    offsetX: -1500
   });
   chart.coord('polar', {
     transposed: true,
@@ -35,7 +35,7 @@ function initChart(canvas, width, height) {
   chart.tooltip(false);
   chart.interval()
     .position('a*data')
-    .color('type', ['#1890FF', '#13C2C2', '#2FC25B'])
+    .color('type', ['#53bca2','#fc9026', '#ec704f'])
     .adjust('stack');
 
   chart.render();
@@ -46,15 +46,26 @@ Page({
   data: {
     title:{
       image: "../../images/tongjixinxi.png",
-      text: "统计信息"
+      text: "统计信息",
+      date: "2020-02-02",
     },
     dashboard:{
-      should : 42,
-      shouldText: "应填写人数",
-      filledIn: 26,
-      filledInText: "已填写人数",
-      unfilledIn: 16,
-      unfilledInText: "未填写人数"
+      health: {
+        should: 42,
+        shouldText: "应填写人数",
+        filledIn: 26,
+        filledInText: "已填写人数",
+        unfilledIn: 16,
+        unfilledInText: "未填写人数"
+      },
+      area: {
+        should: 42,
+        shouldText: "返京人数",
+        filledIn: 26,
+        filledInText: "离京未返京人数",
+        unfilledIn: 16,
+        unfilledInText: "身体异常人数"
+      }
     },
     health:{
       total: 42,
