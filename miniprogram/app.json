@@ -7,6 +7,10 @@
     "pages/clockInRecord/clockInRecord",
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
+    "pages/healthyClock/healthyClock",
+    "pages/msg/healthy_success",
+    "pages/msg/msg_fail",
+    "pages/msg/msg_success",
     "pages/submitSuccess/submitSuccess"
   ],
   "permission": {
@@ -17,7 +21,7 @@
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#4169E1",
+    "navigationBarBackgroundColor": "#CCC",
     "navigationBarTitleText": "泰尔通",
     "navigationBarTextStyle": "white"
   },
