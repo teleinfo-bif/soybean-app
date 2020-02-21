@@ -24,7 +24,7 @@ Page({
       })
       return
     }
-
+    that.getSessionCode();
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -44,13 +44,21 @@ Page({
                 avatarUrl: res.userInfo.avatarUrl,
                 nickName: res.userInfo.nickName,
               })
-              that.getSessionCode();
             }
           })
         }
       }
     })
   },
+
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+      this.onGetOpenid()
+  },
+
 
   /**获取sessionCode和openid */
   getSessionCode: function (e) {
@@ -85,7 +93,6 @@ Page({
             isManagerFlag: '1'
           })
         }
-        this.onGetOpenid();
       },
       fail: err => {
         wx.showToast({
@@ -130,12 +137,6 @@ Page({
   //跳转打卡记录页面
   gotoHealthyClick: function (e) {
     console.log("跳转到健康打卡页面")
-    if (app.globalData.nickName == null) {
-      wx.navigateTo({
-        url: '../login/login',
-      })
-      return;
-    }
     const db = wx.cloud.database()
     db.collection('user_info').where({
       _openid: app.globalData.openid
@@ -165,12 +166,6 @@ Page({
 
   //跳转打卡记录页面
   gotomemberDetailClick: function (e) {
-    if (app.globalData.nickName == null) {
-      wx.navigateTo({
-        url: '../login/login',
-      })
-      return;
-    }
     console.log("跳转详细信息页面")
     const db = wx.cloud.database()
     db.collection('user_info').where({
@@ -202,12 +197,6 @@ Page({
 
   /**用户信息提交 */
   userInfoPut: function (e) {
-    if (app.globalData.nickName == null) {
-      wx.navigateTo({
-        url: '../login/login',
-      })
-      return;
-    }
     wx.navigateTo({
       url: '../personalInfo/personalInfo',
     })

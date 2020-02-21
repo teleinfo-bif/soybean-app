@@ -41,10 +41,13 @@ background-color: white;
   padding:0 30rpx;
   font-size: 30rpx;
   height:40px;
+  border-top: 0px solid #F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
 }
 
 .weui-cells__title {
   font-size: 30rpx;
+  margin-top:20px;
 }
 
 .weui-input{

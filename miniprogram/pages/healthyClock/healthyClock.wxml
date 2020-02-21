@@ -37,7 +37,7 @@
 
         <view class="weui-cells__title">
             <view style="width:85%;display:inline;float:left;">打卡地点</view>
-            <view style="align:right;width:10%;display:inline;"><a bindtap="onShow">获取</a></view>
+            <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="onShow">获取</a></view>
             
         </view>
         <view class="weui-cells weui-cells_after-title">
@@ -62,7 +62,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020.12.29" bindchange="gobackDateChange">
+                    <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
                         <view class="weui-input">{{gobackdate}}</view>
                     </picker>
                 </view>
@@ -86,7 +86,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{leavedate}}" bindchange="leaveDateChange">
+                    <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
                         <view class="weui-input">{{leavedate}}</view>
                     </picker>
                 </view>
@@ -97,7 +97,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{suregobackdate}}" bindchange="suregobackDateChange">
+                    <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
                         <view class="weui-input">{{suregobackdate}}</view>
                     </picker>
                 </view>

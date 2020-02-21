@@ -41,6 +41,9 @@ Page({
     var date = date.getDate();
     that.data = date;
     console.log("当前时间：" + Y + M + D);
+    this.setData({
+      date: Y + M + D,
+    })
     this.qryHealthyTodayInfo()
   },
 
