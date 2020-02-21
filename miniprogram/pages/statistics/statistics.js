@@ -1,5 +1,25 @@
 import F2 from '../../components/f2-canvas/lib/f2';
 
+const db = wx.cloud.database({
+  env: "soybean-uat"
+})
+
+function getCurrentDay() {
+  var date = new Date();
+  var seperator1 = "-";
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  var currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+
 let chart = null;
 
 function initChart(canvas, width, height) {
@@ -101,7 +121,25 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    var currentDate = getCurrentDay()
+    db.collection('user_healthy').where({
+      gobackdate: currentDate
+    }).get({
+      success: res => {
+        console.log(res)
+        // this.setData({
+        //   name: res.data[0].name,
+        //   phone: res.data[0].phone
+        // })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
   },
 
   /**

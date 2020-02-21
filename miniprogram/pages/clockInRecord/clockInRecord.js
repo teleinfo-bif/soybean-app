@@ -8,7 +8,7 @@ Page({
     datas:[
       {
         temperature: 37,
-        date: "2020-02-01",
+        date: "2020-02-03",
         status: "无异常症状"
       },
       {
@@ -18,7 +18,7 @@ Page({
       },
       {
         temperature: 37.4,
-        date: "2020-02-03",
+        date: "2020-02-01",
         status: "乏力"
       },
       {

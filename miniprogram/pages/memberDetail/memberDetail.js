@@ -1,63 +1,118 @@
 // pages/detail/detail.js
+
+const db = wx.cloud.database({
+  env: "soybean-uat"
+})
+
+function getCurrentDay() {
+  let date = new Date();
+  let seperator1 = "-";
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  let currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+
+function getTotalUserIds() {
+  const _ = db.command
+  let ids = new Array()
+  let myMap = new Map()
+  db.collection('user_info').where({
+    _openid: _.neq("")
+  }).get({
+    success: res => {
+      console.log(res)
+      for (let i = 0; i < res.data.length; i++) {
+        myMap.set(res.data[i]._openid, res.data[i])
+      }
+      
+      for (let item of myMap.keys()) {
+        ids.push(item)
+      }
+
+      console.log("total user count :" + ids.length)
+    },
+    fail: err => {
+      wx.showToast({
+        icon: 'none',
+        title: '查询记录失败'
+      })
+      console.log(err)
+    }
+  })
+
+  return ids
+}
+
+function getTotalUserInfos() {
+  const _ = db.command
+  let userInfoMap = new Map()
+  db.collection('user_info').where({
+    _openid: _.neq("")
+  }).get({
+    success: res => {
+      console.log(res)
+      for (let i = 0; i < res.data.length; i++) {
+        userInfoMap.set(res.data[i]._openid, res.data[i])
+      }
+
+      console.log("total user count :" + userInfoMap.size)
+    },
+    fail: err => {
+      wx.showToast({
+        icon: 'none',
+        title: '查询记录失败'
+      })
+      console.log(err)
+    }
+  })
+
+  return userInfoMap
+}
+
+function getClockedIn(currentDate) {
+  const _ = db.command
+  let clockedInMap = new Map()
+
+  db.collection('user_healthy').where({
+    date: currentDate,
+  }).get({
+    success: res => {
+      console.log(res)
+      for (let i = 0; i < res.data.length; i++) {
+        clockedInMap.set(res.data[i]._openid, res.data[i])
+      }
+    },
+    fail: err => {
+      wx.showToast({
+        icon: 'none',
+        title: '查询记录失败'
+      })
+      console.log(err)
+    }
+  })
+
+  return clockedInMap
+}
+
 var treeData = {
   text: 'teleinfo研发部门',
   id: 0,
-  date: "2019-05-01",
+  date: getCurrentDay(),
   nodes: [
     {
-      id: 1,
-      text: "周厚发",
-      clockin: "已打卡",
-      status: "发烧",
-    },
-    {
-      id: 2,
-      text: "郑鹏",
-      clockin: "已打卡",
-      status: "正常",
-    },
-    {
-      id: 3,
-      text: "李腾",
-      clockin: "未打卡",
+      id: 0,
+      text: "---",
+      clockin: "---",
       status: "--",
-    },
-    {
-      id: 1,
-      text: "周厚发",
-      clockin: "已打卡",
-      status: "发烧",
-    },
-    {
-      id: 2,
-      text: "郑鹏",
-      clockin: "已打卡",
-      status: "正常",
-    },
-    {
-      id: 3,
-      text: "李腾",
-      clockin: "未打卡",
-      status: "--",
-    },
-    {
-      id: 1,
-      text: "周厚发",
-      clockin: "已打卡",
-      status: "发烧",
-    },
-    {
-      id: 2,
-      text: "郑鹏",
-      clockin: "已打卡",
-      status: "正常",
-    },
-    {
-      id: 3,
-      text: "李腾",
-      clockin: "未打卡",
-      status: "--",
-    },
+    }
   ]
 }
 
@@ -77,14 +132,95 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onReady: function (options) {
 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onLoad: function () {
+    let currentDate = getCurrentDay()
+    // let userInfoMap = getTotalUserInfos()
+    // let clockedInMap = getClockedIn(currentDate)
+
+    const _ = db.command
+    let userInfoMap = new Map()
+    let clockedInMap = new Map()
+
+    db.collection('user_info').where({
+      _openid: _.neq("")
+    }).get({
+      success: res => {
+        console.log(res)
+        for (let i = 0; i < res.data.length; i++) {
+          userInfoMap.set(res.data[i]._openid, res.data[i])
+        }
+
+        console.log("total user count :" + userInfoMap.size)
+
+        db.collection('user_healthy').where({
+          date: currentDate,
+        }).get({
+          success: res => {
+            console.log(res)
+            for (let i = 0; i < res.data.length; i++) {
+              clockedInMap.set(res.data[i]._openid, res.data[i])
+            }
+
+            console.log("userInfoMap:" + userInfoMap.size)
+            let nodes = new Array()
+            for (let i = 0; i < clockedInMap.size; i++) {
+              for (let item of userInfoMap.keys()) {
+                let status = "--"
+                let clockin = "未打卡"
+                if (clockedInMap.has(item)) {
+                  clockin = "已打卡"
+
+                  let body = clockedInMap.get(item)
+                  if (body.bodyStatusFlag == 0) {
+                    status = "正常"
+                  } else {
+                    status = "异常"
+                  }
+                }
+                
+                nodes.push({
+                  id: item,
+                  text: userInfoMap.get(item).name,
+                  clockin: clockin,
+                  status: status
+                })
+              }
+            }
+            
+            this.setData({
+                treeData: {
+                  text: 'teleinfo研发部门',
+                  id: 0,
+                  date: currentDate,
+                  nodes: nodes
+                },
+            })
+          },
+          fail: err => {
+            wx.showToast({
+              icon: 'none',
+              title: '查询记录失败'
+            })
+            console.log(err)
+          }
+        })
+
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
 
   },
 
