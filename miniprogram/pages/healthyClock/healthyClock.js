@@ -55,7 +55,7 @@ Page({
       success: res => {
         console.log(res)
         //今日已打卡
-        if(res.data.length > 10){
+        if(res.data.length > 0){
           that.setData({
             todayClickFlag: '1',
           })
@@ -150,6 +150,9 @@ Page({
 
   //输入信息验证，敏感字符检测
   onAdd: function (e) {
+    wx.showLoading({
+      title: '信息提交中',
+    })
     console.log("姓名:" + e.detail.value.name);
     console.log("手机号" + e.detail.value.phone);
     console.log("打卡地点" + e.detail.value.place);
@@ -246,9 +249,6 @@ Page({
     var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
     var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-    wx.showLoading({
-      title: '信息提交中',
-    })
     const db = wx.cloud.database()
     db.collection('user_healthy').add({
       data: {
@@ -276,7 +276,7 @@ Page({
         wx.hideLoading()
         console.log('返程信息登记成功，记录 _id: ', res._id)
         wx.reLaunch({
-          url: '../msg/healthy_success',
+          url: '../msg/msg_success',
         })
         console.log('返程信息登记成功，记录 _id: ', res._id)
       },

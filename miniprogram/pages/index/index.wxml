@@ -14,10 +14,12 @@
       style="background-image: url({{avatarUrl}})"
     ></view>
     -->
-    <view 
-      class="userinfo-img"
-      style="background-image: url(../../images/userinfo.png)"
-    ></view>
+    <view  class="userinfo-img" >
+        <image  class="userinfo-img"  src="../../images/userinfo.png" mode="scaleToFill" ></image> 
+    </view>
+
+    
+
     <!--
 <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
     <view class="userinfo-put" hover-class="userinfo-put_active">录入用户信息

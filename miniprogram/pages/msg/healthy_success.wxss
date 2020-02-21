@@ -3,8 +3,6 @@ page{
 }
 page,.page{height:100%;}
 
-
-
 .eg-image {
   height: 50px;
   width: 100%;
@@ -24,3 +22,11 @@ page,.page{height:100%;}
       margin-right:auto; 
       text-align:center;
     }
+    
+.weui-btn {
+  background-color: #4169E1;
+}
+
+.weui-btn-hover{
+  background-color: #ccc;
+}
