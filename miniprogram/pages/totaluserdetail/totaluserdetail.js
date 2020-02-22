@@ -20,6 +20,11 @@ Page({
     })
 
     let temp = [];
+
+    wx.showLoading({
+      title: '数据加载中',
+    })
+
     /**
      * 通过云函数调用可以获取全部45条的数据
      */
@@ -55,13 +60,16 @@ Page({
             this.setData({
               clickdetail: temp
             })
+            wx.hideLoading()
           },
           fail: err => {
+            wx.hideLoading()
             console.log(err)
           }
         })
       },
       fail: err => {
+        wx.hideLoading()
         console.log(err)
       }
     })
@@ -75,6 +83,10 @@ Page({
       date: e.detail.value
     })
     
+    wx.showLoading({
+      title: '数据加载中',
+    })
+
     let that = this;
     let temp = [];
     /**
@@ -112,22 +124,20 @@ Page({
             this.setData({
               clickdetail: temp
             })
+            wx.hideLoading()
           },
           fail: err => {
             console.log(err)
+            wx.hideLoading()
           }
         })
       },
       fail: err => {
         console.log(err)
+        wx.hideLoading()
       }
     })
-
   },
-
-
-
-
 
   onQuery: function () {
     const db = wx.cloud.database();

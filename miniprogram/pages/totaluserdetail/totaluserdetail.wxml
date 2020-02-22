@@ -7,7 +7,7 @@
         </view>
         <view><image class="tree-parent-time-icon" src="../../images/jiankangdaka.png"></image></view>
         <view>
-                <picker mode="date" name="date" value="{{date}}" start="2019-01-01" end="2020-12-29" bindchange="qryClickInfoByDate">
+                <picker mode="date" name="date" value="{{date}}" start="2019-11-01" end="{{date}}" bindchange="qryClickInfoByDate">
                         <view class="" style="float:right;margin-top: 20rpx;margin-right: 20px;color:4169E1;">{{date}}</view>
                   </picker>
         </view>
