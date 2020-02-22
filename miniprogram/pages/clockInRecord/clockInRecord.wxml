@@ -6,11 +6,11 @@
 
   <view wx:for="{{datas}}" wx:key="key" class="template">
     <view class="template-title">
-      <view class="template-title-text" wx:if="{{item.bodyStatusFlag == '0'}}">
+      <view class="template-title-text" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}">
         <view class="red-green"></view>
         <view>正常</view>
       </view>
-      <view class="template-title-text" wx:elif="{{item.bodyStatusFlag != '0'}}">
+      <view class="template-title-text" wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}">
         <view class="red-dot"></view>
         <view>异常</view>
       </view>

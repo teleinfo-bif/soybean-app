@@ -1,0 +1,49 @@
+
+<view class="page_detail">
+
+    <view class="head_body">
+        <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
+              <label>teleinfo研发部门</label>
+        </view>
+        <view><image class="tree-parent-time-icon" src="../../images/jiankangdaka.png"></image></view>
+        <view>
+                <picker mode="date" name="date" value="{{date}}" start="2019-01-01" end="2020-12-29" bindchange="qryClickInfoByDate">
+                        <view class="" style="float:right;margin-top: 20rpx;margin-right: 20px;color:4169E1;">{{date}}</view>
+                  </picker>
+        </view>
+    </view>
+
+    <!--列表部分开始-->
+    <view class="detail_body">
+
+        <view class="userclicklist" wx:for="{{clickdetail}}"  wx:key="_id">
+              <label>{{item.name}}</label>
+              <label wx:if="{{item.temperature > 0}}">已打卡</label>
+              <label wx:else="{{item.temperature > 0}}">未打卡</label>
+              <label>
+                  <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{date}}">
+                  <view  bindtap="clickRecord" style="color:#4169E1;">
+                      打卡详情
+                  </view>
+                  </navigator>
+                  <view  wx:else="{{item.temperature > 0}}" style="color:#ccc;">
+                      打卡详情
+                  </view>
+              </label>
+              <label style="margin-top:0px;" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}" >
+                    <view  class="tree-children-status-green"></view>
+                    <view class="tree-children-status-text">正常</view>
+              </label>
+              <label style="margin-top:0px;" wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}" >
+                    <view  class="tree-children-status-yellow"></view>
+                    <view class="tree-children-status-text">异常</view>
+              </label>
+              <label style="margin-top:20rpx;" wx:else="{{item.temperature > 0}}" >
+                    <view class="tree-children-status-text">--</view>
+              </label>
+        </view>
+        <view>      
+    </view>
+    </view>
+    <!--列表部分开始-->
+</view>

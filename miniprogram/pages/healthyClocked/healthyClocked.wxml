@@ -2,7 +2,7 @@
 
 <view class="todayClicked">
   <view class="weui-msg__icon-area" style="margin-top:0rpx;margin-bottom:20rpx;">
-    <view bindtap="clickRecord" style="color:#ccc;text-align: right;margin-right:30rpx;">
+    <view bindtap="clickRecord" style="color:#4169E1;text-align: right;margin-right:30rpx;">
         打卡记录
     </view>
     <view style="margin-top:0rpx;height:175rpx;">

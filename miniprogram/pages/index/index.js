@@ -12,11 +12,10 @@ Page({
     locationList: [],
     // 默认当前坐标附近的列表
     poiList: [],
-    isManagerFlag: '0',//默认就是管理员
+    isManagerFlag: '0',
   },
 
   onLoad: function () {
-
     var that = this;
     if (!wx.cloud) {
       wx.redirectTo({
@@ -210,7 +209,8 @@ Page({
         console.log(res)
         if (res.data.length > 0) {
           wx.navigateTo({
-            url: '../memberDetail/memberDetail'
+            url: '../totaluserdetail/totaluserdetail'
+         //    url: '../memberDetail/memberDetail'
           })
         } else {
           wx.showToast({

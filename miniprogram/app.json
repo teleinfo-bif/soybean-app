@@ -6,7 +6,7 @@
     "pages/memberDetail/memberDetail",
     "pages/clockInRecord/clockInRecord",
     "pages/healthyClocked/healthyClocked",
-    
+    "pages/totaluserdetail/totaluserdetail",
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
     "pages/healthyClock/healthyClock",

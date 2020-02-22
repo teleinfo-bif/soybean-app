@@ -1,6 +1,6 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
 <form bindsubmit="onAdd" style="width:100%">
-    <view class="page__bd" style="width: 100%;margin: auto;background-color: #FFF;border-radius:22px;">
+    <view class="page__bd" style="width: 100%;margin: auto;background-color: #fff;border-radius:22px;">
 
         <view class="weui-cells__title" style="height:3px;"></view>
         <view class="weui-cells__title">姓名</view>

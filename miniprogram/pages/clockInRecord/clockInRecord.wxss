@@ -18,7 +18,7 @@
   width: 30rpx;
   height: 30rpx;
   border-radius: 30rpx;
-  background-color: red;
+  background-color: yellow;
   margin-right: 10rpx;
 
   float: left;
