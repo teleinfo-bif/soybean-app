@@ -38,8 +38,6 @@ Page({
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
-    var date = date.getDate();
-    that.data = date;
     console.log("当前时间：" + Y + M + D);
     this.setData({
       date: Y + M + D,
@@ -50,10 +48,16 @@ Page({
   //查询当前打卡信息
   qryHealthyTodayInfo: function () {
     let that = this;
+    var date = new Date();
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+
     const db = wx.cloud.database()
+    console.log("查询当前打卡记录日期为：" + Y+M+D);
     db.collection('user_healthy').where({
       _openid: app.globalData.openid,
-      date:that.date
+      date:Y+M+D
     }).get({
       success: res => {
         console.log(res)
@@ -144,10 +148,12 @@ Page({
               that.setData({
                 isGoBackFlag : '0'
               });
+              app.globalData.isGoBackFlag = '0'
             }else{
               that.setData({
                 isGoBackFlag : '1'
               });
+              app.globalData.isGoBackFlag = '1'
             }
               
           }
@@ -325,6 +331,7 @@ Page({
         isLeaveBjFlag: isLeaveBjFlag,
         bodyStatusFlag: bodyStatusFlag,
         goHospitalFlag: goHospitalFlag,
+        isGoBackFlag: app.globalData.isGoBackFlag,
         remark: remark,
         date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
