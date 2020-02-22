@@ -140,11 +140,11 @@ Page({
               address: address,
               poiList: poiList,
               locationList: poiList,
-              place: res.result.ad_info.name
+              place: address
             });
-            var currentProvince = res.result.ad_info.adcode;
+            var currentCity = res.result.ad_info.city;
             //是否在京   1-未返京   0-已返京
-            if (currentProvince == '110101'){
+            if (currentCity == '北京市'){
               that.setData({
                 isGoBackFlag : '0'
               });
