@@ -18,7 +18,7 @@ Page({
     certificate_type_index: 0,
     certificate_number:"",
     
-    multiArray: [["工业互联网与物联网研究所", "安全研究所"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
+    multiArray: [["工业互联网与物联网研究所"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
     companies: [],
     departments: [],
@@ -26,7 +26,9 @@ Page({
     personal_info_change: "personal-change-hide",
     user_info_data: {},
     disabled: false,
+    forever_disabled: false,
     choice_color: "color: #4169E1",
+    forever_choice_color: "color: #4169E1",
     record_id: "",
     placeholder_name: "请输入姓名",
     placeholder_phone: "请输入手机号码",
@@ -351,7 +353,9 @@ Page({
             placeholder_home_district: res.data[0].home_district,
             placeholder_home_detail: res.data[0].home_detail,
             disabled: true,
+            forever_disabled: true,
             choice_color: "color: #bbbbbb",
+            forever_choice_color: "color: #bbbbbb",
             personal_info_change: "personal-change-show",
             buttons_display: "display: none"
           })
@@ -380,10 +384,10 @@ Page({
       disabled: false,
       choice_color: "color: #4169E1",
 
-      value_name: this.data.placeholder_name,
-      value_phone: this.data.placeholder_phone,
-      value_card_type: this.data.placeholder_card_type,
-      value_card_number: this.data.placeholder_card_number,
+      // value_name: this.data.placeholder_name,
+      // value_phone: this.data.placeholder_phone,
+      // value_card_type: this.data.placeholder_card_type,
+      // value_card_number: this.data.placeholder_card_number,
       value_company_name: this.data.placeholder_company_name,
       value_company_district: this.data.placeholder_company_district,
       value_company_detail: this.data.placeholder_company_detail,
@@ -482,10 +486,10 @@ Page({
         db.collection('user_info').doc(this.data.record_id).update({
           data: {
             updated_at: that.getCurrentDateTime(),
-            name: e.detail.value.name,
-            phone: e.detail.value.phone,
-            certificate_type: e.detail.value.certificate_type,
-            certificate_number: e.detail.value.certificate_number,
+            // name: e.detail.value.name,
+            // phone: e.detail.value.phone,
+            // certificate_type: e.detail.value.certificate_type,
+            // certificate_number: e.detail.value.certificate_number,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
