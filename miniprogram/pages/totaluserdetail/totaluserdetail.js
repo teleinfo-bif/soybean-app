@@ -17,6 +17,7 @@ Page({
     console.log("当前时间：" + Y + M + D);
     this.setData({
       date: Y + M + D,
+      currentdate: Y + M + D,
     })
 
     let temp = [];
