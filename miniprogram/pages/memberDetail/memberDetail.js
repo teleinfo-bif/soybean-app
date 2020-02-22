@@ -105,6 +105,7 @@ function getClockedIn(currentDate) {
 let emptyNode = {
   id: 0,
   text: "--",
+  date: getCurrentDay(),
   clockin: "--",
   status: "--"
 }
@@ -190,6 +191,7 @@ Page({
                 nodes.push({
                   id: item,
                   text: name,
+                  date: currentDate,
                   clockin: clockin,
                   status: status
                 })

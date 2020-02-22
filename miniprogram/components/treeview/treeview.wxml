@@ -21,15 +21,12 @@
             <view class="tree-children-clockin table-row">{{ model.clockin }}</view>
           </view>
           <view class="table-col-4">
-            <!-- <navigator wx:if="{{ model.status == '--'}}" url="" hover-class="weui-grid_active">
+            <view wx:if="{{ model.status == '--'}}" >
+              <view class="tree-children-detail-disable table-row">打卡详情</view>
+            </view>
+            <navigator wx:else url="../healthyClocked/healthyClocked?user_id={{model.id}}&date={{model.date}}" hover-class="weui-grid_active">
               <view class="tree-children-detail table-row">打卡详情</view>
             </navigator>
-            <navigator wx:else url="../healthyClocked/healthyClocked?user_id={{model.id}}" hover-class="weui-grid_active">
-              <view class="tree-children-detail table-row">打卡详情</view>
-            </navigator> -->
-            <navigator url="../healthyClocked/healthyClocked?user_id={{model.id}}" hover-class="weui-grid_active">
-              <view class="tree-children-detail table-row">打卡详情</view>
-            </navigator> 
           </view>
           <view class="table-col-4">
             <view wx:if="{{ model.status == '正常'}}" class="tree-children-status table-row">
@@ -37,7 +34,7 @@
               <view class="tree-children-status-text">{{ model.status }}</view>
             </view>
             <view wx:elif="{{ model.status == '异常'}}" class="tree-children-status table-row">
-              <view class="tree-children-status-red"></view>
+              <view class="tree-children-status-yellow"></view>
               <view class="tree-children-status-text">{{ model.status }}</view>
             </view>
             <view wx:else class="tree-children-status table-row">

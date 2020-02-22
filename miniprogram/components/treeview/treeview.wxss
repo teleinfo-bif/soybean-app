@@ -94,6 +94,10 @@
   color: #4f7ef2;
 }
 
+.tree-children-detail-disable {
+  color: gray;
+}
+
 .tree-children-status {
   /* border-style: dotted;
   border-width: 2rpx; */
@@ -112,6 +116,14 @@
   height: 40rpx;
   border-radius: 40rpx;
   background: green;
+  margin: 8rpx auto;
+}
+
+.tree-children-status-yellow {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background: yellow;
   margin: 8rpx auto;
 }
 

@@ -1,5 +1,21 @@
 const app = getApp()
 
+function getCurrentDay() {
+  let date = new Date();
+  let seperator1 = "-";
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  let currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+
 Page({
 
   data: {
@@ -32,28 +48,44 @@ Page({
     ],
     index: 0,
     user_id: app.globalData.openid,
+    date: getCurrentDay()
   },
 
   onLoad: function (options) {
+    let user_id = app.globalData.openid
+    let date = getCurrentDay()
+
+    if (options.user_id != undefined && options.user_id != "") {
+      user_id = options.user_id
+    }
+
+    if (options.date != undefined && options.date != "") {
+        date= options.date
+    }
+    
     this.setData({
-      user_id: options.user_id
+      user_id: user_id,
+      date: date
     })
+
+
     console.log("current user_id: ", this.data.user_id)
-    this.qryHealthyTodayInfo(options.user_id)
+    console.log("current date: ", this.data.date)
+    this.qryHealthyTodayInfo()
   },
 
   //查询当天打卡信息
   qryHealthyTodayInfo: function () {
     let that = this;
-    var date = new Date();
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
-    console.log("查询当天打卡记录当前时间：" + Y + M + D);
+    // var date = new Date();
+    // var Y = date.getFullYear() + '-';
+    // var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    // var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    console.log("查询当天打卡记录当前时间：", this.data.date);
     const db = wx.cloud.database()
     db.collection('user_healthy').where({
       _openid: this.data.user_id,
-      date: Y + M + D
+      date: this.data.date,
     }).get({
       success: res => {
         console.log(res)

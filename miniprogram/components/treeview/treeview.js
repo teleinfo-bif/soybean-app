@@ -80,6 +80,7 @@ Component({
                   nodes.push({
                     id: item,
                     text: name,
+                    date: currentDate,
                     clockin: clockin,
                     status: status
                   })
