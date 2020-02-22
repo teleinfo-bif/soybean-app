@@ -32,7 +32,7 @@ function getTotalUserIds() {
       for (let i = 0; i < res.data.length; i++) {
         myMap.set(res.data[i]._openid, res.data[i])
       }
-      
+
       for (let item of myMap.keys()) {
         ids.push(item)
       }
@@ -126,39 +126,52 @@ Page({
   },
 
   //事件处理函数
-  tapItem: function (e) {
+  tapItem: function(e) {
     console.log('index接收到的itemid: ' + e.detail.itemid);
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onReady: function (options) {
+  onReady: function(options) {
 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onLoad: function () {
+  onLoad: function() {
     const _ = db.command
     let currentDate = getCurrentDay()
     let userInfoMap = new Map()
     let clockedInMap = new Map()
+    let ids = new Array()
 
     db.collection('user_info').where({
       _openid: _.neq("")
-    }).get({
+    }).count({
+      success: function(res) {
+        console.log("总用户数目" + res.total)
+        that.data.totalCount = res.total;
+      }
+    })
+
+    db.collection('user_info').where({
+      _openid: _.neq("")
+    }).limit(10).get({
       success: res => {
         console.log(res)
         for (let i = 0; i < res.data.length; i++) {
           userInfoMap.set(res.data[i]._openid, res.data[i])
         }
 
-        console.log("total user count :" + userInfoMap.size)
+        for (let item of userInfoMap.keys()) {
+          ids.push(item)
+        }
 
         db.collection('user_healthy').where({
           date: currentDate,
+          _openid: _.in(ids)
         }).get({
           success: res => {
             console.log(res)
@@ -168,47 +181,46 @@ Page({
 
             console.log("userInfoMap:" + userInfoMap.size)
             let nodes = new Array()
-            for (let i = 0; i < clockedInMap.size; i++) {
-              for (let item of userInfoMap.keys()) {
-                let status = "--"
-                let clockin = "未打卡"
-                let name = "--"
-                if (clockedInMap.has(item)) {
-                  clockin = "已打卡"
+            for (let i = 0; i < ids.length; i++) {
+              let user_id = ids[i]
+              let status = "--"
+              let clockin = "未打卡"
+              let name = "--"
+              if (clockedInMap.has(user_id)) {
+                clockin = "已打卡"
 
-                  let body = clockedInMap.get(item)
-                  if (body.bodyStatusFlag == 0) {
-                    status = "正常"
-                  } else {
-                    status = "异常"
-                  }
+                let body = clockedInMap.get(user_id)
+                if (body.bodyStatusFlag == 0) {
+                  status = "正常"
+                } else {
+                  status = "异常"
                 }
-
-                if (userInfoMap.get(item).name != "") {
-                  name = userInfoMap.get(item).name
-                }
-
-                nodes.push({
-                  id: item,
-                  text: name,
-                  date: currentDate,
-                  clockin: clockin,
-                  status: status
-                })
               }
+
+              if (userInfoMap.get(user_id).name != "") {
+                name = userInfoMap.get(user_id).name
+              }
+
+              nodes.push({
+                id: user_id,
+                text: name,
+                date: currentDate,
+                clockin: clockin,
+                status: status
+              })
             }
-            
+
             if (nodes.length == 0) {
               nodes.push(emptyNode)
             }
 
             this.setData({
-                treeData: {
-                  text: 'teleinfo研发部门',
-                  id: 0,
-                  date: currentDate,
-                  nodes: nodes
-                },
+              treeData: {
+                text: 'teleinfo研发部门',
+                id: 0,
+                date: currentDate,
+                nodes: nodes
+              },
             })
           },
           fail: err => {
@@ -220,12 +232,19 @@ Page({
           }
         })
 
+        wx.hideLoading();
+        wx.hideNavigationBarLoading(); //隐藏加载
+        wx.stopPullDownRefresh();
+        console.log(res)
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
           title: '查询记录失败'
         })
+
+        wx.hideLoading();
+        wx.stopPullDownRefresh();
         console.log(err)
       }
     })
@@ -235,42 +254,144 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow: function() {
+    // this.onReachBottom()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
+    let currentDate = getCurrentDay()
+    let userInfoMap = new Map()
+    let clockedInMap = new Map()
+    let ids = new Array()
 
+    if (this.data.treeData.nodes.length < this.data.totalCount || true) {
+      console.log("分页查询，当前skip的值为：" + this.data.treeData.nodes.length);
+      try {
+        const _ = db.command
+        db.collection('user_info').where({
+            _openid: _.neq("")
+          }).skip(this.data.treeData.nodes.length)
+          .limit(10).get({
+            success: res => {
+              for (let i = 0; i < res.data.length; i++) {
+                userInfoMap.set(res.data[i]._openid, res.data[i])
+              }
+
+              for (let item of userInfoMap.keys()) {
+                ids.push(item)
+              }
+
+              db.collection('user_healthy').where({
+                date: currentDate,
+                _openid: _.in(ids)
+              }).get({
+                success: res => {
+                  console.log("user_healthy: ", res)
+                  for (let i = 0; i < res.data.length; i++) {
+                    clockedInMap.set(res.data[i]._openid, res.data[i])
+                  }
+
+                  console.log("clockedInMap: " + clockedInMap.size)
+                  let nodes = new Array()
+                  for (let i = 0; i < ids.length; i++) {
+                    let user_id = ids[i]
+                    let status = "--"
+                    let clockin = "未打卡"
+                    let name = "--"
+                    if (clockedInMap.has(user_id)) {
+                      clockin = "已打卡"
+
+                      let body = clockedInMap.get(user_id)
+                      if (body.bodyStatusFlag == 0) {
+                        status = "正常"
+                      } else {
+                        status = "异常"
+                      }
+                    }
+
+                    if (userInfoMap.get(user_id).name != "") {
+                      name = userInfoMap.get(user_id).name
+                    }
+
+                    nodes.push({
+                      id: user_id,
+                      text: name,
+                      date: currentDate,
+                      clockin: clockin,
+                      status: status
+                    })
+                  }
+
+                  let totalNodes = this.data.treeData.nodes
+                  totalNodes = totalNodes.concat(nodes)
+
+                  this.setData({
+                    treeData: {
+                      text: 'teleinfo研发部门',
+                      id: 0,
+                      date: currentDate,
+                      nodes: totalNodes
+                    },
+                  })
+                },
+                fail: err => {
+                  wx.showToast({
+                    icon: 'none',
+                    title: '查询记录失败'
+                  })
+                  console.log(err)
+                }
+              })
+
+              console.log(res)
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '查询记录失败'
+              })
+
+              console.log(err)
+            }
+          })
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      wx.showToast({
+        title: '没有更多数据了',
+      })
+    }
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })
