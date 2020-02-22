@@ -460,6 +460,10 @@ Page({
 
   submitUserInfo: function(e) {
 
+    wx.showLoading({
+      title: '信息提交中',
+    })
+
     this.setData({
       certificate_number: e.detail.value.certificate_number
     })
@@ -566,6 +570,8 @@ Page({
 
       }
 
+      wx.hideLoading()
+
     }
 
     if (!flag) {
@@ -573,6 +579,8 @@ Page({
         title: '提示',
         content: warn
       })
+      wx.hideLoading()
+      return
 
     }
   },
@@ -651,33 +659,6 @@ Page({
     this.queryUserInfo()
     this.getCompanyDepartments()
     this.getSessionCode()
-
-    // if (!wx.cloud) {
-    //   console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-    // }
-    // else {
-    //   wx.cloud.init({
-    //     traceUser: true,
-    //   })
-    // }
-
-    
-    
-    // wx.cloud.callFunction({
-    //   name: "sum",
-    //   data: {
-    //     a: 2,
-    //     b: 3,
-    //   },
-
-    //   success: res => {
-    //     console.log(res)
-    //   },
-
-    //   fail: err => {
-    //     console.log(err)
-    //   }
-    // })
   },
 
   /**
