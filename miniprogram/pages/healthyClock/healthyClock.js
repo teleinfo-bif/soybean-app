@@ -267,6 +267,7 @@ Page({
           });
           return;
         }
+
         var suregobackdate = e.detail.value.suregobackdate
         if (suregobackdate == null || suregobackdate == '') {
           wx.showToast({
@@ -345,7 +346,7 @@ Page({
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
-
+    
     var name = e.detail.value.name
     var phone = e.detail.value.phone
     var place = e.detail.value.place
