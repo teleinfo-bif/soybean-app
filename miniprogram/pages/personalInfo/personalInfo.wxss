@@ -8,7 +8,7 @@
 } */
 
 .personal{
-  margin-top: 40rpx;
+  margin-top: 20rpx;
   background: white;
 }
 
@@ -63,6 +63,8 @@
   color: #4169E1
 }
 
+
+
 .personal-view{
   margin-left: 30rpx;
   margin-right: 30rpx;
@@ -95,6 +97,15 @@
   font-weight: 500;
   /* font-family: STFangSong; */
   float: right;
+  margin-right: 25rpx;
+}
+
+.info-phone {
+  /* background: #F5F5F5; */
+  float: right;
+  font-weight: 500;
+  font-size: 30rpx;
+  color: #4169E1
 }
 
 .info-input{
@@ -151,6 +162,3 @@
   justify-content: center;
 }
 
-uni-picker .uni-picker-action.uni-picker-action-confirm{  
-  color: blue;  
-}
