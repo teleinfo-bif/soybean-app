@@ -47,6 +47,11 @@ Page({
     const db = wx.cloud.database();
     var that = this;
     // 获取总数
+
+    if(user_id == null || user_id == '' || user_id.length < 20){
+      user_id = app.globalData.openid
+    }
+    console.log("user_id" + user_id);
     db.collection('user_healthy').where({
       _openid: user_id
     }).count({
@@ -79,15 +84,27 @@ Page({
   },
 
 
+  onPullDownRefresh: function () {
+    if (this.data.isRefreshing || this.data.isLoadingMoreData) {
+      return
+    }
+    this.setData({
+      isRefreshing: true,
+      hasMoreData: true
+    })
+    this.onQuery(this.data.user_id);
+  },
+
   /**
  * 分页处理函数
  */
   onReachBottom: function () {
+    console.log("调用分页处理函数")
     var that = this;
     var temp = [];
     // 获取后面十条
-    if (this.data.datas.length < this.data.totalCount) {
-      console.log("分页查询，当前skip的值为：" + this.data.orglistdata.length);
+    if (that.data.datas.length < that.data.totalCount) {
+      console.log("分页查询，当前skip的值为：" + that.data.datas.length);
       try {
         const db = wx.cloud.database();
         db.collection('user_healthy').where({
@@ -105,9 +122,9 @@ Page({
                   temp.push(tempTopic);
                 }
                 var totalactivies = {};
-                totalactivies = that.data.orglistdata.concat(temp);
+                totalactivies = that.data.datas.concat(temp);
                 that.setData({
-                  orglistdata: totalactivies,
+                  datas: totalactivies,
                 })
               } else {
                 wx.showToast({
@@ -154,20 +171,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
   },
 

@@ -36,9 +36,8 @@
         </view>
 
         <view class="weui-cells__title">
-            <view style="width:85%;display:inline;float:left;">打卡地点</view>
-            <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="onShow">获取</a></view>
-            
+            <view>打卡地点</view>
+       
         </view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
