@@ -516,7 +516,8 @@ Page({
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
             home_district: e.detail.value.home_location,
-            home_detail: e.detail.value.home_detail
+            home_detail: e.detail.value.home_detail,
+            usertype:'0'
           },
             success: res=> {
             console.log(res)
