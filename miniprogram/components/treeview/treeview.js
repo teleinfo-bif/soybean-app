@@ -54,8 +54,7 @@ Component({
               for (let i = 0; i < res.data.length; i++) {
                 clockedInMap.set(res.data[i]._openid, res.data[i])
               }
-
-              console.log("userInfoMap:" + userInfoMap.size)
+              
               let nodes = new Array()
               for (let i = 0; i < clockedInMap.size; i++) {
                 for (let item of userInfoMap.keys()) {

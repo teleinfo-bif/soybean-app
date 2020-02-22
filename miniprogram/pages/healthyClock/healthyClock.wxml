@@ -7,7 +7,8 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" />
+                   <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" disabled="true"/>
+              <!--         <label weui-input>{{name}}</label>-->
                 </view>
             </view>
         </view>
@@ -16,7 +17,8 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" />
+                   <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" disabled="true"/>
+                <!--     <label weui-input>{{phone}}</label>-->
                 </view>
             </view>
         </view>
@@ -35,7 +37,9 @@
         </view>
 
 <view wx:if="{{isGoBackFlag == '1'}}"> <!--未返京开始-->
-        <view class="weui-cells__title">未返京原因</view>
+        <view class="weui-cells__title">未返京原因
+            
+        </view>
         <view>
             <radio-group class="radio-group" bindchange="noGoBackRadioChange">
                 <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
@@ -44,12 +48,15 @@
             </radio-group>
         </view>
 
-        <view class="weui-cells__title">计划返京日期</view>
+        <view class="weui-cells__title">
+              计划返京日期          
+        </view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
                     <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
-                        <view class="weui-input">{{gobackdate}}</view>
+                        <view class="weui-input" style="width:85%;float:left;">{{gobackdate}}</view>
+                        <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="gobackDateChange">选择</a></view>
                     </picker>
                 </view>
             </view>
@@ -67,24 +74,29 @@
         </view>
 
   <view wx:if="{{isLeaveBjFlag == '0'}}"><!--14天内离京开始-->
-
-        <view class="weui-cells__title">离京日期</view>
+        <view class="weui-cells__title">
+              离京日期
+        </view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
                     <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
-                        <view class="weui-input">{{leavedate}}</view>
+                        <view class="weui-input" style="width:85%;float:left;">{{leavedate}}</view>
+                        <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="leaveDateChange">选择</a></view>
                     </picker>
                 </view>
             </view>
         </view>
 
-        <view class="weui-cells__title">返京日期</view>
+        <view class="weui-cells__title">
+              返京日期
+          </view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
                     <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
-                        <view class="weui-input">{{suregobackdate}}</view>
+                        <view class="weui-input" style="width:85%;float:left;">{{suregobackdate}}</view>
+                        <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="suregobackDateChange">选择</a></view>
                     </picker>
                 </view>
             </view>

@@ -12,7 +12,7 @@ Page({
     locationList: [],
     // 默认当前坐标附近的列表
     poiList: [],
-    isManagerFlag: '0',
+    isManagerFlag: '0',//默认就是管理员
   },
 
   onLoad: function () {
@@ -115,7 +115,7 @@ Page({
     const db = wx.cloud.database()
     db.collection('user_info').where({
       _openid: app.globalData.openid,
-      usertype : '1'
+     // usertype : '1'
     }).get({
       success: res => {
         console.log("管理员信息返回结果：" + res);
