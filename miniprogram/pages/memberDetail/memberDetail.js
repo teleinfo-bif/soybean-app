@@ -20,6 +20,36 @@ function getCurrentDay() {
   return currentdate;
 }
 
+function getDayString(day) {
+  var today = new Date();
+  var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+  today.setTime(targetday_milliseconds);
+  var tYear = today.getFullYear();
+  var tMonth = today.getMonth();
+  var tDate = today.getDate();
+  tMonth = doHandleMonth(tMonth + 1);
+  tDate = doHandleMonth(tDate);
+
+  return tYear + "-" + tMonth + "-" + tDate;
+}
+
+function doHandleMonth(month) {
+  var m = month;
+  if (month.toString().length == 1) {
+    m = "0" + month;
+  }
+  return m;
+}
+
+function getRecentDates(day) {
+  let dateStrings = new Array()
+  for (let i = day; i > 0; i--) {
+    dateStrings.push(getDayString(-day))
+  }
+
+  return dateStrings
+}
+
 function getTotalUserIds() {
   const _ = db.command
   let ids = new Array()
@@ -107,7 +137,7 @@ let emptyNode = {
   text: "--",
   date: getCurrentDay(),
   clockin: "--",
-  status: "--"
+  status: -1
 }
 
 var treeData = {
@@ -123,34 +153,43 @@ Page({
    */
   data: {
     treeData: treeData,
+    date: getCurrentDay()
   },
 
   //事件处理函数
-  tapItem: function(e) {
+  tapItem: function (e) {
     console.log('index接收到的itemid: ' + e.detail.itemid);
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onReady: function(options) {
-
+  onReady: function (options) {
+   
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onLoad: function() {
+  onLoad: function () {
+    // if (options.date != undefined && options.date != "") {
+    //   this.setData({
+    //     date: options.date
+    //   })
+    // }
+
     const _ = db.command
-    let currentDate = getCurrentDay()
+    let currentDate = this.data.date
     let userInfoMap = new Map()
     let clockedInMap = new Map()
     let ids = new Array()
+    let that = this
+    let totalNodes = that.data.treeData.nodes
 
     db.collection('user_info').where({
       _openid: _.neq("")
     }).count({
-      success: function(res) {
+      success: function (res) {
         console.log("总用户数目" + res.total)
         that.data.totalCount = res.total;
       }
@@ -183,52 +222,58 @@ Page({
             let nodes = new Array()
             for (let i = 0; i < ids.length; i++) {
               let user_id = ids[i]
-              let status = "--"
+              let status = -1
               let clockin = "未打卡"
               let name = "--"
-              if (clockedInMap.has(user_id)) {
-                clockin = "已打卡"
-
-                let body = clockedInMap.get(user_id)
-                if (body.bodyStatusFlag == 0) {
-                  status = "正常"
-                } else {
-                  status = "异常"
-                }
-              }
 
               if (userInfoMap.get(user_id).name != "") {
                 name = userInfoMap.get(user_id).name
               }
 
-              nodes.push({
+              if (clockedInMap.has(user_id)) {
+                clockin = "已打卡"
+
+                let body = clockedInMap.get(user_id)
+                if (body.bodyStatusFlag == 0) {
+                  status = 0
+                } else {
+                  status = 1
+
+                  let dayCount = 6
+                  let recentDays = getRecentDates(dayCount)
+                  recentDays.push(getCurrentDay())
+
+                  db.collection('user_healthy').where({
+                    _openid: user_id,
+                    // date: _.in(recentDates),
+                    bodyStatusFlag: _.neq("0")
+                  }).count({
+                    success: res => {
+                      if (dayCount + 1 == res.total) {
+                        status = 2
+                      }
+                    }
+                  })
+                }
+              }
+
+              totalNodes.push({
                 id: user_id,
                 text: name,
                 date: currentDate,
                 clockin: clockin,
                 status: status
               })
-            }
 
-            if (nodes.length == 0) {
-              nodes.push(emptyNode)
+              this.setData({
+                treeData: {
+                  text: 'teleinfo研发部门',
+                  id: 0,
+                  date: currentDate,
+                  nodes: totalNodes
+                },
+              })
             }
-
-            this.setData({
-              treeData: {
-                text: 'teleinfo研发部门',
-                id: 0,
-                date: currentDate,
-                nodes: nodes
-              },
-            })
-          },
-          fail: err => {
-            wx.showToast({
-              icon: 'none',
-              title: '查询记录失败'
-            })
-            console.log(err)
           }
         })
 
@@ -254,47 +299,52 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     // this.onReachBottom()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
-    let currentDate = getCurrentDay()
+  onReachBottom: function () {
+    let currentDate = this.data.date
+
+    // if (app.globalData.slectedDate == undefined || app.globalData.slectedDate == "") {
+    //   currentDate = app.globalData.slectedDate
+    // }
+
     let userInfoMap = new Map()
     let clockedInMap = new Map()
     let ids = new Array()
 
-    if (this.data.treeData.nodes.length < this.data.totalCount || true) {
+    if (this.data.treeData.nodes.length < this.data.totalCount) {
       console.log("分页查询，当前skip的值为：" + this.data.treeData.nodes.length);
       try {
         const _ = db.command
         db.collection('user_info').where({
-            _openid: _.neq("")
-          }).skip(this.data.treeData.nodes.length)
+          _openid: _.neq("")
+        }).skip(this.data.treeData.nodes.length)
           .limit(10).get({
             success: res => {
               for (let i = 0; i < res.data.length; i++) {
@@ -319,7 +369,7 @@ Page({
                   let nodes = new Array()
                   for (let i = 0; i < ids.length; i++) {
                     let user_id = ids[i]
-                    let status = "--"
+                    let status = -1
                     let clockin = "未打卡"
                     let name = "--"
                     if (clockedInMap.has(user_id)) {
@@ -327,9 +377,25 @@ Page({
 
                       let body = clockedInMap.get(user_id)
                       if (body.bodyStatusFlag == 0) {
-                        status = "正常"
+                        status = 0
                       } else {
-                        status = "异常"
+                        status = 1
+
+                        let dayCount = 6
+                        let recentDays = getRecentDates(dayCount)
+                        recentDays.push(getCurrentDay())
+
+                        db.collection('user_healthy').where({
+                          _openid: user_id,
+                          // date: _.in(recentDates),
+                          bodyStatusFlag: _.neq("0")
+                        }).count({
+                          success: res => {
+                            if (dayCount + 1 == res.total) {
+                              status = 2
+                            }
+                          }
+                        })
                       }
                     }
 
@@ -391,7 +457,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

@@ -29,17 +29,21 @@
             </navigator>
           </view>
           <view class="table-col-4">
-            <view wx:if="{{ model.status == '正常'}}" class="tree-children-status table-row">
+            <view wx:if="{{ model.status == 0}}" class="tree-children-status table-row">
               <view class="tree-children-status-green"></view>
-              <view class="tree-children-status-text">{{ model.status }}</view>
+              <view class="tree-children-status-text">正常</view>
             </view>
-            <view wx:elif="{{ model.status == '异常'}}" class="tree-children-status table-row">
+            <view wx:elif="{{ model.status == 1}}" class="tree-children-status table-row">
               <view class="tree-children-status-yellow"></view>
-              <view class="tree-children-status-text">{{ model.status }}</view>
+              <view class="tree-children-status-text">异常</view>
+            </view>
+            <view wx:elif="{{ model.status == 2}}" class="tree-children-status table-row">
+              <view class="tree-children-status-red"></view>
+              <view class="tree-children-status-text">异常</view>
             </view>
             <view wx:else class="tree-children-status table-row">
               <view class="tree-children-status-none"></view>
-              <view class="tree-children-status-text">{{ model.status }}</view>
+              <view class="tree-children-status-text">--</view>
             </view>
           </view>
         </view>
