@@ -192,6 +192,7 @@ Page({
     var bodyStatusFlag = this.bodyStatusFlag
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
+
     if (name == null || name == '') {
       wx.showToast({
         icon: 'none',
@@ -225,6 +226,65 @@ Page({
       }
     }
 
+
+    if (app.globalData.isGoBackFlag == '1') {//未返京
+      var noGoBackFlag = this.noGoBackFlag
+      var gobackdate = e.detail.value.gobackdate
+      if (noGoBackFlag == null || noGoBackFlag == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '请选择未返京原因'
+        });
+        return;
+      }
+      if (gobackdate == null || gobackdate == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '请选择计划返京日期'
+        });
+        return;
+      }
+    }
+    console.log("this.app.globalData.isGoBackFlag" + app.globalData.isGoBackFlag);
+    console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
+    if (app.globalData.isGoBackFlag == '0') {//已返京
+      var isLeaveBjFlag = this.isLeaveBjFlag
+      
+      if (isLeaveBjFlag == null || isLeaveBjFlag == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '请选择14天内是否离京'
+        });
+        return;
+      }
+
+      if (isLeaveBjFlag == '0') {
+        var leavedate = e.detail.value.leavedate
+        if (leavedate == null || leavedate == '') {
+          wx.showToast({
+            icon: 'none',
+            title: '请选择离京日期'
+          });
+          return;
+        }
+        var suregobackdate = e.detail.value.suregobackdate
+        if (suregobackdate == null || suregobackdate == '') {
+          wx.showToast({
+            icon: 'none',
+            title: '请选择返京日期'
+          });
+          return;
+        }
+        var trainnumber = e.detail.value.trainnumber
+        if (trainnumber == null || trainnumber == '') {
+          wx.showToast({
+            icon: 'none',
+            title: '请输入所乘车次航班'
+          });
+          return;
+        }
+      }
+    }
     if (goHospitalFlag == null || goHospitalFlag == '') {
       wx.showToast({
         icon: 'none',
