@@ -217,7 +217,7 @@
 .icon-green {
   width: 20rpx;
   height: 20rpx;
-  background-color: #53bca2;
+  background-color: #22bb77;
   float: left;
   margin: 25rpx 10rpx 0rpx 0rpx;
 }
@@ -225,7 +225,7 @@
 .icon-orange {
   width: 20rpx;
   height: 20rpx;
-  background-color: #fc9026;
+  background-color: #ffaa00;
   float: left;
   margin: 25rpx 10rpx 0rpx 0rpx;
 }
@@ -233,7 +233,7 @@
 .icon-orange2 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ec704f;
+  background-color: #ec7055;
   float: left;
   margin: 25rpx 10rpx 0rpx 0rpx;
 }

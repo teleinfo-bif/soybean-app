@@ -1,6 +1,8 @@
 {
-	"miniprogramRoot": "miniprogram/",
-	"cloudfunctionRoot": "cloudfunctions/",
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
@@ -9,6 +11,7 @@
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
@@ -19,12 +22,22 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		},
-		"nodeModules": false
+		}
 	},
-	"appid": "wx5236affef117da53",
-	"projectname": "soybean-app",
+	"compileType": "miniprogram",
 	"libVersion": "2.8.1",
+	"appid": "wx5236affef117da53",
+	"projectname": "miniprogram",
+	"miniprogramRoot": "miniprogram/",
+	"cloudfunctionRoot": "cloudfunctions/",
+	"cloudfunctionTemplateRoot": "",
+	"watchOptions": {
+		"ignore": []
+	},
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -48,48 +61,39 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "statistics",
-					"pathName": "pages/statistics/statistics",
-					"query": "",
-					"scene": null
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
 				},
 				{
-					"id": 1,
-					"name": "memberDetail",
-					"pathName": "pages/memberDetail/memberDetail",
-					"query": "",
-					"scene": null
-				},
-        {
-          "id": 2,
-          "name": "clockInRecord",
-          "pathName": "pages/clockInRecord/clockInRecord",
-          "query": "",
-          "scene": null,
-        },
-				{
-					"id": 3,
+					"id": -1,
 					"name": "pages/personalInfo/personalInfo",
 					"pathName": "pages/personalInfo/personalInfo",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": 4,
-					"name": "pages/submitSuccess/submitSuccess",
-					"pathName": "pages/submitSuccess/submitSuccess",
-          "query": "",
+					"id": -1,
+					"name": "pages/msg/msg_success",
+					"pathName": "pages/msg/msg_success",
+					"query": "",
 					"scene": null
 				},
 				{
-					"id": 5,
-					"name": "pages/msg/msg_success",
-					"pathName": "pages/msg/msg_success",
-          "query": "",
+					"id": -1,
+					"name": "pages/statistics/statistics",
+					"pathName": "pages/statistics/statistics",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ring/ring",
+					"pathName": "pages/ring/ring",
 					"scene": null
 				}
 			]

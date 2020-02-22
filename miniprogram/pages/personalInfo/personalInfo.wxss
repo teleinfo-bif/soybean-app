@@ -40,7 +40,7 @@
   width: 300rpx;
   height: 60rpx;
   float: left;
-  font-size: 45rpx;
+  font-size: 36rpx;
   padding: 0rpx 10rpx 20rpx 20rpx;
   line-height: 60rpx;
   color: #333333
