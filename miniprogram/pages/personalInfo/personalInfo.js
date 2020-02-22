@@ -231,6 +231,9 @@ Page({
   bindMultiPickerChange: function(e) {
     multiIndex: e.detail.value
     console.log(this.data.multiIndex)
+    if (this.data.multiArray[1][this.data.multiIndex[1]] == undefined){
+      this.data.multiArray[1][this.data.multiIndex[1]] = ""
+    }
     this.setData({
       value_company_name: this.data.multiArray[0][this.data.multiIndex[0]] + " " + this.data.multiArray[1][this.data.multiIndex[1]]
     })
@@ -319,14 +322,46 @@ Page({
    */
 
   getCompanyDepartments: function(e) {
-    db.collection("company_info").get({
+
+    /**
+     * 通过本地小程序调用最多获取20条数据
+     */
+    // db.collection("company_info").get({
+    //   success: res => {
+    //     console.log(res.data)
+    //     var first = []
+    //     var second = []
+      
+    //     for (var i = 0; i < res.data.length; i++) {
+    //       var item = res.data[i]
+    //       first.push(item.name)
+    //       second.push(item.departments)
+    //     }
+
+    //     this.setData({
+    //       companies: first,
+    //       departments: second,
+    //     })
+    //   },
+
+    //   fail: res => {
+    //     console.log(res)
+    //   }
+    // })
+
+    /**
+     * 通过云函数调用可以获取全部45条的数据
+     */
+
+    wx.cloud.callFunction({
+      name: "getCompany",
       success: res => {
-        console.log(res.data)
+        console.log(res)
         var first = []
         var second = []
-      
-        for (var i = 0; i < res.data.length; i++) {
-          var item = res.data[i]
+
+        for (var i = 0; i < res.result.length; i++) {
+          var item = res.result[i]
           first.push(item.name)
           second.push(item.departments)
         }
@@ -337,8 +372,8 @@ Page({
         })
       },
 
-      fail: res => {
-        console.log(res)
+      fail: err => {
+        console.log(err)
       }
     })
   },
@@ -350,8 +385,8 @@ Page({
   queryUserInfo: function(e) {
     console.log("openid: ", app.globalData.openid)
     db.collection('user_info').where({
-      // _openid: app.globalData.openid
-      _id: "e30d61715e4fb437020bb81b754a6f6d"
+      _openid: app.globalData.openid
+      // _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
           console.log(res.data)
@@ -626,8 +661,15 @@ Page({
     //   })
     // }
 
+    
+    
     // wx.cloud.callFunction({
-    //   name: "getCompany",
+    //   name: "sum",
+    //   data: {
+    //     a: 2,
+    //     b: 3,
+    //   },
+
     //   success: res => {
     //     console.log(res)
     //   },
@@ -636,7 +678,6 @@ Page({
     //     console.log(err)
     //   }
     // })
-    
   },
 
   /**
