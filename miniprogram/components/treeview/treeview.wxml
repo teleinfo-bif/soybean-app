@@ -21,9 +21,15 @@
             <view class="tree-children-clockin table-row">{{ model.clockin }}</view>
           </view>
           <view class="table-col-4">
-            <navigator url="../clockInRecord/clockInRecord?user_id={{model.id}}" hover-class="weui-grid_active">
+            <!-- <navigator wx:if="{{ model.status == '--'}}" url="" hover-class="weui-grid_active">
               <view class="tree-children-detail table-row">打卡详情</view>
             </navigator>
+            <navigator wx:else url="../healthyClocked/healthyClocked?user_id={{model.id}}" hover-class="weui-grid_active">
+              <view class="tree-children-detail table-row">打卡详情</view>
+            </navigator> -->
+            <navigator url="../healthyClocked/healthyClocked?user_id={{model.id}}" hover-class="weui-grid_active">
+              <view class="tree-children-detail table-row">打卡详情</view>
+            </navigator> 
           </view>
           <view class="table-col-4">
             <view wx:if="{{ model.status == '正常'}}" class="tree-children-status table-row">

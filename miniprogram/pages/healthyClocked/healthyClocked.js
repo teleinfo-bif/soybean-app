@@ -31,10 +31,15 @@ Page({
       { name: '当地未放行', value: '1' }
     ],
     index: 0,
+    user_id: app.globalData.openid,
   },
 
   onLoad: function (options) {
-    this.qryHealthyTodayInfo()
+    this.setData({
+      user_id: options.user_id
+    })
+    console.log("current user_id: ", this.data.user_id)
+    this.qryHealthyTodayInfo(options.user_id)
   },
 
   //查询当天打卡信息
@@ -47,7 +52,7 @@ Page({
     console.log("查询当天打卡记录当前时间：" + Y + M + D);
     const db = wx.cloud.database()
     db.collection('user_healthy').where({
-      _openid: app.globalData.openid,
+      _openid: this.data.user_id,
       date: Y + M + D
     }).get({
       success: res => {
@@ -110,9 +115,11 @@ Page({
 
 
         }else{
-          wx.navigateTo({
-            url: '../healthyClock/healthyClock'
-          })
+          if (this.data.user_id == app.globalData.openid) {
+            wx.navigateTo({
+              url: '../healthyClock/healthyClock'
+            })
+          }
         }
         
         that.qryUserInfo();
@@ -131,7 +138,7 @@ Page({
   clickRecord: function (e) {
     console.log("跳转到打卡记录页面")
     wx.navigateTo({
-      url: '../clockInRecord/clockInRecord'
+      url: '../clockInRecord/clockInRecord?user_id=' + this.data.user_id
     })
   },
 
