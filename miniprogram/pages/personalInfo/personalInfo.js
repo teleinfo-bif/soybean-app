@@ -18,7 +18,7 @@ Page({
     certificate_type_index: 0,
     certificate_number:"",
     
-    multiArray: [["工业互联网与物联网研究所"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
+    multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
     companies: [],
     departments: [],
@@ -50,7 +50,8 @@ Page({
     value_home_district: "",
     value_home_detail: "",
 
-    buttons_display: "display: flex"
+    buttons_display: "display: flex",
+    phone_display: "display: block",
 
   },
 
@@ -205,6 +206,10 @@ Page({
   },
 
 
+  /**
+   *  身份类型选择
+   */
+
   bindCertificatePickerChange: function(e) {
     this.setData({
       certificate_type_index: parseInt(e.detail.value),
@@ -214,6 +219,10 @@ Page({
     console.log(this.data.value_card_type)
   },
 
+  /**
+   * 单位部门的选择
+   */
+
   bindMultiPickerChange: function(e) {
     multiIndex: e.detail.value
     console.log(this.data.multiIndex)
@@ -221,6 +230,10 @@ Page({
       value_company_name: this.data.multiArray[0][this.data.multiIndex[0]] + " " + this.data.multiArray[1][this.data.multiIndex[1]]
     })
   },
+
+  /**
+   * 单位部门列触发调用
+   */
 
   bindMultiPickerColumnChange: function(e) {
     // multiIndex: e.detail.value
@@ -254,7 +267,10 @@ Page({
     
   },
 
-  
+  /**
+   * 单位城市地区的选择
+   */
+
   bindCompanyRegionChange: function(res) {
     console.log(res)
     this.setData({
@@ -265,6 +281,10 @@ Page({
     console.log(this.data.value_company_district)
   },
 
+  /**
+   * 家庭城市地区的选择
+   */
+
   bindHomeRegionChange: function (res) {
     console.log(res)
     this.setData({
@@ -273,6 +293,9 @@ Page({
     })
   },
 
+  /**
+   * 获取当前时间
+   */
 
   getCurrentDateTime: function(e) {
     var date = new Date();
@@ -307,19 +330,6 @@ Page({
           companies: first,
           departments: second,
         })
-
-      //   console.log("first: " + first)
-      //   console.log("second: " + second)
-
-      //   for (var i in first) {
-      //     console.log(i)
-      //     console.log(first[i])
-      //   }
-
-      //   for (var i in second) {
-      //     console.log(i)
-      //     console.log(second[i])
-      //   }
       },
 
       fail: res => {
@@ -335,8 +345,8 @@ Page({
   queryUserInfo: function(e) {
     console.log("openid: ", app.globalData.openid)
     db.collection('user_info').where({
-      _openid: app.globalData.openid
-      // _id: "e30d61715e4fb437020bb81b754a6f6d"
+      // _openid: app.globalData.openid
+      _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
           console.log(res.data)
@@ -357,7 +367,8 @@ Page({
             choice_color: "color: #bbbbbb",
             forever_choice_color: "color: #bbbbbb",
             personal_info_change: "personal-change-show",
-            buttons_display: "display: none"
+            buttons_display: "display: none",
+            phone_display: "display: none"
           })
 
           wx.showToast({
@@ -377,7 +388,7 @@ Page({
 
   
   /**
-   * 触发修改信息
+   * 个人修改信息按钮触发调用
    */
   personalInfoChange: function(res) {
     this.setData({
@@ -404,7 +415,7 @@ Page({
 
 
   /**
-   * 报表提交
+   * 基本信息报表提交
    */
 
   submitUserInfo: function(e) {
@@ -527,6 +538,69 @@ Page({
   },
 
 
+  /** 
+   * 获取sessionCode和openid 
+   */
+
+  getSessionCode: function (e) {
+    let that = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          console.log(res)
+          //发起网络请求
+          app.globalData.sessionCode = res.code
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  },
+
+  /**
+   * 获取手机号码
+   */
+
+  getPhoneNumber: function (e) {
+
+    var that = this;
+    if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
+      wx.showModal({
+        content: '不能获取手机号码',
+        showCancel: false
+      })
+      return;
+    }
+    wx.showLoading({
+      title: '获取手机号中...',
+    })
+
+    wx.cloud.callFunction({
+      name: 'getToken',  // 对应云函数名
+      data: {
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv,
+        sessionCode: app.globalData.sessionCode    // 这个通过wx.login获取，去了解一下就知道。这不多描述
+      },
+      success: res => {
+        wx.hideLoading()
+        // 成功拿到手机号，跳转首页
+        console.log(res.result.data);
+        app.globalData.phoneNumber = res.result.data.phoneNumber
+        this.setData({
+          value_phone: res.result.data.phoneNumber
+        })
+      },
+      fail: err => {
+        console.error(err);
+        wx.showToast({
+          title: '获取手机号失败',
+          icon: 'none'
+        })
+      }
+    })
+
+  },
   
 
   /**
@@ -536,6 +610,7 @@ Page({
 
     this.queryUserInfo()
     this.getCompanyDepartments()
+    this.getSessionCode()
     
   },
 
