@@ -108,7 +108,7 @@ Page({
 
   //跳转打卡记录页面
   clickRecord: function(e) {
-    console.log("跳转到打卡记录页面")
+    console.log("跳转到打卡记录页面appid内容为：" + app.globalData.openid)
     wx.navigateTo({
       url: '../clockInRecord/clockInRecord'
     })
