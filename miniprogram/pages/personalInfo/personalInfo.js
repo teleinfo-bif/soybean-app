@@ -13,11 +13,8 @@ Page({
   data: {
     company_region: ["", "", ""],
     home_region: ["", "", ""],
-    company_district: "",
-    home_district: "",
 
     certificate_type: ["大陆身份证", "港澳身份证","台湾身份证", "军官证", "护照"],
-    certificate_type_choose: "",
     certificate_type_index: 0,
     certificate_number:"",
     
@@ -25,7 +22,6 @@ Page({
     multiIndex: [0, 0],
     companies: [],
     departments: [],
-    company_department_choose: "",
 
     personal_info_change: "personal-change-hide",
     user_info_data: {},
@@ -40,11 +36,25 @@ Page({
     placeholder_company_district: "请选择单位所在区及街道、社区",
     placeholder_company_detail: "请输入单位详细地址",
     placeholder_home_district: "请选择家庭所在区及街道、社区",
-    placeholder_home_detail: "请输入家庭详细地址"
+    placeholder_home_detail: "请输入家庭详细地址",
 
+    value_name: "",
+    value_phone: "",
+    value_card_type: "",
+    value_card_number: "",
+    value_company_name: "",
+    value_company_district: "",
+    value_company_detail: "",
+    value_home_district: "",
+    value_home_detail: "",
 
+    buttons_display: "display: flex"
 
   },
+
+  /**
+   * 身份验证相关
+   */
 
   // 大陆身份证验证
   idCardValid: function(e) {
@@ -178,25 +188,35 @@ Page({
     return warn;
   },
 
-  chooseCertificate: function(e){
-    console.log(e)
-    console.log("hello choose certificate")
+
+  getCardType: function(e) {
+
+    for (var i = 0; i < this.data.certificate_type.length; i++) {
+      // console.log(this.data.placeholder_card_number)
+      // console.log(this.data.certificate_type[i])
+      if (this.data.placeholder_card_type == this.data.certificate_type[i]){
+        return i
+      }
+    }
+
+    return -1
   },
+
 
   bindCertificatePickerChange: function(e) {
     this.setData({
       certificate_type_index: parseInt(e.detail.value),
-      certificate_type_choose: this.data.certificate_type[e.detail.value]
+      value_card_type: this.data.certificate_type[e.detail.value]
     })
 
-    console.log(this.data.certificate_type_choose)
+    console.log(this.data.value_card_type)
   },
 
   bindMultiPickerChange: function(e) {
     multiIndex: e.detail.value
     console.log(this.data.multiIndex)
     this.setData({
-      company_department_choose: this.data.multiArray[0][this.data.multiIndex[0]] + " " + this.data.multiArray[1][this.data.multiIndex[1]]
+      value_company_name: this.data.multiArray[0][this.data.multiIndex[0]] + " " + this.data.multiArray[1][this.data.multiIndex[1]]
     })
   },
 
@@ -237,17 +257,17 @@ Page({
     console.log(res)
     this.setData({
       company_region: res.detail.value, 
-      company_district: res.detail.value[0] + " " + res.detail.value[1] + " " + res.detail.value[2]
+      value_company_district: res.detail.value[0] + " " + res.detail.value[1] + " " + res.detail.value[2]
     })
 
-    console.log(this.data.company_district)
+    console.log(this.data.value_company_district)
   },
 
   bindHomeRegionChange: function (res) {
     console.log(res)
     this.setData({
       home_region: res.detail.value,
-      home_district: res.detail.value[0] + " " + res.detail.value[1] + " " + res.detail.value[2]
+      value_home_district: res.detail.value[0] + " " + res.detail.value[1] + " " + res.detail.value[2]
     })
   },
 
@@ -332,7 +352,8 @@ Page({
             placeholder_home_detail: res.data[0].home_detail,
             disabled: true,
             choice_color: "color: #bbbbbb",
-            personal_info_change: "personal-change-show"
+            personal_info_change: "personal-change-show",
+            buttons_display: "display: none"
           })
 
           wx.showToast({
@@ -357,8 +378,24 @@ Page({
   personalInfoChange: function(res) {
     this.setData({
       disabled: false,
-      choice_color: "color: #4169E1"
+      choice_color: "color: #4169E1",
+
+      value_name: this.data.placeholder_name,
+      value_phone: this.data.placeholder_phone,
+      value_card_type: this.data.placeholder_card_type,
+      value_card_number: this.data.placeholder_card_number,
+      value_company_name: this.data.placeholder_company_name,
+      value_company_district: this.data.placeholder_company_district,
+      value_company_detail: this.data.placeholder_company_detail,
+      value_home_district: this.data.placeholder_home_district,
+      value_home_detail: this.data.placeholder_home_detail,
+
+      certificate_type_index: this.getCardType(),
+       buttons_display: "display: flex",
+
     })
+
+    console.log(this.data.certificate_type_index)
   },
 
 
@@ -406,8 +443,8 @@ Page({
       flag = true 
 
 
-      // if (this.data.personal_info_change == "personal-change-hide") {
-
+      if (this.data.personal_info_change == "personal-change-hide") {
+          console.log("add user info to database")
           db.collection("user_info").add({
             data: {
             created_at: that.getCurrentDateTime(),
@@ -438,49 +475,50 @@ Page({
 
             }      
          })
-      // }
+      }
 
-      // else if (this.data.personal_info_change == "personal-change-show") {
+      else if (this.data.personal_info_change == "personal-change-show") {
+        console.log("update user info to database")
+        db.collection('user_info').doc(this.data.record_id).update({
+          data: {
+            updated_at: that.getCurrentDateTime(),
+            name: e.detail.value.name,
+            phone: e.detail.value.phone,
+            certificate_type: e.detail.value.certificate_type,
+            certificate_number: e.detail.value.certificate_number,
+            company_department: e.detail.value.company_name,
+            company_district: e.detail.value.company_location,
+            company_detail: e.detail.value.company_detail,
+            home_district: e.detail.value.home_location,
+            home_detail: e.detail.value.home_detail
+          },
 
-      //   db.collection('user_info').doc("fb16f7905e4e37cb017116ba6e3a0a80").update({
-      //     data: {
-      //       updated_at: that.getCurrentDateTime(),
-      //       name: e.detail.value.name,
-      //       phone: e.detail.value.phone,
-      //       certificate_type: e.detail.value.certificate_type,
-      //       certificate_number: e.detail.value.certificate_number,
-      //       company_department: e.detail.value.company_name,
-      //       company_district: e.detail.value.company_location,
-      //       company_detail: e.detail.value.company_detail,
-      //       home_district: e.detail.value.home_location,
-      //       home_detail: e.detail.value.home_detail
-      //     },
+          success: res => {
+            console.log(res)
 
-      //     success: res => {
-      //       console.log(res)
+            wx.navigateTo({
+              url: '../../pages/msg/msg_success',
+            })
+          },
 
-      //       wx.navigateTo({
-      //         url: '../../pages/msg/msg_success',
-      //       })
-      //     },
+          fail: err => {
+            console.error('[数据库] [更新记录] 失败：', err)
+            wx.navigateTo({
+              url: '../../pages/msg/msg_fail',
+            })
+          }
+        })
 
-      //     fail: err => {
-      //       console.error('[数据库] [更新记录] 失败：', err)
-      //       wx.navigateTo({
-      //         url: '../../pages/msg/msg_fail',
-      //       })
-      //     }
-      // })
+      }
 
-    // }
+    }
 
-    if (!flag ) {
+    if (!flag) {
       wx.showModal({
         title: '提示',
         content: warn
       })
 
-    }
     }
   },
 
@@ -493,7 +531,7 @@ Page({
   onLoad: function (options) {
 
     this.queryUserInfo()
-    // this.getCompanyDepartments()
+    this.getCompanyDepartments()
     
   },
 

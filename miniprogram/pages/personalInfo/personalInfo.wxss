@@ -140,7 +140,6 @@
 
 .button-submit {
   background:  #4169E1;
-  display: flex;
   width: 300rpx;
   height: 100rpx;
   margin-top: 30rpx;

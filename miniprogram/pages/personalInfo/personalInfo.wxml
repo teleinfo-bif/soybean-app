@@ -5,7 +5,7 @@
   <view class="personal-title">
    <image class="personal-icon"></image>
    <text class="personal-info"> 基本信息</text>
-   <!-- <text class="{{personal_info_change}}" bindtap="personalInfoChange">修改</text> -->
+   <text class="{{personal_info_change}}" bindtap="personalInfoChange">修改</text>
   </view>
 
   <!-- 分割线 -->
@@ -21,7 +21,7 @@
         <text class="info-label">姓名:</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="name" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_name}}" disabled="{{disabled}}" ></input>
+        <input class="info-input" name="name" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_name}}" disabled="{{disabled}}" value="{{value_name}}"></input>
       </view>
 
       <!-- 手机号码 -->
@@ -29,7 +29,7 @@
         <text class="info-label">手机号码:</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="phone" type="number"   placeholder-class="placeholder-style" placeholder="{{placeholder_phone}}" disabled="{{disabled}}" ></input>
+        <input class="info-input" name="phone" type="number"   placeholder-class="placeholder-style" placeholder="{{placeholder_phone}}" disabled="{{disabled}}" value="{{value_phone}}"></input>
       </view>
 
       <!-- 证件类型 -->
@@ -40,7 +40,7 @@
             <text class="info-choice" style="{{choice_color}}"> 选择</text>
           </view>
           <view class="personal-info-td">
-            <input class="info-input" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_type}}" name="certificate_type" value="{{certificate_type_choose}}" disabled="disabled"></input>
+            <input class="info-input" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_type}}" name="certificate_type" value="{{value_card_type}}" disabled="disabled"></input>
           </view>
         </picker>
       </view>
@@ -50,7 +50,7 @@
         <text class="info-label">证件号码:</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="certificate_number" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_number}}" disabled="{{disabled}}" ></input>
+        <input class="info-input" name="certificate_number" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_number}}" disabled="{{disabled}}" value="{{value_card_number}}"></input>
       </view>
 
       <!-- 单位名称 -->
@@ -58,7 +58,7 @@
         <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
           <view class="personal-info-hd"><text class="info-label">单位名称 :</text><text class="info-choice" style="{{choice_color}}"> 选择</text></view>
           <view class="personal-info-td">
-          <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{company_department_choose}}" disabled="disabled"></input>
+          <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></input>
           </view>
         </picker>
       </view>
@@ -70,7 +70,7 @@
               <text class="info-label">单位所在区及街道、社区:</text><text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">
-              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_district}}" name="company_location" value="{{company_district}}" disabled="disabled"></input>
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_district}}" name="company_location" value="{{value_company_district}}" disabled="disabled"></input>
             </view>
           </picker>
       </view>
@@ -80,7 +80,7 @@
         <text class="info-label">单位详细地址:</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="company_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_company_detail}}" disabled="{{disabled}}" ></input>
+        <input class="info-input" name="company_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_company_detail}}" disabled="{{disabled}}" value="{{value_company_detail}}"></input>
       </view>
 
       <!-- 家庭所在地区 -->
@@ -90,7 +90,7 @@
               <text class="info-label">家庭所在区街道及社区:</text><text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
              <view class="personal-info-td">
-              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_home_district}}" name="home_location" value="{{home_district}}" disabled="disabled"></input>
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_home_district}}" name="home_location" value="{{value_home_district}}" disabled="disabled"></input>
             </view>
             <!-- <view class="picker-td" name="home_district">
               {{home_region[0]}} {{home_region[1]}} {{home_region[2]}}
@@ -103,11 +103,11 @@
         <text class="info-label">家庭详细地址:</text>
       </view>
       <view class="personal-info-td">
-        <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_home_detail}}" disabled="{{disabled}}"></input>
+        <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_home_detail}}" disabled="{{disabled}}" value="{{value_home_detail}}"></input>
       </view>
 
     </view>
-      <view class="personal-buttons">
+      <view class="personal-buttons" style="{{buttons_display}}">
         <button class="button-reset" form-type="reset" disabled="{{disabled}}">重置</button>
         <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
       </view>

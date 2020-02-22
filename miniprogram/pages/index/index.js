@@ -12,7 +12,7 @@ Page({
     locationList: [],
     // 默认当前坐标附近的列表
     poiList: [],
-    isManagerFlag: '0',
+    isManagerFlag: '1',//默认就是管理员
   },
 
   onLoad: function () {
