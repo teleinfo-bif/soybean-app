@@ -60,6 +60,38 @@ Page({
   },
 
 
+  //查询当前打卡信息
+  qryHealthyTodayInfo: function () {
+    let that = this;
+    //获取当天日期
+    var date = new Date();
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    const db = wx.cloud.database()
+    console.log("查询健康打卡日期的值为：" + Y+M+D);
+    db.collection('user_healthy').where({
+      _openid: app.globalData.openid,
+      date: Y + M + D
+    }).get({
+      success: res => {
+        console.log(res)
+        //今日已打卡
+        if (res.data.length > 0) {
+          app.globalData.todayClickFlag = '1'
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+
   /**获取sessionCode和openid */
   getSessionCode: function (e) {
     let that = this;
@@ -102,9 +134,6 @@ Page({
         console.log(err)
       }
     })
-
-
-
   },
 
   
@@ -136,32 +165,38 @@ Page({
 
   //跳转打卡记录页面
   gotoHealthyClick: function (e) {
-    console.log("跳转到健康打卡页面")
-    const db = wx.cloud.database()
-    db.collection('user_info').where({
-      _openid: app.globalData.openid
-    }).get({
-      success: res => {
-        console.log(res)
-        if (res.data.length > 0){
-          wx.navigateTo({
-            url: '../healthyClock/healthyClock'
-          })
-        }else{
+    if (app.globalData.todayClickFlag == '1'){
+      wx.navigateTo({
+        url: '../healthyClocked/healthyClocked'
+      })
+    }else{
+      console.log("跳转到健康打卡页面")
+      const db = wx.cloud.database()
+      db.collection('user_info').where({
+        _openid: app.globalData.openid
+      }).get({
+        success: res => {
+          console.log(res)
+          if (res.data.length > 0) {
+            wx.navigateTo({
+              url: '../healthyClock/healthyClock'
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '请先录入用户信息'
+            })
+          }
+        },
+        fail: err => {
           wx.showToast({
             icon: 'none',
-            title: '请先录入用户信息'
+            title: '查询记录失败'
           })
-        }  
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.log(err)
-      }
-    })
+          console.log(err)
+        }
+      })
+    }
   },
 
   //跳转打卡记录页面
@@ -258,6 +293,7 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
+        this.qryHealthyTodayInfo();
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
