@@ -1,4 +1,6 @@
 // miniprogram/pages/personalInfo/personal.js
+const app = getApp()
+
 const db = wx.cloud.database({
   env: "soybean-uat"
 })
@@ -24,6 +26,24 @@ Page({
     companies: [],
     departments: [],
     company_department_choose: "",
+
+    personal_info_change: "personal-change-hide",
+    user_info_data: {},
+    disabled: false,
+    choice_color: "color: #4169E1",
+    record_id: "",
+    placeholder_name: "请输入姓名",
+    placeholder_phone: "请输入手机号码",
+    placeholder_card_type: "选择证件类型",
+    placeholder_card_number: "证件号码",
+    placeholder_company_name: "请选择单位及部门",
+    placeholder_company_district: "请选择单位所在区及街道、社区",
+    placeholder_company_detail: "请输入单位详细地址",
+    placeholder_home_district: "请选择家庭所在区及街道、社区",
+    placeholder_home_detail: "请输入家庭详细地址"
+
+
+
   },
 
   // 大陆身份证验证
@@ -286,6 +306,65 @@ Page({
     })
   },
 
+  /**
+   *  首次登录先获取用户信息是否存在
+   */
+
+  queryUserInfo: function(e) {
+    console.log("openid: ", app.globalData.openid)
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+      // _id: "e30d61715e4fb437020bb81b754a6f6d"
+    }).get({
+        success: res => {
+          console.log(res.data)
+          this.setData({
+            user_info_data: res.data[0],
+            record_id: res.data[0]._id,
+            placeholder_name: res.data[0].name,
+            placeholder_phone: res.data[0].phone,
+            placeholder_card_type: res.data[0].certificate_type,
+            placeholder_card_number: res.data[0].certificate_number,
+            placeholder_company_name: res.data[0].company_department,
+            placeholder_company_district: res.data[0].company_district,
+            placeholder_company_detail: res.data[0].company_detail,
+            placeholder_home_district: res.data[0].home_district,
+            placeholder_home_detail: res.data[0].home_detail,
+            disabled: true,
+            choice_color: "color: #bbbbbb",
+            personal_info_change: "personal-change-show"
+          })
+
+          wx.showToast({
+            icon: 'success',
+            title: '信息已录入!'
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询记录失败'
+          })
+          console.log(err)
+        }
+      })
+  },
+
+  
+  /**
+   * 触发修改信息
+   */
+  personalInfoChange: function(res) {
+    this.setData({
+      disabled: false,
+      choice_color: "color: #4169E1"
+    })
+  },
+
+
+  /**
+   * 报表提交
+   */
 
   submitUserInfo: function(e) {
 
@@ -325,40 +404,75 @@ Page({
       warn = "请输入您的家庭详细地址"
     } else {
       flag = true 
-    db.collection("user_info").add({
-      data: {
-        datetime: that.getCurrentDateTime(),
-        name: e.detail.value.name,
-        phone: e.detail.value.phone,
-        certificate_type: e.detail.value.certificate_type,
-        certificate_number: e.detail.value.certificate_number,
-        company_department: e.detail.value.company_name,
-        company_district: e.detail.value.company_location,
-        company_detail: e.detail.value.company_detail,
-        home_district: e.detail.value.home_location,
-        home_detail: e.detail.value.home_detail
-      },
 
-      success: res=> {
-        console.log(res)
+
+      // if (this.data.personal_info_change == "personal-change-hide") {
+
+          db.collection("user_info").add({
+            data: {
+            created_at: that.getCurrentDateTime(),
+            updated_at: that.getCurrentDateTime(),
+            name: e.detail.value.name,
+            phone: e.detail.value.phone,
+            certificate_type: e.detail.value.certificate_type,
+            certificate_number: e.detail.value.certificate_number,
+            company_department: e.detail.value.company_name,
+            company_district: e.detail.value.company_location,
+            company_detail: e.detail.value.company_detail,
+            home_district: e.detail.value.home_location,
+            home_detail: e.detail.value.home_detail
+          },
+            success: res=> {
+            console.log(res)
         
-        wx.navigateTo({
-          url: '../../pages/msg/msg_success',
-        })
-        
+              wx.navigateTo({
+                url: '../../pages/msg/msg_success',
+              })
+            },
 
-      },
+            fail: err => {
+              console.log(err)
+              wx.navigateTo({
+                url: '../../pages/msg/msg_fail',
+              })
 
-      fail: err => {
-        console.log(err)
-        wx.navigateTo({
-          url: '../../pages/msg/msg_fail',
-        })
+            }      
+         })
+      // }
 
-      }      
-    })
+      // else if (this.data.personal_info_change == "personal-change-show") {
 
-    }
+      //   db.collection('user_info').doc("fb16f7905e4e37cb017116ba6e3a0a80").update({
+      //     data: {
+      //       updated_at: that.getCurrentDateTime(),
+      //       name: e.detail.value.name,
+      //       phone: e.detail.value.phone,
+      //       certificate_type: e.detail.value.certificate_type,
+      //       certificate_number: e.detail.value.certificate_number,
+      //       company_department: e.detail.value.company_name,
+      //       company_district: e.detail.value.company_location,
+      //       company_detail: e.detail.value.company_detail,
+      //       home_district: e.detail.value.home_location,
+      //       home_detail: e.detail.value.home_detail
+      //     },
+
+      //     success: res => {
+      //       console.log(res)
+
+      //       wx.navigateTo({
+      //         url: '../../pages/msg/msg_success',
+      //       })
+      //     },
+
+      //     fail: err => {
+      //       console.error('[数据库] [更新记录] 失败：', err)
+      //       wx.navigateTo({
+      //         url: '../../pages/msg/msg_fail',
+      //       })
+      //     }
+      // })
+
+    // }
 
     if (!flag ) {
       wx.showModal({
@@ -366,6 +480,7 @@ Page({
         content: warn
       })
 
+    }
     }
   },
 
@@ -377,8 +492,8 @@ Page({
    */
   onLoad: function (options) {
 
-    this.getCompanyDepartments()
-    // this.data.multiArray[0] = this.data.companies
+    this.queryUserInfo()
+    // this.getCompanyDepartments()
     
   },
 
@@ -393,7 +508,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+   
   },
 
   /**
