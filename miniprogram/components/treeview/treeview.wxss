@@ -99,11 +99,24 @@
   border-width: 2rpx; */
 }
 
-.tree-children-status-boll {
+.tree-children-status-red {
   width: 40rpx;
   height: 40rpx;
   border-radius: 40rpx;
   background: red;
+  margin: 8rpx auto;
+}
+
+.tree-children-status-green {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background: green;
+  margin: 8rpx auto;
+}
+
+.tree-children-status-none {
+  height: 16rpx;
   margin: 8rpx auto;
 }
 

@@ -1,50 +1,54 @@
 // pages/clockInRecord/clockInRecord.js
 const app = getApp()
-Page({
 
+function getCurrentDay() {
+  let date = new Date();
+  let seperator1 = "-";
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  let currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+
+let emptyData = {
+  temperature: "--",
+  date: getCurrentDay(),
+  bodyStatusFlag: "--"
+}
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    datas:[
-      {
-        temperature: 37,
-        date: "2020-02-03",
-        status: "无异常症状"
-      },
-      {
-        temperature: 37.2,
-        date: "2020-02-02",
-        status: "腹泻、肌肉酸痛"
-      },
-      {
-        temperature: 37.4,
-        date: "2020-02-01",
-        status: "乏力"
-      },
-      {
-        temperature: 37.1,
-        date: "2020-01-30",
-        status: "无异常症状"
-      }
-    ]
+    user_id: '',
+    datas:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.onQuery(this.data.page);
+    this.setData({
+      user_id: options.user_id
+    })
+
+    this.onQuery(this.data.user_id);
   },
 
-
-
-  onQuery: function () {
+  onQuery: function (user_id) {
     const db = wx.cloud.database();
     var that = this;
     // 获取总数
     db.collection('user_healthy').where({
-      _openid: app.globalData.openid
+      _openid: user_id
     }).count({
       success: function (res) {
         console.log("群组分页查询记录数为：" + res.total)
@@ -53,15 +57,13 @@ Page({
     })
 
     db.collection('user_healthy').where({
-      _openid: app.globalData.openid
+      _openid: user_id
     }).limit(10) // 限制返回数量为 10 条
       .orderBy('addtime', 'desc').get({
         success: res => {
-          console.log("群组列表查询成功：" + res.data);
-          console.log("群组列表查询成功：" + JSON.stringify(res.data));
-          that.data.orglistdata = res.data;
+          that.data.datas = res.data;
           this.setData({
-            orglistdata: that.data.orglistdata
+            datas: that.data.datas
           })
           wx.hideLoading();
           wx.hideNavigationBarLoading();//隐藏加载
@@ -84,13 +86,13 @@ Page({
     var that = this;
     var temp = [];
     // 获取后面十条
-    if (this.data.orglistdata.length < this.data.totalCount) {
+    if (this.data.datas.length < this.data.totalCount) {
       console.log("分页查询，当前skip的值为：" + this.data.orglistdata.length);
       try {
         const db = wx.cloud.database();
         db.collection('user_healthy').where({
           _openid: app.globalData.openid
-        }).skip(this.data.orglistdata.length)
+        }).skip(this.data.datas.length)
           .limit(10) // 限制返回数量为 10 条
           .orderBy('addtime', 'desc') // 排序
           .get({
@@ -126,11 +128,6 @@ Page({
       })
     }
   },
-
-
-
-
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成

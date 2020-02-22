@@ -34,6 +34,16 @@
   float: left;
 }
 
+.red-gray {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 30rpx;
+  background-color: gray;
+  margin-right: 10rpx;
+
+  float: left;
+}
+
 .template-title-text {
   width: 260rpx;
   height: 30rpx;

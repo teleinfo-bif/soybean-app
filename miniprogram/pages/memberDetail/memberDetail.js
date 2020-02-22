@@ -102,18 +102,18 @@ function getClockedIn(currentDate) {
   return clockedInMap
 }
 
+let emptyNode = {
+  id: 0,
+  text: "--",
+  clockin: "--",
+  status: "--"
+}
+
 var treeData = {
   text: 'teleinfo研发部门',
   id: 0,
   date: getCurrentDay(),
-  nodes: [
-    {
-      id: 0,
-      text: "---",
-      clockin: "---",
-      status: "--",
-    }
-  ]
+  nodes: [emptyNode]
 }
 
 Page({
@@ -140,11 +140,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onLoad: function () {
-    let currentDate = getCurrentDay()
-    // let userInfoMap = getTotalUserInfos()
-    // let clockedInMap = getClockedIn(currentDate)
-
     const _ = db.command
+    let currentDate = getCurrentDay()
     let userInfoMap = new Map()
     let clockedInMap = new Map()
 
@@ -174,6 +171,7 @@ Page({
               for (let item of userInfoMap.keys()) {
                 let status = "--"
                 let clockin = "未打卡"
+                let name = "--"
                 if (clockedInMap.has(item)) {
                   clockin = "已打卡"
 
@@ -184,16 +182,24 @@ Page({
                     status = "异常"
                   }
                 }
-                
+
+                if (userInfoMap.get(item).name != "") {
+                  name = userInfoMap.get(item).name
+                }
+
                 nodes.push({
                   id: item,
-                  text: userInfoMap.get(item).name,
+                  text: name,
                   clockin: clockin,
                   status: status
                 })
               }
             }
             
+            if (nodes.length == 0) {
+              nodes.push(emptyNode)
+            }
+
             this.setData({
                 treeData: {
                   text: 'teleinfo研发部门',
