@@ -21,7 +21,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="name" value="{{clickdata.name}}"  />
+                    <input class="weui-input" name="name" disabled="true" value="{{clickdata.name}}"  />
                 </view>
             </view>
         </view>
@@ -30,7 +30,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="phone" value="{{clickdata.phone}}" />
+                    <input class="weui-input" name="phone" disabled="true" value="{{clickdata.phone}}" />
                 </view>
             </view>
         </view>
@@ -42,7 +42,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="place" value="{{clickdata.place}}"  />
+                    <input class="weui-input" name="place" disabled="true" value="{{clickdata.place}}"  />
                 </view>
             </view>
         </view>
@@ -85,7 +85,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="leavedate" value="{{clickdata.leavedate}}" >
+                    <picker mode="date" disabled="true" name="leavedate" value="{{clickdata.leavedate}}" >
                         <view class="weui-input">{{clickdata.leavedate}}</view>
                     </picker>
                 </view>
@@ -96,7 +96,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <picker mode="date" name="suregobackdate" value="{{clickdata.suregobackdate}}" >
+                    <picker mode="date" disabled="true"  name="suregobackdate" value="{{clickdata.suregobackdate}}" >
                         <view class="weui-input">{{clickdata.suregobackdate}}</view>
                     </picker>
                 </view>
@@ -107,7 +107,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="trainnumber" value="{{clickdata.trainnumber}}" />
+                    <input class="weui-input" disabled="true" name="trainnumber" value="{{clickdata.trainnumber}}" />
                 </view>
             </view>
         </view>
@@ -118,7 +118,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="temperature" value="{{clickdata.temperature}}"/>
+                    <input class="weui-input" disabled="true" name="temperature" value="{{clickdata.temperature}}"/>
                 </view>
             </view>
         </view>
@@ -136,7 +136,7 @@
         <view wx:if="{{clickdata.bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="bodystatusotherremark" value="{{clickdata.bodystatusotherremark}}"/>
+                    <input class="weui-input" disabled="true" name="bodystatusotherremark" value="{{clickdata.bodystatusotherremark}}"/>
                 </view>
             </view>
         </view>
@@ -163,7 +163,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" name="remark"  value="{{clickdata.remark}}"/>
+                    <input class="weui-input" name="remark"  disabled="true" value="{{clickdata.remark}}"/>
                 </view>
             </view>
         </view>
