@@ -5,6 +5,11 @@ const db = wx.cloud.database({
   env: "soybean-uat"
 })
 
+// const cloud = require('wx-server-sdk')
+// cloud.init()
+
+
+
 Page({
 
   /**
@@ -345,8 +350,8 @@ Page({
   queryUserInfo: function(e) {
     console.log("openid: ", app.globalData.openid)
     db.collection('user_info').where({
-      // _openid: app.globalData.openid
-      _id: "e30d61715e4fb437020bb81b754a6f6d"
+      _openid: app.globalData.openid
+      // _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
           console.log(res.data)
@@ -611,6 +616,26 @@ Page({
     this.queryUserInfo()
     this.getCompanyDepartments()
     this.getSessionCode()
+
+    // if (!wx.cloud) {
+    //   console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+    // }
+    // else {
+    //   wx.cloud.init({
+    //     traceUser: true,
+    //   })
+    // }
+
+    // wx.cloud.callFunction({
+    //   name: "getCompany",
+    //   success: res => {
+    //     console.log(res)
+    //   },
+
+    //   fail: err => {
+    //     console.log(err)
+    //   }
+    // })
     
   },
 
