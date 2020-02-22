@@ -28,7 +28,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    user_id: '',
+    user_id: app.globalData.openid,
     datas:[]
   },
 
@@ -36,24 +36,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      user_id: options.user_id
-    })
 
-    this.onQuery(this.data.user_id);
+    if (options.user_id != undefined && options.user_id != "") {
+      this.setData({
+        user_id: options.user_id
+      })
+    }
+
+    this.onQuery();
   },
 
-  onQuery: function (user_id) {
+  onQuery: function () {
     const db = wx.cloud.database();
     var that = this;
     // 获取总数
 
+    let user_id = that.data.user_id
     if(user_id == null || user_id == '' || user_id.length < 20){
       user_id = app.globalData.openid
     }
     console.log("user_id" + user_id);
     db.collection('user_healthy').where({
-      _openid: user_id
+      _openid: that.data.user_id
     }).count({
       success: function (res) {
         console.log("群组分页查询记录数为：" + res.total)
@@ -62,7 +66,7 @@ Page({
     })
 
     db.collection('user_healthy').where({
-      _openid: user_id
+      _openid: that.data.user_id
     }).limit(10) // 限制返回数量为 10 条
       .orderBy('addtime', 'desc').get({
         success: res => {
@@ -108,7 +112,7 @@ Page({
       try {
         const db = wx.cloud.database();
         db.collection('user_healthy').where({
-          _openid: app.globalData.openid
+          _openid: that.data.user_id
         }).skip(this.data.datas.length)
           .limit(10) // 限制返回数量为 10 条
           .orderBy('addtime', 'desc') // 排序
