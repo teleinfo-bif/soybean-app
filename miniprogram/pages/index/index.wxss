@@ -1,13 +1,16 @@
 /**index.wxss**/
 
-page {
+/* .page_container */
+
+.page {
   background: #f6f6f6;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  font-family: PingFangSC-Regular;
 }
 
-.headerblock{
+.headerblock {
   height: 590rpx;
   width: 100%;
 }
@@ -16,71 +19,113 @@ page {
   height: 500rpx;
   width: 100%;
   z-index: -1;
-  position:fixed; 
+  position: fixed;
 }
 
 .putuserinfobutton {
   height: 100rpx;
-  width: 220px;
+  width: 440rpx;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 40rpx;
-  margin-left:16px;
+  border-radius: 50rpx;
+  margin-left: 32rpx;
   border-left: none;
   border-right: none;
   display: flex;
-  margin-top: 350rpx;
+  margin-top: 340rpx;
 }
 
 .userinfo-put {
   font-size: 32rpx;
-  color: #000;
+  color: #333333;
   text-align: left;
   padding-left: 0;
-  margin-left: 10px;
-  margin-top:12px;
+  margin-left: 20rpx;
+  margin-top: 24rpx;
 }
 
 .userinfo-put_active {
   background-color: #ccc;
 }
 
-.userinfo-img {
-  width:50px;
-  height:50px;
-  border-radius: 50%;
+.userinfo-img-container {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 30rpx;
+  padding-left: 0;
+  margin-left: 20rpx;
+  margin-top: 15rpx;
   background-size: cover;
-  background-color: white;
+  background-color: #ecedf1;
 }
 
+.userinfo-img {
+  width: 44rpx;
+  height: 44rpx;
+  margin: 10rpx 5rpx 5rpx 8rpx;
+}
 
-.head_title{
-  margin:auto;
-  color: #fff;
-  margin-top:30px;
+.head_title {
+  margin: auto;
+  color: #fdfdff;
+  margin-top: 60rpx;
   text-align: center;
+  font-size: 36rpx;
 }
 
+.page__title {
+  margin-left: 32rpx;
+  font-size: 30rpx;
+  line-height: 70rpx;
+  color: #333333;  
+  margin-top: 10rpx;
+}
 
 .weui-grids {
-  width:90%;
-  margin:auto;
-  border-top: 0px;
-  margin-top:8px;
+  width: 720rpx;
+  margin: auto;
+  border-top: 0rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
 }
 
 .weui-grid {
-  width:47.5%;
-  height:165px;
+  width: 340rpx;
+  height: 330rpx;
+  margin: 10rpx;
   background-color: #fff;
+  border-radius: 10rpx;
+
+  /* box-shadow:[inset] x-offset y-offset blur-radius spread-radiuscolor */
+  box-shadow:[inset] 0rpx 10rpx 30rpx rgba(194, 199, 225, 0.47);
 }
 
 .weui-grid__icon {
-  width:90px;
-  height:90px;
-  margin-bottom: 15px;
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: 30rpx;
+}
+
+.weui-grid__icon_jk {
+  width: 155rpx;
+  height: 155rpx;
+  margin: 10rpx 10rpx 25rpx 70rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
 }
 
 .weui-grid_active {
   background-color: #ccc;
+}
+
+.weui-grid__label_inactive { 
+  color: #e1e1e1;
+}
+
+.weui-grid__label {
+  font-size: 30rpx;
+  color: #333333;
+
 }
