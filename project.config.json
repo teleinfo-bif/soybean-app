@@ -108,6 +108,13 @@
 					"id": -1,
 					"name": "memberDetail",
 					"pathName": "pages/memberDetail/memberDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "healthyClock",
+					"pathName": "pages/healthyClock/healthyClock",
 					"scene": null
 				}
 			]

@@ -27,6 +27,10 @@ Page({
       { name: '是', value: '0' },
       { name: '否', value: '1' }
     ],
+    isQueZhenRadioItems: [
+      { name: '是', value: '0' },
+      { name: '否', value: '1' }
+    ],
     goHBradioItems: [
       { name: '是', value: '0' },
       { name: '否', value: '1' }
@@ -121,6 +125,15 @@ Page({
           }
           this.setData({
             goHospitalRadioItems: goHospitalRadioItems
+          });
+
+          var isQueZhenRadioItems = this.data.isQueZhenRadioItems;
+          console.log("isQueZhenRadioItems的内容为：" + isQueZhenRadioItems);
+          for (var i = 0, len = 2; i < 2; ++i) {
+            isQueZhenRadioItems[i].checked = isQueZhenRadioItems[i].value == res.data[0].isQueZhenFlag;
+          }
+          this.setData({
+            isQueZhenRadioItems: isQueZhenRadioItems
           });
 
           var goHBradioItems = this.data.goHBradioItems;

@@ -184,12 +184,14 @@ Page({
     console.log("体温 :" + e.detail.value.temperature);
     console.log("目前健康状况:" + this.bodyStatusFlag);
     console.log("健康状况为其他的原因:" + e.detail.value.bodystatusotherremark);
+    console.log("是否确诊:" + this.isQueZhenFlag);
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
     var name = e.detail.value.name
     var temperature = e.detail.value.temperature
     var bodyStatusFlag = this.bodyStatusFlag
+    var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
 
@@ -286,6 +288,14 @@ Page({
         }
       }
     }
+    if (isQueZhenFlag == null || isQueZhenFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '是否确诊不能为空'
+      });
+      return;
+    }
+
     if (goHospitalFlag == null || goHospitalFlag == '') {
       wx.showToast({
         icon: 'none',
@@ -293,6 +303,7 @@ Page({
       });
       return;
     }
+    
     if (goHBFlag == null || goHBFlag == '') {
       wx.showToast({
         icon: 'none',
@@ -343,6 +354,7 @@ Page({
     console.log("体温 :" + e.detail.value.temperature);
     console.log("目前健康状况:" + this.bodyStatusFlag);
     console.log("健康状况为其他的原因:" + e.detail.value.bodystatusotherremark);
+    console.log("是否确诊:" + this.isQueZhenFlag);
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
@@ -362,6 +374,7 @@ Page({
     var noGoBackFlag = this.noGoBackFlag
     var isLeaveBjFlag = this.isLeaveBjFlag
     var bodyStatusFlag = this.bodyStatusFlag
+    var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
 
 
@@ -391,6 +404,7 @@ Page({
         workPlaceFlag: workPlaceFlag,
         isLeaveBjFlag: isLeaveBjFlag,
         bodyStatusFlag: bodyStatusFlag,
+        isQueZhenFlag: isQueZhenFlag,
         goHospitalFlag: goHospitalFlag,
         isGoBackFlag: app.globalData.isGoBackFlag,
         remark: remark,
@@ -460,11 +474,18 @@ Page({
   //  this.radioChange(e)
   },
 
+  //是否确诊
+  isQueZhenRadioChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.isQueZhenFlag = e.detail.value
+  //  this.radioChange(e)
+  },
+
   //是否就诊住院
   goHospitalRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
-  //  this.radioChange(e)
+    //  this.radioChange(e)
   },
 
   //计划返京日期

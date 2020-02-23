@@ -140,7 +140,16 @@
             </view>
         </view>
 
-        <view class="weui-cells__title">是否就诊住院</view>
+        <view class="weui-cells__title">是否确诊</view>
+        <view>
+            <radio-group class="radio-group"   bindchange="isQueZhenRadioChange">
+                <label wx:for="{{radioItems}}"  wx:key="{{index}}">
+                    <radio value="{{item.value}}" />{{item.name}}
+                </label>
+            </radio-group>
+        </view>
+
+                <view class="weui-cells__title">是否就诊住院</view>
         <view>
             <radio-group class="radio-group"   bindchange="goHospitalRadioChange">
                 <label wx:for="{{radioItems}}"  wx:key="{{index}}">
@@ -158,7 +167,7 @@
             </radio-group>
         </view>
 
-        <view class="weui-cells__title">16.其他</view>
+        <view class="weui-cells__title">其他</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
