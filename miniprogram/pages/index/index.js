@@ -13,7 +13,7 @@ Page({
     // 默认当前坐标附近的列表
     poiList: [],
     isManagerFlag: '0',
-    isSuperUserFlag: '0',
+    isSuperUserFlag: '0', 
   },
 
   onLoad: function () {

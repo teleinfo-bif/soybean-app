@@ -19,5 +19,5 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   console.log(wxContext);
   console.log(event);
-  return getMuserByOpenid(wxContext.openid)
+  return getMuserByOpenid(wxContext.OPENID)
 }
