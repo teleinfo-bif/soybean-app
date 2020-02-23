@@ -14,28 +14,28 @@ const db = wx.cloud.database({
 
 // let chart = null;
 
-function getReturnBeijingNumbers(datas){
+// function getReturnBeijingNumbers(datas){
 
-  var sum = 0
-  for (var i = 0; i < datas.length; i++) {
-    if (datas[i].isGoBackFlag == "0" ){
-      sum = sum + 1
-    }
-  }
+//   var sum = 0
+//   for (var i = 0; i < datas.length; i++) {
+//     if (datas[i].isGoBackFlag == "0" ){
+//       sum = sum + 1
+//     }
+//   }
 
-  return sum
-}
+//   return sum
+// }
 
-function getHealthyStatusNumber(datas, status) {
-  var sum = 0
-  for (var i = 0; i < datas.length; i++) {
-    if (datas[i].bodyStatusFlag == status){
-      sum = sum + 1
-    }
-  }
+// function getHealthyStatusNumber(datas, status) {
+//   var sum = 0
+//   for (var i = 0; i < datas.length; i++) {
+//     if (datas[i].bodyStatusFlag == status){
+//       sum = sum + 1
+//     }
+//   }
 
-  return sum
-}
+//   return sum
+// }
 
 // function initChart(canvas, width, height) {
 //   const { Util, G } = F2;
@@ -182,23 +182,23 @@ Page({
 
   },
 
-  getIsolateNumber: function(e) {
-    var days14Diffms = 1123200000
-    var current = new Date(this.data.showDate)
+  // getIsolateNumber: function(e) {
+  //   var days14Diffms = 1123200000
+  //   var current = new Date(this.data.showDate)
 
-    var sum = 0
+  //   var sum = 0
     
-    for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
-      var back = this.data.beijingUnConfirmed[i].suregobackdate
-      var backDate = new Date(back)
-      if ((current.getTime() - backDate.getTime()) < days14Diffms) {
-        sum = sum + 1
-      }
-    }
+  //   for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
+  //     var back = this.data.beijingUnConfirmed[i].suregobackdate
+  //     var backDate = new Date(back)
+  //     if ((current.getTime() - backDate.getTime()) < days14Diffms) {
+  //       sum = sum + 1
+  //     }
+  //   }
 
-    return sum
+  //   return sum
 
-  },
+  // },
 
   bindDateChange: function(e) {
     console.log(e)
@@ -285,7 +285,7 @@ Page({
         name: '咳嗽、发烧',
         data: this.data.stateServerNumber,
         stroke: false,
-        color: "#ec7055",
+        color: "#aa4438",
       },
       ],
       disablePieStroke: false,
@@ -555,24 +555,26 @@ getDatas: function(e) {
         stateOthersNumber: datas[3],
         stateServerNumber: datas[4],
 
+        healthyBadNumber : datas[1] - datas[2],
+
         wuhanNumber: datas[5],
         hubeiNumber: datas[6],
         othersNumber: datas[7],
         beijingNumber: datas[8],
 
         confirmedNumber: datas[9],
-        healthyBadNumber: datas[10],
-        beijingUnConfirmed: datas[11]
+        beijingUnConfirmed: datas[11],
+        isolateNumber: datas[12]
       })
 
-      var isolateNum = this.getIsolateNumber()
-      var unSolateNum = this.data.beijingUnConfirmed.length - isolateNum
-      var other = datas[1] - datas[8]
+      var beijingConfirmedNum = datas[13]
+      var unIsoNum = datas[8] - datas[12]
+      var other = datas[1] - datas[9] - datas[8]
 
       this.setData({
-        isolateNumber: isolateNum,
-        outIsolateNumber: unSolateNum,
-        othersNumber: other
+       
+        outIsolateNumber: unIsoNum,
+        otherCasesNumber: other
       })
 
       

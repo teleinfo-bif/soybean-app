@@ -84,10 +84,33 @@ exports.main = async (event, context) => {
         regexp: '.*' + '北京'
       })
 
-  }, {
-    "isQueZhenFlag": "1"
+  }, 
+  // {
+  //   "isQueZhenFlag": "1"
+  // }, 
+  {
+    "isGoBackFlag": "0"
   }])).get()
 
+  let isLeaveBeijing = await db.collection('user_healthy').where(_.and([{
+    "date": event.date
+  }, {
+      "place": db.RegExp({
+        regexp: '.*' + '北京'
+      })
+  },{
+    "isLeaveBjFlag": "0"
+  }])).count()
+
+  let beijingConfirmed = await db.collection('user_healthy').where(_.and([{
+    "date": event.date
+  },{
+      "place": db.RegExp({
+        regexp: '.*' + '北京'
+      })
+  },{
+    "isQueZhenFlag": "0"
+  }])).count()
 
   datas.push(userInfo.total)
   datas.push(userHealthy.total)
@@ -109,6 +132,8 @@ exports.main = async (event, context) => {
   datas.push(stateBad)
 
   datas.push(beijingUnComfirmed.data)
+  datas.push(isLeaveBeijing.total)
+  datas.push(beijingConfirmed.total)
 
 
 

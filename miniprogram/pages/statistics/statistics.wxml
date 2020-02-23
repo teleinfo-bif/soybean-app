@@ -45,7 +45,7 @@
   <view class="template">
     <view class="template-title">
       <view class="template-title-text">健康情况</view>
-      <view class="template-title-total">总人数 {{healthyTotalNumber}}人</view>
+      <view class="template-title-total">总人数 {{totalStateNumber}}人</view>
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
@@ -57,17 +57,19 @@
           <view class="table-col-title">分布情况:</view>
           <view class="table-row">
             <view class="table-row-content">
-              <view class="ring-icon1"></view>
-              <view class="table-row-content-text">健康 {{stateGoodNumber}}人</view>
+              <view class="ring-icon3"></view>
+              <view class="table-row-content-text">咳嗽、发烧 {{stateServerNumber}}人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon2"></view>
               <view class="table-row-content-text">其它症状 {{stateOthersNumber}}人</view>
             </view>
             <view class="table-row-content">
-              <view class="ring-icon3"></view>
-              <view class="table-row-content-text">咳嗽、发烧 {{stateServerNumber}}人</view>
+              <view class="ring-icon1"></view>
+              <view class="table-row-content-text">健康 {{stateGoodNumber}}人</view>
             </view>
+            
+            
           </view>
         </view>
         <view class="table-col-2">
@@ -75,7 +77,7 @@
           <view class="table-row">
             <view class="table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{stateGoodPercent}} %</view>
+              <view class="table-row-content-text">{{stateServerPercent}} %</view>
             </view>
             <view class=" table-row-content">
               <view class="icon-none"></view>
@@ -83,7 +85,7 @@
             </view>
             <view class="table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{stateServerPercent}} %</view>
+              <view class="table-row-content-text">{{stateGoodPercent}} %</view>
             </view>
           </view>
         </view>

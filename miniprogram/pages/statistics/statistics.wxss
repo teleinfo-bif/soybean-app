@@ -249,7 +249,7 @@
 .ring-icon3 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ec7055;
+  background-color: #aa4438;
   float: left;
   margin: 15rpx 10rpx 0rpx 0rpx;
 }
