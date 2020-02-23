@@ -9,7 +9,7 @@ async function getMuserByOpenid(openid) {
     _openid: openid,
     superuser:'1'
   }).count();
-  console.log("调用云函数getMuserByOpenid结果count为：" + count);
+  console.log("调用云函数getMuserByOpenid结果count为：" + count.total);
   return count;
 }
 
@@ -19,5 +19,5 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   console.log(wxContext);
   console.log(event);
-  return getMuserByOpenid(wxContext.openid)
+  return getMuserByOpenid(wxContext.OPENID)
 }
