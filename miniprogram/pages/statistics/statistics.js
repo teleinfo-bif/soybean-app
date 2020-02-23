@@ -210,7 +210,7 @@ Page({
 
     var selectedDate = new Date(e.detail.value)
     var current = new Date()
-    var startDate = new Date('2020-02-20')
+    var startDate = new Date('2020-02-22')
     var date2 = new Date("2020-02-21")
 
     console.log("cha: ", date2.getTime() - startDate.getTime())
@@ -549,7 +549,7 @@ getDatas: function(e) {
       this.setData({
         shouldFilledNumber: datas[0],
         hasFilledNumber: datas[1],
-        outBeijingNumber: datas[0] - datas[8],
+        outBeijingNumber: datas[1] - datas[8],
 
         stateGoodNumber: datas[2],
         stateOthersNumber: datas[3],
@@ -564,15 +564,16 @@ getDatas: function(e) {
 
         confirmedNumber: datas[9],
         beijingUnConfirmed: datas[11],
-        isolateNumber: datas[12]
+        
       })
 
-      var beijingConfirmedNum = datas[13]
-      var unIsoNum = datas[8] - datas[12]
-      var other = datas[1] - datas[9] - datas[8]
+      var isoNum = datas[12] - datas[13]
+
+      var unIsoNum = datas[8] - isoNum - datas[13]
+      var other = datas[1] - isoNum - unIsoNum - datas[13]
 
       this.setData({
-       
+        isolateNumber: isoNum,
         outIsolateNumber: unIsoNum,
         otherCasesNumber: other
       })
