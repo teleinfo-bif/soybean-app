@@ -208,7 +208,7 @@ Page({
       canvasId: 'ringCanvas',
       type: 'ring',
       extra: {
-        ringWidth: 25,
+        ringWidth: 15,
         pie: {
           offsetAngle: -45
         }
@@ -242,7 +242,7 @@ Page({
       ],
       disablePieStroke: false,
       width: windowWidth,
-      height: 170,
+      height: 140,
       dataLabel: false,
       legend: false,
       background: '#f5f5f5',
@@ -263,7 +263,7 @@ Page({
       canvasId: 'ringCanvas2',
       type: 'ring',
       extra: {
-        ringWidth: 25,
+        ringWidth: 15,
         pie: {
           offsetAngle: -45
         }
@@ -297,7 +297,7 @@ Page({
       ],
       disablePieStroke: false,
       width: windowWidth,
-      height: 170,
+      height: 140,
       dataLabel: false,
       legend: false,
       background: '#f5f5f5',
