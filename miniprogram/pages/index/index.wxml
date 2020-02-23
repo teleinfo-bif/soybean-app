@@ -22,7 +22,7 @@
   </view>
 
   <view class="page__hd">
-    <view class="page__title">我所在的部门</view>
+    <view class="page__title"></view>
     <view class="weui-grids">
       <navigator url="" class="weui-grid" hover-class="weui-grid_active" bindtap="gotoHealthyClick">
         <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
