@@ -2,10 +2,11 @@
 
 .page_detail {
   background-color: #F5F5F5;
+  font-family: PingFangSC-Regular;
 }
 
 .head_body {
-  width: 95%;
+  width: 720rpx;
   background-color: #fff;
   height:90rpx;
   margin: auto;
@@ -20,36 +21,31 @@
   margin-left:175rpx;
 }
 
-
-
 .detail_body {
-
-  width:90%;
+  width:700rpx;
+  height: 500rpx;
   border-radius: 20rpx;
   margin: auto;
-  margin-top:10rpx;
+  margin-top:5rpx;
+
 }
 
 .userclicklist {
-
-    width:100%;
+    width:700rpx;
     float:left;
-    margin-left:20rpx;
-    padding-left:20rpx;
     background-color: #fff;
     margin: auto;
     margin-top:10rpx;
-    height: 90rpx;
-
+    height: 100rpx;
+    font-size: 30rpx;
 }
 
 .userclicklist label{
-  width:25%;
+  width:170rpx;
   float: left;
-  margin-top:21rpx;
+  line-height: 110rpx;
   text-align: center;
 }
-
 
 .tree-children-status-red {
   width: 40rpx;
@@ -57,6 +53,9 @@
   border-radius: 40rpx;
   background: red;
   margin: 5rpx auto;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
 }
 
 .tree-children-status-green {
@@ -73,4 +72,10 @@
   border-radius: 40rpx;
   background: yellow;
   margin: 5rpx auto;
+}
+
+.tree-children-status-text {
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-top: 5rpx;
 }

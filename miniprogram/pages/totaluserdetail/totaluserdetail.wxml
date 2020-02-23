@@ -20,25 +20,25 @@
               <label>{{item.name}}</label>
               <label wx:if="{{item.temperature > 0}}">已打卡</label>
               <label wx:else="{{item.temperature > 0}}">未打卡</label>
-              <label>
+              <label >
                   <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{date}}">
-                  <view  bindtap="clickRecord" style="color:#4169E1;">
+                  <view  bindtap="clickRecord"  style="color:#4f7ef2;">
                       打卡详情
                   </view>
                   </navigator>
-                  <view  wx:else="{{item.temperature > 0}}" style="color:#ccc;">
+                  <view  wx:else="{{item.temperature > 0}}" style="color:gray;">
                       打卡详情
                   </view>
               </label>
-              <label style="margin-top:0px;" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}" >
+              <label style="margin-top:10rpx;" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}" >
                     <view  class="tree-children-status-green"></view>
                     <view class="tree-children-status-text">正常</view>
               </label>
-              <label style="margin-top:0px;" wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}" >
+              <label style="margin-top:10rpx;" wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}" >
                     <view  class="tree-children-status-yellow"></view>
                     <view class="tree-children-status-text">异常</view>
               </label>
-              <label style="margin-top:20rpx;" wx:else="{{item.temperature > 0}}" >
+              <label style="margin-top:30rpx;" wx:else="{{item.temperature > 0}}" >
                     <view class="tree-children-status-text">--</view>
               </label>
         </view>
