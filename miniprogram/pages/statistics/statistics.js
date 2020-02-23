@@ -4,6 +4,7 @@ var wxCharts = require('../../utils/wxcharts.js');
 // var app = getApp();
 var ringChart = null;
 var ringChart2 = null;
+var ringChart3 = null;
 
 const db = wx.cloud.database({
   env: "soybean-uat"
@@ -93,7 +94,7 @@ Page({
         filledIn: 26,
         filledInText: "已填写人数",
         unfilledIn: 16,
-        unfilledInText: "未填写人数"
+        unfilledInText: "确诊人数"
       },
       area: {
         should: 42,
@@ -128,27 +129,74 @@ Page({
     //   onInit: initChart
     // },
 
-    totalNumber: 0,
-    filleInNumber: 0,
-    unFilledNumber: 0,
-
-    returnBeijingNumber: 0,
+    shouldFilledNumber: 0,
+    hasFilledNumber: 0,
     outBeijingNumber: 0,
+    healthyBadNumber: 0,
 
-    healthyTotalNumber: 0,
+    
+
+    // healthy datas
+    totalStateNumber: 0,
     stateGoodNumber: 0,
     stateServerNumber: 0,
     stateOthersNumber: 0,
 
     stateGoodPercent: 0,
-    stateOtherPercent: 0,
+    stateOthersPercent: 0,
     stateServerPercent: 0,
 
-    returnBeijingPercent: 0,
-    outBeijingPercent: 0,
+    // area datas
+    beijingNumber: 5,
+    wuhanNumber: 6,
+    hubeiNumber: 7,
+    othersNumber: 3,
+    totalAreaNumber: 0,
+
+    beijingPercent: 0,
+    wuhanPercent: 0,
+    hubeiPercent: 0,
+    othersPercent: 0,
+
+    // case datas
+    confirmedNumber: 3,
+    isolateNumber: 5,
+    outIsolateNumber: 2,
+    otherCasesNumber: 9,
+    totalCasesNumber: 0,
+
+    confirmedPercent: 0,
+    isolatePercent: 0,
+    outIsolatePercent: 0,
+    otherCasesPercent: 0,
+
+    beijingUnConfirmed: [],
 
     showDate: "",
 
+    ringWidth: 200,
+    ringHeight: 150,
+    ringHou: 10,
+    ringBackGround: "#f5f5f5"
+
+
+  },
+
+  getIsolateNumber: function(e) {
+    var days14Diffms = 1123200000
+    var current = new Date(this.data.showDate)
+
+    var sum = 0
+    
+    for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
+      var back = this.data.beijingUnConfirmed[i].suregobackdate
+      var backDate = new Date(back)
+      if ((current.getTime() - backDate.getTime()) < days14Diffms) {
+        sum = sum + 1
+      }
+    }
+
+    return sum
 
   },
 
@@ -201,14 +249,14 @@ Page({
   },
 
   initChats: function(e) {
-    var windowWidth = 200;
+    // var windowWidth = 200;
 
     ringChart = new wxCharts({
       animation: true,
       canvasId: 'ringCanvas',
       type: 'ring',
       extra: {
-        ringWidth: 15,
+        ringWidth: this.data.ringHou,
         pie: {
           offsetAngle: -45
         }
@@ -227,7 +275,7 @@ Page({
         name: '健康人数',
         data: this.data.stateGoodNumber,
         stroke: false,
-        color: "#22bb77"
+        color: "#4169E1"
       }, {
         name: '其他症状',
         data: this.data.stateOthersNumber,
@@ -241,11 +289,11 @@ Page({
       },
       ],
       disablePieStroke: false,
-      width: windowWidth,
-      height: 140,
+      width: this.data.ringWidth,
+      height: this.data.ringHeight,
       dataLabel: false,
       legend: false,
-      background: '#f5f5f5',
+      background: this.data.ringBackGround,
       padding: 0
     });
 
@@ -254,16 +302,16 @@ Page({
       console.log('renderComplete');
     });
 
-    // setTimeout(() => {
-    //   ringChart.stopAnimation();
-    // }, 8000);
+    setTimeout(() => {
+      ringChart.stopAnimation();
+    }, 500);
 
     ringChart2 = new wxCharts({
       animation: true,
       canvasId: 'ringCanvas2',
       type: 'ring',
       extra: {
-        ringWidth: 15,
+        ringWidth: this.data.ringHou,
         pie: {
           offsetAngle: -45
         }
@@ -279,28 +327,36 @@ Page({
       //   fontSize: 15
       // },
       series: [{
-        name: '返京人数',
-        data: this.data.returnBeijingNumber,
+        name: '武汉人数',
+        data: this.data.wuhanNumber,
         stroke: false,
-        color: "#22bb77"
-      }, {
-        name: '未返京人数',
-        data: this.data.outBeijingNumber,
-        stroke: false,
-        color: "#ffaa00",
-      }, {
-        name: '身体异常',
-        data: this.data.stateServerNumber,
-        stroke: false,
-        color: "#ec7055"
-      }
+        color: "#aa4438",
+      },
+        {
+          name: '湖北其他人数',
+          data: this.data.hubeiNumber,
+          stroke: false,
+          color: "#ffaa00",
+        },
+        {
+          name: '全国其他人数',
+          data: this.data.othersNumber,
+          stroke: false,
+          color: "#ffff00",
+        },
+        {
+          name: '北京人数',
+          data: this.data.beijingNumber,
+          stroke: false,
+          color: "#4169E1"
+        }
       ],
       disablePieStroke: false,
-      width: windowWidth,
-      height: 140,
+      width: this.data.ringWidth,
+      height: this.data.ringHeight,
       dataLabel: false,
       legend: false,
-      background: '#f5f5f5',
+      background: this.data.ringBackGround,
       padding: 0
     });
 
@@ -310,45 +366,74 @@ Page({
     });
     setTimeout(() => {
       ringChart.stopAnimation();
-      ringChart2.stopAnimation();
-    
-    }, 2000);
+    }, 500);
+
+    ringChart3 = new wxCharts({
+      animation: true,
+      canvasId: 'ringCanvas3',
+      type: 'ring',
+      extra: {
+        ringWidth: this.data.ringHou,
+        pie: {
+          offsetAngle: -45
+        }
+      },
+      // title: {
+      //   name: '70%',
+      //   color: '#7cb5ec',
+      //   fontSize: 25
+      // },
+      // subtitle: {
+      //   name: '收益率',
+      //   color: '#666666',
+      //   fontSize: 15
+      // },
+      series: [{
+        name: '确诊人数',
+        data: this.data.confirmedNumber,
+        stroke: false,
+        color: "#aa4438",
+      },
+      {
+        name: '隔离人数',
+        data: this.data.isolateNumber,
+        stroke: false,
+        color: "#ffaa00",
+      },
+      {
+        name: '出隔离人数',
+        data: this.data.outIsolateNumber,
+        stroke: false,
+        color: "#ffff00",
+      },
+      {
+        name: '其他人数',
+        data: this.data.otherCasesNumber,
+        stroke: false,
+        color: "#4169E1"
+      }
+      ],
+      disablePieStroke: false,
+      width: this.data.ringWidth,
+      height: this.data.ringHeight,
+      dataLabel: false,
+      legend: false,
+      background: this.data.ringBackGround,
+      padding: 0
+    });
+
+
+    ringChart3.addEventListener('renderComplete', () => {
+      console.log('renderComplete');
+    });
+    setTimeout(() => {
+      ringChart3.stopAnimation();
+    }, 500);
   },
 
   touchHandler: function (e) {
     console.log(ringChart.getCurrentDataIndex(e));
-    
   },
-
-  // updateData1: function () {
-
-  //   ringChart.updateData({
-  //       series: [{
-  //         name: '健康人数',
-  //         data: this.data.stateGoodNumber,
-  //         stroke: false,
-  //         color: "#22bb77"
-  //       }, {
-  //         name: '其他症状',
-  //         data: this.data.stateOthersNumber,
-  //         stroke: false,
-  //           color: "#ffaa00"
-  //       }, {
-  //         name: '咳嗽、发烧',
-  //         data: this.data.stateServerNumber,
-  //         stroke: false,
-  //           color: "#ec7055"
-  //       }],
-  //   });
-
-   
-  // },
-
-  // goRing: function(e) {
-  //     wx.redirectTo({
-  //       url: '../../pages/ring/ring',
-  //     })
-  // },
 
   getCurrentDay: function(e){
     var date = new Date();
@@ -368,6 +453,84 @@ Page({
     return currentdate;
 },
 
+// 统计健康百分比
+
+setHealthyPercents: function(e) {
+
+  var total = this.data.stateGoodNumber + this.data.stateOthersNumber + this.data.stateServerNumber
+
+  var goodP = (this.data.stateGoodNumber / total * 100).toFixed(2)
+  var otherP = (this.data.stateOthersNumber / total * 100).toFixed(2) 
+  var serverP = (this.data.stateServerNumber / total * 100).toFixed(2)
+
+  this.setData({
+    totalStateNumber: total,
+    stateGoodPercent: goodP,
+    stateOthersPercent: otherP,
+    stateServerPercent: serverP,
+  })
+},
+
+// 地区数据百分比
+
+setAreaPercents: function(e) {
+  var total = this.data.beijingNumber + this.data.wuhanNumber + this.data.hubeiNumber + this.data.othersNumber
+
+  var bjPercent = (this.data.beijingNumber / total * 100).toFixed(2)
+  var whPercent = (this.data.wuhanNumber / total * 100).toFixed(2)
+  var hbPercent = (this.data.hubeiNumber / total * 100).toFixed(2)
+  var othPercent = (this.data.othersNumber / total * 100).toFixed(2)
+
+  this.setData({
+    beijingPercent: bjPercent,
+    wuhanPercent: whPercent,
+    hubeiPercent: hbPercent,
+    othersPercent: othPercent,
+    totalAreaNumber: total,
+  })
+},
+
+// 就诊情况百分比
+
+setCasesPercents: function(e) {
+  var total = this.data.confirmedNumber + this.data.isolateNumber + this.data.outIsolateNumber + this.data.otherCasesNumber
+
+  var conP = (this.data.confirmedNumber / total * 100).toFixed(2)
+  var isoP = (this.data.isolateNumber / total * 100).toFixed(2)
+  var outIsoP = (this.data.outIsolateNumber / total * 100).toFixed(2)
+  var otherP = (this.data.otherCasesNumber / total * 100).toFixed(2)
+
+  this.setData({
+    confirmedPercent: conP,
+    isolatePercent: isoP,
+    outIsolatePercent: outIsoP,
+    otherCasesPercent: otherP,
+    totalCasesNumber: total,
+  })
+},
+
+printDatas: function(e) {
+  console.log("should filled number: ", this.data.shouldFilledNumber)
+  console.log("has filled number:    ", this.data.hasFilledNumber)
+
+  console.log("state good number:    ", this.data.stateGoodNumber)
+  console.log("state others number:  ", this.data.stateOthersNumber)
+  console.log("state server number:  ", this.data.stateServerNumber)
+  console.log("state good percent:   ", this.data.stateGoodPercent)
+  console.log("state others percent: ", this.data.stateOthersPercent)
+  console.log("state server percent: ", this.data.stateServerPercent)
+
+  console.log("wuhan number:         ", this.data.wuhanNumber)
+  console.log("hubei other number:   ", this.data.hubeiNumber)
+  console.log("others number:        ", this.data.othersNumber)
+  console.log("beijing number:       ", this.data.beijingNumber)
+  console.log("wuhan number percent: ", this.data.wuhanPercent)
+  console.log("hubei number percent: ", this.data.wuhanPercent)
+  console.log("other number percent: ", this.data.othersPercent)
+  console.log("beijing number percent:", this.data.beijingPercent)
+
+},
+
 getDatas: function(e) {
 
   console.log("get datas")
@@ -380,57 +543,48 @@ getDatas: function(e) {
 
     success: res => {
       console.log(res.result)
-      var healthyDatas = res.result[0]
-      var infoDatas = res.result[1]
 
-      var totalNumber2 = infoDatas.length
-      var filledNumber = healthyDatas.length
-      var returnBeijingNumber2 = getReturnBeijingNumbers(healthyDatas)
-      var outBeijingNumber2 = totalNumber2 - returnBeijingNumber2
-      var unFilledNumber2 = totalNumber2 - filledNumber
+      var datas = res.result
 
-      var healthyGoodNumber = getHealthyStatusNumber(healthyDatas, "0")
-      var healthySeveryNumber = getHealthyStatusNumber(healthyDatas, "2")
-      var healthyOthers = getHealthyStatusNumber(healthyDatas, "1")
-      var healthyTotalNumber2 = healthyGoodNumber + healthyOthers + healthySeveryNumber
-
-      var goodPercent = healthyGoodNumber / healthyTotalNumber2 * 100
-      var otherPercent = healthyOthers / healthyTotalNumber2 * 100
-      var serverPercent = healthySeveryNumber / healthyTotalNumber2 * 100
-
-      var returnPercent = returnBeijingNumber2 / totalNumber2 * 100
-      var outPercent = outBeijingNumber2 / totalNumber2 * 100
-      
       this.setData({
-        totalNumber: totalNumber2,
-        filledInNumber: filledNumber,
-        unFilledNumber: unFilledNumber2,
+        shouldFilledNumber: datas[0],
+        hasFilledNumber: datas[1],
+        outBeijingNumber: datas[0] - datas[8],
 
-        returnBeijingNumber: returnBeijingNumber2,
-        outBeijingNumber: outBeijingNumber2,
+        stateGoodNumber: datas[2],
+        stateOthersNumber: datas[3],
+        stateServerNumber: datas[4],
 
-        healthyTotalNumber: healthyTotalNumber2,
-        stateGoodNumber: healthyGoodNumber,
-        stateServerNumber: healthySeveryNumber,
-        stateOthersNumber: healthyOthers,
+        wuhanNumber: datas[5],
+        hubeiNumber: datas[6],
+        othersNumber: datas[7],
+        beijingNumber: datas[8],
 
-        stateGoodPercent: goodPercent.toFixed(2),
-        stateServerPercent: serverPercent.toFixed(2),
-        stateOtherPercent: otherPercent.toFixed(2),
-
-        returnBeijingPercent: returnPercent.toFixed(2),
-        outBeijingPercent: outPercent.toFixed(2),
+        confirmedNumber: datas[9],
+        healthyBadNumber: datas[10],
+        beijingUnConfirmed: datas[11]
       })
 
-      console.log("state good:", this.stateGoodNumber)
-      console.log("state others: ", this.data.stateOthersNumber)
-      console.log("state server: ", this.data.stateServerNumber)
+      var isolateNum = this.getIsolateNumber()
+      var unSolateNum = this.data.beijingUnConfirmed.length - isolateNum
+      var other = datas[1] - datas[8]
 
-      console.log("return: ", this.data.returnBeijingNumber)
-      console.log("out beijing: ", this.data.outBeijingNumber)
+      this.setData({
+        isolateNumber: isolateNum,
+        outIsolateNumber: unSolateNum,
+        othersNumber: other
+      })
 
-      // this.updateData()
+      
+      this.setHealthyPercents()
+      this.setAreaPercents()
+      this.setCasesPercents()
+      
       this.initChats()
+
+      this.printDatas()
+
+
         
     },
 
