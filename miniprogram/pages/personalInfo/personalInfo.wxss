@@ -94,15 +94,15 @@
   /* color: #4169E1; */
   font-size: 30rpx;
   float: right;
-  margin-right: 50rpx;
+  margin-right: 40rpx;
 }
 
 .info-phone {
   /* background: #F5F5F5; */
   float: right;
-  
+  margin-right: 16rpx;
   font-size: 30rpx;
-  color: #4169E1
+  color: #4169E1;
 }
 
 .info-input{
