@@ -58,6 +58,11 @@ Page({
   },
 
   onQuery: function () {
+
+    wx.showLoading({
+      title: '数据加载中',
+    })
+
     /**
      * 通过云函数调用可以获取全部45条的数据
      */
@@ -71,10 +76,13 @@ Page({
         this.setData({
           userData: res.result
         })
+        wx.hideLoading()
       },
       fail: err => {
         console.log(err)
+        wx.hideLoading()
       }
+      
     })
 
   },

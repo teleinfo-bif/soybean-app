@@ -7,7 +7,7 @@
   width: 750rpx;
   height: 88rpx;
   margin: 10rpx 0rpx;
-  background-color: #F5F5F5;
+  background-color: #ffffff;
   font-family: PingFangSC-Regular;
 }
 
@@ -116,8 +116,8 @@
   width: 260rpx;
   height: 30rpx;
   margin: 15rpx 5rpx 5rpx 20rpx;
-  font-size: 30rpx;
-  line-height: 30rpx;
+  font-size: 26rpx;
+  line-height: 26rpx;
   color: #333333;
   float: left;
   display: flex;
@@ -128,7 +128,7 @@
   width: 380rpx;
   height: 30rpx;
   margin: 15rpx 5rpx 5rpx 20rpx;
-  font-size: 24rpx;
+  font-size: 20rpx;
   line-height: 30rpx;
   color: #666666;
   display: flex;
@@ -190,9 +190,19 @@
 .table-col-title {
   width: 120rpx;
   height: 30rpx;
-  margin: -20rpx 5rpx 5rpx 20rpx;
+  margin: -20rpx 15rpx 5rpx 0rpx;
   font-family: PingFangSC-Regular;
-  font-size: 30rpx;
+  font-size: 25rpx;
+  line-height: 30rpx;
+  color: #999999;
+}
+
+.table-col-title2 {
+  width: 120rpx;
+  height: 30rpx;
+  margin: -20rpx 15rpx 5rpx 20rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 25rpx;
   line-height: 30rpx;
   color: #999999;
 }
@@ -203,41 +213,87 @@
   margin: 10rpx 5rpx 5rpx 0rpx;
   font-family: PingFangSC-Regular;
   font-size: 23rpx;
-  line-height: 67rpx;
+  line-height: 50rpx;
   color: #999999;
 }
 
 .table-row-content {
   width: 200rpx;
-  height: 67rpx;
+  height: 50rpx;
 }
 
 .table-row-content-text {
   float: left;
+  font-size: 20rpx;
 }
 
-.icon-green {
+.canvas {
+  margin-top: 1rpx;
+  margin-left: -20rpx;
+}
+
+.ring-icon1 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #22bb77;
+  background-color: #4169E1;
   float: left;
-  margin: 25rpx 10rpx 0rpx 0rpx;
+  margin: 15rpx 10rpx 0rpx 0rpx;
 }
 
-.icon-orange {
+.ring-icon2 {
   width: 20rpx;
   height: 20rpx;
   background-color: #ffaa00;
   float: left;
-  margin: 25rpx 10rpx 0rpx 0rpx;
+  margin: 15rpx 10rpx 0rpx 0rpx;
 }
 
-.icon-orange2 {
+.ring-icon3 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ec7055;
+  background-color: #aa4438;
   float: left;
-  margin: 25rpx 10rpx 0rpx 0rpx;
+  margin: 15rpx 10rpx 0rpx 0rpx;
+}
+
+.ring-icon4 {
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #4169E1;
+  float: left;
+  margin: 15rpx 10rpx 0rpx 0rpx;
+}
+
+.ring-icon5 {
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #aa4438;
+  float: left;
+  margin: 15rpx 10rpx 0rpx 0rpx;
+}
+
+.ring-icon6 {
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #ffaa00;
+  float: left;
+  margin: 15rpx 10rpx 0rpx 0rpx;
+}
+
+.ring-icon7 {
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #ffff00;
+  float: left;
+  margin: 15rpx 10rpx 0rpx 0rpx;
+}
+
+.ring-others{
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #4169E1;
+  float: left;
+  margin: 15rpx 10rpx 0rpx 0rpx;
 }
 
 .icon-none {

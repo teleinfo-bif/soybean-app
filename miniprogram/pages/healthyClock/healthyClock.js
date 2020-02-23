@@ -270,6 +270,21 @@ Page({
           return;
         }
 
+        var current = new Date()
+        var ldate = new Date(leavedate)
+        console.log(ldate);
+        console.log(ldate.getTime());
+        console.log(current.getTime());
+        console.log(ldate.getTime() - current.getTime())
+        var ms = current.getTime() - ldate.getTime() 
+        if (ms > 1209600000){
+          wx.showToast({
+            icon: 'none',
+            title: '离京日期请选择14天内的日期'
+          });
+          return;
+        }
+
         var suregobackdate = e.detail.value.suregobackdate
         if (suregobackdate == null || suregobackdate == '') {
           wx.showToast({
@@ -278,6 +293,18 @@ Page({
           });
           return;
         }
+
+        var bdate = new Date(suregobackdate)
+        var msback = current.getTime() - bdate.getTime()
+        if (msback > 1209600000) {
+          wx.showToast({
+            icon: 'none',
+            title: '返京日期请选择14天内的日期'
+          });
+          return;
+        }
+
+
         var trainnumber = e.detail.value.trainnumber
         if (trainnumber == null || trainnumber == '') {
           wx.showToast({
