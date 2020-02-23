@@ -10,6 +10,7 @@
     "pages/personalInfo/personalInfo",
     "pages/healthySubmit/healthySubmit",
     "pages/healthyClock/healthyClock",
+    "pages/superUserMgmt/superUserMgmt",
     "pages/msg/msg_fail",
     "pages/msg/msg_success"
   ],

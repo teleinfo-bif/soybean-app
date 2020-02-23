@@ -54,4 +54,15 @@
               </navigator>
         </view>
 </view>
+
+
+<view wx:if="{{isSuperUserFlag == '1'}}">
+        <view class="page__title" style="margin-left:5%;margin-top:10px;">权限分配</view>
+        <view class="weui-grids" >
+            <navigator url="../superUserMgmt/superUserMgmt" class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../../images/quanxianfenpei.png" />
+                    <view class="weui-grid__label">权限分配</view>
+              </navigator>
+        </view>
+</view>
 </view>
