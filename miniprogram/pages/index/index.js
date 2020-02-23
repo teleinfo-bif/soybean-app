@@ -13,6 +13,7 @@ Page({
     // 默认当前坐标附近的列表
     poiList: [],
     isManagerFlag: '0',
+    isSuperUserFlag: '0',
   },
 
   onLoad: function () {
@@ -79,6 +80,7 @@ Page({
         if (res.data.length > 0) {
           app.globalData.todayClickFlag = '1'
         }
+        that.getUserManagerFlag();
       },
       fail: err => {
         wx.showToast({
@@ -100,7 +102,7 @@ Page({
           console.log(res)
           //发起网络请求
           app.globalData.sessionCode = res.code
-          that.getUserManagerFlag();
+        //  that.getUserManagerFlag();
         } else {
           console.log('登录失败！' + res.errMsg)
         }
@@ -112,18 +114,19 @@ Page({
   getUserManagerFlag: function () {
     let that = this
     const db = wx.cloud.database()
+    console.log("查询当前用户是否为管理员：" + app.globalData.openid);
     db.collection('user_info').where({
       _openid: app.globalData.openid,
-     // usertype : '1'
+      usertype : '1'
     }).get({
       success: res => {
-        console.log("管理员信息返回结果：" + res);
-        console.info("管理员信息返回结果：" + JSON.stringify(res, null, 2));
+        console.log("管理员信息返回结果：", res.data);
         if (res.data.length > 0) {
           this.setData({
             isManagerFlag: '1'
           })
         }
+        this.getSuperUser();
       },
       fail: err => {
         wx.showToast({
@@ -236,6 +239,28 @@ Page({
       url: '../personalInfo/personalInfo',
     })
   },
+
+
+  getSuperUser: function () {
+    var that = this;
+    wx.cloud.callFunction({
+      name: 'superUser',  // 对应云函数名
+      data: { },
+      success: res => {
+        // 成功拿到手机号，跳转首页
+        console.log("获取超级管理员", JSON.stringify(res.result, null, 2));
+        if(res.result.total > 0){
+            this.setData({
+              isSuperUserFlag:'1'
+            })
+        }
+      },
+      fail: err => {
+        console.error(err);
+      }
+    })
+  },
+
 
   getPhoneNumber: function (e) {
     var that = this;

@@ -1,0 +1,76 @@
+/* pages/memberDetail/memberDetail.wxss */
+
+.page_detail {
+  background-color: #F5F5F5;
+}
+
+.head_body {
+  width: 95%;
+  background-color: #fff;
+  height:90rpx;
+  margin: auto;
+  margin-top: 15rpx;
+}
+
+.tree-parent-time-icon {
+  width: 40rpx;
+  height: 40rpx;
+  float: left;
+  margin: 25rpx auto;
+  margin-left:175rpx;
+}
+
+
+
+.detail_body {
+
+  width:90%;
+  border-radius: 20rpx;
+  margin: auto;
+  margin-top:10rpx;
+}
+
+.userclicklist {
+
+    width:100%;
+    float:left;
+    margin-left:20rpx;
+    padding-left:20rpx;
+    background-color: #fff;
+    margin: auto;
+    margin-top:10rpx;
+    height: 90rpx;
+
+}
+
+.userclicklist label{
+  width:25%;
+  float: left;
+  margin-top:21rpx;
+  text-align: center;
+}
+
+
+.tree-children-status-red {
+  width: 40rpx;
+  height: rpx;
+  border-radius: 40rpx;
+  background: red;
+  margin: 5rpx auto;
+}
+
+.tree-children-status-green {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background: green;
+  margin: 5rpx auto;
+}
+
+.tree-children-status-yellow {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background: yellow;
+  margin: 5rpx auto;
+}
