@@ -7,8 +7,9 @@
     <view class="title-time section">
       <picker mode="date" value="{{showDate}}" start="2019-05-01" bindchange="bindDateChange">
         <view class="picker">
-          <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
+          
           <view class="title-time-text">{{showDate}}</view>
+          <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
         </view>
       </picker>
     </view>

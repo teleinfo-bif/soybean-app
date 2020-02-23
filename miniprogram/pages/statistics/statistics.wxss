@@ -7,7 +7,7 @@
   width: 750rpx;
   height: 88rpx;
   margin: 10rpx 0rpx;
-  background-color: #ffffff;
+  background-color: #F5F5F5;
   font-family: PingFangSC-Regular;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .title-text {
-  width: 160rpx;
+  width: 260rpx;
   height: 30rpx;
   float: left;
   font-size: 20;
@@ -29,34 +29,35 @@
 }
 
 .title-time {
-  width: 280rpx;
+  width: 300rpx;
   height: 90rpx;
   font-size: 30rpx;
   line-height: 90rpx;
   color: #4f7ef2;
-  margin-right: 20rpx;
+  margin-right: 10rpx;
   
-  display: flex;
-  flex-wrap: wrap;
   float: right;
 }
 
 .title-time-icon {
   width: 40rpx;
   height: 40rpx;
-  float: left;
-  margin: 25rpx auto;
+  float: right;
+  margin-top: 25rpx;
+  margin-right: -15rpx;
 }
 
 .title-time-text {
   width: 200rpx;
   height: 90rpx;
-  float: left;
-  margin-left: 10rpx;
+  float: right;
+  text-align: right;
+  margin-right: 10rpx;
 }
 
 .page-container .dashboard {
-  margin: 10rpx;
+  margin-top: 10rpx;
+  margin: auto;
   width: 720rpx;
   height: 250rpx;
   border-radius: 6rpx;
@@ -98,7 +99,8 @@
 .page-container .template {
   width: 720rpx;
   height: 320rpx;
-  margin:15rpx;
+  margin: auto;
+  margin-top: 10rpx;
   background-color: #ffffff;
   border-radius: 6rpx;
 }

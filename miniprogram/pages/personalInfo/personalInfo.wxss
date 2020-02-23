@@ -1,15 +1,15 @@
 /* pages/personalInfo/personalInfo.wxss */
 
-/* page { 
-  display: block; 
-  min-height: 100%; 
-  background-color: blue;
-  color: blue;
-} */
+.page { 
+  background-color: #F5F5F5;
+}
 
 .personal{
+  width: 720rpx;
+  margin: auto;
   margin-top: 20rpx;
-  background: white;
+  background-color: #ffffff;
+  font-family: PingFangSC-Regular;
 }
 
 .personal-divide {
@@ -63,21 +63,22 @@
   color: #4169E1
 }
 
-
-
 .personal-view{
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
 }
 
 .personal-info-hd {
   margin-top: 30rpx;
   width: 100%;
-
+  padding-left: 30rpx;
 }
 
 .personal-info-td {
   margin-top: 20rpx;
+  border-bottom: 2rpx solid #F5F5F5; 
+  padding-left: 30rpx;
 }
 
 /* .personal-info-picker {
@@ -85,25 +86,21 @@
 } */
 
 .info-label{
-  color: #777777;
+  color: #999999;
   font-size: 30rpx;
-  font-weight: 350;
-  /* font-family: STFangSong; */
 }
 
 .info-choice{
   /* color: #4169E1; */
   font-size: 30rpx;
-  font-weight: 500;
-  /* font-family: STFangSong; */
   float: right;
-  margin-right: 25rpx;
+  margin-right: 50rpx;
 }
 
 .info-phone {
   /* background: #F5F5F5; */
   float: right;
-  font-weight: 500;
+  
   font-size: 30rpx;
   color: #4169E1
 }
@@ -111,17 +108,17 @@
 .info-input{
   width: 100%;
   height: 45rpx;
-  font-size: 35rpx;
-  border-bottom: 1px solid #F5F5F5;
-  
+  font-size: 30rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+  font-family: PingFangSC-Regular;
+  color: #999999;
 }
 
 .placeholder-style {
   color: #bbbbbb;
-  /* font-family: STFangsong; */
   margin-left: 10rpx;
   margin-top: -5rpx;
-  font-weight: 300;
+  
   font-size: 35rpx;
 }
 
