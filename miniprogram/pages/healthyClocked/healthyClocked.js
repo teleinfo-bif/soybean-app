@@ -154,11 +154,6 @@ Page({
           this.setData({
             isLeaveBjRadioItems: isLeaveBjRadioItems
           });
-
-
-
-
-
         }else{
           if (this.data.user_id == app.globalData.openid) {
             wx.navigateTo({
