@@ -552,8 +552,9 @@ getDatas: function(e) {
         outBeijingNumber: datas[1] - datas[8],
 
         stateGoodNumber: datas[2],
-        stateOthersNumber: datas[3],
-        stateServerNumber: datas[4],
+       
+        stateServerNumber: datas[3],
+        stateOthersNumber: datas[4],
 
         healthyBadNumber : datas[1] - datas[2],
 
