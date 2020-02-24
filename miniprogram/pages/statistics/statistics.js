@@ -182,23 +182,23 @@ Page({
 
   },
 
-  // getIsolateNumber: function(e) {
-  //   var days14Diffms = 1123200000
-  //   var current = new Date(this.data.showDate)
+  getIsolateNumber: function(e) {
+    var days14Diffms = 1209600000
+    var current = new Date(this.data.showDate)
 
-  //   var sum = 0
+    var sum = 0
     
-  //   for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
-  //     var back = this.data.beijingUnConfirmed[i].suregobackdate
-  //     var backDate = new Date(back)
-  //     if ((current.getTime() - backDate.getTime()) < days14Diffms) {
-  //       sum = sum + 1
-  //     }
-  //   }
+    for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
+      var back = this.data.beijingUnConfirmed[i].suregobackdate
+      var backDate = new Date(back)
+      if ((current.getTime() - backDate.getTime()) < days14Diffms) {
+        sum = sum + 1
+      }
+    }
 
-  //   return sum
+    return sum
 
-  // },
+  },
 
   bindDateChange: function(e) {
     console.log(e)
@@ -567,16 +567,26 @@ getDatas: function(e) {
         
       })
 
-      var isoNum = datas[12] - datas[13]
-
-      var unIsoNum = datas[8] - isoNum - datas[13]
-      var other = datas[1] - isoNum - unIsoNum - datas[13]
+      var isoNum = this.getIsolateNumber()
+      var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
+      var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
 
       this.setData({
         isolateNumber: isoNum,
         outIsolateNumber: unIsoNum,
         otherCasesNumber: other
       })
+
+      // var isoNum = datas[12] - datas[13]
+
+      // var unIsoNum = datas[8] - isoNum - datas[13]
+      // var other = datas[1] - isoNum - unIsoNum - datas[13]
+
+      // this.setData({
+      //   isolateNumber: isoNum,
+      //   outIsolateNumber: unIsoNum,
+      //   otherCasesNumber: other
+      // })
 
       
       this.setHealthyPercents()
@@ -629,6 +639,12 @@ getDatas: function(e) {
   onLoad: function (options) {
     this.initDatas()
     this.dateChanged()
+
+    // var d1 = new Date('2020-02-01')
+    // var d2 = new Date('2020-02-15')
+
+    // var ms = d2.getTime() - d1.getTime()
+    // console.log("ms: ", ms)
     
   },
 

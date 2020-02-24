@@ -83,13 +83,12 @@ exports.main = async (event, context) => {
       "place": db.RegExp({
         regexp: '.*' + '北京'
       })
-
   }, 
-  // {
-  //   "isQueZhenFlag": "1"
-  // }, 
   {
-    "isGoBackFlag": "0"
+    "isQueZhenFlag": "1"
+  }, 
+  {
+    "isLeaveBjFlag": "0"
   }])).get()
 
   let isLeaveBeijing = await db.collection('user_healthy').where(_.and([{
