@@ -191,17 +191,22 @@ Page({
 
   exportExcel: function () {
     // console.log("get date is ", date)
-
+    wx.getSavedFileList({
+      success: function (res) {
+        console.log("es.fileList", res.fileList)
+      }
+    })
     wx.cloud.callFunction({
-      name: "exportExcel",
+      name: "export",
+      // name: "sum",
       data: {
-        date: "houfa"
+        data: "houfa"
       },
       success: res => {
         console.log("exportExcel", res)
 
         wx.downloadFile({
-          url: res.fileID,
+          url: "https://736f-soybean-uat-1301333180.tcb.qcloud.la/download/sheetwx981c51592be1d70c.xlsx?sign=22929a097d27331b648f98a2efa06192&t=1582532741",
           success: function (res) {
             const filePath = res.tempFilePath
             wx.openDocument({

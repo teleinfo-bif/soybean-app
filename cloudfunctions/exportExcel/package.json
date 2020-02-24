@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "excel-export": "^0.5.1",
-    "wx-server-sdk": "latest"
+    "wx-server-sdk": "^1.8.2"
   }
 }

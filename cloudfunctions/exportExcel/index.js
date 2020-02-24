@@ -1,54 +1,3 @@
-// // 云函数入口文件
-// const cloud = require('wx-server-sdk')
-
-// cloud.init()
-
-// const db = cloud.database({ env: "soybean-uat" })
-// // const db = cloud.database()   // 这个会报错
-
-// async function getCompanyCountIndex() {
-//   let count = await db.collection('company_info').where({
-//   }).count();
-//   return count;
-// }
-
-// async function getCompanyListIndex(skip) {
-//   let list = await db.collection('company_info').where({
-//   });
-//   return list.data;
-// }
-
-// exports.main = async (event, context) => {
-//   // let count = await db.collection('company_info').where({
-//   // }).count();
-//   // console.log("查询机构数量为：" + count.total)
-//   // count = count.total;
-//   // let list = []
-//   // for (let i = 0; i < count; i += 100) {
-//   //   list = list.concat(
-//   //     await db.collection('company_info').where({
-//   //     }).data
-//   //   );
-//   // }
-
-//   // return count;
-//   console.log("查询的时期为：" + event.date)
-//   let list = await db.collection('user_healthy').where({
-//     date: event.date
-//   }).get({
-//   });
-//   return list.data;
-// }
-
-
-const db = cloud.database({ env: "soybean-uat" })
-
-async function getCompanyCountIndex() {
-  let count = await db.collection('company_info').where({
-  }).count();
-  return count;
-}
-
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 const nodeExcel = require('excel-export')
@@ -91,25 +40,23 @@ exports.main = async (event, context) => {
   }
   //保存excelResult到相应位置
   var excelResult = nodeExcel.execute(tableMap);
-  var filePath = "outputExcels";
+  var filePath = "download";
   var fileName = wxContext.OPENID + "-" + Date.now() / 1000 + '.xlsx';
   console.log(excelResult);
   //上传文件到云端
-  let file = await cloud.uploadFile({
-    cloudPath: path.join(filePath, fileName),
-    fileContent: Buffer.from(excelResult, 'binary')
-  });
+  // let file = await cloud.uploadFile({
+  //   cloudPath: path.join(filePath, fileName),
+  //   fileContent: Buffer.from(excelResult.toSTring(), 'binary')
+  // });
+
+  return await cloud.uploadFile({
+    cloudPath: `download/sheet-----${wxContext.OPENID}.xlsx`,  // excel文件名称及路径，即云存储中的路径
+    fileContent: Buffer.from(excelResult, 'binary'),
+  })
 
   console.log("file:", file);
 
   return file
 }
 
-// //fileID: "cloud://sobean-uat.736f-sobean-uat-1301333180/outputExcels/oqME_5SxOS8uyKMun5rV4VkkM7Ao-1582519420.623.xlsx"
-
-// // return {
-// //   event,
-// //   openid: wxContext.OPENID,
-// //   appid: wxContext.APPID,
-// //   unionid: wxContext.UNIONID,
-// // }
+// // //fileID: "cloud://sobean-uat.736f-sobean-uat-1301333180/outputExcels/oqME_5SxOS8uyKMun5rV4VkkM7Ao-1582519420.623.xlsx"
