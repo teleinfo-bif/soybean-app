@@ -170,9 +170,9 @@ Page({
               app.globalData.isGoBackFlag = '0'
             }else{
               that.setData({
-                isGoBackFlag : '0'
+                isGoBackFlag : '1'
               });
-              app.globalData.isGoBackFlag = '0'
+              app.globalData.isGoBackFlag = '1'
             }
               
           }
