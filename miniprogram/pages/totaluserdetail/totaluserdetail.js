@@ -191,29 +191,24 @@ Page({
 
   exportExcel: function () {
     // console.log("get date is ", date)
-    wx.getSavedFileList({
-      success: function (res) {
-        console.log("es.fileList", res.fileList)
-      }
-    })
     wx.cloud.callFunction({
       name: "export",
-      // name: "sum",
       data: {
         data: "houfa"
       },
       success: res => {
-        console.log("exportExcel", res)
+        console.log("export", res)
 
-        wx.downloadFile({
-          url: "https://736f-soybean-uat-1301333180.tcb.qcloud.la/download/sheetwx981c51592be1d70c.xlsx?sign=22929a097d27331b648f98a2efa06192&t=1582532741",
-          success: function (res) {
-            const filePath = res.tempFilePath
-            wx.openDocument({
-              filePath: filePath,
-              success: function (res) {
-                console.log('打开文档成功: ', filePath)
-              }
+        wx.cloud.getTempFileURL({
+          fileList: [res.result.fileID],
+          success: res => {
+            console.log("res.fileList ", res.fileList)
+
+            this.sendEmail({
+              fromAddress: "774392980@qq.com",
+              toAddress: "774392980@qq.com",
+              subject: "打卡记录",
+              content: res.fileList[0].tempFileURL,
             })
           }
         })
@@ -222,6 +217,29 @@ Page({
       fail: err => {
         console.log(err)
         wx.hideLoading()
+      }
+    })
+  },
+
+  sendEmail: function (email) {
+    console.log("email ", email)
+    wx.cloud.callFunction({
+      name: "sendEmail",
+      data: {
+        fromAddress: email.fromAddress,
+        toAddress: email.toAddress,
+        subject: email.subject,
+        content: email.content,
+      },
+      success: res => {
+        console.log("sendEmail", res)
+        wx.showToast({
+          icon: 'none',
+          title: `已发送到${email.toAddress}邮箱`
+        });
+      },
+      fail: err => {
+        console.log(err)
       }
     })
   },
