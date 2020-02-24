@@ -35,7 +35,7 @@
 
 .detail_body {
   width: 700rpx;
-  height: 500rpx;
+  /* height: 500rpx; */
   border-radius: 20rpx;
   margin: auto;
   margin-top: 5rpx;
@@ -43,11 +43,10 @@
 
 .userclicklist {
   width: 700rpx;
-  float: left;
+  height: 100rpx;
   background-color: #ffffff;
   margin: auto;
   margin-top: 10rpx;
-  height: 100rpx;
   font-size: 30rpx;
 }
 
@@ -103,4 +102,20 @@
   line-height: 100rpx;
   margin-left: 20rpx;
   float: left;
+}
+
+.foot {
+  width: 300rpx;
+  height: 90rpx;
+  margin: 16rpx auto;
+  border-radius: 10rpx;
+  
+  background-color: #1759ef;
+}
+
+.btn {
+  font-size: 35rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #ffffff;
 }

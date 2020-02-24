@@ -55,4 +55,9 @@
     </view>
   </view>
   <!--列表部分开始-->
+
+
+  <view class="foot">
+    <button class="btn" bindtap="exportExcel">导出</button>
+  </view>
 </view>

@@ -8,7 +8,7 @@ Page({
 
   onLoad: function (options) {
     let that = this;
-   
+
     //获取当天日期
     var date = new Date();
     var Y = date.getFullYear() + '-';
@@ -44,12 +44,12 @@ Page({
             date: that.data.date
           },
           success: res => {
-            console.log("查询用户指定日期的打卡记录数据" + JSON.stringify(res, null, 2))
+            console.log("查询用户指定日期的打卡记录数据", res)
             for (var i = 0; i < that.data.userinfodata.length; i++) {
               var tempTopic = that.data.userinfodata[i];
               for (var j = 0; j < res.result.length; j++) {
-                if (that.data.userinfodata[i]._openid == res.result[j]._openid){
-                  console.log("循环打印打卡记录内容" + JSON.stringify(res.result[j], null, 2) );
+                if (that.data.userinfodata[i]._openid == res.result[j]._openid) {
+                  console.log("循环打印打卡记录内容 ", res.result[j]);
                   tempTopic['temperature'] = res.result[j].temperature
                   tempTopic['goHospitalFlag'] = res.result[j].goHospitalFlag
                   tempTopic['bodyStatusFlag'] = res.result[j].bodyStatusFlag
@@ -57,7 +57,7 @@ Page({
               }
               temp.push(tempTopic);
             }
-            console.log("打卡详情数据结构：" , temp);
+            console.log("打卡详情数据结构：", temp);
             this.setData({
               clickdetail: temp
             })
@@ -74,16 +74,16 @@ Page({
         console.log(err)
       }
     })
-    
+
   },
 
   qryClickInfoByDate: function (e) {
-    
+
     console.log('日期选择改变，需要查询的日期为', e.detail.value)
     this.setData({
       date: e.detail.value
     })
-    
+
     wx.showLoading({
       title: '数据加载中',
     })
@@ -181,30 +181,6 @@ Page({
       })
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   //返京日期
   dateChange: function (e) {
     console.log('日期选择改变，携带值为', e.detail.value)
@@ -213,13 +189,35 @@ Page({
     })
   },
 
+  exportExcel: function () {
+    // console.log("get date is ", date)
 
+    wx.cloud.callFunction({
+      name: "exportExcel",
+      data: {
+        date: "houfa"
+      },
+      success: res => {
+        console.log("exportExcel", res)
 
-
-
-
-
-
-
-
+        wx.downloadFile({
+          url: res.fileID,
+          success: function (res) {
+            const filePath = res.tempFilePath
+            wx.openDocument({
+              filePath: filePath,
+              success: function (res) {
+                console.log('打开文档成功: ', filePath)
+              }
+            })
+          }
+        })
+        wx.hideLoading()
+      },
+      fail: err => {
+        console.log(err)
+        wx.hideLoading()
+      }
+    })
+  },
 });
