@@ -64,7 +64,7 @@
 
       <view wx:if="{{clickdata.isGoBackFlag == '0'}}">
         <!--已返京开始-->
-        <view class="weui-cells__title">14天内是否离京:</view>
+        <view class="weui-cells__title">是否离过京(2020年1月10日以后):</view>
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{isLeaveBjRadioItems}}" wx:key="{{index}}">

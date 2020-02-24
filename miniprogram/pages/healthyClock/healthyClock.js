@@ -22,6 +22,25 @@ Page({
     todayClickFlag : '0' //今日是否打卡标志，默认未打卡
   },
 
+  currentDate: function(e) {
+    var date = new Date();
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    console.log("当前时间：" + Y + M + D);
+    return Y + M + D
+  },
+
+  dateJudge: function(e) {
+    var otherDate = new Date(e)
+    var currentDate = new Date(this.currentDate())
+
+    if (otherDate.getTime() < currentDate.getTime()) {
+      return false 
+    }
+    return true
+  },
+
   onLoad: function (options) {
     let that = this;
     qqmapsdk = new QQMapWX({
@@ -209,6 +228,25 @@ Page({
       });
       return;
     }
+
+    if (!(/^\d+(\.\d+)?$/.test(temperature))) {
+      wx.showToast({
+        icon: 'none',
+        title: '体温格式错误!',
+      
+      });
+      return;
+    }
+
+    if (temperature > 37.2 && bodyStatusFlag == '0'){
+      wx.showToast({
+        icon: 'none',
+        title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
+        duration: 3000,
+      });
+      return;
+    }
+
     if (bodyStatusFlag == null || bodyStatusFlag == '') {
       wx.showToast({
         icon: 'none',
@@ -246,6 +284,17 @@ Page({
         });
         return;
       }
+
+
+      if (! this.dateJudge(gobackdate)) {
+        wx.showToast({
+          icon: 'none',
+          title: '返京日期应不小于当天',
+          duration: 2500, 
+        });
+        return;
+      }
+
     }
     console.log("this.app.globalData.isGoBackFlag" + app.globalData.isGoBackFlag);
     console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
@@ -255,7 +304,7 @@ Page({
       if (isLeaveBjFlag == null || isLeaveBjFlag == '') {
         wx.showToast({
           icon: 'none',
-          title: '请选择14天内是否离京'
+          title: '请选择2020年1月10日以后是否离过京'
         });
         return;
       }
@@ -270,17 +319,18 @@ Page({
           return;
         }
 
-        var current = new Date()
+        var current = new Date('2020-01-10')
         var ldate = new Date(leavedate)
         console.log(ldate);
         console.log(ldate.getTime());
         console.log(current.getTime());
         console.log(ldate.getTime() - current.getTime())
         var ms = current.getTime() - ldate.getTime() 
-        if (ms > 1209600000){
+        if (ms > 0){
           wx.showToast({
             icon: 'none',
-            title: '离京日期请选择14天内的日期'
+            title: '离京日期选择2020年1月10日以后的日期',
+            duration: 3000,
           });
           return;
         }
@@ -296,10 +346,20 @@ Page({
 
         var bdate = new Date(suregobackdate)
         var msback = current.getTime() - bdate.getTime()
-        if (msback > 1209600000) {
+        if (msback > 0) {
           wx.showToast({
             icon: 'none',
-            title: '返京日期请选择14天内的日期'
+            title: '返京日期选择2020年1月10日以后的日期',
+            duration: 3000,
+          });
+          return;
+        }
+
+        if (ldate.getTime() > bdate.getTime()){
+          wx.showToast({
+            icon: 'none',
+            title: '返京日期应大于离京日期',
+            duration: 3000,
           });
           return;
         }
@@ -393,6 +453,9 @@ Page({
     var trainnumber = e.detail.value.trainnumber
     var leavedate = e.detail.value.leavedate
     var suregobackdate = e.detail.value.suregobackdate
+    if (suregobackdate == null) {
+      suregobackdate = ""
+    }
     var temperature = e.detail.value.temperature
     var bodystatusotherremark = e.detail.value.bodystatusotherremark
     var remark = e.detail.value.remark

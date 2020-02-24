@@ -34,8 +34,8 @@
     </view>
 
     <view class="dashboard-show">
-      <view class="dashboard-show-data">{{confirmedNumber}}</view>
-      <view class="dashboard-show-text">{{dashboard.health.unfilledInText}}</view>
+      <view class="dashboard-show-data"><text class="confirmed-text">{{confirmedNumber}}</text></view>
+      <view class="dashboard-show-text"><text class="confirmed-text">{{dashboard.health.unfilledInText}}</text></view>
 
       <view class="dashboard-show-data">{{healthyBadNumber}}</view>
       <view class="dashboard-show-text">{{dashboard.area.unfilledInText}}</view>
