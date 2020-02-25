@@ -525,6 +525,7 @@ Page({
               wx.navigateTo({
                 url: '../../pages/msg/msg_success',
               })
+              wx.hideLoading()
             },
 
             fail: err => {
@@ -532,7 +533,7 @@ Page({
               wx.navigateTo({
                 url: '../../pages/msg/msg_fail',
               })
-
+              wx.hideLoading()
             }      
          })
       }
@@ -559,6 +560,7 @@ Page({
             wx.navigateTo({
               url: '../../pages/msg/msg_success',
             })
+            wx.hideLoading()
           },
 
           fail: err => {
@@ -566,12 +568,13 @@ Page({
             wx.navigateTo({
               url: '../../pages/msg/msg_fail',
             })
+            wx.hideLoading()
           }
         })
 
       }
 
-      wx.hideLoading()
+      
 
     }
 
