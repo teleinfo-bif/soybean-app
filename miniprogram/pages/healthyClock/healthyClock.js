@@ -19,6 +19,7 @@ Page({
       { name: '当地未放行', value: '1' }
     ],
     index: 0,
+    place: "",
     todayClickFlag : '0' //今日是否打卡标志，默认未打卡
   },
 
@@ -213,6 +214,7 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
+    var place = e.detail.value.place
 
     if (name == null || name == '') {
       wx.showToast({
@@ -221,6 +223,15 @@ Page({
       });
       return;
     }
+
+    if (place == null || place == ''){
+      wx.showToast({
+        icon: 'none',
+        title: '打卡地点不能为空'
+      });
+      return;
+    }
+
     if (temperature == null || temperature == '') {
       wx.showToast({
         icon: 'none',

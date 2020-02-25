@@ -20,14 +20,14 @@
       </view>
 
       <view class="weui-cells__title">
-        <view style="">打卡地点:</view>
-        <!--       <view style="align:right;width:10%;display:inline;color:#4169E1"><a bindtap="onShow">获取</a></view>-->
+        <text style="">打卡地点:</text>
+              <!-- <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text> -->
 
       </view>
 
       <view class="weui-cell_ ">
         <view class="weui-cell__bd">
-          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" />
+          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true"/>
         </view>
       </view>
 

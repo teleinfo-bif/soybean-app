@@ -14,6 +14,7 @@ Page({
     poiList: [],
     isManagerFlag: '0',
     isSuperUserFlag: '0', 
+    loginUserInfo: "录入用户信息"
   },
 
   onLoad: function () {
@@ -25,6 +26,8 @@ Page({
       return
     }
     that.getSessionCode();
+    // this.onGetOpenid()
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -49,8 +52,8 @@ Page({
         }
       }
     })
-
-    this.qryUserInfo()
+    this.onGetOpenid()
+   
   },
 
 
@@ -58,7 +61,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-      this.onGetOpenid()
+     
   },
 
 
@@ -149,12 +152,13 @@ Page({
       _openid: app.globalData.openid
     }).get({
       success: res => {
-        console.log(res)
+        console.log("datas: ", res)
         that.userinfo = res.data;
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
-          userinfo: res.data
+          userinfo: res.data,
+          loginUserInfo: "你好！ " + res.data[0].name
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -326,6 +330,8 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
+        console.log("###### openid: ", res.result.openid)
+        this.qryUserInfo()
         this.qryHealthyTodayInfo();
       },
       fail: err => {
