@@ -228,7 +228,9 @@ function buildClockedUsers(data, dateTimeStr) {
     }
 
     //是否从其他城市返回
-    if (currentUserInfo.home_district.substring(0, 3) != "北京市") {
+    if (data.noGoBackFlag != undefined) {
+        row.push("否")
+    } else if (currentUserInfo.home_district.substring(0, 3) != "北京市") {
         if (data.gobackdate != undefined && new Date(data.gobackdate) <= new Date(dateTimeStr)) {
             row.push("是")
         } else {
@@ -283,9 +285,9 @@ function buildClockedUsers(data, dateTimeStr) {
     if (data.bodyStatusFlag == undefined) {
         row.push("")
     } else if (data.bodyStatusFlag == "0") {
-        row.push("否")
-    } else if (data.bodyStatusFlag == "1") {
         row.push("是")
+    } else if (data.bodyStatusFlag == "1") {
+        row.push("否")
     } else {
         row.push("其他")
     }
@@ -294,18 +296,18 @@ function buildClockedUsers(data, dateTimeStr) {
     if (data.goHospitalFlag == undefined) {
         row.push("")
     } else if (data.goHospitalFlag == "0") {
-        row.push("否")
-    } else if (data.goHospitalFlag == "1") {
         row.push("是")
+    } else if (data.goHospitalFlag == "1") {
+        row.push("否")
     }
 
     //是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉
     if (data.goHBFlag == undefined) {
         row.push("")
     } else if (data.goHBFlag == "0") {
-        row.push("否")
-    } else if (data.goHBFlag == "1") {
         row.push("是")
+    } else if (data.goHBFlag == "1") {
+        row.push("否")
     }
 
     //腹泻
