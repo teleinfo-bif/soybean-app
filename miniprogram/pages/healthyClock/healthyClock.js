@@ -213,6 +213,7 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
+    var place = this.place
 
     if (name == null || name == '') {
       wx.showToast({
@@ -221,6 +222,15 @@ Page({
       });
       return;
     }
+
+    if (place == null || place == ''){
+      wx.showToast({
+        icon: 'none',
+        title: '打卡地点不能为空'
+      });
+      return;
+    }
+
     if (temperature == null || temperature == '') {
       wx.showToast({
         icon: 'none',
