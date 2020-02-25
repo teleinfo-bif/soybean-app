@@ -94,63 +94,24 @@
 					"id": -1,
 					"name": "pages/ring/ring",
 					"pathName": "pages/ring/ring",
-					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "totaluserdetail",
-					"pathName": "pages/totaluserdetail/totaluserdetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "memberDetail",
-					"pathName": "pages/memberDetail/memberDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "healthyClock",
+					"name": "pages/healthyClock/healthyClock",
 					"pathName": "pages/healthyClock/healthyClock",
-					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "healthyClocked",
-					"pathName": "pages/healthyClocked/healthyClocked",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "msg_fail",
-					"pathName": "pages/msg/msg_fail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "msg_success",
-					"pathName": "pages/msg/msg_success",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "totaluserdetail",
+					"name": "pages/totaluserdetail/totaluserdetail",
 					"pathName": "pages/totaluserdetail/totaluserdetail",
-					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "superUserMgmt",
-					"pathName": "pages/superUserMgmt/superUserMgmt",
-					"query": "",
+					"name": "pages/totaluserdetail/totaluserdetail",
+					"pathName": "pages/totaluserdetail/totaluserdetail",
 					"scene": null
 				}
 			]

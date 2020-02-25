@@ -49,6 +49,8 @@ Page({
         }
       }
     })
+
+    this.qryUserInfo()
   },
 
 
@@ -154,6 +156,10 @@ Page({
           phone: res.data[0].phone,
           userinfo: res.data
         })
+
+        // app.globalData.userBaseInfo = res.data[0]
+        // console.log("base info index:", app.gloabalData.userBaseInfo)
+
       },
       fail: err => {
         wx.showToast({
@@ -212,7 +218,7 @@ Page({
         console.log(res)
         if (res.data.length > 0) {
           wx.navigateTo({
-            url: '../totaluserdetail/totaluserdetail'
+            url: '../totaluserdetail/totaluserdetail?companyinfo=' + res.data[0].company_department + '&superuser=' + this.data.isSuperUserFlag
          //    url: '../memberDetail/memberDetail'
           })
         } else {
