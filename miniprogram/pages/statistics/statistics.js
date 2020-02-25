@@ -177,7 +177,9 @@ Page({
     ringWidth: 200,
     ringHeight: 150,
     ringHou: 10,
-    ringBackGround: "#f5f5f5"
+    ringBackGround: "#f5f5f5",
+
+    userCompanyDepartment: "",
 
 
   },
@@ -531,6 +533,72 @@ printDatas: function(e) {
 
 },
 
+getDatasAuthority: function(companyInfo) {
+
+  wx.cloud.callFunction({
+    name: "staticDatas",
+    data: {
+      "date": this.data.showDate,
+      "company_department": companyInfo
+    },
+
+    success: res => {
+      console.log(res.result)
+
+      var datas = res.result
+
+      this.setData({
+        shouldFilledNumber: datas[0],
+        hasFilledNumber: datas[1],
+        outBeijingNumber: datas[1] - datas[8],
+
+        stateGoodNumber: datas[2],
+
+        stateServerNumber: datas[3],
+        stateOthersNumber: datas[4],
+
+        healthyBadNumber: datas[1] - datas[2],
+
+        wuhanNumber: datas[5],
+        hubeiNumber: datas[6],
+        othersNumber: datas[7],
+        beijingNumber: datas[8],
+
+        confirmedNumber: datas[9],
+        beijingUnConfirmed: datas[11],
+
+      })
+
+      var isoNum = this.getIsolateNumber()
+      var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
+      var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
+
+      this.setData({
+        isolateNumber: isoNum,
+        outIsolateNumber: unIsoNum,
+        otherCasesNumber: other
+      })
+
+      // var isoNum = datas[12] - datas[13]
+
+      // var unIsoNum = datas[8] - isoNum - datas[13]
+      // var other = datas[1] - isoNum - unIsoNum - datas[13]
+
+      // this.setData({
+      //   isolateNumber: isoNum,
+      //   outIsolateNumber: unIsoNum,
+      //   otherCasesNumber: other
+      // })
+
+
+      this.setHealthyPercents()
+      this.setAreaPercents()
+      this.setCasesPercents()
+
+      this.initChats()
+      this.printDatas()
+},
+
 getDatas: function(e) {
 
   console.log("get datas")
@@ -624,8 +692,34 @@ getDatas: function(e) {
 
   },
 
-  initDatas: function(e) {
 
+  initDatas: function(e) {
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          // wx.navigateTo({
+          //   url: '../../pages/statistics/statistics?companyinfo=' + res.data[0].company_department + '&superuser=' + this.data.isSuperUserFlag
+          //   //    url: '../memberDetail/memberDetail'
+          // })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
    
     this.setData({
      showDate: this.getCurrentDay()

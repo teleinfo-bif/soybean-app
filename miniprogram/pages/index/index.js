@@ -207,6 +207,8 @@ Page({
     }
   },
 
+  
+
   //跳转打卡记录页面
   gotomemberDetailClick: function (e) {
     console.log("跳转详细信息页面")
