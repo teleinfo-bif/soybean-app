@@ -206,7 +206,7 @@ function buildClockedUsers(data, dateTimeStr) {
     row.push(currentUserInfo.phone)
 
     //在京居住地址
-    if (currentUserInfo.home_district.substring(0, 2) == "北京市") {
+    if (currentUserInfo.home_district.substring(0, 3) == "北京市") {
         row.push(`${currentUserInfo.home_district} ${currentUserInfo.home_detail}`)
     } else {
         row.push("")
@@ -229,7 +229,7 @@ function buildClockedUsers(data, dateTimeStr) {
     }
 
     //是否从其他城市返回
-    if (currentUserInfo.home_district.substring(0, 2) != "北京市") {
+    if (currentUserInfo.home_district.substring(0, 3) != "北京市") {
         if (data.gobackdate != undefined && new Date(data.gobackdate) <= new Date(dateTimeStr)) {
             row.push("是")
         } else {
@@ -427,7 +427,7 @@ async function getDetails(dateTimeStr) {
     let clockedIds = []
     let unClockedIds = []
     dataAggr.list.forEach(item => {
-        if (item.date == dateTimeStr) {
+        if (item.lastCockedDate == dateTimeStr) {
             clockedIds.push(item.userId)
         } else {
             unClockedIds.push(item.userId)
@@ -467,10 +467,13 @@ async function getDetails(dateTimeStr) {
 exports.main = async (event, context) => {
     try {
         let dateTimeStr = event.date
-        // let openId = event.userId
+        let openId = cloud.getWXContext().OPENID
 
-        // let dateTimeStr = "2020-02-24"
-        let openId = cloud.getWXContext().OPENID //"oqME_5SxOS8uyKMun5rV4VkkM7Ao"
+        if (event.user_id != undefined) {
+            openId = event.user_id
+        }        
+
+        // let dateTimeStr = "2020-02-25"
         // let openId = "oqME_5SxOS8uyKMun5rV4VkkM7Ao"
 
         let user = await db.collection('user_info').where({
@@ -483,7 +486,7 @@ exports.main = async (event, context) => {
         let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话', '', '', '', '', '', '', '', '', '', '']
         let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '', '', '', '', '', '', '', '', '', '', '', '']
         let row3 = await getRow3(dateTimeStr)
-        let row4 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+        let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '腹泻', '肌肉酸疼', '其他不适症状', '可在这里补充希望获得的帮助']
 
         alldata.push(row1);

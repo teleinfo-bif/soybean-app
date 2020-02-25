@@ -256,7 +256,8 @@ Page({
     wx.cloud.callFunction({
       name: "export",
       data: {
-        date: this.data.date
+        date: this.data.date,
+        user_id: app.globalData.openid
       },
       success: res => {
         console.log("export", res)
