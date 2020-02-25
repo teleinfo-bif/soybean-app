@@ -256,7 +256,7 @@ Page({
     wx.cloud.callFunction({
       name: "export",
       data: {
-        data: "houfa"
+        date: this.data.date
       },
       success: res => {
         console.log("export", res)
@@ -269,6 +269,13 @@ Page({
             this.sendEmail({
               fromAddress: "774392980@qq.com",
               toAddress: "774392980@qq.com",
+              subject: "打卡记录",
+              content: res.fileList[0].tempFileURL,
+            })
+
+            this.sendEmail({
+              fromAddress: "774392980@qq.com",
+              toAddress: "zzjj64@163.com",
               subject: "打卡记录",
               content: res.fileList[0].tempFileURL,
             })
