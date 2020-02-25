@@ -144,50 +144,66 @@ Page({
     }
   },
 
-  initDatas: function (companyinfo, superuser) {
+  initDatas: function (options) {
 
     console.log()
 
     var cur = this.getCurrentDay()
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        // console.log("user info: ", companyinfo.trim())
+        console.log("res info: ", res.data[0])
+        var infoes = res.data[0].company_department.split(' ')
+        console.log("infos: ", infoes)
+        var regInfo = ""
+        var title = ""
 
-    // 对传进来的公司部门名称进行处理
-    console.log("user info: ", companyinfo.trim())
-    var infoes = companyinfo.trim().split(' ')
-    console.log("infos: ", infoes)
-    var regInfo = ""
-    var title = ""
+        if (infoes[0] == '院属公司及协会') {
+          regInfo = '.*' + infoes[1]
+          title = infoes[1]
+        } else {
+          regInfo = infoes[0] + ".*"
+          title = infoes[0]
+        }
 
-    if (infoes[0] == '院属公司及协会'){
-      regInfo = '.*' + infoes[1]
-      title = infoes[1]
-    }else {
-      regInfo = infoes[0] + ".*"
-      title = infoes[0]
-    }
+        console.log("reg info: ", regInfo)
+        var superuser = res.data[0].superuser
 
-    console.log("reg info: ", regInfo)
+        var level = 1
 
-    var level = 1
+        if (superuser != null && superuser == "1") {
+          level = 0
+          title = "中国信息通信技术研究院"
+        }
 
-    if (superuser != null && superuser == "1"){
-      level = 0
-      title = "中国信息通信技术研究院"
-    }
-    
-    this.setData({
-      date: cur, 
-      currentdate: cur,
-      titleInfo: title,
-      departmentLevel2Name: regInfo,
-      authorityLevel: level
+        this.setData({
+          date: cur,
+          currentdate: cur,
+          titleInfo: title,
+          departmentLevel2Name: regInfo,
+          authorityLevel: level
+        })
+
+        this.showDetails()
+      },
+      fail: err => {
+
+      }
     })
+
+  
+
+    
 
   },
 
   onLoad: function (options) {
     console.log("options: ", options)
     this.initDatas(options.companyinfo, options.superuser)
-    this.showDetails()
+   
   },
 
   qryClickInfoByDate: function (e) {
