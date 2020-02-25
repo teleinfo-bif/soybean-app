@@ -95,7 +95,6 @@ async function getRow3(dateTimeStr) {
     //途径湖北的人数，且完成隔离
     let fromHBAndSegregatedCount = ""
 
-
     //累计从非湖北地区返京人数
     let retureFromNotHBC = await db.collection('user_healthy').aggregate()
         .match(
@@ -347,7 +346,7 @@ function buildUnClockedUsers(data) {
     row.push(data.phone)
 
     //在京居住地址
-    if (data.home_district.substring(0, 2) == "北京市") {
+    if (data.home_district.substring(0, 3) == "北京市") {
         row.push(`${data.home_district} ${data.home_detail}`)
     } else {
         row.push("")
@@ -414,25 +413,40 @@ function buildUnClockedUsers(data) {
 }
 
 async function getDetails(dateTimeStr) {
+    let userCount = await db.collection('user_info').where({
+        _openid: _.neq("")
+    }).count()
 
-    let dataAggr = await db.collection('user_healthy').aggregate()
+    let userAggr = await db.collection('user_info').aggregate()
         .group({
             _id: "$_openid",
-            userId: $.min('$_openid'),
-            lastCockedDate: $.max('$date')
-        }).end()
+            userId: $.min('$_openid')
+        }).limit(userCount.total).end()
 
-    console.log("dataAggr ", dataAggr.list)
+    console.log("userAggr ", userAggr.list)
 
     let clockedIds = []
     let unClockedIds = []
-    dataAggr.list.forEach(item => {
-        if (item.lastCockedDate == dateTimeStr) {
+
+    for(let index = 0; index < userAggr.list.length; index ++) {
+        let item = userAggr.list[index]
+        let healthyAggr = await db.collection('user_healthy').aggregate()
+            .match(
+                $.and([
+                    { _openid: item.userId }
+                ])
+            )
+            .group({
+                _id: "$_openid",
+                lastCockedDate: $.max('$date')
+            }).end()
+
+        if (healthyAggr.list.length > 0 && healthyAggr.list[0].lastCockedDate == dateTimeStr) {
             clockedIds.push(item.userId)
         } else {
             unClockedIds.push(item.userId)
         }
-    });
+    }
 
     console.log("clockedIds ", clockedIds)
     console.log("unClockedIds ", unClockedIds)
@@ -471,7 +485,7 @@ exports.main = async (event, context) => {
 
         if (event.user_id != undefined) {
             openId = event.user_id
-        }        
+        }
 
         // let dateTimeStr = "2020-02-25"
         // let openId = "oqME_5SxOS8uyKMun5rV4VkkM7Ao"

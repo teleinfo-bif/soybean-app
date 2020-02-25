@@ -880,6 +880,86 @@ getDatas: function(e) {
 
   },
 
+  exportExcel: function () {
+    // console.log("get date is ", date)
+    wx.showLoading({
+      title: '数据加载中',
+    })
+    let currentDate = this.data.showDate
+    if (currentDate == undefined) {
+      currentDate = this.getCurrentDay()
+    }
+    wx.cloud.callFunction({
+      name: "export",
+      data: {
+        date: this.data.showDate,
+        user_id: app.globalData.openid
+      },
+      success: res => {
+        console.log("export", res)
+        wx.hideLoading()
+
+        wx.cloud.getTempFileURL({
+          fileList: [res.result.fileID],
+          success: res => {
+            console.log("res.fileList ", res.fileList)
+
+            wx.setClipboardData({
+              data: res.fileList[0].tempFileURL,
+              success: function (res) {
+                wx.showToast({
+                  icon: 'none',
+                  title: currentDate + "导出文件下载链接已保存到您的剪贴板"
+                });
+              }
+            })
+
+            // this.sendEmail({
+            //   fromAddress: "774392980@qq.com",
+            //   toAddress: "774392980@qq.com",
+            //   subject: "打卡记录",
+            //   content: res.fileList[0].tempFileURL,
+            // })
+
+            // this.sendEmail({
+            //   fromAddress: "774392980@qq.com",
+            //   toAddress: "zzjj64@163.com",
+            //   subject: "打卡记录",
+            //   content: res.fileList[0].tempFileURL,
+            // })
+          }
+        })
+      },
+      fail: err => {
+        console.log(err)
+        wx.hideLoading()
+      }
+    })
+  },
+
+  sendEmail: function (email) {
+    console.log("email ", email)
+    wx.cloud.callFunction({
+      name: "sendEmail",
+      data: {
+        fromAddress: email.fromAddress,
+        toAddress: email.toAddress,
+        subject: email.subject,
+        content: email.content,
+      },
+      success: res => {
+        console.log("sendEmail", res)
+        wx.showToast({
+          icon: 'none',
+          title: `已发送到${email.toAddress}邮箱`
+        });
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
