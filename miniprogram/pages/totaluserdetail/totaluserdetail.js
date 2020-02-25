@@ -253,6 +253,10 @@ Page({
 
   exportExcel: function () {
     // console.log("get date is ", date)
+    wx.showLoading({
+      title: '数据加载中',
+    })
+
     wx.cloud.callFunction({
       name: "export",
       data: {
@@ -261,28 +265,38 @@ Page({
       },
       success: res => {
         console.log("export", res)
+        wx.hideLoading()
 
         wx.cloud.getTempFileURL({
           fileList: [res.result.fileID],
           success: res => {
             console.log("res.fileList ", res.fileList)
 
-            this.sendEmail({
-              fromAddress: "774392980@qq.com",
-              toAddress: "774392980@qq.com",
-              subject: "打卡记录",
-              content: res.fileList[0].tempFileURL,
+            wx.setClipboardData({
+              data: res.fileList[0].tempFileURL,
+              success: function (res) {
+                wx.showToast({
+                  icon: 'none',
+                  title: "导出文件下载链接已保存到您的剪贴板"
+                });
+              }
             })
 
-            this.sendEmail({
-              fromAddress: "774392980@qq.com",
-              toAddress: "zzjj64@163.com",
-              subject: "打卡记录",
-              content: res.fileList[0].tempFileURL,
-            })
+            // this.sendEmail({
+            //   fromAddress: "774392980@qq.com",
+            //   toAddress: "774392980@qq.com",
+            //   subject: "打卡记录",
+            //   content: res.fileList[0].tempFileURL,
+            // })
+
+            // this.sendEmail({
+            //   fromAddress: "774392980@qq.com",
+            //   toAddress: "zzjj64@163.com",
+            //   subject: "打卡记录",
+            //   content: res.fileList[0].tempFileURL,
+            // })
           }
         })
-        wx.hideLoading()
       },
       fail: err => {
         console.log(err)
