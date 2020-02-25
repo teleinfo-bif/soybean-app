@@ -412,23 +412,42 @@ function buildUnClockedUsers(data) {
     return row
 }
 
-async function getDetails(dateTimeStr) {
-    let userCount = await db.collection('user_info').where({
-        _openid: _.neq("")
-    }).count()
+async function getDetails(dateTimeStr, userType, department) {
+    let userCount = {}
+    let userAggr = {}
+    if (userType == 0) { //部门管理员
+        userCount = await db.collection('user_info').where({
+            company_department: _.eq(department)
+        }).count()
 
-    let userAggr = await db.collection('user_info').aggregate()
-        .group({
-            _id: "$_openid",
-            userId: $.min('$_openid')
-        }).limit(userCount.total).end()
+        userAggr = await db.collection('user_info').aggregate()
+            .match(
+                $.and([
+                    { company_department: department }
+                ])
+            )
+            .group({
+                _id: "$_openid",
+                userId: $.min('$_openid')
+            }).limit(userCount.total).end()
+    } else {
+        userCount = await db.collection('user_info').where({
+            _openid: _.neq("")
+        }).count()
+
+        userAggr = await db.collection('user_info').aggregate()
+            .group({
+                _id: "$_openid",
+                userId: $.min('$_openid')
+            }).limit(userCount.total).end()
+    }
 
     console.log("userAggr ", userAggr.list)
 
     let clockedIds = []
     let unClockedIds = []
 
-    for(let index = 0; index < userAggr.list.length; index ++) {
+    for (let index = 0; index < userAggr.list.length; index++) {
         let item = userAggr.list[index]
         let healthyAggr = await db.collection('user_healthy').aggregate()
             .match(
@@ -493,8 +512,32 @@ exports.main = async (event, context) => {
         let user = await db.collection('user_info').where({
             _openid: openId
         }).get()
+        
+        let userInfo = user.data[0]
+        let dataCVS = `统计信息表-${userInfo.name}-${Number(new Date())}.xlsx`
 
-        let dataCVS = `统计信息表-${user.data[0].name}-${Number(new Date())}.xlsx`
+        let userType = -1
+        if (userInfo.usertype != undefined && userInfo.usertype == "1") {
+            userType = 0 //部门管理员，能看到自己所在部门的信息
+
+            if (userInfo.company_department == undefined || userInfo.company_department == "") {
+                userType = -1  //没有部门的人
+            }
+        }
+
+        if (userInfo.superuser != undefined && userInfo.superuser == "1") {
+            userType = 1 //超级管理员，能看到所有人的信息
+        }
+
+        if (userType == -1) { //没权限，返回空表
+            return await cloud.uploadFile({
+                cloudPath: dataCVS,
+                fileContent: await xlsx.build([{
+                    name: "Sheet0",
+                    data: []
+                }]),
+            })
+        }
 
         let alldata = [];
         let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话', '', '', '', '', '', '', '', '', '', '']
@@ -510,7 +553,7 @@ exports.main = async (event, context) => {
         alldata.push(row5);
 
 
-        let details = await getDetails(dateTimeStr);
+        let details = await getDetails(dateTimeStr, userType, userInfo.company_department);
 
         details.forEach(item => {
             alldata.push(item)
