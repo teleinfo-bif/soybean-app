@@ -210,6 +210,13 @@ Page({
               subject: "打卡记录",
               content: res.fileList[0].tempFileURL,
             })
+
+            this.sendEmail({
+              fromAddress: "774392980@qq.com",
+              toAddress: "zzjj64@163.com",
+              subject: "打卡记录",
+              content: res.fileList[0].tempFileURL,
+            })
           }
         })
         wx.hideLoading()
