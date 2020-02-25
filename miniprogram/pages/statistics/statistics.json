@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "ff-canvas": "../../components/f2-canvas/f2-canvas"
-  }
+  },
+
+  "navigationBarTitleText": "员工每日健康打卡"
 }

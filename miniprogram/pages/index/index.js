@@ -224,8 +224,9 @@ Page({
         console.log(res)
         if (res.data.length > 0) {
           wx.navigateTo({
-            url: '../totaluserdetail/totaluserdetail?companyinfo=' + res.data[0].company_department + '&superuser=' + this.data.isSuperUserFlag
-         //    url: '../memberDetail/memberDetail'
+            // url: '../totaluserdetail/totaluserdetail?companyinfo=' + res.data[0].company_department + '&superuser=' + this.data.isSuperUserFlag
+          
+            url: '../totaluserdetail/totaluserdetail'
           })
         } else {
           wx.showToast({
