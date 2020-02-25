@@ -1,98 +1,40 @@
 
+const app = getApp()
+
 Page({
 
 
   data: {
-    todayClickFlag: '0' //今日是否打卡标志，默认未打卡
+    todayClickFlag: '0',              // 今日是否打卡标志，默认未打卡
+    departmentLevel2Name: "",         // 二级部门名称
+    titleInfo: "",
+    authorityLevel: 0,                // 权限级别: 0 院级管理者，可查看全部；
+                                      //          1 二级管理者，可查看二级部门的数据;
   },
 
-  onLoad: function (options) {
-    let that = this;
-
+  getCurrentDay: function(e) {
     //获取当天日期
     var date = new Date();
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     console.log("当前时间：" + Y + M + D);
-    this.setData({
-      date: Y + M + D,
-      currentdate: Y + M + D,
-    })
 
-    let temp = [];
-
-    wx.showLoading({
-      title: '数据加载中',
-    })
-
-    /**
-     * 通过云函数调用可以获取全部45条的数据
-     */
-    wx.cloud.callFunction({
-      name: "getUserInfo",
-      data: {
-
-      },
-      success: res => {
-        console.log("查询用户信息表数据" + JSON.stringify(res, null, 2))
-        that.data.userinfodata = res.result
-        res.result = null;
-        wx.cloud.callFunction({
-          name: "getUserClickListBydate",
-          data: {
-            date: that.data.date
-          },
-          success: res => {
-            console.log("查询用户指定日期的打卡记录数据", res)
-            for (var i = 0; i < that.data.userinfodata.length; i++) {
-              var tempTopic = that.data.userinfodata[i];
-              for (var j = 0; j < res.result.length; j++) {
-                if (that.data.userinfodata[i]._openid == res.result[j]._openid) {
-                  console.log("循环打印打卡记录内容 ", res.result[j]);
-                  tempTopic['temperature'] = res.result[j].temperature
-                  tempTopic['goHospitalFlag'] = res.result[j].goHospitalFlag
-                  tempTopic['bodyStatusFlag'] = res.result[j].bodyStatusFlag
-                }
-              }
-              temp.push(tempTopic);
-            }
-            console.log("打卡详情数据结构：", temp);
-            this.setData({
-              clickdetail: temp
-            })
-            wx.hideLoading()
-          },
-          fail: err => {
-            wx.hideLoading()
-            console.log(err)
-          }
-        })
-      },
-      fail: err => {
-        wx.hideLoading()
-        console.log(err)
-      }
-    })
-
+    return Y + M + D
   },
 
-  qryClickInfoByDate: function (e) {
-
-    console.log('日期选择改变，需要查询的日期为', e.detail.value)
-    this.setData({
-      date: e.detail.value
-    })
+  showAllDetailsList: function(currentDate) {
+    /**
+     * 通过云函数调用可以获取全部45条的数据
+     */
 
     wx.showLoading({
       title: '数据加载中',
     })
 
-    let that = this;
+    let that = this
     let temp = [];
-    /**
-     * 通过云函数调用可以获取全部45条的数据
-     */
+
     wx.cloud.callFunction({
       name: "getUserInfo",
       data: {
@@ -105,9 +47,11 @@ Page({
         wx.cloud.callFunction({
           name: "getUserClickListBydate",
           data: {
-            date: that.data.date
+            date: currentDate,
           },
           success: res => {
+
+            console.log("result datas: ", res)
             console.log("查询用户指定日期的打卡记录数据" + JSON.stringify(res, null, 2))
             for (var i = 0; i < that.data.userinfodata.length; i++) {
               var tempTopic = that.data.userinfodata[i];
@@ -138,6 +82,124 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+
+  showDetailsList: function(currentDate, company){
+
+
+    wx.showLoading({
+      title: '数据加载中',
+    })
+
+    let temp = [];
+
+    wx.cloud.callFunction({
+      name: "getUserClickByAuthority",
+      data: {
+        // date: that.data.date,
+        date: currentDate,
+        company_department: company
+      },
+
+      success: res => {
+        console.log("result data: ", res)
+
+        var userInfoDatas = res.result[0]
+        var userHealthyDatas = res.result[1]
+
+        for (var i = 0; i < userInfoDatas.length; i++) {
+          var tempTopic = userInfoDatas[i]
+          for (var j = 0; j < userHealthyDatas.length; j++) {
+            if (userInfoDatas[i]._openid == userHealthyDatas[j]._openid) {
+              tempTopic['temperature'] = userHealthyDatas[j].temperature
+              tempTopic['goHospitalFlag'] = userHealthyDatas[j].goHospitalFlag
+              tempTopic['bodyStatusFlag'] = userHealthyDatas[j].bodyStatusFlag
+            }
+          }
+          temp.push(tempTopic)
+        }
+
+        this.setData({
+          clickdetail: temp
+        })
+        wx.hideLoading()
+      },
+
+      fail: err => {
+        console.error("result error: ", err)
+        wx.hideLoading()
+      }
+    })
+  },
+
+
+  showDetails: function(e) {
+    switch(this.data.authorityLevel) {
+      case 0:
+      this.showAllDetailsList(this.data.date)
+      break
+      case 1:
+        this.showDetailsList(this.data.date, this.data.departmentLevel2Name)
+      break
+    }
+  },
+
+  initDatas: function (companyinfo, superuser) {
+
+    console.log()
+
+    var cur = this.getCurrentDay()
+
+    // 对传进来的公司部门名称进行处理
+    console.log("user info: ", companyinfo.trim())
+    var infoes = companyinfo.trim().split(' ')
+    console.log("infos: ", infoes)
+    var regInfo = ""
+    var title = ""
+
+    if (infoes[0] == '院属公司及协会'){
+      regInfo = '.*' + infoes[1]
+      title = infoes[1]
+    }else {
+      regInfo = infoes[0] + ".*"
+      title = infoes[0]
+    }
+
+    console.log("reg info: ", regInfo)
+
+    var level = 1
+
+    if (superuser != null && superuser == "1"){
+      level = 0
+      title = "中国信息通信技术研究院"
+    }
+    
+    this.setData({
+      date: cur, 
+      currentdate: cur,
+      titleInfo: title,
+      departmentLevel2Name: regInfo,
+      authorityLevel: level
+    })
+
+  },
+
+  onLoad: function (options) {
+    console.log("options: ", options)
+    this.initDatas(options.companyinfo, options.superuser)
+    this.showDetails()
+  },
+
+  qryClickInfoByDate: function (e) {
+
+    console.log('日期选择改变，需要查询的日期为', e.detail.value)
+    this.setData({
+      date: e.detail.value
+    })
+
+
+   this.showDetails()
+  
   },
 
   onQuery: function () {

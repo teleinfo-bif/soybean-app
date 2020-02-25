@@ -108,10 +108,10 @@
 .info-input{
   width: 100%;
   height: 45rpx;
-  font-size: 30rpx;
+  font-size: 35rpx;
   border-bottom: 2rpx solid #F5F5F5;
   font-family: PingFangSC-Regular;
-  color: #999999;
+  color: #222222;
 }
 
 .placeholder-style {

@@ -33,7 +33,7 @@
   height: 90rpx;
   font-size: 30rpx;
   line-height: 90rpx;
-  color: #4f7ef2;
+  color: #4169E1;
   margin-right: 10rpx;
   
   float: right;
