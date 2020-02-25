@@ -15,7 +15,7 @@
       </view>
 
       <!-- <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
-      <view class="userinfo-put" hover-class="userinfo-put_active">录入用户信息
+      <view class="userinfo-put" hover-class="userinfo-put_active">{{loginUserInfo}}
       </view>
 
     </view>

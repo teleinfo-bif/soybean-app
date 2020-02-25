@@ -254,10 +254,10 @@ Page({
       })
     }
     else {
-      this.setData({
-        showDate: e.detail.value
-      })
-      this.dateChanged()
+      // this.setData({
+      //   showDate: e.detail.value
+      // })
+      this.initDatas(e.detail.value)
     }
 
     console.log("select: ", selectedDate)
@@ -807,7 +807,7 @@ getDatas: function(e) {
   },
 
 
-  initDatas: function(e) {
+  initDatas: function(currentDate) {
 
     const db = wx.cloud.database()
     db.collection('user_info').where({
@@ -855,7 +855,7 @@ getDatas: function(e) {
 
        
         this.setData({
-          showDate: this.getCurrentDay()
+          showDate: currentDate
         }
         )
 
@@ -884,7 +884,7 @@ getDatas: function(e) {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initDatas()
+    this.initDatas(this.getCurrentDay())
 
     // console.log(11111)
     // console.log("level: ", this.data.authorityLevel)
