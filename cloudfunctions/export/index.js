@@ -466,12 +466,12 @@ async function getDetails(dateTimeStr) {
 
 exports.main = async (event, context) => {
     try {
-        // let dateTimeStr = event.date
+        let dateTimeStr = event.date
         // let openId = event.userId
 
-        let dateTimeStr = "2020-02-24"
-        // let openId = cloud.getWXContext().OPENID //"oqME_5SxOS8uyKMun5rV4VkkM7Ao"
-        let openId = "oqME_5SxOS8uyKMun5rV4VkkM7Ao"
+        // let dateTimeStr = "2020-02-24"
+        let openId = cloud.getWXContext().OPENID //"oqME_5SxOS8uyKMun5rV4VkkM7Ao"
+        // let openId = "oqME_5SxOS8uyKMun5rV4VkkM7Ao"
 
         let user = await db.collection('user_info').where({
             _openid: openId

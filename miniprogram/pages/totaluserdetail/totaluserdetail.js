@@ -256,7 +256,7 @@ Page({
     wx.cloud.callFunction({
       name: "export",
       data: {
-        data: "houfa"
+        date: this.data.date
       },
       success: res => {
         console.log("export", res)
