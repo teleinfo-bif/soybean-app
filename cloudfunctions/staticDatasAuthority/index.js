@@ -66,7 +66,9 @@ exports.main = async (event, context) => {
       regexp: '.*' + '北京'
     })
   }, {
-
+      "company_department": db.RegExp({
+        regexp: event.company_department,
+      })
   }])).count()
 
   let hubei = await db.collection('user_healthy').where(_.and([{
