@@ -555,10 +555,10 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
 
     //是否从其他城市返回
     let isRetured = false
-    if (data.place.substring(0, 3) != "北京市") {
+    if (data.place.substring(0, 2) != "北京") {
         row.push("否")
         isRetured = true
-    } else if (data.place.substring(0, 3) == "北京市") {
+    } else if (data.place.substring(0, 2) == "北京") {
         if (intersecteArray(recentNotInBjIds, [data._openid]).length > 0) {
             row.push("是")
             isRetured = true
@@ -572,7 +572,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
 
     //返程统计.返程出发地
     if (isRetured == true) {
-        if (data.place.substring(0, 3) != "北京市") {
+        if (data.place.substring(0, 2) != "北京") {
             row.push(data.place)
         } else {
             let place = await latestNotBjPlace(data._openid, dateTimeStr)
@@ -665,8 +665,6 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     }
 
-    row.push(data._openid)
-
     return row
 }
 
@@ -749,8 +747,6 @@ function buildUnClockedUsers(data) {
 
     //可在这里补充希望获得的帮助
     row.push("")
-
-    row.push(data._openid)
 
     return row
 }
