@@ -7,149 +7,175 @@ const db = cloud.database({ env: "soybean-uat" })
 const _ = db.command
 const $ = db.command.aggregate
 
-async function getRow3(dateTimeStr) {
+function getDayString(day) {
+    var today = new Date();
+    var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+    today.setTime(targetday_milliseconds);
+    var tYear = today.getFullYear();
+    var tMonth = today.getMonth();
+    var tDate = today.getDate();
+    tMonth = doHandleMonth(tMonth + 1);
+    tDate = doHandleMonth(tDate);
+
+    return tYear + "-" + tMonth + "-" + tDate;
+}
+
+function doHandleMonth(month) {
+    var m = month;
+    if (month.toString().length == 1) {
+        m = "0" + month;
+    }
+    return m;
+}
+
+function intersecteArray(array1, array2) {
+    let result = []
+    if (array1 == undefined || array1.length == 0 
+        || array2 == undefined || array2.length == 0) {
+            return result
+        }
+
+    array1.forEach(item1 => {
+        array2.forEach(item2 => {
+            if (item1 == item2) {
+                result.push(item2)
+            }
+        })
+    })
+
+    return result
+}
+
+async function regExpIdsFilter(days, regExp) {
+    let coolingDay = new Date(getDayString(-days))
+
+    let filter = await db.collection('user_healthy').aggregate()
+        .match(
+            {
+                place: db.RegExp({
+                    regexp: regExp, //'北京*'  
+                    options: 'i',
+                })
+            }
+        )
+        .group({
+            _id: "$_openid",
+            date: $.max('$date'),
+            // place: $.max('$place')
+        }).end()
+
+    console.log("filter ", filter)
+
+    let ids = []
+    filter.list.forEach(item => {
+        let tmpDay = new Date(item.date)
+        if (new Date(item.date) >= coolingDay) {
+            ids.push(item._id)
+        }
+    })
+
+    return ids
+}
+
+function notInCitiesIds(days, cities) {
+    //(?!.*北京|.*湖北)^.*$
+    let regExp = "(?!"
+    cities.forEach(item => {
+        regExp = regExp + `.*${item}|`
+    })
+
+    regExp = regExp.substring(0, regExp.length -1)
+    regExp = regExp + ")^.*$"
+
+    return  regExpIdsFilter(days, regExp)
+}
+
+async function inCityIds(days, city) {
+    return  regExpIdsFilter(days, city + '*')
+}
+
+async function getSegregate(city) {
+    let clockDatas = await db.collection('user_healthy').aggregate()
+        .match(
+            {
+                place: db.RegExp({
+                    regexp: city + '*',
+                    options: 'i',
+                }),
+                bodyStatusFlag: "0"
+            }
+        )
+        .group({
+            _id: "$_openid",
+            count: $.sum(1),
+            // place: $.max('$place')
+        }).end()
+
+    console.log("clockDatas ", clockDatas)
+
+    let finished = []
+    let unFinished = []
+    clockDatas.list.forEach(item => {
+        if (item.count >= 14) {
+            finished.push(item._id)
+        } else {
+            unFinished.push(item._id)
+        }
+    })
+
+    return {
+        finished: finished,
+        unFinished: unFinished
+    }
+}
+
+async function getRow3() {
+    let coolingDays = 28
 
     //当日新增来京人员总数: 离开过北京，在北京，到达北京时间 isLeaveBjFlag  suregobackdate==today
-    let todayRetureBjC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { isLeaveBjFlag: "0" },
-                { suregobackdate: { $eq: dateTimeStr } }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$suregobackdate')
-        }).end()
-
-    console.log("todayRetureBjC ", todayRetureBjC)
-    let todayRetureBjCount = todayRetureBjC.list.length
+    let yesterdayNotInBjIds = await notInCitiesIds(1, ["北京"]) //前一天不在北京的人
+    let nowInBjIds = await inCityIds(0 ,"北京") //今天在北京的人
+    let todayRetureBjCount = intersecteArray(yesterdayNotInBjIds, nowInBjIds).length
 
     //累计来京人员总数
-    let retureBjC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { isLeaveBjFlag: "0" },
-                { suregobackdate: { $lte: dateTimeStr } }
-            ])
-        ).
-        group({
-            _id: "$_openid",
-            data: $.min('$suregobackdate')
-        }).end()
-
-    console.log("retureBjC ", retureBjC)
-    let retureBjCount = retureBjC.list.length
-
+    let recentNotInBjIds = await notInCitiesIds(coolingDays, ["北京"]) //前28天不在北京的人
+    let yesterdayInBjIds = await inCityIds(1 ,"北京") //前一天在北京的人
+    let retureBjCount = intersecteArray(recentNotInBjIds, yesterdayInBjIds).length //前一天在北京
 
     //累计从湖北返京人数
-    let retureFromHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "0" },
-                { suregobackdate: { $lte: dateTimeStr } }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$suregobackdate')
-        }).end()
-
-    console.log("retureFromHBC ", retureFromHBC)
-    let retureFromHBCount = retureFromHBC.list.length
+    let recentInHbIds = await inCityIds(coolingDays, "湖北") //前28天在湖北的人
+    let retureFromHBCount = intersecteArray(recentInHbIds, yesterdayInBjIds).length
 
     //未从湖北返京人数
-    let unRetureFromHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "0" },
-                { gobackdate: { $gt: dateTimeStr } }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$gobackdate')
-        }).end()
-
-    console.log("unRetureFromHBC ", unRetureFromHBC)
-    let unRetureFromHBCount = unRetureFromHBC.list.length
+    let unRetureFromHBCount = intersecteArray(recentInHbIds, yesterdayNotInBjIds).length
 
     //合计途径湖北的人数
-    let fromHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "0" }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$gobackdate')
-        }).end()
-
-    console.log("totalFromHBC ", fromHBC)
-    let fromHBCount = fromHBC.list.length
+    let fromHBCount = recentInHbIds.length
 
     //途径湖北的人数，正在隔离
-    let fromHBAndSegregatingCount = ""
+    let segregate = await getSegregate("北京")
+    let fromHBAndSegregatingCount = intersecteArray(recentInHbIds, segregate.unFinished).length
 
     //途径湖北的人数，且完成隔离
-    let fromHBAndSegregatedCount = ""
+    let fromHBAndSegregatedCount = intersecteArray(recentInHbIds, segregate.finished).length
 
     //累计从非湖北地区返京人数
-    let retureFromNotHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "1" },
-                { isLeaveBjFlag: "0" },
-                { suregobackdate: { $lte: dateTimeStr } }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$suregobackdate')
-        }).end()
-
-    console.log("retureFromHBC ", retureFromHBC)
-    let retureFromNotHBCount = retureFromNotHBC.list.length
+    let recentNotInHbAndNotInBjIds = await notInCitiesIds(coolingDays , ["北京", "湖北"]) //前28天不在湖北也不在北京的人 现在在北京的人
+    let retureFromNotHB = intersecteArray(recentNotInHbAndNotInBjIds, yesterdayInBjIds)
+    let retureFromNotHBCount = retureFromNotHB.length
 
     //未从非湖北地区返京人数
-    let unRetureFromNotHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "1" },
-                { isLeaveBjFlag: "0" },
-                { gobackdate: { $gt: dateTimeStr } }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$gobackdate')
-        }).end()
-
-    console.log("unRetureFromNotHBC ", unRetureFromNotHBC)
-    let unRetureFromHBNotCount = unRetureFromNotHBC.list.length
+    //不在湖北， 也不在北京
+    let unRetureFromHBNotCount = recentNotInHbAndNotInBjIds.length - retureFromNotHBCount//  intersecteArray(recentNotInHbAndNotInBjIds, yesterdayNotInBjIds).length
 
     //合计途径非湖北地区的人数
-    let fromNotHBC = await db.collection('user_healthy').aggregate()
-        .match(
-            $.and([
-                { goHBFlag: "1" },
-                { isLeaveBjFlag: "0" }
-            ])
-        )
-        .group({
-            _id: "$_openid",
-            data: $.min('$gobackdate')
-        }).end()
-
-    console.log("totalFromHBC ", fromHBC)
-    let fromNotHBCount = fromNotHBC.list.length
+    let fromNotHBCount = recentNotInHbAndNotInBjIds.length
 
     //途径非湖北地区的人数，正在隔离
-    let fromNotHBAndSegregatingCount = ""
+    let fromNotHBAndSegregatingCount = intersecteArray(retureFromNotHB, segregate.unFinished).length
 
     //途径非湖北地区的人数，且完成隔离
-    let fromNotHBAndSegregatedCount = ""
+    let fromNotHBAndSegregatedCount = intersecteArray(retureFromNotHB,  segregate.finished).length
 
     let contrat = "伞颉"
     let phone = "15101014863"
@@ -221,17 +247,17 @@ function buildClockedUsers(data, dateTimeStr) {
     }
 
     //计划返京时间
-    if (data.suregobackdate == undefined) {
+    if (data.gobackdate == undefined) {
         row.push("")
     } else {
-        row.push(data.suregobackdate)
+        row.push(data.gobackdate)
     }
 
     //是否从其他城市返回
     if (data.noGoBackFlag != undefined) {
         row.push("否")
     } else if (currentUserInfo.home_district.substring(0, 3) != "北京市") {
-        if (data.gobackdate != undefined && new Date(data.gobackdate) <= new Date(dateTimeStr)) {
+        if (data.suregobackdate != undefined && new Date(data.suregobackdate) <= new Date(dateTimeStr)) {
             row.push("是")
         } else {
             row.push("否")
@@ -244,13 +270,17 @@ function buildClockedUsers(data, dateTimeStr) {
     row.push("")
 
     //返程统计.返程出发地
-    row.push("")
+    if (data.noGoBackFlag != undefined && currentUserInfo.home_district.substring(0, 3) != "北京市") {
+        row.push(currentUserInfo.home_district)
+    } else {
+        row.push("")
+    }
 
     //返程统计.返程日期
-    if (data.gobackdate == undefined) {
+    if (data.suregobackdate == undefined) {
         row.push("")
     } else {
-        row.push(data.gobackdate)
+        row.push(data.suregobackdate)
     }
 
     //返程统计.交通方式
@@ -264,7 +294,11 @@ function buildClockedUsers(data, dateTimeStr) {
     }
 
     //开始观察日期
-    row.push("")
+    if (data.gobackdate == undefined) {
+        row.push("")
+    } else {
+        row.push(data.gobackdate)
+    }
 
     //当前时间,当前地点/城市
     row.push(`${data.addtime} ${data.place}`)
@@ -317,7 +351,7 @@ function buildClockedUsers(data, dateTimeStr) {
     row.push("")
 
     //其他不适症状
-    row.push(data.remark)
+    row.push(data.remark) //bodystatusotherremark
 
     //可在这里补充希望获得的帮助
     row.push("")
@@ -514,7 +548,7 @@ exports.main = async (event, context) => {
         let user = await db.collection('user_info').where({
             _openid: openId
         }).get()
-        
+
         let userInfo = user.data[0]
         let dataCVS = `统计信息表-${userInfo.name}-${Number(new Date())}.xlsx`
 
@@ -554,7 +588,6 @@ exports.main = async (event, context) => {
         alldata.push(row4);
         alldata.push(row5);
 
-
         let details = await getDetails(dateTimeStr, userType, userInfo.company_department);
 
         details.forEach(item => {
@@ -588,139 +621,4 @@ exports.main = async (event, context) => {
         return e
     }
 }
-
-
-
-
-/*
-// 云函数入口文件
-const cloud = require('wx-server-sdk')
-const nodeExcel = require('excel-export')
-const fs = require('fs')
-const path = require('path')
-
-cloud.init({
-    env: "soybean-uat"   // 你的环境
-})
-
-const db = cloud.database()
-const MAX_LIMIT = 80
-// 生成分数项并且下载对应的excel
-exports.main = async (event, context) => {
-
-    let collectionId = 'user_healthy'                 // 模拟的集合名
-    let openId = 'wx981c51592be1d70c'             // 模拟openid
-    //let confParams = ['编号', '登录ID', '打卡时间', '身体状态', '打卡日期', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '是否去医院就诊', '14天内是否离京', '离京日期', '名字', '手机号', '打卡地址', '打卡备注信息', '返京时间', '温度', '返京交通工具'] // 模拟表头
-
-    let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话']
-    let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '', '']
-    let row3 = ['北京泰尔英福网络科技有限责任公司', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-    let row4 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-
-    //26
-    let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '腹泻', '肌肉酸疼', '其他不适症状', '可在这里补充希望获得的帮助']
-
-
-    let confParams = ['姓名', '离京时间', '目前所在地', '返京时间', '未返京原因', '计划返京时间', '交通方式（自驾、火车、飞机）班次', '打卡备注信息'] // 模拟表头
-
-    let jsonData = []
-
-    let time = event
-    //db.collection(collectionId).count
-    const countResult = await db.collection(collectionId).where({
-        date: '2020-02-22'
-    }).count()
-    const total = countResult.total
-    const ci = Math.ceil(total / MAX_LIMIT);
-
-    // 获取数据
-    for (let i = 0; i < ci; i++) {
-        await db.collection(collectionId).where({
-            date: '2020-02-22'
-        }).orderBy('addtime', 'desc').skip(i).limit(MAX_LIMIT).get().then(res => {
-            if (i != 0) {
-                jsonData = jsonData.concat(res.data)
-            } else {
-                jsonData = res.data
-            }
-        })
-    }
-
-    // 转换成excel流数据
-    let conf = {
-        stylesXmlFile: path.resolve(__dirname, 'styles.xml'),
-        name: 'sheet',
-        cols: confParams.map(param => {
-            return { caption: param, type: 'string' }
-        }),
-        rows: jsonToArray(jsonData)
-    }
-    let result = nodeExcel.execute(conf) // result为excel二进制数据流
-
-    // 上传到云存储
-    let excelfile = await cloud.uploadFile({
-        cloudPath: `download/sheet${openId}.xlsx`,  // excel文件名称及路径，即云存储中的路径
-        fileContent: Buffer.from(result.toString(), 'binary'),
-    })
-
-    console.log("excelfile ", excelfile)
-
-    return excelfile
-
-    // json对象转换成数组填充
-    function jsonToArray(arrData) {
-        let arr = new Array()
-        arrData.forEach(item => {
-            let itemArray = new Array()
-            for (let key in item) {
-                //  if (key === 'userinfo') {
-                //    continue
-                // }
-                //  if (item[key] == null || item[key] == '' || item[key] == undefined){
-                //    itemArray.push('-')
-                // }else{
-                //   itemArray.push(item[key])
-                //  }
-
-
-                if (key === 'name' || key === 'leavedate' || key === 'place' || key === 'suregobackdate' || key === 'noGoBackFlag' || key === 'gobackdate' || key === 'trainnumber' || key === 'remark') {
-                    console.log("item[key]的值为：" + item[key])
-
-                    if (key === 'name') {
-                        itemArray[0] = item[key]
-                    }
-                    if (key === 'leavedate') {
-                        itemArray[1] = item[key]
-                    }
-                    if (key === 'place') {
-                        itemArray[2] = item[key]
-                    }
-                    if (key === 'suregobackdate') {
-                        itemArray[3] = item[key]
-                    }
-                    if (key === 'noGoBackFlag') {
-                        if (item[key] == '1') {
-                            itemArray[4] = '当地未放行'
-                        } else {
-                            itemArray[4] = '身体不适'
-                        }
-                    }
-                    if (key === 'gobackdate') {
-                        itemArray[5] = item[key]
-                    }
-                    if (key === 'trainnumber') {
-                        itemArray[6] = item[key]
-                    }
-                    if (key === 'remark') {
-                        itemArray[7] = item[key]
-                    }
-                }
-            }
-            arr.push(itemArray)
-        })
-        return arr
-    }
-
-}
-*/
 
