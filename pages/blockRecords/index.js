@@ -10,7 +10,7 @@ Page({
     requestInit: false,
     currentDate: new Date().getTime(),
     showDateText: "",
-    blockData: {
+    clockData: {
       current: 0,
       pages: 0,
       searchCount: true,
@@ -18,7 +18,7 @@ Page({
       total: 0,
       records: []
     },
-    blockList: [],
+    clockList: [],
     // minDate: ,
     formatter(type, value) {
       if (type === "year") {
@@ -85,15 +85,15 @@ Page({
 
   getData() {
     let { requestInit, userId } = this.data;
-    let { pages, current } = this.data.blockData;
+    let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
       getUserClockList({
         userId: userId,
         current: ++current
       }).then(res => {
         this.setData({
-          blockData: res,
-          blockList: this.data.blockList.concat(res.records)
+          clockData: res,
+          clockList: this.data.clockList.concat(res.records)
         });
       });
     }

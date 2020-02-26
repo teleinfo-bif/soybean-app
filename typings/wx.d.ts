@@ -138,7 +138,7 @@ interface ICanvasContext {
     setShadow(offsetX: number, offsetY: number, blur: number, color: string): void;
     /**
      * 创建一个线性的渐变颜色。需要使用 addColorStop() 来指定渐变点，至少要两个。
-     */ 
+     */
     createLinearGradient(x0: number, y0: number, x1: number, y1: number): void;
     /**
      * 创建一个圆形的渐变颜色。 起点在圆心，终点在圆环。 需要使用 addColorStop() 来指定渐变点，至少要两个。
@@ -262,26 +262,26 @@ interface IAudioContext {
     /**
      * 播放 
      */
-    play: () => void;	
+    play: () => void;
     /**
      * 暂停 
      */
-    pause: () => void;	
+    pause: () => void;
     /**
      * 跳转到指定位置，单位 s
      */
-    seek: (position: number) => void;	
+    seek: (position: number) => void;
 }
 
 interface IVideoContext {
     /**
      * 播放 
      */
-    play: () => void;	
+    play: () => void;
     /**
      * 暂停 
      */
-    pause: () => void;	
+    pause: () => void;
     /**
      * 跳转到指定位置，单位 s
      */
@@ -289,7 +289,7 @@ interface IVideoContext {
     /**
      * 发送弹幕，danmu 包含两个属性 text, color。
      */
-    sendDanmu: (danmu: {text: string; color: string;}) => void;
+    sendDanmu: (danmu: { text: string; color: string; }) => void;
 }
 
 interface IMapContext {
@@ -300,7 +300,7 @@ interface IMapContext {
         /** 
          * 接口调用成功的回调函数 ，res = { longitude: "经度", latitude: "纬度"}
          */
-        success?: (res: {longitude: string; latitude: string}) => void;
+        success?: (res: { longitude: string; latitude: string }) => void;
         /**
          * 接口调用失败的回调函数
          */
@@ -321,7 +321,7 @@ interface Application {
 }
 
 interface AppConstructor {
-    new (): Application;
+    new(): Application;
     (opts: {
         /**
          * 生命周期函数--监听小程序初始化
@@ -350,7 +350,7 @@ interface Page {
 }
 
 interface PageConstructor {
-    new (): Page;
+    new(): Page;
     (opts: {
         /**
          * 页面的初始数据
@@ -400,7 +400,7 @@ interface PageConstructor {
              * 分享路径	默认值当前页面 path ，必须是以 / 开头的完整路径
              */
             path: string;
-        };	
+        };
 
         [key: string]: any;
     }): Page;
@@ -410,7 +410,7 @@ declare var Page: PageConstructor;
 
 declare var wx: {
     // # 网络 # 
-    
+
     request(obj: {
         /**
          * 开发者服务器接口地址
@@ -445,7 +445,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 将本地资源上传到开发者服务器。如页面通过 wx.chooseImage 等接口获取到一个本地资源的临时文件路径后，可通过此接口将本地资源上传到指定服务器。客户端发起一个 HTTPS POST 请求，其中 content-type 为 multipart/form-data 。
      */
@@ -483,7 +483,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 下载文件资源到本地。客户端直接发起一个 HTTP GET 请求，返回文件的本地临时路径。
      */
@@ -509,7 +509,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 创建一个 WebSocket 连接；一个微信小程序同时只能有一个 WebSocket 连接，如果当前已存在一个 WebSocket 连接，会自动关闭该连接，并重新创建一个 WebSocket 连接。
      */
@@ -547,17 +547,17 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 监听WebSocket连接打开事件。
      */
     onSocketOpen(callback: Function): void;
-                    
+
     /**
      * 监听WebSocket错误。
      */
     onSocketError(callback: Function): void;
-                    
+
     /**
      * 通过 WebSocket 连接发送数据，需要先 wx.connectSocket，并在 wx.onSocketOpen 回调之后才能发送。
      */
@@ -579,12 +579,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 监听WebSocket接受到服务器的消息事件。
      */
     onSocketMessage(callback: Function): void;
-                    
+
     /**
      * 关闭WebSocket连接。
      */
@@ -610,14 +610,14 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 监听WebSocket关闭。
      */
     onSocketClose(callback: Function): void;
-                    
+
     // # 媒体 # 
-    
+
     /**
      * 从本地相册选择图片或使用相机拍照。
      */
@@ -647,7 +647,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 预览图片。
      */
@@ -673,7 +673,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 获取图片信息
      */
@@ -695,7 +695,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     saveImageToPhotosAlbum(obj: {
         /**
          * 图片文件路径，可以是临时文件路径也可以是永久文件路径，不支持网络图片路径
@@ -714,7 +714,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 开始录音。当主动调用wx.stopRecord，或者录音超过1分钟时自动结束录音，返回录音文件的临时文件路径。当用户离开小程序时，此接口无法调用。
      */
@@ -732,12 +732,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * ​    主动调用停止录音。
      */
     stopRecord(): void;
-                    
+
     /**
      * 开始播放语音，同时只允许一个语音文件正在播放，如果前一个语音文件还没播放完，将中断前一个语音播放。
      */
@@ -759,17 +759,17 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 暂停正在播放的语音。再次调用wx.playVoice播放同一个文件时，会从暂停处开始播放。如果想从头开始播放，需要先调用 wx.stopVoice。
      */
     pauseVoice(): void;
-                    
+
     /**
      * 结束播放语音。
      */
     stopVoice(): void;
-                    
+
     /**
      * 获取后台音乐播放状态。
      */
@@ -787,7 +787,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 使用后台播放器播放音乐，对于微信客户端来说，只能同时有一个后台音乐在播放。当用户离开小程序后，音乐将暂停播放；当用户点击“显示在聊天顶部”时，音乐不会暂停播放；当用户在其他小程序占用了音乐播放器，原有小程序内的音乐将停止播放。
      */
@@ -817,12 +817,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 暂停播放音乐。
      */
     pauseBackgroundAudio(): void;
-                    
+
     /**
      * 控制音乐播放进度。
      */
@@ -844,34 +844,34 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 停止播放音乐。
      */
     stopBackgroundAudio(): void;
-                    
+
     /**
      * 监听音乐播放。
      */
     onBackgroundAudioPlay(callback: Function): void;
-                    
+
     /**
      * 监听音乐暂停。
      */
     onBackgroundAudioPause(callback: Function): void;
-                    
+
     /**
      * 监听音乐停止。
      */
     onBackgroundAudioStop(callback: Function): void;
-                    
+
     getBackgroundAudioManager(): void;
-                    
+
     /**
      * 创建并返回 audio 上下文 audioContext 对象
      */
     createAudioContext(audioId: string): IAudioContext;
-                    
+
     /**
      * 拍摄视频或从手机相册中选视频，返回视频的临时文件路径。
      */
@@ -901,7 +901,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     saveVideoToPhotosAlbum(obj: {
         /**
          * 视频文件路径，可以是临时文件路径也可以是永久文件路径
@@ -920,14 +920,14 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 创建并返回 video 上下文 videoContext 对象
      */
     createVideoContext(videoId: string): IVideoContext;
-                    
+
     // # 文件 # 
-    
+
     /**
      * 保存文件到本地。
      */
@@ -949,7 +949,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 获取本地已保存的文件列表
      */
@@ -967,7 +967,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 获取本地文件的文件信息。此接口只能用于获取已保存到本地的文件，若需要获取临时文件信息，请使用 wx.getFileInfo 接口。
      */
@@ -989,7 +989,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 删除本地存储的文件
      */
@@ -1011,7 +1011,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 新开页面打开文档，支持格式：doc, xls, ppt, pdf, docx, xlsx, pptx
      */
@@ -1037,7 +1037,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getFileInfo(obj: {
         /**
          * 本地文件路径
@@ -1060,9 +1060,9 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     // # 数据缓存 # 
-    
+
     /**
      * 将数据存储在本地缓存中指定的 key 中，会覆盖掉原来该 key 对应的内容，这是一个异步接口。
      */
@@ -1088,12 +1088,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 将 data 存储在本地缓存中指定的 key 中，会覆盖掉原来该 key 对应的内容，这是一个同步接口。
      */
     setStorageSync(key: string, data: any, ): void;
-                    
+
     /**
      * 从本地缓存中异步获取指定 key 对应的内容。
      */
@@ -1115,12 +1115,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 从本地缓存中同步获取指定 key 对应的内容。
      */
     getStorageSync(key: string): void;
-                    
+
     /**
      * 异步获取当前storage的相关信息
      */
@@ -1138,12 +1138,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 同步获取当前storage的相关信息
      */
     getStorageInfoSync(): void;
-                    
+
     /**
      * 从本地缓存中异步移除指定 key 。
      */
@@ -1165,24 +1165,24 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 从本地缓存中同步移除指定 key 。
      */
     removeStorageSync(key: string): void;
-                    
+
     /**
      * 清理本地数据缓存。
      */
     clearStorage(): void;
-                    
+
     /**
      * 同步清理本地数据缓存
      */
     clearStorageSync(): void;
-                    
+
     // # 位置 # 
-    
+
     /**
      * 获取当前的地理位置、速度。当用户离开小程序后，此接口无法调用；当用户点击“显示在聊天顶部”时，此接口可继续调用。
      */
@@ -1204,7 +1204,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 打开地图选择位置
      */
@@ -1226,7 +1226,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * ​    使用微信内置地图查看位置
      */
@@ -1264,14 +1264,14 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 创建并返回 map 上下文 mapContext 对象
      */
     createMapContext(mapId: string): IMapContext;
-                    
+
     // # 设备 # 
-    
+
     /**
      * 获取系统信息。
      */
@@ -1289,12 +1289,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 获取系统信息同步接口
      */
     getSystemInfoSync(): void;
-                    
+
     /**
      * 获取网络类型。
      */
@@ -1312,9 +1312,9 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     onNetworkStatusChange(callback: Function): void;
-                    
+
     setScreenBrightness(obj: {
         /**
          * 屏幕亮度值，范围 0~1，0 最暗，1 最亮
@@ -1333,7 +1333,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getScreenBrightness(obj: {
         /**
          * 接口调用成功
@@ -1348,7 +1348,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     vibrateLong(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1363,7 +1363,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     vibrateShort(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1378,12 +1378,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 监听加速度数据，频率：5次/秒，接口调用后会自动开始监听，可使用 wx.stopAccelerometer 停止监听。
      */
     onAccelerometerChange(callback: Function): void;
-                    
+
     startAccelerometer(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1398,7 +1398,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     stopAccelerometer(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1413,12 +1413,12 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 监听罗盘数据，频率：5次/秒，接口调用后会自动开始监听，可使用wx.stopCompass停止监听。
      */
     onCompassChange(callback: Function): void;
-                    
+
     startCompass(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1433,7 +1433,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     stopCompass(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1448,7 +1448,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     makePhoneCall(obj: {
         /**
          * 需要拨打的电话号码
@@ -1467,7 +1467,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 调起客户端扫码界面，扫码成功后返回对应的结果
      */
@@ -1489,7 +1489,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     setClipboardData(obj: {
         /**
          * 需要设置的内容
@@ -1508,7 +1508,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getClipboardData(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1523,7 +1523,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     openBluetoothAdapter(obj: {
         /**
          * 成功则返回成功初始化信息
@@ -1538,7 +1538,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     closeBluetoothAdapter(obj: {
         /**
          * 成功则返回成功关闭模块信息
@@ -1553,7 +1553,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getBluetoothAdapterState(obj: {
         /**
          * 成功则返回本机蓝牙适配器状态
@@ -1568,9 +1568,9 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     onBluetoothAdapterStateChange(callback: Function): void;
-                    
+
     startBluetoothDevicesDiscovery(obj: {
         /**
          * 蓝牙设备主 service 的 uuid 列表
@@ -1597,7 +1597,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     stopBluetoothDevicesDiscovery(obj: {
         /**
          * 成功则返回本机蓝牙适配器状态
@@ -1612,7 +1612,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getBluetoothDevices(obj: {
         /**
          * 成功则返回本机蓝牙适配器状态
@@ -1627,9 +1627,9 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     onBluetoothDeviceFound(callback: Function): void;
-                    
+
     getConnectedBluetoothDevices(obj: {
         /**
          * 蓝牙设备主 service 的 uuid 列表
@@ -1648,7 +1648,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     createBLEConnection(obj: {
         /**
          * 蓝牙设备 id，参考 getDevices 接口
@@ -1667,7 +1667,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     closeBLEConnection(obj: {
         /**
          * 蓝牙设备 id，参考 getDevices 接口
@@ -1686,7 +1686,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getBLEDeviceServices(obj: {
         /**
          * 蓝牙设备 id，参考 getDevices 接口
@@ -1705,7 +1705,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getBLEDeviceCharacteristics(obj: {
         /**
          * 蓝牙设备 id，参考 device 对象
@@ -1728,7 +1728,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     readBLECharacteristicValue(obj: {
         /**
          * 蓝牙设备 id，参考 device 对象
@@ -1755,7 +1755,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     writeBLECharacteristicValue(obj: {
         /**
          * 蓝牙设备 id，参考 device 对象
@@ -1786,7 +1786,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     notifyBLECharacteristicValueChange(obj: {
         /**
          * 蓝牙设备 id，参考 device 对象
@@ -1817,11 +1817,11 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     onBLEConnectionStateChange(callback: Function): void;
-                    
+
     onBLECharacteristicValueChange(callback: Function): void;
-                    
+
     startBeaconDiscovery(obj: {
         /**
          * iBeacon设备广播的 uuids
@@ -1840,7 +1840,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     stopBeaconDiscovery(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1855,7 +1855,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getBeacons(obj: {
         /**
          * 接口调用成功的回调函数
@@ -1870,13 +1870,13 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     onBeaconUpdate(callback: Function): void;
-                    
+
     onBeaconServiceChange(callback: Function): void;
-                    
+
     onUserCaptureScreen(callback: Function): void;
-                    
+
     addPhoneContact(obj: {
         /**
          * 头像本地文件路径
@@ -2019,9 +2019,9 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     // # 界面 # 
-    
+
     /**
      * 显示消息提示框
      */
@@ -2059,7 +2059,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     showLoading(obj: {
         /**
          * 提示的内容
@@ -2082,14 +2082,14 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 隐藏消息提示框
      */
     hideToast(): void;
-                    
+
     hideLoading(): void;
-                    
+
     /**
      * ​显示模态弹窗
      */
@@ -2135,7 +2135,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * ​显示操作菜单
      */
@@ -2161,7 +2161,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     setTopBarText(obj: {
         /**
          * 置顶栏文字内容
@@ -2180,7 +2180,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 动态设置当前页面的标题。
      */
@@ -2202,17 +2202,17 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 在当前页面显示导航条加载动画。
      */
     showNavigationBarLoading(): void;
-                    
+
     /**
      * 隐藏导航条加载动画。
      */
     hideNavigationBarLoading(): void;
-                    
+
     /**
      * 保留当前页面，跳转到应用内的某个页面，使用wx.navigateBack可以返回到原页面。
      */
@@ -2234,7 +2234,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 关闭当前页面，跳转到应用内的某个页面。
      */
@@ -2256,7 +2256,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     reLaunch(obj: {
         /**
          * 需要跳转的应用内页面路径 , 路径后可以带参数。参数与路径之间使用?分隔，参数键与参数值用=相连，不同参数用&分隔；如 'path?key=value&key2=value2'，如果跳转的页面路径是 tabBar 页面则不能带参数
@@ -2275,7 +2275,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
      */
@@ -2297,7 +2297,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages()) 获取当前的页面栈，决定需要返回几层。
      */
@@ -2307,7 +2307,7 @@ declare var wx: {
          */
         delta?: number;
     }): void;
-                    
+
     /**
      * 创建一个动画实例animation。调用实例的方法来描述动画。最后通过动画实例的export方法导出动画数据传递给组件的animation属性。
      */
@@ -2329,24 +2329,24 @@ declare var wx: {
          */
         transformOrigin?: string;
     }): IAnimation;
-                    
+
     pageScrollTo(obj: {
         /**
          * 滚动到页面的目标位置（单位px）
          */
         scrollTop: number;
     }): void;
-                    
+
     /**
      * 创建 canvas 绘图上下文（指定 canvasId）.Tip: 需要指定 canvasId，该绘图上下文只作用于对应的 <canvas/>
      */
     createCanvasContext(canvasId: string): ICanvasContext;
-                    
+
     /**
      * 把当前画布的内容导出生成图片，并返回文件路径
      */
     canvasToTempFilePath(canvasId: string): void;
-                    
+
     startPullDownRefresh(obj: {
         /**
          * 接口调用成功的回调函数
@@ -2361,16 +2361,16 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 停止当前页面下拉刷新。
      */
     stopPullDownRefresh(): void;
-                    
+
     // # WXML节点信息 # 
-    
+
     // # 第三方平台 # 
-    
+
     getExtConfig(obj: {
         /**
          * 返回第三方平台自定义的数据
@@ -2385,13 +2385,13 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getExtConfigSync(): void;
-                    
+
     // # 开放接口 # 
-    
+
     /**
-     * 调用接口获取登录凭证（code）进而换取用户登录态信息，包括用户的唯一标识（openid） 及本次登录的 会话密钥（session_key）。用户数据的加解密通讯需要依赖会话密钥完成。
+     * 调用接口获取登录凭证（code）进而换取用户登录态信息，包括用户的唯一标识（openid） 及本次登录的 会话密钥（sessionKey）。用户数据的加解密通讯需要依赖会话密钥完成。
      */
     login(obj: {
         /**
@@ -2407,7 +2407,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 通过上述接口获得的用户登录态拥有一定的时效性。用户越久未使用小程序，用户登录态越有可能失效。反之如果用户一直在使用小程序，则用户登录态一直保持有效。具体时效逻辑由微信维护，对开发者透明。开发者只需要调用wx.checkSession接口检测当前用户登录态是否有效。登录态过期后开发者可以再调用wx.login获取新的用户登录态。
      */
@@ -2425,7 +2425,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     authorize(obj: {
         /**
          * 需要获取权限的scope，详见 scope 列表
@@ -2444,7 +2444,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 获取用户信息，withCredentials 为 true 时需要先调用 wx.login 接口。
      */
@@ -2470,7 +2470,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     /**
      * 发起微信支付。
      */
@@ -2508,7 +2508,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     chooseAddress(obj: {
         /**
          * 返回用户选择的收货地址信息
@@ -2523,7 +2523,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     addCard(obj: {
         /**
          * 需要添加的卡券列表，列表内对象说明请参见请求对象说明
@@ -2542,7 +2542,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     openCard(obj: {
         /**
          * 需要打开的卡券列表，列表内参数详见openCard 请求对象说明
@@ -2561,7 +2561,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     openSetting(obj: {
         /**
          * 接口调用成功的回调函数，返回内容详见返回参数说明。
@@ -2576,7 +2576,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getSetting(obj: {
         /**
          * 接口调用成功的回调函数，返回内容详见返回参数说明。
@@ -2591,7 +2591,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     getWeRunData(obj: {
         /**
          * 接口调用成功的回调函数
@@ -2606,7 +2606,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     navigateToMiniProgram(obj: {
         /**
          * 要打开的小程序 appId
@@ -2637,7 +2637,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     chooseInvoiceTitle(obj: {
         /**
          * 接口调用成功的回调函数
@@ -2652,7 +2652,7 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     checkIsSupportSoterAuthentication(obj: {
         /**
          * 接口调用成功的回调函数
@@ -2667,22 +2667,22 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
     // # 数据 # 
-    
+
     /**
      * 自定义分析数据上报接口。使用前，需要在小程序管理后台自定义分析中新建事件，配置好事件名与字段。
      */
-    reportAnalytics(eventName: string,  data: string, ): void;
-                    
+    reportAnalytics(eventName: string, data: string, ): void;
+
     // # 拓展接口 # 
-    
+
     arrayBufferToBase64(arrayBuffer: string): void;
-                    
+
     base64ToArrayBuffer(base64: string): void;
-                    
+
     // # 调试接口 # 
-    
+
     setEnableDebug(obj: {
         /**
          * 是否打开调试
@@ -2701,5 +2701,5 @@ declare var wx: {
          */
         complete?: Function;
     }): void;
-                    
+
 }

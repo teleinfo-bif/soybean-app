@@ -115,7 +115,6 @@ Component({
     setFormData(formData) {
       let _formData = {};
       for (let prop in formData) {
-        // console.log("prop", prop);
         const field = this.findFieldItemWithProp(prop);
         if (!field) continue;
         const type = field.type;
@@ -137,7 +136,6 @@ Component({
     },
     getFormItemLabel(prop) {
       return this.data.fields.filter(item => {
-        console.log(item.prop, prop);
         return item.prop == prop;
       });
     },
@@ -147,15 +145,13 @@ Component({
       for (let i = 0; i < Object.keys(fields).length; i++) {
         let prop = fields[i].prop;
         let itemData = _formData[prop];
+        // 判断 隐藏、不需要验证的字段跳过验证
         if (
+          fields[i].require != true &&
           fields[i].hide != true &&
           (itemData == null || itemData == undefined || itemData.length == 0)
         ) {
-          console.log("form - validate ", prop);
-          // console.log(this.getFormItemLabel(prop));
-          // debugger;
           let emptyItem = this.getFormItemLabel(prop)[0];
-          console.log(emptyItem);
           wx.showToast({
             title: emptyItem.title + "项不能为空",
             icon: "none"

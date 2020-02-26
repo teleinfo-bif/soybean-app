@@ -28,7 +28,7 @@ App({
     } else {
       getOpenId().then(({ openid }) => {
         this.globalData.openid = openid;
-        this.globalData.session_key = openid;
+        this.globalData.sessionKey = openid;
         this.getUserFilledInfo(openid);
       });
     }
@@ -60,7 +60,7 @@ App({
     auth: false, // 是否开启权限验证
     statusBarHeight: 20, // 标题栏高度-适配首页
     openid: null, // openid
-    session_key: null, // session_key
+    sessionKey: null, // sessionKey
     userInfo: null, // 从微信获取的用户信息
     userRegisted: false, // 用户是否填写了个人信息
     userFilledInfo: null // 用户填写的个人信息

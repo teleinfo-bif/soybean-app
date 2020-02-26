@@ -51,18 +51,18 @@ Component({
         });
     },
     getPhoneNumber(e) {
-      const sessionKey = app.globalData.session_key;
+      const { sessionKey } = app.globalData;
       let requestData = {
         encryptedData: e.detail.encryptedData,
         iv: e.detail.iv,
         sessionKey: sessionKey
       };
-      if (app.globalData.session_key) {
+      if (app.globalData.sessionKey) {
         requestData.sessionKey;
         this.getPhoneNumberFromServer(requestData);
       } else {
-        getOpenId().then(({ session_key }) => {
-          requestData.sessionKey = session_key;
+        getOpenId().then(({ sessionKey }) => {
+          requestData.sessionKey = sessionKey;
           this.getPhoneNumberFromServer(requestData);
         });
       }

@@ -1,12 +1,14 @@
 import Request from "./request.js";
 
+const appid = "wx5236affef117da53";
+
 // 获取用户openId
 export const getOpenId = () => {
   return new Promise((resolve, reject) => {
     wx.login({
       success: res => {
         let params = {
-          appid: "wx5236affef117da53",
+          appid,
           code: res.code
         };
         Request._get("/wx/user/login", params)
@@ -26,7 +28,8 @@ export const getOpenId = () => {
 // 获取用户获取的个人信息
 export const getUserPhone = params => {
   console.log(params);
-  return Request._post("/wx/user/phone", params);
+  params = Object.assign({}, params, { appid });
+  return Request._get("/wx/user/phone", params);
 };
 
 // 获取用户获取的个人信息

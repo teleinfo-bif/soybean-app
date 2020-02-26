@@ -14,7 +14,7 @@
           </picker>
         </view>
       </view>
-      <view class="people-item" wx:for="{{ blockData }}" wx:key="index">
+      <view class="people-item" wx:for="{{ clockData }}" wx:key="index">
         <view class="people-item_name">{{item.userName || "-"}}</view>
         <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
         <view class="people-item_detail">打卡记录</view>
@@ -37,7 +37,7 @@
           </block>
         </view>
       </view>
-      <view wx:if="{{blockData.pages > 1 && blockData.pages == blockData.current}}" class="no-more-data">
+      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-more-data">
         没有更多数据
       </view>
     </scroll-view>

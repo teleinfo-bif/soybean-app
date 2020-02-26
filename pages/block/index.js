@@ -1,12 +1,7 @@
 // pages/Sign/index.js
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import {
-  getTodayClock,
-  getUserClockList,
-  getUserFilledInfo,
-  saveClock
-} from "../../api/api.js";
+import { getTodayClock, getUserFilledInfo, saveClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -52,15 +47,24 @@ let fields = [
       ]
     }
   },
-  // {
-  //   title: "返京日期",
-  //   type: "date",
-  //   prop: "gobacktime2",
-  //   hide: false,
-  //   props: {
-  //     placeholder: "请输入返京日期"
-  //   }
-  // },
+  {
+    title: "离京日期",
+    type: "date",
+    prop: "leavetime",
+    hide: false,
+    props: {
+      placeholder: "请输入返京日期"
+    }
+  },
+  {
+    title: "返京日期",
+    type: "date",
+    prop: "gobacktime2",
+    hide: false,
+    props: {
+      placeholder: "请输入返京日期"
+    }
+  },
   {
     title: "未返京原因 ",
     type: "input",
@@ -80,14 +84,6 @@ let fields = [
     }
   },
   {
-    title: "开始观察时间",
-    type: "date",
-    prop: "startTime",
-    props: {
-      placeholder: "请输入开始观察时间"
-    }
-  },
-  {
     title: "体温",
     type: "input",
     prop: "temperature",
@@ -96,7 +92,7 @@ let fields = [
     }
   },
   {
-    title: "目前健康状态健康状态",
+    title: "目前健康状况",
     type: "radio",
     prop: "healthy",
     props: {
@@ -105,22 +101,33 @@ let fields = [
       options: [
         { id: 1, name: "健康" },
         { id: 2, name: "有发烧、咳嗽等症状" },
-        { id: 0, name: "其他" }
+        { id: 0, name: "其他症状" }
+      ]
+    }
+  },
+  {
+    title: "是否确诊",
+    type: "radio",
+    prop: "comfirmed",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 0, name: "否" },
+        { id: 1, name: "是" }
       ]
     }
   },
   {
     title: "是否就诊住院",
     type: "radio",
-    prop: "hospital",
+    prop: "admitting",
     props: {
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "无" },
-        { id: 1, name: "门诊" },
-        { id: 2, name: "住院" },
-        { id: 3, name: "其他" }
+        { id: 0, name: "否" },
+        { id: 1, name: "是" }
       ]
     }
   },
@@ -138,107 +145,12 @@ let fields = [
     }
   },
   {
-    title: "是否在隔离",
-    type: "radio",
-    prop: "quarantine",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否发热",
-    type: "radio",
-    prop: "fever",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否咳嗽",
-    type: "radio",
-    prop: "hoose",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否乏力",
-    type: "radio",
-    prop: "fatigue",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否呼吸困难",
-    type: "radio",
-    prop: "dyspnea",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否腹泻",
-    type: "radio",
-    prop: "diarrhea",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "是否肌肉酸痛",
-    type: "radio",
-    prop: "muscle",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
-  },
-  {
-    title: "其他不适症状",
-    type: "radio",
+    title: "其他备注信息",
+    type: "input",
     prop: "other",
+    require: false,
     props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
+      placeholder: "请输入备注信息"
     }
   }
 ];
@@ -284,31 +196,57 @@ Page({
       address: ""
     }
   },
+  // 温度大于37.2设置健康是禁选中
+  setHealthyDisabled(disable) {
+    let { fields, data } = this.data;
+    data["healthy"] = null;
+    this.setData({
+      data
+    });
+    fields.forEach((item, index) => {
+      if (item.prop === "healthy") {
+        for (let i = 0; i < item.props.options.length; i++) {
+          if (item.props.options[i].id === 1) {
+            fields[index].props.options[i]["disabled"] = disable;
+            break;
+          }
+        }
+      }
+    });
+    this.setData({ fields, data });
+  },
   onFormChange(e) {
     console.log("onFormChange", e);
     const { prop, value } = e.detail;
-    const { data } = this.data;
+    let { data } = this.data;
 
     // 根据填选是否离开，显示返回日期
     if (prop === "otherCity") {
       this.setFields(this.data.atBeijing, value.toString() === "1");
     } else if (prop === "temperature") {
       // 判断 > 37.2摄氏度，默认发烧状态
-      if (value > 37.2) {
-        data["healthy"] = 0;
-        this.setData({
-          data
-        });
+      if (Number(value) > 37.2) {
+        this.setHealthyDisabled(true);
+      } else {
+        this.setHealthyDisabled(false);
+      }
+    } else if (prop === "comfirmed") {
+      // 判断 确诊不能选择健康
+      if (value === "1") {
+        this.setHealthyDisabled(true);
+      } else {
+        this.setHealthyDisabled(false);
       }
     }
 
     let itemData = {};
     itemData[e.detail.prop] = e.detail.value;
-    let data = Object.assign(this.data.data, itemData);
-    // this.setData({
-    //   data
-    // });
-    this.data.data = data;
+    data = Object.assign({}, data, itemData);
+    // this.data.data = data;
+
+    this.setData({
+      data
+    });
   },
 
   formSubmit() {
@@ -366,10 +304,15 @@ Page({
       // }
       this.setFieldsHide(["reason", "gobacktime", "reason"]);
       if (leaved) {
-        // this.setFieldsHide(["reason", "gobacktime", "reason"]);
+        this.setFieldsHide(["reason", "gobacktime", "reason"]);
       } else {
         // 在北京且未离开
-        // this.setFieldsHide(["reason", "gobacktime", "gobacktime2"]);
+        this.setFieldsHide([
+          "reason",
+          "gobacktime",
+          "leavetime",
+          "gobacktime2"
+        ]);
         // this.setFieldsHide(["reason", "gobacktime", "reason"]);
       }
     } else {
@@ -442,13 +385,18 @@ Page({
 
   // 获取用户今日打卡信息
   getUserTodyClockData() {
-    this.initFormData();
     console.log("====getUserTodyClockData====");
     getTodayClock({
       userId: 60
     }).then(data => {
+      console.log("today data", data);
+      // 整数个
+      // if (data.total === 0) {
+      //   this.initAddress();
+      // }
       let formData = Object.assign({}, this.data.data, data.records[0]);
-      let atBeijing = formData.address.indexOf("北京市") > -1;
+      let atBeijing =
+        (formData.address && formData.address.indexOf("北京市") > -1) || false;
 
       // ============================
 
@@ -478,38 +426,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.initFormData();
-    // this.initAddress();
+    this.initFormData();
     this.initUserInfo();
     this.getUserTodyClockData();
-    // this.setData({
-    //   data: {
-    //     address: "北京市海淀区长春桥路17号",
-    //     diarrhea: "0",
-    //     dyspnea: "0",
-    //     fatigue: "0",
-    //     fever: "0",
-    //     gobacktime: null,
-    //     healthy: "1",
-    //     hoose: "0",
-    //     hospital: "0",
-    //     muscle: "0",
-    //     name: "1",
-    //     other: "0",
-    //     otherCity: "0",
-    //     phone: "1",
-    //     quarantine: "0",
-    //     reason: null,
-    //     startTime: "2020-02-25",
-    //     temperature: "33",
-    //     wuhan: "0"
-    //   }
-    // });
-    getUserClockList({
-      userId: 60
-    }).then(res => {
-      console.log(res);
-    });
   },
 
   /**

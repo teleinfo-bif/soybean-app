@@ -57,7 +57,7 @@ const Request = ({ url, params, method, ...other } = {}) => {
             .then(resolve);
         } else if (res.data.code !== 200) {
           // 获取后台返回报错信息
-          let title = res.data.err_msg;
+          let title = res.data.err_msg || "请求错误";
           // 调用全局toast方法
           showToast(title);
         } else if (res.data.code === 200) {

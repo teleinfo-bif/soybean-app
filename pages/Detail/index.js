@@ -20,7 +20,7 @@ Page({
   data: {
     now: "",
     value: "",
-    blockData: {
+    clockData: {
       current: 0,
       pages: 0,
       searchCount: true,
@@ -28,7 +28,7 @@ Page({
       total: 0,
       records: []
     },
-    blockList: [],
+    clockList: [],
     show: false,
     currentDate: new Date().getTime(),
     showDateText: "",
@@ -53,7 +53,7 @@ Page({
 
   getData() {
     let { requestInit, userId } = this.data;
-    let { pages, current } = this.data.blockData;
+    let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
       getGroupBlockList({
         userId: userId,
@@ -62,8 +62,8 @@ Page({
         clockInTime: ""
       }).then(res => {
         this.setData({
-          blockData: res,
-          blockList: this.data.blockList.concat(res.records)
+          clockData: res,
+          clockList: this.data.clockList.concat(res.records)
         });
       });
     }

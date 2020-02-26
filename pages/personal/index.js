@@ -46,14 +46,9 @@ Page({
           type: "number",
           itemLabelKey: "name",
           options: [
-            { id: 1, name: "身份证" },
-            { id: 2, name: "军官证" },
-            { id: 3, name: "护照" },
-            { id: 4, name: "港澳居民来往内地通行证" },
-            { id: 5, name: "台湾居民来往内地通行证" },
-            { id: 6, name: "港澳居民居住证" },
-            { id: 7, name: "台湾居民居住证" },
-            { id: 8, name: "出入境通行证" }
+            { id: 1, name: "大陆身份证" },
+            { id: 2, name: "护照" },
+            { id: 3, name: "军官证" }
           ]
         }
       },
@@ -83,34 +78,6 @@ Page({
           addressKey: ""
         }
       }
-      // {
-      //   title: '测试 radio',
-      //   type: 'radio',
-      //   prop: 'radio',
-      //   props: {
-      //     itemKey: 'id',
-      //     itemLabelKey: 'name',
-      //     options: [
-      //       { id: 1, name: '是' },
-      //       { id: 2, name: '否' }
-      //     ]
-      //   }
-      // },
-      // {
-      //   title: '测试 area',
-      //   type: 'area',
-      //   prop: 'area'
-      // },
-      // {
-      //   title: '测试 date',
-      //   type: 'date',
-      //   prop: 'date'
-      // },
-      // {
-      //   title: '测试 time',
-      //   type: 'time',
-      //   prop: 'time'
-      // }
     ],
     data: {}
   },
@@ -140,7 +107,7 @@ Page({
     const validate = this.selectComponent("#form").validate();
     if (validate) {
       const formData = this.data.data;
-      formData.idType = formData.idType.name;
+      formData.idType = formData.idType.id;
       formData.homeAddress = formData.homeAddress.join("-");
       console.log(formData);
       if (!this.data.userRegisted) {

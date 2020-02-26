@@ -5,7 +5,7 @@ module.exports = Behavior({
   properties: {},
   data: {
     openid: null, // openid
-    session_key: null, // session_key
+    sessionKey: null, // sessionKey
     userId: null,
     userRegisted: false, // 用户是否填写了个人信息
     userFilledInfo: null
@@ -19,10 +19,10 @@ module.exports = Behavior({
       } else {
         getOpenId().then(({ openid, sessionKey }) => {
           app.globalData.openid = openid;
-          app.globalData.session_key = openid;
+          app.globalData.sessionKey = openid;
           this.setData({
             openid,
-            session_key: session_key
+            sessionKey: sessionKey
           });
           this.getUserFilledInfo(openid);
         });
