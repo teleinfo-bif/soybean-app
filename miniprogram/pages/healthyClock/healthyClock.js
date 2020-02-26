@@ -23,7 +23,8 @@ Page({
     todayClickFlag : '0', //今日是否打卡标志，默认未打卡
     healthyFlag: false,
     tempera: 0,
-    confirmed: false
+    confirmed: '1',
+    hospital: '1'
   },
 
   currentDate: function(e) {
@@ -279,6 +280,48 @@ Page({
         return;
       }
     }
+
+    if (bodyStatusFlag == 0) {
+       if (this.data.tempera > 37.3) {
+         wx.showToast({
+           icon: 'none',
+           title: '体温与健康状况发生冲突，请重新填写',
+           duration: 3000,
+
+         });
+         return;
+       }
+
+       if(this.data.confirmed == 0) {
+         wx.showToast({
+           icon: 'none',
+           title: '是否确诊与健康状况发生冲突，请重新填写',
+           duration: 3000,
+
+         });
+         return;
+       }
+
+       if (this.data.hospital == 0) {
+         wx.showToast({
+           icon: 'none',
+           title: '是否就诊住院与健康状况发生冲突，请重新填写',
+           duration: 3000
+
+         });
+         return;
+       }
+    }
+
+    if (this.data.tempera > 37.3 || this.data.confirmed == 0 || this.data.hospital == 0){
+      if (bodyStatusFlag == 0) {
+        wx.showToast({
+          icon: 'none',
+          title: '健康状况与实际情况不符合，请重新填写'
+        });
+        return;
+      }
+    } 
 
 
     if (app.globalData.isGoBackFlag == '1') {//未返京
@@ -582,14 +625,16 @@ Page({
 
   judgeTemperature: function(e) {
     console.log("value: ", e.detail.value)
-    var flag = 0
-    if (e.detail.value < 37.3) {
-      flag = 1
+    if (this.data.confirmed == '1' && this.data.hospital == '1'){
+      var flag = 0
+      if (e.detail.value < 37.3) {
+        flag = 1
+      }
+      this.setData({
+        tempera: e.detail.value
+      })
+      this.healthShowHide(flag)
     }
-    this.setData({
-      tempera: e.detail.value
-    })
-    this.healthShowHide(flag)
   },
 
   //目前健康状况
@@ -607,7 +652,10 @@ Page({
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     
     this.isQueZhenFlag = e.detail.value
-    if (this.data.tempera < 37.3){
+    this.setData({
+      confirmed: e.detail.value
+    })
+    if (this.data.tempera < 37.3 && this.data.hospital == 1) {
       this.healthShowHide(e.detail.value)
     }
   //  this.radioChange(e)
@@ -618,7 +666,10 @@ Page({
     
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
-    if (!this.data.tempera < 37.3 && this.isQueZhenFlag != 0){
+    this.setData({
+      hospital: e.detail.value
+    })
+    if (!this.data.tempera < 37.3 && this.data.confirmed == 1){
       this.healthShowHide(e.detail.value)
     }
     //  this.radioChange(e)
