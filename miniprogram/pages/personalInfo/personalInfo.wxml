@@ -31,7 +31,7 @@
           <button class="info-phone" style="{{phone_display}}" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取</button>
         </view>
         <view class="personal-info-td">
-          <input class="info-input" name="phone" type="number" placeholder-class="placeholder-style" placeholder="{{placeholder_phone}}" disabled="{{forever_disabled}}" value="{{value_phone}}"></input>
+          <input class="info-input" name="phone" type="number" placeholder-class="placeholder-style" placeholder="{{placeholder_phone}}" disabled="true" value="{{value_phone}}"></input>
         </view>
 
         <!-- 证件类型 -->

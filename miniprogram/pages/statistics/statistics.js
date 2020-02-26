@@ -104,7 +104,7 @@ Page({
         filledIn: 26,
         filledInText: "离京未返京人数",
         unfilledIn: 16,
-        unfilledInText: "身体异常人数"
+        unfilledInText: "非健康人数"
       }
     },
 
@@ -133,6 +133,7 @@ Page({
 
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
+    returnBeijingNumber: 0,
     outBeijingNumber: 0,
     healthyBadNumber: 0,
 
@@ -149,10 +150,10 @@ Page({
     stateServerPercent: 0,
 
     // area datas
-    beijingNumber: 5,
-    wuhanNumber: 6,
-    hubeiNumber: 7,
-    othersNumber: 3,
+    beijingNumber: 0,
+    wuhanNumber: 0,
+    hubeiNumber: 0,
+    othersNumber: 0,
     totalAreaNumber: 0,
 
     beijingPercent: 0,
@@ -161,10 +162,10 @@ Page({
     othersPercent: 0,
 
     // case datas
-    confirmedNumber: 3,
-    isolateNumber: 5,
-    outIsolateNumber: 2,
-    otherCasesNumber: 9,
+    confirmedNumber: 0,
+    isolateNumber: 0,
+    outIsolateNumber: 0,
+    otherCasesNumber: 0,
     totalCasesNumber: 0,
 
     confirmedPercent: 0,
@@ -565,6 +566,17 @@ getBeijingNumber: function(datas, reg) {
   return sum
 },
 
+getLongBeijingNumber: function() {
+  var sum = 0
+  for (var i = 0; i < datas.length; i++) {
+    if (/.*北京/.test(datas[i].place) && datas[i].isLeaveBjFlag == '1') {
+      sum += 1
+    }
+  }
+
+  return sum
+},
+
   getWuhanNumber: function (datas, reg) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
@@ -654,6 +666,8 @@ getDatasAuthority: function(company) {
       var should = totalDatas.length
       var filled = healthyDatas.length
 
+      var longBeijing = this.getLongBeijingNumber()
+
       var good = this.getStateNumber(healthyDatas, "0")
       var server = this.getStateNumber(healthyDatas, "1")
       var otherNum = this.getStateNumber(healthyDatas, "2")
@@ -673,7 +687,9 @@ getDatasAuthority: function(company) {
       this.setData({
         shouldFilledNumber: should,
         hasFilledNumber: filled,
-        outBeijingNumber: filled - beijing,
+        returnBeijingNumber: beijing - longBeijing,
+        outBeijingNumber: filled - beijing ,
+
 
         stateGoodNumber: good,
 
@@ -743,10 +759,17 @@ getDatas: function(e) {
 
       var datas = res.result
 
+      var should = datas[0]
+      var filled = datas[1]
+      var returnBeijing = datas[12]
+      var totalBeijing = datas[8]
+      var outBeijing = filled - totalBeijing 
+
       this.setData({
         shouldFilledNumber: datas[0],
         hasFilledNumber: datas[1],
-        outBeijingNumber: datas[1] - datas[8],
+        returnBeijingNumber: returnBeijing,
+        outBeijingNumber: outBeijing,
 
         stateGoodNumber: datas[2],
        

@@ -21,7 +21,7 @@
       <view class="dashboard-show-data">{{shouldFilledNumber}}</view>
       <view class="dashboard-show-text">{{dashboard.health.shouldText}}</view>
 
-      <view class="dashboard-show-data">{{beijingNumber}}</view>
+      <view class="dashboard-show-data">{{returnBeijingNumber}}</view>
       <view class="dashboard-show-text">{{dashboard.area.shouldText}}</view>
     </view>
 

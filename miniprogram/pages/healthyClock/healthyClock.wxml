@@ -21,13 +21,13 @@
 
       <view class="weui-cells__title">
         <text style="">打卡地点:</text>
-              <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text>
+              <!-- <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text> -->
 
       </view>
 
       <view class="weui-cell_ ">
         <view class="weui-cell__bd">
-          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点"/>
+          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true"/>
         </view>
       </view>
 
@@ -39,8 +39,8 @@
         </view>
         <view>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange">
-            <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" />{{item.name}}
+            <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -68,8 +68,8 @@
         <view class="weui-cells__title">是否离过京(2020年1月10日以后):</view>
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
-            <label wx:for="{{radioItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" />{{item.name}}
+            <label wx:for="{{leaveBeijingItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -112,7 +112,7 @@
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
               <view class="weui-cell__bd">
-                <input class="weui-input" name="trainnumber" placeholder="请输入车次/航班/车牌" />
+                <input class="weui-input" name="trainnumber" value="{{trainnumber}}" placeholder="请输入车次/航班/车牌" />
               </view>
             </view>
           </view>
@@ -124,27 +124,9 @@
       <view class="weui-cells__title">当日体温:</view>
       <view class="weui-cell_">
           <view class="weui-cell__bd">
-            <input class="weui-input" name="temperature" placeholder="请输入当日体温" />
+            <input class="weui-input" name="temperature" placeholder="请输入体温，健康体温不大于37.2度" bindblur="judgeTemperature"/>
           </view>
         </view>
-
-      <view class="weui-cells__title">目前健康状况:</view>
-      <view>
-        <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
-          <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" />{{item.name}}
-          </label>
-        </radio-group>
-      </view>
-
-      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells__title">健康状况为其他的原因</view>
-      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
-        <view class="weui-cell ">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="bodystatusotherremark" placeholder="请输入信息" />
-          </view>
-        </view>
-      </view>
 
       <view class="weui-cells__title">是否确诊:</view>
       <view>
@@ -163,6 +145,31 @@
           </label>
         </radio-group>
       </view>
+
+      <view class="weui-cells__title">目前健康状况:</view>
+      <view>
+        <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
+          <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells__title">健康状况为其他的原因</view>
+      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
+        <view class="weui-cell ">
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="bodystatusotherremark" placeholder="请输入信息" />
+          </view>
+        </view>
+      </view>
+
+      
 
       <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
       <view>

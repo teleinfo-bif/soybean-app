@@ -63,7 +63,8 @@
 .weui-input {
   width: 100%;
   font-size: 35rpx;
-  /* margin-top: 5rpx; */
+  /* font-weight: 500; */
+  margin-top: 5rpx;
   padding-left: 8rpx;
 }
 

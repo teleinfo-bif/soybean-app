@@ -61,6 +61,7 @@ Page({
                   tempTopic['temperature'] = res.result[j].temperature
                   tempTopic['goHospitalFlag'] = res.result[j].goHospitalFlag
                   tempTopic['bodyStatusFlag'] = res.result[j].bodyStatusFlag
+                  tempTopic['isQueZhenFlag'] = res.result[j].isQueZhenFlag
                 }
               }
               temp.push(tempTopic);
@@ -114,6 +115,7 @@ Page({
               tempTopic['temperature'] = userHealthyDatas[j].temperature
               tempTopic['goHospitalFlag'] = userHealthyDatas[j].goHospitalFlag
               tempTopic['bodyStatusFlag'] = userHealthyDatas[j].bodyStatusFlag
+              tempTopic['isQueZhenFlag'] = userHealthyDatas[j].isQueZhenFlag
             }
           }
           temp.push(tempTopic)

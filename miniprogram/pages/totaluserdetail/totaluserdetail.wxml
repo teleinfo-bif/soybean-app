@@ -36,13 +36,25 @@
           打卡详情
         </view>
       </label>
-      <label wx:if="{{item.temperature < 37.3 && item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}">
+      <label wx:if="{{item.isQueZhenFlag=='0'}}">
+        <view>
+          <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">确诊</view>
+        </view>
+      </label>
+      <label wx:elif="{{item.goHospitalFlag == '0'}}">
+        <view>
+          <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">就诊</view>
+        </view>
+      </label>
+      <label wx:elif="{{item.temperature < 37.3 && item.bodyStatusFlag == '0'}}">
         <view>
           <view class="tree-children-status-green"></view>
           <view class="tree-children-status-text">正常</view>
         </view>
       </label>
-      <label wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}">
+      <label wx:elif="{{item.temperature > 37.2 && item.bodyStatusFlag != '0'}}">
         <view>
           <view class="tree-children-status-yellow"></view>
           <view class="tree-children-status-text">异常</view>
