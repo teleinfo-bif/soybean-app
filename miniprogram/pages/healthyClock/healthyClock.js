@@ -21,7 +21,9 @@ Page({
     index: 0,
     place: "",
     todayClickFlag : '0', //今日是否打卡标志，默认未打卡
-    healthyFlag: false
+    healthyFlag: false,
+    tempera: 0,
+    confirmed: false
   },
 
   currentDate: function(e) {
@@ -584,7 +586,9 @@ Page({
     if (e.detail.value < 37.3) {
       flag = 1
     }
-
+    this.setData({
+      tempera: e.detail.value
+    })
     this.healthShowHide(flag)
   },
 
@@ -603,7 +607,9 @@ Page({
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     
     this.isQueZhenFlag = e.detail.value
-    this.healthShowHide(this.isQueZhenFlag)
+    if (this.data.tempera < 37.3){
+      this.healthShowHide(e.detail.value)
+    }
   //  this.radioChange(e)
   },
 
@@ -612,7 +618,9 @@ Page({
     
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
-    this.healthShowHide(this.goHospitalFlag)
+    if (!this.data.tempera < 37.3 && this.isQueZhenFlag != 0){
+      this.healthShowHide(e.detail.value)
+    }
     //  this.radioChange(e)
   },
 
