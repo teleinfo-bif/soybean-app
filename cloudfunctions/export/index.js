@@ -21,6 +21,25 @@ async function getLimit(department) {
     return userCount.total
 }
 
+async function getMembers(department) {
+    let membersData = await db.collection('user_info').where({
+        company_department: db.RegExp({
+            regexp: department + "*",
+            options: 'i',
+        }),
+        _openid: _.neq("")
+    }).get()
+
+    console.log("members ", membersData)
+
+    let ids = []
+    for (let index = 0 ; index < membersData.data.length; index ++) {
+        ids.push(membersData.data[index]._openid)
+    }
+
+    return ids
+}
+
 function getDayString(date, day) {
     let today = date
     var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
@@ -76,7 +95,7 @@ async function regExpIdsFilter(date, days, regExp) {
         .group({
             _id: "$_openid",
             date: $.max('$date'),
-            // place: $.max('$place')
+            name: $.max('$name')
         }).limit(limit).end()
 
     console.log("filter ", filter)
@@ -174,7 +193,7 @@ async function getSegregateV(openId, dateTimeStr) {
 
     let tmpDate = getDayString(new Date(dateTimeStr), -14)
     for (let index = 0; index < clockDatas.data.length; index ++) {
-        if (new Date(clockDatas.data[index].suregobackdate) < new Date(tmpDate)) {
+        if (new Date(clockDatas.data[index].suregobackdate) > new Date(tmpDate)) {
             return true
         }
     }
@@ -195,7 +214,8 @@ async function returnBjs(dateTimeStr) {
         )
         .group({
             _id: "$_openid",
-            date: $.max('$date')
+            date: $.max('$date'),
+            name: $.max('$name'),
         }).limit(limit).end()
 
     console.log("filter ", filter)
@@ -203,22 +223,24 @@ async function returnBjs(dateTimeStr) {
     return filter.list
 }
 
-function getDifference(arr1, arr2) {
-    let tmp = []
-
-    for (let index = 0; index < arr1.length; index++) {
-        tmp.push(arr1[index])
+function getDifference(arry1, arry2) {
+    if (arry1 == undefined && arry2 == undefined) {
+        return []
+    } else if (arry1 == undefined) {
+        return arry2
+    }else if (arry2 == undefined) {
+        return arry1
     }
 
-    for (let index = 0; index < arr1.length; index++) {
-        for (let index2 = 0; index2 < arr2.length; index2++) {
-            if (arr1[index] == arr2[index2]) {
-                tmp.pop(arr1[index])
-            }
-        }
+    let result = arry1.concat(arry2).filter(function (v) {
+        return arry1.indexOf(v)===-1 || arry2.indexOf(v)===-1
+    })
+
+    if (result == undefined || result == []) {
+        return []
     }
 
-    return tmp;
+    return result;
 }
 
 async function latestNotBjPlace(openId, dateTimeStr) {
@@ -295,15 +317,22 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let fromNotHBAndSegregatingCount = 0
     let fromNotHBAndSegregatedCount = 0
 
-    // let segregate = await getSegregate("北京")
+    let clockeds = await clockedDatas(dateTimeStr)
+    let returnedBj = await returnBjs(dateTimeStr)
+    let memberIds = await getMembers(department)
+    clockeds = intersecteArray(clockeds, memberIds)
+
     let recentInHbIds = await inCityIds(coolingDays, "湖北")
     // let nowInHbIds = await inCityIds(0, "北京")
 
     //已返回北京
     let returnedBjIds = []
-    let returnedBj = await returnBjs(dateTimeStr)
     for (let index = 0; index < returnedBj.length; index++) {
         let item = returnedBj[index]
+        if (intersecteArray(clockeds, [item._id]).length == 0) {
+            continue
+        }
+
         let healthy = await getUserHealthy(item._id, item.date)
 
         //当日新增来京人员总数
@@ -319,10 +348,10 @@ async function getRow3(userInfo, dateTimeStr, department) {
 
                 //途径湖北的人数，正在隔离
                 if (getSegregateV(item._id, dateTimeStr)) {
-                    //途径湖北的人数，完成隔离
-                    fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
-                } else {
                     fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1
+                } else {
+                   //途径湖北的人数，完成隔离
+                   fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
                 }
             }
 
@@ -335,11 +364,11 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 retureFromNotHBCount = retureFromNotHBCount + 1
 
                 if (getSegregateV(item._id, dateTimeStr)) {
-                    //途径非湖北地区的人数，完成隔离
-                    fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
-                } else {
                     //途径非湖北地区的人数，正在隔离
                     fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1
+                } else {
+                    //途径非湖北地区的人数，完成隔离
+                    fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
                 }
             }
 
@@ -351,10 +380,9 @@ async function getRow3(userInfo, dateTimeStr, department) {
     }
 
     //累计来京人员总数
-    retureBjCount = returnedBj.length
+    retureBjCount = returnedBjIds.length
 
     //未返回北京
-    let clockeds = await clockedDatas(dateTimeStr)
     let unReturnedBj = getDifference(clockeds, returnedBjIds)
     for (let index = 0; index < unReturnedBj.length; index++) {
         let item = unReturnedBj[index]
@@ -387,8 +415,8 @@ async function getRow3(userInfo, dateTimeStr, department) {
         fromHBAndSegregatingCount,
         fromHBAndSegregatedCount,
         fromNotHBCount,
-        retureFromNotHBCount,
         unRetureFromHBNotCount,
+        retureFromNotHBCount,
         fromNotHBAndSegregatingCount,
         fromNotHBAndSegregatedCount,
         contrat,
@@ -746,39 +774,27 @@ async function getDetails(dateTimeStr, department) {
 
     console.log("userAggr ", userAggr.list)
 
-    let clockedIds = []
-    let unClockedIds = []
-
+    let members = []
     for (let index = 0; index < userAggr.list.length; index++) {
-        let item = userAggr.list[index]
-        let healthyAggr = await db.collection('user_healthy').aggregate()
-            .match(
-                $.and([
-                    { _openid: item.userId }
-                ])
-            )
-            .group({
-                _id: "$_openid",
-                lastCockedDate: $.max('$date')
-            }).end()
-
-        if (healthyAggr.list.length > 0 && healthyAggr.list[0].lastCockedDate == dateTimeStr) {
-            clockedIds.push(item.userId)
-        } else {
-            unClockedIds.push(item.userId)
-        }
+        members.push(userAggr.list[index]._id)
     }
-
-    console.log("clockedIds ", clockedIds)
-    console.log("unClockedIds ", unClockedIds)
 
     let rowDatas = []
     let clockedUsers = await db.collection('user_healthy').where({
         date: dateTimeStr,
-        _openid: _.in(clockedIds)
+        _openid: _.in(members)
     }).get()
 
+    let clockedIds = []
+    for (let index = 0; index < clockedUsers.data.length; index++) {
+        clockedIds.push(clockedUsers.data[index]._openid)
+    }
+
+    let unClockedIds = getDifference(members, clockedIds)
+
     console.log("clockedUsers ", clockedUsers)
+    console.log("clockedIds ", clockedIds)
+    console.log("unClockedIds ", unClockedIds)
 
     let clockedUsersInfo = await db.collection('user_info').where({
         _openid: _.in(clockedIds)
@@ -896,4 +912,3 @@ exports.main = async (event, context) => {
         return e
     }
 }
-
