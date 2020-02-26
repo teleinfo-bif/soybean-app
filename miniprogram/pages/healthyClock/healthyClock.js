@@ -6,8 +6,8 @@ Page({
 
   data: {
     radioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1'}
     ],
     radioHealthyStatusItems: [
       { name: '健康', value: '0' },
@@ -20,7 +20,8 @@ Page({
     ],
     index: 0,
     place: "",
-    todayClickFlag : '0' //今日是否打卡标志，默认未打卡
+    todayClickFlag : '0', //今日是否打卡标志，默认未打卡
+    healthyFlag: false
   },
 
   currentDate: function(e) {
@@ -249,14 +250,14 @@ Page({
       return;
     }
 
-    if (temperature > 37.2 && bodyStatusFlag == '0'){
-      wx.showToast({
-        icon: 'none',
-        title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
-        duration: 3000,
-      });
-      return;
-    }
+    // if (temperature > 37.2 && bodyStatusFlag == '0'){
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
+    //     duration: 3000,
+    //   });
+    //   return;
+    // }
 
     if (bodyStatusFlag == null || bodyStatusFlag == '') {
       wx.showToast({
@@ -541,6 +542,18 @@ Page({
     });
   },
 
+  healthShowHide: function(value) {
+    if (value == 0){
+      this.setData({
+        healthyFlag: true
+      })
+    }else {
+      this.setData({
+        healthyFlag: false
+      })
+    }
+  },
+
   // 是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉
   goHBRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
@@ -548,7 +561,7 @@ Page({
    // this.radioChange(e)
   },
 
-  //14天内是否离开北京
+  // 2020-02-10 后是否离开北京
   LeaveBjChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.isLeaveBjFlag = e.detail.value
@@ -565,6 +578,16 @@ Page({
     //this.radioChange(e)
   },
 
+  judgeTemperature: function(e) {
+    console.log("value: ", e.detail.value)
+    var flag = 0
+    if (e.detail.value < 37.3) {
+      flag = 1
+    }
+
+    this.healthShowHide(flag)
+  },
+
   //目前健康状况
   bodyStatusRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
@@ -578,14 +601,18 @@ Page({
   //是否确诊
   isQueZhenRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
+    
     this.isQueZhenFlag = e.detail.value
+    this.healthShowHide(this.isQueZhenFlag)
   //  this.radioChange(e)
   },
 
   //是否就诊住院
   goHospitalRadioChange: function (e) {
+    
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
+    this.healthShowHide(this.goHospitalFlag)
     //  this.radioChange(e)
   },
 

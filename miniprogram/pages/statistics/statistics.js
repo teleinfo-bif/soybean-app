@@ -104,7 +104,7 @@ Page({
         filledIn: 26,
         filledInText: "离京未返京人数",
         unfilledIn: 16,
-        unfilledInText: "身体异常人数"
+        unfilledInText: "非健康人数"
       }
     },
 
@@ -149,10 +149,10 @@ Page({
     stateServerPercent: 0,
 
     // area datas
-    beijingNumber: 5,
-    wuhanNumber: 6,
-    hubeiNumber: 7,
-    othersNumber: 3,
+    beijingNumber: 0,
+    wuhanNumber: 0,
+    hubeiNumber: 0,
+    othersNumber: 0,
     totalAreaNumber: 0,
 
     beijingPercent: 0,
@@ -161,10 +161,10 @@ Page({
     othersPercent: 0,
 
     // case datas
-    confirmedNumber: 3,
-    isolateNumber: 5,
-    outIsolateNumber: 2,
-    otherCasesNumber: 9,
+    confirmedNumber: 0,
+    isolateNumber: 0,
+    outIsolateNumber: 0,
+    otherCasesNumber: 0,
     totalCasesNumber: 0,
 
     confirmedPercent: 0,
