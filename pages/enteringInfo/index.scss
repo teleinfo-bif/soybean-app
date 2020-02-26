@@ -1,0 +1,37 @@
+page {
+  background: #f7f7f7;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+
+  width: 750rpx;
+  height: 88rpx;
+  background: rgba(255, 255, 255, 1);
+  font-size: 36rpx;
+
+  .btn-edit {
+    position: absolute;
+    right: 30rpx;
+    font-size: 26rpx;
+    color: rgba(23, 89, 239, 1);
+    z-index: 100;
+  }
+  &::before {
+    content: "";
+    margin-right: 20rpx;
+    margin-left: 30rpx;
+    width: 12rpx;
+    height: 40rpx;
+    background: rgba(23, 89, 239, 1);
+  }
+}
+
+.btn-wrap {
+  margin-top: 25rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+  justify-content: center;
+}

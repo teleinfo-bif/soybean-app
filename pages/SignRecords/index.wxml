@@ -1,0 +1,44 @@
+<!-- pages/SignRecords/index.wxml -->
+<wxs module="filter" src="./index.wxs"></wxs>
+<view style="height: 100%;">
+  <!-- 时间选择器 -->
+  <van-popup show="{{ show }}" position="bottom" custom-style="height: 30%;" bind:close="onClose">
+    <van-datetime-picker type="date" value="{{ currentDate }}" bind:input="onInput" formatter="{{ formatter }}" bind:confirm="test2"></van-datetime-picker>
+  </van-popup>
+  <!-- 人员列表 -->
+  <view style="height: 100%;">
+    <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view class="record-item" wx:for="{{ blockList }}" wx:key="index">
+        <view class="record-item_head">
+          <view class="record-item_head-status">
+            <block wx:if="{{ item.healthy == 1}}">
+              <view class="status-circle status-circle-green"></view>
+              <view>正常</view>
+            </block>
+            <block wx:if="{{item.healthy == 2 || item.healthy == 0 }}">
+              <view class="status-circle status-circle-red"></view>
+              <view>异常</view>
+            </block>
+          </view>
+          <view class="record-item_head-date">{{filter.formatDate(item.createTime)}}</view>
+        </view>
+        <view class="record-item_content">
+          <view class="record-item_content_item">
+            <view class="record-item_content_item-icon">
+              <i class="iconfont iconwenduji"></i>
+            </view>
+            <view class="record-item_content_item-value">{{item.temperature}}</view>
+            <view class="record-item_content_item-label">体温（℃）</view>
+          </view>
+          <view class="record-item_content_item">
+            <view class="record-item_content_item-icon">
+              <i class="iconfont iconxinshuaijiance"></i>
+            </view>
+            <view class="record-item_content_item-value">腹泻、肌肉酸痛</view>
+            <view class="record-item_content_item-label">症状表现</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

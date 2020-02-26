@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "Banner": "./Banner/banner",
+    "EnteringInfo": "./EnteringInfo/EnteringInfo",
+    "Sign": "./Sign/Sign",
+    "Statistics": "./Statistics/Statistics"
+  },
+  "navigationBarTitleText": "泰尔通",
+  "navigationStyle": "custom",
+  "backgroundColor": "#F7F7F7"
+}

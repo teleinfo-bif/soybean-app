@@ -1,0 +1,11 @@
+<!-- index.wxml -->
+<view>
+  <!-- 首页banner -->
+  <Banner statusBarHeight="{{statusBarHeight}}"></Banner>
+  <!-- 录入个人信息 -->
+  <EnteringInfo></EnteringInfo>
+  <!-- 健康打卡 -->
+  <Sign></Sign>
+  <!-- 统计信息 -->
+  <Statistics></Statistics>
+</view>

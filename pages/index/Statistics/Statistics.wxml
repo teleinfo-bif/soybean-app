@@ -1,0 +1,11 @@
+<!--pages/index/Statistics/Statistics.wxml-->
+<view class="module">
+  <view class="module_head">
+    <text>{{head}}</text>
+  </view>
+  <view class="module_content">
+    <!-- <slot name="funcbtn"></slot> -->
+    <FuncBtn btn-data="{{stastic}}"></FuncBtn>
+    <FuncBtn btn-data="{{detail}}"></FuncBtn>
+  </view>
+</view>

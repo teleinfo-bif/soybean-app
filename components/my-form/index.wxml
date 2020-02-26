@@ -1,0 +1,64 @@
+<van-cell-group class="my-form">
+  <!-- <button bindtap="out">out</button> -->
+  <block wx:for="{{fields}}" wx:key="index">
+    <view wx:if="{{item.hide != true}}" class="my-form_item" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
+      <!-- form-label文字 -->
+      <view class="my-form_item_head">
+        <view class="my-form_item_head-left">{{item.title}}</view>
+      </view>
+      <view class="my-form_item_content">
+        <!-- input输入框 -->
+        <block wx:if="{{item.type === 'input'}}">
+          <my-input props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-input>
+        </block>
+        <block wx:elif="{{item.type === 'select'}}">
+          <my-input props="{{item.props}}" value="{{_formData[item.prop].name ? _formData[item.prop][item.props.itemLabelKey] : ''}}" data-prop="{{item.prop}}" bind:change=""></my-input>
+        </block>
+        <!-- radio单选框 -->
+        <block wx:elif="{{item.type === 'radio'}}">
+          <my-radio itemKey="{{item.props.itemKey}}" itemLabelKey="{{item.props.itemLabelKey}}" options="{{item.props.options || []}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onRadioChange"></my-radio>
+        </block>
+        <!-- area地区选择 -->
+        <block wx:elif="{{item.type === 'area'}}">
+          <my-area props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onAreaChange"></my-area>
+        </block>
+        <!-- date日期选择 -->
+        <block wx:elif="{{item.type === 'date'}}">
+          <my-date props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onDateChange"></my-date>
+        </block>
+        <!-- time时间选择 -->
+        <block wx:elif="{{item.type === 'time'}}">
+          <my-time props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onTimeChange"></my-time>
+        </block>
+        <!-- id底部弹出选择框 -->
+        <block wx:if="{{item.type === 'select' && !item.props.disable}}">
+          <picker class="select-picker" bindchange="onPickerChange" value="{{_formData[item.prop].id}}" data-prop="{{item.prop}}" range-key="{{item.props.itemLabelKey}}" range="{{item.props.options || []}}">
+            <view class="select-picker-box">
+              <view class="select-picker-btn">选择</view>
+            </view>
+          </picker>
+        </block>
+        <!-- 地图 -->
+        <block wx:elif="{{item.type === 'map' && !disable}}">
+          <my-map props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-map>
+        </block>
+        <!-- 手机号 -->
+        <block wx:elif="{{item.type === 'phone' && !disable}}">
+          <my-phone props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-phone>
+        </block>
+      </view>
+      <!-- 底部弹出选择框 -->
+      <!-- <block wx:if="{{item.type === 'select'}}">
+        <picker class="select-picker" bindchange="onPickerChange" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" range-key="{{item.props.itemLabelKey}}" range="{{item.props.options || []}}">
+          <view class="select-picker-box">
+            <view class="select-picker-btn">
+              选择
+            </view>
+          </view>
+        </picker>
+      </block> -->
+      <!-- form label 选择按钮 -->
+      <!-- <view slot="label"> -->
+    </view>
+  </block>
+</van-cell-group>

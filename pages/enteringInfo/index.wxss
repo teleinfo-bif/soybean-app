@@ -1,0 +1,29 @@
+page {
+  background: #f7f7f7; }
+
+.form-header {
+  display: flex;
+  align-items: center;
+  width: 750rpx;
+  height: 88rpx;
+  background: white;
+  font-size: 36rpx; }
+  .form-header .btn-edit {
+    position: absolute;
+    right: 30rpx;
+    font-size: 26rpx;
+    color: #1759ef;
+    z-index: 100; }
+  .form-header::before {
+    content: "";
+    margin-right: 20rpx;
+    margin-left: 30rpx;
+    width: 12rpx;
+    height: 40rpx;
+    background: #1759ef; }
+
+.btn-wrap {
+  margin-top: 25rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+  justify-content: center; }

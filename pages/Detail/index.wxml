@@ -1,0 +1,38 @@
+<!-- pages/Detail/index.wxml -->
+<view style="height: 100%;">
+  <!-- 人员列表 -->
+  <view style="height: 100%;">
+    <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view class="head">
+        <view class="head_title" hover-class="none" hover-stop-propagation="false">
+          北京泰尔英福网络科技有限责任公司
+        </view>
+        <view class="head_icon">
+          <picker mode="date" value="{{value}}" bindchange="onChange" end="{{ now}}" fields="{{'day'}}">
+            <van-icon name="calender-o" />
+            {{value}}
+          </picker>
+        </view>
+      </view>
+      <view class="people-item" wx:for="{{ list }}" wx:key="index">
+        <view class="people-item_name">{{item.name}}</view>
+        <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
+        <view class="people-item_detail">打卡记录</view>
+        <view class="people-item_status">
+          <block wx:if="{{ item.status == 0}}">
+            <view class="status-circle status-circle-green"></view>
+            <view>正常</view>
+          </block>
+          <block wx:if="{{item.status == 1}}">
+            <view class="status-circle status-circle-yellow"></view>
+            <view>异常</view>
+          </block>
+          <block wx:if="{{item.status == 2}}">
+            <view class="status-circle status-circle-red"></view>
+            <view>异常</view>
+          </block>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

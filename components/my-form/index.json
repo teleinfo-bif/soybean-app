@@ -1,0 +1,15 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-cell": "vant-weapp/cell",
+    "van-cell-group": "vant-weapp/cell-group",
+    "van-field": "vant-weapp/field",
+    "my-input": "../my-input",
+    "my-radio": "../my-radio",
+    "my-area": "../my-area",
+    "my-date": "../my-date",
+    "my-time": "../my-time",
+    "my-phone": "../my-phone",
+    "my-map": "../my-map"
+  }
+}

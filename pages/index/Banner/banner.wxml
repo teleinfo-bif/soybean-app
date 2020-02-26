@@ -1,0 +1,4 @@
+<view class="container">
+  <image class="home-bannner" mode="widthFix" src="../../../static/images/home_banner@3x.png" style="width:100%;"></image>
+  <view class="title" style="top: {{statusBarHeight}}px">泰尔通</view>
+</view>

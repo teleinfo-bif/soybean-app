@@ -1,0 +1,20 @@
+<!-- pages/enteringInfo/index.wxml -->
+<view>
+  <view class="form-header">
+    <view>基本信息</view>
+    <view wx:if="{{userRegisted}}" bindtap="setEditState" class="btn-edit">
+      {{!edit? '修改':'取消'}}
+    </view>
+  </view>
+  <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
+  <!-- 证件类型 -->
+  <view class="btn-wrap">
+    <van-button wx:if="{{userRegisted}}" bindtap="del" size="normal" type="danger">删 除</van-button>
+    <view style="width: 35rpx;"></view>
+    <van-button bindtap="formCancel" size="normal">重 置</van-button>
+    <view style="width: 35rpx;"></view>
+    <van-button bindtap="formSubmit" size="normal" color="#1759EF">{{
+      !userRegisted  ? '提 交' : '更 新'}}</van-button>
+  </view>
+  <view wx:if="{{userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>
+</view>

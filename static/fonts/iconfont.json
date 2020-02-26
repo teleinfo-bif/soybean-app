@@ -1,0 +1,44 @@
+{
+  "id": "1648039",
+  "name": "毛豆",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "icon",
+  "glyphs": [
+    {
+      "icon_id": "1825700",
+      "name": "心率监测",
+      "font_class": "xinshuaijiance",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "4688385",
+      "name": "温度计",
+      "font_class": "wenduji",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
+      "icon_id": "4766299",
+      "name": "bar chart",
+      "font_class": "barchart",
+      "unicode": "e7af",
+      "unicode_decimal": 59311
+    },
+    {
+      "icon_id": "4766857",
+      "name": "calendar-check",
+      "font_class": "calendar-check",
+      "unicode": "e7d3",
+      "unicode_decimal": 59347
+    },
+    {
+      "icon_id": "4766959",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e7e1",
+      "unicode_decimal": 59361
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "usingComponents": {
+    "van-cell": "vant-weapp/cell",
+    "van-cell-group": "vant-weapp/cell-group",
+    "van-icon": "vant-weapp/icon",
+    "van-field": "vant-weapp/field",
+    "van-button": "vant-weapp/button",
+    "van-row": "vant-weapp/row",
+    "van-col": "vant-weapp/col",
+    "van-action-sheet": "vant-weapp/action-sheet",
+    "my-form": "../components/my-form",
+    "van-notify": "vant-weapp/notify"
+  },
+  "navigationBarBackgroundColor": "#1759EF",
+  "navigationBarTitleText": "录入个人信息",
+  "navigationBarTextStyle": "white"
+}

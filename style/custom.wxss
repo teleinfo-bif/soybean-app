@@ -1,0 +1,53 @@
+.my-form .van-cell {
+  padding-right: 30rpx; }
+  .my-form .van-cell::after {
+    left: 0 !important; }
+  .my-form .van-cell.field-index--van-field {
+    padding: 0;
+    height: 100%;
+    margin-left: 0 !important;
+    font-size: 28rpx !important; }
+  .my-form .van-cell__title {
+    font-size: 24rpx !important; }
+
+.my-form .van-radio {
+  margin-top: 10rpx; }
+  .my-form .van-radio__label {
+    flex: 1;
+    font-size: 28rpx; }
+
+picker.select-picker {
+  background-color: transparent;
+  position: absolute;
+  display: block;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 70rpx;
+  z-index: 10; }
+
+.select-picke {
+  top: 0 !important; }
+
+.select-picker-box {
+  display: block;
+  width: 100% !important;
+  height: 50rpx !important;
+  position: relative !important;
+  z-index: 4 !important; }
+
+.select-picker-btn {
+  position: absolute;
+  right: 30rpx;
+  top: -45rpx;
+  color: #1759ef;
+  font-size: 24rpx !important; }
+
+.select-picker-btn {
+  color: #1759ef;
+  font-size: 30rpx; }
+
+.my-radio .vant-radio {
+  display: block;
+  margin-top: 100rpx !important; }

@@ -1,0 +1,5 @@
+<van-radio-group class="my-radio {{options.length > 0 ? 'my-radio-ver' : 'my-radio-hor'}}" value="{{value}}" bind:change="onChange">
+  <van-radio custom-class="my-radio-item" icon-size="28rpx" wx:for="{{options}}" wx:key="index" name="{{item[itemKey]}}">
+    {{item[itemLabelKey]}}
+  </van-radio>
+</van-radio-group>

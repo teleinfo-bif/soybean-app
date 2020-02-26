@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-radio-group": "vant-weapp/radio-group",
+    "van-radio": "vant-weapp/radio"
+  }
+}

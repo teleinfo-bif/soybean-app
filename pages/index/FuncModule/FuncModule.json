@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "FuncBtn": "../FuncBtn/FuncBtn"
+  },
+  "options": {
+    "multipleSlots": true
+  }
+}

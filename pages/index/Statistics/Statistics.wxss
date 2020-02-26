@@ -1,0 +1,19 @@
+/* pages/index/Statistics/Statistics.wxss */
+
+
+.module {
+  margin-bottom: 50rpx;
+  padding: 0 30rpx;
+ 
+}
+
+.module_head {
+  /* margin-top: 32rpx; */
+  font-size: 30rpx;
+  line-height: 30rpx;
+}
+
+.module_content {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,112 @@
+/* pages/Detail/index.wxss */
+page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7; }
+
+.head {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 20rpx;
+  width: 750rpx;
+  height: 88rpx;
+  color: #4f7ef2;
+  background: white; }
+  .head_title {
+    font-size: 30rpx; }
+  .head picker {
+    display: flex;
+    align-items: center;
+    font-size: 26rpx; }
+
+.head text {
+  margin-left: 10rpx; }
+
+.people-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  padding-left: 20rpx;
+  /* padding-top: 30px;
+  padding-bottom: 30px; */
+  height: 120rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f2f2f2;
+  font-size: 26rpx; }
+
+.people-item view {
+  flex: 1;
+  text-align: center; }
+
+.people-item_name {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 20rpx;
+  text-align: left;
+  /* border-right: 1rpx solid #dcdce0; */
+  /* border: 1rpx solid #DCDCE0; */ }
+
+.people-item_name::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -50%;
+  display: block;
+  width: 1rpx;
+  height: 100%;
+  background: #dcdce0; }
+
+.people-item_name:nth-of-type(1)::before {
+  top: -20rpx; }
+
+.people-item_name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  display: block;
+  width: 20rpx;
+  height: 1rpx;
+  background: #dcdce0; }
+
+.people-item_sign {
+  position: relative; }
+
+.people-item_sign::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -50%;
+  display: block;
+  margin-top: 10rpx;
+  width: 1rpx;
+  height: 60rpx;
+  background: #dcdce0; }
+
+.people-item_status {
+  /* display: flex;
+  flex-direction: row; */
+  /* align-items: center;
+  justify-content: center; */ }
+
+.status-circle {
+  display: inline-block;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%; }
+
+.status-circle-green {
+  background: #2eb541; }
+
+.status-circle-yellow {
+  background: #ff976a; }
+
+.status-circle-red {
+  background: #cc3535; }

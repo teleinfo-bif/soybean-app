@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="entering-box" bindtap="toNextPage">
+    <view class="entering-box_icon">
+      <!-- <at-icon compid="{{$compid__0}}"></at-icon> -->
+      <van-icon name="edit" />
+    </view>
+    <text class="entering-box_text">录入身份信息</text>
+  </view>
+</view>

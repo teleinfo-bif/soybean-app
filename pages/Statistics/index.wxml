@@ -1,0 +1,106 @@
+<!-- pages/Statistics/index.wxml -->
+<view class="">
+  <!-- 头部信息 -->
+  <view class="head">
+    <van-icon name="chart-trending-o" size="36rpx" />
+    <Text>统计信息</Text>
+  </view>
+  <!-- 统计数字 -->
+  <view class="statistic-box">
+    <view class="statistic-box_item">
+      <view class="statistic-box_item_value">42</view>
+      <view class="statistic-box_item_label">应填写人数</view>
+    </view>
+    <view class="statistic-box_item">
+      <view class="statistic-box_item_value">30</view>
+      <view class="statistic-box_item_label">已填写人数</view>
+    </view>
+    <view class="statistic-box_item">
+      <view class="statistic-box_item_value">12</view>
+      <view class="statistic-box_item_label">未填写人数</view>
+    </view>
+  </view>
+  <!-- 健康状况 -->
+  <view class="health-box">
+    <view class="box-head">
+      <view class="box-head_text">健康情况</view>
+      <view class="box-head_count">
+        总人数
+        <text class="box-head_count-num">42</text>
+      </view>
+    </view>
+    <view class="box-content">
+      <view class="pie-box">
+        <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+      </view>
+      <view>
+        <view class="legend-item">
+          <view class="legend-item_label">分布情况</view>
+          <view class="legend-item_value">占比率</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square"></view>
+            <view>健康 38人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square2"></view>
+            <view>其他症状 3人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square3"></view>
+            <view>咳嗽、发烧 1人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="area-box">
+    <view class="box-head">
+      <view class="box-head_text">所在地区分布情况</view>
+      <view class="box-head_count">
+        总人数
+        <text class="box-head_count-num">42</text>
+      </view>
+    </view>
+    <view class="box-content">
+      <view class="pie-box">
+        <ec-canvas id="mychart-dom-line2" canvas-id="mychart-line2" ec="{{ ec2 }}"></ec-canvas>
+      </view>
+      <view>
+        <view class="legend-item">
+          <view class="legend-item_label">分布情况</view>
+          <view class="legend-item_value">占比率</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square4"></view>
+            <view>健康 38人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square5"></view>
+            <view>其他症状 3人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-item_label">
+            <view class="square square6"></view>
+            <view>咳嗽、发烧 1人</view>
+          </view>
+          <view class="legend-item_value">96%</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

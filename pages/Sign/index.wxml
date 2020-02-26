@@ -1,0 +1,25 @@
+<!-- pages/Sign/index.wxml -->
+<view class="page">
+  <block wx:if="{{locked}}">
+    <view class="shade"></view>
+    <view class="block-success" hover-class="none" hover-stop-propagation="false">
+      <view class="block-record" hover-class="none" hover-stop-propagation="false">
+        <navigator class="block-success" target="" url="/pages/SignRecords/index" hover-class="navigator-hover" open-type="navigate">
+          打卡记录
+        </navigator>
+      </view>
+      <view class="block-success_icon">
+        <image mode="aspectFit" src="../../static/images/yidaka@3x.png" alt="已打卡" />
+      </view>
+      <view class="block-success_text">今日已打卡</view>
+    </view>
+  </block>
+  <view class="form-header">健康打卡</view>
+  <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
+  <!-- 证件类型 -->
+  <view class="btn-wrap">
+    <van-button size="normal">重 置</van-button>
+    <view style="width: 35rpx;"></view>
+    <van-button bindtap="formSubmit" size="normal" color="#1759EF">提 交</van-button>
+  </view>
+</view>
