@@ -1,7 +1,0 @@
-<view class="page-container">
-
-  <view>
-    <treeview model='{{ treeData }}' bind:tapitem='tapItem'></treeview>
-  </view>
-
-</view>
