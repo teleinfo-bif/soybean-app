@@ -1,17 +1,8 @@
-<!--pages/index/Sign/Sign.wxml-->
+<!-- pages/index/Sign/Sign.wxml -->
 <view class="module">
-  <view class="module_head">
-    <text>{{head}}</text>
-  </view>
   <view class="module_content">
     <!-- <slot name="funcbtn"></slot> -->
     <FuncBtn btn-data="{{healthSign}}"></FuncBtn>
     <FuncBtn btn-data="{{healthCode}}"></FuncBtn>
   </view>
 </view>
-<!-- <FuncModule head="{{head}}">
-  <block slot="funcbtn">
-    <FuncBtn btn-data="{{healthSign}}"></FuncBtn>
-    <FuncBtn btn-data="{{healthCode}}"></FuncBtn>
-  </block>
-</FuncModule> -->

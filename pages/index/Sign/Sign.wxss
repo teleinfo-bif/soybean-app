@@ -1,9 +1,8 @@
 /* pages/index/Sign/Sign.wxss */
 
 .module {
-  margin-bottom: 50rpx;
+  margin-bottom: 30rpx;
   padding: 0 30rpx;
- 
 }
 
 .module_head {

@@ -1,10 +1,11 @@
 <!-- pages/Sign/index.wxml -->
 <view class="page">
-  <block wx:if="{{locked}}">
+  <!-- <block wx:if="{{locked}}"> -->
+  <block wx:if="{{false}}">
     <view class="shade"></view>
     <view class="block-success" hover-class="none" hover-stop-propagation="false">
       <view class="block-record" hover-class="none" hover-stop-propagation="false">
-        <navigator class="block-success" target="" url="/pages/SignRecords/index" hover-class="navigator-hover" open-type="navigate">
+        <navigator class="block-success" target="" url="/pages/blockRecords/index" hover-class="navigator-hover" open-type="navigate">
           打卡记录
         </navigator>
       </view>

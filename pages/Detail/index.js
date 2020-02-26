@@ -9,8 +9,11 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getUserClockList } from "../../api/api.js";
+import { getGroupBlockList } from "../../api/api.js";
+const beahavior_userInfo = require("../../behavior/userInfo");
+
 Page({
+  behaviors: [beahavior_userInfo],
   /**
    * 页面的初始数据
    */
@@ -23,27 +26,7 @@ Page({
       searchCount: true,
       size: 0,
       total: 0,
-      records: [
-        {
-          address: "",
-          admitting: 0,
-          avatarUrl: "",
-          comfirmed: 0,
-          createTime: "",
-          gobacktime: "",
-          healthy: 0,
-          hospital: 0,
-          id: 0,
-          nobackreason: 0,
-          quarantine: 0,
-          reason: "",
-          remarks: "",
-          temperature: 0,
-          userId: 0,
-          userName: "",
-          wuhan: 0
-        }
-      ]
+      records: []
     },
     blockList: [],
     show: false,
@@ -68,32 +51,35 @@ Page({
     ]
   },
 
-  onChange(e) {
-    const { value } = e.detail;
-    this.setData({
-      value
-    });
-  },
-  setLabel(val = "") {
-    this.setData({
-      label: val
-    });
+  getData() {
+    let { requestInit, userId } = this.data;
+    let { pages, current } = this.data.blockData;
+    if (!requestInit || pages > current) {
+      getGroupBlockList({
+        userId: userId,
+        current: ++current,
+        groupId: 1,
+        clockInTime: ""
+      }).then(res => {
+        this.setData({
+          blockData: res,
+          blockList: this.data.blockList.concat(res.records)
+        });
+      });
+    }
   },
 
-  test2(a) {
-    console.log(a);
-    this.setData({
-      show: false
-    });
+  behaviorCallback() {
+    this.getData();
   },
 
   upper(e) {
-    console.log(e);
+    // console.log(e);
   },
 
   lower(e) {
-    console.log(e);
-    console.log("到底了");
+    // console.log(e);
+    // console.log("到底了");
     this.getData();
   },
 
@@ -131,35 +117,11 @@ Page({
     });
   },
 
-  test() {
-    console.log("123");
-    this.setData({
-      show: true
-    });
-  },
-
-  getData() {
-    let temp = [];
-    for (let i = 0; i < 10; i++) {
-      temp.push({
-        name: "测试" + (i + 1),
-        sign: i % 3 != 1 ? true : false,
-        status: i % 3
-      });
-    }
-    console.log(temp);
-    this.setData({
-      list: this.data.list.concat(temp)
-    });
-    getUserClockList({
-      userId: 60
-    });
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("option", options);
     this.getData();
     this.setData({
       value: getyyyyMMdd(new Date())

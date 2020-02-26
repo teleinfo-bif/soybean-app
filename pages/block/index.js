@@ -287,10 +287,19 @@ Page({
   onFormChange(e) {
     console.log("onFormChange", e);
     const { prop, value } = e.detail;
+    const { data } = this.data;
 
     // 根据填选是否离开，显示返回日期
     if (prop === "otherCity") {
       this.setFields(this.data.atBeijing, value.toString() === "1");
+    } else if (prop === "temperature") {
+      // 判断 > 37.2摄氏度，默认发烧状态
+      if (value > 37.2) {
+        data["healthy"] = 0;
+        this.setData({
+          data
+        });
+      }
     }
 
     let itemData = {};

@@ -46,7 +46,7 @@ Component({
       });
       // const { value } = e.detail
       // this.setLabel(value)
-      this.triggerEvent("change", "test");
+      // this.triggerEvent("change", "test");
     },
     setLabel(val = "") {
       this.setData({

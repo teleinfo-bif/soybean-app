@@ -1,0 +1,96 @@
+.echarts-box {
+  position: relative;
+  width: 750rpx;
+  height: 461rpx;
+  background: white; }
+  .echarts-box .legend-box {
+    padding-top: 50rpx; }
+  .echarts-box.first {
+    top: -30;
+    height: 440rpx;
+    padding-top: 20px; }
+
+.echarts-box {
+  width: 750rpx;
+  height: 423rpx;
+  margin-bottom: 20rpx;
+  background: white; }
+
+.hospital-box {
+  margin-top: 20rpx; }
+
+.box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 30rpx; }
+
+.box-head_text {
+  font-size: 30rpx; }
+
+.box-head_count {
+  font-size: 24rpx;
+  color: #666; }
+
+.box-head_count-num {
+  display: inline-block;
+  margin-left: 30rpx; }
+
+.box-content {
+  display: flex; }
+
+.pie-box {
+  width: 350rpx;
+  height: 350rpx;
+  /* border: 2px solid red; */ }
+
+ec-canvas {
+  width: 100%;
+  height: 100%; }
+
+ec-canvas {
+  width: 100%;
+  height: 100%; }
+
+.picker-pos {
+  margin-top: -130rpx;
+  margin-left: 150rpx;
+  color: blueviolet; }
+
+/*  */
+.legend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350rpx;
+  height: 27rpx;
+  padding-left: 30rpx;
+  margin-bottom: 38rpx;
+  font-size: 24rpx; }
+  .legend-item-head {
+    height: 40rpx;
+    color: #999; }
+
+.legend-item:nth-of-type(1) {
+  color: #999;
+  font-size: 30rpx; }
+
+.legend-item_label {
+  width: 250rpx;
+  display: flex;
+  align-items: center; }
+
+.square {
+  margin-right: 20rpx;
+  width: 27rpx;
+  height: 27rpx;
+  background: #3891ff; }
+
+.square2 {
+  background: #53bca2; }
+
+.square3 {
+  background: #dcb64f; }
+
+.square4 {
+  background: #ec704f; }

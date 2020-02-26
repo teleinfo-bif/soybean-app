@@ -1,0 +1,29 @@
+<!-- pages/index/organization/index.wxml -->
+<block wx:if="{{true}}">
+  <view class="organization">
+    <view class="organization_head van-hairline--bottom">
+      <view class="organization_head-text">我的组织</view>
+      <view class="organization_head-btn">按钮</view>
+    </view>
+    <view class="organization_content">
+      <view class="organization_item">
+        <view class="organization_item-logo">
+          <image class="btn" src="../../../static/images/stastic@3x.png" />
+        </view>
+        <view class="organization_item-name">测试组织测试组织测试组织测试组织测试组织</view>
+        <view class="organization_item-btn">
+          <view>
+            <navigator url="/pages/statistics/index?groupId=1">
+              <image class="btn" src="../../../static/images/stastic@3x.png" />
+            </navigator>
+          </view>
+          <view>
+            <navigator url="/pages/detail/index?groupId=1">
+              <image class="btn" src="../../../static/images/deatil_data@3x.png" />
+            </navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

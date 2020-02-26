@@ -1,13 +1,17 @@
 import { VantComponent } from '../common/component';
 VantComponent({
     props: {
-        color: String,
-        vertical: Boolean,
+        size: {
+            type: String,
+            value: '30px'
+        },
         type: {
             type: String,
             value: 'circular'
         },
-        size: String,
-        textSize: String
+        color: {
+            type: String,
+            value: '#c9c9c9'
+        }
     }
 });

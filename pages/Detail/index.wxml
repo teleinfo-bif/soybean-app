@@ -14,24 +14,31 @@
           </picker>
         </view>
       </view>
-      <view class="people-item" wx:for="{{ list }}" wx:key="index">
-        <view class="people-item_name">{{item.name}}</view>
+      <view class="people-item" wx:for="{{ blockData }}" wx:key="index">
+        <view class="people-item_name">{{item.userName || "-"}}</view>
         <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
         <view class="people-item_detail">打卡记录</view>
         <view class="people-item_status">
-          <block wx:if="{{ item.status == 0}}">
+          <block wx:if="{{ item.healthy == 1}}">
             <view class="status-circle status-circle-green"></view>
             <view>正常</view>
           </block>
-          <block wx:if="{{item.status == 1}}">
+          <block wx:elif="{{item.status == 1}}">
             <view class="status-circle status-circle-yellow"></view>
             <view>异常</view>
           </block>
-          <block wx:if="{{item.status == 2}}">
+          <block wx:elif="{{item.status == 2}}">
             <view class="status-circle status-circle-red"></view>
             <view>异常</view>
           </block>
+          <block wx:else>
+            <view class="status-circle status-circle-red"></view>
+            <view>-</view>
+          </block>
         </view>
+      </view>
+      <view wx:if="{{blockData.pages > 1 && blockData.pages == blockData.current}}" class="no-more-data">
+        没有更多数据
       </view>
     </scroll-view>
   </view>

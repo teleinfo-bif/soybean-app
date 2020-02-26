@@ -1,0 +1,6 @@
+var filter = {
+  formatDate: function(date) {
+    return date.split(" ")[0];
+  }
+};
+module.exports = filter;

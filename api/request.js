@@ -17,10 +17,15 @@ const Request = ({ url, params, method, ...other } = {}) => {
       userId: app.globalData.userFilledInfo.id
     });
   }
-  data = Object.assign(params, {
-    openid: openid || "",
-    wechatId: openid || ""
-  });
+  // params放在后面，避免覆盖参数中的openid
+  data = Object.assign(
+    {},
+    {
+      openid: openid || "",
+      wechatId: openid || ""
+    },
+    params
+  );
 
   // 添加请求加载等待
   wx.showLoading({

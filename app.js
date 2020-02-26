@@ -1,5 +1,5 @@
 //app.js
-import { getOpenId, getUserFilledInfo } from "./api/api.js";
+// import { getOpenId, getUserFilledInfo } from "./api/api.js";
 
 App({
   getUserFilledInfo(openid) {
@@ -53,41 +53,16 @@ App({
         } else {
           console.log("未授权获取用户信息");
         }
-        // 判断用户是否授权了位置信息
-        if (res.authSetting["scope.userLocation"]) {
-          console.log("已授权位置信息");
-          // wx.getLocation({
-          //   altitude: true,
-          //   success(res2) {
-          //     const latitude = res.latitude;
-          //     const longitude = res.longitude;
-          //     const speed = res.speed;
-          //     const accuracy = res.accuracy;
-          //     console.log(res2);
-          //     // wx.navigateTo({ url: getLocationPluginMapUrl(res2) });
-          //   }
-          // });
-        } else {
-          console.log("未授权位置信息");
-        }
       }
     });
-
-    // wx.getUserLo
-
-    // wx.lo
-    // 展示本地存储能力
-    var logs = wx.getStorageSync("logs") || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync("logs", logs);
   },
   globalData: {
-    auth: false,
-    statusBarHeight: 20,
-    openid: null,
-    session_key: null,
-    userInfo: null,
-    userRegisted: false,
-    userFilledInfo: null
+    auth: false, // 是否开启权限验证
+    statusBarHeight: 20, // 标题栏高度-适配首页
+    openid: null, // openid
+    session_key: null, // session_key
+    userInfo: null, // 从微信获取的用户信息
+    userRegisted: false, // 用户是否填写了个人信息
+    userFilledInfo: null // 用户填写的个人信息
   }
 });

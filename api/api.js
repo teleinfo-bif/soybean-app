@@ -63,3 +63,18 @@ export const getUserClockList = params => {
 export const getTodayClock = params => {
   return Request._get("/wx/interaction/show/today", params);
 };
+
+// 获取用户群组信息
+export const getUserGroupList = params => {
+  return Request._get("/wx/group/list", params);
+};
+
+// 获取群组统计信息
+export const getGroupStatistic = params => {
+  return Request._get("/wx/clockln/census/census", params);
+};
+
+// 获取群组详细信息
+export const getGroupBlockList = params => {
+  return Request._get("/wx/clockln/census/list", params);
+};

@@ -3,24 +3,22 @@ Component({
   /**
    * 组件的属性列表
    */
-  properties: {
-
-  },
+  properties: {},
 
   /**
    * 组件的初始数据
    */
   data: {
-    head: '我管理的部门',
+    head: "我管理的部门",
     stastic: {
-      text: '统计信息',
-      img: '../../../static/images/stastic@3x.png',
-      path: '/pages/Statistics/index',
-    }, 
+      text: "统计信息",
+      img: "../../../static/images/stastic@3x.png",
+      path: "/pages/statistics/index"
+    },
     detail: {
-      text: '详细信息',
-      img: '../../../static/images/deatil_data@3x.png',
-    path: '/pages/Detail/index',
+      text: "详细信息",
+      img: "../../../static/images/deatil_data@3x.png",
+      path: "/pages/detail/index",
       disable: true
     }
   },
@@ -28,7 +26,5 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {
-
-  }
-})
+  methods: {}
+});

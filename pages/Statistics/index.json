@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "ec-canvas": "../../components/ec-canvas/ec-canvas",
-    "van-icon": "vant-weapp/icon"
+    "van-icon": "vant-weapp/icon",
+    "pie": "./pie/index"
   },
   "navigationBarBackgroundColor": "#1759EF",
   "navigationBarTitleText": "统计信息",

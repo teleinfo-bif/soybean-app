@@ -1,5 +1,7 @@
 import { VantComponent } from '../common/component';
+import { safeArea } from '../mixins/safe-area';
 VantComponent({
+    mixins: [safeArea()],
     classes: [
         'bar-class',
         'price-class',
@@ -33,22 +35,18 @@ VantComponent({
             value: 2,
             observer: 'updatePrice'
         },
-        suffixLabel: String,
-        safeAreaInsetBottom: {
-            type: Boolean,
-            value: true
-        }
+        suffixLabel: String
     },
     methods: {
         updatePrice() {
             const { price, decimalLength } = this.data;
-            this.setData({
+            this.set({
                 hasPrice: typeof price === 'number',
                 priceStr: (price / 100).toFixed(decimalLength)
             });
         },
         updateTip() {
-            this.setData({ hasTip: typeof this.data.tip === 'string' });
+            this.set({ hasTip: typeof this.data.tip === 'string' });
         },
         onSubmit(event) {
             this.$emit('submit', event.detail);

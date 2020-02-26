@@ -3,18 +3,14 @@ VantComponent({
     field: true,
     classes: ['icon-class'],
     props: {
-        value: {
-            type: Number,
-            observer(value) {
-                if (value !== this.data.innerValue) {
-                    this.setData({ innerValue: value });
-                }
-            }
-        },
+        value: Number,
         readonly: Boolean,
         disabled: Boolean,
         allowHalf: Boolean,
-        size: null,
+        size: {
+            type: Number,
+            value: 20
+        },
         icon: {
             type: String,
             value: 'star'
@@ -38,37 +34,39 @@ VantComponent({
         count: {
             type: Number,
             value: 5
-        },
-        gutter: null,
-        touchable: {
-            type: Boolean,
-            value: true
         }
     },
     data: {
         innerValue: 0
+    },
+    watch: {
+        value(value) {
+            if (value !== this.data.innerValue) {
+                this.set({ innerValue: value });
+            }
+        }
     },
     methods: {
         onSelect(event) {
             const { data } = this;
             const { score } = event.currentTarget.dataset;
             if (!data.disabled && !data.readonly) {
-                this.setData({ innerValue: score + 1 });
+                this.set({ innerValue: score + 1 });
                 this.$emit('input', score + 1);
                 this.$emit('change', score + 1);
             }
         },
         onTouchMove(event) {
-            const { touchable } = this.data;
-            if (!touchable)
-                return;
-            const { clientX } = event.touches[0];
+            const { clientX, clientY } = event.touches[0];
             this.getRect('.van-rate__icon', true).then((list) => {
                 const target = list
                     .sort(item => item.right - item.left)
-                    .find(item => clientX >= item.left && clientX <= item.right);
+                    .find(item => clientX >= item.left &&
+                    clientX <= item.right &&
+                    clientY >= item.top &&
+                    clientY <= item.bottom);
                 if (target != null) {
-                    this.onSelect(Object.assign(Object.assign({}, event), { currentTarget: target }));
+                    this.onSelect(Object.assign({}, event, { currentTarget: target }));
                 }
             });
         }

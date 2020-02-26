@@ -3,7 +3,8 @@
     "Banner": "./Banner/banner",
     "EnteringInfo": "./EnteringInfo/EnteringInfo",
     "Sign": "./Sign/Sign",
-    "Statistics": "./Statistics/Statistics"
+    "Statistics": "./Statistics/Statistics",
+    "organization": "./organization/index"
   },
   "navigationBarTitleText": "泰尔通",
   "navigationStyle": "custom",

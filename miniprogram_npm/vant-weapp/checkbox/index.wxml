@@ -6,11 +6,10 @@
     <van-icon
       wx:else
       name="success"
-      size="0.8em"
       class="{{ utils.bem('checkbox__icon', [shape, { disabled, checked: value }]) }}"
-      style="font-size: {{ utils.addUnit(iconSize) }};{{ checkedColor && value && !disabled ? 'border-color:' + checkedColor + '; background-color:' + checkedColor : '' }}"
+      style="{{ checkedColor && value && !disabled ? 'border-color:' + checkedColor + '; background-color:' + checkedColor : '' }}"
       custom-class="icon-class"
-      custom-style="line-height: 1.25em;"
+      custom-style="line-height: 20px;"
     />
   </view>
   <view class="label-class {{ utils.bem('checkbox__label', [labelPosition, { disabled }]) }}" bindtap="onClickLabel">

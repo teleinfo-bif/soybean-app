@@ -34,10 +34,17 @@
             <view class="record-item_content_item-icon">
               <i class="iconfont iconxinshuaijiance"></i>
             </view>
-            <view class="record-item_content_item-value">腹泻、肌肉酸痛</view>
+            <view class="record-item_content_item-value">
+              <block wx:if="{{item.healthy == 1}}">健康</block>
+              <block wx:if="{{item.healthy == 2}}">发烧、咳嗽</block>
+              <block wx:if="{{item.healthy == 0}}">其他</block>
+            </view>
             <view class="record-item_content_item-label">症状表现</view>
           </view>
         </view>
+      </view>
+      <view wx:if="{{blockData.pages > 1 && blockData.pages == blockData.current}}" class="no-more-data">
+        没有更多数据
       </view>
     </scroll-view>
   </view>

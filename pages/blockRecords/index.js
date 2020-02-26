@@ -1,11 +1,13 @@
 // pages/SignRecords/index.js
 import { getUserClockList } from "../../api/api";
+const beahavior_userInfo = require("../../behavior/userInfo");
 Page({
   /**
    * 页面的初始数据
    */
+  behaviors: [beahavior_userInfo],
   data: {
-    show: false,
+    requestInit: false,
     currentDate: new Date().getTime(),
     showDateText: "",
     blockData: {
@@ -14,27 +16,7 @@ Page({
       searchCount: true,
       size: 0,
       total: 0,
-      records: [
-        {
-          address: "",
-          admitting: 0,
-          avatarUrl: "",
-          comfirmed: 0,
-          createTime: "",
-          gobacktime: "",
-          healthy: 0,
-          hospital: 0,
-          id: 0,
-          nobackreason: 0,
-          quarantine: 0,
-          reason: "",
-          remarks: "",
-          temperature: 0,
-          userId: 0,
-          userName: "",
-          wuhan: 0
-        }
-      ]
+      records: []
     },
     blockList: [],
     // minDate: ,
@@ -56,11 +38,9 @@ Page({
     ]
   },
 
-  test2(a) {
-    console.log(a);
-    this.setData({
-      show: false
-    });
+  behaviorCallback() {
+    console.log("behaviorCallback");
+    this.getData();
   },
 
   upper(e) {
@@ -68,14 +48,10 @@ Page({
   },
 
   lower(e) {
-    console.log(e);
-    console.log("到底了");
     this.getData();
   },
 
-  scroll(e) {
-    console.log(e);
-  },
+  scroll(e) {},
 
   scrollToTop() {
     this.setAction({
@@ -107,39 +83,26 @@ Page({
     });
   },
 
-  test() {
-    console.log("123");
-    this.setData({
-      show: true
-    });
-  },
-  formatDate(date) {
-    console.log(typeof date);
-    return 1;
-  },
-
   getData() {
-    getUserClockList({
-      userId: 60
-    }).then(res => {
-      this.setData({
-        blockData: res,
-        blockList: this.data.blockList.concat(res.records)
+    let { requestInit, userId } = this.data;
+    let { pages, current } = this.data.blockData;
+    if (!requestInit || pages > current) {
+      getUserClockList({
+        userId: userId,
+        current: ++current
+      }).then(res => {
+        this.setData({
+          blockData: res,
+          blockList: this.data.blockList.concat(res.records)
+        });
       });
-    });
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    this.getData();
-    const now = new Date();
-    this.setData({
-      showDateText:
-        now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDay()
-    });
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成

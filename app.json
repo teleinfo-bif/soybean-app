@@ -1,18 +1,17 @@
 {
   "pages": [
-    "pages/SignRecords/index",
-    "pages/Sign/index",
+    "pages/block/index",
 
-    "pages/Detail/index",
-
-    "pages/enteringInfo/index",
     "pages/index/index",
 
-    "pages/status/index",
+    "pages/detail/index",
 
-    "pages/Statistics/index",
-    "pages/Sign/status/index",
-    "pages/logs/logs"
+    "pages/statistics/index",
+    "pages/blockRecords/index",
+    "pages/personal/index",
+    "pages/status/index",
+    "pages/block/status/index",
+    "pages/index/organization/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

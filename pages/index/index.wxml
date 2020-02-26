@@ -6,6 +6,8 @@
   <EnteringInfo></EnteringInfo>
   <!-- 健康打卡 -->
   <Sign></Sign>
+  <!-- 组织信息 -->
+  <organization></organization>
   <!-- 统计信息 -->
-  <Statistics></Statistics>
+  <!-- <Statistics></Statistics> -->
 </view>
