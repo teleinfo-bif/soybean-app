@@ -21,13 +21,13 @@
 
       <view class="weui-cells__title">
         <text style="">打卡地点:</text>
-              <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text>
+              <!-- <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text> -->
 
       </view>
 
       <view class="weui-cell_ ">
         <view class="weui-cell__bd">
-          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点"/>
+          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true"/>
         </view>
       </view>
 
@@ -39,8 +39,8 @@
         </view>
         <view>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange">
-            <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" />{{item.name}}
+            <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -68,8 +68,8 @@
         <view class="weui-cells__title">是否离过京(2020年1月10日以后):</view>
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
-            <label wx:for="{{radioItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" />{{item.name}}
+            <label wx:for="{{leaveBeijingItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -112,7 +112,7 @@
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
               <view class="weui-cell__bd">
-                <input class="weui-input" name="trainnumber" placeholder="请输入车次/航班/车牌" />
+                <input class="weui-input" name="trainnumber" value="{{trainnumber}}" placeholder="请输入车次/航班/车牌" />
               </view>
             </view>
           </view>

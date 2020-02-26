@@ -9,6 +9,10 @@ Page({
       { name: '否', value: '1' },
       { name: '是', value: '0' },
     ],
+    leaveBeijingItems:[
+      { name: '否', value: '1' },
+      { name: '是', value: '0' },
+    ],
     radioHealthyStatusItems: [
       { name: '健康', value: '0' },
       { name: '有发烧、咳嗽等症状', value: '1' },
@@ -18,13 +22,24 @@ Page({
       { name: '身体不适', value: '0' },
       { name: '当地未放行', value: '1' }
     ],
+
     index: 0,
     place: "",
     todayClickFlag : '0', //今日是否打卡标志，默认未打卡
     healthyFlag: false,
     tempera: 0,
     confirmed: '1',
-    hospital: '1'
+    hospital: '1',
+
+    isInBeijing: -1,
+    whetherLeaveBeijing: -1,
+    outBejingReason: -1,
+    planReturnBejingDate: "",
+    leaveBeijingDate: "",
+    returnBeijingDate: "",
+    traffic: "",
+
+    userLatestInfo: []
   },
 
   currentDate: function(e) {
@@ -46,7 +61,53 @@ Page({
     return true
   },
 
+  initDatas: function(e) {
+
+    if (this.data.userLatestInfo.length > 0){
+    var radioNoGoBackItems = this.data.radioNoGoBackItems
+    var latestInfo = this.data.userLatestInfo
+      for (var i = 0; i < radioNoGoBackItems.length; i++) {
+        console.log("item value: ", radioNoGoBackItems[i].value)
+        console.log("latest out reason: ", latestInfo[0].out_reason)
+        radioNoGoBackItems[i].checked = parseInt(radioNoGoBackItems[i].value) == latestInfo[0].out_reason
+      }
+
+      var leaveBeijingItems = this.data.leaveBeijingItems
+
+      for (var i = 0; i < leaveBeijingItems.length; i++) {
+        console.log("leave value: ", leaveBeijingItems[i].value)
+        console.log("latest leave : ", latestInfo[0].ever_leave_beijing)
+        leaveBeijingItems[i].checked = parseInt(leaveBeijingItems[i].value) == latestInfo[0].ever_leave_beijing
+      }
+
+      this.noGoBackFlag = latestInfo[0].out_reason.toString()
+
+      this.setData({
+        radioNoGoBackItems: radioNoGoBackItems,
+        leaveBeijingItems:leaveBeijingItems,
+
+        noGoBackFlag: latestInfo[0].out_reason.toString(),
+        gobackdate: latestInfo[0].plan_beijing,
+        leavedate: latestInfo[0].leave_date,
+        isLeaveBjFlag: latestInfo[0].ever_leave_beijing,
+        suregobackdate: latestInfo[0].return_date,
+        trainnumber: latestInfo[0].traffic,
+
+        isInBeijing: latestInfo[0].is_in_beijing,
+        whetherLeaveBeijing: latestInfo[0].ever_leave_beijing,
+        outBejingReason: latestInfo[0].out_reason,
+        planReturnBejingDate: latestInfo[0].plan_beijing,
+        leaveBeijingDate: latestInfo[0].leave_date,
+        returnBeijingDate: latestInfo[0].return_date,
+        traffic: latestInfo[0].traffic
+      })
+
+      console.log("### noGoBackFlag: ", this.noGoBackFlag)
+    }
+  }, 
+
   onLoad: function (options) {
+
     let that = this;
     qqmapsdk = new QQMapWX({
       key: 'UY2BZ-MLI6O-V2CWK-SERF5-ZNSI2-XRFOJ'
@@ -67,6 +128,8 @@ Page({
       date: Y + M + D,
     })
     this.qryHealthyTodayInfo()
+    this.qryUserLatestInfo()
+   
   },
 
   //查询当前打卡信息
@@ -87,9 +150,12 @@ Page({
         console.log(res)
         //今日已打卡
         if(res.data.length > 0){
+          console.log("filled users number: ", res.data.length)
+
           that.setData({
             todayClickFlag: '1',
           })
+
         }
         
         that.qryUserInfo();
@@ -128,6 +194,31 @@ Page({
         console.log(err)
       }
     })
+  },
+
+  //查询用户历史最近信息
+  qryUserLatestInfo: function () {
+    console.log("user open id: ", app.globalData.openid)
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_latest').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        this.setData({
+          userLatestInfo: res.data
+        })      
+        this.initDatas()
+        console.log("user latest info: ", this.data.userLatestInfo)
+      },
+      fail: err => {
+        
+        console.log(err)
+      }
+    })
+
+    
   },
 
   //跳转打卡记录页面
@@ -170,12 +261,15 @@ Page({
             //是否在京   1-未返京   0-已返京
             if (currentCity == '北京市'){
               that.setData({
-                isGoBackFlag : '0'
+                isGoBackFlag : '0',
+                isInBeijing: 0,
               });
               app.globalData.isGoBackFlag = '0'
+              
             }else{
               that.setData({
-                isGoBackFlag : '1'
+                isGoBackFlag : '1',
+                isInBeijing: 1,
               });
               app.globalData.isGoBackFlag = '1'
             }
@@ -352,6 +446,11 @@ Page({
         return;
       }
 
+      this.setData({
+        outBejingReason: parseInt(noGoBackFlag),
+        planReturnBejingDate: gobackdate
+      })
+
     }
     console.log("this.app.globalData.isGoBackFlag" + app.globalData.isGoBackFlag);
     console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
@@ -431,6 +530,13 @@ Page({
           return;
         }
       }
+
+      this.setData({
+        leaveBeijingDate: leavedate,
+        returnBeijingDate: suregobackdate,
+        traffic: trainnumber
+
+      })
     }
     if (isQueZhenFlag == null || isQueZhenFlag == '') {
       wx.showToast({
@@ -524,6 +630,8 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
 
+    
+
 
     var date = new Date();
     var Y = date.getFullYear() + '-';
@@ -535,6 +643,42 @@ Page({
     var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
     const db = wx.cloud.database()
+
+    if (this.data.userLatestInfo.length  == 0){
+      console.log("add user latest info:")
+      db.collection('user_latest').add({
+        data: {
+          name: name,
+          phone: phone,
+          place: place,
+          is_in_beijing: this.data.isInBeijing,
+          out_reason: this.data.outBejingReason,
+          plan_beijing: this.data.planReturnBejingDate,
+          ever_leave_beijing: this.data.whetherLeaveBeijing, 
+          leave_date: this.data.leaveBeijingDate,
+          return_date: this.data.returnBeijingDate,
+          traffic: this.data.traffic
+        }
+      })
+
+    }else {
+      console.log("update user latest info:")
+      db.collection('user_latest').doc(this.data.userLatestInfo[0]._id).update({
+        data: {
+          name: name,
+          phone: phone,
+          place: place,
+          is_in_beijing: this.data.isInBeijing,
+          out_reason: this.data.outBejingReason,
+          plan_beijing: this.data.planReturnBejingDate,
+          ever_leave_beijing: this.data.whetherLeaveBeijing,
+          leave_date: this.data.leaveBeijingDate,
+          return_date: this.data.returnBeijingDate,
+          traffic: this.data.traffic
+        }
+      })
+    }
+
     db.collection('user_healthy').add({
       data: {
         name: name,
@@ -611,7 +755,8 @@ Page({
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.isLeaveBjFlag = e.detail.value
     this.setData({
-      isLeaveBjFlag: e.detail.value
+      isLeaveBjFlag: e.detail.value,
+      whetherLeaveBeijing: e.detail.value
     });
   //  this.radioChange(e)
   },

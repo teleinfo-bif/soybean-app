@@ -42,6 +42,12 @@
           <view class="tree-children-status-text">确诊</view>
         </view>
       </label>
+      <label wx:elif="{{item.goHospitalFlag == '0'}}">
+        <view>
+          <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">就诊</view>
+        </view>
+      </label>
       <label wx:elif="{{item.temperature < 37.3 && item.bodyStatusFlag == '0'}}">
         <view>
           <view class="tree-children-status-green"></view>

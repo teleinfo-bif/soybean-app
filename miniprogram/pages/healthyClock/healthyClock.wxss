@@ -62,9 +62,9 @@
 
 .weui-input {
   width: 100%;
-  font-size: 30rpx;
+  font-size: 35rpx;
   /* font-weight: 500; */
-  /* margin-top: 5rpx; */
+  margin-top: 5rpx;
   padding-left: 8rpx;
 }
 
