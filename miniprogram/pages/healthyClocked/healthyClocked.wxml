@@ -44,9 +44,9 @@
         <!--未返京开始-->
         <view class="weui-cells__title">未返京原因:</view>
         <view>
-          <radio-group class="radio-group" bindchange="noGoBackRadioChange">
+          <radio-group class="radio-group" bindchange="noGoBackRadioChange" >
             <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+              <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -54,7 +54,7 @@
         <view class="weui-cells__title">计划返京日期:</view>
         <view class="weui-cell_">
             <view class="weui-cell__bd">
-              <picker mode="date" name="gobackdate" value="{{clickdata.gobackdate}}">
+              <picker mode="date" name="gobackdate" value="{{clickdata.gobackdate}}" disabled="true">
                 <view class="weui-input">{{clickdata.gobackdate}}</view>
               </picker>
             </view>
@@ -68,7 +68,7 @@
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{isLeaveBjRadioItems}}" wx:key="{{index}}">
-              <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+              <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true"/>{{item.name}}
             </label>
           </radio-group>
         </view>
@@ -79,7 +79,7 @@
           <view class="weui-cells__title">离京日期:</view>
           <view class="weui-cell_">
               <view class="weui-cell__bd">
-                <picker mode="date" disabled="true" name="leavedate" value="{{clickdata.leavedate}}">
+                <picker mode="date" disabled="true" name="leavedate" disabled="true" value="{{clickdata.leavedate}}">
                   <view class="weui-input">{{clickdata.leavedate}}</view>
                 </picker>
               </view>
@@ -116,7 +116,7 @@
       <view>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
           <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+            <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -125,7 +125,7 @@
       <view wx:if="{{clickdata.bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
         <view class="weui-cell ">
           <view class="weui-cell__bd">
-            <input class="weui-input" disabled="true" name="bodystatusotherremark" value="{{clickdata.bodystatusotherremark}}" />
+            <input class="weui-input" disabled="true" name="bodystatusotherremark" value="{{clickdata.bodystatusotherremark}}" disabled="true"/>
           </view>
         </view>
       </view>
@@ -134,7 +134,7 @@
       <view>
         <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
           <label wx:for="{{isQueZhenRadioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+            <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -143,7 +143,7 @@
       <view>
         <radio-group class="radio-group" bindchange="goHospitalRadioChange">
           <label wx:for="{{goHospitalRadioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+            <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -152,7 +152,7 @@
       <view>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{goHBradioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+            <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -161,7 +161,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <input class="weui-input" name="remark" disabled="true" value="{{clickdata.remark}}" />
+            <input class="weui-input" name="remark" disabled="true" value="{{clickdata.remark}}" disabled="true" />
           </view>
         </view>
       </view>

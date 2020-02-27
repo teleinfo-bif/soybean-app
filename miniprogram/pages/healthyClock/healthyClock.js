@@ -81,6 +81,9 @@ Page({
       }
 
       this.noGoBackFlag = latestInfo[0].out_reason.toString()
+      this.isLeaveBjFlag = latestInfo[0].ever_leave_beijing.toString()
+      this.leavedate = latestInfo[0].leave_date
+      this.suregobackdate = latestInfo[0].suregobackdate
 
       this.setData({
         radioNoGoBackItems: radioNoGoBackItems,
