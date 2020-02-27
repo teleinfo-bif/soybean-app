@@ -566,7 +566,7 @@ getBeijingNumber: function(datas, reg) {
   return sum
 },
 
-getLongBeijingNumber: function() {
+getLongBeijingNumber: function(datas) {
   var sum = 0
   for (var i = 0; i < datas.length; i++) {
     if (/.*北京/.test(datas[i].place) && datas[i].isLeaveBjFlag == '1') {
@@ -666,7 +666,7 @@ getDatasAuthority: function(company) {
       var should = totalDatas.length
       var filled = healthyDatas.length
 
-      var longBeijing = this.getLongBeijingNumber()
+      var longBeijing = this.getLongBeijingNumber(healthyDatas)
 
       var good = this.getStateNumber(healthyDatas, "0")
       var server = this.getStateNumber(healthyDatas, "1")
