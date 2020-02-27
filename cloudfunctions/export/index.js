@@ -10,7 +10,7 @@ const $ = db.command.aggregate
 async function getLimit(department) {
     let userCount = await db.collection('user_info').where({
         company_department: db.RegExp({
-            regexp: department + "*",
+            regexp: department,
             options: 'i',
         }),
         _openid: _.neq("")
@@ -24,7 +24,7 @@ async function getLimit(department) {
 async function getMembers(department) {
     let membersData = await db.collection('user_info').where({
         company_department: db.RegExp({
-            regexp: department + "*",
+            regexp: department,
             options: 'i',
         }),
         _openid: _.neq("")
@@ -94,8 +94,8 @@ async function regExpIdsFilter(date, days, regExp) {
         )
         .group({
             _id: "$_openid",
-            date: $.max('$date'),
-            name: $.max('$name')
+            date: $.max('$date')
+            // name: $.max('$name')
         }).limit(limit).end()
 
     console.log("filter ", filter)
@@ -137,11 +137,11 @@ function notInCitiesIdsWithDay(date, days, cities) {
 }
 
 async function inCityIds(days, city) {
-    return regExpIdsFilter(new Date(), days, city + '*')
+    return regExpIdsFilter(new Date(), days, city)
 }
 
 async function inCityIdsWithDay(date, days, city) {
-    return regExpIdsFilter(date, days, city + '*')
+    return regExpIdsFilter(date, days, city)
 }
 
 async function getSegregate(city) {
@@ -149,7 +149,7 @@ async function getSegregate(city) {
         .match(
             {
                 place: db.RegExp({
-                    regexp: city + '*',
+                    regexp: city,
                     options: 'i',
                 }),
                 bodyStatusFlag: "0"
@@ -182,23 +182,26 @@ async function getSegregate(city) {
 async function getSegregateV(openId, dateTimeStr) {
     let clockDatas = await db.collection('user_healthy').where({
         _openid: openId,
-        bodyStatusFlag: "0",
+        // isQueZhenFlag: "1", 
         place: db.RegExp({
-            regexp: '北京*',
+            regexp: '北京',
             options: 'i',
-        })
-    }).limit(14).get()
+        }),
+        date: dateTimeStr
+    }).get()
 
     console.log("clockDatas ", clockDatas)
 
     let tmpDate = getDayString(new Date(dateTimeStr), -14)
-    for (let index = 0; index < clockDatas.data.length; index++) {
-        if (new Date(clockDatas.data[index].suregobackdate) > new Date(tmpDate)) {
-            return true
-        }
-    }
 
-    return false
+    if (clockDatas.data == undefined || clockDatas.data.length == 0 || 
+        clockDatas.data[0].suregobackdate == undefined || clockDatas.data[0].suregobackdate == "") {
+        return "0" //其它
+    } else if (new Date(clockDatas.data[0].suregobackdate) > new Date(tmpDate)) {
+        return "1" //隔离中
+    } else {
+        return "0"  //完成隔离
+    }
 }
 
 async function returnBjs(dateTimeStr) {
@@ -327,7 +330,7 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let memberIds = await getMembers(department)
     clockeds = intersecteArray(clockeds, memberIds)
 
-    let recentInHbIds = await inCityIds(coolingDays, "湖北")
+    let recentInHbIds = await inCityIdsWithDay(new Date(dateTimeStr), coolingDays, "湖北")
     // let nowInHbIds = await inCityIds(0, "北京")
 
     //已返回北京
@@ -352,7 +355,7 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 retureFromHBCount = retureFromHBCount + 1
 
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
-                if (!isSegregating) {
+                if (isSegregating == "0") {
                      //途径湖北的人数，完成隔离
                      fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
                 } else {
@@ -370,7 +373,7 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 retureFromNotHBCount = retureFromNotHBCount + 1
 
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
-                if (!isSegregating) {
+                if (isSegregating == "0") {
                      //途径非湖北地区的人数，完成隔离
                      fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
                 } else {
@@ -878,8 +881,8 @@ exports.main = async (event, context) => {
         }
 
         let alldata = [];
-        let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话', '', '', '', '', '', '', '', '', '', '']
-        let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '', '', '', '', '', '', '', '', '', '', '', '']
+        let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话']
+        let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数']
         let row3 = await getRow3(userInfo, dateTimeStr, department)
         let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '其他不适症状', '可在这里补充希望获得的帮助']
@@ -903,6 +906,7 @@ exports.main = async (event, context) => {
 
             { s: { c: 3, r: 0 }, e: { c: 7, r: 0 } },
             { s: { c: 8, r: 0 }, e: { c: 12, r: 0 } },
+
             { s: { c: 13, r: 0 }, e: { c: 13, r: 1 } },
             { s: { c: 14, r: 0 }, e: { c: 14, r: 1 } }
         ];
