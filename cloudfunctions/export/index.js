@@ -624,7 +624,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     } else if (data.bodyStatusFlag == "0") {
         row.push("否")
-    } else if (data.bodyStatusFlag == "1") {
+    } else {
         row.push("是")
     }
 
@@ -633,10 +633,8 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     } else if (data.bodyStatusFlag == "0") {
         row.push("是")
-    } else if (data.bodyStatusFlag == "1") {
-        row.push("否")
     } else {
-        row.push("其他")
+        row.push("否")
     }
 
     //是否有就诊住院
@@ -644,7 +642,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     } else if (data.goHospitalFlag == "0") {
         row.push("是")
-    } else if (data.goHospitalFlag == "1") {
+    } else {
         row.push("否")
     }
 
@@ -653,7 +651,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     } else if (data.goHBFlag == "0") {
         row.push("是")
-    } else if (data.goHBFlag == "1") {
+    } else {
         row.push("否")
     }
 
