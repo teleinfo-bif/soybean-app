@@ -659,6 +659,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    // wx.cloud.callFunction({
+    //   name: "addLatestDatas",
+    //   success: res => {
+    //     console.log("add latest datas: ", res)
+    //   },
+
+    //   fail: err => {
+
+    //   }
+    // })
   
     this.queryUserInfo()
     this.getCompanyDepartments()
