@@ -33,7 +33,7 @@ async function getMembers(department) {
     console.log("members ", membersData)
 
     let ids = []
-    for (let index = 0 ; index < membersData.data.length; index ++) {
+    for (let index = 0; index < membersData.data.length; index++) {
         ids.push(membersData.data[index]._openid)
     }
 
@@ -192,7 +192,7 @@ async function getSegregateV(openId, dateTimeStr) {
     console.log("clockDatas ", clockDatas)
 
     let tmpDate = getDayString(new Date(dateTimeStr), -14)
-    for (let index = 0; index < clockDatas.data.length; index ++) {
+    for (let index = 0; index < clockDatas.data.length; index++) {
         if (new Date(clockDatas.data[index].suregobackdate) > new Date(tmpDate)) {
             return true
         }
@@ -228,12 +228,12 @@ function getDifference(arry1, arry2) {
         return []
     } else if (arry1 == undefined) {
         return arry2
-    }else if (arry2 == undefined) {
+    } else if (arry2 == undefined) {
         return arry1
     }
 
     let result = arry1.concat(arry2).filter(function (v) {
-        return arry1.indexOf(v)===-1 || arry2.indexOf(v)===-1
+        return arry1.indexOf(v) === -1 || arry2.indexOf(v) === -1
     })
 
     if (result == undefined || result == []) {
@@ -251,13 +251,13 @@ async function latestNotBjPlace(openId, dateTimeStr) {
             options: 'i',
         })
     })
-    .orderBy("date", "desc")
-    .get()
+        .orderBy("date", "desc")
+        .get()
 
     console.log("filter ", filter)
     let dateTime = new Date(dateTimeStr)
 
-    for (let index = 0; index < filter.data.length; index ++) {
+    for (let index = 0; index < filter.data.length; index++) {
         if (new Date(filter.data[index].date) <= dateTime && filter.data[index].place != "北京") {  //place为""时
             return filter.data[index].place
         }
@@ -304,6 +304,7 @@ async function getUserHealthy(openid, date) {
 async function getRow3(userInfo, dateTimeStr, department) {
     let coolingDays = 28
     let dateTime = new Date(dateTimeStr)
+    let group = "北京泰尔英福网络科技有限责任公司"
     let todayRetureBjCount = 0
     let retureBjCount = 0
     let retureFromHBCount = 0
@@ -316,6 +317,10 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let unRetureFromHBNotCount = 0
     let fromNotHBAndSegregatingCount = 0
     let fromNotHBAndSegregatedCount = 0
+
+    if (department != ".") {
+        group = department
+    }
 
     let clockeds = await clockedDatas(dateTimeStr)
     let returnedBj = await returnBjs(dateTimeStr)
@@ -347,11 +352,12 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 retureFromHBCount = retureFromHBCount + 1
 
                 //途径湖北的人数，正在隔离
-                if (getSegregateV(item._id, dateTimeStr)) {
+                let isSegregating = await getSegregateV(item._id, dateTimeStr)
+                if (isSegregating) {
                     fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1
                 } else {
-                   //途径湖北的人数，完成隔离
-                   fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
+                    //途径湖北的人数，完成隔离
+                    fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
                 }
             }
 
@@ -363,7 +369,8 @@ async function getRow3(userInfo, dateTimeStr, department) {
             if (new Date(healthy.suregobackdate) <= dateTime) {
                 retureFromNotHBCount = retureFromNotHBCount + 1
 
-                if (getSegregateV(item._id, dateTimeStr)) {
+                let isSegregating = await getSegregateV(item._id, dateTimeStr)
+                if (isSegregating) {
                     //途径非湖北地区的人数，正在隔离
                     fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1
                 } else {
@@ -406,7 +413,7 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let phone = userInfo.phone
 
     let row3 = [
-        "北京泰尔英福网络科技有限责任公司",
+        group,
         todayRetureBjCount,
         retureBjCount,
         fromHBCount,
@@ -656,7 +663,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     } else {
         row.push("")
     }
-    
+
 
     //可在这里补充希望获得的帮助
     if (data.remark != undefined) {
