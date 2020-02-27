@@ -351,13 +351,13 @@ async function getRow3(userInfo, dateTimeStr, department) {
             if (new Date(healthy.suregobackdate) <= dateTime) {
                 retureFromHBCount = retureFromHBCount + 1
 
-                //途径湖北的人数，正在隔离
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
-                if (isSegregating) {
-                    fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1
+                if (!isSegregating) {
+                     //途径湖北的人数，完成隔离
+                     fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
                 } else {
-                    //途径湖北的人数，完成隔离
-                    fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
+                    //途径湖北的人数，正在隔离
+                    fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1  
                 }
             }
 
@@ -370,12 +370,12 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 retureFromNotHBCount = retureFromNotHBCount + 1
 
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
-                if (isSegregating) {
-                    //途径非湖北地区的人数，正在隔离
-                    fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1
+                if (!isSegregating) {
+                     //途径非湖北地区的人数，完成隔离
+                     fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
                 } else {
-                    //途径非湖北地区的人数，完成隔离
-                    fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
+                    //途径非湖北地区的人数，正在隔离
+                    fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1  
                 }
             }
 
@@ -506,7 +506,6 @@ async function getRow31(userInfo) {
 }
 
 async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) {
-    // let dateTime = new Date(dateTimeStr)
 
     //total 25 data
     let row = []
@@ -542,7 +541,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
 
     //未返京人员
     if (data.isGoBackFlag != undefined && data.isGoBackFlag == "1") {
-        //未返京原因（身体不适/当地未放行等
+        //未返京原因身体不适/当地未放行等
         if (data.noGoBackFlag == "1") {
             row.push("当地未放行")
         } else {
@@ -562,26 +561,37 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
 
     //是否从其他城市返回
     let isRetured = false
-    if (data.place.substring(0, 2) != "北京") {
-        row.push("否")
+    let recentIds = intersecteArray(recentNotInBjIds, [data._openid])
+    if (data.place.substring(0, 2) == "北京" && 
+            (data.isGoBackFlag == "0" && data.isLeaveBjFlag == "0" || recentIds.length == 1)) {
         isRetured = true
-    } else if (data.place.substring(0, 2) == "北京") {
-        if (intersecteArray(recentNotInBjIds, [data._openid]).length > 0) {
-            row.push("是")
-            isRetured = true
-        } else {
-            row.push("")
-        }
     }
+    
+    if (isRetured) {
+        row.push("是") //离开过北京
+    } else if (data.place.substring(0, 2) == "北京") {
+        row.push("") //一直在北京
+    } else {
+        row.push("否")  //未返回北京
+    }
+
+    // if (data.place.substring(0, 2) != "北京") {
+    //     row.push("否")
+    // } else if (data.place.substring(0, 2) == "北京") {
+    //     if (intersecteArray(recentNotInBjIds, [data._openid]).length > 0) {
+    //         row.push("是")
+    //         isRetured = true
+    //     } else {
+    //         row.push("")
+    //     }
+    // }
 
     //返程的交通工具中是否出现确诊的新型肺炎患者
     row.push("")
 
     //返程统计.返程出发地
-    if (isRetured == true) {
-        if (data.place.substring(0, 2) != "北京") {
-            row.push(data.place)
-        } else {
+    if (isRetured) {
+        if (data.place.substring(0, 2) == "北京") {
             let place = await latestNotBjPlace(data._openid, dateTimeStr)
             row.push(place)
         }
@@ -590,27 +600,27 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     }
 
     //返程统计.返程日期
-    if (data.suregobackdate == undefined) {
-        row.push("")
-    } else {
+    if (isRetured && data.suregobackdate != undefined) {
         row.push(data.suregobackdate)
+    } else {
+        row.push("")
     }
 
     //返程统计.交通方式
     row.push("")
 
     //返程统计.航班/车次/车牌号
-    if (data.trainnumber == undefined) {
-        row.push("")
-    } else {
+    if (isRetured && data.trainnumber != undefined) {
         row.push(data.trainnumber)
+    } else {
+        row.push("")
     }
 
     //开始观察日期
-    if (data.suregobackdate == undefined) {
-        row.push("")
-    } else {
+    if (isRetured && data.suregobackdate != undefined) {
         row.push(data.suregobackdate)
+    } else {
+        row.push("")
     }
 
     //当前时间,当前地点/城市
