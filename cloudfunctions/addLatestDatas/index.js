@@ -55,6 +55,7 @@ exports.main = async (event, context) => {
 
          await db.collection('user_latest').add({
             data: {
+              _openid: res.data[i]._openid,
               name: res.data[i].name,
               phone: res.data[i].phone,
               place: res.data[i].place,
