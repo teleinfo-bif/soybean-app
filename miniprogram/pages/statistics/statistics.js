@@ -558,7 +558,7 @@ printDatas: function(e) {
 getBeijingNumber: function(datas, reg) {
   var sum = 0
   for (var i = 0; i < datas.length; i++) {
-    if (reg.test(datas[i].place)){
+    if (datas[i].isGoBackFlag == '0'){
       sum += 1
     }
   }
@@ -569,7 +569,7 @@ getBeijingNumber: function(datas, reg) {
 getLongBeijingNumber: function(datas) {
   var sum = 0
   for (var i = 0; i < datas.length; i++) {
-    if (/.*北京/.test(datas[i].place) && datas[i].isLeaveBjFlag == '1') {
+    if (datas[i].isGoBackFlag == '0' && datas[i].isLeaveBjFlag == '1') {
       sum += 1
     }
   }
@@ -624,7 +624,7 @@ getConfimedNumber: function(datas) {
 getBeijingUnconfirmed: function(datas) {
   var sum = 0
   for (var i = 0; i < datas.length; i++){
-    if (/.*北京/.test(datas[i].place) && datas[i].isQueZhenFlag == "1" && datas[i].isLeaveBjFlag == "0"){
+    if (datas[i].isGoBackFlag == '0' && datas[i].isQueZhenFlag == "1" && datas[i].isLeaveBjFlag == "0"){
       sum += 1
     }
   }
@@ -672,7 +672,7 @@ getDatasAuthority: function(company) {
       var server = this.getStateNumber(healthyDatas, "1")
       var otherNum = this.getStateNumber(healthyDatas, "2")
 
-      var beijing = this.getBeijingNumber(healthyDatas, /.*北京/)
+      var beijing = this.getBeijingNumber(healthyDatas)
       var wuhan = this.getWuhanNumber(healthyDatas, /.*武汉/)
       var hubei = this.getHubeiNumber(healthyDatas, /.*湖北/)
 
@@ -682,6 +682,18 @@ getDatasAuthority: function(company) {
       var isoNum = this.getIsoNumber(healthyDatas)
       var unIsoNum = beijingUnconfirmed - isoNum
       var otherCases = filled - confirmed - isoNum - unIsoNum
+
+      console.log("========================================================")
+
+      console.log("beijing number: ", beijing)
+      console.log("beijing long:   ", longBeijing)
+      console.log("beijing unconfirmed: ", beijingUnconfirmed)
+      console.log("iso number: ", isoNum)
+      console.log("unIso number: ", unIsoNum)
+
+      console.log("confirmed: ", confirmed)
+
+      console.log("========================================================")
 
 
       this.setData({
@@ -723,7 +735,7 @@ getDatasAuthority: function(company) {
       //   otherCasesNumber: other
       // })
 
-      console.log("confimed: ", this.data.confirmed)
+      console.log("confimed: ", this.data.confirmedNumber)
       console.log("iso num: ", this.data.isolateNumber)
       console.log("un iso num: ", this.data.outIsolateNumber)
       console.log("other: ", this.data.otherCasesNumber)
@@ -981,6 +993,26 @@ getDatas: function(e) {
         console.log(err)
       }
     })
+  },
+
+  goToUnhealthy: function(e) {
+
+    console.log("show date: ", this.data.showDate)
+   
+   wx.cloud.callFunction({
+     name: "unHealthy",
+     data : {
+       "date": this.data.showDate
+     },
+
+     success: res => {
+      console.log("res data: ", res)
+     }, 
+     fail: err => {
+      console.log("err: ", err)
+     }
+   })
+
   },
 
   /**

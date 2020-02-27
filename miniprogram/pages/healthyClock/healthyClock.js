@@ -704,7 +704,7 @@ Page({
         remark: remark,
         date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
-        userinfo: that.userinfo
+        // userinfo: that.userinfo
       },
       success: res => {
         wx.hideLoading()

@@ -248,6 +248,10 @@
   margin-left: -20rpx;
 }
 
+.unhealthy {
+  color: #ffaa00
+}
+
 .ring-icon1 {
   width: 20rpx;
   height: 20rpx;
