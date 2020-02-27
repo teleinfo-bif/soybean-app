@@ -37,7 +37,7 @@ Component({
       getUserPhone(data)
         .then(res => {
           console.log(res);
-          this.triggerEvent("change", res.phone);
+          this.triggerEvent("change", res.phoneNumber);
         })
         .catch(e => {
           console.error("获取手机号码失败");
