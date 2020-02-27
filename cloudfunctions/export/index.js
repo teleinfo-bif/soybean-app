@@ -182,9 +182,9 @@ async function getSegregate(city) {
 async function getSegregateV(openId, dateTimeStr) {
     let clockDatas = await db.collection('user_healthy').where({
         _openid: openId,
-        bodyStatusFlag: "0",
+        // isQueZhenFlag: "1", 
         place: db.RegExp({
-            regexp: '北京*',
+            regexp: '北京',
             options: 'i',
         }),
         date: dateTimeStr
@@ -194,8 +194,9 @@ async function getSegregateV(openId, dateTimeStr) {
 
     let tmpDate = getDayString(new Date(dateTimeStr), -14)
 
-    if (clockDatas.data[0].suregobackdate == undefined || clockDatas.data[0].suregobackdate == "") {
-        return "2" //其它
+    if (clockDatas.data == undefined || clockDatas.data.length == 0 || 
+        clockDatas.data[0].suregobackdate == undefined || clockDatas.data[0].suregobackdate == "") {
+        return "0" //其它
     } else if (new Date(clockDatas.data[0].suregobackdate) > new Date(tmpDate)) {
         return "1" //隔离中
     } else {
@@ -314,13 +315,11 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let fromHBCount = 0
     let fromHBAndSegregatingCount = 0
     let fromHBAndSegregatedCount = 0
-    let fromHBAndSegregateOtherCount = 0
     let fromNotHBCount = 0
     let retureFromNotHBCount = 0
     let unRetureFromHBNotCount = 0
     let fromNotHBAndSegregatingCount = 0
     let fromNotHBAndSegregatedCount = 0
-    let fromNotHBAndSegregateOtherCount = 0
 
     if (department != ".") {
         group = department
@@ -359,12 +358,9 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 if (isSegregating == "0") {
                      //途径湖北的人数，完成隔离
                      fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
-                } else if (isSegregating == "1") {
+                } else {
                     //途径湖北的人数，正在隔离
                     fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1  
-                } else {
-                    //途径湖北的人数，隔离其它状态
-                    fromHBAndSegregateOtherCount = fromHBAndSegregateOtherCount + 1  
                 }
             }
 
@@ -380,12 +376,9 @@ async function getRow3(userInfo, dateTimeStr, department) {
                 if (isSegregating == "0") {
                      //途径非湖北地区的人数，完成隔离
                      fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
-                } else if (isSegregating == "1") {
+                } else {
                     //途径非湖北地区的人数，正在隔离
                     fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1  
-                } else {
-                    //途径非湖北地区的人数，隔离其它状态
-                    fromNotHBAndSegregateOtherCount = fromNotHBAndSegregateOtherCount + 1  
                 }
             }
 
@@ -431,13 +424,11 @@ async function getRow3(userInfo, dateTimeStr, department) {
         retureFromHBCount,
         fromHBAndSegregatingCount,
         fromHBAndSegregatedCount,
-        fromHBAndSegregateOtherCount,
         fromNotHBCount,
         unRetureFromHBNotCount,
         retureFromNotHBCount,
         fromNotHBAndSegregatingCount,
         fromNotHBAndSegregatedCount,
-        fromNotHBAndSegregateOtherCount,
         contrat,
         phone,
         '', '', '', '', '', '', '', '', '', ''];
@@ -890,8 +881,8 @@ exports.main = async (event, context) => {
         }
 
         let alldata = [];
-        let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '', '联系人', '电话']
-        let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '其它', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '其它']
+        let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话']
+        let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数']
         let row3 = await getRow3(userInfo, dateTimeStr, department)
         let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '其他不适症状', '可在这里补充希望获得的帮助']
@@ -913,11 +904,11 @@ exports.main = async (event, context) => {
             { s: { c: 1, r: 0 }, e: { c: 1, r: 1 } },
             { s: { c: 2, r: 0 }, e: { c: 2, r: 1 } },
 
-            { s: { c: 3, r: 0 }, e: { c: 8, r: 0 } },
-            { s: { c: 9, r: 0 }, e: { c: 14, r: 0 } },
+            { s: { c: 3, r: 0 }, e: { c: 7, r: 0 } },
+            { s: { c: 8, r: 0 }, e: { c: 12, r: 0 } },
 
-            { s: { c: 15, r: 0 }, e: { c: 15, r: 1 } },
-            { s: { c: 16, r: 0 }, e: { c: 16, r: 1 } }
+            { s: { c: 13, r: 0 }, e: { c: 13, r: 1 } },
+            { s: { c: 14, r: 0 }, e: { c: 14, r: 1 } }
         ];
         const options = { '!merges': ranges };
 
