@@ -5,39 +5,44 @@
     <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
       <view class="head">
         <view class="head_title" hover-class="none" hover-stop-propagation="false">
-          北京泰尔英福网络科技有限责任公司
+          {{groupName}}
         </view>
         <view class="head_icon">
           <picker mode="date" value="{{value}}" bindchange="onChange" end="{{ now}}" fields="{{'day'}}">
             <van-icon name="calender-o" />
-            {{value}}
+            {{clockInTime}}
           </picker>
         </view>
       </view>
-      <view class="people-item" wx:for="{{ clockData }}" wx:key="index">
-        <view class="people-item_name">{{item.userName || "-"}}</view>
-        <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
-        <view class="people-item_detail">打卡记录</view>
-        <view class="people-item_status">
-          <block wx:if="{{ item.healthy == 1}}">
-            <view class="status-circle status-circle-green"></view>
-            <view>正常</view>
-          </block>
-          <block wx:elif="{{item.status == 1}}">
-            <view class="status-circle status-circle-yellow"></view>
-            <view>异常</view>
-          </block>
-          <block wx:elif="{{item.status == 2}}">
-            <view class="status-circle status-circle-red"></view>
-            <view>异常</view>
-          </block>
-          <block wx:else>
-            <view class="status-circle status-circle-red"></view>
-            <view>-</view>
-          </block>
+      <block wx:if="{{clockList.length> 0}}">
+        <view class="people-item" wx:for="{{ clockList }}" wx:key="index">
+          <view class="people-item_name">{{item.userName || "-"}}</view>
+          <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
+          <view class="people-item_detail">打卡记录</view>
+          <view class="people-item_status">
+            <block wx:if="{{ item.healthy == 1}}">
+              <view class="status-circle status-circle-green"></view>
+              <view>正常</view>
+            </block>
+            <block wx:elif="{{item.status == 1}}">
+              <view class="status-circle status-circle-yellow"></view>
+              <view>异常</view>
+            </block>
+            <block wx:elif="{{item.status == 2}}">
+              <view class="status-circle status-circle-red"></view>
+              <view>异常</view>
+            </block>
+            <block wx:else>
+              <view class="status-circle status-circle-red"></view>
+              <view>-</view>
+            </block>
+          </view>
         </view>
+      </block>
+      <view wx:if="{{clockList.length== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
+        暂无详细信息
       </view>
-      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-more-data">
+      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-data-msg">
         没有更多数据
       </view>
     </scroll-view>

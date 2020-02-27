@@ -1,24 +1,27 @@
 <!-- pages/index/organization/index.wxml -->
-<block wx:if="{{true}}">
+<block wx:if="{{groupList.length > 0}}">
   <view class="organization">
     <view class="organization_head van-hairline--bottom">
       <view class="organization_head-text">我的组织</view>
-      <view class="organization_head-btn">按钮</view>
+      <view class="organization_head-btn"></view>
     </view>
     <view class="organization_content">
-      <view class="organization_item">
+      <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
+        <!-- 左侧群组logo -->
         <view class="organization_item-logo">
-          <image class="btn" src="../../../static/images/stastic@3x.png" />
+          <image class="btn" src="{{item.logo?item.logo:'../../../static/images/defaultlogo.png'}}" />
         </view>
-        <view class="organization_item-name">测试组织测试组织测试组织测试组织测试组织</view>
+        <!-- 中间群组名称 -->
+        <view class="organization_item-name">{{item.name}}</view>
+        <!-- 右侧操作按钮 -->
         <view class="organization_item-btn">
           <view>
-            <navigator url="/pages/statistics/index?groupId=1">
+            <navigator url="/pages/statistics/index?groupId={{item.id}}">
               <image class="btn" src="../../../static/images/stastic@3x.png" />
             </navigator>
           </view>
           <view>
-            <navigator url="/pages/detail/index?groupId=1">
+            <navigator url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}">
               <image class="btn" src="../../../static/images/deatil_data@3x.png" />
             </navigator>
           </view>

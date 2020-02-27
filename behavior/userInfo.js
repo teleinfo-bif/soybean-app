@@ -1,4 +1,4 @@
-import { getOpenId, getUserFilledInfo } from "../api/api.js";
+import { getUserFilledInfo } from "../api/api.js";
 
 const app = getApp();
 module.exports = Behavior({
@@ -12,21 +12,21 @@ module.exports = Behavior({
   },
   lifetimes: {
     attached() {
-      const openid = wx.getStorageSync("openid");
-      if (openid) {
-        app.globalData.openid = openid;
-        this.getUserFilledInfo(openid);
-      } else {
-        getOpenId().then(({ openid, sessionKey }) => {
-          app.globalData.openid = openid;
-          app.globalData.sessionKey = openid;
-          this.setData({
-            openid,
-            sessionKey: sessionKey
-          });
-          this.getUserFilledInfo(openid);
-        });
-      }
+      // const openid = app.globalData.openid || wx.getStorageSync("openid");
+      // if (openid) {
+      //   app.globalData.openid = openid;
+      //   this.getUserFilledInfo(openid);
+      // } else {
+      //   getOpenId().then(({ openid, sessionKey }) => {
+      //     app.globalData.openid = openid;
+      //     app.globalData.sessionKey = openid;
+      //     this.setData({
+      //       openid,
+      //       sessionKey: sessionKey
+      //     });
+      //     this.getUserFilledInfo(openid);
+      //   });
+      // }
     }
   },
   methods: {

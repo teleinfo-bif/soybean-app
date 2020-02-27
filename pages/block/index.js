@@ -1,4 +1,4 @@
-// pages/Sign/index.js
+// pages/block/index.js
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
 import { getTodayClock, getUserFilledInfo, saveClock } from "../../api/api.js";
@@ -57,9 +57,18 @@ let fields = [
     }
   },
   {
-    title: "返京日期",
+    title: "返京(计划)日期",
     type: "date",
-    prop: "gobacktime2",
+    prop: "gobacktime",
+    hide: true,
+    props: {
+      placeholder: "请输入计划返京日期"
+    }
+  },
+  {
+    title: "返京所乘车次/航班/车牌",
+    type: "input",
+    prop: "flight",
     hide: false,
     props: {
       placeholder: "请输入返京日期"
@@ -72,15 +81,6 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入未返京原因"
-    }
-  },
-  {
-    title: "计划返京日期",
-    type: "date",
-    prop: "gobacktime",
-    hide: true,
-    props: {
-      placeholder: "请输入计划返京日期"
     }
   },
   {
@@ -103,6 +103,15 @@ let fields = [
         { id: 2, name: "有发烧、咳嗽等症状" },
         { id: 0, name: "其他症状" }
       ]
+    }
+  },
+  {
+    title: "其他症状",
+    type: "input",
+    prop: "otherhealthy",
+    hide: true,
+    props: {
+      placeholder: "请输入其他症状"
     }
   },
   {
@@ -147,7 +156,7 @@ let fields = [
   {
     title: "其他备注信息",
     type: "input",
-    prop: "other",
+    prop: "remarks",
     require: false,
     props: {
       placeholder: "请输入备注信息"
@@ -183,7 +192,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    locked: true,
+    clocked: true,
     userRegisted: app.globalData.userRegisted,
     userFilledInfo: app.globalData.userFilledInfo,
     location: "",
@@ -199,7 +208,10 @@ Page({
   // 温度大于37.2设置健康是禁选中
   setHealthyDisabled(disable) {
     let { fields, data } = this.data;
-    data["healthy"] = null;
+    // data["healthy"] = disable ? null : data["otherhealthy"];
+    if (disable && data["healthy"] === "1") {
+      data["healthy"] = null;
+    }
     this.setData({
       data
     });
@@ -215,8 +227,21 @@ Page({
     });
     this.setData({ fields, data });
   },
+  setOtherHealthyHide(hide) {
+    let { fields, data } = this.data;
+    data["otherhealthy"] = null;
+    this.setData({
+      data
+    });
+    fields.forEach((item, index) => {
+      if (item.prop === "otherhealthy") {
+        item.hide = hide;
+      }
+    });
+    this.setData({ fields, data });
+  },
   onFormChange(e) {
-    console.log("onFormChange", e);
+    // console.log("onFormChange", e);
     const { prop, value } = e.detail;
     let { data } = this.data;
 
@@ -237,6 +262,13 @@ Page({
       } else {
         this.setHealthyDisabled(false);
       }
+    } else if (prop === "healthy") {
+      // 判断 健康状况选其它
+      if (value === "0") {
+        this.setOtherHealthyHide(false);
+      } else {
+        this.setOtherHealthyHide(true);
+      }
     }
 
     let itemData = {};
@@ -248,17 +280,27 @@ Page({
       data
     });
   },
-
+  formCancel() {
+    let { data } = this.data;
+    for (let prop in data) {
+      if (prop != "userName" && prop != "phone") {
+        data[prop] = null;
+      }
+    }
+    this.setData({
+      data
+    });
+  },
   formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
-      console.log("formData", formData);
+      // console.log("formData", formData);
       saveClock(formData).then(res => {
-        console.log(res);
-        wx.wx.navigateTo({
-          url: "/pages/Sign/status/index"
+        // console.log(res);
+        wx.navigateTo({
+          url: "/pages/block/status/index"
         });
       });
     }
@@ -275,17 +317,24 @@ Page({
     });
   },
 
-  setFieldsHide(hideList = [], setOtherCith = false) {
+  setFieldsHide(hideList = [], showOtherCity = true, otherCith = 0) {
     // let fields = fields;
     fields.forEach(item => {
-      if (setOtherCith && item.prop == "otherCith") {
+      if (showOtherCity && item.prop == "otherCity") {
         item.hide = false;
-        item.value = 1;
+        item.value = otherCith;
+      }
+      if (item.prop == "otherCity") {
+        // debugger;
       }
       if (hideList.indexOf(item.prop) > -1) {
         item.hide = true;
       } else {
-        item.hide = false;
+        if (item.prop == "otherhealthy") {
+          item.hide = item.hide || true;
+        } else {
+          item.hide = false;
+        }
       }
     });
     this.setData({
@@ -293,32 +342,29 @@ Page({
     });
   },
   // 根据是否在北京设置需要显示的字段，在北京显示是否离开北京，返回日期，不在北京显示原因日期
-  setFields(atBeijing = false, leaved = false, otherCity = false) {
-    console.log("atBeijing:", atBeijing, " leaved:", leaved);
+  setFields(atBeijing = false, leaved = false) {
+    // console.log("atBeijing:", atBeijing, " leaved:", leaved);
     let fields = fields;
     if (atBeijing) {
-      // 在北京，隐藏返回时间，未返回原因
+      // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
+      // 在北京 & 从其它地方返回  显示离京时间leavetime 返程日期gobacktime，隐藏未返程原因，reason
+      // 不在北京 隐藏从其它城市返回otherCity
 
       // 在北京，离开且已经返回
       // if (otherCity) {
       // }
-      this.setFieldsHide(["reason", "gobacktime", "reason"]);
+      // this.setFieldsHide(["reason"]);
       if (leaved) {
-        this.setFieldsHide(["reason", "gobacktime", "reason"]);
+        this.setFieldsHide(["reason"]);
       } else {
         // 在北京且未离开
-        this.setFieldsHide([
-          "reason",
-          "gobacktime",
-          "leavetime",
-          "gobacktime2"
-        ]);
+        this.setFieldsHide(["reason", "leavetime", "gobacktime", "flight"]);
         // this.setFieldsHide(["reason", "gobacktime", "reason"]);
       }
     } else {
       // 不在北京切且返回
       // this.setFieldsHide(["otherCity", "gobacktime2"], true);
-      this.setFieldsHide(["otherCity"], true);
+      this.setFieldsHide(["otherCity"], false);
     }
   },
   // 根据是否离开北京
@@ -336,7 +382,7 @@ Page({
               this.setData({ location });
               reverseAddressFromLocation(location).then(res => {
                 var currentCity = res.result.ad_info.city;
-                console.log(res.result.ad_info.city);
+                // console.log(res.result.ad_info.city);
                 let atBeijing = currentCity == "北京市";
 
                 let { data } = this.data;
@@ -385,26 +431,21 @@ Page({
 
   // 获取用户今日打卡信息
   getUserTodyClockData() {
-    console.log("====getUserTodyClockData====");
+    // console.log("====getUserTodyClockData====");
     getTodayClock({
       userId: 60
     }).then(data => {
-      console.log("today data", data);
-      // 整数个
-      // if (data.total === 0) {
-      //   this.initAddress();
-      // }
+      // console.log("today data", data);
       let formData = Object.assign({}, this.data.data, data.records[0]);
       let atBeijing =
         (formData.address && formData.address.indexOf("北京市") > -1) || false;
+      // 服务端没有其它城市返回字段，根据返京日期判断
+      formData["otherCity"] = formData.gobacktime ? 1 : 0;
 
-      // ============================
-
-      console.log("data-formformData", formData);
       if (data.total > 0) {
         this.setData({
           atBeijing,
-          locked: true,
+          clocked: true,
           leaved: !atBeijing,
           goBack: !atBeijing,
           data: formData
@@ -412,7 +453,7 @@ Page({
       } else {
         this.initAddress();
         this.setData({
-          locked: false,
+          clocked: false,
           atBeijing,
           leaved: !atBeijing,
           goBack: !atBeijing

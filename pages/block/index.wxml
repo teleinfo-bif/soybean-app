@@ -1,7 +1,7 @@
-<!-- pages/Sign/index.wxml -->
+<!-- pages/block/index.wxml -->
 <view class="page">
   <!-- <block wx:if="{{locked}}"> -->
-  <block wx:if="{{false}}">
+  <block wx:if="{{clocked}}">
     <view class="shade"></view>
     <view class="block-success" hover-class="none" hover-stop-propagation="false">
       <view class="block-record" hover-class="none" hover-stop-propagation="false">
@@ -18,8 +18,8 @@
   <view class="form-header">健康打卡</view>
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
-  <view class="btn-wrap">
-    <van-button size="normal">重 置</van-button>
+  <view wx:if="{{!clocked}}" class="btn-wrap">
+    <van-button bindtap="formCancel" size="normal">重 置</van-button>
     <view style="width: 35rpx;"></view>
     <van-button bindtap="formSubmit" size="normal" color="#1759EF">提 交</van-button>
   </view>

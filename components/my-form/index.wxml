@@ -1,5 +1,5 @@
 <van-cell-group class="my-form">
-  <!-- <button bindtap="out">out</button> -->
+  <!-- <button bindtap="out" style="position: relative;z-index: 10000;">out</button> -->
   <block wx:for="{{fields}}" wx:key="index">
     <view wx:if="{{item.hide != true}}" class="my-form_item" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
       <!-- form-label文字 -->

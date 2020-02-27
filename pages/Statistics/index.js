@@ -26,7 +26,6 @@ Page({
    */
   data: {
     data: {},
-    value: "",
     ecHealth: {
       lazyLoad: true
     },
@@ -35,62 +34,49 @@ Page({
     },
     ecHospital: {
       lazyLoad: true
-    }
+    },
+    groupId: null,
+    clockInTime: ""
   },
 
+  getData() {
+    let { groupId, clockInTime } = this.data;
+    getGroupStatistic({
+      groupId: groupId,
+      clockInTime: clockInTime
+    }).then(data => {
+      console.log(data);
+      this.setData({
+        data
+      });
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    getGroupStatistic({
-      groupId: 1,
-      clockInTime: ""
-    }).then(data => {
-      try {
-        console.log("JSON.parse: ", JSON.parse(data));
-      } catch (e) {
-        // console.error(e);
-      }
-      this.setData({
-        data: {
-          totality: {
-            total: 0,
-            clockIn: 10,
-            unClockIn: -10,
-            notInbeijing: 10,
-            goBackBeijing: 0,
-            abnormalbody: 5,
-            diagnosis: 0
-          },
-          healthy: [
-            { name: "健康", value: 5, percent: 50.0 },
-            { name: "发烧，咳嗽", value: 5, percent: 50.0 },
-            { name: "其他症状", value: 0, percent: 0.0 }
-          ],
-          region: [
-            { name: "北京", value: 0, percent: 0.0 },
-            { name: "湖北", value: 0, percent: 0.0 },
-            { name: "武汉", value: 0, percent: 0.0 },
-            { name: "其他地区", value: 10, percent: 100.0 }
-          ],
-          hospitalization: [
-            { name: "确诊", value: 0, percent: 0.0 },
-            { name: "隔离期", value: 10, percent: 100.0 },
-            { name: "出隔离期", value: 0, percent: 0.0 },
-            { name: "其他", value: 0, percent: 0.0 }
-          ]
-        }
-      });
-    });
+    console.log(options);
+    let { groupId } = options;
+    this.setData(
+      {
+        groupId
+      },
+      this.getData
+    );
+
     this.setData({
-      value: getyyyyMMdd(new Date())
+      clockInTime: getyyyyMMdd(new Date())
     });
   },
   onChange(e) {
+    // console.log(e);
     const { value } = e.detail;
-    this.setData({
-      value
-    });
+    this.setData(
+      {
+        clockInTime: value
+      },
+      this.getData
+    );
   },
 
   /**

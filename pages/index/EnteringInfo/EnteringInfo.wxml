@@ -1,9 +1,14 @@
 <view class="container">
-  <view class="entering-box" bindtap="toNextPage">
+  <view class="entering-box">
     <view class="entering-box_icon">
       <!-- <at-icon compid="{{$compid__0}}"></at-icon> -->
       <van-icon name="edit" />
     </view>
-    <text class="entering-box_text">录入身份信息</text>
+    <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
+      你好，{{userFilledInfo.name}}
+    </view>
+    <text wx:else class="entering-box_text">录入身份信息</text>
+    <button class="test" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>
   </view>
 </view>
+<!-- <button bindtap="test">test</button> -->

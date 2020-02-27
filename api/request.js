@@ -1,31 +1,91 @@
 // 获取小程序全局配置（变量、函数等）
-const app = getApp();
-console.log(getApp);
-console.log("app is:", app);
-
+const tokenKey = "fedToken";
+const userFilledInfofoKey = "userFilledInfo";
 // 从storage中获取openid
-const openid = wx.getStorageSync("openid");
+
+const appid = "wx5236affef117da53";
 
 // 定义网络请求API地址
 const baseURL = "https://admin.bidspace.cn/bid-soybean";
 
+// 获取用户openId
+async function getOpenId() {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        let params = {
+          appid,
+          code: res.code
+        };
+        wx.request({
+          url: baseURL + "/wx/user/login",
+          data: params,
+          success: data => {
+            wx.setStorageSync(tokenKey, data.data.data);
+            resolve(data.data.data);
+          },
+          fail: res => {
+            reject(res);
+          }
+        });
+      }
+    });
+  });
+}
+
+// 获取用户openId
+async function getUserInfo(params) {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: baseURL + "/user/exist",
+      data: params,
+      success: data => {
+        wx.setStorageSync(userFilledInfofoKey, data.data.data);
+        resolve(data.data.data);
+      },
+      fail: res => {
+        reject(res);
+      }
+    });
+  });
+}
+
+/**
+ * 获取存的openID
+ *
+ * @returns
+ */
+function getTokenStorage() {
+  return wx.getStorageSync(tokenKey);
+}
+function getUserStorage() {
+  return wx.getStorageSync(userFilledInfofoKey);
+}
+
 // 封装网络请求开始
-const Request = ({ url, params, method, ...other } = {}) => {
-  let data = {};
-  if (app && app.globalData.userFilledInfo) {
-    data = Object.assign(params, {
-      userId: app.globalData.userFilledInfo.id
+const Request = async ({ url, params, method, ...other } = {}) => {
+  // 先取localstorage里面openid,userid,
+  let token = getTokenStorage();
+  let userInfo = getUserStorage();
+  if (token.openid == undefined) {
+    token = await getOpenId();
+  }
+  if (userInfo.id == undefined) {
+    userInfo = await getUserInfo({ openid: token.openid });
+  }
+
+  if (url == "/user/exist") {
+    return new Promise(resolve => {
+      resolve(userInfo);
     });
   }
+
   // params放在后面，避免覆盖参数中的openid
-  data = Object.assign(
-    {},
-    {
-      openid: openid || "",
-      wechatId: openid || ""
-    },
-    params
-  );
+  let data = Object.assign({}, params, {
+    openid: token.openid,
+    wechatId: token.openid,
+    userId: userInfo.id
+  });
 
   // 添加请求加载等待
   wx.showLoading({
@@ -56,10 +116,17 @@ const Request = ({ url, params, method, ...other } = {}) => {
             .then(() => _refetch(url, data, method))
             .then(resolve);
         } else if (res.data.code !== 200) {
-          // 获取后台返回报错信息
-          let title = res.data.err_msg || "请求错误";
-          // 调用全局toast方法
-          showToast(title);
+          if (url == "/wx/clockln/census/census") {
+            resolve(res.data);
+          } else {
+            console.log(url + "-" + res.statusCode);
+            console.log(data);
+            console.log(res.data);
+            // 获取后台返回报错信息
+            let title = res.data.err_msg || "请求错误";
+            // 调用全局toast方法
+            showToast(title);
+          }
         } else if (res.data.code === 200) {
           resolve(res.data.data);
         } else {
@@ -190,6 +257,7 @@ const _postParams = (url, params = {}) => {
     }
   });
 };
+
 module.exports = {
   baseURL,
   refreshToken,
@@ -199,5 +267,6 @@ module.exports = {
   _post,
   _put,
   _delete,
-  _postParams
+  _postParams,
+  userFilledInfofoKey
 };

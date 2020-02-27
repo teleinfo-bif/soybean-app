@@ -8,7 +8,7 @@
     <view class="status_text">您已经提交成功，可立即去打卡</view>
   </view>
   <view class="btn-item">
-    <van-button bind:click="navigateTo" data-path='/pages/Sign/index' round="{{true}}" type="primary" color="#1759EF" block>
+    <van-button bind:click="navigateTo" data-path='/pages/block/index' round="{{true}}" type="primary" color="#1759EF" block>
       健康打卡
     </van-button>
   </view>

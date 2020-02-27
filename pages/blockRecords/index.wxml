@@ -1,10 +1,6 @@
 <!-- pages/SignRecords/index.wxml -->
 <wxs module="filter" src="./index.wxs"></wxs>
 <view style="height: 100%;">
-  <!-- 时间选择器 -->
-  <van-popup show="{{ show }}" position="bottom" custom-style="height: 30%;" bind:close="onClose">
-    <van-datetime-picker type="date" value="{{ currentDate }}" bind:input="onInput" formatter="{{ formatter }}" bind:confirm="test2"></van-datetime-picker>
-  </van-popup>
   <!-- 人员列表 -->
   <view style="height: 100%;">
     <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">

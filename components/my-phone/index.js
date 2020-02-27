@@ -42,9 +42,10 @@ Component({
         .catch(e => {
           console.error("获取手机号码失败");
           wx.showToast({
-            title: "获取手机号码失败",
+            title: "获取手机号码失败，使用测试手机号填写-13888888888",
             icon: "none"
           });
+          this.triggerEvent("change", 13888888888);
         })
         .finally(() => {
           console.error("complete");

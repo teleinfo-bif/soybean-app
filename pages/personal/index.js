@@ -2,15 +2,9 @@
 
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
-console.log("app", app);
-console.log("app", app.globalData.userRegisted);
+
 // import Notify from "vant-weapp/dist/notify/notify";
-import {
-  delUserInfo,
-  getUserFilledInfo,
-  saveUserInfo,
-  updateUserInfo
-} from "../../api/api.js";
+import { delUserInfo, saveUserInfo, updateUserInfo } from "../../api/api.js";
 
 Page({
   /**
@@ -43,7 +37,6 @@ Page({
         props: {
           placeholder: "证件类型",
           itemKey: "id",
-          type: "number",
           itemLabelKey: "name",
           options: [
             { id: 1, name: "大陆身份证" },
@@ -79,37 +72,35 @@ Page({
         }
       }
     ],
-    data: {}
+    data: app.globalData.userFilledInfo,
+    globalData: app.globalData
   },
+  // 设置可编辑状态
   setEditState() {
-    this.setData({
-      edit: !this.data.edit
-    });
+    this.setData(
+      {
+        edit: !this.data.edit
+      },
+      this.setFieldsEditable
+    );
   },
   onFormChange(e) {
-    console.log("onFormChange", e);
     let itemData = {};
     itemData[e.detail.prop] = e.detail.value;
     let data = Object.assign(this.data.data, itemData);
-    // this.setData({
-    //   data
-    // });
-    this.data.data = data;
-  },
-  click(data) {},
-  getFormItemLabel(prop) {
-    return this.data.fields.filter(item => {
-      console.log(item.prop, prop);
-      return item.prop == prop;
+    this.setData({
+      data
     });
+    // this.data.data = data;
   },
+  // 提交/更新
   formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
       const formData = this.data.data;
       formData.idType = formData.idType.id;
       formData.homeAddress = formData.homeAddress.join("-");
-      console.log(formData);
+      // console.log(formData);
       if (!this.data.userRegisted) {
         saveUserInfo(formData).then(data => {
           wx.navigateTo({
@@ -126,10 +117,11 @@ Page({
       }
     }
   },
+  // 删除
   del() {
     delUserInfo({ ids: [app.globalData.userFilledInfo.id].join(",") }).then(
       res => {
-        console.log(this.data.data);
+        // console.log(this.data.data);
         let { data } = this.data;
         Object.keys(data).forEach(key => {
           data[key] = null;
@@ -144,6 +136,7 @@ Page({
       }
     );
   },
+  // 重置
   formCancel() {
     let { data } = this.data;
     data.phone = null;
@@ -154,29 +147,21 @@ Page({
     });
   },
 
+  // 已填写设置禁用字段
   setFieldsDisable(resData) {
     let fields = this.data.fields;
-    let edit = this.data.edit;
+    // let edit = this.data.edit;
     let userRegisted = Object.keys(resData).length > 0;
 
     fields.forEach(item => {
-      if (
-        item.prop == "name" ||
-        item.prop == "phone" ||
-        item.prop == "idType" ||
-        item.prop == "idNumber"
-      ) {
-        return (item["props"]["disable"] = userRegisted && !edit);
-      } else {
-        return (item["props"]["disable"] = false);
-      }
+      return (item["props"]["disable"] = userRegisted);
     });
 
-    console.log("userRegisted", userRegisted);
-    resData.homeAddress = resData.homeAddress.split("-");
+    if (typeof resData.homeAddress === "string") {
+      resData.homeAddress = resData.homeAddress.split("-");
+    }
     if (userRegisted) {
       this.setData({
-        userRegisted,
         fields: fields,
         data: resData
       });
@@ -186,38 +171,33 @@ Page({
         data[item.prop] = null;
       });
       this.setData({
-        userRegisted,
         fields: fields,
         data
       });
     }
   },
+  setFieldsEditable() {
+    let fields = this.data.fields;
+
+    fields.forEach(item => {
+      if (item.prop == "homeAddress" || item.prop == "detailAddress") {
+        return (item["props"]["disable"] = !this.data.edit);
+      }
+    });
+
+    this.setData({
+      fields: fields
+    });
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    if (app.globalData.userRegisted) {
-      this.setFieldsDisable(app.globalData.userFilledInfo);
-    } else {
-      getUserFilledInfo({ openid: app.globalData.openid }).then(data => {
-        this.setFieldsDisable(data);
-      });
+  onLoad: async function(options) {
+    if (!this.data.globalData.userId) {
+      await app.init();
     }
-    // Notify("通知内容");
-
-    // this.setData({ data: data });
-    // this.setData({
-    //   data: {
-    //     detailAddress: "北京市海淀区长春桥路17号",
-    //     homeAddress: ["北京市", "北京市", "东城区"],
-    //     idNumber: "123",
-    //     idType: "港澳居民居住证",
-    //     name: "测试",
-    //     openid: "oqME_5blDi4SI5XvPO6hRrc7926A",
-    //     phone: "13312345678"
-    //   }
-    // });
+    this.setFieldsDisable(app.globalData.userFilledInfo);
   },
 
   /**

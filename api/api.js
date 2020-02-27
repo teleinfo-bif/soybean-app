@@ -1,6 +1,7 @@
 import Request from "./request.js";
 
 const appid = "wx5236affef117da53";
+// const appid = "wx5b2106519f2fb6c6";
 
 // 获取用户openId
 export const getOpenId = () => {
@@ -54,7 +55,7 @@ export const delUserInfo = params => {
 
 // 用户打卡信息
 export const saveClock = params => {
-  return Request._postParams("/wx/interaction/clock", params);
+  return Request._post("/wx/interaction/clock", params);
 };
 
 // 获取用户打卡信息
@@ -68,8 +69,8 @@ export const getTodayClock = params => {
 };
 
 // 获取用户群组信息
-export const getUserGroupList = params => {
-  return Request._get("/wx/group/list", params);
+export const getUserGroupTree = params => {
+  return Request._get("/wx/group/tree/user", params);
 };
 
 // 获取群组统计信息

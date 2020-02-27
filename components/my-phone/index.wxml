@@ -12,7 +12,7 @@
 <block wx:if="{{true}}">
   <my-input props="{{props}}" value="{{label}}" bind:change="onChange"></my-input>
   <!-- <view bindtap="onChange" class="map-picker"> -->
-  <view class="phone-picker">
+  <view wx:if="{{!props.disable}}" class="phone-picker">
     <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button>
   </view>
 </block>

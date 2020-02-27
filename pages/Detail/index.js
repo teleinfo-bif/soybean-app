@@ -20,6 +20,9 @@ Page({
   data: {
     now: "",
     value: "",
+    groupId: "",
+    groupName: "",
+    clockInTime: "",
     clockData: {
       current: 0,
       pages: 0,
@@ -52,14 +55,14 @@ Page({
   },
 
   getData() {
-    let { requestInit, userId } = this.data;
+    let { requestInit, userId, clockInTime, groupId } = this.data;
     let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
       getGroupBlockList({
         userId: userId,
         current: ++current,
-        groupId: 1,
-        clockInTime: ""
+        groupId,
+        clockInTime: clockInTime
       }).then(res => {
         this.setData({
           clockData: res,
@@ -68,7 +71,19 @@ Page({
       });
     }
   },
-
+  onChange(e) {
+    // console.log(e);
+    const { value } = e.detail;
+    this.clockData.current = 0;
+    this.setData(
+      {
+        clockInTime: value,
+        clockData: this.clockData,
+        clockList: []
+      },
+      this.getData
+    );
+  },
   behaviorCallback() {
     this.getData();
   },
@@ -84,7 +99,7 @@ Page({
   },
 
   scroll(e) {
-    console.log(e);
+    // console.log(e);
   },
 
   scrollToTop() {
@@ -121,10 +136,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("option", options);
+    console.log(options);
+    let { groupId, groupName } = options;
+    this.setData(
+      {
+        groupId,
+        groupName
+      },
+      this.getData
+    );
+    // console.log("option", options);
     this.getData();
     this.setData({
-      value: getyyyyMMdd(new Date())
+      clockInTime: getyyyyMMdd(new Date())
     });
   },
 

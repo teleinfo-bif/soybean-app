@@ -1,4 +1,4 @@
-/* pages/Sign/index.wxss */
+/* pages/block/index.wxss */
 page {
   min-height: 100%;
   background: #f7f7f7; }

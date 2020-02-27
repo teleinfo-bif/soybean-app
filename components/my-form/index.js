@@ -27,8 +27,8 @@ Component({
   methods: {
     out() {
       console.log("this.data", this.data);
-      console.log("this.formData", this.formData);
-      console.log("this._formData", this._formData);
+      console.log("this.formData", this.data.formData);
+      console.log("this._formData", this.data._formData);
     },
     findFieldItemWithProp(prop) {
       const fields = this.data.fields || [];
@@ -123,9 +123,7 @@ Component({
             const value = formData[prop];
             const { itemKey = "", options, itemLabelKey = "" } =
               field.props || {};
-            _formData[prop] = options.find(
-              item => item[itemLabelKey] === value
-            );
+            _formData[prop] = options.find(item => item[itemKey] === value);
             break;
           default:
             _formData[prop] = formData[prop];
@@ -147,7 +145,7 @@ Component({
         let itemData = _formData[prop];
         // 判断 隐藏、不需要验证的字段跳过验证
         if (
-          fields[i].require != true &&
+          fields[i].require == true &&
           fields[i].hide != true &&
           (itemData == null || itemData == undefined || itemData.length == 0)
         ) {

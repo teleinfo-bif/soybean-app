@@ -39,12 +39,11 @@ Page({
   },
 
   behaviorCallback() {
-    console.log("behaviorCallback");
     this.getData();
   },
 
   upper(e) {
-    console.log(e);
+    // console.log(e);
   },
 
   lower(e) {
@@ -84,11 +83,10 @@ Page({
   },
 
   getData() {
-    let { requestInit, userId } = this.data;
+    let { requestInit } = this.data;
     let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
       getUserClockList({
-        userId: userId,
         current: ++current
       }).then(res => {
         this.setData({
@@ -102,7 +100,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    this.getData();
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

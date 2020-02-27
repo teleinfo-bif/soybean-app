@@ -1,14 +1,16 @@
 {
   "pages": [
+    "pages/index/index",
+
+    "pages/blockRecords/index",
+
     "pages/personal/index",
 
-    "pages/index/index",
     "pages/block/index",
 
     "pages/detail/index",
 
     "pages/statistics/index",
-    "pages/blockRecords/index",
     "pages/status/index",
     "pages/block/status/index",
     "pages/index/organization/index"

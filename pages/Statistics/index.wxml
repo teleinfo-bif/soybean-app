@@ -11,7 +11,7 @@
         <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
           <view class="head-date-text">
             <image class="btn" src="../../static/images/health_sign@3x.png" />
-            {{value}}
+            {{clockInTime}}
           </view>
         </picker>
       </view>

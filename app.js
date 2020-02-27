@@ -1,45 +1,41 @@
 //app.js
-// import { getOpenId, getUserFilledInfo } from "./api/api.js";
-
+// const behavior_app = require("./behavior/app");
+import { getUserFilledInfo } from "./api/api";
+import { userFilledInfofoKey } from "./api/request";
 App({
-  getUserFilledInfo(openid) {
-    getUserFilledInfo({ openid: openid }).then(data => {
-      this.globalData.userFilledInfo = data;
-      console.log(Object.keys(data).length > 0);
-      this.globalData.userRegisted = Object.keys(data).length > 0;
-      console.log(data);
-    });
-  },
-
-  // 公用跳转方法
-  navigateTo({ url = "", ...option }) {
-    wx.navigateTo({
-      url,
-      ...option
-    });
-  },
-
-  onLaunch: function() {
-    //  判断storage中有没有openid，没有则像服务端请求，然后获取用户信息
-    const openid = wx.getStorageSync("openid");
-    if (openid) {
-      this.globalData.openid = openid;
-      this.getUserFilledInfo(openid);
+  // behaviors: [behavior_app],
+  async init() {
+    const userFilledInfo = wx.getStorageSync(userFilledInfofoKey);
+    if (userFilledInfo.id) {
+      this.setGloableUserInfo(userFilledInfo);
+      return this.globalData;
     } else {
-      getOpenId().then(({ openid }) => {
-        this.globalData.openid = openid;
-        this.globalData.sessionKey = openid;
-        this.getUserFilledInfo(openid);
+      getUserFilledInfo().then(data => {
+        this.setGloableUserInfo(data);
+        return this.globalData;
       });
     }
+  },
+
+  setGloableUserInfo(userFilledInfo) {
+    this.globalData.userFilledInfo = userFilledInfo;
+    this.globalData.userRegisted = Object.keys(userFilledInfo).length > 0;
+    this.globalData.userId = userFilledInfo.id;
+  },
+
+  onLaunch: async function() {
+    await this.init();
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
         // 判断用户是否已授权获取用户信息
         if (res.authSetting["scope.userInfo"]) {
+          console.log("已授权");
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              console.log(res);
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo;
 
@@ -63,6 +59,7 @@ App({
     sessionKey: null, // sessionKey
     userInfo: null, // 从微信获取的用户信息
     userRegisted: false, // 用户是否填写了个人信息
-    userFilledInfo: null // 用户填写的个人信息
+    userFilledInfo: null, // 用户填写的个人信息
+    userId: null
   }
 });

@@ -1,22 +1,5 @@
 import * as echarts from "../../../components/ec-canvas/echarts";
-var echartData = [
-  {
-    value: 3515,
-    name: "健康"
-  },
-  {
-    value: 134,
-    name: "其他症状"
-  },
-  {
-    value: 224,
-    name: "咳嗽、发烧"
-  },
-  {
-    value: 224,
-    name: "测试"
-  }
-];
+
 const titles = ["健康情况", "地区分布", "就诊情况"];
 const colors = ["#3891FF", "#53BCA2", "#FCAD57", "#EC704F"];
 function setOption(chart, data, index = 0) {
@@ -57,10 +40,11 @@ function setOption(chart, data, index = 0) {
         color: colors,
         label: {
           normal: {
-            show: false
+            show: false,
+            rich: {}
           }
         },
-        data: echartData
+        data: data
       }
     ]
   };
@@ -71,7 +55,7 @@ Component({
   lifetimes: {
     attached() {
       this.ecComponent = this.selectComponent("#mychart-dom-pie");
-      this.initEcharts();
+      // this.initEcharts();
     }
     // onLoad() {
     //   console.log(this);
@@ -100,8 +84,13 @@ Component({
       default: ""
     },
     data: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => {},
+      observer() {
+        if (this.data.data.length > 0) {
+          this.initEcharts();
+        }
+      }
     }
   },
   // observer
@@ -127,7 +116,7 @@ Component({
           width: width,
           height: height
         });
-        setOption(chart);
+        setOption(chart, this.data.data);
 
         // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
         this.chart = chart;

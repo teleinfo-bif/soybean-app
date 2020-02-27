@@ -1,6 +1,6 @@
 <block wx:if="{{true}}">
   <my-input props="{{props}}" value="{{value}}"></my-input>
-  <picker class="select-picker" mode="region" value="{{value}}" bindchange="onChange">
+  <picker wx:if="{{props.disable != true}}" class="select-picker" mode="region" value="{{value}}" bindchange="onChange">
     <view class="select-picker-box">
       <view class="select-picker-btn">选择</view>
     </view>
