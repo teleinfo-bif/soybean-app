@@ -20,25 +20,26 @@ Page({
 
   data: {
     radioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1'}
+      
     ],
     goHospitalRadioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1' }
     ],
     isQueZhenRadioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1' }
     ],
     goHBradioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1' }
     ],
 
     isLeaveBjRadioItems: [
+      { name: '否', value: '1' },
       { name: '是', value: '0' },
-      { name: '否', value: '1' }
     ],
     
     radioHealthyStatusItems: [

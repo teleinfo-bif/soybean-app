@@ -48,18 +48,19 @@
           <view class="tree-children-status-text">就诊</view>
         </view>
       </label>
+      <label wx:elif="{{item.bodyStatusFlag == '1' || item.bodyStatusFlag == '2'}}">
+        <view>
+          <view class="tree-children-status-yellow"></view>
+          <view class="tree-children-status-text">异常</view>
+        </view>
+      </label>
       <label wx:elif="{{item.temperature < 37.3 && item.bodyStatusFlag == '0'}}">
         <view>
           <view class="tree-children-status-green"></view>
           <view class="tree-children-status-text">正常</view>
         </view>
       </label>
-      <label wx:elif="{{item.temperature > 37.2 && item.bodyStatusFlag != '0'}}">
-        <view>
-          <view class="tree-children-status-yellow"></view>
-          <view class="tree-children-status-text">异常</view>
-        </view>
-      </label>
+      
       <label wx:else="{{item.temperature > 0}}">
         <view>
           <view class="tree-children-status-gray"></view>

@@ -1,2 +1,76 @@
-<!--pages/unhealthy/unhealthy.wxml-->
-<text>pages/unhealthy/unhealthy.wxml</text>
+
+
+  <view class="head_body2">
+    <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
+      <label>{{titleInfo}}</label>
+    </view>
+    
+    <!-- <view>
+      <picker mode="date" name="date" value="{{date}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+        <text class="title-info">{{date}}</text>
+      </picker>
+    </view> -->
+   
+    <!-- <view>
+      <image class="tree-parent-time-icon2" src="../../images/jiankangdaka.png"></image>
+    </view> -->
+  </view>
+
+  <view class="divide"></view>
+
+  <!--列表部分开始-->
+<view class="page_detail">
+  <view class="detail_body">
+
+    <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
+      <label>{{item.name}}</label>
+      <label wx:if="{{item.temperature > 0}}">已打卡</label>
+      <label wx:else="{{item.temperature > 0}}">未打卡</label>
+      <label>
+        <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{currentDate}}">
+          <view bindtap="clickRecord" style="color:#4f7ef2;">
+            打卡详情
+          </view>
+        </navigator>
+        <view wx:else="{{item.temperature > 0}}" style="color:gray;">
+          打卡详情
+        </view>
+      </label>
+      <label wx:if="{{item.isQueZhenFlag=='0'}}">
+        <view>
+          <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">确诊</view>
+        </view>
+      </label>
+      <label wx:elif="{{item.goHospitalFlag == '0'}}">
+        <view>
+          <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">就诊</view>
+        </view>
+      </label>
+      <label wx:elif="{{item.bodyStatusFlag == '1' || item.bodyStatusFlag == '2'}}">
+        <view>
+          <view class="tree-children-status-yellow"></view>
+          <view class="tree-children-status-text">异常</view>
+        </view>
+      </label>
+      <label wx:elif="{{item.temperature < 37.3 && item.bodyStatusFlag == '0'}}">
+        <view>
+          <view class="tree-children-status-green"></view>
+          <view class="tree-children-status-text">正常</view>
+        </view>
+      </label>
+      
+      <label wx:else="{{item.temperature > 0}}">
+        <view>
+          <view class="tree-children-status-gray"></view>
+          <view class="tree-children-status-text">--</view>
+        </view>
+      </label>
+    </view>
+    <view>
+    </view>
+  </view>
+  <!--列表部分开始-->
+  
+</view>

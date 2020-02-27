@@ -9,12 +9,29 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  let list = await db.collection('user_healthy').where(_.and[{
-    "date": event.date
+  let list = await db.collection('user_healthy').where(_.or([{
+    "bodyStatusFlag": "1"
   }, {
-    "bodyStatusFlag": "0"
-  }]).get({
-  });
+    "bodyStatusFlag": "2"
+  },{
+    'isQueZhenFlag': '0'
+  }]).and({
+    "date": event.date
+  })).get()
+
+  let list2 = await db.collection('user_info').get()
+
+  var healthyDatas = list.data
+  var infoDatas = list2.data
+
+  for (var i = 0; i < healthyDatas.length; i++) {
+    for (var j = 0; j < infoDatas.length; j++) {
+      if (healthyDatas[i]._openid == infoDatas[j]._openid) {
+        healthyDatas[i]['company_department'] = infoDatas[j].company_department
+      }
+    }
+  }
+
+  return healthyDatas
   
-  return list.data;
 }

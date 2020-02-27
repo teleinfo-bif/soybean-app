@@ -183,7 +183,9 @@ Page({
     ringBackGround: "#f5f5f5",
 
     userCompanyDepartment: "",
-    authorityLevel : 0
+    authorityLevel : 0,
+
+    regCompanyInfo: ""
 
 
   },
@@ -890,14 +892,21 @@ getDatas: function(e) {
 
        
         this.setData({
-          showDate: currentDate
+          showDate: currentDate,
+          regCompanyInfo: regInfo
         }
         )
 
+        this.setData({
+          authorityLevel: level
+        })
         console.log("reg info: ", regInfo)
+
         if (level == 0) {
           this.getDatas()
+         
         } else {
+          
           this.getDatasAuthority(regInfo)
         }
         
@@ -995,23 +1004,15 @@ getDatas: function(e) {
     })
   },
 
+
   goToUnhealthy: function(e) {
 
     console.log("show date: ", this.data.showDate)
+    wx.navigateTo({
+      url: '../unhealthy/unhealthy?date=' + this.data.showDate + '&&level='  + this.data.authorityLevel + '&&company=' + this.data.regCompanyInfo,
+    })
    
-   wx.cloud.callFunction({
-     name: "unHealthy",
-     data : {
-       "date": this.data.showDate
-     },
-
-     success: res => {
-      console.log("res data: ", res)
-     }, 
-     fail: err => {
-      console.log("err: ", err)
-     }
-   })
+   
 
   },
 
