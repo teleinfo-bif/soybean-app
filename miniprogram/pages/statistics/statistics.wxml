@@ -34,11 +34,11 @@
     </view>
 
     <view class="dashboard-show">
-      <view class="dashboard-show-data" bindtap="goToUnhealthy"><text class="confirmed-text">{{confirmedNumber}}</text></view>
-      <view class="dashboard-show-text" bindtap="goToUnhealthy"><text class="confirmed-text">{{dashboard.health.unfilledInText}}</text></view>
+      <view class="dashboard-show-data"><text class="confirmed-text">{{confirmedNumber}}</text></view>
+      <view class="dashboard-show-text"><text class="confirmed-text">{{dashboard.health.unfilledInText}}</text></view>
 
-      <view class="dashboard-show-data" bindtap="goToUnhealthy"><text class="unhealthy">{{healthyBadNumber}}</text></view>
-      <view class="dashboard-show-text" bindtap="goToUnhealthy"><text class="unhealthy">{{dashboard.area.unfilledInText}}</text></view>
+      <view class="dashboard-show-data"><text class="unhealthy">{{healthyBadNumber}}</text></view>
+      <view class="dashboard-show-text"><text class="unhealthy">{{dashboard.area.unfilledInText}}</text></view>
     </view>
   </view>
 
@@ -50,7 +50,7 @@
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
-        <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler1"></canvas>
         <!-- <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts}}"></ff-canvas> -->
       </view>
       <view class="template-show-table">
@@ -102,7 +102,7 @@
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
-        <canvas canvas-id="ringCanvas2" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <canvas canvas-id="ringCanvas2" class="canvas" bindtouchstart="touchHandler2"></canvas>
         <!-- <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts }}"></ff-canvas> -->
       </view>
       <view class="template-show-table">
@@ -166,7 +166,7 @@
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
-        <canvas canvas-id="ringCanvas3" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <canvas canvas-id="ringCanvas3" class="canvas" bindtouchstart="touchHandler3"></canvas>
         <!-- <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts }}"></ff-canvas> -->
       </view>
       <view class="template-show-table">

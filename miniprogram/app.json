@@ -12,7 +12,10 @@
     "pages/superUserMgmt/superUserMgmt",
     "pages/msg/msg_fail",
     "pages/msg/msg_success",
-    "pages/unhealthy/unhealthy"
+    "pages/unhealthy/unhealthy",
+    "pages/healthyDetails/healthyDetails",
+    "pages/areaDetails/areaDetails",
+    "pages/seperateDetails/seperateDetails"
   ],
   "permission": {
     "scope.userLocation": {

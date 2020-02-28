@@ -1,0 +1,133 @@
+/* pages/healthyDetails/healthyDetails.wxss */
+
+/* pages/memberDetail/memberDetail.wxss */
+
+.page_detail {
+  margin-top: 20rpx;
+  background-color: #f5f5f5;
+  font-family: PingFangSC-Regular;
+}
+
+.divide{
+  margin-top: 20rpx;
+  width: 100%;
+  height: 1rpx;
+  background: #bbbbbb
+}
+
+.head_body {
+  width: 720rpx;
+  background-color: #fff;
+  height: 90rpx;
+  margin: auto;
+  margin-top: 15rpx;
+}
+
+.title-info {
+  float: right;
+  margin-top: 20rpx;
+  margin-right: 30rpx;
+  font-size: 30rpx;
+  color: #4169E1
+}
+
+.tree-parent-time-icon {
+  width: 40rpx;
+  height: 40rpx;
+  float: right;
+  margin-top: 25rpx;
+  margin-left: 30rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}
+
+.title-time-text {
+  width: 220rpx;
+  height: 90rpx;
+  float: right;
+  text-align: right;
+  line-height: 90rpx;
+  margin-right: 10rpx;
+}
+
+.detail_body {
+  width: 700rpx;
+  /* height: 500rpx; */
+  border-radius: 20rpx;
+  margin: auto;
+  margin-top: 5rpx;
+}
+
+.userclicklist {
+  width: 700rpx;
+  height: 100rpx;
+  background-color: #ffffff;
+  margin: auto;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+}
+
+.userclicklist label {
+  width: 150rpx;
+  float: left;
+  line-height: 100rpx;
+  text-align: left;
+  margin-left: 24rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
+}
+
+.tree-children-status-red {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background-color: #cc3535;
+  float: right;
+  margin-top: 30rpx;
+}
+
+.tree-children-status-green {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background-color: #2eb541;
+  margin-top: 30rpx;
+  float: right;
+}
+
+.tree-children-status-yellow {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background-color: #f2d45e;
+  margin-top: 30rpx;
+  float: right;
+}
+
+.tree-children-status-orange {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background-color: #ff7700;
+  margin-top: 30rpx;
+  float: right;
+}
+
+.tree-children-status-gray {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 40rpx;
+  background-color: #f5f5f5;
+  margin-top: 30rpx;
+  float: left;
+}
+
+.tree-children-status-text {
+
+  height: 40rpx;
+  line-height: 100rpx;
+  margin-left: 20rpx;
+  float: left;
+}

@@ -248,9 +248,6 @@
   margin-left: -20rpx;
 }
 
-.unhealthy {
-  color: #ffaa00
-}
 
 .ring-icon1 {
   width: 20rpx;
@@ -263,7 +260,7 @@
 .ring-icon2 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ffaa00;
+  background-color: #ffff00;
   float: left;
   margin: 15rpx 10rpx 0rpx 0rpx;
 }

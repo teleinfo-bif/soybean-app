@@ -112,6 +112,24 @@
           </view>
         </view>
 
+      <view class="weui-cells__title">是否确诊:</view>
+      <view>
+        <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
+          <label wx:for="{{isQueZhenRadioItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+
+      <view class="weui-cells__title">是否就诊住院:</view>
+      <view>
+        <radio-group class="radio-group" bindchange="goHospitalRadioChange">
+          <label wx:for="{{goHospitalRadioItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+
       <view class="weui-cells__title">目前健康状况:</view>
       <view>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
@@ -130,23 +148,7 @@
         </view>
       </view>
 
-      <view class="weui-cells__title">是否确诊:</view>
-      <view>
-        <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
-          <label wx:for="{{isQueZhenRadioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
-          </label>
-        </radio-group>
-      </view>
-
-      <view class="weui-cells__title">是否就诊住院:</view>
-      <view>
-        <radio-group class="radio-group" bindchange="goHospitalRadioChange">
-          <label wx:for="{{goHospitalRadioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
-          </label>
-        </radio-group>
-      </view>
+      
 
       <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
       <view>

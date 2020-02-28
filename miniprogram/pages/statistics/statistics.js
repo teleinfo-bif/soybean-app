@@ -304,7 +304,7 @@ Page({
         name: '其他症状',
         data: this.data.stateOthersNumber,
         stroke: false,
-        color: "#ffaa00"
+        color: "#ffff00"
       }, {
         name: '咳嗽、发烧',
         data: this.data.stateServerNumber,
@@ -455,8 +455,22 @@ Page({
     }, 500);
   },
 
-  touchHandler: function (e) {
-    console.log(ringChart.getCurrentDataIndex(e));
+  touchHandler1: function (e) {
+    wx.navigateTo({
+      url: '../healthyDetails/healthyDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+    })
+  },
+
+  touchHandler2: function (e) {
+    wx.navigateTo({
+      url: '../areaDetails/areaDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+    })
+  },
+
+  touchHandler3: function (e) {
+    wx.navigateTo({
+      url: '../seperateDetails/seperateDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+    })
   },
 
   getCurrentDay: function(e){
@@ -652,6 +666,9 @@ getIsoNumber: function(datas) {
  
 getDatasAuthority: function(company) {
 
+  wx.showLoading({
+    title: '加载中...',
+  })
   wx.cloud.callFunction({
     name: "getUserClickByAuthority",
     data: {
@@ -748,10 +765,13 @@ getDatasAuthority: function(company) {
 
       this.initChats()
       this.printDatas()
+
+      wx.hideLoading()
     },
 
     fail: err => {
       console.log(err)
+      wx.hideLoading()
     }
 
   });
@@ -761,6 +781,9 @@ getDatasAuthority: function(company) {
 getDatas: function(e) {
 
   console.log("get datas")
+  wx.showLoading({
+    title: '加载中...',
+  })
    
   wx.cloud.callFunction({
     name: "staticDatas",
@@ -818,9 +841,12 @@ getDatas: function(e) {
       
       this.initChats()
       this.printDatas()
+
+      wx.hideLoading()
     },
 
     fail: err => {
+      wx.hideLoading()
       console.log(err)
     }
     
@@ -845,6 +871,8 @@ getDatas: function(e) {
 
 
   initDatas: function(currentDate) {
+
+    
 
     const db = wx.cloud.database()
     db.collection('user_info').where({
@@ -1005,16 +1033,16 @@ getDatas: function(e) {
   },
 
 
-  goToUnhealthy: function(e) {
+  // goToUnhealthy: function(e) {
 
-    console.log("show date: ", this.data.showDate)
-    wx.navigateTo({
-      url: '../unhealthy/unhealthy?date=' + this.data.showDate + '&&level='  + this.data.authorityLevel + '&&company=' + this.data.regCompanyInfo,
-    })
+  //   console.log("show date: ", this.data.showDate)
+  //   wx.navigateTo({
+  //     url: '../unhealthy/unhealthy?date=' + this.data.showDate + '&&level='  + this.data.authorityLevel + '&&company=' + this.data.regCompanyInfo,
+  //   })
    
    
 
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面加载

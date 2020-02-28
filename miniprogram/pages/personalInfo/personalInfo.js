@@ -58,6 +58,8 @@ Page({
     buttons_display: "display: flex",
     phone_display: "display: block",
 
+    healthyDatas: []
+
   },
 
   /**
@@ -654,6 +656,7 @@ Page({
 
   },
   
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -661,13 +664,13 @@ Page({
   onLoad: function (options) {
 
     // wx.cloud.callFunction({
-    //   name: "addLatestDatas",
-    //   success: res => {
-    //     console.log("add latest datas: ", res)
+    //   name: "healthyDatasDivide",
+    //   data: {
+    //     date: '2020-02-28'
     //   },
 
-    //   fail: err => {
-
+    //   success: res => {
+    //     console.log("res result: ", res.result)
     //   }
     // })
   
