@@ -13,21 +13,19 @@
     <view class="pages-body">
       <view class="userclicklist" wx:for="{{wuhanDatas}}" wx:key="id">
         <label>{{item.name}}</label>
-      
+      <label></label>
       <label>
         <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
         </navigator>
       </label>
 
-      <label>
-        <view></view>
-      </label>
+      
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-red"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
     </view>
     </view>
   </view>
@@ -50,22 +48,19 @@
       </label>
 
       <label>{{item.name}}</label>
-      
+      <label></label>
       <label>
         <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
         </navigator>
       </label>
 
-      <label>
-        <view></view>
-      </label>
+      
 
-
-      <label>
+      <!-- <label>
           <view class="tree-children-status-orange"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
   </view>
 </view>
 </view>
@@ -84,22 +79,20 @@
   <view class="pages-body">
     <view class="userclicklist" wx:for="{{otherDatas}}" wx:key="id">
       <label>{{item.name}}</label>
-      
+      <label></label>
       <label>
         <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
         </navigator>
       </label>
 
-      <label>
-        <view></view>
-      </label>
+      
 
 
-      <label>
+      <!-- <label>
         <view class="tree-children-status-yellow"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label> -->
     </view>
   </view>
 </view>
@@ -117,6 +110,8 @@
 <view class="pages-body">
   <view class="userclicklist" wx:for="{{beijingDatas}}" wx:key="id">
       <label>{{item.name}}</label>
+
+      <label></label>
       
       <label>
         <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
@@ -124,14 +119,12 @@
         </navigator>
       </label>
 
-      <label>
-        <view></view>
-      </label>
+      
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-green"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
   </view>
 </view>
 </view>

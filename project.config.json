@@ -112,10 +112,16 @@
 					"scene": null
 				},
 				{
-					"id": 7,
-					"name": "healthyClocked",
-					"pathName": "pages/healthyClocked/healthyClocked",
+					"id": -1,
+					"name": "pages/totaluserdetail/totaluserdetail",
+					"pathName": "pages/totaluserdetail/totaluserdetail",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/healthyDetails/healthyDetails",
+					"pathName": "pages/healthyDetails/healthyDetails",
 					"scene": null
 				}
 			]

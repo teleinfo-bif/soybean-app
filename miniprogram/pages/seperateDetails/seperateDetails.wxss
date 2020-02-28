@@ -76,7 +76,7 @@
 }
 
 .userclicklist label {
-  width: 150rpx;
+  width: 300rpx;
   float: left;
   line-height: 100rpx;
   text-align: left;

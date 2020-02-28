@@ -304,7 +304,7 @@ Page({
         name: '其他症状',
         data: this.data.stateOthersNumber,
         stroke: false,
-        color: "#ffff00"
+          color: "#f2d45e"
       }, {
         name: '咳嗽、发烧',
         data: this.data.stateServerNumber,
@@ -366,7 +366,7 @@ Page({
           name: '全国其他人数',
           data: this.data.othersNumber,
           stroke: false,
-          color: "#ffff00",
+          color: "#f2d45e",
         },
         {
           name: '北京人数',
@@ -428,7 +428,7 @@ Page({
         name: '出隔离人数',
         data: this.data.outIsolateNumber,
         stroke: false,
-        color: "#ffff00",
+        color: "#f2d45e",
       },
       {
         name: '其他人数',

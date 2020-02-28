@@ -20,10 +20,10 @@
         </navigator>
       </label>
 
-    <label>
+    <!-- <label>
           <view class="tree-children-status-red"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
     </view>
   </view>
 </view>
@@ -47,10 +47,10 @@
         </navigator>
       </label>
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-orange"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label> -->
       </view>
     </view>
   </view>
@@ -75,10 +75,10 @@
           </navigator>
         </label>
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-yellow"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
     </view>
   </view>
 </view>
@@ -102,10 +102,10 @@
           </navigator>
         </label>
 
-        <label>
+        <!-- <label>
           <view class="tree-children-status-green"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-        </label>
+        <!-- </label>  -->
        </view>
     </view>
   </view>

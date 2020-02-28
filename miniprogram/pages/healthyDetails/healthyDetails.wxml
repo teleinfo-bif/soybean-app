@@ -15,23 +15,25 @@
   <view class="userclicklist" wx:for="{{serverDatas}}" wx:key="id">
       <label>{{item.name}}</label>
       
-      <label>
-        <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
-          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
-        </navigator>
-      </label>
+      
         <!-- <view wx:else="{{item.temperature > 0}}" style="color:gray;">
           打卡详情
         </view> -->
       
       <label wx:if="{{item.quezhen =='0'}}">
           <view class="tree-children-status-red"></view>
-          <!-- <view class="tree-children-status-text">确诊</view> --> 
+          <view class="tree-children-status-text">确诊</view> 
       </label>
 
       <label wx:else>
-          <view class="tree-children-status-orange"></view>
-          <!-- <view class="tree-children-status-text"></view> -->
+          <view class="tree-children-status-yellow"></view>
+          <view class="tree-children-status-text">异常</view>
+      </label>
+
+      <label>
+        <navigator class="navigator-style" url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
+          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
+        </navigator>
       </label>
   </view>
 </view>
@@ -51,24 +53,30 @@
   <view class="userclicklist" wx:for="{{otherDatas}}" wx:key="id">
       <label>{{item.name}}</label>
       
-      <label>
-        <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
-          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
-        </navigator>
-      </label>
+      
         <!-- <view wx:else="{{item.temperature > 0}}" style="color:gray;">
           打卡详情
         </view> -->
       
       <label wx:if="{{item.quezhen =='0'}}">
+          <view class="tree-children-status-text">确诊</view> 
           <view class="tree-children-status-red"></view>
-          <!-- <view class="tree-children-status-text">确诊</view> --> 
+          
       </label>
 
       <label wx:else>
+          <view class="tree-children-status-text">异常</view> 
           <view class="tree-children-status-yellow"></view>
+          
           <!-- <view class="tree-children-status-text"></view> -->
       </label>
+
+      <label>
+        <navigator class="navigator-style" url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
+          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
+        </navigator>
+      </label>
+
   </view>
 </view>
 </view>
@@ -87,15 +95,18 @@
   <view class="userclicklist" wx:for="{{goodDatas}}" wx:key="id">
       <label>{{item.name}}</label>
       
+      
+
       <label>
-        <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
-          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
-        </navigator>
+          <view class="tree-children-status-text">正常</view>
+          <view class="tree-children-status-green"></view>
+          
       </label>
 
       <label>
-          <view class="tree-children-status-green"></view>
-          <!-- <view class="tree-children-status-text"></view> -->
+        <navigator class="navigator-style" url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
+          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
+        </navigator>
       </label>
   </view>
 </view>
