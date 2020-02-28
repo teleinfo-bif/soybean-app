@@ -14,7 +14,18 @@ Page({
     poiList: [],
     isManagerFlag: '0',
     isSuperUserFlag: '0',
-    loginUserInfo: "录入用户信息"
+    loginUserInfo: "录入用户信息",
+
+    swiperPages: [
+      "../epidemiNews/epidemiNews",
+      "../epidemiMap/epidemicMap",
+      "../journeyCheck/journeyCheck"
+    ],
+    indicatorDots: false,
+    vertical: false,
+    autoplay: true,
+    interval: 2000,
+    duration: 500
   },
 
   onLoad: function () {

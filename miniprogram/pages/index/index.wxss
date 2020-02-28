@@ -10,12 +10,43 @@
   font-family: PingFangSC-Regular;
 }
 
-.page__hd {
+/* .page__hd {
   margin-bottom: 50rpx;
+} */
+
+.page-section-title{
+  padding: 0;
+}
+
+.swiper-container {
+  margin: auto;
+  width: 720rpx;
+  margin-top: 15rpx;
+  border-radius: 20rpx;
+}
+
+.swiper-item{
+  display: block;
+  height: 150px;
+
+  border-radius: 20rpx;
+}
+
+.swiper-item-container {
+  border-radius: 20rpx;
+  box-shadow:[inset] -10rpx 20rpx 40rpx 0rpx rgba(194, 199, 225, 0.47);
+  -webkit-box-shadow: -5px 10px 20px 0px rgba(194, 199, 225, 0.47);
+  opacity: 1;
+}
+
+.swiper-item-image {
+  width: 720rpx;
+  height: 300rpx;
+  border-radius: 20rpx;
 }
 
 .headerblock {
-  height: 590rpx;
+  height: 560rpx;
   width: 100%;
 }
 

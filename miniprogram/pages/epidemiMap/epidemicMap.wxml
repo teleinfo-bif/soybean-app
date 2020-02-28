@@ -1,0 +1,4 @@
+<!--pages/epidemiMap/epidemicMap.wxml-->
+<view>
+  <web-view src="https://z.cbndata.com/2019-nCoV/index.html"></web-view>
+</view>
