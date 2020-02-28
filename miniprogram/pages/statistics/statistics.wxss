@@ -298,7 +298,7 @@
 .ring-icon2 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ffff00;
+  background-color: #f2d45e;
   float: left;
   margin: 15rpx 10rpx 0rpx 0rpx;
 }
@@ -338,7 +338,7 @@
 .ring-icon7 {
   width: 20rpx;
   height: 20rpx;
-  background-color: #ffff00;
+  background-color: #f2d45e;
   float: left;
   margin: 15rpx 10rpx 0rpx 0rpx;
 }

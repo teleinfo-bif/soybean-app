@@ -15,6 +15,26 @@ Page({
 
   },
 
+  setQuezhenFirst: function(datas) {
+
+    let res = []
+
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].quezhen == '0'){
+        res.push(datas[i])
+      }
+    }
+
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].quezhen == '1') {
+        res.push(datas[i])
+      }
+    }
+
+    return res
+
+  },
+
   analysisDatas: function(datas) {
 
     var goods = []
@@ -46,6 +66,9 @@ Page({
         others.push(other)
       }
     }
+
+    servers = this.setQuezhenFirst(servers)
+    others = this.setQuezhenFirst(others)
 
     this.setData({
       goodDatas: goods,

@@ -1,16 +1,7 @@
 
 
-<view class="head_body2">
-    <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
-      <label>就诊隔离详情统计</label>
-    </view>
-  </view>
 
-  <view class="divide"></view>
-
-
-
-<view>确诊人数: {{quezhenDatas.length}}人</view>
+<view class="text-title">确诊人数: {{quezhenDatas.length}}人</view>
 <view wx:if="{{quezhenDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -29,15 +20,15 @@
         </navigator>
       </label>
 
-    <label>
+    <!-- <label>
           <view class="tree-children-status-red"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
     </view>
   </view>
 </view>
 
-<view>隔离期: {{geliDatas.length}}人</view>
+<view class="text-title">隔离期: {{geliDatas.length}}人</view>
   <view wx:if="{{geliDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -56,16 +47,16 @@
         </navigator>
       </label>
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-orange"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label> -->
       </view>
     </view>
   </view>
 
 
-<view>出隔离期: {{outGeliDatas.length}}人</view>
+<view class="text-title">出隔离期: {{outGeliDatas.length}}人</view>
   <view wx:if="{{outGeliDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -84,15 +75,15 @@
           </navigator>
         </label>
 
-      <label>
+      <!-- <label>
           <view class="tree-children-status-yellow"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-      </label>
+      <!-- </label>  -->
     </view>
   </view>
 </view>
 
-<view>其他诊况: {{otherDatas.length}}人</view>
+<view class="text-title">其他诊况: {{otherDatas.length}}人</view>
   <view wx:if="{{otherDatas.length == 0}}">
       <view class="pages-body">
         <view class="userclicklist">
@@ -111,10 +102,10 @@
           </navigator>
         </label>
 
-        <label>
+        <!-- <label>
           <view class="tree-children-status-green"></view>
           <!-- <view class="tree-children-status-text"></view> -->
-        </label>
+        <!-- </label>  -->
        </view>
     </view>
   </view>

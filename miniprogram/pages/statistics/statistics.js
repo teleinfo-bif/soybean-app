@@ -304,7 +304,7 @@ Page({
         name: '其他症状',
         data: this.data.stateOthersNumber,
         stroke: false,
-        color: "#ffff00"
+          color: "#f2d45e"
       }, {
         name: '咳嗽、发烧',
         data: this.data.stateServerNumber,
@@ -366,7 +366,7 @@ Page({
           name: '全国其他人数',
           data: this.data.othersNumber,
           stroke: false,
-          color: "#ffff00",
+          color: "#f2d45e",
         },
         {
           name: '北京人数',
@@ -428,7 +428,7 @@ Page({
         name: '出隔离人数',
         data: this.data.outIsolateNumber,
         stroke: false,
-        color: "#ffff00",
+        color: "#f2d45e",
       },
       {
         name: '其他人数',
@@ -651,7 +651,7 @@ getBeijingUnconfirmed: function(datas) {
 getIsoNumber: function(datas) {
   var sum = 0;
   for (var i = 0; i < datas.length; i++) {
-    if (datas[i].isLeaveBjFlag != null && datas[i].isLeaveBjFlag == "0"){
+    if (datas[i].isLeaveBjFlag != null && datas[i].isLeaveBjFlag == "0" && datas[i].isQueZhenFlag == '1'){
       var backDate = new Date(datas[i].suregobackdate)
       if (this.judgeIsolate(backDate)) {
         sum += 1
@@ -801,6 +801,7 @@ getDatas: function(e) {
       var returnBeijing = datas[12]
       var totalBeijing = datas[8]
       var outBeijing = filled - totalBeijing 
+
 
       this.setData({
         shouldFilledNumber: datas[0],

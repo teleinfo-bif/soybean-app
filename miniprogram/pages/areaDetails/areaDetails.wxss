@@ -21,6 +21,20 @@
   margin-top: 15rpx;
 }
 
+.text-title {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  color: #bbbbbb;
+  font-size: 35rpx;
+
+}
+
+.navigator-style{
+  float: right;
+  text-align: right;
+  margin-right: 50rpx;
+}
+
 .title-info {
   float: right;
   margin-top: 20rpx;
@@ -44,7 +58,7 @@
   width: 220rpx;
   height: 90rpx;
   float: right;
-  text-align: right;
+  
   line-height: 90rpx;
   margin-right: 10rpx;
 }
@@ -67,10 +81,10 @@
 }
 
 .userclicklist label {
-  width: 150rpx;
-  float: left;
+  width: 300rpx;
+  /* text-align: left; */
   line-height: 100rpx;
-  text-align: left;
+  float: left;
   margin-left: 24rpx;
 
   /* border-style: dotted;

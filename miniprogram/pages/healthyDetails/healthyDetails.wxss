@@ -15,6 +15,20 @@
   background: #bbbbbb
 }
 
+.text-title {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  color: #bbbbbb;
+  font-size: 35rpx;
+
+}
+
+.navigator-style{
+  float: right;
+  margin-left: 30rpx;
+  
+}
+
 .head_body {
   width: 720rpx;
   background-color: #fff;
@@ -69,7 +83,7 @@
 }
 
 .userclicklist label {
-  width: 150rpx;
+  width: 200rpx;
   float: left;
   line-height: 100rpx;
   text-align: left;
@@ -84,8 +98,9 @@
   height: 40rpx;
   border-radius: 40rpx;
   background-color: #cc3535;
-  float: right;
   margin-top: 30rpx;
+  margin-left: 30rpx;
+  float: right;
 }
 
 .tree-children-status-green {
@@ -94,6 +109,7 @@
   border-radius: 40rpx;
   background-color: #2eb541;
   margin-top: 30rpx;
+  margin-left: 30rpx;
   float: right;
 }
 
@@ -103,6 +119,7 @@
   border-radius: 40rpx;
   background-color: #f2d45e;
   margin-top: 30rpx;
+  margin-left: 30rpx;
   float: right;
 }
 
@@ -129,5 +146,5 @@
   height: 40rpx;
   line-height: 100rpx;
   margin-left: 20rpx;
-  float: left;
+  float: right;
 }
