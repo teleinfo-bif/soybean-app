@@ -651,7 +651,7 @@ getBeijingUnconfirmed: function(datas) {
 getIsoNumber: function(datas) {
   var sum = 0;
   for (var i = 0; i < datas.length; i++) {
-    if (datas[i].isLeaveBjFlag != null && datas[i].isLeaveBjFlag == "0"){
+    if (datas[i].isLeaveBjFlag != null && datas[i].isLeaveBjFlag == "0" && datas[i].isQueZhenFlag == '1'){
       var backDate = new Date(datas[i].suregobackdate)
       if (this.judgeIsolate(backDate)) {
         sum += 1
@@ -699,7 +699,7 @@ getDatasAuthority: function(company) {
       var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
 
       var isoNum = this.getIsoNumber(healthyDatas)
-      var unIsoNum = beijing - longBeijing - isoNum
+      var unIsoNum = beijingUnconfirmed - isoNum
       var otherCases = filled - confirmed - isoNum - unIsoNum
 
       console.log("========================================================")
@@ -827,7 +827,7 @@ getDatas: function(e) {
       })
 
       var isoNum = this.getIsolateNumber()
-      var unIsoNum = returnBeijing - isoNum
+      var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
       var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
 
       this.setData({

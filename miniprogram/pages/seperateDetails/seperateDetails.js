@@ -46,13 +46,13 @@ Page({
         quezhen['name'] = healthyDatas[i].name
 
         quezhens.push(quezhen)
-      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' && this.isInSeperation(healthyDatas[i].suregobackdate)) {
+      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' &&healthyDatas[i].isQueZhenFlag == '1' && this.isInSeperation(healthyDatas[i].suregobackdate)) {
         var geli = {}
         geli['id'] = healthyDatas[i]._id
         geli['openid'] = healthyDatas[i]._openid
         geli['name'] = healthyDatas[i].name
         gelies.push(geli)
-      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' && !this.isInSeperation(healthyDatas[i].suregobackdate)) {
+      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' &&  healthyDatas[i].isQueZhenFlag == '1' &&!this.isInSeperation(healthyDatas[i].suregobackdate)) {
         var ugeli = {}
         ugeli['id'] = healthyDatas[i]._id
         ugeli['openid'] = healthyDatas[i]._openid
