@@ -699,7 +699,7 @@ getDatasAuthority: function(company) {
       var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
 
       var isoNum = this.getIsoNumber(healthyDatas)
-      var unIsoNum = beijingUnconfirmed - isoNum
+      var unIsoNum = beijing - longBeijing - isoNum
       var otherCases = filled - confirmed - isoNum - unIsoNum
 
       console.log("========================================================")
@@ -802,6 +802,7 @@ getDatas: function(e) {
       var totalBeijing = datas[8]
       var outBeijing = filled - totalBeijing 
 
+
       this.setData({
         shouldFilledNumber: datas[0],
         hasFilledNumber: datas[1],
@@ -826,7 +827,7 @@ getDatas: function(e) {
       })
 
       var isoNum = this.getIsolateNumber()
-      var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
+      var unIsoNum = returnBeijing - isoNum
       var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
 
       this.setData({
