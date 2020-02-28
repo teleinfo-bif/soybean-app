@@ -13,7 +13,8 @@ async function getHealthyCount(date) {
 }
 
 async function getHealthyData(date, step) {
-  let list = await db.collection('company_info').skip(step).where({
+  let list = await db.collection('user_healthy').skip(step).where({
+    "date": date
   }).limit(10).get();
   return list.data;
 }
@@ -26,8 +27,11 @@ exports.main = async (event, context) => {
   let datas = []
 
   for (var i = 0; i < count; i += 10) {
-    datas.concat(await getHealthyData(event.date, datas.length))
+    console.log("i = ", i)
+    datas = datas.concat(await getHealthyData(event.date, datas.length))
   }
+
+  console.log("datas: ", datas)
 
   return datas
 

@@ -8,6 +8,7 @@ Page({
     currentDate: "",
     authorityLevel: 0,
     companyReg: "",
+    department: "",
 
     quezhenDatas:[],
     geliDatas: [],
@@ -105,36 +106,75 @@ Page({
       title: '加载中...',
     })
 
-    wx.cloud.callFunction({
-      name: "healthyDatas",
-      data: {
-        date: this.data.currentDate
-      },
+    console.log("authorith level: ", this.data.authorityLevel)
 
-      success: res => {
-        this.setData({
-          healthyDatas: res.result
+    switch (this.data.authorityLevel) {
+      case 1:
+        wx.cloud.callFunction({
+          name: "oneLevelDatas",
+          data: {
+            date: this.data.currentDate
+          },
+
+          success: res => {
+            console.log("res result: ", res.result)
+            var healthyDatas = res.result[1]
+            this.analysisDatas(healthyDatas)
+            wx.hideLoading()
+          },
+
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
         })
+        break;
 
-        if (this.data.authorityLevel == 0) {
-          console.log("super level")
-          this.analysisDatas(this.data.healthyDatas)
-        } else {
-          console.log("two level")
-          var datas = this.healthyAuthorityDatas()
-          this.analysisDatas(datas)
-        }
+      case 2:
+        wx.cloud.callFunction({
+          name: "twoLevelDatas",
+          data: {
+            date: this.data.currentDate,
+            company_department: this.data.companyReg
+          },
 
-        this.printDatas()
-        wx.hideLoading()
+          success: res => {
+            console.log("res result: ", res.result)
+            var healthyDatas = res.result[1]
+            this.analysisDatas(healthyDatas)
+            wx.hideLoading()
+          },
 
-      },
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
+        })
+        break;
 
-      fail: err => {
-        console.error(err)
-        wx.hideLoading()
-      }
-    })
+      case 3:
+        wx.cloud.callFunction({
+          name: "twoLevelDatas",
+          data: {
+            date: this.data.currentDate,
+            company_department: this.data.department
+            
+          },
+
+          success: res => {
+            console.log("res result: ", res.result)
+            var healthyDatas = res.result[1]
+            this.analysisDatas(healthyDatas)
+            wx.hideLoading()
+          },
+
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
+        })
+        break;
+    }
 
   },
 
@@ -148,7 +188,8 @@ Page({
     this.setData({
       currentDate: options.date,
       authorityLevel: parseInt(options.level),
-      companyReg: options.companyReg
+      companyReg: options.companyReg,
+      department: options.department
     })
 
     this.initDatas()
