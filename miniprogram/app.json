@@ -15,7 +15,10 @@
     "pages/unhealthy/unhealthy",
     "pages/healthyDetails/healthyDetails",
     "pages/areaDetails/areaDetails",
-    "pages/seperateDetails/seperateDetails"
+    "pages/seperateDetails/seperateDetails",
+    "pages/epidemiNews/epidemiNews",
+    "pages/epidemiMap/epidemicMap",
+    "pages/journeyCheck/journeyCheck"
   ],
   "permission": {
     "scope.userLocation": {

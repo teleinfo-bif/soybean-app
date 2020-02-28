@@ -1,39 +1,70 @@
 <!--index.wxml-->
-  <view class="headerblock">
-    <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
-    <view class="head_title">泰尔通
-    </view>
-    <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut">
-      <!--
+<view class="headerblock">
+  <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
+  <view class="head_title">泰尔通
+  </view>
+  <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut">
+    <!--
         <view 
           class="userinfo-img"
           style="background-image: url({{avatarUrl}})"
         ></view>
       -->
-      <view class="userinfo-img-container">
-        <image class="userinfo-img" src="../../images/bianji3x.png" mode="scaleToFill"></image>
-      </view>
-
-      <!-- <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
-      <view class="userinfo-put" hover-class="userinfo-put_active">{{loginUserInfo}}
-      </view>
-
+    <view class="userinfo-img-container">
+      <image class="userinfo-img" src="../../images/bianji3x.png" mode="scaleToFill"></image>
     </view>
+
+    <!-- <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
+    <view class="userinfo-put" hover-class="userinfo-put_active">{{loginUserInfo}}
+    </view>
+
+  </view>
+</view>
+
+<view class="page__hd">
+
+  <view class="page__title"></view>
+  <view class="weui-grids">
+    <navigator url="" class="weui-grid" hover-class="weui-grid_active" bindtap="gotoHealthyClick">
+      <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
+      <view class="weui-grid__label">健康打卡</view>
+    </navigator>
+
+    <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+      <image class="weui-grid__icon_jk" src="../../images/jiankangma3x.png" />
+      <view class="weui-grid__label" style="color: #e1e1e1">健康码</view>
+    </navigator>
   </view>
 
-  <view class="page__hd">
-    <view class="page__title"></view>
+  <view class="swiper-container">
+    <swiper ndicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{swiperPages}}" wx:key="*this">
+        <swiper-item class="swiper-item-container">
+          <!-- <view class="swiper-item {{item}}"></view> -->
+          <view class="swiper-item">
+            <navigator url="{{item}}" hover-class="navigator-hover">
+              <image class="swiper-item-image" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
+            </navigator>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- <view wx:if="{{isManagerFlag == '1'}}">
+    <view class="page__title">我管理的部门</view>
     <view class="weui-grids">
-      <navigator url="" class="weui-grid" hover-class="weui-grid_active" bindtap="gotoHealthyClick">
-        <image class="weui-grid__icon" src="../../images/jiankangdaka3x.png" />
-        <view class="weui-grid__label">健康打卡</view>
+      <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/tongjixinxi3x.png" />
+        <view class="weui-grid__label">统计信息</view>
       </navigator>
 
-      <navigator url="" class="weui-grid" hover-class="weui-grid_active">
-        <image class="weui-grid__icon_jk" src="../../images/jiankangma3x.png" />
-        <view class="weui-grid__label" style="color: #e1e1e1">健康码</view>
+      <navigator url="" bindtap="gotomemberDetailClick" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/xiangqingxinxi3x.png" />
+        <view class="weui-grid__label">详细信息</view>
       </navigator>
-    </view>
+    </view> -->
+
 
     <view wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
       <view class="page__title">我管理的部门</view>
@@ -59,5 +90,18 @@
           <view class="weui-grid__label">权限分配</view>
         </navigator>
       </view>
-    </view>
+
   </view>
+
+
+  <!-- <view wx:if="{{isSuperUserFlag == '1'}}">
+    <view class="page__title">权限分配</view>
+    <view class="weui-grids">
+      <navigator url="../superUserMgmt/superUserMgmt" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/quanxianfenpei.png" />
+        <view class="weui-grid__label">权限分配</view>
+      </navigator>
+<!-- >>>>>>> origin/master -->
+    <!-- </view>  -->
+  <!-- </view> -->
+</view>

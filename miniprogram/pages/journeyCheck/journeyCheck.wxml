@@ -1,0 +1,4 @@
+<!--pages/journeyCheck/journeyCheck.wxml-->
+<view>
+  <web-view src="https://ncov.html5.qq.com/"></web-view>
+</view>
