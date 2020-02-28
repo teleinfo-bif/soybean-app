@@ -1,16 +1,7 @@
-<!--pages/healthyDetails/healthyDetails.wxml-->
 
-
-  <view class="head_body2">
-    <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
-      <label>健康状况详情统计</label>
-    </view>
-  </view>
-
-  <view class="divide"></view>
 
   <!--列表部分开始-->
-<view>咳嗽、发烧: {{serverDatas.length}}人</view>
+<view class="text-title">咳嗽、发烧: {{serverDatas.length}}人</view>
 
 <view wx:if="{{serverDatas.length == 0}}">
     <view class="pages-body">
@@ -46,7 +37,7 @@
 </view>
 </view>
 
-<view>其他症状: {{otherDatas.length}}人</view>
+<view class="text-title">其他症状: {{otherDatas.length}}人</view>
 
 <view wx:if="{{otherDatas.length == 0}}">
     <view class="pages-body">
@@ -82,7 +73,7 @@
 </view>
 </view>
 
-<view>健康正常: {{goodDatas.length}}人</view>
+<view class="text-title">健康正常: {{goodDatas.length}}人</view>
 
 <view wx:if="{{goodDatas.length == 0}}">
     <view class="pages-body">

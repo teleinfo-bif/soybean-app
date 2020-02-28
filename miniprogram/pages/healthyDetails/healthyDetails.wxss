@@ -15,6 +15,14 @@
   background: #bbbbbb
 }
 
+.text-title {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  color: #bbbbbb;
+  font-size: 35rpx;
+
+}
+
 .head_body {
   width: 720rpx;
   background-color: #fff;

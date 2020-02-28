@@ -1,16 +1,7 @@
 <!--pages/areaDetails/areaDetails.wxml-->
 
-<view class="head_body2">
-    <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
-      <label>健康状况详情统计</label>
-    </view>
-  </view>
 
-  <view class="divide"></view>
-
-
-
-<view>武汉地区: {{wuhanDatas.length}}人</view>
+<view class="text-title">武汉地区: {{wuhanDatas.length}}人</view>
   <view wx:if="{{wuhanDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -30,6 +21,10 @@
       </label>
 
       <label>
+        <view></view>
+      </label>
+
+      <label>
           <view class="tree-children-status-red"></view>
           <!-- <view class="tree-children-status-text"></view> -->
       </label>
@@ -37,7 +32,7 @@
     </view>
   </view>
 
-<view>湖北其他: {{hubeiDatas.length}}人</view>
+<view class="text-title">湖北其他: {{hubeiDatas.length}}人</view>
 
 <view wx:if="{{hubeiDatas.length == 0}}">
     <view class="pages-body">
@@ -49,6 +44,11 @@
 <view wx:else>
 <view class="pages-body">
   <view class="userclicklist" wx:for="{{hubeiDatas}}" wx:key="id">
+
+      <label>
+        <view> </view>
+      </label>
+
       <label>{{item.name}}</label>
       
       <label>
@@ -56,6 +56,11 @@
           <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
         </navigator>
       </label>
+
+      <label>
+        <view></view>
+      </label>
+
 
       <label>
           <view class="tree-children-status-orange"></view>
@@ -66,7 +71,7 @@
 </view>
 
 
-<view>全国其他: {{otherDatas.length}}人</view>
+<view class="text-title">全国其他: {{otherDatas.length}}人</view>
 
 <view wx:if="{{otherDatas.length == 0}}">
     <view class="pages-body">
@@ -87,6 +92,11 @@
       </label>
 
       <label>
+        <view></view>
+      </label>
+
+
+      <label>
         <view class="tree-children-status-yellow"></view>
           <!-- <view class="tree-children-status-text"></view> -->
       </label>
@@ -94,7 +104,7 @@
   </view>
 </view>
 
-<view>北京地区: {{beijingDatas.length}}人</view>
+<view class="text-title">北京地区: {{beijingDatas.length}}人</view>
 
 <view wx:if="{{beijingDatas.length == 0}}">
     <view class="pages-body">
@@ -112,6 +122,10 @@
         <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
         </navigator>
+      </label>
+
+      <label>
+        <view></view>
       </label>
 
       <label>

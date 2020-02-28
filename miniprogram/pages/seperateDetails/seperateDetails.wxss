@@ -21,6 +21,15 @@
   margin-top: 15rpx;
 }
 
+.text-title {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  color: #bbbbbb;
+  font-size: 35rpx;
+
+}
+
+
 .title-info {
   float: right;
   margin-top: 20rpx;
