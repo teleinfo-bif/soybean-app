@@ -2,6 +2,7 @@
   width: 720rpx;
   height: 320rpx;
   margin:15rpx;
+  margin-bottom: 50rpx;
   font-family: PingFangSC-Regular;
   background-color: #ffffff;
   border-radius: 6rpx;

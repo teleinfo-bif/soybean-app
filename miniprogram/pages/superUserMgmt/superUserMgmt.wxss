@@ -3,6 +3,7 @@
 .page_detail {
   background-color: #f5f5f5;
   font-family: PingFangSC-Regular;
+  margin-bottom: 50rpx;
 }
 
 .head_body {
