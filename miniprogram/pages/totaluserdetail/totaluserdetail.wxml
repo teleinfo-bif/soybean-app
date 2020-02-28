@@ -1,25 +1,24 @@
+<view class="page_detail">
 
+  <view class="head_body">
+    <view class="title-info">
+      <text>{{titleInfo}}</text>
+    </view>
 
-  <view class="head_body2">
-    <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
-      <label>{{titleInfo}}</label>
+    <view class="title-time-info">
+      <view class="title-time-text">
+        <picker mode="date" name="date" value="{{date}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+          <text>{{date}}</text>
+        </picker>
+      </view>
+
+      <view>
+        <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
+      </view>
+
     </view>
-    
-    <view>
-      <picker mode="date" name="date" value="{{date}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
-        <text class="title-info">{{date}}</text>
-      </picker>
-    </view>
-   
-    <!-- <view>
-      <image class="tree-parent-time-icon2" src="../../images/jiankangdaka.png"></image>
-    </view> -->
   </view>
 
-  <view class="divide"></view>
-
-  <!--列表部分开始-->
-<view class="page_detail">
   <view class="detail_body">
 
     <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
@@ -60,11 +59,11 @@
           <view class="tree-children-status-text">正常</view>
         </view>
       </label>
-      
+
       <label wx:else="{{item.temperature > 0}}">
         <view>
           <view class="tree-children-status-gray"></view>
-          <view class="tree-children-status-text">--</view>
+          <view class="tree-children-status-text">---</view>
         </view>
       </label>
     </view>
@@ -72,5 +71,5 @@
     </view>
   </view>
   <!--列表部分开始-->
-  
+
 </view>

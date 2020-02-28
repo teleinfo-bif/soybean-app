@@ -11,7 +11,7 @@
         ></view>
       -->
       <view class="userinfo-img-container">
-        <image class="userinfo-img" src="../../images/bianji.png" mode="scaleToFill"></image>
+        <image class="userinfo-img" src="../../images/bianji3x.png" mode="scaleToFill"></image>
       </view>
 
       <!-- <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->

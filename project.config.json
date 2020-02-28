@@ -94,24 +94,28 @@
 					"id": -1,
 					"name": "pages/ring/ring",
 					"pathName": "pages/ring/ring",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/healthyClock/healthyClock",
 					"pathName": "pages/healthyClock/healthyClock",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "pages/totaluserdetail/totaluserdetail",
 					"pathName": "pages/totaluserdetail/totaluserdetail",
+					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/totaluserdetail/totaluserdetail",
-					"pathName": "pages/totaluserdetail/totaluserdetail",
+					"id": 7,
+					"name": "healthyClocked",
+					"pathName": "pages/healthyClocked/healthyClocked",
+					"query": "",
 					"scene": null
 				}
 			]
