@@ -10,6 +10,10 @@
   font-family: PingFangSC-Regular;
 }
 
+page__hd {
+  margin-bottom: 300rpx;
+}
+
 .headerblock {
   height: 590rpx;
   width: 100%;
@@ -18,6 +22,7 @@
 .headerimage {
   height: 500rpx;
   width: 100%;
+  background-color: #ffffff;
   z-index: -1;
   position: absolute ;
 }
@@ -92,10 +97,12 @@
   height: 330rpx;
   margin: 10rpx;
   background-color: #fff;
-  border-radius: 10rpx;
+  border-radius: 20rpx;
 
   /* box-shadow:[inset] x-offset y-offset blur-radius spread-radiuscolor */
-  box-shadow:[inset] 0rpx 10rpx 30rpx rgba(194, 199, 225, 0.47);
+  box-shadow:[inset] 0rpx 60rpx 28rpx 0rpx rgba(194, 199, 225, 0.47);
+  -webkit-box-shadow: 0px 3px 14px 0px rgba(194, 199, 225, 0.47);
+  opacity: 1;
 }
 
 .weui-grid__icon {

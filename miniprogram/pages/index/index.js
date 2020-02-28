@@ -13,7 +13,7 @@ Page({
     // 默认当前坐标附近的列表
     poiList: [],
     isManagerFlag: '0',
-    isSuperUserFlag: '0', 
+    isSuperUserFlag: '0',
     loginUserInfo: "录入用户信息"
   },
 
@@ -53,7 +53,7 @@ Page({
       }
     })
     this.onGetOpenid()
-   
+
   },
 
 
@@ -61,7 +61,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-     
+
   },
 
 
@@ -74,7 +74,7 @@ Page({
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     const db = wx.cloud.database()
-    console.log("查询健康打卡日期的值为：" + Y+M+D);
+    console.log("查询健康打卡日期的值为：" + Y + M + D);
     db.collection('user_healthy').where({
       _openid: app.globalData.openid,
       date: Y + M + D
@@ -107,7 +107,7 @@ Page({
           console.log(res)
           //发起网络请求
           app.globalData.sessionCode = res.code
-        //  that.getUserManagerFlag();
+          //  that.getUserManagerFlag();
         } else {
           console.log('登录失败！' + res.errMsg)
         }
@@ -122,7 +122,7 @@ Page({
     console.log("查询当前用户是否为管理员：" + app.globalData.openid);
     db.collection('user_info').where({
       _openid: app.globalData.openid,
-      usertype : '1'
+      usertype: '1'
     }).get({
       success: res => {
         console.log("管理员信息返回结果：", res.data);
@@ -143,7 +143,7 @@ Page({
     })
   },
 
-  
+
   //查询用户基本信息
   qryUserInfo: function () {
     let that = this
@@ -177,11 +177,11 @@ Page({
 
   //跳转打卡记录页面
   gotoHealthyClick: function (e) {
-    if (app.globalData.todayClickFlag == '1'){
+    if (app.globalData.todayClickFlag == '1') {
       wx.navigateTo({
         url: '../healthyClocked/healthyClocked'
       })
-    }else{
+    } else {
       console.log("跳转到健康打卡页面")
       const db = wx.cloud.database()
       db.collection('user_info').where({
@@ -211,8 +211,6 @@ Page({
     }
   },
 
-  
-
   //跳转打卡记录页面
   gotomemberDetailClick: function (e) {
     console.log("跳转详细信息页面")
@@ -225,7 +223,7 @@ Page({
         if (res.data.length > 0) {
           wx.navigateTo({
             // url: '../totaluserdetail/totaluserdetail?companyinfo=' + res.data[0].company_department + '&superuser=' + this.data.isSuperUserFlag
-          
+
             url: '../totaluserdetail/totaluserdetail'
           })
         } else {
@@ -244,7 +242,7 @@ Page({
       }
     })
   },
-  
+
 
   /**用户信息提交 */
   userInfoPut: function (e) {
@@ -258,14 +256,14 @@ Page({
     var that = this;
     wx.cloud.callFunction({
       name: 'superUser',  // 对应云函数名
-      data: { },
+      data: {},
       success: res => {
         // 成功拿到手机号，跳转首页
         console.log("获取超级管理员", JSON.stringify(res.result, null, 2));
-        if(res.result.total > 0){
-            this.setData({
-              isSuperUserFlag:'1'
-            })
+        if (res.result.total > 0) {
+          this.setData({
+            isSuperUserFlag: '1'
+          })
         }
       },
       fail: err => {
@@ -313,7 +311,7 @@ Page({
   },
 
 
-  onGetUserInfo: function(e) {
+  onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
@@ -323,7 +321,7 @@ Page({
     }
   },
 
-  onGetOpenid: function() {
+  onGetOpenid: function () {
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -343,6 +341,42 @@ Page({
         })
       }
     })
+  },
+
+  onShareAppMessage: function (options) {
+    var that = this;
+    // 设置菜单中的转发按钮触发转发事件时的转发内容
+    var shareObj = {
+      title: "愿亲人平安 春暖艳阳天 一起健康打卡！", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
+      path: '/pages/index/index',    // 默认是当前页面，必须是以‘/'开头的完整路径
+      imageUrl: '../../images/zongzhichengchengshare.jpg',
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+        }
+      },
+      fail: function () {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function () {
+        // 转发结束之后的回调（转发成不成功都会执行）
+      }
+    }
+    // // 来自页面内的按钮的转发
+    // if (options.from == 'button') {
+    //   var eData = options.target.dataset;
+    //   console.log(eData.name);   // shareBtn
+    //   // 此处可以修改 shareObj 中的内容
+    //   shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
+    // }
+    
+    console.log("shareObj, ", shareObj)
+    return shareObj;
   }
 
 })
