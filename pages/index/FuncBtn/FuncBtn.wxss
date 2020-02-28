@@ -9,8 +9,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 20rpx;
-   width: 335rpx;
+  /* margin-top: 20rpx; */
+  width: 335rpx;
   height: 300rpx;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0rpx 5rpx 27rpx 0rpx rgba(194, 199, 225, 0.47);
