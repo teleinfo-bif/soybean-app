@@ -664,13 +664,18 @@ Page({
   onLoad: function (options) {
 
     // wx.cloud.callFunction({
-    //   name: "healthyDatasDivide",
+    //   name: "twoLevelDatas",
     //   data: {
-    //     date: '2020-02-28'
+    //     date: '2020-02-28',
+    //     company_department: "工业互联网与物联网研究所 系统开发部"
     //   },
 
     //   success: res => {
     //     console.log("res result: ", res.result)
+    //   },
+
+    //   fail: err => {
+    //     console.log("error: ", err)
     //   }
     // })
   

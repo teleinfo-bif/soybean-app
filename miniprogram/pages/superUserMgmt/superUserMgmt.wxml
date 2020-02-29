@@ -3,7 +3,7 @@
 
     <view class="head_body">
         <view style="float:left;width:70%；margin-left:20rpx;margin-top:20rpx;padding-left:20rpx;">
-              <label>中国信息通信技术研究院</label>
+              <label>{{titleText}}</label>
         </view>
     </view>
 
@@ -13,15 +13,27 @@
         <view class="userclicklist" wx:for="{{userData}}"  wx:key="_id">
               <label style="width:20%;">{{item.name}}</label>
               <label style="width:30%;">{{item.phone}}</label>
-              <label  wx:if="{{item.usertype == '1'}}">管理员</label>
+              <label  wx:if="{{item.usertype == '1' && authorityLevel == 1}}">管理员</label>
+              <label  wx:if="{{item.usertype == '2' && authorityLevel == 2}}">管理员</label>
               <label  wx:if="{{item.usertype == '0' || item.usertype == '' ||item.usertype == null }}">用户</label>
-              <label wx:if="{{item.usertype == '0' || item.usertype == '' ||item.usertype == null }}">
+              <label  wx:if="{{(item.usertype == '0' || item.usertype == '' ||item.usertype == null) && authorityLevel == 1}}">
                   <view  bindtap="setManager" data-id="{{item._id}}" style="color:#4169E1;">
                       设置管理
                   </view>
               </label>
-              <label wx:if="{{item.usertype == '1'}}">
+              <label wx:if="{{(item.usertype == '0' || item.usertype == '' ||item.usertype == null) && authorityLevel == 2}}">
+                  <view  bindtap="setSecondManager" data-id="{{item._id}}" style="color:#4169E1;">
+                      设置管理
+                  </view>
+              </label>
+              <label wx:if="{{item.usertype == '1' && authorityLevel == 1}}">
                   <view  bindtap="cancelManager" data-id="{{item._id}}" style="color:#4169E1;">
+                      取消管理
+                  </view>
+              </label>
+
+              <label wx:if="{{item.usertype == '2' && authorityLevel == 2}}">
+                  <view  bindtap="cancelSecondManager" data-id="{{item._id}}" style="color:#4169E1;">
                       取消管理
                   </view>
               </label>

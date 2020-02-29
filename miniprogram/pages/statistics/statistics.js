@@ -12,76 +12,6 @@ const db = wx.cloud.database({
   env: "soybean-uat"
 })
 
-
-
-// let chart = null;
-
-// function getReturnBeijingNumbers(datas){
-
-//   var sum = 0
-//   for (var i = 0; i < datas.length; i++) {
-//     if (datas[i].isGoBackFlag == "0" ){
-//       sum = sum + 1
-//     }
-//   }
-
-//   return sum
-// }
-
-// function getHealthyStatusNumber(datas, status) {
-//   var sum = 0
-//   for (var i = 0; i < datas.length; i++) {
-//     if (datas[i].bodyStatusFlag == status){
-//       sum = sum + 1
-//     }
-//   }
-
-//   return sum
-// }
-
-// function initChart(canvas, width, height) {
-//   const { Util, G } = F2;
-//   const { Group } = G;
-
-//   const data = [
-//     { type: '和你', data: 3, a: '1' },
-//     { type: '其它症状', data: 8, a: '1' },
-//     { type: '咳嗽、发烧', data: 6, a : '1' }
-//   ];
-
-//   let sum = 0;
-//   data.map(obj => {
-//     sum += obj.data;
-//   });
-//   chart = new F2.Chart({
-//     el: canvas,
-//     width,
-//     height
-//   });
-//   chart.source(data);
-//   chart.legend({
-//     position: 'right',
-//     offsetX: -1500
-//   });
-//   chart.coord('polar', {
-//     transposed: true,
-//     innerRadius: 0.75,
-//     radius: 2
-//   });
-//   chart.axis(false);
-//   chart.tooltip(false);
-//   chart.interval()
-//     .position('a*data')
-//     .color('type', ['#53bca2','#fc9026', '#ec704f'])
-//     .adjust('stack');
-
-//   chart.render();
-//   return chart;
-// }
-
-
-
-
 Page({
   data: {
     title:{
@@ -89,47 +19,13 @@ Page({
       text: "统计信息",
       date: "2020-02-01",
     },
-    dashboard:{
-      health: {
-        should: 42,
-        shouldText: "应填写人数",
-        filledIn: 26,
-        filledInText: "已填写人数",
-        unfilledIn: 16,
-        unfilledInText: "确诊人数"
-      },
-      area: {
-        should: 42,
-        shouldText: "返京人数",
-        filledIn: 26,
-        filledInText: "离京未返京人数",
-        unfilledIn: 16,
-        unfilledInText: "非健康人数"
-      }
-    },
 
-    health:{
-      total: 42,
-      health: 38,
-      healthPercent: 96,
-      other: 3,
-      otherPercent: 3,
-      feverAndCough: 1,
-      feverAndCoughPercent: 1
-    },
-
-    area: {
-      total: 42,
-      health: 38,
-      healthPercent: 96,
-      other: 3,
-      otherPercent: 3,
-      feverAndCough: 1,
-      feverAndCoughPercent: 1
-    },
-    // opts: {
-    //   onInit: initChart
-    // },
+    shouldText: "应填写人数",
+    filledInText: "已填写人数",
+    confirmedText: "确诊人数",
+    returnJingText: "返京人数",
+    leaveJingText: "离京未返京人数",
+    stateBadText: "非健康人数",
 
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
@@ -173,7 +69,6 @@ Page({
     outIsolatePercent: 0,
     otherCasesPercent: 0,
 
-    beijingUnConfirmed: [],
 
     showDate: "",
 
@@ -185,53 +80,16 @@ Page({
     userCompanyDepartment: "",
     authorityLevel : 0,
 
-    regCompanyInfo: ""
-
-
-  },
-
-  getIsolateNumber: function(e) {
-    var days14Diffms = 1209600000
-    var current = new Date(this.data.showDate)
-
-    var sum = 0
-    
-    for (var i = 0; i < this.data.beijingUnConfirmed.length; i++){
-      var back = this.data.beijingUnConfirmed[i].suregobackdate
-      var backDate = new Date(back)
-      if ((current.getTime() - backDate.getTime()) < days14Diffms) {
-        sum = sum + 1
-      }
-    }
-
-    return sum
+    regCompanyInfo: "",
+    companyDepartment: ""
 
   },
 
-  judgeIsolate: function (date) {
-    var days14Diffms = 1209600000
-    var current = new Date(this.data.showDate)
-    var backDate = new Date(date)
-    var sum = 0
 
-    if (current.getTime() - backDate.getTime() < days14Diffms) {
-      return true
-    }
-
-    
-
-    return false 
-
-  },
 
   bindDateChange: function(e) {
     console.log(e)
-    // this.setData({
-    //   showDate: e.detail.value
-    // })
-
-    // console.log("showDate: ", this.data.showDate)
-
+    
     var selectedDate = new Date(e.detail.value)
     var current = new Date()
     var startDate = new Date('2020-02-22')
@@ -257,19 +115,11 @@ Page({
       })
     }
     else {
-      // this.setData({
-      //   showDate: e.detail.value
-      // })
-      this.initDatas(e.detail.value)
+      this.setData({
+        showDate: e.detail.value
+      })
+      this.analysisLevel(this.data.authorityLevel)
     }
-
-    console.log("select: ", selectedDate)
-    console.log("current: ", current)
-
-
-
-    // this.dateChanged()
-
   },
 
   initChats: function(e) {
@@ -457,19 +307,19 @@ Page({
 
   touchHandler1: function (e) {
     wx.navigateTo({
-      url: '../healthyDetails/healthyDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+      url: '../healthyDetails/healthyDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
     })
   },
 
   touchHandler2: function (e) {
     wx.navigateTo({
-      url: '../areaDetails/areaDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+      url: '../areaDetails/areaDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
     })
   },
 
   touchHandler3: function (e) {
     wx.navigateTo({
-      url: '../seperateDetails/seperateDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo,
+      url: '../seperateDetails/seperateDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
     })
   },
 
@@ -571,10 +421,10 @@ printDatas: function(e) {
 
 // 
 
-getBeijingNumber: function(datas, reg) {
+getReturnBeijingNumber: function(datas) {
   var sum = 0
   for (var i = 0; i < datas.length; i++) {
-    if (datas[i].isGoBackFlag == '0'){
+    if (datas[i].isGoBackFlag == '0' && datas[i].isLeaveBjFlag == '0'){
       sum += 1
     }
   }
@@ -582,21 +432,10 @@ getBeijingNumber: function(datas, reg) {
   return sum
 },
 
-getLongBeijingNumber: function(datas) {
-  var sum = 0
-  for (var i = 0; i < datas.length; i++) {
-    if (datas[i].isGoBackFlag == '0' && datas[i].isLeaveBjFlag == '1') {
-      sum += 1
-    }
-  }
-
-  return sum
-},
-
-  getWuhanNumber: function (datas, reg) {
+  getBeijingNumber: function (datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (reg.test(datas[i].place)) {
+      if (datas[i].isGoBackFlag == '0') {
         sum += 1
       }
     }
@@ -604,10 +443,21 @@ getLongBeijingNumber: function(datas) {
     return sum
   },
 
-  getHubeiNumber: function (datas, reg) {
+  getWuhanNumber: function (datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (reg.test(datas[i].place)) {
+      if (/.*武汉/.test(datas[i].place)) {
+        sum += 1
+      }
+    }
+
+    return sum
+  },
+
+  getHubeiNumber: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (/.*湖北/.test(datas[i].place)) {
         sum += 1
       }
     }
@@ -648,6 +498,15 @@ getBeijingUnconfirmed: function(datas) {
   return sum 
 },
 
+judgeIsolate: function(backDate) {
+  var days14Diffms = 1209600000
+  var current = new Date(this.data.showDate)
+  if (current.getTime() - backDate.getTime() < days14Diffms)  {
+    return true
+  }
+  return false 
+},
+
 getIsoNumber: function(datas) {
   var sum = 0;
   for (var i = 0; i < datas.length; i++) {
@@ -663,217 +522,344 @@ getIsoNumber: function(datas) {
   return sum 
 
 },
+
+parseDatas: function(datas) {
+
+  var should = datas[0]
+  this.setData({
+    shouldFilledNumber: should
+  })
+
+  var healthyDatas = datas[1]
+
+  if (healthyDatas.length > 0) {
+    
+  
+  var filled = healthyDatas.length
+  var confirmed = this.getConfimedNumber(healthyDatas)
+
+  var beijing = this.getBeijingNumber(healthyDatas)
+  var fanJing = this.getReturnBeijingNumber(healthyDatas)
+  var outJing = filled - beijing 
+
+  var good = this.getStateNumber(healthyDatas, '0')
+  var server = this.getStateNumber(healthyDatas, '1')
+  var other = this.getStateNumber(healthyDatas, '2')
+  var bad = filled - good 
+
+  var hubei = this.getHubeiNumber(healthyDatas)
+  var wuhan = this.getWuhanNumber(healthyDatas)
+  var hubeiOther = hubei - wuhan
+  var wholeOther = filled - beijing - hubei
+
+  var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
+  var isoNum = this.getIsoNumber(healthyDatas)
+  var outIsoNum = beijingUnconfirmed - isoNum
+  var othercases = filled - confirmed - isoNum - outIsoNum
+
+  this.setData({
+    // shouldFilledNumber: should,
+    hasFilledNumber: filled,
+    returnBeijingNumber: fanJing,
+    outBeijingNumber: outJing,
+
+
+    stateGoodNumber: good,
+    stateServerNumber: server,
+    stateOthersNumber: other,
+
+    healthyBadNumber: bad,
+
+    wuhanNumber: wuhan,
+    hubeiNumber: hubeiOther,
+    othersNumber: wholeOther,
+    beijingNumber: beijing,
+
+
+    confirmedNumber: confirmed,
+    isolateNumber: isoNum,
+    outIsolateNumber: outIsoNum,
+    otherCasesNumber: othercases
+  })
+
+  }
+
+  this.setHealthyPercents()
+  this.setAreaPercents()
+  this.setCasesPercents()
+
+  this.initChats()
+  // this.printDatas()
+
+}, 
  
-getDatasAuthority: function(company) {
+// getDatasAuthority: function(company) {
 
-  wx.showLoading({
-    title: '加载中...',
-  })
-  wx.cloud.callFunction({
-    name: "getUserClickByAuthority",
-    data: {
-      "date": this.data.showDate,
-      company_department: company,
-    },
+//   wx.showLoading({
+//     title: '加载中...',
+//   })
+//   wx.cloud.callFunction({
+//     name: "getUserClickByAuthority",
+//     data: {
+//       "date": this.data.showDate,
+//       company_department: company,
+//     },
 
-    success: res => {
-      console.log(res.result)
+//     success: res => {
+//       console.log(res.result)
 
-      var totalDatas = res.result[0]
-      var healthyDatas = res.result[1]
+//       var totalDatas = res.result[0]
+//       var healthyDatas = res.result[1]
 
-      var should = totalDatas.length
-      var filled = healthyDatas.length
+//       var should = totalDatas.length
+//       var filled = healthyDatas.length
 
-      var longBeijing = this.getLongBeijingNumber(healthyDatas)
+//       var longBeijing = this.getLongBeijingNumber(healthyDatas)
 
-      var good = this.getStateNumber(healthyDatas, "0")
-      var server = this.getStateNumber(healthyDatas, "1")
-      var otherNum = this.getStateNumber(healthyDatas, "2")
+//       var good = this.getStateNumber(healthyDatas, "0")
+//       var server = this.getStateNumber(healthyDatas, "1")
+//       var otherNum = this.getStateNumber(healthyDatas, "2")
 
-      var beijing = this.getBeijingNumber(healthyDatas)
-      var wuhan = this.getWuhanNumber(healthyDatas, /.*武汉/)
-      var hubei = this.getHubeiNumber(healthyDatas, /.*湖北/)
+//       var beijing = this.getBeijingNumber(healthyDatas)
+//       var wuhan = this.getWuhanNumber(healthyDatas, /.*武汉/)
+//       var hubei = this.getHubeiNumber(healthyDatas, /.*湖北/)
 
-      var confirmed = this.getConfimedNumber(healthyDatas)
-      var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
+//       var confirmed = this.getConfimedNumber(healthyDatas)
+//       var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
 
-      var isoNum = this.getIsoNumber(healthyDatas)
-      var unIsoNum = beijingUnconfirmed - isoNum
-      var otherCases = filled - confirmed - isoNum - unIsoNum
+//       var isoNum = this.getIsoNumber(healthyDatas)
+//       var unIsoNum = beijingUnconfirmed - isoNum
+//       var otherCases = filled - confirmed - isoNum - unIsoNum
 
-      console.log("========================================================")
+//       console.log("========================================================")
 
-      console.log("beijing number: ", beijing)
-      console.log("beijing long:   ", longBeijing)
-      console.log("beijing unconfirmed: ", beijingUnconfirmed)
-      console.log("iso number: ", isoNum)
-      console.log("unIso number: ", unIsoNum)
+//       console.log("beijing number: ", beijing)
+//       console.log("beijing long:   ", longBeijing)
+//       console.log("beijing unconfirmed: ", beijingUnconfirmed)
+//       console.log("iso number: ", isoNum)
+//       console.log("unIso number: ", unIsoNum)
 
-      console.log("confirmed: ", confirmed)
+//       console.log("confirmed: ", confirmed)
 
-      console.log("========================================================")
-
-
-      this.setData({
-        shouldFilledNumber: should,
-        hasFilledNumber: filled,
-        returnBeijingNumber: beijing - longBeijing,
-        outBeijingNumber: filled - beijing ,
+//       console.log("========================================================")
 
 
-        stateGoodNumber: good,
-
-        stateServerNumber: server,
-        stateOthersNumber: otherNum,
-
-        healthyBadNumber: filled - good,
-
-        wuhanNumber: wuhan,
-        hubeiNumber: hubei - wuhan,
-        othersNumber: filled - hubei - beijing,
-        beijingNumber: beijing,
-
-        outBeijingNumber: filled - beijing,
-
-        confirmedNumber: confirmed,
-        isolateNumber: isoNum,
-        outIsolateNumber: unIsoNum,
-        otherCasesNumber: otherCases
+//       this.setData({
+//         shouldFilledNumber: should,
+//         hasFilledNumber: filled,
+//         returnBeijingNumber: beijing - longBeijing,
+//         outBeijingNumber: filled - beijing ,
 
 
-      })
+//         stateGoodNumber: good,
 
-      // var isoNum = this.getIsolateNumber()
-      // var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
-      // var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
+//         stateServerNumber: server,
+//         stateOthersNumber: otherNum,
 
-      // this.setData({
-      //   isolateNumber: isoNum,
-      //   outIsolateNumber: unIsoNum,
-      //   otherCasesNumber: other
-      // })
+//         healthyBadNumber: filled - good,
 
-      console.log("confimed: ", this.data.confirmedNumber)
-      console.log("iso num: ", this.data.isolateNumber)
-      console.log("un iso num: ", this.data.outIsolateNumber)
-      console.log("other: ", this.data.otherCasesNumber)
+//         wuhanNumber: wuhan,
+//         hubeiNumber: hubei - wuhan,
+//         othersNumber: filled - hubei - beijing,
+//         beijingNumber: beijing,
 
-      this.setHealthyPercents()
-      this.setAreaPercents()
-      this.setCasesPercents()
+//         outBeijingNumber: filled - beijing,
 
-      this.initChats()
-      this.printDatas()
+//         confirmedNumber: confirmed,
+//         isolateNumber: isoNum,
+//         outIsolateNumber: unIsoNum,
+//         otherCasesNumber: otherCases
 
-      wx.hideLoading()
-    },
 
-    fail: err => {
-      console.log(err)
-      wx.hideLoading()
-    }
+//       })
 
-  });
+//       // var isoNum = this.getIsolateNumber()
+//       // var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
+//       // var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
 
-},
+//       // this.setData({
+//       //   isolateNumber: isoNum,
+//       //   outIsolateNumber: unIsoNum,
+//       //   otherCasesNumber: other
+//       // })
 
-getDatas: function(e) {
+//       console.log("confimed: ", this.data.confirmedNumber)
+//       console.log("iso num: ", this.data.isolateNumber)
+//       console.log("un iso num: ", this.data.outIsolateNumber)
+//       console.log("other: ", this.data.otherCasesNumber)
 
-  console.log("get datas")
-  wx.showLoading({
-    title: '加载中...',
-  })
+//       this.setHealthyPercents()
+//       this.setAreaPercents()
+//       this.setCasesPercents()
+
+//       this.initChats()
+//       this.printDatas()
+
+//       wx.hideLoading()
+//     },
+
+//     fail: err => {
+//       console.log(err)
+//       wx.hideLoading()
+//     }
+
+//   });
+
+// },
+
+// getDatas: function(e) {
+
+//   console.log("get datas")
+//   wx.showLoading({
+//     title: '加载中...',
+//   })
    
-  wx.cloud.callFunction({
-    name: "staticDatas",
-    data: {
-      "date": this.data.showDate
-    },
+//   wx.cloud.callFunction({
+//     name: "staticDatas",
+//     data: {
+//       "date": this.data.showDate
+//     },
 
-    success: res => {
-      console.log(res.result)
+//     success: res => {
+//       console.log(res.result)
 
-      var datas = res.result
+//       var datas = res.result
 
-      var should = datas[0]
-      var filled = datas[1]
-      var returnBeijing = datas[12]
-      var totalBeijing = datas[8]
-      var outBeijing = filled - totalBeijing 
+//       var should = datas[0]
+//       var filled = datas[1]
+//       var returnBeijing = datas[12]
+//       var totalBeijing = datas[8]
+//       var outBeijing = filled - totalBeijing 
 
 
-      this.setData({
-        shouldFilledNumber: datas[0],
-        hasFilledNumber: datas[1],
-        returnBeijingNumber: returnBeijing,
-        outBeijingNumber: outBeijing,
+//       this.setData({
+//         shouldFilledNumber: datas[0],
+//         hasFilledNumber: datas[1],
+//         returnBeijingNumber: returnBeijing,
+//         outBeijingNumber: outBeijing,
 
-        stateGoodNumber: datas[2],
+//         stateGoodNumber: datas[2],
        
-        stateServerNumber: datas[3],
-        stateOthersNumber: datas[4],
+//         stateServerNumber: datas[3],
+//         stateOthersNumber: datas[4],
 
-        healthyBadNumber : datas[1] - datas[2],
+//         healthyBadNumber : datas[1] - datas[2],
 
-        wuhanNumber: datas[5],
-        hubeiNumber: datas[6],
-        othersNumber: datas[7],
-        beijingNumber: datas[8],
+//         wuhanNumber: datas[5],
+//         hubeiNumber: datas[6],
+//         othersNumber: datas[7],
+//         beijingNumber: datas[8],
 
-        confirmedNumber: datas[9],
-        beijingUnConfirmed: datas[11],
+//         confirmedNumber: datas[9],
+//         beijingUnConfirmed: datas[11],
         
-      })
+//       })
 
-      var isoNum = this.getIsolateNumber()
-      var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
-      var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
+//       var isoNum = this.getIsolateNumber()
+//       var unIsoNum = this.data.beijingUnConfirmed.length - isoNum
+//       var other = this.data.hasFilledNumber - this.data.confirmedNumber - isoNum - unIsoNum
 
-      this.setData({
-        isolateNumber: isoNum,
-        outIsolateNumber: unIsoNum,
-        otherCasesNumber: other
-      })
+//       this.setData({
+//         isolateNumber: isoNum,
+//         outIsolateNumber: unIsoNum,
+//         otherCasesNumber: other
+//       })
 
-      this.setHealthyPercents()
-      this.setAreaPercents()
-      this.setCasesPercents()
+//       this.setHealthyPercents()
+//       this.setAreaPercents()
+//       this.setCasesPercents()
       
-      this.initChats()
-      this.printDatas()
+//       this.initChats()
+//       this.printDatas()
 
-      wx.hideLoading()
-    },
+//       wx.hideLoading()
+//     },
 
-    fail: err => {
-      wx.hideLoading()
-      console.log(err)
-    }
+//     fail: err => {
+//       wx.hideLoading()
+//       console.log(err)
+//     }
     
-    });
+//     });
 
    
-  },
+//   },
 
 
+  analysisLevel: function(level) {
 
-  dateChanged: function(e){
-    this.getDatas()
+    wx.showLoading({
+      title: '加载中',
+    })
+    console.log("authority level: ", level)
 
-    // var totalNumber = this.data.infoDatas.length;
-    // var filledNumber = this.data.healtyDatas.length;
+    switch(level) {
+      case 1:
+        wx.cloud.callFunction({
+          name: "oneLevelDatas",
+          data: {
+            date: this.data.showDate
+          },
 
-    // console.log("total: ", totalNumber)
-    // console.log("fill: ", filledNumber)
-    
+          success: res => {
+            console.log("res result: ", res.result)
+            this.parseDatas(res.result)
+            wx.hideLoading()
+          },
 
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
+        })
+      break;
+
+      case 2:
+        wx.cloud.callFunction({
+          name: "twoLevelDatas",
+          data: {
+            date: this.data.showDate,
+            company_department: this.data.regCompanyInfo
+          },
+
+          success: res => {
+            console.log("res result: ", res.result)
+            this.parseDatas(res.result)
+            wx.hideLoading()
+          },
+
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
+        })
+      break;
+
+      case 3:
+        wx.cloud.callFunction({
+          name: "threeLevelDatas",
+          data: {
+            date: this.data.showDate,
+            company_department: this.data.companyDepartment
+          },
+
+          success: res => {
+            console.log("res result: ", res.result)
+            this.parseDatas(res.result)
+            wx.hideLoading()
+          },
+
+          fail: err => {
+            console.log("error: ", err)
+            wx.hideLoading()
+          }
+        })
+      break;
+    }
   },
 
 
   initDatas: function(currentDate) {
-
-    
 
     const db = wx.cloud.database()
     db.collection('user_info').where({
@@ -883,61 +869,42 @@ getDatas: function(e) {
         console.log(res)
         console.log("user info: ", res)
 
-        var user = res.data[0].superuser;
-
-        console.log("super user: ", res.data[0].superuser)
-        console.log("company: ", res.data[0].company_department)
-
+        var superUser = res.data[0].superuser;
+        var userType = res.data[0].usertype
         var company = res.data[0].company_department
-        console.log("company: ", company)
-
-
-        var level = 1
-
-        if (user != null && user == "1") {
-          level = 0
-        }else {
-          level = 1
-        }
-
-
-        console.log(2222222)
+      
+        var level = 0
 
         var infoes = company.split(' ')
-        console.log("infos: ", infoes)
         var regInfo = ""
         var title = ""
 
+        if (superUser != null && superUser == "1") {
+          level = 1
+          title = "中国信息通信研究院"
+        }else if(userType == '1'){
+          level = 2
+          if (infoes[0] == '院属公司及协会') {
+            regInfo = '.*' + infoes[1]
+            title = infoes[1]
+          } else {
+            regInfo = infoes[0] + ".*"
+            title = infoes[0]
+          }
 
-        if (infoes[0] == '院属公司及协会') {
-          regInfo = '.*' + infoes[1]
-          title = infoes[1]
-          console.log(333333)
-        } else {
-          regInfo = infoes[0] + ".*"
-          title = infoes[0]
-          console.log(44444)
-        }
+        }else if (userType == '2'){
+          level = 3
+          title = company
+        } 
 
-       
         this.setData({
           showDate: currentDate,
-          regCompanyInfo: regInfo
-        }
-        )
-
-        this.setData({
+          companyDepartment: company,
+          regCompanyInfo: regInfo,
           authorityLevel: level
         })
-        console.log("reg info: ", regInfo)
 
-        if (level == 0) {
-          this.getDatas()
-         
-        } else {
-          
-          this.getDatasAuthority(regInfo)
-        }
+        this.analysisLevel(level)
         
     } ,
       fail: err => {
@@ -948,9 +915,6 @@ getDatas: function(e) {
         console.log(err)
       }
     })
-   
-    
-
   },
 
   exportExcel: function () {
@@ -1034,30 +998,14 @@ getDatas: function(e) {
   },
 
 
-  // goToUnhealthy: function(e) {
-
-  //   console.log("show date: ", this.data.showDate)
-  //   wx.navigateTo({
-  //     url: '../unhealthy/unhealthy?date=' + this.data.showDate + '&&level='  + this.data.authorityLevel + '&&company=' + this.data.regCompanyInfo,
-  //   })
-   
-   
-
-  // },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     this.initDatas(this.getCurrentDay())
 
-    // console.log(11111)
-    // console.log("level: ", this.data.authorityLevel)
-    // console.log(22222)
-    // console.log("company: ", this.data.company_department)
-
-    
-
+  
     // var d1 = new Date('2020-02-01')
     // var d2 = new Date('2020-02-15')
 

@@ -133,13 +133,17 @@ Page({
     console.log("查询当前用户是否为管理员：" + app.globalData.openid);
     db.collection('user_info').where({
       _openid: app.globalData.openid,
-      usertype: '1'
+      // usertype: '1'
     }).get({
       success: res => {
         console.log("管理员信息返回结果：", res.data);
-        if (res.data.length > 0) {
+        if (res.data[0].usertype == '1') {
           this.setData({
             isManagerFlag: '1'
+          })
+        }else if (res.data[0].usertype == '2'){
+          this.setData({
+            isManagerFlag: '2'            
           })
         }
         this.getSuperUser();

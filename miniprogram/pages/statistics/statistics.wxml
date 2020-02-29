@@ -20,7 +20,7 @@
     <view class="dashboard-show move-right">
       <view class="dashboard-show-data">{{shouldFilledNumber}}</view>
       <view>
-        <view class="dashboard-show-text split-before">{{dashboard.health.shouldText}}</view>
+        <view class="dashboard-show-text split-before">{{shouldText}}</view>
         <view class="split"></view>
       </view>
 
@@ -28,14 +28,14 @@
         <view class="dashboard-show-data split-before">{{returnBeijingNumber}}</view>
         <view class="split-data"></view>
       </view>
-      <view class="dashboard-show-text">{{dashboard.area.shouldText}}</view>
+      <view class="dashboard-show-text">{{returnJingText}}</view>
 
     </view>
 
     <view class="dashboard-show">
       <view class="dashboard-show-data">{{hasFilledNumber}}</view>
       <view>
-        <view class="dashboard-show-text split-before">{{dashboard.health.filledInText}}</view>
+        <view class="dashboard-show-text split-before">{{filledInText}}</view>
         <view class="split"></view>
       </view>
 
@@ -43,7 +43,7 @@
         <view class="dashboard-show-data split-before">{{outBeijingNumber}}</view>
         <view class="split-data"></view>
       </view>
-      <view class="dashboard-show-text">{{dashboard.area.filledInText}}</view>
+      <view class="dashboard-show-text">{{leaveJingText}}</view>
     </view>
 
     <view class="dashboard-show">
@@ -54,7 +54,7 @@
 
       <view>
         <view class="dashboard-show-text split-before" >
-          <text class="confirmed-text">{{dashboard.health.unfilledInText}}</text>
+          <text class="confirmed-text">{{confirmedText}}</text>
         </view>
       </view>
 
@@ -65,7 +65,7 @@
       </view>
 
       <view class="dashboard-show-text" >
-        <text class="unhealthy">{{dashboard.area.unfilledInText}}</text>
+        <text class="unhealthy">{{stateBadText}}</text>
       </view>
     </view>
   </view>
