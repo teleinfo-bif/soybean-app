@@ -12,7 +12,9 @@
           <image class="btn" src="{{item.logo?item.logo:'../../../static/images/defaultlogo.png'}}" />
         </view>
         <!-- 中间群组名称 -->
-        <view class="organization_item-name">{{item.name}}</view>
+        <view class="organization_item-name" data-groupName="{{item.name}}" data-children="{{item.children}}" data-groupId="{{item.id}}" bind:tap="navigateToGroupIndex">
+          {{item.name}}
+        </view>
         <!-- 右侧操作按钮 -->
         <view class="organization_item-btn">
           <view>

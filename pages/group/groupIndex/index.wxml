@@ -1,0 +1,9 @@
+<!-- pages/group/groupIndex/index.wxml -->
+<view class="" hover-class="none" hover-stop-propagation="false">
+  <button class="btn-lucency-filled" open-type='share'>
+    <image style="float: right;width: 100rpx;height: 100rpx;" src="../../../static/images/fenxiang.png" />
+  </button>
+</view>
+<view class="" wx:for="{{children}}" wx:key="index" hover-class="none" hover-stop-propagation="false">
+  {{item.name}}
+</view>

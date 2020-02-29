@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/clockOthers/index",
     "pages/statistics/statisticsTab/index",
-
     "pages/personal/index",
     "pages/clock/index",
     "pages/clockRecords/index",
@@ -11,13 +10,15 @@
     "pages/statistics/index",
     "pages/status/index",
     "pages/clock/status/index",
-    "pages/index/organization/index"
+    "pages/index/organization/index",
+    "pages/group/groupIndex/index",
+    "pages/group/shareJoin/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#1759EF",
     "navigationBarTitleText": "信本聪",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "permission": {

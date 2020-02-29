@@ -26,8 +26,8 @@
     }
   }
 }
-.color{
-  color: #4F7EF2;
+.color {
+  color: #4f7ef2;
 }
 
 picker.select-picker {
@@ -82,7 +82,19 @@ picker.select-picker {
   }
 }
 
-
-.form-btn{
+// 表单按钮
+.form-btn {
   width: 260rpx;
+}
+
+button.btn-lucency-filled {
+  position: absolute;
+  z-index: 1000;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  &::after {
+    border: none;
+  }
 }

@@ -5,7 +5,5 @@
     "van-popup": "vant-weapp/popup",
     "van-icon": "vant-weapp/icon"
   },
-  "navigationBarBackgroundColor": "#1759EF",
-  "navigationBarTitleText": "打卡记录",
-  "navigationBarTextStyle": "white"
+  "navigationBarTitleText": "打卡记录"
 }

@@ -11,7 +11,5 @@
     "my-form": "../components/my-form",
     "van-notify": "vant-weapp/notify"
   },
-  "navigationBarBackgroundColor": "#1759EF",
-  "navigationBarTitleText": "录入个人信息",
-  "navigationBarTextStyle": "white"
+  "navigationBarTitleText": "录入个人信息"
 }

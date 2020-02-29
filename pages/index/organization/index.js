@@ -58,6 +58,15 @@ Component({
     },
     tap() {
       // console.log(this.data);
+    },
+    navigateToGroupIndex(e) {
+      console.log(e.currentTarget.dataset.groupname);
+      const { groupname, children, groupid } = e.currentTarget.dataset;
+      wx.navigateTo({
+        url: `/pages/group/groupIndex/index?groupName=${groupname}&groupId=${groupid}&children=${JSON.stringify(
+          children
+        )}`
+      });
     }
   }
 });

@@ -4,7 +4,5 @@
     "van-icon": "vant-weapp/icon",
     "pie": "./pie/index"
   },
-  "navigationBarBackgroundColor": "#1759EF",
-  "navigationBarTitleText": "统计信息",
-  "navigationBarTextStyle": "white"
+  "navigationBarTitleText": "统计信息"
 }
