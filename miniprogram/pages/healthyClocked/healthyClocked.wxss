@@ -1,6 +1,7 @@
 /* pages/databaseGuide/databaseGuide.wxss */
 
 @import "../../style/guide.wxss";
+@import "../healthyClock/healthyClock.wxss";
 
 .page {
   background-color: #f5f5f5;
@@ -65,58 +66,3 @@ background-color: white;
   padding: 0rpx 20rpx; 
 }
 
-.weui-input{
-  width: 100%;
-  font-size: 35rpx;
-  margin-top:5rpx;
-  padding: 0rpx 5rpx;
-}
-
-.radio-group {
-  border-bottom: 2rpx solid #f5f5f5;
-}
-
-/* 单选框 */
-.radio-group label {
-    display: block;
-    height: 56rpx;
-    line-height: 30rpx;
-    font-size: 30rpx;
-    box-sizing: border-box;
-    padding: 10rpx;
-    margin-left:10px;
-    color: #777777;
-}
-
-radio {
-    width: 38rpx;
-}
-
-/* 单选框未选中 */
-radio .wx-radio-input {
-    width: 24rpx;
-    height: 24rpx;
-    border-radius: 50%;
-}
-
-
-/* 单选框选中后对勾样式 */
-radio .wx-radio-input.wx-radio-input-checked::before{
-    border-radius: 50%;
-    width: 44rpx;
-    height: 44rpx;
-    line-height: 44rpx;
-    text-align: center;
-    font-size: 30rpx;   
-    color:#fff;
-    background-color: #4169E1;
-    border-color: #4169E1;
-}
-
-.weui-btn {
-  background-color: #4169E1;
-}
-
-.weui-btn-hover{
-  background-color: #ccc;
-}

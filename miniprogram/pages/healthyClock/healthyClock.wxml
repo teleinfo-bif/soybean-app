@@ -29,7 +29,7 @@
 
       <view class="clock_form__title">
         <text style="">打卡地点</text>
-              <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text>
+              <text style="float:right;width:10%;display:inline;color:#1759EF; margin-right:20rpx" bindtap="onShow">获取</text>
 
       </view>
       
@@ -42,16 +42,17 @@
 
       <view wx:if="{{isGoBackFlag == '1'}}">
         <!--未返京开始-->
-        <view class="clock_form__title">未返京原因:
-
+        <view class="clock_form__title">未返京原因
         </view>
-        <view>
+        <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange">
             <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
               <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+            <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
             </label>
           </radio-group>
         </view>
+        <view class='devide-middle'/>
 
         <view class="clock_form__title">
           计划返京日期:
@@ -61,25 +62,29 @@
             <view class="clock_form_input">
               <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
                 <view class="weui-input" style="width:85%;float:left;">{{gobackdate}}</view>
-                <view style="align:right;width:10%;display:inline;color:#4169E1">
+                <view style="align:right;width:10%;display:inline;color:#1759EF">
                   <a bindtap="gobackDateChange">选择</a>
                 </view>
               </picker>
             </view>
           </view>
         </view>
+        <view class='devide-middle'/>
       </view>
       <!--未返京结束-->
 
       <view wx:if="{{isGoBackFlag == '0'}}">
         <!--已返京开始-->
-        <view class="clock_form__title">是否离过京(2020年1月10日以后):</view>
+        <view class="clock_form__title">是否离过京(2020年1月10日以后)</view>
         <view>
+        <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{leaveBeijingItems}}" wx:key="index">
               <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+               <view  wx:if='{{index != leaveBeijingItems.length-1}}'class='devide-radio'/>
             </label>
           </radio-group>
+        </view>
         </view>
        <view class='devide-middle'/>
        
@@ -93,13 +98,14 @@
               <view class="clock_form_input">
                 <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
                   <view class="weui-input" style="width:85%;float:left;">{{leavedate}}</view>
-                  <view style="align:right;width:10%;display:inline;color:#4169E1">
+                  <view style="align:right;width:10%;display:inline;color:#1759EF">
                     <a bindtap="leaveDateChange">选择</a>
                   </view>
                 </picker>
               </view>
             </view>
           </view>
+          <view class='devide-middle'/>
 
           <view class="clock_form__title">
             返京日期
@@ -109,13 +115,14 @@
               <view class="clock_form_input">
                 <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
                   <view class="weui-input" style="width:85%;float:left;">{{suregobackdate}}</view>
-                  <view style="align:right;width:10%;display:inline;color:#4169E1">
+                  <view style="align:right;width:10%;display:inline;color:#1759EF">
                     <a bindtap="suregobackDateChange">选择</a>
                   </view>
                 </picker>
               </view>
             </view>
           </view>
+          <view class='devide-middle'/>
 
           <view class="clock_form__title">返京所乘车次/航班/车牌</view>
           <view class="weui-cells weui-cells_after-title">
@@ -125,6 +132,8 @@
               </view>
             </view>
           </view>
+          <view class='devide-middle'/>
+          
         </view>
         <!--14天内离京结束-->
       </view>
