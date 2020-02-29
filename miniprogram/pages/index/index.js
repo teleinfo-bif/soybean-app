@@ -172,14 +172,13 @@ Page({
         console.log("datas: ", res)
         that.userinfo = res.data;
 
-
         var department = res.data[0].company_department
         var infoes = department.split(' ')
         var regInfo = ""
         var title = "众志成城，抗击疫情" 
         var superuser = res.data[0].superuser
         var userType = res.data[0].usertype
-
+        
         if (superuser != null && superuser == "1") {
           title = "中国信息通信技术研究院"
         }else if (userType == '1'){
@@ -193,6 +192,9 @@ Page({
             title = infoes[0]
           }
         }else if (userType == '2'){
+          regInfo = "",
+          title = infoes[1]
+        } else {
           regInfo = "",
           title = infoes[1]
         }

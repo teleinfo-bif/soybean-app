@@ -180,8 +180,8 @@ Page({
 
           success: res => {
             console.log("res result: ", res.result)
-            var healthyDatas = res.result[1]
-            this.parseDatas(healthyDatas)
+            var infoDatas = res.result[0]
+            this.parseDatas(infoDatas)
             wx.hideLoading()
           },
 
@@ -245,16 +245,6 @@ Page({
   // },
 
 
-  // showDetails: function(e) {
-  //   switch(this.data.authorityLevel) {
-  //     case 0:
-  //     this.showAllDetailsList(this.data.date)
-  //     break
-  //     case 1:
-  //       this.showDetailsList(this.data.date, this.data.departmentLevel2Name)
-  //     break
-  //   }
-  // },
 
   initDatas: function (e) {
 
@@ -291,6 +281,10 @@ Page({
           }
         }else if (userType == '2'){
           level = 3
+          regInfo = "",
+          title = infoes[1]
+        } else {
+          level = 3 //看到的数据跟3级管理员一样
           regInfo = "",
           title = infoes[1]
         }
@@ -370,11 +364,5 @@ Page({
   //     })
   // },
 
-  //返京日期
-  // dateChange: function (e) {
-  //   console.log('日期选择改变，携带值为', e.detail.value)
-  //   this.setData({
-  //     date: e.detail.value
-  //   })
-  // },
+
 });
