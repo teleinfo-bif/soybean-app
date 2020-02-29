@@ -86,7 +86,15 @@
 /* .personal-info-picker {
   margin-top: 10rpx;
 } */
-
+.personal-info-td-company{
+  margin-top:20rpx;
+  margin-bottom:30rpx;
+  margin-left:30rpx;
+  display: flex;
+  flex-flow: row wrap;
+  margin-right: 30rpx;
+  color: #999999;
+}
 .info-input{
   width: 90%;
   height: 45rpx;

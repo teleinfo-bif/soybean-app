@@ -14,36 +14,50 @@
 
 
   <form bindsubmit="onAdd" >
-    <view class="page__bd" >
+    <view class="clock__bd" >
 
-      <view class="weui-cells__title" style="height:3px;"></view>
-      <view class="weui-cells__title">姓名:</view>
-      <view class="weui-cell_ ">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="name" disabled="true" value="{{clickdata.name}}" />
-          </view>
+      <view class="clock_form__title" style="height:3px;"></view>
+      <view class="clock_form__title">姓名</view>
+      <view class="">
+        <view class="clock_form_input">
+          <input class="weui-input" name="name" disabled="true" value="{{clickdata.name}}" />
+          <!--         <label weui-input>{{name}}</label>-->
         </view>
-
-      <view class="weui-cells__title">手机号:</view>
-      <view class="weui-cell_">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="phone" disabled="true" value="{{clickdata.phone}}" />
-          </view>
-        </view>
-
-      <view class="weui-cells__title">
-        <view>打卡地点:</view>
       </view>
-      <view class="weui-cell_">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="place" disabled="true" value="{{clickdata.place}}" />
-          </view>
+      <view class='devide-middle'/>
+
+      <view class="clock_form__title">手机号</view>
+      <view class="">
+        <view class="clock_form_input">
+          <input class="weui-input" name="phone" disabled="true" value="{{clickdata.phone}}"  />
+          <!--     <label weui-input>{{phone}}</label>-->
         </view>
+      </view>
+      <view class='devide-middle'/>
+
+      <view class="clock_form__title">打卡地点</view>
+      <view class="">
+        <view class="clock_form_input">
+          <input class="weui-input" name="place" disabled="true" value="{{clickdata.place}}"   />
+          <!--     <label weui-input>{{phone}}</label>-->
+        </view>
+      </view>
+      <view class='devide-middle'/>
+
 
       <view wx:if="{{clickdata.isGoBackFlag == '1'}}">
         <!--未返京开始-->
-        <view class="weui-cells__title">未返京原因:</view>
-        <view>
+        <view class="clock_form__title">未返京原因</view>
+        <view class='clock-radio'>
+          <radio-group class="radio-group" bindchange="noGoBackRadioChange">
+            <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+            <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
+            </label>
+          </radio-group>
+        </view>
+
+        <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange" >
             <label wx:for="{{radioNoGoBackItems}}" wx:key="{{index}}">
               <radio value="{{item.value}}" disabled="true" checked="{{item.checked}}" />{{item.name}}
@@ -51,7 +65,7 @@
           </radio-group>
         </view>
 
-        <view class="weui-cells__title">计划返京日期:</view>
+        <view class="clock_form__title">计划返京日期:</view>
         <view class="weui-cell_">
             <view class="weui-cell__bd">
               <picker mode="date" name="gobackdate" value="{{clickdata.gobackdate}}" disabled="true">
@@ -64,7 +78,7 @@
 
       <view wx:if="{{clickdata.isGoBackFlag == '0'}}">
         <!--已返京开始-->
-        <view class="weui-cells__title">是否离过京(2020年1月10日以后):</view>
+        <view class="clock_form__title">是否离过京(2020年1月10日以后):</view>
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{isLeaveBjRadioItems}}" wx:key="{{index}}">
@@ -76,7 +90,7 @@
         <view wx:if="{{clickdata.isLeaveBjFlag == '0'}}">
           <!--14天内离京开始-->
 
-          <view class="weui-cells__title">离京日期:</view>
+          <view class="clock_form__title">离京日期:</view>
           <view class="weui-cell_">
               <view class="weui-cell__bd">
                 <picker mode="date" disabled="true" name="leavedate" disabled="true" value="{{clickdata.leavedate}}">
@@ -85,7 +99,7 @@
               </view>
             </view>
 
-          <view class="weui-cells__title">返京日期:</view>
+          <view class="clock_form__title">返京日期:</view>
           <view class="weui-cell_">
               <view class="weui-cell__bd">
                 <picker mode="date" disabled="true" name="suregobackdate" value="{{clickdata.suregobackdate}}">
@@ -94,7 +108,7 @@
               </view>
             </view>
 
-          <view class="weui-cells__title">返京所乘车次/航班/车牌:</view>
+          <view class="clock_form__title">返京所乘车次/航班/车牌:</view>
           <view class="weui-cell_">
               <view class="weui-cell__bd">
                 <input class="weui-input" disabled="true" name="trainnumber" value="{{clickdata.trainnumber}}" />
@@ -105,14 +119,14 @@
       </view>
       <!--已返京结束-->
 
-      <view class="weui-cells__title">当日体温:</view>
+      <view class="clock_form__title">当日体温:</view>
       <view class="weui-cell_">
           <view class="weui-cell__bd">
             <input class="weui-input" disabled="true" name="temperature" value="{{clickdata.temperature}}" />
           </view>
         </view>
 
-      <view class="weui-cells__title">是否确诊:</view>
+      <view class="clock_form__title">是否确诊:</view>
       <view>
         <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
           <label wx:for="{{isQueZhenRadioItems}}" wx:key="{{index}}">
@@ -121,7 +135,7 @@
         </radio-group>
       </view>
 
-      <view class="weui-cells__title">是否就诊住院:</view>
+      <view class="clock_form__title">是否就诊住院:</view>
       <view>
         <radio-group class="radio-group" bindchange="goHospitalRadioChange">
           <label wx:for="{{goHospitalRadioItems}}" wx:key="{{index}}">
@@ -130,7 +144,7 @@
         </radio-group>
       </view>
 
-      <view class="weui-cells__title">目前健康状况:</view>
+      <view class="clock_form__title">目前健康状况:</view>
       <view>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
           <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
@@ -139,7 +153,7 @@
         </radio-group>
       </view>
 
-      <view wx:if="{{clickdata.bodyStatusFlag == '2'}}" class="weui-cells__title">健康状况为其他的原因:</view>
+      <view wx:if="{{clickdata.bodyStatusFlag == '2'}}" class="clock_form__title">健康状况为其他的原因:</view>
       <view wx:if="{{clickdata.bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
         <view class="weui-cell ">
           <view class="weui-cell__bd">
@@ -150,7 +164,7 @@
 
       
 
-      <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
+      <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
       <view>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{goHBradioItems}}" wx:key="{{index}}">
@@ -159,7 +173,7 @@
         </radio-group>
       </view>
 
-      <view class="weui-cells__title">其他:</view>
+      <view class="clock_form__title">其他:</view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
