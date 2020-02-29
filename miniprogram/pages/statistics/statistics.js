@@ -525,7 +525,7 @@ getIsoNumber: function(datas) {
 
 parseDatas: function(datas) {
 
-  var should = datas[0]
+  var should = datas[0].length
   this.setData({
     shouldFilledNumber: should
   })
