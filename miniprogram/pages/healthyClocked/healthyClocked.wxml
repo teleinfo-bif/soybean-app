@@ -150,7 +150,7 @@
 
       
 
-      <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
+      <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北:</view>
       <view>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{goHBradioItems}}" wx:key="{{index}}">
