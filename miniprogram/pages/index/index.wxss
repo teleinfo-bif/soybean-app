@@ -23,6 +23,7 @@
   width: 720rpx;
   margin-top: 15rpx;
   border-radius: 20rpx;
+  display: none;
 }
 
 .swiper-item{
