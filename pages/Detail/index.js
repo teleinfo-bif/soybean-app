@@ -136,19 +136,20 @@ Page({
    */
   onLoad: function(options) {
     console.log(options);
-    let { groupId, groupName } = options;
+    let { groupId } = options;
     this.setData(
       {
         groupId,
-        groupName
+        clockInTime: getyyyyMMdd(new Date())
       },
       this.getData
     );
+    // this.setData({
+      
+    // });
     // console.log("option", options);
-    this.getData();
-    this.setData({
-      clockInTime: getyyyyMMdd(new Date())
-    });
+   
+    
   },
 
   /**

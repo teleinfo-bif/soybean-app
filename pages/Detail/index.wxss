@@ -97,6 +97,12 @@ page {
   background: #cc3535; }
 
 .no-data-msg {
+  margin-top: 300rpx;
+  color: 999;
+  font-size: 28rpx;
+  text-align: center; }
+
+.no-more-msg {
   margin-top: 20rpx 0 10rpx;
   color: 999;
   font-size: 28rpx;

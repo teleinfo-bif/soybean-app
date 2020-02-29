@@ -49,7 +49,7 @@
       <view wx:if="{{clockList.length== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
         暂无详细信息
       </view>
-      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-data-msg">
+      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-more-msg">
         没有更多数据
       </view>
     </scroll-view>

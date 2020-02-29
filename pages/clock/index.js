@@ -80,6 +80,7 @@ let fields = [
     type: "input",
     prop: "reason",
     hide: true,
+    require: false,
     props: {
       placeholder: "请输入未返京原因"
     }
@@ -441,9 +442,7 @@ Page({
   // 获取用户今日打卡信息
   getUserTodyClockData() {
     // console.log("====getUserTodyClockData====");
-    getTodayClock({
-      userId: 60
-    }).then(data => {
+    getTodayClock({}).then(data => {
       // console.log("today data", data);
       let formData = Object.assign({}, this.data.data, data.records[0]);
       let atBeijing =

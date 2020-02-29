@@ -109,10 +109,10 @@ page {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
-/* display: flex;
+
+  /* display: flex;
   flex-direction: row; */
-/* align-items: center;
+  /* align-items: center;
   justify-content: center; */
 }
 
@@ -135,6 +135,12 @@ page {
 }
 
 .no-data-msg {
+  margin-top: 300rpx;
+  color: 999;
+  font-size: 28rpx;
+  text-align: center;
+}
+.no-more-msg {
   margin-top: 20rpx 0 10rpx;
   color: 999;
   font-size: 28rpx;
