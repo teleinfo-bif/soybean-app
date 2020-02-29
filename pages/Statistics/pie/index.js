@@ -109,6 +109,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 初始化
     initEcharts() {
       this.ecComponent.init((canvas, width, height) => {
         // 获取组件的 canvas、width、height 后的回调函数
@@ -124,6 +125,12 @@ Component({
 
         // 注意这里一定要返回 chart 实例，否则会影响事件处理等
         return chart;
+      });
+    },
+    // pie图点击跳转
+    onPieClick() {
+      wx.navigateTo({
+        url: "/pages/statistics/statisticsTab/index?type=1"
       });
     }
   }
