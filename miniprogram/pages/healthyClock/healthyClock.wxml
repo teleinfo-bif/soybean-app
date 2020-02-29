@@ -18,6 +18,7 @@
       </view>
       <view class='devide-middle'/>
 
+
       <view class="clock_form__title">手机号</view>
       <view class="">
         <view class="clock_form_input">
@@ -26,6 +27,9 @@
         </view>
       </view>
       <view class='devide-middle'/>
+
+
+
 
       <view class="clock_form__title">
         <text style="">打卡地点</text>
@@ -55,13 +59,13 @@
         <view class='devide-middle'/>
 
         <view class="clock_form__title">
-          计划返京日期:
+          计划返京日期
         </view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell ">
+        <view class="">
+          <view class=" ">
             <view class="clock_form_input">
               <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
-                <view class="weui-input" style="width:85%;float:left;">{{gobackdate}}</view>
+                <view class="weui-input" style="width:87%;float:left;">{{gobackdate}}</view>
                 <view style="align:right;width:10%;display:inline;color:#1759EF">
                   <a bindtap="gobackDateChange">选择</a>
                 </view>
@@ -91,7 +95,7 @@
         <view wx:if="{{isLeaveBjFlag == '0'}}">
           <!--14天内离京开始-->
           <view class="clock_form__title">
-            离京日期:
+            离京日期
           </view>
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
@@ -125,8 +129,8 @@
           <view class='devide-middle'/>
 
           <view class="clock_form__title">返京所乘车次/航班/车牌</view>
-          <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell ">
+          <view class="">
+            <view class="">
               <view class="clock_form_input">
                 <input class="weui-input" name="trainnumber" value="{{trainnumber}}" placeholder="请输入车次/航班/车牌" placeholder-class="placeholder-style"/>
               </view>
@@ -139,12 +143,12 @@
       </view>
       <!--已返京结束-->
 
-      <view class="weui-cells__title">当日体温:</view>
-      <view class="weui-cell_">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="temperature" placeholder="请输入数字和小数点" bindblur="judgeTemperature"/>
-
-          </view>
+      <view class="clock_form__title">当日体温</view>
+      <view class="">
+        <view class="clock_form_input">
+          <input class="weui-input" name="temperature" placeholder="请输入数字和小数点" bindblur="judgeTemperature" placeholder-class="placeholder-style"/>
+          <!--     <label weui-input>{{phone}}</label>-->
+        </view>
       </view>
       <view class='devide-middle'/>
 
