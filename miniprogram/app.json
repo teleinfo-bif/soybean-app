@@ -21,7 +21,8 @@
     "pages/journeyCheck/journeyCheck",
     "pages/departmentDetail/departmentDetail",
     "pages/totaluserdetail2/totaluserdetail2",
-    "pages/submitSuccess/submitSuccess"
+    "pages/submitSuccess/submitSuccess",
+    "pages/modifySuccess/modifySuccess"
   ],
   "permission": {
     "scope.userLocation": {

@@ -560,7 +560,7 @@ Page({
             console.log(res)
 
             wx.navigateTo({
-              url: '../../pages/msg/msg_success',
+              url: '../../pages/modifySuccess/modifySuccess',
             })
             wx.hideLoading()
           },
