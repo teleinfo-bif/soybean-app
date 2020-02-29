@@ -1,4 +1,4 @@
 <!--pages/epidemiNews/epidemiNews.wxml-->
 <view>
-  <web-view src="https://feiyan.wecity.qq.com/wuhan/dist/index.html"></web-view>
+  <web-view src="https://z.cbndata.com/2019-nCoV/index.html?from=timeline&isappinstalled=0&timestamp=1582897269651"></web-view>
 </view>

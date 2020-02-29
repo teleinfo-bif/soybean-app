@@ -18,13 +18,13 @@ Page({
 
     swiperPages: [
       "../epidemiNews/epidemiNews",
-      "../epidemiMap/epidemicMap",
-      "../journeyCheck/journeyCheck"
+      "../epidemiMap/epidemicMap"
+    /*   "../journeyCheck/journeyCheck" */
     ],
     indicatorDots: false,
     vertical: false,
     autoplay: true,
-    interval: 2000,
+    interval: 3000,
     duration: 500
   },
 
