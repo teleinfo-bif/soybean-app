@@ -79,10 +79,33 @@ function intersecteArray(array1, array2) {
     return result
 }
 
-function buildRegexp(input, endStr) {
-    let regexpStr= input.replace(new RegExp(' ', "g"), "\\s{1}") //^((湖\s{1}北\s{1}的)){1}
-    regexpStr = `^((${regexpStr}))${endStr}`
-    return regexpStr
+function buildRegexp(input, userType) {
+    let departments = input.split(" ")
+
+    let regexpStr = "*"
+    let group = ""
+    // let regexpStr= input.replace(new RegExp(' ', "g"), "\\s{1}") //^((湖\s{1}北\s{1}的)){1}
+    if (userType == -1) { //一级管理员
+        regexpStr = ".*"
+        group = "中国信息通信研究院"
+    } else if (userType == 1) { //二级管理员
+        regexpStr = `^((${departments[0]})){1}`
+        group = departments[0]
+    } else if (userType == 2) { //三级管理员
+        let tmp = input.replace(new RegExp(' ', "g"), "\\s")
+        regexpStr = `^((${tmp}))$`
+        group = input
+    }
+    
+    if (departments[1] == "院属公司及协会") {
+        //.*(院属公司及协会)
+        regexpStr = `.*(${departments[1]})`
+    }
+
+    return {
+        regexpStr: regexpStr,
+        gorup: group
+    }
 }
 
 async function regExpIdsFilter(date, days, regExp) {
@@ -310,10 +333,10 @@ async function getUserHealthy(openid, date) {
 }
 
 
-async function getRow3(userInfo, dateTimeStr, department) {
+async function getRow3(userInfo, dateTimeStr, group, department) {
     let coolingDays = 28
     let dateTime = new Date(dateTimeStr)
-    let group = "北京泰尔英福网络科技有限责任公司"
+    // let group = "北京泰尔英福网络科技有限责任公司"
     let todayRetureBjCount = 0
     let retureBjCount = 0
     let retureFromHBCount = 0
@@ -326,10 +349,6 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let unRetureFromHBNotCount = 0
     let fromNotHBAndSegregatingCount = 0
     let fromNotHBAndSegregatedCount = 0
-
-    if (department != ".") {
-        group = userInfo.company_department
-    }
 
     let clockeds = await clockedDatas(dateTimeStr)
     let returnedBj = await returnBjs(dateTimeStr)
@@ -864,24 +883,33 @@ exports.main = async (event, context) => {
         let userInfo = user.data[0]
         let dataCVS = `统计信息表-${userInfo.name}-${Number(new Date())}.xlsx`
 
-        let department = ""
+        let department = "*"
+        let group = ""
         if (userInfo.usertype != undefined && userInfo.usertype == "1") { //^((湖\s{1}北\s{1}的)){1}
             if (userInfo.company_department == undefined || userInfo.company_department == "") {
                 department = "*"  //没有部门的人
+                group = userInfo.company_department
             } else {
-                department = buildRegexp(userInfo.company_department, "{1}") //二级部门管理员，能看到自己所在部门的信息
+                let regexp = buildRegexp(userInfo.company_department, "1")
+                department = regexp.regexpStr //二级部门管理员，能看到自己所在部门的信息
+                group = regexp.gorup
             }
         } else if (userInfo.usertype != undefined && userInfo.usertype == "2") {
             department = userInfo.company_department //部门管理员，能看到自己所在部门的信息
             if (userInfo.company_department == undefined || userInfo.company_department == "") {
                 department = "*"  
+                group = userInfo.company_department
             } else {
-                department = buildRegexp(userInfo.company_department, "$") //三级管理员
+                let regexp = buildRegexp(userInfo.company_department, "2") //三级管理员
+                department = regexp.regexpStr
+                group = regexp.gorup
             }
-        }
-
+        } 
+        
         if (userInfo.superuser != undefined && userInfo.superuser == "1") {
-            department = "." //超级管理员，能看到所有人的信息
+            let regexp = buildRegexp(userInfo.company_department, "-1") //超级管理员，能看到所有人的信息
+                department = regexp.regexpStr
+                group = regexp.gorup
         }
 
         if (department == "*") { //没权限，返回空表
@@ -897,7 +925,7 @@ exports.main = async (event, context) => {
         let alldata = [];
         let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话']
         let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数']
-        let row3 = await getRow3(userInfo, dateTimeStr, department)
+        let row3 = await getRow3(userInfo, dateTimeStr, group, department)
         let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '其他不适症状', '可在这里补充希望获得的帮助']
 
