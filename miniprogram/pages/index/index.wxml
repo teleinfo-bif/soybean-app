@@ -96,7 +96,7 @@
     </view> -->
 
 
-    <view wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+    <view wx:if="{{isSuperUserFlag == '1' || isManagerFlag == '1' || isManagerFlag == '2'}}">
       <view class="page__title">我管理的部门</view>
       <view class="weui-grids">
         <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">

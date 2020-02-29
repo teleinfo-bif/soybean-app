@@ -56,7 +56,7 @@ async function getHealthyDatas(date) {
 
 async function parseDatas(infoDatas, healthyDatas) {
   var ret = []
-  ret.push(infoDatas.length)
+  ret.push(infoDatas)
   var datas = []
   for (var i = 0; i < infoDatas.length; i++) {
     for (var j = 0; j < healthyDatas.length; j++) {
