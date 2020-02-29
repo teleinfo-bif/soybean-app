@@ -90,31 +90,31 @@ const Request = async ({ url, params, method, ...other } = {}) => {
   let token = getTokenStorage();
   let userInfo = getUserStorage();
 
-
   const sessionValidate = await checkSessionKey();
-  console.log("await checkSessionKey()", sessionValidate);
+  // console.log("await checkSessionKey()", sessionValidate);
 
   if (!token || token == "" || token.openid == undefined || !sessionValidate) {
+    console.log(
+      "提醒：storage读取openID、sessionkey失败，正在重新获取openID、sessionkey..."
+    );
     token = await getOpenId();
-    console.log("request await token", token);
+    console.log("返回数据：获取的用户", token);
   }
-  if (typeof userInfo != "object") {
+
+  if (typeof userInfo != "object" || !userInfo.id) {
+    console.log(
+      "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
+    );
     userInfo = await getUserInfo({ openid: token.openid });
-    console.log("request await token", userInfo);
+    console.log("返回数据：获取的用户", userInfo);
   }
 
-  // if (url == "/user/exist") {
-  //   return new Promise(resolve => {
-  //     resolve(userInfo);
-  //   });
-  // }
-
-  // params放在后面，避免覆盖参数中的openid
-  let data = Object.assign({}, {
+  // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
+  let data = Object.assign({}, params, {
     openid: token.openid ? token.openid : "",
     wechatId: token.openid ? token.openid : "",
-    userId: userInfo.id ? userInfo.id : ""
-  },params);
+    userId: params.userId ? params.userId : userInfo.id || ""
+  });
 
   // 添加请求加载等待
   wx.showLoading({
@@ -128,7 +128,6 @@ const Request = async ({ url, params, method, ...other } = {}) => {
       data: data,
       // 获取请求头配置
       // header: getHeader(),
-      // header: getHeader(),
       // header: Object.assign(getHeader(), header),
       method: method,
       ...other,
@@ -139,18 +138,19 @@ const Request = async ({ url, params, method, ...other } = {}) => {
         // 进行状态码判断并处理
         if (res.statusCode === 204) {
           resolve(res);
-        } else if (res.statusCode === 401) {
-          // 检测到状态码401，进行token刷新并重新请求等操作
-          refreshToken()
-            .then(() => _refetch(url, data, method))
-            .then(resolve);
         } else if (res.data.code !== 200) {
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
           } else {
             console.log(url + "-" + res.statusCode);
-            console.error("request请求错误，request data", data);
-            console.error("request请求错误，res.data", res.data);
+            console.error(
+              "request请求错误，URL:",
+              url,
+              "\nrequest data:",
+              data,
+              "\nresponse data:",
+              res.data
+            );
             // 获取后台返回报错信息
             let title = res.data.msg || "请求错误";
             // 调用全局toast方法
@@ -161,6 +161,12 @@ const Request = async ({ url, params, method, ...other } = {}) => {
         } else {
           reject(res);
         }
+        // else if (res.statusCode === 401) {
+        //   // 检测到状态码401，进行token刷新并重新请求等操作
+        //   refreshToken()
+        //     .then(() => _refetch(url, data, method))
+        //     .then(resolve);
+        // }
       }
     });
   });
@@ -170,7 +176,7 @@ const showToast = title => {
   wx.showToast({
     title: title,
     icon: "none",
-    duration: 1500,
+    duration: 3000,
     mask: true
   });
 };

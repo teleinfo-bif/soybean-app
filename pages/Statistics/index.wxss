@@ -20,8 +20,11 @@ page {
   .head-title, .head-date,
   .head .head-date-text {
     display: flex;
-    justify-content: center;
     align-items: center; }
+  .head-title {
+    flex: 1; }
+  .head-date {
+    width: 260rpx; }
   .head .head-date-text {
     color: #3891ff; }
 

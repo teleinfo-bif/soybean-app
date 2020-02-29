@@ -1,13 +1,11 @@
 //app.js
-// const behavior_app = require("./behavior/app");
 import { getUserFilledInfo } from "./api/api";
 import { tokenKey, userFilledInfofoKey } from "./api/request";
 App({
-  // behaviors: [behavior_app],
   initRequest: false,
   async init(refreshUserInfo = false) {
     if (this.globalData.appInit == false || refreshUserInfo) {
-      console.log("app init 未完成初始化");
+      console.log("app init 开始初始化");
       const userFilledInfo = wx.getStorageSync(userFilledInfofoKey);
       const fedToken = wx.getStorageSync(tokenKey);
       this.globalData.fedToken = fedToken;
@@ -15,16 +13,16 @@ App({
       // debugger;
       if (!refreshUserInfo && userFilledInfo && userFilledInfo.userRegisted) {
         this.setGloableUserInfo(userFilledInfo);
-        console.log("this.globalData", this.globalData);
+        console.log("初始化未完成，", this.globalData);
         return this.globalData;
       } else {
         let userFilledInfo = await getUserFilledInfo();
         this.setGloableUserInfo(userFilledInfo);
-        console.log("this.globalData", this.globalData);
+        console.log("app.init return globalData:", this.globalData);
         return this.globalData;
       }
     } else {
-      console.log("this.globalData", this.globalData);
+      console.log("app.init return globalData:", this.globalData);
       return this.globalData;
     }
 
@@ -38,12 +36,12 @@ App({
 
     this.globalData.userId = userFilledInfo.id;
     this.globalData.appInit = true;
-    console.warn("用户注册：", userFilledInfo.userRegisted);
     console.log("app init 完成初始化");
+    console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
   },
 
   onLaunch: async function() {
-    await this.init(true);
+    await this.init();
 
     // 获取用户信息
     wx.getSetting({

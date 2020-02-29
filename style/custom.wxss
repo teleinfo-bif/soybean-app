@@ -54,3 +54,6 @@ picker.select-picker {
 .my-radio .vant-radio {
   display: block;
   margin-top: 100rpx !important; }
+
+.form-btn {
+  width: 260rpx; }

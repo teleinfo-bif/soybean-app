@@ -41,7 +41,7 @@ page {
   background: #2eb541; }
 
 .status-circle-yellow {
-  background: #ff976a; }
+  background: yellow; }
 
 .status-circle-red {
   background: #cc3535; }

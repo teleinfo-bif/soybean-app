@@ -11,8 +11,8 @@
               <view class="status-circle status-circle-green"></view>
               <view>正常</view>
             </block>
-            <block wx:if="{{item.healthy == 2 || item.healthy == 0 }}">
-              <view class="status-circle status-circle-red"></view>
+            <block wx:else>
+              <view class="status-circle status-circle-yellow"></view>
               <view>异常</view>
             </block>
           </view>

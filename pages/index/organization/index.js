@@ -18,8 +18,8 @@ Component({
   },
   lifetimes: {
     async attached() {
-      console.log('-----管理组织-----')
-      this.getData();
+      // console.log("-----管理组织-----");
+      await this.getData();
     }
   },
 
@@ -29,28 +29,32 @@ Component({
   methods: {
     async getData() {
       // const { userRegisted } = this.data.globalData;
-      let {globalData} = app
+      let { globalData } = app;
       if (app.globalData.userFilledInfo.userRegisted == null) {
-        globalData = await app.init()
+        globalData = await app.init();
         this.setData({
           globalData,
           userFilledInfo: globalData.userFilledInfo
         });
       }
-      console.log("------------群组中用户注册状态",globalData.userFilledInfo.userRegisted)
+      console.log(
+        "------------群组中用户注册状态",
+        globalData.userFilledInfo.userRegisted
+      );
 
       if (globalData.userFilledInfo.userRegisted) {
         // debugger
-        getUserGroupTree({
-          userId: this.data.globalData.userId
-        }).then(data => {
-          console.log("===============用户管理群组：===============\n", data.length ,data)
+        getUserGroupTree({}).then(data => {
+          console.log(
+            "===============用户管理群组：===============\n",
+            data.length,
+            data
+          );
           this.setData({
             groupList: data
           });
         });
       }
-     
     },
     tap() {
       // console.log(this.data);

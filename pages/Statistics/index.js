@@ -36,6 +36,7 @@ Page({
       lazyLoad: true
     },
     groupId: null,
+    groupName: "",
     clockInTime: ""
   },
 
@@ -55,11 +56,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options);
-    let { groupId } = options;
+    // console.log(options);
+    let { groupId, groupName } = options;
     this.setData(
       {
-        groupId
+        groupId,
+        groupName
       },
       this.getData
     );

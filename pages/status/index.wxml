@@ -3,9 +3,9 @@
   <view class="status">
     <view class="status_msg">
       <van-icon color="#1759EF" name="passed" />
-      <text>提交成功</text>
+      <text>注册成功</text>
     </view>
-    <view class="status_text">您已经提交成功，可立即去打卡</view>
+    <view class="status_text">您已经注册成功，可立即去打卡</view>
   </view>
   <view class="btn-item">
     <van-button bind:click="navigateTo" data-path='/pages/clock/index' round="{{true}}" type="primary" color="#1759EF" block>

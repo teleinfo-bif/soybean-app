@@ -36,16 +36,16 @@ Component({
       // this.triggerEvent("change", 10010010011);
       getUserPhone(data)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           this.triggerEvent("change", res.phoneNumber);
         })
         .catch(e => {
-          console.error("获取手机号码失败");
+          console.error("错误：获取手机号码失败", e);
           wx.showToast({
-            title: "获取手机号码失败，使用测试手机号填写-13888888888",
+            title: "获取手机号码失败",
             icon: "none"
           });
-          this.triggerEvent("change", 13888888888);
+          // this.triggerEvent("change", 13888888888);
         })
         .finally(() => {
           // console.error("complete");

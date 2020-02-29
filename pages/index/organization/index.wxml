@@ -16,7 +16,7 @@
         <!-- 右侧操作按钮 -->
         <view class="organization_item-btn">
           <view>
-            <navigator url="/pages/statistics/index?groupId={{item.id}}">
+            <navigator url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}">
               <image class="btn" src="../../../static/images/stastic@3x.png" />
             </navigator>
           </view>

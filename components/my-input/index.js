@@ -15,7 +15,7 @@ Component({
   },
   methods: {
     onChange(e) {
-      console.log("input - e.deatil", e.detail);
+      // console.log("input - e.deatil", e.detail);
       this.triggerEvent("change", e.detail);
     }
   }

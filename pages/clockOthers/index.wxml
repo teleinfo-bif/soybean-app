@@ -19,8 +19,10 @@
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
   <view wx:if="{{!clocked}}" class="btn-wrap">
-    <van-button bindtap="formCancel" size="normal">重 置</van-button>
+    <van-button bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
-    <van-button bindtap="formSubmit" size="normal" color="#1759EF">提 交</van-button>
+    <van-button bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">
+      提 交
+    </van-button>
   </view>
 </view>

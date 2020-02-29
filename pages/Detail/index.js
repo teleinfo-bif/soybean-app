@@ -10,10 +10,10 @@ function getyyyyMMdd(date) {
   return yyyyMMdd;
 }
 import { getGroupBlockList } from "../../api/api.js";
-const beahavior_userInfo = require("../../behavior/userInfo");
+// const beahavior_userInfo = require("../../behavior/userInfo");
 
 Page({
-  behaviors: [beahavior_userInfo],
+  // behaviors: [beahavior_userInfo],
   /**
    * 页面的初始数据
    */
@@ -83,9 +83,9 @@ Page({
       this.getData
     );
   },
-  behaviorCallback() {
-    this.getData();
-  },
+  // behaviorCallback() {
+  //   this.getData();
+  // },
 
   upper(e) {
     // console.log(e);
@@ -136,20 +136,19 @@ Page({
    */
   onLoad: function(options) {
     console.log(options);
-    let { groupId } = options;
+    let { groupId, groupName } = options;
     this.setData(
       {
         groupId,
+        groupName,
         clockInTime: getyyyyMMdd(new Date())
       },
       this.getData
     );
     // this.setData({
-      
+
     // });
     // console.log("option", options);
-   
-    
   },
 
   /**

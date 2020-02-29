@@ -26,8 +26,14 @@ page {
   &-date,
   .head-date-text {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
+  }
+  &-title {
+    flex: 1;
+  }
+  &-date {
+    width: 260rpx;
   }
   .head-date-text {
     color: #3891ff;

@@ -15,7 +15,8 @@ page {
   width: 750rpx;
   height: 88rpx;
   font-size: 30rpx;
-  background: white; }
+  background: white;
+  border-bottom: 1rpx solid #f2f2f2; }
   .head image {
     margin-right: 20rpx;
     width: 54rpx;
@@ -91,10 +92,13 @@ page {
   background: #2eb541; }
 
 .status-circle-yellow {
-  background: #ff976a; }
+  background: yellow; }
 
 .status-circle-red {
   background: #cc3535; }
+
+.status-circle-gray {
+  background: #eee; }
 
 .no-data-msg {
   margin-top: 300rpx;

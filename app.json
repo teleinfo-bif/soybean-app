@@ -2,10 +2,11 @@
   "pages": [
     "pages/index/index",
     "pages/statistics/statisticsTab/index",
+    "pages/clockOthers/index",
+
     "pages/personal/index",
     "pages/clock/index",
     "pages/clockRecords/index",
-    "pages/clockOthers/index",
     "pages/detail/index",
     "pages/statistics/index",
     "pages/status/index",
@@ -15,7 +16,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "泰尔通",
+    "navigationBarTitleText": "信本聪",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

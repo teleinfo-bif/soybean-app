@@ -1,13 +1,14 @@
 <!-- index.wxml -->
 <view>
   <!-- 首页banner -->
-  <Banner statusBarHeight="{{statusBarHeight}}"></Banner>
+  <banner statusBarHeight="{{statusBarHeight}}"></banner>
   <!-- 录入个人信息 -->
-  <EnteringInfo userFilledInfo="{{userFilledInfo}}"></EnteringInfo>
+  <personalLogin userFilledInfo="{{userFilledInfo}}"></personalLogin>
   <!-- 健康打卡 -->
-  <Sign></Sign>
+  <clock></clock>
   <!-- 组织信息 -->
   <organization></organization>
   <!-- 统计信息 -->
   <!-- <Statistics></Statistics> -->
+  <view class="footer-copy-right">中国信息通信研究院出品</view>
 </view>

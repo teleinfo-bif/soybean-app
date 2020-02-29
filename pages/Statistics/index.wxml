@@ -4,7 +4,7 @@
   <view class="head">
     <view class="head-title">
       <image class="btn" src="../../static/images/stastic@3x.png" />
-      <Text>统计信息</Text>
+      <Text>{{groupName}}</Text>
     </view>
     <view class="head-date" hover-class="none" hover-stop-propagation="false">
       <view>
@@ -48,7 +48,10 @@
       </view>
     </view>
   </view>
-  <pie first="{{true}}" title="健康情况测试" class="health-box" data="{{data.healthy}}" total="{{data.totality.total}}"></pie>
-  <pie title="所在地区分布情况" data="{{data.region}}" total="{{data.totality.total}}"></pie>
-  <pie title="就诊住院情况" data="{{data.hospitalization}}" total="{{data.totality.total}}"></pie>
+  <!-- <navigator class="" target="" url="/pages/statisticsTab" hover-class="navigator-hover" open-type="navigate">
+    
+  </navigator> -->
+  <pie first="{{true}}" title="健康情况测试" class="health-box" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie title="所在地区分布情况" data="{{data.region}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie title="就诊住院情况" data="{{data.hospitalization}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>

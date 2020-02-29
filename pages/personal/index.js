@@ -5,7 +5,7 @@ const app = getApp();
 
 // import Notify from "vant-weapp/dist/notify/notify";
 import { delUserInfo, saveOrUpdateUserInfo } from "../../api/api.js";
-const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
+const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
 Page({
   /**
    * 页面的初始数据
@@ -27,7 +27,10 @@ Page({
         type: "phone",
         prop: "phone",
         props: {
-          placeholder: "请输入手机号码"
+          placeholder: "请输入手机号码",
+          validate(value) {
+            return /^1[3456789]\d{9}$/.test(value);
+          }
         }
       },
       {
@@ -51,13 +54,13 @@ Page({
         prop: "idNumber",
         props: {
           placeholder: "请输入证件号码",
-          validate (value){
-            return idNumberReg.test(value)
+          validate(value) {
+            return idNumberReg.test(value);
           }
         }
       },
       {
-        title: "家庭所在区及街道、社区",
+        title: "家庭所在城市及区",
         type: "area",
         prop: "homeAddress",
         props: {
@@ -103,12 +106,15 @@ Page({
     const validate = this.selectComponent("#form").validate();
     if (validate) {
       let formData = this.data.data;
-      formData.idType = formData.idType.id;
+      formData.idType =
+        typeof formData.idType == "object"
+          ? formData.idType.id
+          : formData.idType;
       formData.homeAddress = formData.homeAddress.join("-");
       formData = {
         ...formData,
         ...app.globalData.userInfo
-      }
+      };
       // console.log(formData);
       if (!this.data.userFilledInfo.userRegisted) {
         saveOrUpdateUserInfo(formData).then(async data => {
@@ -146,8 +152,8 @@ Page({
         wx.clearStorageSync();
         await app.init(true);
         wx.navigateTo({
-          url: '/pages/index/index'
-        })
+          url: "/pages/index/index"
+        });
       }
     );
   },
@@ -208,8 +214,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
-    console.log(this.data.fields[3].props.validate)
+  onLoad: async function(options) {
+    console.log(this.data.fields[3].props.validate);
     if (!app.globalData.userFilledInfo) {
       // await app.init();
     }

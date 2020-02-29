@@ -1,11 +1,11 @@
 // pages/SignRecords/index.js
 import { getUserClockList } from "../../api/api";
-const beahavior_userInfo = require("../../behavior/userInfo");
+// const beahavior_userInfo = require("../../behavior/userInfo");
 Page({
   /**
    * 页面的初始数据
    */
-  behaviors: [beahavior_userInfo],
+  // behaviors: [beahavior_userInfo],
   data: {
     requestInit: false,
     currentDate: new Date().getTime(),
@@ -38,9 +38,9 @@ Page({
     ]
   },
 
-  behaviorCallback() {
-    this.getData();
-  },
+  // behaviorCallback() {
+  //   // this.getData();
+  // },
 
   upper(e) {
     // console.log(e);
@@ -100,9 +100,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    const {userId} = options
-    console.log(userId)
+  onLoad: function(options) {
+    const { userId } = options;
+    console.log(userId);
     this.getData();
   },
 

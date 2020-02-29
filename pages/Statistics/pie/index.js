@@ -27,7 +27,7 @@ function setOption(chart, data, index = 0) {
         color: "#000",
         fontSize: "130px",
         align: "center",
-        rich:{}
+        rich: {}
       }
     },
     series: [
@@ -76,7 +76,7 @@ Component({
       type: Boolean,
       default: false
     },
-    totalNumber: {
+    clockIn: {
       type: Number,
       default: 0
     },

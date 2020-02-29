@@ -20,6 +20,7 @@ page {
   // line-height: 88rpx;
   font-size: 30rpx;
   background: rgba(255, 255, 255, 1);
+  border-bottom: 1rpx solid #f2f2f2;
   image {
     margin-right: 20rpx;
     width: 54rpx;
@@ -128,10 +129,13 @@ page {
   background: rgba(46, 181, 65, 1);
 }
 .status-circle-yellow {
-  background: #ff976a;
+  background: yellow;
 }
 .status-circle-red {
   background: rgba(204, 53, 53, 1);
+}
+.status-circle-gray {
+  background: #eee;
 }
 
 .no-data-msg {

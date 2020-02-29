@@ -70,7 +70,7 @@ Component({
       this.triggerChange(prop, value);
     },
     triggerChange(prop, value, other = null) {
-      console.log("====picker idtype =======");
+      // console.log("====picker idtype =======");
       this.setData({
         _formData: {
           ...this.data._formData,
@@ -94,7 +94,7 @@ Component({
     formatFormData() {
       let formData = {};
       let _formData = this.data._formData;
-      console.log("formData", formData);
+      // console.log("formData", formData);
       for (let prop in _formData) {
         // console.log("prop", prop);
         const field = this.findFieldItemWithProp(prop);
@@ -155,8 +155,9 @@ Component({
         if (item.require != false && item.hide != true) {
           let emptyItem = this.getFormItemLabel(prop)[0];
           if (item.props.validate && !item.props.validate(itemData)) {
+            let errorMsg = item.props.errorMsg || emptyItem.title + "验证错误";
             wx.showToast({
-              title: emptyItem.title + "验证错误",
+              title: errorMsg,
               icon: "none"
             });
             return false;
@@ -170,7 +171,7 @@ Component({
               icon: "none"
             });
             return false;
-          } 
+          }
         }
       }
       return true;

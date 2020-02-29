@@ -11,9 +11,9 @@
   <view  class="btn-wrap">
     <!-- <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" wx:if="{{userFilledInfo.userRegisted}}" bindtap="del" size="normal" type="danger">删 除</van-button>
     <view style="width: 35rpx;"></view> -->
-    <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal">重 置</van-button>
+    <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
-    <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF">{{
+    <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
       !userRegisted  ? '提 交' : '更 新'}}</van-button>
   </view>
   <view wx:if="{{userFilledInfo.userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>

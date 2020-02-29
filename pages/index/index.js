@@ -21,15 +21,13 @@ Page({
       }
     });
   },
-  onLoad: async function () {
-    console.log('onLoadonLoadonLoadonLoadonLoadonLoadonLoadonLoad')
+  onLoad: async function() {
     this.setBarHeight();
-    let globalData
+    let globalData;
     if (!app.globalData.userFilledInfo.userRegisted) {
       globalData = await app.init(true);
-     
     } else {
-      globalData = app.globalData
+      globalData = app.globalData;
     }
     this.setData({
       globalData: globalData,
@@ -46,7 +44,6 @@ Page({
     });
   },
   onShow() {
-    console.log('onShowonShowonShowonShowonShowonShow')
     const location = chooseLocation.getLocation(); // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
     // console.log("====");
     // console.log(location);

@@ -34,9 +34,9 @@ let fields = [
   },
 
   {
-    title: "是否从其他城市返回",
+    title: "是否离开过北京（2020年1月10日以后）",
     type: "radio",
-    prop: "otherCity",
+    prop: "leave",
     hide: false,
     props: {
       itemKey: "id",
@@ -77,12 +77,17 @@ let fields = [
   },
   {
     title: "未返京原因 ",
-    type: "input",
+    type: "radio",
     prop: "reason",
     hide: true,
     require: false,
     props: {
-      placeholder: "请输入未返京原因"
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 0, name: "身体原因" },
+        { id: 1, name: "当地未放行" }
+      ]
     }
   },
   {
@@ -90,30 +95,11 @@ let fields = [
     type: "input",
     prop: "temperature",
     props: {
-      placeholder: "请输入体温"
-    }
-  },
-  {
-    title: "目前健康状况",
-    type: "radio",
-    prop: "healthy",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "健康" },
-        { id: 2, name: "有发烧、咳嗽等症状" },
-        { id: 0, name: "其他症状" }
-      ]
-    }
-  },
-  {
-    title: "其他症状",
-    type: "input",
-    prop: "otherhealthy",
-    hide: true,
-    props: {
-      placeholder: "请输入其他症状"
+      placeholder: "请输入体温",
+      validate(value) {
+        return /^\d+(\.\d+)?$/.test(value);
+      },
+      errorMsg: "体温请输入数字和小数点"
     }
   },
   {
@@ -143,7 +129,30 @@ let fields = [
     }
   },
   {
-    title: "是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉",
+    title: "目前健康状况",
+    type: "radio",
+    prop: "healthy",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "健康" },
+        { id: 2, name: "有发烧、咳嗽等症状" },
+        { id: 0, name: "其他症状" }
+      ]
+    }
+  },
+  {
+    title: "其他症状",
+    type: "input",
+    prop: "otherhealthy",
+    hide: true,
+    props: {
+      placeholder: "请输入其他症状"
+    }
+  },
+  {
+    title: "是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北",
     type: "radio",
     prop: "wuhan",
     props: {
@@ -208,30 +217,29 @@ Page({
     }
   },
   onFormChange(e) {
-    // console.log("onFormChange", e);
+    console.log("onFormChange", e);
     const { prop, value } = e.detail;
     let { data } = this.data;
 
+    let itemData = {};
+    itemData[e.detail.prop] = e.detail.value;
+    data = Object.assign({}, data, itemData);
+
     // 根据填选是否离开，显示返回日期
-    if (prop === "otherCity") {
+    if (prop === "leave") {
       this.setFields(this.data.atBeijing, value.toString() === "1");
-    } else if (prop === "temperature") {
-      // 判断 > 37.2摄氏度，默认发烧状态
-      if (Number(value) > 37.2) {
-        this.setHealthyDisabled(true);
-      } else {
-        this.setHealthyDisabled(false);
-      }
-    } else if (prop === "comfirmed") {
-      // 判断 确诊不能选择健康
-      if (value === "1") {
-        this.setHealthyDisabled(true);
-      } else if(data['temperature'] > 37.2) {
-        this.setHealthyDisabled(true);
-      } else {
-        this.setHealthyDisabled(false);
-      }
-      
+    } else if (
+      prop === "comfirmed" ||
+      prop === "admitting" ||
+      prop === "temperature"
+    ) {
+      this.setData(
+        {
+          data
+        },
+        this.setHealthyDisabled
+      );
+      // ();
     } else if (prop === "healthy") {
       // 判断 健康状况选其它
       if (value === "0") {
@@ -241,9 +249,6 @@ Page({
       }
     }
 
-    let itemData = {};
-    itemData[e.detail.prop] = e.detail.value;
-    data = Object.assign({}, data, itemData);
     // this.data.data = data;
 
     this.setData({
@@ -251,15 +256,25 @@ Page({
     });
   },
   // 温度大于37.2设置健康是禁选中
-  setHealthyDisabled(disable) {
+  setHealthyDisabled() {
+    let disable = false;
     let { fields, data } = this.data;
+    // 体温高于37.2 或者 选择确诊 或者 选择就诊 这三种情况都不允许选择健康
+    const { temperature, comfirmed, admitting } = this.data.data;
     // data["healthy"] = disable ? null : data["otherhealthy"];
-    if (disable && data["healthy"] === "1") {
+    debugger;
+    if (
+      (temperature && Number(temperature) > 37.2) ||
+      (comfirmed != null && comfirmed == "1") ||
+      (admitting != null && admitting == "1")
+    ) {
       data["healthy"] = null;
+      disable = true;
     }
-    this.setData({
-      data
-    });
+
+    // this.setData({
+    //   data
+    // });
     fields.forEach((item, index) => {
       if (item.prop === "healthy") {
         for (let i = 0; i < item.props.options.length; i++) {
@@ -322,15 +337,15 @@ Page({
       data
     });
   },
-// 设置部分选项隐藏
+  // 设置部分选项隐藏
   setFieldsHide(hideList = [], showOtherCity = true, otherCith = 0) {
     // let fields = fields;
     fields.forEach(item => {
-      if (showOtherCity && item.prop == "otherCity") {
+      if (showOtherCity && item.prop == "leave") {
         item.hide = false;
         item.value = otherCith;
       }
-      if (item.prop == "otherCity") {
+      if (item.prop == "leave") {
         // debugger;
       }
       if (hideList.indexOf(item.prop) > -1) {
@@ -357,7 +372,7 @@ Page({
       // 不在北京 隐藏从其它城市返回otherCity
 
       // 在北京，离开且已经返回
-      // if (otherCity) {
+      // if (leave) {
       // }
       // this.setFieldsHide(["reason"]);
       if (leaved) {
@@ -370,7 +385,7 @@ Page({
     } else {
       // 不在北京切且返回
       // this.setFieldsHide(["otherCity", "gobacktime2"], true);
-      this.setFieldsHide(["otherCity"], false);
+      this.setFieldsHide(["leave"], false);
     }
   },
   // 根据是否离开北京
@@ -400,7 +415,9 @@ Page({
   },
   // 地址选项变化
   onAddressChange(location, chooseLocation) {
-    var currentCity = chooseLocation ?   location.city : location.result.ad_info.city;
+    var currentCity = chooseLocation
+      ? location.city
+      : location.result.ad_info.city;
     // console.log(res.result.ad_info.city);
     let atBeijing = currentCity == "北京市";
 
@@ -448,7 +465,7 @@ Page({
       let atBeijing =
         (formData.address && formData.address.indexOf("北京市") > -1) || false;
       // 服务端没有其它城市返回字段，根据返京日期判断
-      formData["otherCity"] = formData.gobacktime ? 1 : 0;
+      formData["leave"] = formData.gobacktime ? 1 : 0;
 
       if (data.total > 0) {
         this.setData({
@@ -474,8 +491,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
-    const userId = options.id
+  onLoad: async function(options) {
+    const userId = options.id;
 
     this.initFormData();
     this.initUserInfo();
@@ -493,7 +510,7 @@ Page({
   onShow() {
     // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
     const location = chooseLocation.getLocation();
-    console.log(location);
+    // console.log(location);
     if (location) {
       // this.setData({
       //   data: {
@@ -501,7 +518,7 @@ Page({
       //     address: location.address
       //   }
       // });
-      this.onAddressChange(location,true);
+      this.onAddressChange(location, true);
     }
   },
 

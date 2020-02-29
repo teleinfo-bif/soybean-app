@@ -1,12 +1,11 @@
 {
   "usingComponents": {
-    "Banner": "./Banner/banner",
-    "EnteringInfo": "./EnteringInfo/EnteringInfo",
-    "Sign": "./Sign/Sign",
-    "Statistics": "./Statistics/Statistics",
+    "banner": "./banner/banner",
+    "personalLogin": "./personalLogin/index",
+    "clock": "./clock/index",
     "organization": "./organization/index"
   },
-  "navigationBarTitleText": "泰尔通",
+  "navigationBarTitleText": "信本聪",
   "navigationStyle": "custom",
   "backgroundColor": "#F7F7F7"
 }
