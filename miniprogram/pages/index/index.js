@@ -179,7 +179,9 @@ Page({
         var superuser = res.data[0].superuser
         var userType = res.data[0].usertype
 
-        if (userType == '1'){
+        if (superuser != null && superuser == "1") {
+          title = "中国信息通信技术研究院"
+        }else if (userType == '1'){
           title = infoes[0]
           // level = 2
           if (infoes[0] == '院属公司及协会') {
@@ -190,7 +192,6 @@ Page({
             title = infoes[0]
           }
         }else if (userType == '2'){
-          level = 3
           regInfo = "",
           title = infoes[1]
         }
@@ -430,7 +431,7 @@ Page({
   gotoDetailClick: function() {
     if(this.data.isSuperUserFlag == '1' || this.data.isManagerFlag == '1'){
       wx.navigateTo({
-        url: '../departmentDetail/departmentDetail?department='+ this.data.department
+        url: '../departmentDetail/departmentDetail?department='+ this.data.department + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
     } else {
       wx.navigateTo({

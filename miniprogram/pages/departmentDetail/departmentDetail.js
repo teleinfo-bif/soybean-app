@@ -60,6 +60,9 @@ Page({
   initDatas: function (e) {
     const that = this;
     // this.getInfoDatas(this.data.department)
+    wx.showLoading({
+      title: '加载中...',
+    })
     var cur = this.getCurrentDay()
     const db = wx.cloud.database()
     db.collection('company_info').where({
@@ -77,10 +80,11 @@ Page({
           currentDate: cur,
         })
 
-        // this.analysisLevel(level)
+        wx.hideLoading()
       },
       fail: err => {
         console.log("error: ", err)
+        wx.hideLoading()
       }
     })
 
@@ -133,13 +137,66 @@ Page({
     })
 
   },
+ 
+  initDatas2: function (e) {
+    const that = this;
+    var cur = this.getCurrentDay()
+    const db = wx.cloud.database()
+    this.getCompanyDepartments()
 
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        var department = res.data[0].company_department
+        var infoes = department.split(' ')
+
+        var regInfo = ""
+        var title = ""   
+        var superuser = res.data[0].superuser
+        var userType = res.data[0].usertype
+
+        var level = 1
+
+        if (superuser != null && superuser == "1") {
+          level = 1
+          title = "中国信息通信技术研究院"
+        }else if (userType == '1'){
+          level = 2
+          if (infoes[0] == '院属公司及协会') {
+            regInfo = '.*' + infoes[1]
+            title = infoes[1]
+          } else {
+            regInfo = infoes[0] + ".*"
+            title = infoes[0]
+          }
+        }else if (userType == '2'){
+          level = 3
+          regInfo = "",
+          title = infoes[1]
+        }
+        console.log('0cur',cur,title);
+        this.setData({
+          currentDate: cur,
+          titleInfo: title,
+          companyReg: regInfo,
+          department: department,
+          authorityLevel: level
+        })
+
+        // this.analysisLevel(level)
+      },
+      fail: err => {
+        console.log("error: ", err)
+      }
+    })
+
+  },
 
   getInfoDatas: function(data) {
-    // console.log("userInfoDatasgetInfoDatas", data)
-    wx.showLoading({
-      title: '加载中...',
-    })
+    // wx.showLoading({
+    //   title: '加载中...',
+    // })
 
     console.log("userInfoDatas: ", )
 
@@ -150,18 +207,18 @@ Page({
           },
 
           success: res => {
-            console.log("res result: ", res.result)
+            // console.log("res result: ", res.result)
             // this.parseDatas([data, res.result])
             let temp = [{name:data,num:res.result.length}]
             this.setData({
               clickdetail: this.data.clickdetail.concat(temp)
             })
-            wx.hideLoading()
+            // wx.hideLoading()
           },
 
           fail: err => {
             console.log("error: ", err)
-            wx.hideLoading()
+            // wx.hideLoading()
           }
         })
   },
@@ -177,10 +234,15 @@ Page({
 
   onLoad: function (options) {
     console.log("options: ", options)
+    let isSuperUserFlag = options.isSuperUserFlag
     this.setData({
       department: options.department
-    })
-    this.initDatas()
+    })   
+    if(isSuperUserFlag=='1'){
+      this.initDatas2()
+    }else {
+      this.initDatas()
+    }
    
   },
 
@@ -193,6 +255,50 @@ Page({
 
   //  this.analysisLevel(this.data.authorityLevel)
   
+  },
+
+  getCompanyDepartments: function(e) {
+    const that = this;
+    /**
+     * 通过云函数调用可以获取全部45条的数据
+     */
+    wx.showLoading({
+      title: '加载中...',
+    })
+
+    wx.cloud.callFunction({
+      name: "getCompany",
+      success: res => {
+        console.log(res)
+        var first = []
+        var second = []
+
+        for (var i = 0; i < res.result.length; i++) {
+          var item = res.result[i]
+          that.getInfoDatas(item.name)
+          
+          // if (item.name !=="院属公司及协会") {
+          //   that.getInfoDatas(item.name)
+          // } else {
+          //   item.departments.forEach(function(val, idx, arr) {         
+          //     that.getInfoDatas(val)
+          // }, 0);            
+          // }
+          
+        }
+ 
+        // this.setData({
+        //   companies: first,
+        //   departments: second,
+        // })
+        wx.hideLoading()
+      },
+
+      fail: err => {
+        console.log(err)
+        wx.hideLoading()
+      }
+    })
   },
 
 
