@@ -152,7 +152,7 @@ const Request = async ({ url, params, method, ...other } = {}) => {
             console.error("request请求错误，request data", data);
             console.error("request请求错误，res.data", res.data);
             // 获取后台返回报错信息
-            let title = res.data.err_msg || "请求错误";
+            let title = res.data.msg || "请求错误";
             // 调用全局toast方法
             showToast(title);
           }
