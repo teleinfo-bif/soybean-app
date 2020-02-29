@@ -12,6 +12,8 @@
 
 安装 npm 依赖，构建 npm
 
+`npm install --registry=https://registry.npm.taobao.org`
+
 运行 `npm run dev` 可实时编译 scss 到同目录同名 wxss 文件
 
 ## 编译说明
