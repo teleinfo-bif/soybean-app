@@ -4,14 +4,14 @@ const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
 
 // import Notify from "vant-weapp/dist/notify/notify";
-import { delUserInfo, saveUserInfo, updateUserInfo } from "../../api/api.js";
-
+import { delUserInfo, saveOrUpdateUserInfo } from "../../api/api.js";
+const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    userRegisted: app.globalData.userRegisted,
+    userRegisted: app.globalData.userFilledInfo.userRegisted,
     edit: false,
     fields: [
       {
@@ -50,8 +50,10 @@ Page({
         type: "input",
         prop: "idNumber",
         props: {
-          type: "number",
-          placeholder: "请输入证件号码"
+          placeholder: "请输入证件号码",
+          validate (value){
+            return idNumberReg.test(value)
+          }
         }
       },
       {
@@ -72,7 +74,8 @@ Page({
         }
       }
     ],
-    data: app.globalData.userFilledInfo,
+    data: {},
+    userFilledInfo: {},
     globalData: app.globalData
   },
   // 设置可编辑状态
@@ -87,29 +90,37 @@ Page({
   onFormChange(e) {
     let itemData = {};
     itemData[e.detail.prop] = e.detail.value;
-    let data = Object.assign(this.data.data, itemData);
-    this.setData({
-      data
-    });
-    // this.data.data = data;
+    // let data = Object.assign(this.data.data, itemData);
+    let data = {
+      ...this.data.data,
+      ...itemData
+    };
+    // this.setData({});
+    this.data.data = data;
   },
   // 提交/更新
-  formSubmit() {
+  async formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
-      const formData = this.data.data;
+      let formData = this.data.data;
       formData.idType = formData.idType.id;
       formData.homeAddress = formData.homeAddress.join("-");
+      formData = {
+        ...formData,
+        ...app.globalData.userInfo
+      }
       // console.log(formData);
-      if (!this.data.userRegisted) {
-        saveUserInfo(formData).then(data => {
+      if (!this.data.userFilledInfo.userRegisted) {
+        saveOrUpdateUserInfo(formData).then(async data => {
+          await app.init(true);
           wx.navigateTo({
             url: "/pages/status/index"
           });
         });
       } else {
         formData["id"] = formData.id;
-        updateUserInfo(formData).then(data => {
+        saveOrUpdateUserInfo(formData).then(async data => {
+          await app.init(true);
           wx.navigateTo({
             url: "/pages/status/index"
           });
@@ -120,7 +131,7 @@ Page({
   // 删除
   del() {
     delUserInfo({ ids: [app.globalData.userFilledInfo.id].join(",") }).then(
-      res => {
+      async res => {
         // console.log(this.data.data);
         let { data } = this.data;
         Object.keys(data).forEach(key => {
@@ -132,14 +143,18 @@ Page({
           userRegisted: false,
           data
         });
-        this.onLoad();
+        wx.clearStorageSync();
+        await app.init(true);
+        wx.navigateTo({
+          url: '/pages/index/index'
+        })
       }
     );
   },
   // 重置
   formCancel() {
     let { data } = this.data;
-    data.phone = null;
+    // data.phone = null;
     data.homeAddress = null;
     data.detailAddress = null;
     this.setData({
@@ -148,16 +163,16 @@ Page({
   },
 
   // 已填写设置禁用字段
-  setFieldsDisable(resData) {
+  setFieldsDisable(resData = {}) {
     let fields = this.data.fields;
     // let edit = this.data.edit;
-    let userRegisted = Object.keys(resData).length > 0;
+    let userRegisted = resData.userRegisted;
 
     fields.forEach(item => {
       return (item["props"]["disable"] = userRegisted);
     });
 
-    if (typeof resData.homeAddress === "string") {
+    if (resData && typeof resData.homeAddress === "string") {
       resData.homeAddress = resData.homeAddress.split("-");
     }
     if (userRegisted) {
@@ -193,11 +208,23 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
-    if (!this.data.globalData.userId) {
-      await app.init();
+  onLoad: async function (options) {
+    console.log(this.data.fields[3].props.validate)
+    if (!app.globalData.userFilledInfo) {
+      // await app.init();
     }
-    this.setFieldsDisable(app.globalData.userFilledInfo);
+    const globalData = await app.init();
+    this.setData({
+      globalData: globalData,
+      userFilledInfo: globalData.userFilledInfo
+    });
+    this.setFieldsDisable(globalData.userFilledInfo);
+    // this.setData({
+    //   edit: app.globalData.userFilledInfo.userRegisted
+    // })
+    // if () {
+
+    // }
   },
 
   /**
@@ -211,10 +238,12 @@ Page({
   onShow() {
     const location = chooseLocation.getLocation(); // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
     if (location) {
+      debugger;
       this.setData({
-        data: Object.assign({}, this.data.data, {
+        data: {
+          ...this.data.data,
           detailAddress: location.address
-        })
+        }
       });
     }
   },

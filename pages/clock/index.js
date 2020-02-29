@@ -1,7 +1,7 @@
 // pages/block/index.js
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import { getTodayClock, getUserFilledInfo, saveClock } from "../../api/api.js";
+import { getTodayClock, saveClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -51,7 +51,7 @@ let fields = [
     title: "离京日期",
     type: "date",
     prop: "leavetime",
-    hide: false,
+    hide: true,
     props: {
       placeholder: "请输入返京日期"
     }
@@ -62,14 +62,15 @@ let fields = [
     prop: "gobacktime",
     hide: true,
     props: {
-      placeholder: "请输入计划返京日期"
+      placeholder: "请输入计划返京日期",
+      end: ""
     }
   },
   {
     title: "返京所乘车次/航班/车牌",
     type: "input",
     prop: "flight",
-    hide: false,
+    hide: true,
     props: {
       placeholder: "请输入返京日期"
     }
@@ -192,7 +193,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    clocked: true,
+    clocked: false,
     userRegisted: app.globalData.userRegisted,
     userFilledInfo: app.globalData.userFilledInfo,
     location: "",
@@ -204,6 +205,49 @@ Page({
     data: {
       address: ""
     }
+  },
+  onFormChange(e) {
+    // console.log("onFormChange", e);
+    const { prop, value } = e.detail;
+    let { data } = this.data;
+
+    // 根据填选是否离开，显示返回日期
+    if (prop === "otherCity") {
+      this.setFields(this.data.atBeijing, value.toString() === "1");
+    } else if (prop === "temperature") {
+      // 判断 > 37.2摄氏度，默认发烧状态
+      if (Number(value) > 37.2) {
+        this.setHealthyDisabled(true);
+      } else {
+        this.setHealthyDisabled(false);
+      }
+    } else if (prop === "comfirmed") {
+      // 判断 确诊不能选择健康
+      if (value === "1") {
+        this.setHealthyDisabled(true);
+      } else if(data['temperature'] > 37.2) {
+        this.setHealthyDisabled(true);
+      } else {
+        this.setHealthyDisabled(false);
+      }
+      
+    } else if (prop === "healthy") {
+      // 判断 健康状况选其它
+      if (value === "0") {
+        this.setOtherHealthyHide(false);
+      } else {
+        this.setOtherHealthyHide(true);
+      }
+    }
+
+    let itemData = {};
+    itemData[e.detail.prop] = e.detail.value;
+    data = Object.assign({}, data, itemData);
+    // this.data.data = data;
+
+    this.setData({
+      data
+    });
   },
   // 温度大于37.2设置健康是禁选中
   setHealthyDisabled(disable) {
@@ -240,46 +284,7 @@ Page({
     });
     this.setData({ fields, data });
   },
-  onFormChange(e) {
-    // console.log("onFormChange", e);
-    const { prop, value } = e.detail;
-    let { data } = this.data;
-
-    // 根据填选是否离开，显示返回日期
-    if (prop === "otherCity") {
-      this.setFields(this.data.atBeijing, value.toString() === "1");
-    } else if (prop === "temperature") {
-      // 判断 > 37.2摄氏度，默认发烧状态
-      if (Number(value) > 37.2) {
-        this.setHealthyDisabled(true);
-      } else {
-        this.setHealthyDisabled(false);
-      }
-    } else if (prop === "comfirmed") {
-      // 判断 确诊不能选择健康
-      if (value === "1") {
-        this.setHealthyDisabled(true);
-      } else {
-        this.setHealthyDisabled(false);
-      }
-    } else if (prop === "healthy") {
-      // 判断 健康状况选其它
-      if (value === "0") {
-        this.setOtherHealthyHide(false);
-      } else {
-        this.setOtherHealthyHide(true);
-      }
-    }
-
-    let itemData = {};
-    itemData[e.detail.prop] = e.detail.value;
-    data = Object.assign({}, data, itemData);
-    // this.data.data = data;
-
-    this.setData({
-      data
-    });
-  },
+  // 重置按钮
   formCancel() {
     let { data } = this.data;
     for (let prop in data) {
@@ -291,6 +296,7 @@ Page({
       data
     });
   },
+  // 提交按钮
   formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
@@ -300,12 +306,11 @@ Page({
       saveClock(formData).then(res => {
         // console.log(res);
         wx.navigateTo({
-          url: "/pages/block/status/index"
+          url: "/pages/clock/status/index"
         });
       });
     }
   },
-
   // 初始化this.data.data
   initFormData() {
     let data = {};
@@ -316,7 +321,7 @@ Page({
       data
     });
   },
-
+// 设置部分选项隐藏
   setFieldsHide(hideList = [], showOtherCity = true, otherCith = 0) {
     // let fields = fields;
     fields.forEach(item => {
@@ -368,7 +373,6 @@ Page({
     }
   },
   // 根据是否离开北京
-
   // 初始化位置信息
   initAddress() {
     wx.getSetting({
@@ -379,22 +383,10 @@ Page({
           wx.getLocation({
             altitude: true,
             success: location => {
+              console.log(location);
               this.setData({ location });
               reverseAddressFromLocation(location).then(res => {
-                var currentCity = res.result.ad_info.city;
-                // console.log(res.result.ad_info.city);
-                let atBeijing = currentCity == "北京市";
-
-                let { data } = this.data;
-                data.address = res.result.address;
-                this.setData({
-                  atBeijing,
-                  leaved: !atBeijing,
-                  goBack: !atBeijing,
-                  address: res.result,
-                  data
-                });
-                this.setFields(atBeijing, false);
+                this.onAddressChange(res);
               });
               // wx.navigateTo({ url: getLocationPluginMapUrl(res2) });
             }
@@ -405,7 +397,26 @@ Page({
       }
     });
   },
+  // 地址选项变化
+  onAddressChange(location, chooseLocation) {
+    var currentCity = chooseLocation ?   location.city : location.result.ad_info.city;
+    // console.log(res.result.ad_info.city);
+    let atBeijing = currentCity == "北京市";
 
+    this.setData({
+      atBeijing,
+      leaved: !atBeijing,
+      goBack: !atBeijing,
+      address: chooseLocation ? location : location.result,
+      data: {
+        ...this.data.data,
+        address: chooseLocation ? location.address : location.result.address
+      }
+    });
+    this.setFields(atBeijing, false);
+  },
+
+  // 设置用户填入信息
   setUserFilledInfo(userFilledInfo) {
     let { data } = this.data;
     data["name"] = userFilledInfo.name || "";
@@ -418,15 +429,13 @@ Page({
   },
 
   // 初始化用户信息
-  initUserInfo() {
-    let { userRegisted, openid, userFilledInfo } = app.globalData;
-    if (userRegisted) {
-      this.setUserFilledInfo(userFilledInfo);
-    } else {
-      getUserFilledInfo({ openid: openid }).then(data => {
-        this.setUserFilledInfo(data);
-      });
+  async initUserInfo() {
+    let { globalData } = app;
+    if (!app.globalData.userFilledInfo.userRegisted) {
+      globalData = await app.init(true);
     }
+
+    this.setUserFilledInfo(globalData.userFilledInfo);
   },
 
   // 获取用户今日打卡信息
@@ -466,7 +475,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function (options) {
+    const userId = options.id
+
     this.initFormData();
     this.initUserInfo();
     this.getUserTodyClockData();
@@ -483,12 +494,15 @@ Page({
   onShow() {
     // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
     const location = chooseLocation.getLocation();
+    console.log(location);
     if (location) {
-      this.setData({
-        data: {
-          address: location.address
-        }
-      });
+      // this.setData({
+      //   data: {
+      //     ...this.data.data,
+      //     address: location.address
+      //   }
+      // });
+      this.onAddressChange(location,true);
     }
   },
 

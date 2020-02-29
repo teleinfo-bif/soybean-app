@@ -11,16 +11,14 @@ Component({
    * 组件的初始数据
    */
   data: {
-    userFilledInfo: app.globalData.userFilledInfo,
-    globalData: app.globalData,
+    userFilledInfo: {},
+    globalData: {},
     groupList: [],
     groupData: {}
   },
   lifetimes: {
     async attached() {
-      if (!this.data.globalData.userId) {
-        await app.init();
-      }
+      console.log('-----管理组织-----')
       this.getData();
     }
   },
@@ -29,15 +27,30 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    getData() {
-      getUserGroupTree({
-        userId: this.data.globalData.userId
-      }).then(data => {
+    async getData() {
+      // const { userRegisted } = this.data.globalData;
+      let {globalData} = app
+      if (app.globalData.userFilledInfo.userRegisted == null) {
+        globalData = await app.init()
         this.setData({
-          // groupData: data,
-          groupList: data
+          globalData,
+          userFilledInfo: globalData.userFilledInfo
         });
-      });
+      }
+      console.log("------------群组中用户注册状态",globalData.userFilledInfo.userRegisted)
+
+      if (globalData.userFilledInfo.userRegisted) {
+        // debugger
+        getUserGroupTree({
+          userId: this.data.globalData.userId
+        }).then(data => {
+          console.log("===============用户管理群组：===============\n", data.length ,data)
+          this.setData({
+            groupList: data
+          });
+        });
+      }
+     
     },
     tap() {
       // console.log(this.data);

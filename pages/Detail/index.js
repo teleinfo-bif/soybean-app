@@ -55,11 +55,10 @@ Page({
   },
 
   getData() {
-    let { requestInit, userId, clockInTime, groupId } = this.data;
+    let { requestInit, clockInTime, groupId } = this.data;
     let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
       getGroupBlockList({
-        userId: userId,
         current: ++current,
         groupId,
         clockInTime: clockInTime
@@ -74,11 +73,11 @@ Page({
   onChange(e) {
     // console.log(e);
     const { value } = e.detail;
-    this.clockData.current = 0;
+    this.data.clockData.current = 0;
     this.setData(
       {
         clockInTime: value,
-        clockData: this.clockData,
+        clockData: this.data.clockData,
         clockList: []
       },
       this.getData

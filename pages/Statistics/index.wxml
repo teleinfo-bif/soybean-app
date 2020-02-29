@@ -25,11 +25,11 @@
         <view class="statistic-box_item_label">应填写人数</view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.total}}</view>
+        <view class="statistic-box_item_value">{{data.totality.clockIn}}</view>
         <view class="statistic-box_item_label">已填写人数</view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.total}}</view>
+        <view class="statistic-box_item_value">{{data.totality.diagnosis}}</view>
         <view class="statistic-box_item_label">确诊人数</view>
       </view>
     </view>

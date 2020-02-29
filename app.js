@@ -1,30 +1,49 @@
 //app.js
 // const behavior_app = require("./behavior/app");
 import { getUserFilledInfo } from "./api/api";
-import { userFilledInfofoKey } from "./api/request";
+import { tokenKey, userFilledInfofoKey } from "./api/request";
 App({
   // behaviors: [behavior_app],
-  async init() {
-    const userFilledInfo = wx.getStorageSync(userFilledInfofoKey);
-    if (userFilledInfo.id) {
-      this.setGloableUserInfo(userFilledInfo);
-      return this.globalData;
-    } else {
-      getUserFilledInfo().then(data => {
-        this.setGloableUserInfo(data);
+  initRequest: false,
+  async init(refreshUserInfo = false) {
+    if (this.globalData.appInit == false || refreshUserInfo) {
+      console.log("app init 未完成初始化");
+      const userFilledInfo = wx.getStorageSync(userFilledInfofoKey);
+      const fedToken = wx.getStorageSync(tokenKey);
+      this.globalData.fedToken = fedToken;
+
+      // debugger;
+      if (!refreshUserInfo && userFilledInfo && userFilledInfo.userRegisted) {
+        this.setGloableUserInfo(userFilledInfo);
+        console.log("this.globalData", this.globalData);
         return this.globalData;
-      });
+      } else {
+        let userFilledInfo = await getUserFilledInfo();
+        this.setGloableUserInfo(userFilledInfo);
+        console.log("this.globalData", this.globalData);
+        return this.globalData;
+      }
+    } else {
+      console.log("this.globalData", this.globalData);
+      return this.globalData;
     }
+
+    // console.log("app.js init userFilledInfo:", userFilledInfo);
+    // console.log("app.js init fedToken:", fedToken);
   },
 
   setGloableUserInfo(userFilledInfo) {
     this.globalData.userFilledInfo = userFilledInfo;
-    this.globalData.userRegisted = Object.keys(userFilledInfo).length > 0;
+    this.globalData.userRegisted = userFilledInfo.userRegisted;
+
     this.globalData.userId = userFilledInfo.id;
+    this.globalData.appInit = true;
+    console.warn("用户注册：", userFilledInfo.userRegisted);
+    console.log("app init 完成初始化");
   },
 
   onLaunch: async function() {
-    await this.init();
+    await this.init(true);
 
     // 获取用户信息
     wx.getSetting({
@@ -53,13 +72,13 @@ App({
     });
   },
   globalData: {
-    auth: false, // 是否开启权限验证
+    auth: true, // 是否开启权限验证
+    appInit: false,
     statusBarHeight: 20, // 标题栏高度-适配首页
-    openid: null, // openid
-    sessionKey: null, // sessionKey
     userInfo: null, // 从微信获取的用户信息
-    userRegisted: false, // 用户是否填写了个人信息
-    userFilledInfo: null, // 用户填写的个人信息
-    userId: null
+
+    userFilledInfo: {}, // 用户填写的个人信息
+    userId: null,
+    fedToken: null
   }
 });

@@ -5,7 +5,7 @@
       <van-icon name="edit" />
     </view>
     <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
-      你好，{{userFilledInfo.name}}
+      您好！{{userFilledInfo.name}}
     </view>
     <text wx:else class="entering-box_text">录入身份信息</text>
     <button class="test" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>

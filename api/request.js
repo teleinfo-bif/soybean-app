@@ -3,7 +3,7 @@ const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
 // 从storage中获取openid
 
-const appid = "wx5236affef117da53";
+const appid = "wxd69df881f0c947dc";
 
 // 定义网络请求API地址
 const baseURL = "https://admin.bidspace.cn/bid-soybean";
@@ -21,6 +21,7 @@ async function getOpenId() {
           url: baseURL + "/wx/user/login",
           data: params,
           success: data => {
+            console.log("tokenKey", data.data);
             wx.setStorageSync(tokenKey, data.data.data);
             resolve(data.data.data);
           },
@@ -40,11 +41,32 @@ async function getUserInfo(params) {
       url: baseURL + "/user/exist",
       data: params,
       success: data => {
-        wx.setStorageSync(userFilledInfofoKey, data.data.data);
-        resolve(data.data.data);
+        const userFilledInfo = data.data.data;
+        userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
+        wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
+        resolve(userFilledInfo);
       },
       fail: res => {
         reject(res);
+      }
+    });
+  });
+}
+
+// 检查sessionKey
+async function checkSessionKey() {
+  return new Promise((resolve, reject) => {
+    wx.checkSession({
+      success() {
+        console.log("checkSessionKey success");
+        //session_key 未过期，并且在本生命周期一直有效
+        resolve(true);
+      },
+      fail() {
+        console.log("checkSessionKey fail");
+        // session_key 已经失效，需要重新执行登录流程
+        // wx.login() //重新登录
+        resolve(false);
       }
     });
   });
@@ -67,25 +89,32 @@ const Request = async ({ url, params, method, ...other } = {}) => {
   // 先取localstorage里面openid,userid,
   let token = getTokenStorage();
   let userInfo = getUserStorage();
-  if (token.openid == undefined) {
+
+
+  const sessionValidate = await checkSessionKey();
+  console.log("await checkSessionKey()", sessionValidate);
+
+  if (!token || token == "" || token.openid == undefined || !sessionValidate) {
     token = await getOpenId();
+    console.log("request await token", token);
   }
-  if (userInfo.id == undefined) {
+  if (typeof userInfo != "object") {
     userInfo = await getUserInfo({ openid: token.openid });
+    console.log("request await token", userInfo);
   }
 
-  if (url == "/user/exist") {
-    return new Promise(resolve => {
-      resolve(userInfo);
-    });
-  }
+  // if (url == "/user/exist") {
+  //   return new Promise(resolve => {
+  //     resolve(userInfo);
+  //   });
+  // }
 
   // params放在后面，避免覆盖参数中的openid
-  let data = Object.assign({}, params, {
-    openid: token.openid,
-    wechatId: token.openid,
-    userId: userInfo.id
-  });
+  let data = Object.assign({}, {
+    openid: token.openid ? token.openid : "",
+    wechatId: token.openid ? token.openid : "",
+    userId: userInfo.id ? userInfo.id : ""
+  },params);
 
   // 添加请求加载等待
   wx.showLoading({
@@ -120,8 +149,8 @@ const Request = async ({ url, params, method, ...other } = {}) => {
             resolve(res.data);
           } else {
             console.log(url + "-" + res.statusCode);
-            console.log(data);
-            console.log(res.data);
+            console.error("request请求错误，request data", data);
+            console.error("request请求错误，res.data", res.data);
             // 获取后台返回报错信息
             let title = res.data.err_msg || "请求错误";
             // 调用全局toast方法
@@ -268,5 +297,8 @@ module.exports = {
   _put,
   _delete,
   _postParams,
-  userFilledInfofoKey
+  userFilledInfofoKey,
+  tokenKey,
+  checkSessionKey,
+  getTokenStorage
 };

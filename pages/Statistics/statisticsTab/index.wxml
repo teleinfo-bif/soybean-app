@@ -1,0 +1,10 @@
+<!-- pages/statistics/statisticsTab/index.wxml -->
+<van-tabs bind:click="onClick" swipeable color="#4F7EF2">
+  <van-tab title="健康"></van-tab>
+  <van-tab title="发烧、咳嗽">内容 2</van-tab>
+  <van-tab title="其他">内容 3</van-tab>
+  <van-tab title="标签 2">内容 4</van-tab>
+</van-tabs>
+<scroll-view class="" scroll-x="false" scroll-y="false" upper-threshold="50" lower-threshold="50" scroll-top="0" scroll-left="0" scroll-into-view="" scroll-with-animation="false" enable-back-to-top="false" bindscrolltoupper="" bindscrolltolower="" bindscroll="">
+  <view wx:for="{{1000}}" class="" hover-class="none" hover-stop-propagation="false">1</view>
+</scroll-view>

@@ -1,4 +1,4 @@
-import { getOpenId, getUserPhone } from "../../api/api.js";
+import { getUserPhone } from "../../api/api.js";
 const app = getApp();
 Component({
   options: {
@@ -33,7 +33,7 @@ Component({
   },
   methods: {
     getPhoneNumberFromServer(data = {}) {
-      this.triggerEvent("change", 10010010011);
+      // this.triggerEvent("change", 10010010011);
       getUserPhone(data)
         .then(res => {
           console.log(res);
@@ -48,25 +48,31 @@ Component({
           this.triggerEvent("change", 13888888888);
         })
         .finally(() => {
-          console.error("complete");
+          // console.error("complete");
         });
     },
-    getPhoneNumber(e) {
-      const { sessionKey } = app.globalData;
+    async getPhoneNumber(e) {
+      let { fedToken } = app.globalData;
+      if (!fedToken.sessionKey) {
+        // debugger;
+        let globalData = await app.init();
+        fedToken = globalData.fedToken;
+      }
       let requestData = {
         encryptedData: e.detail.encryptedData,
         iv: e.detail.iv,
-        sessionKey: sessionKey
+        sessionKey: fedToken.sessionKey
       };
-      if (app.globalData.sessionKey) {
-        requestData.sessionKey;
-        this.getPhoneNumberFromServer(requestData);
-      } else {
-        getOpenId().then(({ sessionKey }) => {
-          requestData.sessionKey = sessionKey;
-          this.getPhoneNumberFromServer(requestData);
-        });
-      }
+      this.getPhoneNumberFromServer(requestData);
+      // if (app.globalData.sessionKey) {
+      //   requestData.sessionKey;
+      //   this.getPhoneNumberFromServer(requestData);
+      // } else {
+      //   getOpenId().then(({ sessionKey }) => {
+      //     requestData.sessionKey = sessionKey;
+      //     this.getPhoneNumberFromServer(requestData);
+      //   });
+      // }
       if (e.detail.errMsg == "getPhoneNumber:ok") {
       }
     },

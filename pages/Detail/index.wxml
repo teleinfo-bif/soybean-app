@@ -4,21 +4,28 @@
   <view style="height: 100%;">
     <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
       <view class="head">
-        <view class="head_title" hover-class="none" hover-stop-propagation="false">
-          {{groupName}}
+        <view class="head-title">
+          <image class="btn" src="../../static/images/deatil_data@3x.png" />
+          <Text>{{groupName}}</Text>
         </view>
-        <view class="head_icon">
-          <picker mode="date" value="{{value}}" bindchange="onChange" end="{{ now}}" fields="{{'day'}}">
-            <van-icon name="calender-o" />
-            {{clockInTime}}
-          </picker>
+        <view class="head-date" hover-class="none" hover-stop-propagation="false">
+          <view>
+            <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
+              <view class="head-date-text">
+                <image class="btn" src="../../static/images/health_sign@3x.png" />
+                {{clockInTime}}
+              </view>
+            </picker>
+          </view>
         </view>
       </view>
       <block wx:if="{{clockList.length> 0}}">
         <view class="people-item" wx:for="{{ clockList }}" wx:key="index">
           <view class="people-item_name">{{item.userName || "-"}}</view>
-          <view class="people-item_sign">{{itme.sign ? '已打卡': '未打卡'}}</view>
-          <view class="people-item_detail">打卡记录</view>
+          <view class="people-item_sign">{{itme.healthy != -1 ? '已打卡': '未打卡'}}</view>
+          <view class="people-item_detail color">
+            <navigator url="/pages/clockOthers/index?userId={{item.id}}">打卡详情</navigator>
+          </view>
           <view class="people-item_status">
             <block wx:if="{{ item.healthy == 1}}">
               <view class="status-circle status-circle-green"></view>
@@ -34,7 +41,7 @@
             </block>
             <block wx:else>
               <view class="status-circle status-circle-red"></view>
-              <view>-</view>
+              <view>--</view>
             </block>
           </view>
         </view>

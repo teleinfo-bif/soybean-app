@@ -1,4 +1,5 @@
-import { getLocationPluginMapUrl } from "../../utils/qqmap-wx-jssdk/map";
+import { getLocationPluginMapUrl, reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
+
 Component({
   options: {
     multipleSlots: true,
@@ -31,19 +32,86 @@ Component({
     label: ""
   },
   methods: {
-    onChange(e) {
-      console.log("click");
-      wx.getLocation({
-        // altitude: true,
-        success(res2) {
-          // const latitude = res.latitude;
-          // const longitude = res.longitude;
-          // const speed = res.speed;
-          // const accuracy = res.accuracy;
-          console.log(res2);
-          wx.navigateTo({ url: getLocationPluginMapUrl(res2) });
+    bindGetLoation() {
+      const _this = this
+      wx.showModal({
+        //弹窗提示
+        title: "是否授权当前位置",
+        content:
+          "需要获取您的地理位置，请确认授权，否则地定位功能将无法使用",
+        success: function(tip) {
+          if (tip.confirm) {
+            wx.openSetting({
+              //点击确定则调其用户设置
+              success: function(data) {
+                if (data.authSetting["scope.userLocation"] === true) {
+                  //如果设置成功
+                  wx.showToast({
+                    //弹窗提示
+                    title: "授权成功",
+                    icon: "success",
+                    duration: 1000
+                  });
+                  _this.getLocation()
+                }
+              }
+            });
+          } else {
+            //点击取消按钮，则刷新当前页面
+            wx.redirectTo({
+              //销毁当前页面，并跳转到当前页面
+              url: "index" //此处按照自己的需求更改
+            });
+          }
         }
       });
+    },
+    // 直接获取位置信息
+    getLocation() {
+      const _this = this
+      wx.getLocation({
+        success(res) {
+          reverseAddressFromLocation(res).then(location => {
+            _this.triggerEvent("change", location.result.address);
+          });
+         
+        }
+      });
+    },
+    // 选择位置信息
+    chooseLocation() {
+      wx.getLocation({
+        success(res) {
+          wx.navigateTo({ url: getLocationPluginMapUrl(res) });
+        }
+      });
+    },
+    // picker点击事件
+    onChange(e) {
+      const _this = this
+      wx.getSetting({
+        success:(res)=>{
+          if (!res.authSetting['scope.userLocation']) {
+            console.warn("-----不满足scope.userLocation权限-----");
+            //申请授权
+            wx.authorize({
+              scope: 'scope.userLocation',
+              success() {
+                console.log('-----wx.authorize授权成功-----')
+                _this.getLocation()
+              },
+              fail(e) {
+                console.warn('-----wx.authorize授权失败（第一次拒绝定位）-----')
+                _this.bindGetLoation()
+              }
+            })
+          } else {
+            _this.chooseLocation()
+          }
+        }
+      })
+  
+    
       // const { value } = e.detail
       // this.setLabel(value)
       // this.triggerEvent("change", "test");

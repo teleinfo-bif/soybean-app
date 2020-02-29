@@ -1,18 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-
-    "pages/blockRecords/index",
-
+    "pages/statistics/statisticsTab/index",
     "pages/personal/index",
-
-    "pages/block/index",
-
+    "pages/clock/index",
+    "pages/clockRecords/index",
+    "pages/clockOthers/index",
     "pages/detail/index",
-
     "pages/statistics/index",
     "pages/status/index",
-    "pages/block/status/index",
+    "pages/clock/status/index",
     "pages/index/organization/index"
   ],
   "window": {
@@ -24,7 +21,7 @@
   "sitemapLocation": "sitemap.json",
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+      "desc": "你的位置信息将用于小程序帮您填写资料"
     }
   },
   "plugins": {

@@ -3,10 +3,11 @@
 const QQMapWX = require("./qqmap-wx-jssdk.min.js");
 
 //腾讯位置服务申请的key
-const key = "UYVBZ-XOV6P-JZWD5-V4CMF-46R7T-UMFJ4";
+const key = "2YLBZ-FJS64-RINUP-XWG5O-JC5U3-ALBXJ";
 
 const wxMapSdk = new QQMapWX({
-  key: "27VBZ-4QOLP-ZTDD7-V35OS-WY67E-WEBO4"
+  // key: "27VBZ-4QOLP-ZTDD7-V35OS-WY67E-WEBO4"
+  key: "2YLBZ-FJS64-RINUP-XWG5O-JC5U3-ALBXJ"
 });
 
 // 根据经纬度逆解析位置信息

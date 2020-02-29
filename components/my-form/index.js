@@ -46,6 +46,7 @@ Component({
       if (!fieldSetting || !fieldSetting.props) return;
       const { options = [] } = fieldSetting.props;
       const option = options[index];
+      // debugger;
       this.triggerChange(prop, option);
     },
     onRadioChange(e) {
@@ -69,6 +70,7 @@ Component({
       this.triggerChange(prop, value);
     },
     triggerChange(prop, value, other = null) {
+      console.log("====picker idtype =======");
       this.setData({
         _formData: {
           ...this.data._formData,
@@ -120,10 +122,15 @@ Component({
         const type = field.type;
         switch (type) {
           case "select":
-            const value = formData[prop];
+            // debugger;
+            const value = formData[prop] || {};
             const { itemKey = "", options, itemLabelKey = "" } =
               field.props || {};
-            _formData[prop] = options.find(item => item[itemKey] === value);
+            // 写入的字段是string，选择的是object
+            _formData[prop] = options.find(
+              item =>
+                item[itemKey] === (typeof value == "object" ? value.id : value)
+            );
             break;
           default:
             _formData[prop] = formData[prop];
@@ -143,18 +150,27 @@ Component({
       for (let i = 0; i < Object.keys(fields).length; i++) {
         let prop = fields[i].prop;
         let itemData = _formData[prop];
+        const item = fields[i];
         // 判断 隐藏、不需要验证的字段跳过验证
-        if (
-          fields[i].require == true &&
-          fields[i].hide != true &&
-          (itemData == null || itemData == undefined || itemData.length == 0)
-        ) {
+        if (item.require != false && item.hide != true) {
           let emptyItem = this.getFormItemLabel(prop)[0];
-          wx.showToast({
-            title: emptyItem.title + "项不能为空",
-            icon: "none"
-          });
-          return false;
+          if (item.props.validate && !item.props.validate(itemData)) {
+            wx.showToast({
+              title: emptyItem.title + "验证错误",
+              icon: "none"
+            });
+            return false;
+          } else if (
+            itemData == null ||
+            itemData == undefined ||
+            itemData.length == 0
+          ) {
+            wx.showToast({
+              title: emptyItem.title + "项不能为空",
+              icon: "none"
+            });
+            return false;
+          } 
         }
       }
       return true;

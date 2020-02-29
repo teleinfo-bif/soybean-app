@@ -3,7 +3,7 @@
   <!-- 首页banner -->
   <Banner statusBarHeight="{{statusBarHeight}}"></Banner>
   <!-- 录入个人信息 -->
-  <EnteringInfo></EnteringInfo>
+  <EnteringInfo userFilledInfo="{{userFilledInfo}}"></EnteringInfo>
   <!-- 健康打卡 -->
   <Sign></Sign>
   <!-- 组织信息 -->

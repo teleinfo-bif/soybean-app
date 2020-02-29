@@ -26,7 +26,8 @@ function setOption(chart, data, index = 0) {
       textStyle: {
         color: "#000",
         fontSize: "130px",
-        align: "center"
+        align: "center",
+        rich:{}
       }
     },
     series: [
