@@ -191,7 +191,7 @@ Page({
       currentDate: e.detail.value
     })
 
-   this.analysisLevel(this.data.authorityLevel)
+  //  this.analysisLevel(this.data.authorityLevel)
   
   },
 
