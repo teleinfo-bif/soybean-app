@@ -79,6 +79,12 @@ function intersecteArray(array1, array2) {
     return result
 }
 
+function buildRegexp(input, endStr) {
+    let regexpStr= input.replace(new RegExp(' ', "g"), "\\s{1}") //^((湖\s{1}北\s{1}的)){1}
+    regexpStr = `^((${regexpStr}))${endStr}`
+    return regexpStr
+}
+
 async function regExpIdsFilter(date, days, regExp) {
     let coolingDay = new Date(getDayString(date, -days))
     let limit = await getLimit(".")
@@ -322,7 +328,7 @@ async function getRow3(userInfo, dateTimeStr, department) {
     let fromNotHBAndSegregatedCount = 0
 
     if (department != ".") {
-        group = department
+        group = userInfo.company_department
     }
 
     let clockeds = await clockedDatas(dateTimeStr)
@@ -776,7 +782,7 @@ async function getDetails(dateTimeStr, department) {
     userAggr = await db.collection('user_info').aggregate()
         .match({
             company_department: db.RegExp({
-                regexp: department + "*",
+                regexp: department,
                 options: 'i',
             }),
             _openid: _.neq("")
@@ -859,10 +865,18 @@ exports.main = async (event, context) => {
         let dataCVS = `统计信息表-${userInfo.name}-${Number(new Date())}.xlsx`
 
         let department = ""
-        if (userInfo.usertype != undefined && userInfo.usertype == "1") {
-            department = userInfo.company_department //部门管理员，能看到自己所在部门的信息
+        if (userInfo.usertype != undefined && userInfo.usertype == "1") { //^((湖\s{1}北\s{1}的)){1}
             if (userInfo.company_department == undefined || userInfo.company_department == "") {
                 department = "*"  //没有部门的人
+            } else {
+                department = buildRegexp(userInfo.company_department, "{1}") //二级部门管理员，能看到自己所在部门的信息
+            }
+        } else if (userInfo.usertype != undefined && userInfo.usertype == "2") {
+            department = userInfo.company_department //部门管理员，能看到自己所在部门的信息
+            if (userInfo.company_department == undefined || userInfo.company_department == "") {
+                department = "*"  
+            } else {
+                department = buildRegexp(userInfo.company_department, "$") //三级管理员
             }
         }
 
