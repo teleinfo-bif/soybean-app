@@ -18,7 +18,8 @@
     "pages/seperateDetails/seperateDetails",
     "pages/epidemiNews/epidemiNews",
     "pages/epidemiMap/epidemicMap",
-    "pages/journeyCheck/journeyCheck"
+    "pages/journeyCheck/journeyCheck",
+    "pages/submitSuccess/submitSuccess"
   ],
   "permission": {
     "scope.userLocation": {

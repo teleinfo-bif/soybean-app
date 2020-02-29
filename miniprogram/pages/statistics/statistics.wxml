@@ -252,6 +252,6 @@
   </view> -->
 
   <view class="foot">
-    <button class="btn" bindtap="exportExcel">导出数据</button>
+    <button class="btn" bindtap="exportExcel">导出报告</button>
   </view>
 </view>
