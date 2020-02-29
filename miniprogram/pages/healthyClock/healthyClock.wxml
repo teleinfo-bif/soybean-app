@@ -1,40 +1,48 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <form bindsubmit="onAdd" class="form">
-    <view class="page__bd">
-
-      <view style="height: 1rpx;"></view>
-      <view class="weui-cells__title">姓名:</view>
-      <view class="weui-cell_ ">
-        <view class="weui-cell__bd">
+    <view class='devide-head'/>
+    <!-- 基本信息 -->
+    <view class="personal-title">
+      <view class="personal-icon"></view>
+      <text class="personal-info"> 基本信息</text>
+    </view>
+    <view class='devide-middle'/>
+  <form bindsubmit="onAdd" class="clock_form">
+    <view class="clock__bd">
+ 
+      <view class="clock_form__title">姓名</view>
+      <view class="">
+        <view class="clock_form_input">
           <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" disabled="true" />
           <!--         <label weui-input>{{name}}</label>-->
         </view>
       </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">手机号:</view>
-      <view class="weui-cell_ ">
-        <view class="weui-cell__bd">
+      <view class="clock_form__title">手机号</view>
+      <view class="">
+        <view class="clock_form_input">
           <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" disabled="true" />
           <!--     <label weui-input>{{phone}}</label>-->
         </view>
       </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">
-        <text style="">打卡地点:</text>
-              <!-- <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text> -->
+      <view class="clock_form__title">
+        <text style="">打卡地点</text>
+              <text style="float:right;width:10%;display:inline;color:#4169E1; margin-right:20rpx" bindtap="onShow">获取</text>
 
       </view>
-
-      <view class="weui-cell_ ">
-        <view class="weui-cell__bd">
-          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true"/>
+      
+      <view class="">
+        <view class="clock_form_input">
+          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true" placeholder-class="placeholder-style"/>
         </view>
       </view>
-
+      <view class='devide-middle'/>
 
       <view wx:if="{{isGoBackFlag == '1'}}">
         <!--未返京开始-->
-        <view class="weui-cells__title">未返京原因:
+        <view class="clock_form__title">未返京原因:
 
         </view>
         <view>
@@ -45,12 +53,12 @@
           </radio-group>
         </view>
 
-        <view class="weui-cells__title">
+        <view class="clock_form__title">
           计划返京日期:
         </view>
         <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell ">
-            <view class="weui-cell__bd">
+            <view class="clock_form_input">
               <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
                 <view class="weui-input" style="width:85%;float:left;">{{gobackdate}}</view>
                 <view style="align:right;width:10%;display:inline;color:#4169E1">
@@ -65,7 +73,7 @@
 
       <view wx:if="{{isGoBackFlag == '0'}}">
         <!--已返京开始-->
-        <view class="weui-cells__title">是否离过京(2020年1月10日以后):</view>
+        <view class="clock_form__title">是否离过京(2020年1月10日以后):</view>
         <view>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{leaveBeijingItems}}" wx:key="index">
@@ -73,15 +81,16 @@
             </label>
           </radio-group>
         </view>
-
+       <view class='devide-middle'/>
+       
         <view wx:if="{{isLeaveBjFlag == '0'}}">
           <!--14天内离京开始-->
-          <view class="weui-cells__title">
+          <view class="clock_form__title">
             离京日期:
           </view>
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
-              <view class="weui-cell__bd">
+              <view class="clock_form_input">
                 <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
                   <view class="weui-input" style="width:85%;float:left;">{{leavedate}}</view>
                   <view style="align:right;width:10%;display:inline;color:#4169E1">
@@ -92,12 +101,12 @@
             </view>
           </view>
 
-          <view class="weui-cells__title">
+          <view class="clock_form__title">
             返京日期
           </view>
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
-              <view class="weui-cell__bd">
+              <view class="clock_form_input">
                 <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
                   <view class="weui-input" style="width:85%;float:left;">{{suregobackdate}}</view>
                   <view style="align:right;width:10%;display:inline;color:#4169E1">
@@ -108,11 +117,11 @@
             </view>
           </view>
 
-          <view class="weui-cells__title">返京所乘车次/航班/车牌</view>
+          <view class="clock_form__title">返京所乘车次/航班/车牌</view>
           <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell ">
-              <view class="weui-cell__bd">
-                <input class="weui-input" name="trainnumber" value="{{trainnumber}}" placeholder="请输入车次/航班/车牌" />
+              <view class="clock_form_input">
+                <input class="weui-input" name="trainnumber" value="{{trainnumber}}" placeholder="请输入车次/航班/车牌" placeholder-class="placeholder-style"/>
               </view>
             </view>
           </view>
@@ -121,71 +130,81 @@
       </view>
       <!--已返京结束-->
 
-      <view class="weui-cells__title">当日体温:</view>
-      <view class="weui-cell_">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="temperature" placeholder="请输入体温，健康体温不大于37.2度" bindblur="judgeTemperature"/>
+      <view class="clock_form__title">当日体温</view>
+      <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="temperature" placeholder="请输入体温，健康体温不大于37.2度" placeholder-class="placeholder-style" bindblur="judgeTemperature"/>
           </view>
-        </view>
+      </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">是否确诊:</view>
-      <view>
+      <view class="clock_form__title">是否确诊</view>
+      <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
             <radio value="{{item.value}}" />{{item.name}}
+            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>
       </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">是否就诊住院:</view>
-      <view>
+      <view class="clock_form__title">是否就诊住院</view>
+      <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHospitalRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
             <radio value="{{item.value}}" />{{item.name}}
+            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>
       </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">目前健康状况:</view>
-      <view>
+      <view class="clock_form__title">目前健康状况</view>
+      <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
           <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
            <view wx:if="{{index == 0}}">
             <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
+            <view  wx:if='{{index != radioHealthyStatusItems.length-1}}'class='devide-radio'/>
            </view>
            <view wx:else>
             <radio value="{{item.value}}" />{{item.name}}
+             <view  wx:if='{{index != radioHealthyStatusItems.length-1}}'class='devide-radio'/>
            </view>
           </label>
         </radio-group>
       </view>
 
-      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells__title">健康状况为其他的原因</view>
-      <view wx:if="{{bodyStatusFlag == '2'}}" class="weui-cells weui-cells_after-title">
-        <view class="weui-cell ">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="bodystatusotherremark" placeholder="请输入信息" />
+      <view wx:if="{{bodyStatusFlag == '2'}}" class="clock_form__title">健康状况为其他的原因</view>
+      <view wx:if="{{bodyStatusFlag == '2'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="bodystatusotherremark" placeholder="请输入信息" placeholder-class="placeholder-style"/>
           </view>
         </view>
       </view>
+      <view class='devide-middle'/>
 
-      
-
-      <view class="weui-cells__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:</view>
-      <view>
+      <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉</view>
+      <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
             <radio value="{{item.value}}" />{{item.name}}
+            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
+  
         </radio-group>
       </view>
+      <view class='devide-middle'/>
 
-      <view class="weui-cells__title">其他:</view>
-       <view class="weui-cell_">
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="remark" placeholder="请输入信息" />
+      <view class="clock_form__title">其他</view>
+       <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="remark" placeholder="请输入信息" placeholder-class="placeholder-style"/>
           </view>
-        </view>
+      </view>
+      <view class='devide-middle'/>
 
       <view class="weui-btn-area" style="margin: 28px 16px 8px;padding-bottom: 20px;">
         <button class="weui-btn" hover-class="weui-btn-hover" wx:if="{{todayClickFlag == '0'}}" form-type="submit" style="color:#fff">提交</button>
