@@ -200,7 +200,8 @@ Page({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
-          loginUserInfo: "您好， " + res.data[0].name + '!'
+          loginUserInfo: "您好， " + res.data[0].name + '!',
+          department: title
         })
 
         // app.globalData.userBaseInfo = res.data[0]
