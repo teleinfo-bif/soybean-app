@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "FuncBtn": "../FuncBtn/FuncBtn"
+    "funcBtn": "../funcBtn/index"
   }
 }

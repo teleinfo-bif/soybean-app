@@ -2,9 +2,9 @@
   <!-- <view class="module_head">
     <text>{{head}}</text>
   </view> -->
-  <view class="module_content">
+  <funcBtn class="module_content">
     <!-- <slot name="funcbtn"></slot> -->
-    <FuncBtn btn-data="{{stastic}}"></FuncBtn>
-    <FuncBtn btn-data="{{detail}}"></FuncBtn>
+    <funcBtn btn-data="{{stastic}}"></funcBtn>
+    <funcBtn btn-data="{{detail}}"></funcBtn>
   </view>
 </view>

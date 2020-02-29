@@ -2,7 +2,7 @@
 <view class="module">
   <view class="module_content">
     <!-- <slot name="funcbtn"></slot> -->
-    <FuncBtn btn-data="{{healthSign}}"></FuncBtn>
-    <FuncBtn btn-data="{{healthCode}}"></FuncBtn>
+    <funcBtn btn-data="{{healthSign}}"></funcBtn>
+    <funcBtn btn-data="{{healthCode}}"></funcBtn>
   </view>
 </view>
