@@ -37,7 +37,7 @@ Page({
     },
     groupId: null,
     groupName: "",
-    clockInTime: ""
+    clockInTime: getyyyyMMdd(new Date())
   },
 
   getData() {

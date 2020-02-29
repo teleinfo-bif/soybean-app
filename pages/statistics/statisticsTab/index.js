@@ -1,33 +1,168 @@
 // pages/statistics/statisticsTab/index.js
+import { getGroupCensusList } from "../../../api/api";
+function getyyyyMMdd(date) {
+  var d = date || new Date();
+  var curr_date = d.getDate();
+  var curr_month = d.getMonth() + 1;
+  var curr_year = d.getFullYear();
+  String(curr_month).length < 2 ? (curr_month = "0" + curr_month) : curr_month;
+  String(curr_date).length < 2 ? (curr_date = "0" + curr_date) : curr_date;
+  var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
+  return yyyyMMdd;
+}
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    currentTab: ["北京", "武汉", "湖北其他", "全国其他"],
-    // currentTab: ['健康', '发烧、咳嗽', '其他'],
-    currentTab3: ["北京", "武汉", "湖北其他", "全国其他"],
-    currentTab2: ["确诊", "隔离期", "出隔离期", "其他"],
-    currentData: [],
-    tabs: [
-      {
-        name: "",
-        tabNames: ["北京", "武汉", "湖北其他", "全国其他"]
-      }
-    ]
+    clockInTime: getyyyyMMdd(new Date()),
+    type: "",
+    groupId: "",
+    currentTab: {},
+    currentTabList: [], //当前现实的tab的数据情况
+    currentTabData: [], //当前现实的tab的数据列表
+    allData: [], // 所有分页数据的集合
+    activeIndex: 0, //当前选中的索引
+    activeType: 0,
+    tabsOption: {
+      healthy: [
+        {
+          name: "发烧、咳嗽",
+          type: 2
+        },
+        {
+          name: "其他",
+          type: 0
+        },
+        {
+          name: "健康",
+          type: 1
+        }
+      ],
+      hospitalization: [
+        {
+          name: "确诊",
+          type: 1
+        },
+        {
+          name: "隔离期",
+          type: 2
+        },
+        {
+          name: "出隔离期",
+          type: 3
+        },
+        {
+          name: "其他",
+          type: 4
+        }
+      ],
+      region: [
+        {
+          name: "武汉",
+          type: 1
+        },
+        {
+          name: "湖北其他",
+          type: 2
+        },
+        {
+          name: "北京",
+          type: 3
+        },
+        {
+          name: "其他",
+          type: 4
+        }
+      ]
+    }
   },
-  onClick(event) {
-    console.log(event);
-    wx.showToast({
-      title: `点击标签 ${event.detail.name}`,
-      icon: "none"
+  lower(e) {
+    // console.log(e);
+    // console.log("到底了");
+    this.getData();
+  },
+  onClick(e) {
+    const activeIndex = e.detail.index;
+    wx.pageScrollTo({
+      scrollTop: 0
     });
+    this.setData(
+      {
+        activeIndex,
+        currentTabData: this.data.allData[activeIndex]
+      },
+      this.getData
+    );
+  },
+  onscroll(e, b) {
+    console.log(e);
+    console.log(b);
+  },
+
+  getData() {
+    const {
+      groupId,
+      clockInTime,
+      type,
+      type: url,
+      currentTab,
+      activeIndex,
+      allData
+    } = this.data;
+    let { current, pages } = allData[activeIndex];
+    if (current == 0 || current < pages) {
+      let params = {};
+      params[type] = currentTab[activeIndex].type;
+
+      getGroupCensusList({
+        url,
+        groupId,
+        current: ++current,
+        clockInTime,
+        ...params
+      }).then(data => {
+        allData[activeIndex] = {
+          ...data,
+          records: allData[activeIndex].records.concat(data.records)
+        };
+        this.setData({ allData });
+      });
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    console.log("提醒：页面接受的参数：", options);
+    const { groupId, type, clockInTime } = options;
+    const currentTab = this.data.tabsOption[type];
+    const allData = [];
+    currentTab.forEach((item, index) => {
+      allData.push({
+        total: 0,
+        size: 0,
+        current: 0,
+        orders: [],
+        searchCount: true,
+        pages: 0,
+        records: []
+      });
+    });
+    this.setData(
+      {
+        type,
+        groupId,
+        clockInTime,
+        currentTab,
+        allData,
+        currentTabData: allData[0],
+        activeType: currentTab[0].type
+      },
+      this.getData
+    );
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

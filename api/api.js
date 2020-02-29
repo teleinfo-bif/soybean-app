@@ -101,3 +101,8 @@ export const getGroupStatistic = async params => {
 export const getGroupBlockList = async params => {
   return Request._get("/wx/clockln/census/list", params);
 };
+
+// 获取群组打卡分类信息
+export const getGroupCensusList = async params => {
+  return Request._get(`/wx/clockln/census/${params.url}`, params);
+};

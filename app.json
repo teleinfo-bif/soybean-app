@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/statistics/statisticsTab/index",
     "pages/clockOthers/index",
+    "pages/statistics/statisticsTab/index",
 
     "pages/personal/index",
     "pages/clock/index",

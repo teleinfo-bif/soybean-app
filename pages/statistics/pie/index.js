@@ -72,6 +72,18 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    type: {
+      type: String,
+      default: ""
+    },
+    groupId: {
+      type: [Number, String],
+      default: 0
+    },
+    clockInTime: {
+      type: [Number, String],
+      default: 0
+    },
     first: {
       type: Boolean,
       default: false
@@ -129,8 +141,9 @@ Component({
     },
     // pie图点击跳转
     onPieClick() {
+      const { groupId, type, clockInTime } = this.data;
       wx.navigateTo({
-        url: "/pages/statistics/statisticsTab/index?type=1"
+        url: `/pages/statistics/statisticsTab/index?groupId=${groupId}&type=${type}&clockInTime=${clockInTime}`
       });
     }
   }

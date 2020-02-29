@@ -51,7 +51,7 @@
   <!-- <navigator class="" target="" url="/pages/statisticsTab" hover-class="navigator-hover" open-type="navigate">
     
   </navigator> -->
-  <pie first="{{true}}" title="健康情况测试" class="health-box" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
-  <pie title="所在地区分布情况" data="{{data.region}}" clockIn="{{data.totality.clockIn}}"></pie>
-  <pie title="就诊住院情况" data="{{data.hospitalization}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie first="{{true}}" type="healthy" groupId="{{groupId}}" title="健康情况测试" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie type="region" groupId="{{groupId}}" title="所在地区分布情况" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie type="hospitalization" groupId="{{groupId}}" title="就诊住院情况" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>
