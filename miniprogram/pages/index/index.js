@@ -16,6 +16,7 @@ Page({
     isSuperUserFlag: '0',
     loginUserInfo: "用户注册",
     department: '',//所在部门
+    todayClickFlag: "0",
 
     swiperPages: [
       "../epidemiNews/epidemiNews",
@@ -95,7 +96,7 @@ Page({
         console.log(res)
         //今日已打卡
         if (res.data.length > 0) {
-          app.globalData.todayClickFlag = '1'
+          that.data.todayClickFlag = '1'
         }
         that.getUserManagerFlag();
       },
@@ -175,7 +176,7 @@ Page({
         var department = res.data[0].company_department
         var infoes = department.split(' ')
         var regInfo = ""
-        var title = "434" 
+        var title = "众志成城，抗击疫情" 
         var superuser = res.data[0].superuser
         var userType = res.data[0].usertype
 
@@ -221,7 +222,7 @@ Page({
 
   //跳转打卡记录页面
   gotoHealthyClick: function (e) {
-    if (app.globalData.todayClickFlag == '1') {
+    if (this.data.todayClickFlag == '1') {
       wx.navigateTo({
         url: '../healthyClocked/healthyClocked'
       })
