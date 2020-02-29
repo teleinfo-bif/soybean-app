@@ -246,3 +246,15 @@ white-space: nowrap;
   width: 72rpx;
   height: 72rpx;
 }
+
+.copyright {
+  margin: auto;
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+  width:  720rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  text-align: center;
+  color: #999;
+  font-size: 25rpx;
+}
