@@ -165,3 +165,83 @@
   color: #333333;
 
 }
+
+
+.group {
+  background-color: #fff;
+  width: 690rpx;
+  margin: auto;
+  border-radius: 20rpx;
+}
+.group-title {
+  height: 88rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid rgba(234,234,239,1);
+}
+.group-title-name {
+ margin-left: 21rpx; 
+font-size:30rpx;
+font-family:"PingFang SC";
+font-weight:400;
+color:rgba(51,51,51,1);
+
+}
+.group-title-icon {
+  margin-right: 30rpx; 
+  width: 250rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-title-icon-item {
+  width: 45rpx;
+  height: 45rpx;
+}
+.group-items {
+  padding-bottom: 170rpx;
+}
+.group-item {
+  height: 120rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  border-bottom: 1rpx solid rgba(234,234,239,1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+.group-item-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.group-item-icon-manger {
+  font-size:20rpx;
+}
+.group-item-name { 
+  margin-left: 10rpx;
+font-size:30rpx;
+font-family:"PingFang SC";
+font-weight:400;
+color:rgba(51,51,51,1);
+max-width: 350rpx;
+overflow: hidden;    
+text-overflow: ellipsis; 
+white-space: nowrap;
+}
+.group-item-icons {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.group-item-icon {
+  display: block;
+  width: 72rpx;
+  height: 72rpx;
+}

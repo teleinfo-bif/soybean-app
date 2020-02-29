@@ -1,0 +1,46 @@
+<view class="page_detail">
+
+  <view class="head_body">
+    <view class="title-info">
+      <text>{{titleInfo}}</text>
+    </view>
+
+    <view class="title-time-info">
+      <view class="title-time-text">
+        <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+          <text>{{currentDate}}</text>
+        </picker>
+      </view>
+
+      <view>
+        <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="detail_body">
+
+    <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
+      <label>{{item.name}}</label>
+      <label style="float:right" wx:if="{{item.temperature > 0}}">已打卡</label>
+      <label style="float:right" wx:else="{{item.temperature > 0}}">未打卡</label>
+      
+
+      
+      
+      
+<!-- 
+      <label wx:else="{{item.temperature > 0}}">
+        <view>
+          <view class="tree-children-status-gray"></view>
+          <view class="tree-children-status-text">---</view>
+        </view>
+      </label> -->
+    </view>
+    <view>
+    </view>
+  </view>
+  <!--列表部分开始-->
+
+</view>

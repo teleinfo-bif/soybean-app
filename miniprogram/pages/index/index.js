@@ -15,6 +15,7 @@ Page({
     isManagerFlag: '0',
     isSuperUserFlag: '0',
     loginUserInfo: "录入用户信息",
+    department: '',//所在部门
 
     swiperPages: [
       "../epidemiNews/epidemiNews",
@@ -169,11 +170,41 @@ Page({
       success: res => {
         console.log("datas: ", res)
         that.userinfo = res.data;
+
+
+        var department = res.data[0].company_department
+        var infoes = department.split(' ')
+        var regInfo = ""
+        var title = "434" 
+        var superuser = res.data[0].superuser
+        var userType = res.data[0].usertype
+
+        if (superuser != null && superuser == "1") {
+          level = 1
+          title = "中国信息通信技术研究院"
+        }else if (userType == '1'){
+          title = infoes[0]
+          // level = 2
+          if (infoes[0] == '院属公司及协会') {
+            regInfo = '.*' + infoes[1]
+            title = infoes[1]
+          } else {
+            regInfo = infoes[0] + ".*"
+            title = infoes[0]
+          }
+        }else if (userType == '2'){
+          level = 3
+          regInfo = "",
+          title = infoes[1]
+        }
+
+
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
-          loginUserInfo: "你好！ " + res.data[0].name
+          loginUserInfo: "你好！ " + res.data[0].name,
+          department: title
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -392,6 +423,24 @@ Page({
     
     console.log("shareObj, ", shareObj)
     return shareObj;
+  },
+
+  gotoStatistics: function() {
+    wx.navigateTo({
+      url: '../statistics/statistics'
+    })
+  },
+  gotoDetailClick: function() {
+    if(this.data.isSuperUserFlag == '1' || this.data.isManagerFlag == '1'){
+      wx.navigateTo({
+        url: '../departmentDetail/departmentDetail?department='+ this.data.department
+      })
+    } else {
+      wx.navigateTo({
+        url: '../totaluserdetail2/totaluserdetail2'
+      })
+    }
   }
+  
 
 })

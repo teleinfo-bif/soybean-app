@@ -1,0 +1,35 @@
+<view class="page_detail">
+
+  <view class="head_body">
+    <view class="title-info">
+      <text>{{titleInfo}}</text>
+    </view>
+
+    <view class="title-time-info">
+      <view class="title-time-text">
+        <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+          <text>{{currentDate}}</text>
+        </picker>
+      </view>
+
+      <view>
+        <image class="title-time-icon" src="../../images/jiankangdaka.png"></image>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="detail_body">
+
+    <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
+      <view class="userclicklist-name">{{item.name}}</view>
+      <view>{{item.num}}人</view>
+      <view class="group-item-icons" bindtap="gotoStatistics">
+        <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />                   
+      </view>
+    </view>
+   
+  </view>
+ 
+
+</view>

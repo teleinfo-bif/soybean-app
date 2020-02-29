@@ -18,7 +18,9 @@
     "pages/seperateDetails/seperateDetails",
     "pages/epidemiNews/epidemiNews",
     "pages/epidemiMap/epidemicMap",
-    "pages/journeyCheck/journeyCheck"
+    "pages/journeyCheck/journeyCheck",
+    "pages/departmentDetail/departmentDetail",
+    "pages/totaluserdetail2/totaluserdetail2"
   ],
   "permission": {
     "scope.userLocation": {
