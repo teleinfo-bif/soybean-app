@@ -32,8 +32,8 @@ Page({
     user_info_data: {},
     disabled: false,
     forever_disabled: false,
-    choice_color: "color: #4169E1",
-    forever_choice_color: "color: #4169E1",
+    choice_color: "color: #1759EF",
+    forever_choice_color: "color: #1759EF",
     record_id: "",
     placeholder_name: "请输入姓名",
     placeholder_phone: "请输入手机号码",
@@ -406,8 +406,8 @@ Page({
             placeholder_home_detail: res.data[0].home_detail,
             disabled: true,
             forever_disabled: true,
-            choice_color: "color: #bbbbbb",
-            forever_choice_color: "color: #bbbbbb",
+            choice_color: "color: #999999",
+            forever_choice_color: "color: #999999",
             personal_info_change: "personal-change-show",
             buttons_display: "display: none",
             phone_display: "display: none"
@@ -435,7 +435,7 @@ Page({
   personalInfoChange: function(res) {
     this.setData({
       disabled: false,
-      choice_color: "color: #4169E1",
+      choice_color: "color: #1759EF",
 
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,

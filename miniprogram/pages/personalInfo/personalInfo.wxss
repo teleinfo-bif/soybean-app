@@ -1,67 +1,61 @@
 /* pages/personalInfo/personalInfo.wxss */
 
 .page { 
-  background-color: #F5F5F5;
+  background-color: rgba(249, 249, 249, 1);
   margin-bottom: 50rpx;
 }
 
 .personal{
-  width: 720rpx;
-  margin: auto;
-  margin-top: 20rpx;
   background-color: #ffffff;
   font-family: PingFangSC-Regular;
 }
 
-.personal-divide {
-  width: 100%;
-  height: 3rpx;
-  background: #DDDDDD;
-  margin-top: 10rpx;
-}
-
 .personal-title{
   width: 100%;
-  height: 60rpx;
-  margin-top: 20rpx;
-  margin-right: 30rpx;
-  margin-left: 30rpx;
-
+  height: 105rpx;
+  margin-top: 35rpx;
+  font-size:36rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight:600;
+  color:rgba(51,51,51,1);
+  line-height:50rpx;
+  padding-top:35rpx;
   /* background-color: #ffffff; */
 }
 
 .personal-icon{
-  width: 3rpx;
+  width: 12rpx;
   height: 40rpx;
-  padding: 5rpx 4rpx 10rpx 10rpx;
   float: left;
-  background: #4169E1
+  margin-left:30rpx;
+  margin-right:14rpx;
+  margin-top:11rpx;
+  background: rgba(23, 89, 239, 1);
 }
 .personal-info{
-  width: 300rpx;
-  height: 60rpx;
   float: left;
   font-size: 36rpx;
-  padding: 0rpx 10rpx 20rpx 20rpx;
   line-height: 60rpx;
   color: #333333
 }
 
 .personal-change-show{
-  margin-top: 15rpx;
-  margin-right: 60rpx;
   float: right;
-  font-size: 30rpx;
-  color: #4169E1
+  color: #1759EF;
+  margin-right:30rpx;
 }
 
 .personal-change-hide{
   display: none;
-  margin-top: 15rpx;
-  margin-right: 60rpx;
   float: right;
-  font-size: 30rpx;
-  color: #4169E1
+  color: #1759EF;
+  margin-right:30rpx;
+}
+
+.personal-divide {
+  width: 100%;
+  height: 10rpx;
+  background-color: rgba(249, 249, 249, 1);
 }
 
 .personal-view{
@@ -71,31 +65,52 @@
 }
 
 .personal-info-hd {
-  margin-top: 30rpx;
-  width: 100%;
-  padding-left: 30rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  height: 75rpx;
+  margin-left:30rpx;
+  margin-top:20rpx;
 }
 
+
 .personal-info-td {
-  margin-top: 20rpx;
-  border-bottom: 2rpx solid #F5F5F5; 
-  padding-left: 30rpx;
+  margin-top:20rpx;
+  margin-bottom:30rpx;
+  margin-left:30rpx;
+/*   border-bottom: 2rpx solid #F5F5F5; 
+  padding-left: 30rpx; */
 }
 
 /* .personal-info-picker {
   margin-top: 10rpx;
 } */
 
-.info-label{
-  color: #999999;
-  font-size: 30rpx;
+.info-input{
+  width: 100%;
+  height: 45rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+/*   font-size: 35rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+  font-family: PingFangSC-Regular;
+  color: #222222; */
 }
 
 .info-choice{
   /* color: #4169E1; */
+  margin-top:50rpx;
   font-size: 30rpx;
   float: right;
-  margin-right: 40rpx;
+  margin-right: 30rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(23,89,239,1);
+  line-height:42rpx;
 }
 
 .info-phone {
@@ -106,57 +121,56 @@
   color: #4169E1;
 }
 
-.info-input{
-  width: 100%;
-  height: 45rpx;
-  font-size: 35rpx;
-  border-bottom: 2rpx solid #F5F5F5;
-  font-family: PingFangSC-Regular;
-  color: #222222;
-}
+
 
 .placeholder-style {
-  color: #bbbbbb;
-  margin-left: 10rpx;
+  color: #999999;
+/*   margin-left: 10rpx;
   margin-top: -5rpx;
   
-  font-size: 35rpx;
+  font-size: 35rpx; */
 }
 
 .personal-buttons{
   width: 100%;
-  height: 160rpx;
+  height: 155rpx;
   background: #F5F5F5;
-  margin-top: 60rpx;
+  margin-top: 80rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 .button-reset {
-  background: white;
+  background: #E6E6E6;
   display: flex;
   width: 300rpx;
-  height: 100rpx;
+  height: 90rpx;
   margin-top: 30rpx;
   margin-right: 10rpx;
-  line-height: 100rpx;
-  font-size: 35rpx;
   text-align: center;
   justify-content: center;
-  
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:90rpx;
+  border-radius: 0rpx;
 }
 
 .button-submit {
-  background:  #4169E1;
+  background:  #1759EF;
   width: 300rpx;
-  height: 100rpx;
+  height: 90rpx;
   margin-top: 30rpx;
   margin-left: 10rpx;
-  line-height: 100rpx;
-  font-size: 35rpx;
-  color: white;
   text-align: center;
   justify-content: center;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:90rpx;
+  border-radius: 0rpx;
 }
 
