@@ -165,9 +165,11 @@ Page({
           }
         })
   },
-  gotoStatistics: function() {
+  gotoStatistics: function(e) {
+    console.log(e.currentTarget.dataset.name)
+    var name = e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: '../statistics/statistics'
+      url: '../statistics/statistics?name=' + name
     })
   },
 
@@ -193,52 +195,5 @@ Page({
   
   },
 
-  // onQuery: function () {
-  //   const db = wx.cloud.database();
-  //   var that = this;
-  //   // 获取总数
 
-  //   let user_id = that.data.user_id
-  //   if (user_id == null || user_id == '' || user_id.length < 20) {
-  //     user_id = app.globalData.openid
-  //   }
-  //   console.log("user_id" + user_id);
-  //   db.collection('user_healthy').where({
-  //     _openid: that.data.user_id
-  //   }).count({
-  //     success: function (res) {
-  //       console.log("群组分页查询记录数为：" + res.total)
-  //       that.data.totalCount = res.total;
-  //     }
-  //   })
-
-  //   db.collection('user_healthy').where({
-  //     _openid: that.data.user_id
-  //   }).limit(10) // 限制返回数量为 10 条
-  //     .orderBy('addtime', 'desc').get({
-  //       success: res => {
-  //         that.data.datas = res.data;
-  //         this.setData({
-  //           datas: that.data.datas
-  //         })
-  //         wx.hideLoading();
-  //         wx.hideNavigationBarLoading();//隐藏加载
-  //         wx.stopPullDownRefresh();
-  //         console.log('[数据库] [查询记录] 成功: ', res)
-  //       },
-  //       fail: err => {
-  //         wx.hideLoading();
-  //         wx.stopPullDownRefresh();
-  //         console.error('[数据库] [查询记录] 失败：', err)
-  //       }
-  //     })
-  // },
-
-  //返京日期
-  // dateChange: function (e) {
-  //   console.log('日期选择改变，携带值为', e.detail.value)
-  //   this.setData({
-  //     date: e.detail.value
-  //   })
-  // },
 });

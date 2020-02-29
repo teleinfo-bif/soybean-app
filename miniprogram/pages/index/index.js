@@ -179,10 +179,7 @@ Page({
         var superuser = res.data[0].superuser
         var userType = res.data[0].usertype
 
-        if (superuser != null && superuser == "1") {
-          level = 1
-          title = "中国信息通信技术研究院"
-        }else if (userType == '1'){
+        if (userType == '1'){
           title = infoes[0]
           // level = 2
           if (infoes[0] == '院属公司及协会') {

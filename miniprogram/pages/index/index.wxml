@@ -49,8 +49,8 @@
       <view class="group-items">
             <view class="group-item">
               <view class="group-item-title" bindtap="gotoDetailClick">
-                <image class="group-item-icon" src="../../images/jiankangdaka2x.png" />
-                <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view>
+                <image class="group-item-icon" src="../../images/title-icon.png" />
+                <!-- <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view> -->
                 <view class="group-item-name">{{department}}</view>
               </view>
               <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">

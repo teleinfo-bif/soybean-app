@@ -1002,8 +1002,14 @@ parseDatas: function(datas) {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    this.initDatas(this.getCurrentDay())
+    let name = decodeURIComponent(options.name)
+    console.log('name: ', name)
+    if(name !=="undefined") {
+      this.initDatas2(name, this.getCurrentDay())
+    }else {
+      this.initDatas(this.getCurrentDay())
+    }
+    
 
   
     // var d1 = new Date('2020-02-01')
@@ -1056,10 +1062,68 @@ parseDatas: function(datas) {
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  // onShareAppMessage: function () {
+  initDatas2: function(name, currentDate) {
+    // const db = wx.cloud.database()
+    this.setData({
+      showDate: currentDate,
+      companyDepartment: name,
+      regCompanyInfo: name,
+      authorityLevel: 2
+    })
 
-  // }
+    this.analysisLevel(2)
+    // db.collection('user_info').where({
+    //   _openid: app.globalData.openid
+    // }).get({
+    //   success: res => {
+    //     console.log(res)
+    //     console.log("user info: ", res)
+
+    //     var superUser = res.data[0].superuser;
+    //     var userType = res.data[0].usertype
+    //     var company = res.data[0].company_department
+      
+    //     var level = 0
+
+    //     var infoes = company.split(' ')
+    //     var regInfo = ""
+    //     var title = ""
+
+    //     if (superUser != null && superUser == "1") {
+    //       level = 1
+    //       title = "中国信息通信研究院"
+    //     }else if(userType == '1'){
+    //       level = 2
+    //       if (infoes[0] == '院属公司及协会') {
+    //         regInfo = '.*' + infoes[1]
+    //         title = infoes[1]
+    //       } else {
+    //         regInfo = infoes[0] + ".*"
+    //         title = infoes[0]
+    //       }
+
+    //     }else if (userType == '2'){
+    //       level = 3
+    //       title = company
+    //     } 
+
+    //     this.setData({
+    //       showDate: currentDate,
+    //       companyDepartment: company,
+    //       regCompanyInfo: regInfo,
+    //       authorityLevel: level
+    //     })
+
+    //     this.analysisLevel(level)
+        
+    // } ,
+    //   fail: err => {
+    //     wx.showToast({
+    //       icon: 'none',
+    //       title: '查询记录失败'
+    //     })
+    //     console.log(err)
+    //   }
+    // })
+  },
 })

@@ -24,7 +24,7 @@
     <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
       <view class="userclicklist-name">{{item.name}}</view>
       <view>{{item.num}}人</view>
-      <view class="group-item-icons" bindtap="gotoStatistics">
+      <view class="group-item-icons" bindtap="gotoStatistics" data-name="{{item.name}}">
         <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />                   
       </view>
     </view>
