@@ -1,7 +1,7 @@
 page {
   position: relative;
   min-height: 100%;
-  padding-bottom: 50rpx;
+  padding-bottom: 65rpx;
   background-color: #f7f7f7;
 }
 
@@ -11,9 +11,8 @@ page {
   bottom: 0;
   display: block;
   width: 100%;
-  height: 40rpx;
-  line-height: 40rpx;
-  /* padding: 20rpx auto; */
+  height: 50rpx;
+  line-height: 50rpx;
   text-align: center;
   background-color: #fff;
 }
