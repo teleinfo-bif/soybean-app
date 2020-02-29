@@ -82,10 +82,14 @@
   height: 72rpx;
   }
   .userclicklist-name {
+    margin-left: 20rpx;
     width: 300rpx;
 overflow: hidden;    
 text-overflow: ellipsis; 
 white-space: nowrap;
+  }
+  .group-item-icons {
+    margin-right: 10rpx;
   }
   
   .userclicklist label {
