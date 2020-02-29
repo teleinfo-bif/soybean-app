@@ -88,13 +88,14 @@
 } */
 
 .info-input{
-  width: 100%;
+  width: 90%;
   height: 45rpx;
   font-size:32rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(153,153,153,1);
   line-height:45rpx;
+  margin-right: 30rpx;
 /*   font-size: 35rpx;
   border-bottom: 2rpx solid #F5F5F5;
   font-family: PingFangSC-Regular;

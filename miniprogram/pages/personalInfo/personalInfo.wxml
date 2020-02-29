@@ -77,7 +77,7 @@
         <view class="personal-info-picker">
           <picker mode="region" bindchange="bindCompanyRegionChange" value="{{company_region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">单位所在区及街道、社区</text>
+              <text class="info-label">单位所在城市及区:</text>
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">
@@ -100,7 +100,7 @@
         <view class="personal-info-picker">
           <picker mode="region" bindchange="bindHomeRegionChange" value="{{home_region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">家庭所在区街道及社区</text>
+              <text class="info-label">家庭所在城市及区:</text>
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">

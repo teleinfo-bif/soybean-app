@@ -4,7 +4,7 @@
     <view class="icon-container">
       <image class="icon"  src="../../images/yidaka3x.png"></image>
     </view>
-      <view class="text">注册成功</view>
+      <view class="text">提交成功</view>
   </view>
 
 

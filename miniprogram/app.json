@@ -20,7 +20,8 @@
     "pages/epidemiMap/epidemicMap",
     "pages/journeyCheck/journeyCheck",
     "pages/departmentDetail/departmentDetail",
-    "pages/totaluserdetail2/totaluserdetail2"
+    "pages/totaluserdetail2/totaluserdetail2",
+    "pages/submitSuccess/submitSuccess"
   ],
   "permission": {
     "scope.userLocation": {

@@ -710,7 +710,7 @@ Page({
         wx.hideLoading()
         console.log('返程信息登记成功，记录 _id: ', res._id)
         wx.reLaunch({
-          url: '../msg/msg_success',
+          url: '../submitSuccess/submitSuccess',
         })
         console.log('返程信息登记成功，记录 _id: ', res._id)
       },

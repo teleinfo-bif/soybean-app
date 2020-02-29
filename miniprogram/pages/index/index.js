@@ -14,7 +14,7 @@ Page({
     poiList: [],
     isManagerFlag: '0',
     isSuperUserFlag: '0',
-    loginUserInfo: "录入用户信息",
+    loginUserInfo: "用户注册",
     department: '',//所在部门
 
     swiperPages: [
@@ -200,8 +200,7 @@ Page({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
-          loginUserInfo: "你好！ " + res.data[0].name,
-          department: title
+          loginUserInfo: "您好， " + res.data[0].name + '!'
         })
 
         // app.globalData.userBaseInfo = res.data[0]
