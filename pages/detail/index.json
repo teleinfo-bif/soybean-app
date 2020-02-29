@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-datetime-picker": "vant-weapp/datetime-picker",
+    "van-action-sheet": "vant-weapp/action-sheet",
+    "van-popup": "vant-weapp/popup",
+    "van-icon": "vant-weapp/icon"
+  },
+  "navigationBarTitleText": "详细信息"
+}

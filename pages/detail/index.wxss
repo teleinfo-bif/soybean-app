@@ -1,0 +1,113 @@
+/* pages/Detail/index.wxss */
+page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7; }
+
+.head {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  padding: 0 30rpx 0;
+  width: 750rpx;
+  height: 88rpx;
+  font-size: 30rpx;
+  background: white;
+  border-bottom: 1rpx solid #f2f2f2; }
+  .head image {
+    margin-right: 20rpx;
+    width: 54rpx;
+    height: 54rpx; }
+  .head-title, .head-date,
+  .head .head-date-text {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .head .head-date-text {
+    color: #3891ff; }
+
+.people-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  padding-left: 30rpx;
+  margin-right: 30rpx;
+  /* padding-top: 30px;
+  padding-bottom: 30px; */
+  height: 120rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f2f2f2;
+  font-size: 26rpx; }
+
+.people-item > view {
+  flex: 1;
+  text-align: center; }
+
+.people-item_name {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 20rpx;
+  text-align: left;
+  /* border-right: 1rpx solid #dcdce0; */
+  /* border: 1rpx solid #DCDCE0; */ }
+
+.people-item_sign {
+  position: relative; }
+
+.people-item_sign::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -50%;
+  display: block;
+  margin-top: 10rpx;
+  width: 1rpx;
+  height: 60rpx;
+  background: #dcdce0; }
+
+.people-item_status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* display: flex;
+  flex-direction: row; */
+  /* align-items: center;
+  justify-content: center; */ }
+
+.status-circle {
+  display: inline-block;
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  border-radius: 50%; }
+
+.status-circle-green {
+  background: #2eb541; }
+
+.status-circle-yellow {
+  background: yellow; }
+
+.status-circle-red {
+  background: #cc3535; }
+
+.status-circle-gray {
+  background: #eee; }
+
+.no-data-msg {
+  margin-top: 300rpx;
+  color: 999;
+  font-size: 28rpx;
+  text-align: center; }
+
+.no-more-msg {
+  margin-top: 20rpx 0 10rpx;
+  color: 999;
+  font-size: 28rpx;
+  text-align: center; }

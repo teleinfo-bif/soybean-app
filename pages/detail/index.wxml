@@ -1,0 +1,64 @@
+<!-- pages/Detail/index.wxml -->
+<view style="height: 100%;">
+  <!-- 人员列表 -->
+  <view style="height: 100%;">
+    <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view class="head">
+        <view class="head-title">
+          <image class="btn" src="../../static/images/deatil_data@3x.png" />
+          <Text>{{groupName}}</Text>
+        </view>
+        <view class="head-date" hover-class="none" hover-stop-propagation="false">
+          <view>
+            <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
+              <view class="head-date-text">
+                <image class="btn" src="../../static/images/health_sign@3x.png" />
+                {{clockInTime}}
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <block wx:if="{{clockList.length> 0}}">
+        <view class="people-item" wx:for="{{ clockList }}" wx:key="index">
+          <view class="people-item_name">{{item.name || "-"}}</view>
+          <view class="people-item_sign">{{item.clockInId != 0 ? '已打卡': '未打卡'}}</view>
+          <view class="people-item_detail ">
+            <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}">
+              打卡详情
+            </navigator>
+            <block wx:else>打卡详情</block>
+          </view>
+          <view class="people-item_status">
+            <block wx:if="{{item.clockInId != 0}}">
+              <block wx:if="{{ item.comfirmed == 1 || item.admitting == 1}}">
+                <view class="status-circle status-circle-red"></view>
+                <view wx:if="{{ item.comfirmed == 1}}">确诊</view>
+                <view wx:else>就诊</view>
+              </block>
+              <block wx:elif="{{item.healthy != 1}}">
+                <view class="status-circle status-circle-yellow"></view>
+                <view wx:if="{{item.healthy == 2}}">发烧、咳嗽</view>
+                <view wx:else>其他</view>
+              </block>
+              <block wx:else>
+                <view class="status-circle status-circle-green"></view>
+                <view>正常</view>
+              </block>
+            </block>
+            <block wx:else="{{item.clockInId == 0}}">
+              <view class="status-circle status-circle-gray"></view>
+              <view>--</view>
+            </block>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{clockList.length== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
+        暂无详细信息
+      </view>
+      <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-more-msg">
+        没有更多数据
+      </view>
+    </scroll-view>
+  </view>
+</view>

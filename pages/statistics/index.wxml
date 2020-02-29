@@ -1,0 +1,57 @@
+<!-- pages/Statistics/index.wxml -->
+<view class="">
+  <!-- 头部信息 -->
+  <view class="head">
+    <view class="head-title">
+      <image class="btn" src="../../static/images/stastic@3x.png" />
+      <Text>{{groupName}}</Text>
+    </view>
+    <view class="head-date" hover-class="none" hover-stop-propagation="false">
+      <view>
+        <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
+          <view class="head-date-text">
+            <image class="btn" src="../../static/images/health_sign@3x.png" />
+            {{clockInTime}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <!-- 统计数字 -->
+  <view class="statistic-box">
+    <view class="statistic-box_row">
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.total}}</view>
+        <view class="statistic-box_item_label">应填写人数</view>
+      </view>
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.clockIn}}</view>
+        <view class="statistic-box_item_label">已填写人数</view>
+      </view>
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.diagnosis}}</view>
+        <view class="statistic-box_item_label">确诊人数</view>
+      </view>
+    </view>
+    <view class="statistic-box_row">
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.goBackBeijing}}</view>
+        <view class="statistic-box_item_label">返京人数</view>
+      </view>
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.notInbeijing}}</view>
+        <view class="statistic-box_item_label">离京未返京人数</view>
+      </view>
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value">{{data.totality.abnormalbody}}</view>
+        <view class="statistic-box_item_label">身体异常人数</view>
+      </view>
+    </view>
+  </view>
+  <!-- <navigator class="" target="" url="/pages/statisticsTab" hover-class="navigator-hover" open-type="navigate">
+    
+  </navigator> -->
+  <pie first="{{true}}" title="健康情况测试" class="health-box" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie title="所在地区分布情况" data="{{data.region}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie title="就诊住院情况" data="{{data.hospitalization}}" clockIn="{{data.totality.clockIn}}"></pie>
+</view>
