@@ -27,9 +27,33 @@ Page({
     vertical: false,
     autoplay: true,
     interval: 3000,
-    duration: 500
+    duration: 500,
+    imgQR:''
   },
+  testQR: function () {
+    var that = this
+    wx.request({
+      url: "https://www.guokezhixing.com/secHealth/version1/healthRecord/miniSubmitRecord",
+      data: {
 
+      },
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      success(res) {
+        // console.log(res.data); 
+        console.log('=====请求sucessTESTQR=====', res);
+        that.setData({
+          imgQR: res.data.data.qrcodeUrl
+        })
+
+      },
+      fail() {
+        console.log('====请求失败=====');
+      }
+    })
+  },
   onLoad: function () {
     var that = this;
     if (!wx.cloud) {

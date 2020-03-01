@@ -12,7 +12,7 @@
       <view class="clock_form__title">姓名</view>
       <view class="">
         <view class="clock_form_input">
-          <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" disabled="true" />
+          <input class="weui-input" name="name" value="{{name}}" placeholder="请输入姓名" disabled="true" placeholder-class="placeholder-style"/>
           <!--         <label weui-input>{{name}}</label>-->
         </view>
       </view>
@@ -22,7 +22,7 @@
       <view class="clock_form__title">手机号</view>
       <view class="">
         <view class="clock_form_input">
-          <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" disabled="true" />
+          <input class="weui-input" name="phone" value="{{phone}}" placeholder="请输入手机号" disabled="true" placeholder-class="placeholder-style"/>
           <!--     <label weui-input>{{phone}}</label>-->
         </view>
       </view>
@@ -39,7 +39,7 @@
       
       <view class="">
         <view class="clock_form_input">
-          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true" placeholder-class="placeholder-style"/>
+          <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true" placeholder-class="placeholder-style" />
         </view>
       </view>
       <view class='devide-middle'/>

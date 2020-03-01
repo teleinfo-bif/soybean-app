@@ -40,9 +40,9 @@ Page({
     placeholder_card_type: "选择证件类型",
     placeholder_card_number: "证件号码",
     placeholder_company_name: "请选择单位及部门",
-    placeholder_company_district: "请选择单位所在区及街道、社区",
+    placeholder_company_district: "请选择单位所在城市及区",
     placeholder_company_detail: "请输入单位详细地址",
-    placeholder_home_district: "请选择家庭所在区及街道、社区",
+    placeholder_home_district: "请选择家庭所在城市及区",
     placeholder_home_detail: "请输入家庭详细地址",
 
     value_name: "",

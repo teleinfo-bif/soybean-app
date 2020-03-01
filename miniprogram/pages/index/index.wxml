@@ -36,7 +36,8 @@
     </navigator>
   </view>
 
-
+<!-- <button class='test' bindtap='testQR'>测试</button>
+<image src='{{imgQR}}'> </image> -->
   <view class="group">
       <view class="group-title">
           <view class="group-title-name">我的组织</view>
