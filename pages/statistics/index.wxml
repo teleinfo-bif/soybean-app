@@ -29,8 +29,10 @@
         <view class="statistic-box_item_label">已填写人数</view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.diagnosis}}</view>
-        <view class="statistic-box_item_label">确诊人数</view>
+        <view class="statistic-box_item_value" style="color: #aa4438;">
+          {{data.totality.diagnosis}}
+        </view>
+        <view class="statistic-box_item_label" style="color: #aa4438;">确诊人数</view>
       </view>
     </view>
     <view class="statistic-box_row">

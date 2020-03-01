@@ -1,7 +1,7 @@
 import * as echarts from "../../../components/ec-canvas/echarts";
 
 const titles = ["健康情况", "地区分布", "就诊情况"];
-const colors = ["#3891FF", "#53BCA2", "#FCAD57", "#EC704F"];
+const colors = ["#aa4438", "#ffaa00", "#f2d45e", "#4169E1"];
 function setOption(chart, data, index = 0) {
   const option = {
     tooltip: {
@@ -100,6 +100,7 @@ Component({
       type: Array,
       default: () => {},
       observer() {
+        const order = [];
         if (this.data.data.length > 0) {
           this.initEcharts();
         }

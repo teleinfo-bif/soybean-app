@@ -13,7 +13,10 @@
       <view class="people-item_name">{{item.userName || "-"}}</view>
       <view class="people-item_sign">{{itme.healthy != -1 ? '已打卡': '未打卡'}}</view>
       <view class="people-item_detail color">
-        <navigator url="/pages/clockOthers/index?userId={{item.id}}">打卡详情</navigator>
+        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}">
+          打卡详情
+        </navigator>
+        <block wx:else>打卡详情</block>
       </view>
       <view class="people-item_status">
         <block wx:if="{{ item.healthy == 1}}">
