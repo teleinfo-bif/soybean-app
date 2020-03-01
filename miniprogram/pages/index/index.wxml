@@ -4,7 +4,7 @@
   <view class="head_title">泰尔通</view>
 
   <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" hover-class="userinfo-put_active">
-    <button class="get-avatar" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">快来登陆吧</button>
+    <button class="get-avatar" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">快来登录吧</button>
   </view>
 
   <view wx:else class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut">
