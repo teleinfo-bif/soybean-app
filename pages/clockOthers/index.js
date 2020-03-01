@@ -11,7 +11,8 @@ let fields = [
     type: "input",
     prop: "name",
     props: {
-      placeholder: "请输入姓名"
+      placeholder: "请输入姓名",
+      disable: true
     }
   },
   {
@@ -19,14 +20,14 @@ let fields = [
     type: "input",
     prop: "phone",
     props: {
-      placeholder: "请输入手机号码"
+      placeholder: "请输入手机号码",
+      disable: true
     }
   },
   {
     title: "打卡地点",
     type: "map",
     prop: "address",
-    disable: true,
     props: {
       placeholder: "请输入打卡地点"
     }
@@ -41,8 +42,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -76,12 +77,17 @@ let fields = [
   },
   {
     title: "未返京原因 ",
-    type: "input",
-    prop: "reason",
+    type: "radio",
+    prop: "nobackreason",
     hide: true,
     require: false,
     props: {
-      placeholder: "请输入未返京原因"
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "身体原因" },
+        { id: 2, name: "当地未放行" }
+      ]
     }
   },
   {
@@ -104,8 +110,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -117,8 +123,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -218,7 +224,7 @@ Page({
 
     // 根据填选是否离开，显示返回日期
     if (prop === "leave") {
-      this.setFields(this.data.atBeijing, value.toString() === "1");
+      this.setFields(this.data.atBeijing, value.toString() === "2");
     } else if (prop === "temperature") {
       // 判断 > 37.2摄氏度，默认发烧状态
       if (Number(value) > 37.2) {
@@ -364,10 +370,10 @@ Page({
       // }
       // this.setFieldsHide(["reason"]);
       if (leaved) {
-        this.setFieldsHide(["reason"]);
+        this.setFieldsHide(["nobackreason"]);
       } else {
         // 在北京且未离开
-        this.setFieldsHide(["reason", "leavetime", "gobacktime", "flight"]);
+        this.setFieldsHide(["nobackreason", "leavetime", "gobacktime", "flight"]);
         // this.setFieldsHide(["reason", "gobacktime", "reason"]);
       }
     } else {

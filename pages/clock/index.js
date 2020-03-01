@@ -42,8 +42,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -78,15 +78,15 @@ let fields = [
   {
     title: "未返京原因 ",
     type: "radio",
-    prop: "reason",
+    prop: "nobackreason",
     hide: true,
     require: false,
     props: {
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "身体原因" },
-        { id: 1, name: "当地未放行" }
+        { id: 1, name: "身体原因" },
+        { id: 2, name: "当地未放行" }
       ]
     }
   },
@@ -110,8 +110,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -123,8 +123,8 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 0, name: "否" },
-        { id: 1, name: "是" }
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
       ]
     }
   },
@@ -227,7 +227,7 @@ Page({
 
     // 根据填选是否离开，显示返回日期
     if (prop === "leave") {
-      this.setFields(this.data.atBeijing, value.toString() === "1");
+      this.setFields(this.data.atBeijing, value.toString() === "2");
     } else if (
       prop === "comfirmed" ||
       prop === "admitting" ||
@@ -265,8 +265,8 @@ Page({
     debugger;
     if (
       (temperature && Number(temperature) > 37.2) ||
-      (comfirmed != null && comfirmed == "1") ||
-      (admitting != null && admitting == "1")
+      (comfirmed != null && comfirmed == "2") ||
+      (admitting != null && admitting == "2")
     ) {
       data["healthy"] = null;
       disable = true;
@@ -376,10 +376,15 @@ Page({
       // }
       // this.setFieldsHide(["reason"]);
       if (leaved) {
-        this.setFieldsHide(["reason"]);
+        this.setFieldsHide(["nobackreason"]);
       } else {
         // 在北京且未离开
-        this.setFieldsHide(["reason", "leavetime", "gobacktime", "flight"]);
+        this.setFieldsHide([
+          "nobackreason",
+          "leavetime",
+          "gobacktime",
+          "flight"
+        ]);
         // this.setFieldsHide(["reason", "gobacktime", "reason"]);
       }
     } else {

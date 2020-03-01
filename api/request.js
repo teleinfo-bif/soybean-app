@@ -101,7 +101,7 @@ const Request = async ({ url, params, method, ...other } = {}) => {
     console.log("返回数据：获取的用户", token);
   }
 
-  if (typeof userInfo != "object" || !userInfo.id) {
+  if ((url != "/user/exist" && typeof userInfo != "object") || !userInfo.id) {
     console.log(
       "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
     );

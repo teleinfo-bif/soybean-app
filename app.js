@@ -41,7 +41,7 @@ App({
   },
 
   onLaunch: async function() {
-    await this.init();
+    await this.init(true);
 
     // 获取用户信息
     wx.getSetting({
