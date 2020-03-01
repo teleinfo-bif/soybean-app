@@ -4,19 +4,17 @@
   <view class="head_title">泰尔通
   </view>
   <view class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut">
-    <!--
-        <view 
-          class="userinfo-img"
-          style="background-image: url({{avatarUrl}})"
-        ></view>
-      -->
+
     <view class="userinfo-img-container">
       <image class="userinfo-img" src="../../images/bianji3x.png" mode="scaleToFill"></image>
     </view>
 
     <!-- <button open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">获取用户手机号</button>-->
     <view class="userinfo-put" hover-class="userinfo-put_active">{{loginUserInfo}}
+      <view class="dayuhao-container">
+        <image class="dayuhao" src="../../images/dayuhao.png" /> </view>
     </view>
+
 
   </view>
 </view>
@@ -30,36 +28,65 @@
       <view class="weui-grid__label">健康打卡</view>
     </navigator>
 
-    <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+    <navigator url="" class="weui-grid weui-grid-move" hover-class="weui-grid_active">
       <image class="weui-grid__icon_jk" src="../../images/jiankangma3x.png" />
-      <view class="weui-grid__label" style="color: #e1e1e1">健康码</view>
+      <view class="weui-grid__label weui-grid__label-move" style="color: #e1e1e1">健康码</view>
     </navigator>
   </view>
 
-<!-- <button class='test' bindtap='testQR'>测试</button>
+  <!-- <button class='test' bindtap='testQR'>测试</button>
 <image src='{{imgQR}}'> </image> -->
   <view class="group">
-      <view class="group-title">
-          <view class="group-title-name">我的组织</view>
-          <view class="group-title-icon">
-              <!-- <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" />
+    <view class="group-title">
+      <view class="group-title-name">今日数据</view>
+      <view class="group-title-icon">
+        <!-- <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" />
               <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" />
               <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" /> -->
-          </view>
       </view>
-      <view class="group-items">
-            <view class="group-item">
-              <view class="group-item-title" bindtap="gotoDetailClick">
-                <image class="group-item-icon" src="../../images/title-icon.png" />
-                <!-- <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view> -->
-                <view class="group-item-name">{{department}}</view>
-              </view>
-              <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
-                <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />                   
-              </view>
-            </view> 
+    </view>
+    <view class="group-items">
+
+
+
+
+      <view class="group-item">
+        <view class="group-item-title" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}" bindtap="gotoStatistics">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        <view class="group-item-title" wx:else  bindtap="gotoDetailClick">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        
       </view>
-    </view> 
+
+
+      <!-- <view class="group-item">
+        <view class="group-item-title" bindtap="gotoDetailClick">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+        </view>
+      </view>
+     -->
+
+      
+
+      <!-- <view class="group-item">
+        <view class="group-item-title" bindtap="gotoDetailClick">
+          <image class="group-item-icon" src="../../images/title-icon.png" />
+          <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view>
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+        </view>
+      </view> -->
+    </view>
+  </view>
 
 
 
@@ -79,7 +106,7 @@
   </view>
 
 
-    
+
 
 
   <!-- <view wx:if="{{isManagerFlag == '1'}}">
@@ -97,30 +124,30 @@
     </view> -->
 
 
-    <view wx:if="{{isSuperUserFlag == '1' || isManagerFlag == '1' || isManagerFlag == '2'}}">
-      <view class="page__title">我管理的部门</view>
-      <view class="weui-grids">
-        <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">
-          <image class="weui-grid__icon" src="../../images/tongjixinxi3x.png" />
-          <view class="weui-grid__label">统计信息</view>
-        </navigator>
+  <view class="noShow" wx:if="{{isSuperUserFlag == '1' || isManagerFlag == '1' || isManagerFlag == '2'}}">
+    <view class="page__title">我管理的部门</view>
+    <view class="weui-grids">
+      <navigator url="../statistics/statistics" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/tongjixinxi3x.png" />
+        <view class="weui-grid__label">统计信息</view>
+      </navigator>
 
-        <navigator url="" bindtap="gotomemberDetailClick" class="weui-grid" hover-class="weui-grid_active">
-          <image class="weui-grid__icon" src="../../images/xiangqingxinxi3x.png" />
-          <view class="weui-grid__label">详细信息</view>
-        </navigator>
-      </view>
+      <navigator url="" bindtap="gotomemberDetailClick" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/xiangqingxinxi3x.png" />
+        <view class="weui-grid__label">详细信息</view>
+      </navigator>
     </view>
+  </view>
 
 
-    <view wx:if="{{isSuperUserFlag == '1' || isManagerFlag == '1'}}">
-      <view class="page__title">权限分配</view>
-      <view class="weui-grids">
-        <navigator url="../superUserMgmt/superUserMgmt" class="weui-grid" hover-class="weui-grid_active">
-          <image class="weui-grid__icon" src="../../images/quanxianfenpei.png" />
-          <view class="weui-grid__label">权限分配</view>
-        </navigator>
-      </view>
+  <view class="noShow" wx:if="{{isSuperUserFlag == '1' || isManagerFlag == '1'}}">
+    <view class="page__title">权限分配</view>
+    <view class="weui-grids">
+      <navigator url="../superUserMgmt/superUserMgmt" class="weui-grid" hover-class="weui-grid_active">
+        <image class="weui-grid__icon" src="../../images/quanxianfenpei.png" />
+        <view class="weui-grid__label">权限分配</view>
+      </navigator>
+    </view>
 
   </view>
 
@@ -133,7 +160,7 @@
         <view class="weui-grid__label">权限分配</view>
       </navigator>
 <!-- >>>>>>> origin/master -->
-    <!-- </view>  -->
+  <!-- </view>  -->
   <!-- </view> -->
 
   <view class="copyright">中国信息通信研究院 出品</view>

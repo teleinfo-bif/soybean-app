@@ -28,7 +28,10 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 500,
-    imgQR:''
+    imgQR:'',
+
+    userInfoFlagYes: true,
+    userInfoFlagNo: false,
   },
   testQR: function () {
     var that = this
@@ -62,9 +65,9 @@ Page({
       })
       return
     }
+    
     that.getSessionCode();
     // this.onGetOpenid()
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -80,11 +83,18 @@ Page({
               console.info("用户信息为：" + JSON.stringify(res.userInfo, null, 2));
               app.globalData.nickName = res.userInfo.nickName
               app.globalData.avatarUrl = res.userInfo.avatarUrl
+
+              console.log("app.globalData.avatarUrl = res.userInfo.avatarUrl, ", app.globalData.avatarUrl)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 nickName: res.userInfo.nickName,
               })
             }
+          })
+        } else {
+          this.setData({
+            userInfoFlagYes: false,
+            userInfoFlagNo: true
           })
         }
       }
@@ -228,7 +238,8 @@ Page({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
-          loginUserInfo: "您好， " + res.data[0].name + '!',
+          // loginUserInfo: "您好， " + res.data[0].name + '!',
+          loginUserInfo: res.data[0].name,
           department: title
         })
 
@@ -383,6 +394,39 @@ Page({
 
 
   onGetUserInfo: function (e) {
+    let that = this;
+    // 获取用户信息
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          console.log("已授权=====")
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success(res) {
+
+              console.log("获取用户信息成功", res)
+              app.globalData.nickName = res.userInfo.nickName
+              app.globalData.avatarUrl = res.userInfo.avatarUrl
+              that.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo,
+                userInfoFlagYes: true,
+                userInfoFlagNo: false
+              })
+              wx.reLaunch({
+                url: 'index',
+              })
+            },
+            fail(res) {
+              console.log("获取用户信息失败", res)
+            }
+          })
+        } else {
+          console.log("未授权=====")
+        }
+      }
+    })
+
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
