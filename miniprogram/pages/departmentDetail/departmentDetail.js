@@ -233,7 +233,9 @@ Page({
 
 
   onLoad: function (options) {
+    
     console.log("options: ", options)
+    this.getDepartmentsAndUsers(options.department)
     let isSuperUserFlag = options.isSuperUserFlag
     this.setData({
       department: options.department
@@ -299,6 +301,37 @@ Page({
         wx.hideLoading()
       }
     })
+  },
+
+
+  getDepartmentsAndUsers: function(data) {
+    // wx.showLoading({
+    //   title: '加载中...',
+    // })
+
+    console.log("userInfoDatas: ", )
+
+        wx.cloud.callFunction({
+          name: "getDepartmentsAndUsers",
+          data: {
+            company_department: data
+          },
+
+          success: res => {
+            // console.log("res result: ", res.result)
+            // this.parseDatas([data, res.result])
+            let temp = [{name:data,num:res.result.length}]
+            this.setData({
+              clickdetail: this.data.clickdetail.concat(temp)
+            })
+            // wx.hideLoading()
+          },
+
+          fail: err => {
+            console.log("error: ", err)
+            // wx.hideLoading()
+          }
+        })
   },
 
 

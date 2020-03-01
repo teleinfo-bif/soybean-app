@@ -459,19 +459,24 @@ Page({
       url: '../statistics/statistics'
     })
   },
-  gotoDetailClick: function() {
-    if(this.data.groupType == '2' ){
+  gotoDetailClick: function(e) {
+    let department = e.currentTarget.dataset.name;
+    let type = e.currentTarget.dataset.type;
+    let isXintongyuan = e.currentTarget.dataset.xty;
+    let serialNumber = e.currentTarget.dataset.num;
+    // console.log(department,type,isXintongyuan,serialNumber)
+    if(type == '2' ){
       wx.navigateTo({
-        url: '../departmentDetail/departmentDetail?department='+ this.data.department + "&isSuperUserFlag=" + this.data.isSuperUserFlag
+        url: '../departmentDetail/departmentDetail?department='+ department + "&isXintongyuan=" + isXintongyuan  + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
     } else {
       wx.navigateTo({
-        url: '../totaluserdetail2/totaluserdetail2'
+        url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + serialNumber
       })
     }
   },
 
-  //查询用户基本信息
+  //查询用户群组信息
   getUserGroupInfo: function () {
     let that = this
     const db = wx.cloud.database()
@@ -488,103 +493,95 @@ Page({
         if(company_department.split(' ').length==3){
           if(company_count >= 2) {
             list.push({
-              infoes:userinfo['company_department'],
+              infoes:userinfo['company_department'].split(' '),
               userType:userinfo['usertype'],
+              number: 0,
               isXintongyuan: false
             })
             for(let i=1;i<company_count;i++) {
-              console.log(userinfo['company_department'+i])
+              // console.log(userinfo['company_department'+i])
               list.push({
-                infoes:userinfo['company_department'+i],
+                infoes:userinfo['company_department'+i].split(' '),
                 userType:userinfo['usertype'+i],
+                number: i,
                 isXintongyuan: false
               })
             }
           } else {
             list.push({
-              infoes:userinfo['company_department'],
+              infoes:userinfo['company_department'].split(' '),
               userType:userinfo['usertype'],
+              number: 0,
               isXintongyuan: false
             })
           }
         } else {
           if(company_count >= 2) {
             list.push({
-              infoes:userinfo['company_department'],
+              infoes:userinfo['company_department'].split(' '),
               userType:userinfo['usertype'],
+              number: 0,
               isXintongyuan: true
             })
             for(let i=1;i<company_count;i++) {
               list.push({
-                infoes:userinfo['company_department'+i],
+                infoes:userinfo['company_department'+i].split(' '),
                 userType:userinfo['usertype'+i],
+                number: i,
                 isXintongyuan: false
               })
             }
           } else {
             list.push({
-              infoes:userinfo['company_department'],
+              infoes:userinfo['company_department'].split(' '),
               userType:userinfo['usertype'],
+              number: 0,
               isXintongyuan: true
             })
           }
         }
-        console.log('list',list)
+        // console.log('list',list)
         let groupTypeList = []
         var superuser = res.data[0].superuser
         var title = "众志成城，抗击疫情"  
         var regInfo = ""
         var groupType = "1"
-        // var infoes = department.split(' ')
-        
-               
+        // var infoes = department.split(' ')              
         // var userType = res.data[0].usertype
         list.forEach((item,index,array)=>{
           //执行代码
           if (superuser != null && superuser == "1") {
             title = "中国信息通信技术研究院"
             groupType = "2"
-            console.log('00000000000')
           }else if (item.userType == '1'){
-            console.log('111111')
             title = item.infoes[0]
             // level = 2
             if (item.infoes[0] == '院属公司及协会') {
-              console.log('22222')
               regInfo = '.*' + item.infoes[1]
               title = item.infoes[1]
             } else {
-              console.log('33333')
               regInfo = item.infoes[0] + ".*"
               title = item.infoes[0]
               groupType = "2"
             }
           }else if (item.userType == '2'){
-            console.log('44444',item.infoes[1])
             regInfo = "",
             title = item.infoes[1]
-            console.log('444445555',item.infoes[1])
           } else {
-            console.log('55555',item.infoes)
             regInfo = "",
             title = item.infoes[1]
           }
-          console.log('title',j)
           groupTypeList.push({
             department:title,
-            groupType:groupType
+            groupType:groupType,
+            number: item.number,
+            isXintongyuan: item.isXintongyuan
           })
         })
         console.log('groupTypeList',groupTypeList)
-        
-
         that.setData({
           departments: groupTypeList,
         })
-
-        console.log('department')
-        // app.globalData.userBaseInfo = res.data[0]
-        // console.log("base info index:", app.gloabalData.userBaseInfo)
 
       },
       fail: err => {
