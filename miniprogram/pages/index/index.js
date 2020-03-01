@@ -83,9 +83,7 @@ Page({
               console.info("用户信息为：" + JSON.stringify(res.userInfo, null, 2));
               app.globalData.nickName = res.userInfo.nickName
               app.globalData.avatarUrl = res.userInfo.avatarUrl
-
-              console.log("------------- res.userInfo.avatarUr", res.userInfo.avatarUrl)
-
+              
               console.log("app.globalData.avatarUrl = res.userInfo.avatarUrl, ", app.globalData.avatarUrl)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,

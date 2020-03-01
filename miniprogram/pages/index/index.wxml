@@ -31,7 +31,7 @@
 
     <navigator url="" class="weui-grid weui-grid-move" hover-class="weui-grid_active" bindtap="gotoHealthyQR">
       <image class="weui-grid__icon_jk" src="../../images/jiankangma3x.png" />
-      <view class="weui-grid__label weui-grid__label-move" style="color: #e1e1e1">健康码</view>
+      <view class="weui-grid__label weui-grid__label-move" >健康码</view>
     </navigator>
   </view>
 
