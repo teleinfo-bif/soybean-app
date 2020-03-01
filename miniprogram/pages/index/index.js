@@ -172,40 +172,11 @@ Page({
         console.log("datas: ", res)
         that.userinfo = res.data;
 
-        var department = res.data[0].company_department
-        var infoes = department.split(' ')
-        var regInfo = ""
-        var title = "众志成城，抗击疫情" 
-        var superuser = res.data[0].superuser
-        var userType = res.data[0].usertype
-        
-        if (superuser != null && superuser == "1") {
-          title = "中国信息通信技术研究院"
-        }else if (userType == '1'){
-          title = infoes[0]
-          // level = 2
-          if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
-            title = infoes[1]
-          } else {
-            regInfo = infoes[0] + ".*"
-            title = infoes[0]
-          }
-        }else if (userType == '2'){
-          regInfo = "",
-          title = infoes[1]
-        } else {
-          regInfo = "",
-          title = infoes[1]
-        }
-
-
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
           loginUserInfo: "您好， " + res.data[0].name + '!',
-          department: title
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -378,6 +349,7 @@ Page({
         app.globalData.openid = res.result.openid
         console.log("###### openid: ", res.result.openid)
         this.qryUserInfo()
+        this.getUserGroupInfo()
         this.qryHealthyTodayInfo();
       },
       fail: err => {
@@ -441,6 +413,74 @@ Page({
         url: '../totaluserdetail2/totaluserdetail2'
       })
     }
+  },
+
+  //查询用户基本信息
+  getUserGroupInfo: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+      // _openid: "oqME_5ZzCkV38KfpLIRx3dRNMGr8"
+    }).get({
+      success: res => {
+        // console.log("datas: ", res)
+        let userinfo = res.data[0];
+        let company_count = userinfo.company_count;
+        let company_department = userinfo.company_department; //判断是否是信通院
+        if(company_department.split(' ').length==3){
+          //非信通院
+          console.log("33333",company_department.split(' ') )
+        } else {
+          
+        }
+
+        console.log("datas: ", company_count)
+       
+        // var department = res.data[0].company_department
+        // var infoes = department.split(' ')
+        // var regInfo = ""
+        // var title = "众志成城，抗击疫情" 
+        // var superuser = res.data[0].superuser
+        // var userType = res.data[0].usertype
+        
+        if (superuser != null && superuser == "1") {
+          title = "中国信息通信技术研究院"
+        }else if (userType == '1'){
+          title = infoes[0]
+          // level = 2
+          if (infoes[0] == '院属公司及协会') {
+            regInfo = '.*' + infoes[1]
+            title = infoes[1]
+          } else {
+            regInfo = infoes[0] + ".*"
+            title = infoes[0]
+          }
+        }else if (userType == '2'){
+          regInfo = "",
+          title = infoes[1]
+        } else {
+          regInfo = "",
+          title = infoes[1]
+        }
+
+
+        // that.setData({
+        //   department: title
+        // })
+
+        // app.globalData.userBaseInfo = res.data[0]
+        // console.log("base info index:", app.gloabalData.userBaseInfo)
+
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
   },
 
   createGroup: function (e) {

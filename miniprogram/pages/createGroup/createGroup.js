@@ -165,8 +165,8 @@ Page({
   queryUserInfo: function(e) {
     console.log("openid: ", app.globalData.openid)
     db.collection('user_info').where({
-      // _openid: app.globalData.openid
-      _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
+      _openid: app.globalData.openid
+      // _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
     }).get({
         success: res => {
           console.log(res.data)

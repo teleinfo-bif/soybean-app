@@ -192,7 +192,7 @@ color:rgba(51,51,51,1);
 }
 .group-title-icon {
   margin-right: 30rpx; 
-  width: 250rpx;
+  /* width: 250rpx; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -200,8 +200,9 @@ color:rgba(51,51,51,1);
 }
 
 .group-title-icon-item {
-  width: 45rpx;
-  height: 45rpx;
+  /* width: 45rpx;
+  height: 45rpx; */
+  font-size: 20rpx;
 }
 .group-items {
   padding-bottom: 170rpx;
