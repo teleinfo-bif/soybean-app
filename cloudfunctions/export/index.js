@@ -634,8 +634,12 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     }
 
-    //返程统计.交通方式
-    row.push("")
+    //返程统计.交通方式 
+    if (isRetured && data.trafficTool != undefined) {
+        row.push(data.trafficTool)
+    } else {
+        row.push("")
+    }
 
     //返程统计.航班/车次/车牌号
     if (isRetured && data.trainnumber != undefined) {
