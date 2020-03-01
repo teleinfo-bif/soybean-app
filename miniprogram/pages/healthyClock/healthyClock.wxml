@@ -152,28 +152,7 @@
       </view>
       <view class='devide-middle'/>
 
-      <view class="clock_form__title">是否确诊</view>
-      <view class='clock-radio'>
-        <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
-          <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" />{{item.name}}
-            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
-          </label>
-        </radio-group>
-      </view>
-      <view class='devide-middle'/>
-
-      <view class="clock_form__title">是否就诊住院</view>
-      <view class='clock-radio'>
-        <radio-group class="radio-group" bindchange="goHospitalRadioChange">
-          <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" />{{item.name}}
-            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
-          </label>
-        </radio-group>
-      </view>
-      <view class='devide-middle'/>
-
+      
       <view class="clock_form__title">目前健康状况</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
@@ -199,6 +178,29 @@
         </view>
       </view>
       <view class='devide-middle'/>
+
+      <view class="clock_form__title">是否就诊住院</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="goHospitalRadioChange">
+          <label wx:for="{{radioItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}" />{{item.name}}
+            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
+          </label>
+        </radio-group>
+      </view>
+      <view class='devide-middle'/>
+
+      <view class="clock_form__title">是否确诊</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
+          <label wx:for="{{radioItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}" />{{item.name}}
+            <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
+          </label>
+        </radio-group>
+      </view>
+      <view class='devide-middle'/>
+
 
       <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
       <view class='clock-radio'>
