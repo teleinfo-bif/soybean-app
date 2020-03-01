@@ -124,7 +124,7 @@
         
       </view>
       <view class="personal-buttons" style="{{buttons_display}}">
-        <button class="button-reset" form-type="reset" disabled="{{disabled}}">重置</button>
+        <button class="button-reset" form-type="reset" disabled="{{disabled}}" bindtap="resetBtn">重置</button>
         <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
       </view>
     </form>

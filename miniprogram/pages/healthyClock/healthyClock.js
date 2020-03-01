@@ -375,14 +375,14 @@ Page({
       return;
     }
 
-    // if (temperature > 37.2 && bodyStatusFlag == '0'){
-    //   wx.showToast({
-    //     icon: 'none',
-    //     title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
-    //     duration: 3000,
-    //   });
-    //   return;
-    // }
+     if (temperature > 37.2 && bodyStatusFlag == '0'){
+       wx.showToast({
+         icon: 'none',
+        title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
+        duration: 3000,
+      });
+       return;
+     }
 
     if (bodyStatusFlag == null || bodyStatusFlag == '') {
       wx.showToast({
