@@ -17,7 +17,7 @@ Page({
     loginUserInfo: "用户注册",
     department: '',//所在部门
     todayClickFlag: "0",
-
+    groupType: '1',
     swiperPages: [
       "../epidemiNews/epidemiNews",
       "../epidemiMap/epidemicMap"
@@ -199,12 +199,14 @@ Page({
         var department = res.data[0].company_department
         var infoes = department.split(' ')
         var regInfo = ""
+        var groupType = "1"
         var title = "众志成城，抗击疫情" 
         var superuser = res.data[0].superuser
         var userType = res.data[0].usertype
         
         if (superuser != null && superuser == "1") {
           title = "中国信息通信技术研究院"
+          groupType = "2"
         }else if (userType == '1'){
           title = infoes[0]
           // level = 2
@@ -214,6 +216,7 @@ Page({
           } else {
             regInfo = infoes[0] + ".*"
             title = infoes[0]
+            groupType = "2"
           }
         }else if (userType == '2'){
           regInfo = "",
@@ -229,7 +232,8 @@ Page({
           phone: res.data[0].phone,
           userinfo: res.data,
           loginUserInfo: "您好， " + res.data[0].name + '!',
-          department: title
+          department: title,
+          groupType: groupType
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -456,7 +460,7 @@ Page({
     })
   },
   gotoDetailClick: function() {
-    if(this.data.isSuperUserFlag == '1' || this.data.isManagerFlag == '1'){
+    if(this.data.groupType == '2' ){
       wx.navigateTo({
         url: '../departmentDetail/departmentDetail?department='+ this.data.department + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
