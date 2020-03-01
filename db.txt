@@ -1,0 +1,42 @@
+user_healthy
+String date; 打卡时间
+String goHBFlag; 是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉 0是， 1否
+String bodyStatusFlag; 身体是否健康 0健康 1有发烧咳嗽等症状   2健康状况为其他的原因，此时用户写入数据到bodystatusotherremark
+String isGoBackFlag;  是否返回北京 0是 1否
+String isQueZhenFlag; 是否确诊 0是 1否
+String remark;  其它
+String goHospitalFlag;  是否去医院就诊 0是  1否
+String noGoBackFlag; 未回京原因 0身体不适 1当地未放行
+String phone;  电话号码
+String addtime;  数据入库时间
+String suregobackdate;  实际返京时间
+String _openid;  用户微信唯一标识号
+String temperature; 温度
+String name; 用户名
+String _id;   数据在数据库中的id
+String place; 打卡地点
+String isLeaveBjFlag;  是否离开过北京 0代表离开过，并且已返回， 1代表未离开 ，该字段搭配isGoBackFlag使用
+String gobackdate; 计划返回北京时间
+String leavedate; 离开北京时间
+String trainnumber;  行程号，可以是汽车牌号。火车/飞机号
+String bodystatusotherremark; 健康打卡时的其它备注，如其它身体状况
+
+
+
+user_info
+String _id; 数据在数据库中的id
+String _openid; 用户微信唯一标识号
+String updated_at;  更新时间
+String company_district;  公司区域 如： 北京市 通州区
+String home_detail;  家庭住址
+String created_at;  创建时间
+String name;  用户名
+String company_department; 单位名称
+String certificate_number;   证件号
+String home_district;  家庭住址区域 如：北京市 通州区
+String phone; 手机号
+String certificate_type; 证件类型 如：大陆身份证
+String company_detail;  公司详细地址
+String usertype;  0普通用户 1二级管理员 2三级管理员
+String superuser; 是否超级管理员。0否 1是 
+
