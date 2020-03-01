@@ -47,6 +47,13 @@ Page({
       { name: '有发烧、咳嗽等症状', value: '1' },
       { name: '其他', value: '2'}
     ],
+    trafficToolItems: [
+      { name: '飞机', value: '0' },
+      { name: '火车', value: '1' },
+      { name: '汽车', value: '2' },
+      { name: '轮船', value: '3' },
+      { name: '其他', value: '4' }
+    ],
     radioNoGoBackItems: [
       { name: '身体不适', value: '0' },
       { name: '当地未放行', value: '1' }
@@ -109,6 +116,16 @@ Page({
             radioHealthyStatusItems: radioHealthyStatusItems
           });
 
+          //交通工具
+          var trafficToolItems = this.data.trafficToolItems;
+          console.log("trafficToolItems的内容为：" + trafficToolItems);
+          for (var i = 0, len = 5; i < 5; ++i) {
+            trafficToolItems[i].checked = trafficToolItems[i].value == res.data[0].trafficToolStatusFlag;
+          }
+          this.setData({
+            trafficToolItems: trafficToolItems
+          });
+          
           var radioNoGoBackItems = this.data.radioNoGoBackItems;
           console.log("radioHealthyStatusItems的内容为：" + radioNoGoBackItems);
           for (var i = 0, len = 2; i < 2; ++i) {
@@ -117,6 +134,7 @@ Page({
           this.setData({
             radioNoGoBackItems: radioNoGoBackItems
           });
+
 
           
           var goHospitalRadioItems = this.data.goHospitalRadioItems;

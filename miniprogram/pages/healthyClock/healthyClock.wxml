@@ -97,12 +97,12 @@
           <view class="clock_form__title">
             离京日期
           </view>
-          <view class="weui-cells weui-cells_after-title">
+          <view class=" ">
             <view class="weui-cell ">
-              <view class="clock_form_input">
+              <view class="clock_form_input-date">
                 <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
-                  <view class="weui-input" style="width:85%;float:left;">{{leavedate}}</view>
-                  <view style="align:right;width:10%;display:inline;color:#1759EF">
+                  <view class="weui-input-date" style="width:585rpx;float:left;">{{leavedate}}</view>
+                  <view style="float:right;width:90rpx;display:inline;color:#1759EF">
                     <a bindtap="leaveDateChange">选择</a>
                   </view>
                 </picker>
@@ -114,12 +114,12 @@
           <view class="clock_form__title">
             返京日期
           </view>
-          <view class="weui-cells weui-cells_after-title">
+          <view class="">
             <view class="weui-cell ">
-              <view class="clock_form_input">
+              <view class="clock_form_input-date">
                 <picker mode="date" name="suregobackdate" value="{{suregobackdate}}" start="2019-01-01" end="{{date}}" bindchange="suregobackDateChange">
-                  <view class="weui-input" style="width:85%;float:left;">{{suregobackdate}}</view>
-                  <view style="align:right;width:10%;display:inline;color:#1759EF">
+                  <view class="weui-input-date" style="width:585rpx;float:left;">{{suregobackdate}}</view>
+                  <view style="float:right;width:90rpx;display:inline;color:#1759EF">
                     <a bindtap="suregobackDateChange">选择</a>
                   </view>
                 </picker>
@@ -128,7 +128,20 @@
           </view>
           <view class='devide-middle'/>
 
-          <view class="clock_form__title">返京所乘车次/航班/车牌</view>
+      <view class="clock_form__title">交通工具</view>
+        <view>
+        <view class='clock-radio'>
+          <radio-group class="radio-group" bindchange="trafficToolChange">
+            <label wx:for="{{trafficToolItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+               <view  wx:if='{{index != trafficToolItems.length-1}}'class='devide-radio'/>
+            </label>
+          </radio-group>
+        </view>
+        </view>
+       <view class='devide-middle'/>
+
+      <view class="clock_form__title">返京所乘车次/航班/车牌</view>
           <view class="">
             <view class="">
               <view class="clock_form_input">
@@ -183,7 +196,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHospitalRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" />{{item.name}}
+            <radio value="{{item.value}}" disabled='{{disableAtHospital}}'/>{{item.name}}
             <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>
@@ -194,7 +207,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" />{{item.name}}
+            <radio value="{{item.value}}" disabled='{{disableDiagnosis}}'/>{{item.name}}
             <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>

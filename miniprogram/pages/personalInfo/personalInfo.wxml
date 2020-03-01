@@ -86,7 +86,7 @@
             </view>
           </picker>
         </view>
-        <view class="personal-divide"></view>
+        
 
         <!-- 单位详细地址 -->
         <view class="personal-info-hd">
@@ -121,7 +121,7 @@
         <view class="personal-info-td">
           <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_home_detail}}" disabled="{{disabled}}" value="{{value_home_detail}}"></input>
         </view>
-
+        
       </view>
       <view class="personal-buttons" style="{{buttons_display}}">
         <button class="button-reset" form-type="reset" disabled="{{disabled}}">重置</button>

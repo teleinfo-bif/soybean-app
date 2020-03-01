@@ -30,16 +30,24 @@ Page({
     tempera: 0,
     confirmed: '1',
     hospital: '1',
-
+    traffic:'',
     isInBeijing: -1,
     whetherLeaveBeijing: -1,
     outBejingReason: -1,
     planReturnBejingDate: "",
     leaveBeijingDate: "",
     returnBeijingDate: "",
-    traffic: "",
-
-    userLatestInfo: []
+    userLatestInfo: [],
+    disableAtHospital:false,
+    disableDiagnosis:false,
+    trafficToolItems: [
+      { name: '飞机', value: '0' },
+      { name: '火车', value: '1' },
+      { name: '汽车', value: '2' },
+      { name: '轮船', value: '3' },
+      { name: '其他', value: '4' }
+    ],
+    trafficToolStatusFlag:'',
   },
 
   currentDate: function (e) {
@@ -86,6 +94,16 @@ Page({
         this.isLeaveBjFlag = "1"
       }
 
+      //交通工具
+      var trafficToolItems = this.data.trafficToolItems;
+      console.log("trafficToolItems的内容为：" + trafficToolItems);
+      for (var i = 0, len = 5; i < 5; ++i) {
+        trafficToolItems[i].checked = trafficToolItems[i].value == latestInfo[0].trafficToolStatusFlag;
+      }
+      this.setData({
+        trafficToolItems: trafficToolItems
+      });
+
       this.leavedate = latestInfo[0].leave_date
       this.suregobackdate = latestInfo[0].suregobackdate
 
@@ -106,7 +124,8 @@ Page({
         planReturnBejingDate: latestInfo[0].plan_beijing,
         leaveBeijingDate: latestInfo[0].leave_date,
         returnBeijingDate: latestInfo[0].return_date,
-        traffic: latestInfo[0].traffic
+        traffic: latestInfo[0].traffic,
+        trafficToolStatusFlag: latestInfo[0].trafficToolStatusFlag
       })
 
       console.log("### noGoBackFlag: ", this.noGoBackFlag)
@@ -313,6 +332,7 @@ Page({
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
+    console.log("=====乘坐交通工具====:" + this.trafficToolStatusFlag);
     var name = e.detail.value.name
     var temperature = e.detail.value.temperature
     var bodyStatusFlag = this.bodyStatusFlag
@@ -320,6 +340,7 @@ Page({
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
     var place = e.detail.value.place
+    var trafficToolStatusFlag = this.trafficToolStatusFlag
 
     if (name == null || name == '') {
       wx.showToast({
@@ -527,6 +548,14 @@ Page({
           return;
         }
 
+        var trafficToolStatusFlag = this.data.trafficToolStatusFlag
+        if (trafficToolStatusFlag == null || trafficToolStatusFlag == '') {
+          wx.showToast({
+            icon: 'none',
+            title: '请选择交通工具'
+          });
+          return;
+        }
 
         var trainnumber = e.detail.value.trainnumber
         if (trainnumber == null || trainnumber == '') {
@@ -541,24 +570,29 @@ Page({
       this.setData({
         leaveBeijingDate: leavedate,
         returnBeijingDate: suregobackdate,
-        traffic: trainnumber
+        traffic: trainnumber,
+        
 
       })
     }
     if (isQueZhenFlag == null || isQueZhenFlag == '') {
-      wx.showToast({
-        icon: 'none',
-        title: '是否确诊不能为空'
-      });
-      return;
+      if (this.data.bodyStatusFlag != 0){
+        wx.showToast({
+          icon: 'none',
+          title: '是否确诊不能为空'
+        });
+        return;
+      }
     }
 
     if (goHospitalFlag == null || goHospitalFlag == '') {
-      wx.showToast({
-        icon: 'none',
-        title: '是否就诊住院不能为空'
-      });
-      return;
+      if (this.data.bodyStatusFlag != 0) {
+        wx.showToast({
+          icon: 'none',
+          title: '是否就诊住院不能为空'
+        });
+        return;
+      }
     }
 
     if (goHBFlag == null || goHBFlag == '') {
@@ -615,6 +649,7 @@ Page({
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
+    console.log("=====乘坐交通工具====:" + this.trafficToolStatusFlag);
 
     var name = e.detail.value.name
     var phone = e.detail.value.phone
@@ -636,8 +671,7 @@ Page({
     var bodyStatusFlag = this.bodyStatusFlag
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
-
-
+    var trafficToolStatusFlag = this.trafficToolStatusFlag
 
 
     var date = new Date();
@@ -664,7 +698,8 @@ Page({
           ever_leave_beijing: this.data.whetherLeaveBeijing,
           leave_date: this.data.leaveBeijingDate,
           return_date: this.data.returnBeijingDate,
-          traffic: this.data.traffic
+          traffic: this.data.traffic,
+          trafficToolStatusFlag: this.trafficToolStatusFlag
         }
       })
 
@@ -681,7 +716,8 @@ Page({
           ever_leave_beijing: this.data.whetherLeaveBeijing,
           leave_date: this.data.leaveBeijingDate,
           return_date: this.data.returnBeijingDate,
-          traffic: this.data.traffic
+          traffic: this.data.traffic,
+          trafficToolStatusFlag: this.data.trafficToolStatusFlag
         }
       })
     }
@@ -708,6 +744,7 @@ Page({
         remark: remark,
         date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
+        trafficToolStatusFlag: this.data.trafficToolStatusFlag
         // userinfo: that.userinfo
       },
       success: res => {
@@ -797,6 +834,17 @@ Page({
       bodyStatusFlag: e.detail.value
     })
     //  this.radioChange(e)
+    if (e.detail.value == 0){
+      this.setData({
+        disableAtHospital:true,
+        disableDiagnosis:true
+      })
+    }else{
+      this.setData({
+        disableAtHospital: false,
+        disableDiagnosis: false
+      })
+    }
   },
 
   //是否确诊
@@ -873,6 +921,15 @@ Page({
         url: '../index/index',
       })
     }
+  },
+
+  //交通工具
+  trafficToolChange: function (e) {
+  console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.trafficToolStatusFlag = e.detail.value
+    this.setData({
+       trafficToolStatusFlag: e.detail.value
+    })
   }
 
 })
