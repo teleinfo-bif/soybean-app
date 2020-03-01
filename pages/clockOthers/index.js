@@ -345,8 +345,9 @@ Page({
       if (hideList.indexOf(item.prop) > -1) {
         item.hide = true;
       } else {
+        // 如果otherhealthy health等于0其他，设置健康其他显示
         if (item.prop == "otherhealthy") {
-          item.hide = item.hide || true;
+          item.hide = this.data.data.healthy == "0" ? false : true;
         } else {
           item.hide = false;
         }
@@ -373,7 +374,12 @@ Page({
         this.setFieldsHide(["nobackreason"]);
       } else {
         // 在北京且未离开
-        this.setFieldsHide(["nobackreason", "leavetime", "gobacktime", "flight"]);
+        this.setFieldsHide([
+          "nobackreason",
+          "leavetime",
+          "gobacktime",
+          "flight"
+        ]);
         // this.setFieldsHide(["reason", "gobacktime", "reason"]);
       }
     } else {
@@ -460,8 +466,8 @@ Page({
       let atBeijing =
         (formData.address && formData.address.indexOf("北京市") > -1) || false;
       // 服务端没有其它城市返回字段，根据返京日期判断
-      formData["leave"] = formData.gobacktime ? 1 : 0;
-      const leaved = formData.leavetime.length > 0;
+      // formData["leave"] = formData.gobacktime ? 2 : 1;
+      const leaved = formData["leave"] == "2";
       this.setData({
         atBeijing,
         leaved: leaved,

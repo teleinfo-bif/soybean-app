@@ -84,13 +84,13 @@ ec-canvas {
   margin-right: 20rpx;
   width: 27rpx;
   height: 27rpx;
-  background: #3891ff; }
+  background: #aa4438; }
 
 .square2 {
-  background: #53bca2; }
+  background: #f2d45e; }
 
 .square3 {
-  background: #dcb64f; }
+  background: #ffaa00; }
 
 .square4 {
-  background: #ec704f; }
+  background: #4169e1; }

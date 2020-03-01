@@ -19,7 +19,8 @@
       </view>
       <view wx:for="{{data}}" wx:key="index" class="legend-item">
         <view class="legend-item_label">
-          <view class="square square{{index+1}}"></view>
+          <view wx:if="{{data.length == 3 && index == 2}}" class="square square{{index+2}}"></view>
+          <view wx:else class="square square{{index+1}}"></view>
           <view>{{item.name}} {{item.value}}人</view>
         </view>
         <view class="legend-item_value">{{item.percent}}%</view>

@@ -1,5 +1,6 @@
 // pages/SignRecords/index.js
 import { getUserClockList } from "../../api/api";
+const app = getApp();
 // const beahavior_userInfo = require("../../behavior/userInfo");
 Page({
   /**
@@ -7,6 +8,7 @@ Page({
    */
   // behaviors: [beahavior_userInfo],
   data: {
+    otherUserId: "",
     requestInit: false,
     currentDate: new Date().getTime(),
     showDateText: "",
@@ -86,8 +88,10 @@ Page({
     let { requestInit } = this.data;
     let { pages, current } = this.data.clockData;
     if (!requestInit || pages > current) {
+      // 请求别人的userId
       getUserClockList({
-        current: ++current
+        current: ++current,
+        userId: this.data.otherUserId || app.globalData.userFilledInfo.id
       }).then(res => {
         this.setData({
           clockData: res,
@@ -101,9 +105,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const { userId } = options;
-    console.log(userId);
-    this.getData();
+    const { otherUserId } = options;
+    this.setData(
+      {
+        otherUserId
+      },
+      this.getData
+    );
   },
 
   /**

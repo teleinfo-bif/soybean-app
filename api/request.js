@@ -108,6 +108,7 @@ const Request = async ({ url, params, method, ...other } = {}) => {
     userInfo = await getUserInfo({ openid: token.openid });
     console.log("返回数据：获取的用户", userInfo);
   }
+  console.log("params.userId", params, params.userId);
 
   // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
   let data = Object.assign({}, params, {
