@@ -54,10 +54,10 @@
       <view class="group-item">
         <view class="group-item-title" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}" bindtap="gotoStatistics">
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
-          <view class="group-item-name">{{department}}</view>
+          <!-- <view class="group-item-name">{{department}}</view> -->
         </view>
-        <view class="group-item-title" wx:else bindtap="gotoDetailClick">
-          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+        <view class="group-item-title" bindtap="gotoDetailClick">
+          <!-- <image class="group-item-icon" src="../../images/tongjixinxi2x.png" /> -->
           <view class="group-item-name">{{department}}</view>
         </view>
 

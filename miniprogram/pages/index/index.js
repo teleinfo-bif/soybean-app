@@ -243,7 +243,8 @@ Page({
           userinfo: res.data,
           // loginUserInfo: "您好， " + res.data[0].name + '!',
           loginUserInfo: res.data[0].name,
-          department: title
+          department: title,
+          groupType: groupType
         })
 
         // app.globalData.userBaseInfo = res.data[0]
