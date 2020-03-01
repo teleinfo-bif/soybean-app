@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    groupAvatarShow: '',
     groupAvatar: '',
     applicant: '',
     phone: '',
@@ -63,15 +64,16 @@ Page({
       success (res) {
         const tempFilePath = res.tempFilePaths[0]
         var key = tempFilePath.substr(tempFilePath.lastIndexOf('/') + 1)
-        // console.log('tempFilePaths:', key)
+        // console.log('tempFilePaths:', tempFilePath)
         wx.cloud.uploadFile({
           cloudPath: 'groupAvatar/'+ key, // 上传至云端的路径
           filePath: tempFilePath, // 小程序临时文件路径
           success: res => {
             // 返回文件 ID
-            console.log(res.fileID)
-            this.setData({
-              groupAvatar: res.fileID
+            // console.log(res.fileID)
+            that.setData({
+              groupAvatar: res.fileID,
+              groupAvatarShow: tempFilePath
             })
           },
           fail: console.error

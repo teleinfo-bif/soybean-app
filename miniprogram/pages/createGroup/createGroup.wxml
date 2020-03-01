@@ -14,8 +14,8 @@
             <text class="info-label">1.上传组织头像</text>
         </view>
         <view class="add-img" bind:tap="chooseImage">
-            <image src="../../images/userinfo.png"></image>
-            <!-- <image wx:if="{{upload}}" src="{{productImg}}"></image> -->
+            <image wx:if="{{!groupAvatarShow}}" src="../../images/userinfo.png"></image>
+            <image wx:if="{{groupAvatarShow}}" src="{{groupAvatarShow}}"></image>
         </view>
         <view class="personal-divide"></view>
 
