@@ -67,8 +67,8 @@
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td-company">
-            中国信息通信研究院 {{value_company_name}}
-              <!--text class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="" disabled="disabled"></text-->
+              <text class=''>中国信息通信研究院</text>
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></input>
             </view>
           </picker>
         </view>
@@ -86,7 +86,7 @@
             </view>
           </picker>
         </view>
-        <view class="personal-divide"></view>
+        
 
         <!-- 单位详细地址 -->
         <view class="personal-info-hd">
@@ -101,7 +101,7 @@
         <view class="personal-info-picker">
           <picker mode="region" bindchange="bindHomeRegionChange" value="{{home_region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">家庭所在城市及区:</text>
+              <text class="info-label">家庭所在城市及区</text>
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">
@@ -121,7 +121,7 @@
         <view class="personal-info-td">
           <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_home_detail}}" disabled="{{disabled}}" value="{{value_home_detail}}"></input>
         </view>
-
+        
       </view>
       <view class="personal-buttons" style="{{buttons_display}}">
         <button class="button-reset" form-type="reset" disabled="{{disabled}}">重置</button>

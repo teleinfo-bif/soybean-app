@@ -132,7 +132,7 @@
         <image class="weui-grid__icon" src="../../images/quanxianfenpei.png" />
         <view class="weui-grid__label">权限分配</view>
       </navigator>
-<!-- >>>>>>> origin/master -->
+<!-- >
     <!-- </view>  -->
   <!-- </view> -->
 

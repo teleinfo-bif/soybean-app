@@ -76,7 +76,6 @@
 
 
 .personal-info-td {
-  margin-top:20rpx;
   margin-bottom:30rpx;
   margin-left:30rpx;
 /*   border-bottom: 2rpx solid #F5F5F5; 
@@ -125,11 +124,9 @@
 .info-phone {
   /* background: #F5F5F5; */
   float: right;
-  margin-right: 16rpx;
   font-size: 30rpx;
-  color: #4169E1;
+  color: rgba(23,89,239,1);
 }
-
 
 
 .placeholder-style {

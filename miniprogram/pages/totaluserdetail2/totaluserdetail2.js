@@ -86,25 +86,24 @@ Page({
   //     }
   //   })
   // },
-
-  parseDatas: function(datas) {
+  parseDatas: function(infoDatas, healthyDatas) {
     
     var temp = []
-   
 
-    for (var i = 0; i < datas.length; i++) {
-      var tempTopic = {}
-      tempTopic['name'] = datas[i].name
-      tempTopic['_id'] = datas[i]._id
-      tempTopic['_openid'] = datas[i]._openid
-      tempTopic['temperature'] = datas[i].temperature
-      tempTopic['goHospitalFlag'] = datas[i].goHospitalFlag
-      tempTopic['bodyStatusFlag'] = datas[i].bodyStatusFlag
-      tempTopic['isQueZhenFlag'] = datas[i].isQueZhenFlag
+    for (var i = 0; i < infoDatas.length; i++) {
+      var tempTopic = infoDatas[i]
+      for (var j = 0; j < healthyDatas.length; j++) {
+        if (infoDatas[i]._openid == healthyDatas[j]._openid){
+        tempTopic['temperature'] = healthyDatas[j].temperature
+        tempTopic['goHospitalFlag'] = healthyDatas[j].goHospitalFlag
+        tempTopic['bodyStatusFlag'] = healthyDatas[j].bodyStatusFlag
+        tempTopic['isQueZhenFlag'] = healthyDatas[j].isQueZhenFlag
+        }
+      }
 
       temp.push(tempTopic)
     }
-
+   
     console.log("temp datas: ", temp)
 
     this.setData({
@@ -112,6 +111,7 @@ Page({
     })
 
   },
+
 
   analysisLevel: function(level) {
 
@@ -132,8 +132,9 @@ Page({
 
           success: res => {
             console.log("res result: ", res.result)
+            var infoDatas = res.result[0]
             var healthyDatas = res.result[1]
-            this.parseDatas(healthyDatas)
+            this.parseDatas(infoDatas, healthyDatas)
             wx.hideLoading()
           },
 
@@ -156,8 +157,9 @@ Page({
 
           success: res => {
             console.log("res result: ", res.result)
+            var infoDatas = res.result[0]
             var healthyDatas = res.result[1]
-            this.parseDatas(healthyDatas)
+            this.parseDatas(infoDatas, healthyDatas)
             wx.hideLoading()
           },
 
@@ -181,7 +183,8 @@ Page({
           success: res => {
             console.log("res result: ", res.result)
             var infoDatas = res.result[0]
-            this.parseDatas(infoDatas)
+            var healthyDatas = res.result[1]
+            this.parseDatas(infoDatas, healthyDatas)
             wx.hideLoading()
           },
 
