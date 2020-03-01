@@ -9,7 +9,7 @@ Page({
       { name: '否', value: '1' },
       { name: '是', value: '0' },
     ],
-    leaveBeijingItems:[
+    leaveBeijingItems: [
       { name: '否', value: '1' },
       { name: '是', value: '0' },
     ],
@@ -25,7 +25,7 @@ Page({
 
     index: 0,
     place: "",
-    todayClickFlag : '0', //今日是否打卡标志，默认未打卡
+    todayClickFlag: '0', //今日是否打卡标志，默认未打卡
     healthyFlag: false,
     tempera: 0,
     confirmed: '1',
@@ -42,7 +42,7 @@ Page({
     userLatestInfo: []
   },
 
-  currentDate: function(e) {
+  currentDate: function (e) {
     var date = new Date();
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
@@ -51,21 +51,21 @@ Page({
     return Y + M + D
   },
 
-  dateJudge: function(e) {
+  dateJudge: function (e) {
     var otherDate = new Date(e)
     var currentDate = new Date(this.currentDate())
 
     if (otherDate.getTime() < currentDate.getTime()) {
-      return false 
+      return false
     }
     return true
   },
 
-  initDatas: function(e) {
+  initDatas: function (e) {
 
-    if (this.data.userLatestInfo.length > 0){
-    var radioNoGoBackItems = this.data.radioNoGoBackItems
-    var latestInfo = this.data.userLatestInfo
+    if (this.data.userLatestInfo.length > 0) {
+      var radioNoGoBackItems = this.data.radioNoGoBackItems
+      var latestInfo = this.data.userLatestInfo
       for (var i = 0; i < radioNoGoBackItems.length; i++) {
         console.log("item value: ", radioNoGoBackItems[i].value)
         console.log("latest out reason: ", latestInfo[0].out_reason)
@@ -82,17 +82,21 @@ Page({
 
       this.noGoBackFlag = latestInfo[0].out_reason.toString()
       this.isLeaveBjFlag = latestInfo[0].ever_leave_beijing.toString()
+      if (this.isLeaveBjFlag == "-1") {
+        this.isLeaveBjFlag = "1"
+      }
+
       this.leavedate = latestInfo[0].leave_date
       this.suregobackdate = latestInfo[0].suregobackdate
 
       this.setData({
         radioNoGoBackItems: radioNoGoBackItems,
-        leaveBeijingItems:leaveBeijingItems,
+        leaveBeijingItems: leaveBeijingItems,
 
         noGoBackFlag: latestInfo[0].out_reason.toString(),
         gobackdate: latestInfo[0].plan_beijing,
         leavedate: latestInfo[0].leave_date,
-        isLeaveBjFlag: latestInfo[0].ever_leave_beijing,
+        isLeaveBjFlag: this.isLeaveBjFlag,
         suregobackdate: latestInfo[0].return_date,
         trainnumber: latestInfo[0].traffic,
 
@@ -107,7 +111,7 @@ Page({
 
       console.log("### noGoBackFlag: ", this.noGoBackFlag)
     }
-  }, 
+  },
 
   onLoad: function (options) {
 
@@ -132,7 +136,7 @@ Page({
     })
     this.qryHealthyTodayInfo()
     this.qryUserLatestInfo()
-   
+
   },
 
   //查询当前打卡信息
@@ -144,15 +148,15 @@ Page({
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
 
     const db = wx.cloud.database()
-    console.log("查询当前打卡记录日期为：" + Y+M+D);
+    console.log("查询当前打卡记录日期为：" + Y + M + D);
     db.collection('user_healthy').where({
       _openid: app.globalData.openid,
-      date:Y+M+D
+      date: Y + M + D
     }).get({
       success: res => {
         console.log(res)
         //今日已打卡
-        if(res.data.length > 0){
+        if (res.data.length > 0) {
           console.log("filled users number: ", res.data.length)
 
           that.setData({
@@ -160,7 +164,7 @@ Page({
           })
 
         }
-        
+
         that.qryUserInfo();
       },
       fail: err => {
@@ -186,7 +190,7 @@ Page({
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
-          userinfo:res.data
+          userinfo: res.data
         })
       },
       fail: err => {
@@ -211,21 +215,21 @@ Page({
         console.log(res)
         this.setData({
           userLatestInfo: res.data
-        })      
+        })
         this.initDatas()
         console.log("user latest info: ", this.data.userLatestInfo)
       },
       fail: err => {
-        
+
         console.log(err)
       }
     })
 
-    
+
   },
 
   //跳转打卡记录页面
-  clickRecord: function(e) {
+  clickRecord: function (e) {
     console.log("跳转到打卡记录页面appid内容为：" + app.globalData.openid)
     wx.navigateTo({
       url: '../clockInRecord/clockInRecord'
@@ -262,24 +266,24 @@ Page({
             });
             var currentCity = res.result.ad_info.city;
             //是否在京   1-未返京   0-已返京
-            if (currentCity == '北京市'){
+            if (currentCity == '北京市') {
               that.setData({
-                isGoBackFlag : '0',
+                isGoBackFlag: '0',
                 isInBeijing: 0,
               });
               app.globalData.isGoBackFlag = '0'
-              
-            }else{
+
+            } else {
               that.setData({
-                isGoBackFlag : '1',
+                isGoBackFlag: '1',
                 isInBeijing: 1,
               });
               app.globalData.isGoBackFlag = '1'
             }
-              
+
           }
         })
-      }, 
+      },
       fail: err => {
         wx.hideLoading()
         console.error('用户当前位置信息获取失败', err)
@@ -297,8 +301,8 @@ Page({
     console.log("打卡地点" + e.detail.value.place);
     console.log("是否在京:" + this.workPlaceFlag);
     console.log("未返京原因:" + this.noGoBackFlag);
-    console.log("计划返京日期:" + e.detail.value.gobackdate); 
-    console.log("14天内是否离京:" + this.isLeaveBjFlag);  
+    console.log("计划返京日期:" + e.detail.value.gobackdate);
+    console.log("14天内是否离京:" + this.isLeaveBjFlag);
     console.log("离京日期:" + e.detail.value.leavedate);
     console.log("返京日期:" + e.detail.value.suregobackdate);
     console.log("返京车次/航班/车牌 :" + e.detail.value.trainnumber);
@@ -325,7 +329,7 @@ Page({
       return;
     }
 
-    if (place == null || place == ''){
+    if (place == null || place == '') {
       wx.showToast({
         icon: 'none',
         title: '打卡地点不能为空'
@@ -345,7 +349,7 @@ Page({
       wx.showToast({
         icon: 'none',
         title: '体温格式错误!',
-      
+
       });
       return;
     }
@@ -367,9 +371,9 @@ Page({
       return;
     }
 
-    if (bodyStatusFlag == '3'){
+    if (bodyStatusFlag == '3') {
       var bodystatusotherremark = e.detail.value.bodystatusotherremark
-      if (bodystatusotherremark == null || bodystatusotherremark == ''){
+      if (bodystatusotherremark == null || bodystatusotherremark == '') {
         wx.showToast({
           icon: 'none',
           title: '身体健康状态为其他原因不能为空'
@@ -379,38 +383,38 @@ Page({
     }
 
     if (bodyStatusFlag == 0) {
-       if (this.data.tempera > 37.3) {
-         wx.showToast({
-           icon: 'none',
-           title: '体温与健康状况发生冲突，请重新填写',
-           duration: 3000,
+      if (this.data.tempera > 37.3) {
+        wx.showToast({
+          icon: 'none',
+          title: '体温与健康状况发生冲突，请重新填写',
+          duration: 3000,
 
-         });
-         return;
-       }
+        });
+        return;
+      }
 
-       if(this.data.confirmed == 0) {
-         wx.showToast({
-           icon: 'none',
-           title: '是否确诊与健康状况发生冲突，请重新填写',
-           duration: 3000,
+      if (this.data.confirmed == 0) {
+        wx.showToast({
+          icon: 'none',
+          title: '是否确诊与健康状况发生冲突，请重新填写',
+          duration: 3000,
 
-         });
-         return;
-       }
+        });
+        return;
+      }
 
-       if (this.data.hospital == 0) {
-         wx.showToast({
-           icon: 'none',
-           title: '是否就诊住院与健康状况发生冲突，请重新填写',
-           duration: 3000
+      if (this.data.hospital == 0) {
+        wx.showToast({
+          icon: 'none',
+          title: '是否就诊住院与健康状况发生冲突，请重新填写',
+          duration: 3000
 
-         });
-         return;
-       }
+        });
+        return;
+      }
     }
 
-    if (this.data.tempera > 37.3 || this.data.confirmed == 0 || this.data.hospital == 0){
+    if (this.data.tempera > 37.3 || this.data.confirmed == 0 || this.data.hospital == 0) {
       if (bodyStatusFlag == 0) {
         wx.showToast({
           icon: 'none',
@@ -418,7 +422,7 @@ Page({
         });
         return;
       }
-    } 
+    }
 
 
     if (app.globalData.isGoBackFlag == '1') {//未返京
@@ -440,11 +444,11 @@ Page({
       }
 
 
-      if (! this.dateJudge(gobackdate)) {
+      if (!this.dateJudge(gobackdate)) {
         wx.showToast({
           icon: 'none',
           title: '返京日期应不小于当天',
-          duration: 2500, 
+          duration: 2500,
         });
         return;
       }
@@ -459,7 +463,7 @@ Page({
     console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
     if (app.globalData.isGoBackFlag == '0') {//已返京
       var isLeaveBjFlag = this.isLeaveBjFlag
-      
+
       if (isLeaveBjFlag == null || isLeaveBjFlag == '') {
         wx.showToast({
           icon: 'none',
@@ -484,8 +488,8 @@ Page({
         console.log(ldate.getTime());
         console.log(current.getTime());
         console.log(ldate.getTime() - current.getTime())
-        var ms = current.getTime() - ldate.getTime() 
-        if (ms > 0){
+        var ms = current.getTime() - ldate.getTime()
+        if (ms > 0) {
           wx.showToast({
             icon: 'none',
             title: '离京日期选择2020年1月10日以后的日期',
@@ -514,7 +518,7 @@ Page({
           return;
         }
 
-        if (ldate.getTime() > bdate.getTime()){
+        if (ldate.getTime() > bdate.getTime()) {
           wx.showToast({
             icon: 'none',
             title: '返京日期应大于离京日期',
@@ -556,7 +560,7 @@ Page({
       });
       return;
     }
-    
+
     if (goHBFlag == null || goHBFlag == '') {
       wx.showToast({
         icon: 'none',
@@ -588,7 +592,7 @@ Page({
           duration: 3000
         })
       }
-      })
+    })
   },
 
   //返程信息提交
@@ -611,7 +615,7 @@ Page({
     console.log("是否就诊住院:" + this.goHospitalFlag);
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
-    
+
     var name = e.detail.value.name
     var phone = e.detail.value.phone
     var place = e.detail.value.place
@@ -633,7 +637,7 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
 
-    
+
 
 
     var date = new Date();
@@ -647,7 +651,7 @@ Page({
 
     const db = wx.cloud.database()
 
-    if (this.data.userLatestInfo.length  == 0){
+    if (this.data.userLatestInfo.length == 0) {
       console.log("add user latest info:")
       db.collection('user_latest').add({
         data: {
@@ -657,14 +661,14 @@ Page({
           is_in_beijing: this.data.isInBeijing,
           out_reason: this.data.outBejingReason,
           plan_beijing: this.data.planReturnBejingDate,
-          ever_leave_beijing: this.data.whetherLeaveBeijing, 
+          ever_leave_beijing: this.data.whetherLeaveBeijing,
           leave_date: this.data.leaveBeijingDate,
           return_date: this.data.returnBeijingDate,
           traffic: this.data.traffic
         }
       })
 
-    }else {
+    } else {
       console.log("update user latest info:")
       db.collection('user_latest').doc(this.data.userLatestInfo[0]._id).update({
         data: {
@@ -734,12 +738,12 @@ Page({
     });
   },
 
-  healthShowHide: function(value) {
-    if (value == 0){
+  healthShowHide: function (value) {
+    if (value == 0) {
       this.setData({
         healthyFlag: true
       })
-    }else {
+    } else {
       this.setData({
         healthyFlag: false
       })
@@ -750,7 +754,7 @@ Page({
   goHBRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHBFlag = e.detail.value
-   // this.radioChange(e)
+    // this.radioChange(e)
   },
 
   // 2020-02-10 后是否离开北京
@@ -761,19 +765,19 @@ Page({
       isLeaveBjFlag: e.detail.value,
       whetherLeaveBeijing: e.detail.value
     });
-  //  this.radioChange(e)
+    //  this.radioChange(e)
   },
-  
+
   //未返京原因
-  noGoBackRadioChange: function(e) {
+  noGoBackRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.noGoBackFlag = e.detail.value
     //this.radioChange(e)
   },
 
-  judgeTemperature: function(e) {
+  judgeTemperature: function (e) {
     console.log("value: ", e.detail.value)
-    if (this.data.confirmed == '1' && this.data.hospital == '1'){
+    if (this.data.confirmed == '1' && this.data.hospital == '1') {
       var flag = 0
       if (e.detail.value < 37.3) {
         flag = 1
@@ -792,13 +796,13 @@ Page({
     this.setData({
       bodyStatusFlag: e.detail.value
     })
-  //  this.radioChange(e)
+    //  this.radioChange(e)
   },
 
   //是否确诊
   isQueZhenRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
-    
+
     this.isQueZhenFlag = e.detail.value
     this.setData({
       confirmed: e.detail.value
@@ -806,18 +810,18 @@ Page({
     if (this.data.tempera < 37.3 && this.data.hospital == 1) {
       this.healthShowHide(e.detail.value)
     }
-  //  this.radioChange(e)
+    //  this.radioChange(e)
   },
 
   //是否就诊住院
   goHospitalRadioChange: function (e) {
-    
+
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHospitalFlag = e.detail.value
     this.setData({
       hospital: e.detail.value
     })
-    if (!this.data.tempera < 37.3 && this.data.confirmed == 1){
+    if (!this.data.tempera < 37.3 && this.data.confirmed == 1) {
       this.healthShowHide(e.detail.value)
     }
     //  this.radioChange(e)
@@ -849,14 +853,14 @@ Page({
 
   // 选择省市区函数
   changeReginChange(e) {
-    console.log("省市区选择发生变化,携带的值为：" +  e.detail.value);
+    console.log("省市区选择发生变化,携带的值为：" + e.detail.value);
     this.gobackwhere = e.detail.value
-    this.setData({ 
-      region: e.detail.value 
+    this.setData({
+      region: e.detail.value
     });
   },
 
-  goHome: function() {
+  goHome: function () {
     const pages = getCurrentPages()
     if (pages.length === 2) {
       wx.navigateBack()
