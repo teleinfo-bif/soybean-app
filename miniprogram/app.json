@@ -22,7 +22,8 @@
     "pages/departmentDetail/departmentDetail",
     "pages/totaluserdetail2/totaluserdetail2",
     "pages/submitSuccess/submitSuccess",
-    "pages/modifySuccess/modifySuccess"
+    "pages/modifySuccess/modifySuccess",
+    "pages/createGroup/createGroup"
   ],
   "permission": {
     "scope.userLocation": {

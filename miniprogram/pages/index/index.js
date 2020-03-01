@@ -441,7 +441,58 @@ Page({
         url: '../totaluserdetail2/totaluserdetail2'
       })
     }
-  }
+  },
+
+  createGroup: function (e) {
+    console.log("跳转创建组织页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          db.collection('applications_info').where({
+            _openid: app.globalData.openid,
+            status: 'waiting'
+          }).get({
+            success: res => {
+              console.log('application:',res)
+              if (res.data.length > 0) {
+                wx.showToast({
+                  icon: 'none',
+                  title: '您有待审核的创建群组申请'
+                })           
+              } else {
+                wx.navigateTo({
+                  url: '../createGroup/createGroup'
+                })
+              }
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '请稍后'
+              })
+              console.log(err)
+            }
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '请稍后'
+        })
+        console.log(err)
+      }
+    })
+  },
   
 
 })

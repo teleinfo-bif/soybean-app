@@ -41,6 +41,7 @@
       <view class="group-title">
           <view class="group-title-name">我的组织</view>
           <view class="group-title-icon">
+            <view bindtap="createGroup">创建群组</view>
               <!-- <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" />
               <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" />
               <image class="group-title-icon-item" src="../../images/jiankangdaka2x.png" /> -->
