@@ -48,13 +48,13 @@
           </view>
       </view>
       <view class="group-items">
-            <view class="group-item">
+            <view class="group-item" wx:for="{{departments}}" wx:key="*this">
               <view class="group-item-title" bindtap="gotoDetailClick">
                 <image class="group-item-icon" src="../../images/title-icon.png" />
                 <!-- <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view> -->
-                <view class="group-item-name">{{department}}</view>
+                <view class="group-item-name">{{item.department}}</view>
               </view>
-              <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+              <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{item.groupType == '2'}}">
                 <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />                   
               </view>
             </view> 

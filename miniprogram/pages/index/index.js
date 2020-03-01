@@ -15,9 +15,10 @@ Page({
     isManagerFlag: '0',
     isSuperUserFlag: '0',
     loginUserInfo: "用户注册",
-    department: '',//所在部门
+    // department: '',//所在部门
+    departments: [],//所在的部门群组s
     todayClickFlag: "0",
-    groupType: '1',
+    groupType: '1',//2是管理员1非管理员
     swiperPages: [
       "../epidemiNews/epidemiNews",
       "../epidemiMap/epidemicMap"
@@ -196,35 +197,35 @@ Page({
         console.log("datas: ", res)
         that.userinfo = res.data;
 
-        var department = res.data[0].company_department
-        var infoes = department.split(' ')
-        var regInfo = ""
-        var groupType = "1"
-        var title = "众志成城，抗击疫情" 
-        var superuser = res.data[0].superuser
-        var userType = res.data[0].usertype
+        // var department = res.data[0].company_department
+        // var infoes = department.split(' ')
+        // var regInfo = ""
+        // var groupType = "1"
+        // var title = "众志成城，抗击疫情" 
+        // var superuser = res.data[0].superuser
+        // var userType = res.data[0].usertype
         
-        if (superuser != null && superuser == "1") {
-          title = "中国信息通信技术研究院"
-          groupType = "2"
-        }else if (userType == '1'){
-          title = infoes[0]
-          // level = 2
-          if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
-            title = infoes[1]
-          } else {
-            regInfo = infoes[0] + ".*"
-            title = infoes[0]
-            groupType = "2"
-          }
-        }else if (userType == '2'){
-          regInfo = "",
-          title = infoes[1]
-        } else {
-          regInfo = "",
-          title = infoes[1]
-        }
+        // if (superuser != null && superuser == "1") {
+        //   title = "中国信息通信技术研究院"
+        //   groupType = "2"
+        // }else if (userType == '1'){
+        //   title = infoes[0]
+        //   // level = 2
+        //   if (infoes[0] == '院属公司及协会') {
+        //     regInfo = '.*' + infoes[1]
+        //     title = infoes[1]
+        //   } else {
+        //     regInfo = infoes[0] + ".*"
+        //     title = infoes[0]
+        //     groupType = "2"
+        //   }
+        // }else if (userType == '2'){
+        //   regInfo = "",
+        //   title = infoes[1]
+        // } else {
+        //   regInfo = "",
+        //   title = infoes[1]
+        // }
 
 
         that.setData({
@@ -232,8 +233,6 @@ Page({
           phone: res.data[0].phone,
           userinfo: res.data,
           loginUserInfo: "您好， " + res.data[0].name + '!',
-          department: title,
-          groupType: groupType
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -482,50 +481,108 @@ Page({
     }).get({
       success: res => {
         // console.log("datas: ", res)
+        let list = []
         let userinfo = res.data[0];
         let company_count = userinfo.company_count;
         let company_department = userinfo.company_department; //判断是否是信通院
         if(company_department.split(' ').length==3){
-          //非信通院
-          console.log("33333",company_department.split(' ') )
-        } else {
-          
-        }
-
-        console.log("datas: ", company_count)
-       
-        // var department = res.data[0].company_department
-        // var infoes = department.split(' ')
-        // var regInfo = ""
-        // var title = "众志成城，抗击疫情" 
-        // var superuser = res.data[0].superuser
-        // var userType = res.data[0].usertype
-        
-        if (superuser != null && superuser == "1") {
-          title = "中国信息通信技术研究院"
-        }else if (userType == '1'){
-          title = infoes[0]
-          // level = 2
-          if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
-            title = infoes[1]
+          if(company_count >= 2) {
+            list.push({
+              infoes:userinfo['company_department'],
+              userType:userinfo['usertype'],
+              isXintongyuan: false
+            })
+            for(let i=1;i<company_count;i++) {
+              console.log(userinfo['company_department'+i])
+              list.push({
+                infoes:userinfo['company_department'+i],
+                userType:userinfo['usertype'+i],
+                isXintongyuan: false
+              })
+            }
           } else {
-            regInfo = infoes[0] + ".*"
-            title = infoes[0]
+            list.push({
+              infoes:userinfo['company_department'],
+              userType:userinfo['usertype'],
+              isXintongyuan: false
+            })
           }
-        }else if (userType == '2'){
-          regInfo = "",
-          title = infoes[1]
         } else {
-          regInfo = "",
-          title = infoes[1]
+          if(company_count >= 2) {
+            list.push({
+              infoes:userinfo['company_department'],
+              userType:userinfo['usertype'],
+              isXintongyuan: true
+            })
+            for(let i=1;i<company_count;i++) {
+              list.push({
+                infoes:userinfo['company_department'+i],
+                userType:userinfo['usertype'+i],
+                isXintongyuan: false
+              })
+            }
+          } else {
+            list.push({
+              infoes:userinfo['company_department'],
+              userType:userinfo['usertype'],
+              isXintongyuan: true
+            })
+          }
         }
+        console.log('list',list)
+        let groupTypeList = []
+        var superuser = res.data[0].superuser
+        var title = "众志成城，抗击疫情"  
+        var regInfo = ""
+        var groupType = "1"
+        // var infoes = department.split(' ')
+        
+               
+        // var userType = res.data[0].usertype
+        list.forEach((item,index,array)=>{
+          //执行代码
+          if (superuser != null && superuser == "1") {
+            title = "中国信息通信技术研究院"
+            groupType = "2"
+            console.log('00000000000')
+          }else if (item.userType == '1'){
+            console.log('111111')
+            title = item.infoes[0]
+            // level = 2
+            if (item.infoes[0] == '院属公司及协会') {
+              console.log('22222')
+              regInfo = '.*' + item.infoes[1]
+              title = item.infoes[1]
+            } else {
+              console.log('33333')
+              regInfo = item.infoes[0] + ".*"
+              title = item.infoes[0]
+              groupType = "2"
+            }
+          }else if (item.userType == '2'){
+            console.log('44444',item.infoes[1])
+            regInfo = "",
+            title = item.infoes[1]
+            console.log('444445555',item.infoes[1])
+          } else {
+            console.log('55555',item.infoes)
+            regInfo = "",
+            title = item.infoes[1]
+          }
+          console.log('title',j)
+          groupTypeList.push({
+            department:title,
+            groupType:groupType
+          })
+        })
+        console.log('groupTypeList',groupTypeList)
+        
 
+        that.setData({
+          departments: groupTypeList,
+        })
 
-        // that.setData({
-        //   department: title
-        // })
-
+        console.log('department')
         // app.globalData.userBaseInfo = res.data[0]
         // console.log("base info index:", app.gloabalData.userBaseInfo)
 
