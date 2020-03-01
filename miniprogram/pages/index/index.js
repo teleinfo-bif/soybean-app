@@ -261,6 +261,43 @@ Page({
       }
     })
   },
+  
+  //跳转健康码页面
+  gotoHealthyQR: function (e) {
+    if (this.data.todayClickFlag == '1') {
+      wx.navigateTo({
+        url: '../healthQR/healthQR'
+      })
+    } else {
+      console.log("跳转到健康打卡页面")
+      const db = wx.cloud.database()
+      db.collection('user_info').where({
+        _openid: app.globalData.openid
+      }).get({
+        success: res => {
+          console.log(res)
+          if (res.data.length > 0) {
+            wx.showToast({
+              icon: 'none',
+              title: '请先健康打卡'
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '请先录入用户信息'
+            })
+          }
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询记录失败'
+          })
+          console.log(err)
+        }
+      })
+    }
+  },
 
   //跳转打卡记录页面
   gotoHealthyClick: function (e) {

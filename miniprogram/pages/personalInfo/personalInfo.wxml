@@ -86,7 +86,7 @@
             </view>
           </picker>
         </view>
-        
+        <view class="personal-divide"></view>
 
         <!-- 单位详细地址 -->
         <view class="personal-info-hd">
