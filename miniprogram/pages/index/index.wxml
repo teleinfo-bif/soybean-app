@@ -30,7 +30,7 @@
     </navigator>
 
     <navigator url="" class="weui-grid weui-grid-move" hover-class="weui-grid_active" bindtap="gotoHealthyQR">
-      <image class="weui-grid__icon_jk" src="../../images/jiankangma3x.png" />
+      <image class="weui-grid__icon_jk" src="../../images/jiankangma13x.png" />
       <view class="weui-grid__label weui-grid__label-move" >健康码</view>
     </navigator>
   </view>
@@ -163,12 +163,11 @@
   </view>  
   </view> -->
 
-  <view class="copyright">中国信息通信研究院 出品</view>
+  <!-- <view class="copyright">中国信息通信研究院 出品</view> -->
 
 
-  <!-- <view class="logo">
-    <view class="copyright">中国信息通信研究院 出品</view>
-    <view class="logo_ground"></view>
-  </view> -->
+  <view class="logo">
+    <view class="copyright-view">中国信息通信研究院 出品</view>
+  </view>
 
 </view>

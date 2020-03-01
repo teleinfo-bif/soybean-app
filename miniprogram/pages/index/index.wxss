@@ -323,3 +323,26 @@
   /* border-style: dotted;
   border-width: 2rpx; */
 }
+
+
+
+
+.logo{
+  width: 100%;
+  position: fixed;
+  bottom:0px;
+  display: flex;
+  justify-content: center;
+}
+ 
+.copyright-view{
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  height: 50rpx;
+  font-size: 25rpx;
+  bottom:0px;
+  color: black;
+  background-color: #fff;
+  z-index: -1;
+}
