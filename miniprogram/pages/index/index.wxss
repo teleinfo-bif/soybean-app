@@ -103,9 +103,10 @@
 }
 
 .userinfo-img {
-  width: 44rpx;
-  height: 44rpx;
-  margin: 10rpx 5rpx 5rpx 8rpx;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 30rpx;
+  margin: auto;
 }
 
 .head_title {
@@ -301,4 +302,24 @@
 .dayuhao-container {
   float: right;
   margin-top: 5rpx;
+}
+
+.footer-copy-right {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  /* background-color: #fff; */
+}
+
+.get-avatar {
+  font-size: 30rpx;
+  line-height: 100rpx;
+
+  /* border-style: dotted;
+  border-width: 2rpx; */
 }

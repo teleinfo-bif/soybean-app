@@ -84,6 +84,8 @@ Page({
               app.globalData.nickName = res.userInfo.nickName
               app.globalData.avatarUrl = res.userInfo.avatarUrl
 
+              console.log("------------- res.userInfo.avatarUr", res.userInfo.avatarUrl)
+
               console.log("app.globalData.avatarUrl = res.userInfo.avatarUrl, ", app.globalData.avatarUrl)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
@@ -401,11 +403,14 @@ Page({
     // 获取用户信息
     wx.getSetting({
       success(res) {
+        console.log("------------- res", res)
         if (res.authSetting['scope.userInfo']) {
           console.log("已授权=====")
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           wx.getUserInfo({
             success(res) {
+
+              console.log("------------- res1", res)
 
               console.log("获取用户信息成功", res)
               app.globalData.nickName = res.userInfo.nickName
