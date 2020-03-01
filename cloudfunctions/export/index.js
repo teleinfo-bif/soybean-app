@@ -635,16 +635,16 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     }
 
     //返程统计.交通方式 
-    if (isRetured && data.trafficTool != undefined) {
-        if (data.trafficTool == "0") {
+    if (isRetured && data.trafficToolStatusFlag != undefined) {
+        if (data.trafficToolStatusFlag == "0") {
             row.push("飞机")
-        } else if (data.trafficTool == "1") {
+        } else if (data.trafficToolStatusFlag == "1") {
             row.push("火车")
-        } else if (data.trafficTool == "2") {
+        } else if (data.trafficToolStatusFlag == "2") {
             row.push("汽车")
-        } else if (data.trafficTool == "3") {
+        } else if (data.trafficToolStatusFlag == "3") {
             row.push("轮船")
-        } else if (data.trafficTool == "4") {
+        } else if (data.trafficToolStatusFlag == "4") {
             row.push("其它")
         } else {
             row.push("")
