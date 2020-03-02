@@ -46,6 +46,23 @@
 
       <view wx:if="{{isGoBackFlag == '1'}}">
         <!--未返京开始-->
+        <view class="clock_form__title">
+            离京日期
+          </view>
+          <view class=" ">
+            <view class="weui-cell ">
+              <view class="clock_form_input-date">
+                <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
+                  <view class="weui-input-date" style="width:585rpx;float:left;">{{leavedate}}</view>
+                  <view style="float:right;width:90rpx;display:inline;color:#1759EF">
+                    <a bindtap="leaveDateChange">选择</a>
+                  </view>
+                </picker>
+              </view>
+            </view>
+          </view>
+          <view class='devide-middle'/>
+
         <view class="clock_form__title">未返京原因
         </view>
         <view class='clock-radio'>
@@ -196,7 +213,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHospitalRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" disabled='{{disableAtHospital}}'/>{{item.name}}
+            <radio value="{{item.value}}" disabled='{{false}}'/>{{item.name}}
             <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>
@@ -207,7 +224,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="isQueZhenRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
-            <radio value="{{item.value}}" disabled='{{disableDiagnosis}}'/>{{item.name}}
+            <radio value="{{item.value}}" disabled='{{false}}'/>{{item.name}}
             <view  wx:if='{{index != radioItems.length-1}}'class='devide-radio'/>
           </label>
         </radio-group>

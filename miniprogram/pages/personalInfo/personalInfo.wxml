@@ -5,7 +5,7 @@
     <!-- 基本信息 -->
     <view class="personal-title">
       <view class="personal-icon"></view>
-      <text class="personal-info"> 基本信息</text>
+      <text class="personal-info"> 身份信息</text>
       <text class="{{personal_info_change}}" bindtap="personalInfoChange">修改</text>
     </view>
 
@@ -86,7 +86,7 @@
             </view>
           </picker>
         </view>
-        
+        <view class="personal-divide"></view>
 
         <!-- 单位详细地址 -->
         <view class="personal-info-hd">
@@ -124,7 +124,7 @@
         
       </view>
       <view class="personal-buttons" style="{{buttons_display}}">
-        <button class="button-reset" form-type="reset" disabled="{{disabled}}">重置</button>
+        <button class="button-reset" form-type="reset" disabled="{{disabled}}" bindtap="resetBtn">重置</button>
         <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
       </view>
     </form>

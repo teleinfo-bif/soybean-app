@@ -267,7 +267,7 @@ Page({
   },
 
   getInfoDatas: function (data) {
-    console.log("userInfoDatas: ", data)
+    // console.log("userInfoDatas: ", data)
     wx.cloud.callFunction({
       name: "qunzuUserInfoDatas",
       data: {

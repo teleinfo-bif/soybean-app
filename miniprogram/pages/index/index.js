@@ -29,7 +29,10 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 500,
-    imgQR:''
+    imgQR:'',
+
+    userInfoFlagYes: true,
+    userInfoFlagNo: false,
   },
   testQR: function () {
     var that = this
@@ -63,9 +66,9 @@ Page({
       })
       return
     }
+    
     that.getSessionCode();
     // this.onGetOpenid()
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -81,11 +84,18 @@ Page({
               console.info("用户信息为：" + JSON.stringify(res.userInfo, null, 2));
               app.globalData.nickName = res.userInfo.nickName
               app.globalData.avatarUrl = res.userInfo.avatarUrl
+              
+              console.log("app.globalData.avatarUrl = res.userInfo.avatarUrl, ", app.globalData.avatarUrl)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 nickName: res.userInfo.nickName,
               })
             }
+          })
+        } else {
+          this.setData({
+            userInfoFlagYes: false,
+            userInfoFlagNo: true
           })
         }
       }
@@ -201,7 +211,8 @@ Page({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
-          loginUserInfo: "您好， " + res.data[0].name + '!',
+          // loginUserInfo: "您好， " + res.data[0].name + '!',
+          loginUserInfo: res.data[0].name,
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -216,6 +227,43 @@ Page({
         console.log(err)
       }
     })
+  },
+  
+  //跳转健康码页面
+  gotoHealthyQR: function (e) {
+    if (this.data.todayClickFlag == '1') {
+      wx.navigateTo({
+        url: '../healthQR/healthQR'
+      })
+    } else {
+      console.log("跳转到健康打卡页面")
+      const db = wx.cloud.database()
+      db.collection('user_info').where({
+        _openid: app.globalData.openid
+      }).get({
+        success: res => {
+          console.log(res)
+          if (res.data.length > 0) {
+            wx.showToast({
+              icon: 'none',
+              title: '请先健康打卡'
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '请先录入用户信息'
+            })
+          }
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询记录失败'
+          })
+          console.log(err)
+        }
+      })
+    }
   },
 
   //跳转打卡记录页面
@@ -355,6 +403,42 @@ Page({
 
 
   onGetUserInfo: function (e) {
+    let that = this;
+    // 获取用户信息
+    wx.getSetting({
+      success(res) {
+        console.log("------------- res", res)
+        if (res.authSetting['scope.userInfo']) {
+          console.log("已授权=====")
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success(res) {
+
+              console.log("------------- res1", res)
+
+              console.log("获取用户信息成功", res)
+              app.globalData.nickName = res.userInfo.nickName
+              app.globalData.avatarUrl = res.userInfo.avatarUrl
+              that.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo,
+                userInfoFlagYes: true,
+                userInfoFlagNo: false
+              })
+              wx.reLaunch({
+                url: 'index',
+              })
+            },
+            fail(res) {
+              console.log("获取用户信息失败", res)
+            }
+          })
+        } else {
+          console.log("未授权=====")
+        }
+      }
+    })
+
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
@@ -520,7 +604,7 @@ Page({
         // var userType = res.data[0].usertype
         list.forEach((item,index,array)=>{
           //执行代码
-          if (superuser != null && superuser == "1") {
+          if (superuser != null && superuser == "1" && item.isXintongyuan) {
             title = "中国信息通信技术研究院"
             groupType = "2"
           }else if (item.userType == '1'){

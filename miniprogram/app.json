@@ -23,7 +23,8 @@
     "pages/totaluserdetail2/totaluserdetail2",
     "pages/submitSuccess/submitSuccess",
     "pages/modifySuccess/modifySuccess",
-    "pages/createGroup/createGroup"
+    "pages/createGroup/createGroup",
+    "pages/healthQR/healthQR"
   ],
   "permission": {
     "scope.userLocation": {

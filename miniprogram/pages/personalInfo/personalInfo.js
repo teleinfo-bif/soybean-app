@@ -62,7 +62,10 @@ Page({
 
   },
 
-  /**
+  resetBtn(){
+    console.log('&&&reset***')
+  },
+  /** 
    * 身份验证相关
    */
 
