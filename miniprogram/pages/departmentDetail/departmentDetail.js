@@ -497,4 +497,38 @@ Page({
 
   },
 
+
+  onPullDownRefresh: function () {
+    console.log('onPullDownRefresh')
+    // this.queryData(id)
+    
+    
+    // let department = options.department
+    // let serialNumber = options.serialNumber
+    // let isXintongyuan = options.isXintongyuan
+    // let userType = options.userType
+    // // this.getDepartmentsAndUsers(options.department)
+    // let isSuperUserFlag = options.isSuperUserFlag
+    // this.setData({
+    //   department: department,
+    //   serialNumber: serialNumber,
+    //   isXintongyuan: isXintongyuan,
+    //   userType: userType,
+    //   isSuperUserFlag: isSuperUserFlag
+    // })   
+    if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag=='1'){
+      this.initDatas2()
+    }else if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag!='1') {
+      this.initDatas()
+    } else if(this.data.isXintongyuan=="false" && this.data.userType!='1') {
+      this.initDatas()
+    } else if(this.data.isXintongyuan=="false" && this.data.userType=='1') {
+      this.initDatas3()
+    }
+
+
+    },
+
+
+
 });

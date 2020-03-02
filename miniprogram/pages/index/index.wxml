@@ -48,9 +48,9 @@
   <view class="group">
     <view class="group-title">
       <view class="group-title-name">今日数据</view>
-      <view class="group-title-icon"  bindtap="createGroup">
+      <!-- <view class="group-title-icon"  bindtap="createGroup">
         <view class="group-title-icon-item">创建群组</view>
-      </view>
+      </view> -->
     </view>
     <view class="group-items">
 

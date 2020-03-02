@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "组织详情"
+  "navigationBarTitleText": "组织详情",
+  "enablePullDownRefresh": true
 }
