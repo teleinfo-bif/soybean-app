@@ -82,8 +82,8 @@
   padding-left: 30rpx; */
 }
 
-.personal-info-picker {
-  
+.personal-info-picker-company {
+  height:300rpx;
 }
 .conpany_title{
   font-size:32rpx;
@@ -120,7 +120,7 @@
 }
 .info-text{
     width: 90%;
-  height: 45rpx;
+  height: 200rpx;
   font-size:32rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
