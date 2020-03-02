@@ -1131,14 +1131,17 @@ parseDatas: function(datas) {
       this.setData(
         {
           showDate: date,
-          regCompanyInfo: name + '.*'
+          regCompanyInfo: name + '.*',
+          authorityLevel: 2,
         }
       )
+      
       this.analysisLevel(2)
     }else if (level != undefined && level == 3){
       this.setData({
         showDate: date,
-        companyDepartment: name
+        companyDepartment: name,
+        authorityLevel: 3,
       })
       this.analysisLevel(3)
     }
