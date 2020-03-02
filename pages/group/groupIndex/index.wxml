@@ -1,10 +1,10 @@
 <!-- pages/group/groupIndex/index.wxml -->
 <van-tabs wx:if="{{isGroup === true}}" custom-class="tab" bind:click="onTabClick" swipeable color="#4F7EF2" sticky>
-  <van-tab title="部门 {{children.length||''}}"></van-tab>
-  <van-tab title="人员 {{memberData.total||''}}"></van-tab>
+  <van-tab title="部门 ({{children.length||''}})"></van-tab>
+  <van-tab title="人员 ({{memberData.total||''}})"></van-tab>
 </van-tabs>
 <!-- 统计信息分享按钮 -->
-<view class="top-box">
+<!-- <view class="top-box">
   <view class="top-box_count">
     <view wx:if="{{isGroup === true &&activeTab == 0}}">部门：{{children.length}}</view>
     <view wx:if="{{isGroup != true ||  activeTab == 1}}">人数：{{memberData.total || '-'}}</view>
@@ -14,7 +14,7 @@
       <image src="../../../static/images/fenxiang.png" />
     </button>
   </view>
-</view>
+</view> -->
 <view wx:if="{{isGroup === true &&activeTab == 0}}" class="" hover-class="none" hover-stop-propagation="false">
   <!-- 每一行 -->
   <view wx:for="{{children}}" wx:key="index" class="row-item">
@@ -32,9 +32,9 @@
         <navigator class="" target="" url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
           <image class="btn-statistic" src="../../../static/images/stastic@3x.png" />
         </navigator>
-        <navigator class="" target="" url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
+        <!-- <navigator class="" target="" url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
           <image class="btn-statistic" src="../../../static/images/deatil_data@3x.png" />
-        </navigator>
+        </navigator> -->
       </view>
     </view>
   </view>
