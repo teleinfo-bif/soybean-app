@@ -317,7 +317,26 @@ Page({
 
   onLoad: function (options) {
     console.log("options: ", options)
-    this.initDatas()
+    let name = decodeURIComponent(options.name)
+    let date = decodeURIComponent(options.date)
+    let level = decodeURIComponent(options.level)
+
+    if (level != undefined && level == 2) {
+      this.setData({
+        currentDate: date,
+        companyReg: name + '.*'
+      })
+      this.analysisLevel(2)
+    }else if (level != undefined && level == 3) {
+      this.setData({
+        currentDate: date,
+        department: name
+      })
+      this.analysisLevel(3)
+
+    }else {
+      this.initDatas()
+    }
    
   },
 

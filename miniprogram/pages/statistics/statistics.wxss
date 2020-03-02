@@ -26,13 +26,17 @@
 }
 
 .title-text {
-  width: 260rpx;
+  max-width: 350rpx;
   height: 30rpx;
   float: left;
   font-size: 20;
   padding: 30rpx 4rpx 30rpx 10rpx;
   line-height: 30rpx;
-  color: #333333
+  color: #333333;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
 }
 
 .title-time {

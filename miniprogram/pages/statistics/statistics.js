@@ -1120,10 +1120,30 @@ parseDatas: function(datas) {
    */
   onLoad: async function (options) {
     let name = decodeURIComponent(options.name)
+    let date = decodeURIComponent(options.date)
+    let level = decodeURIComponent(options.level)
+
     console.log('name: ', name,options.title)
-    if(name !=="undefined") {
-      this.initDatas2(name, this.getCurrentDay())
-    }else {
+    console.log('date: ', date)
+    console.log('level: ', level)
+
+    if(level != undefined && level == 2) {
+      this.setData(
+        {
+          showDate: date,
+          regCompanyInfo: name + '.*'
+        }
+      )
+      this.analysisLevel(2)
+    }else if (level != undefined && level == 3){
+      this.setData({
+        showDate: date,
+        companyDepartment: name
+      })
+      this.analysisLevel(3)
+    }
+    
+    else {
       this.initDatas(this.getCurrentDay())
     }
    
