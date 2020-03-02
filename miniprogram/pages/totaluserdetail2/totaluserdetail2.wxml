@@ -7,9 +7,10 @@
 
     <view class="title-time-info">
       <view class="title-time-text">
-        <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+        <text>{{currentDate}}</text>
+        <!-- <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
           <text>{{currentDate}}</text>
-        </picker>
+        </picker> -->
       </view>
 
       <view>

@@ -15,9 +15,10 @@ Page({
     isManagerFlag: '0',
     isSuperUserFlag: '0',
     loginUserInfo: "",
-    department: '',//所在部门
+    // department: '',//所在部门
+    departments: [],//所在的部门群组s
     todayClickFlag: "0",
-    groupType: '1',
+    groupType: '1',//2是管理员1非管理员
     swiperPages: [
       "../epidemiNews/epidemiNews",
       "../epidemiMap/epidemicMap"
@@ -214,45 +215,12 @@ Page({
 
         that.userinfo = res.data;
 
-        var department = res.data[0].company_department
-        var infoes = department.split(' ')
-        var regInfo = ""
-        var groupType = "1"
-        var title = "众志成城，抗击疫情" 
-        var superuser = res.data[0].superuser
-        var userType = res.data[0].usertype
-        
-        if (superuser != null && superuser == "1") {
-          title = "中国信息通信研究院"
-          groupType = "2"
-        }else if (userType == '1'){
-          title = infoes[0]
-          // level = 2
-          if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
-            title = infoes[1]
-          } else {
-            regInfo = infoes[0] + ".*"
-            title = infoes[0]
-            groupType = "2"
-          }
-        }else if (userType == '2'){
-          regInfo = "",
-          title = infoes[1]
-        } else {
-          regInfo = "",
-          title = infoes[1]
-        }
-
-
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
           userinfo: res.data,
           // loginUserInfo: "您好， " + res.data[0].name + '!',
           loginUserInfo: res.data[0].name,
-          department: title,
-          groupType: groupType
         })
 
         // app.globalData.userBaseInfo = res.data[0]
@@ -498,6 +466,7 @@ Page({
         app.globalData.openid = res.result.openid
         console.log("###### openid: ", res.result.openid)
         this.qryUserInfo()
+        this.getUserGroupInfo()
         this.qryHealthyTodayInfo();
       },
       fail: err => {
@@ -551,17 +520,193 @@ Page({
       url: '../statistics/statistics'
     })
   },
-  gotoDetailClick: function() {
-    if(this.data.groupType == '2' ){
+  gotoDetailClick: function(e) {
+    let department = e.currentTarget.dataset.name;
+    let type = e.currentTarget.dataset.type;
+    let isXintongyuan = e.currentTarget.dataset.xty;
+    let serialNumber = e.currentTarget.dataset.num;
+    let userType = e.currentTarget.dataset.usertype
+    // console.log(e.currentTarget.dataset)
+    if(type == '2' ){
       wx.navigateTo({
-        url: '../departmentDetail/departmentDetail?department='+ this.data.department + "&isSuperUserFlag=" + this.data.isSuperUserFlag
+        url: '../departmentDetail/departmentDetail?department='+ department + "&serialNumber=" + serialNumber + "&isXintongyuan=" + isXintongyuan  + "&userType=" + userType + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
     } else {
       wx.navigateTo({
-        url: '../totaluserdetail2/totaluserdetail2'
+        url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + serialNumber
       })
     }
-  }
+  },
+
+  //查询用户群组信息
+  getUserGroupInfo: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+      // _openid: "oqME_5ZzCkV38KfpLIRx3dRNMGr8"
+    }).get({
+      success: res => {
+        // console.log("datas: ", res)
+        let list = []
+        let userinfo = res.data[0];
+        let company_count = userinfo.company_count;
+        let company_department = userinfo.company_department; //判断是否是信通院
+        if(company_department.split(' ').length==3){
+          if(company_count >= 2) {
+            list.push({
+              infoes:userinfo['company_department'].split(' '),
+              userType:userinfo['usertype'],
+              number: 0,
+              isXintongyuan: false
+            })
+            for(let i=1;i<company_count;i++) {
+              // console.log(userinfo['company_department'+i])
+              list.push({
+                infoes:userinfo['company_department'+i].split(' '),
+                userType:userinfo['usertype'+i],
+                number: i,
+                isXintongyuan: false
+              })
+            }
+          } else {
+            list.push({
+              infoes:userinfo['company_department'].split(' '),
+              userType:userinfo['usertype'],
+              number: 0,
+              isXintongyuan: false
+            })
+          }
+        } else {
+          if(company_count >= 2) {
+            list.push({
+              infoes:userinfo['company_department'].split(' '),
+              userType:userinfo['usertype'],
+              number: 0,
+              isXintongyuan: true
+            })
+            for(let i=1;i<company_count;i++) {
+              list.push({
+                infoes:userinfo['company_department'+i].split(' '),
+                userType:userinfo['usertype'+i],
+                number: i,
+                isXintongyuan: false
+              })
+            }
+          } else {
+            list.push({
+              infoes:userinfo['company_department'].split(' '),
+              userType:userinfo['usertype'],
+              number: 0,
+              isXintongyuan: true
+            })
+          }
+        }
+        // console.log('list',list)
+        let groupTypeList = []
+        var superuser = res.data[0].superuser
+        var title = "众志成城，抗击疫情"  
+        var regInfo = ""
+        var groupType = "1"
+        // var infoes = department.split(' ')              
+        // var userType = res.data[0].usertype
+        list.forEach((item,index,array)=>{
+          //执行代码
+          if (superuser != null && superuser == "1" && item.isXintongyuan) {
+            title = "中国信息通信技术研究院"
+            groupType = "2"
+          }else if (item.userType == '1'){
+            title = item.infoes[0]
+            // level = 2
+            if (item.infoes[0] == '院属公司及协会') {
+              regInfo = '.*' + item.infoes[1]
+              title = item.infoes[1]
+            } else {
+              regInfo = item.infoes[0] + ".*"
+              title = item.infoes[0]
+              groupType = "2"
+            }
+          }else if (item.userType == '2'){
+            regInfo = "",
+            title = item.infoes[1]
+          } else {
+            regInfo = "",
+            title = item.infoes[1]
+          }
+          groupTypeList.push({
+            department:title,
+            groupType:groupType,
+            number: item.number,
+            isXintongyuan: item.isXintongyuan,
+            userType: item.userType
+          })
+        })
+        console.log('groupTypeList',groupTypeList)
+        that.setData({
+          departments: groupTypeList,
+        })
+
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+  createGroup: function (e) {
+    console.log("跳转创建组织页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          db.collection('applications_info').where({
+            _openid: app.globalData.openid,
+            status: 'waiting'
+          }).get({
+            success: res => {
+              console.log('application:',res)
+              if (res.data.length > 0) {
+                wx.showToast({
+                  icon: 'none',
+                  title: '您有待审核的创建群组申请'
+                })           
+              } else {
+                wx.navigateTo({
+                  url: '../createGroup/createGroup'
+                })
+              }
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '请稍后'
+              })
+              console.log(err)
+            }
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '请稍后'
+        })
+        console.log(err)
+      }
+    })
+  },
   
 
 })
