@@ -13,8 +13,10 @@ Page({
     quezhenDatas:[],
     geliDatas: [],
     outGeliDatas: [],
-    otherDatas: []
-
+    otherDatas: [],
+    zaigangs:[],
+    homes:[],
+    undones:[]
   },
 
   isInSeperation: function(date) {
