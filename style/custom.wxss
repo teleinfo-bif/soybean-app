@@ -1,20 +1,46 @@
-.my-form .van-cell {
-  padding-right: 30rpx; }
-  .my-form .van-cell::after {
-    left: 0 !important; }
-  .my-form .van-cell.field-index--van-field {
-    padding: 0;
-    height: 100%;
-    margin-left: 0 !important;
-    font-size: 28rpx !important; }
-  .my-form .van-cell__title {
-    font-size: 24rpx !important; }
-
-.my-form .van-radio {
-  margin-top: 10rpx; }
-  .my-form .van-radio__label {
-    flex: 1;
-    font-size: 28rpx; }
+.my-form_item {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx 30rpx 20rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f2f2f2; }
+  .my-form_item .van-cell {
+    padding-right: 30rpx; }
+    .my-form_item .van-cell::after {
+      left: 0 !important; }
+    .my-form_item .van-cell.field-index--van-field {
+      padding: 0;
+      height: 100%;
+      margin-left: 0 !important;
+      font-size: 32rpx !important; }
+    .my-form_item .van-cell-item__right {
+      width: 50%; }
+    .my-form_item .van-cell__title {
+      font-size: 28rpx !important; }
+  .my-form_item .van-radio {
+    margin-top: 13rpx; }
+    .my-form_item .van-radio__label {
+      flex: 1;
+      font-size: 28rpx; }
+  .my-form_item .must-filled-star {
+    position: absolute;
+    color: #f00;
+    left: 15rpx; }
+  .my-form_item_head {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 44rpx;
+    padding: 20rpx 0rpx;
+    padding-left: 5rpx;
+    margin-bottom: 20rpx;
+    font-size: 28rpx;
+    line-height: 28rpx; }
+  .my-form_item_content {
+    position: relative; }
 
 .color {
   color: #4f7ef2; }
@@ -45,7 +71,7 @@ picker.select-picker {
   right: 30rpx;
   top: -45rpx;
   color: #1759ef;
-  font-size: 24rpx !important; }
+  font-size: 28rpx !important; }
 
 .select-picker-btn {
   color: #1759ef;

@@ -64,7 +64,8 @@ Page({
         type: "area",
         prop: "homeAddress",
         props: {
-          placeholder: "请选择家庭所在区及街道、社区"
+          placeholder: "请选择家庭所在区及街道、社区",
+          require: false
         }
       },
       {
@@ -73,7 +74,8 @@ Page({
         prop: "detailAddress",
         props: {
           placeholder: "请输入家庭详细地址",
-          addressKey: ""
+          addressKey: "",
+          require: false
         }
       }
     ],

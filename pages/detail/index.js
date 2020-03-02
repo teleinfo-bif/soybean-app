@@ -64,6 +64,7 @@ Page({
         clockInTime: clockInTime
       }).then(res => {
         this.setData({
+          requestInit: true,
           clockData: res,
           clockList: this.data.clockList.concat(res.records)
         });

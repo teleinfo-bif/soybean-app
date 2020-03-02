@@ -1,6 +1,8 @@
 //app.js
 import { getUserFilledInfo } from "./api/api";
 import { tokenKey, userFilledInfofoKey } from "./api/request";
+// var crypto = require("/crypto-js/index");
+// console.log(crypto.sha256);
 App({
   initRequest: false,
   async init(refreshUserInfo = false) {

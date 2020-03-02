@@ -4,7 +4,10 @@
     <view wx:if="{{item.hide != true}}" class="my-form_item" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
       <!-- form-label文字 -->
       <view class="my-form_item_head">
-        <view class="my-form_item_head-left">{{item.title}}</view>
+        <view class="my-form_item_head-left">
+          <view wx:if="{{item.props.require != false}}" class="must-filled-star">*</view>
+          {{item.title}}
+        </view>
       </view>
       <view class="my-form_item_content">
         <!-- input输入框 -->
