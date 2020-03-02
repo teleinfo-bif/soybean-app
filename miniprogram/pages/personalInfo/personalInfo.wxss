@@ -82,9 +82,16 @@
   padding-left: 30rpx; */
 }
 
-/* .personal-info-picker {
-  margin-top: 10rpx;
-} */
+.personal-info-picker {
+  
+}
+.conpany_title{
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+}
 .personal-info-td-company{
   margin-top:20rpx;
   margin-bottom:30rpx;
@@ -93,6 +100,9 @@
   flex-flow: row wrap;
   margin-right: 30rpx;
   color: #999999;
+  height:150rpx;
+  line-height: 35rpx;
+  font-size: 30rpx;
 }
 .info-input{
   width: 90%;
@@ -108,7 +118,16 @@
   font-family: PingFangSC-Regular;
   color: #222222; */
 }
-
+.info-text{
+    width: 90%;
+  height: 45rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+  margin-right: 30rpx;
+}
 .info-choice{
   /* color: #4169E1; */
   margin-top:50rpx;
