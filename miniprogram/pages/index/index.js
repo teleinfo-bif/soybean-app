@@ -197,37 +197,6 @@ Page({
         console.log("datas: ", res)
         that.userinfo = res.data;
 
-        // var department = res.data[0].company_department
-        // var infoes = department.split(' ')
-        // var regInfo = ""
-        // var groupType = "1"
-        // var title = "众志成城，抗击疫情" 
-        // var superuser = res.data[0].superuser
-        // var userType = res.data[0].usertype
-        
-        // if (superuser != null && superuser == "1") {
-        //   title = "中国信息通信技术研究院"
-        //   groupType = "2"
-        // }else if (userType == '1'){
-        //   title = infoes[0]
-        //   // level = 2
-        //   if (infoes[0] == '院属公司及协会') {
-        //     regInfo = '.*' + infoes[1]
-        //     title = infoes[1]
-        //   } else {
-        //     regInfo = infoes[0] + ".*"
-        //     title = infoes[0]
-        //     groupType = "2"
-        //   }
-        // }else if (userType == '2'){
-        //   regInfo = "",
-        //   title = infoes[1]
-        // } else {
-        //   regInfo = "",
-        //   title = infoes[1]
-        // }
-
-
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
@@ -464,10 +433,11 @@ Page({
     let type = e.currentTarget.dataset.type;
     let isXintongyuan = e.currentTarget.dataset.xty;
     let serialNumber = e.currentTarget.dataset.num;
-    // console.log(department,type,isXintongyuan,serialNumber)
+    let userType = e.currentTarget.dataset.usertype
+    // console.log(e.currentTarget.dataset)
     if(type == '2' ){
       wx.navigateTo({
-        url: '../departmentDetail/departmentDetail?department='+ department + "&isXintongyuan=" + isXintongyuan  + "&isSuperUserFlag=" + this.data.isSuperUserFlag
+        url: '../departmentDetail/departmentDetail?department='+ department + "&serialNumber=" + serialNumber + "&isXintongyuan=" + isXintongyuan  + "&userType=" + userType + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
     } else {
       wx.navigateTo({
@@ -575,7 +545,8 @@ Page({
             department:title,
             groupType:groupType,
             number: item.number,
-            isXintongyuan: item.isXintongyuan
+            isXintongyuan: item.isXintongyuan,
+            userType: item.userType
           })
         })
         console.log('groupTypeList',groupTypeList)

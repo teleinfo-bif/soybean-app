@@ -56,85 +56,158 @@ Page({
 
   // },
 
-
+  //非一级部门
   initDatas: function (e) {
     const that = this;
-    // this.getInfoDatas(this.data.department)
     wx.showLoading({
       title: '加载中...',
     })
     var cur = this.getCurrentDay()
     const db = wx.cloud.database()
-    db.collection('company_info').where({
-      name: this.data.department
-    }).get({
-      success: res => {
-        console.log('company_info',res)
-        var clickdetail = res.data[0].departments
-        clickdetail.forEach(function(val, idx, arr) {
-          
-          that.getInfoDatas(val);
-      }, 0);
-  
-        this.setData({
-          currentDate: cur,
-        })
-
-        wx.hideLoading()
-      },
-      fail: err => {
-        console.log("error: ", err)
-        wx.hideLoading()
-      }
-    })
-
-
-    db.collection('user_info').where({
-      _openid: app.globalData.openid
-    }).get({
-      success: res => {
-        var department = res.data[0].company_department
-        var infoes = department.split(' ')
-
-        var regInfo = ""
-        var title = ""   
-        var superuser = res.data[0].superuser
-        var userType = res.data[0].usertype
-
-        var level = 1
-
-        if (superuser != null && superuser == "1") {
-          level = 1
-          title = "中国信息通信技术研究院"
-        }else if (userType == '1'){
-          level = 2
-          if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
-            title = infoes[1]
-          } else {
-            regInfo = infoes[0] + ".*"
-            title = infoes[0]
-          }
-        }else if (userType == '2'){
-          level = 3
-          regInfo = "",
-          title = infoes[1]
+    if (this.data.isXintongyuan=="true" && this.data.isSuperUserFlag!=="1") {
+      db.collection('company_info').where({
+        name: this.data.department
+      }).get({
+        success: res => {
+          console.log('company_info', res)
+          var clickdetail = res.data[0].departments
+          clickdetail.forEach(function (val, idx, arr) {
+            that.getInfoDatas(val);
+          }, 0);
+          this.setData({
+            currentDate: cur,
+          })
+          wx.hideLoading()
+        },
+        fail: err => {
+          console.log("error: ", err)
+          wx.hideLoading()
         }
-        console.log('0cur',cur,title);
-        this.setData({
-          currentDate: cur,
-          titleInfo: title,
-          companyReg: regInfo,
-          department: department,
-          authorityLevel: level
-        })
+      })
 
-        // this.analysisLevel(level)
-      },
-      fail: err => {
-        console.log("error: ", err)
-      }
-    })
+      db.collection('user_info').where({
+        _openid: app.globalData.openid
+      }).get({
+        success: res => {
+          var department = res.data[0].company_department
+          var infoes = department.split(' ')
+  
+          var regInfo = ""
+          var title = ""   
+          var superuser = res.data[0].superuser
+          var userType = res.data[0].usertype
+  
+          var level = 1
+          
+            if (superuser != null && superuser == "1") {
+              level = 1
+              title = "中国信息通信技术研究院"
+            } else if (userType == '1') {
+              level = 2
+              if (infoes[0] == '院属公司及协会') {
+                regInfo = '.*' + infoes[1]
+                title = infoes[1]
+              } else {
+                regInfo = infoes[0] + ".*"
+                title = infoes[0]
+              }
+            } else if (userType == '2') {
+              level = 3
+              regInfo = "",
+                title = infoes[1]
+            }
+          
+          
+          console.log('0cur',cur,title);
+          this.setData({
+            currentDate: cur,
+            titleInfo: title,
+            companyReg: regInfo,
+            department: department,
+            authorityLevel: level
+          })
+  
+          // this.analysisLevel(level)
+        },
+        fail: err => {
+          console.log("error: ", err)
+        }
+      })
+
+    }else if (this.data.isXintongyuan=="false" && this.data.userType !== "1"){
+      console.log('userType', this.data.userType)
+      db.collection('company_info').where({
+        name: this.data.department
+      }).get({
+        success: res => {
+          console.log('company_info', res)
+          var clickdetail = res.data[0].departments
+          clickdetail.forEach(function (val, idx, arr) {
+            that.getInfoDatas(val);
+          }, 0);
+          this.setData({
+            currentDate: cur,
+          })
+          wx.hideLoading()
+        },
+        fail: err => {
+          console.log("error: ", err)
+          wx.hideLoading()
+        }
+      })
+
+      db.collection('user_info').where({
+        _openid: app.globalData.openid
+      }).get({
+        success: res => {
+          let serialNumber = this.data.serialNumber
+          var department = ""
+          var userType = "" 
+          var regInfo = ""
+          var title = ""  
+          var infoes = ""  
+          // var superuser = ""
+          if(serialNumber=="0") {
+            var department = res.data[0].company_department
+            var userType = res.data[0].usertype  
+            var infoes = department.split(' ')            
+            // var superuser = res.data[0].superuser            
+          }else {
+            var department = res.data[0][`company_department${serialNumber}`]
+            var userType = res.data[0][`usertype${serialNumber}`]  
+            var infoes = department.split(' ')
+            // var superuser = res.data[0].superuser
+          }
+
+          var level = 1          
+            if (userType == '1') {
+              level = 1
+                regInfo = infoes[0] + ".*"
+                title = infoes[0]           
+            } else if (userType == '2') {
+              level = 2
+              regInfo = "",
+                title = infoes[1]
+            }
+                    
+          console.log('0cur',cur,title);
+          this.setData({
+            currentDate: cur,
+            titleInfo: title,
+            companyReg: regInfo,
+            department: department,
+            authorityLevel: level
+          })
+  
+          // this.analysisLevel(level)
+        },
+        fail: err => {
+          console.log("error: ", err)
+        }
+      })
+
+    }
+    
 
   },
  
@@ -193,34 +266,25 @@ Page({
 
   },
 
-  getInfoDatas: function(data) {
-    // wx.showLoading({
-    //   title: '加载中...',
-    // })
-
-    console.log("userInfoDatas: ", )
-
-        wx.cloud.callFunction({
-          name: "userInfoDatas",
-          data: {
-            company_department: data
-          },
-
-          success: res => {
-            // console.log("res result: ", res.result)
-            // this.parseDatas([data, res.result])
-            let temp = [{name:data,num:res.result.length}]
-            this.setData({
-              clickdetail: this.data.clickdetail.concat(temp)
-            })
-            // wx.hideLoading()
-          },
-
-          fail: err => {
-            console.log("error: ", err)
-            // wx.hideLoading()
-          }
+  getInfoDatas: function (data) {
+    console.log("userInfoDatas: ", data)
+    wx.cloud.callFunction({
+      name: "qunzuUserInfoDatas",
+      data: {
+        serial_number: this.data.serialNumber,
+        company_department: data
+      },
+      success: res => {
+        let temp = [{ name: data, num: res.result.length }]
+        this.setData({
+          clickdetail: this.data.clickdetail.concat(temp)
         })
+      },
+
+      fail: err => {
+        console.log("error: ", err)
+      }
+    })
   },
   gotoStatistics: function(e) {
     console.log(e.currentTarget.dataset.name)
@@ -232,19 +296,31 @@ Page({
 
 
 
-  onLoad: function (options) {
-    
+  onLoad: function (options) {    
     console.log("options: ", options)
-    this.getDepartmentsAndUsers(options.department)
+    let department = options.department
+    let serialNumber = options.serialNumber
+    let isXintongyuan = options.isXintongyuan
+    let userType = options.userType
+    // this.getDepartmentsAndUsers(options.department)
     let isSuperUserFlag = options.isSuperUserFlag
     this.setData({
-      department: options.department
+      department: department,
+      serialNumber: serialNumber,
+      isXintongyuan: isXintongyuan,
+      userType: userType,
+      isSuperUserFlag: isSuperUserFlag
     })   
-    if(isSuperUserFlag=='1'){
+    if(isXintongyuan=="true" && isSuperUserFlag=='1'){
       this.initDatas2()
-    }else {
+    }else if(isXintongyuan=="true" && isSuperUserFlag!='1') {
       this.initDatas()
+    } else if(isXintongyuan=="false" && userType!='1') {
+      this.initDatas()
+    } else if(isXintongyuan=="false" && userType=='1') {
+      this.initDatas3()
     }
+  
    
   },
 
@@ -305,34 +381,120 @@ Page({
 
 
   getDepartmentsAndUsers: function(data) {
-    // wx.showLoading({
-    //   title: '加载中...',
-    // })
+    const that = this;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    wx.cloud.callFunction({
+      name: "getDepartmentsAndUsers",
+      data: {
+        company_department: data,
+        level: "1"
+      },
+      success: res => {
+        console.log(res)
 
-    console.log("userInfoDatas: ", )
+        for (var i = 0; i < res.result.result.length; i++) {
+          var item = res.result.result[i]
+          that.getInfoDatas(item)
+          
+        }
+        wx.hideLoading()
+      },
 
-        wx.cloud.callFunction({
-          name: "getDepartmentsAndUsers",
-          data: {
-            company_department: data
-          },
-
-          success: res => {
-            // console.log("res result: ", res.result)
-            // this.parseDatas([data, res.result])
-            let temp = [{name:data,num:res.result.length}]
-            this.setData({
-              clickdetail: this.data.clickdetail.concat(temp)
-            })
-            // wx.hideLoading()
-          },
-
-          fail: err => {
-            console.log("error: ", err)
-            // wx.hideLoading()
-          }
-        })
+      fail: err => {
+        console.log(err)
+        wx.hideLoading()
+      }
+    })
   },
 
+
+  initDatas3: function (e) {
+    const that = this;
+    var cur = this.getCurrentDay()
+    const db = wx.cloud.database()
+    this.getDepartmentsAndUsers(this.data.department)
+
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        // var department = res.data[0].company_department
+        // var infoes = department.split(' ')
+
+        // var regInfo = ""
+        // var title = ""   
+        // var superuser = res.data[0].superuser
+        // var userType = res.data[0].usertype
+
+        // var level = 1
+
+        // if (superuser != null && superuser == "1") {
+        //   level = 1
+        //   title = "中国信息通信技术研究院"
+        // }else if (userType == '1'){
+        //   level = 2
+        //   if (infoes[0] == '院属公司及协会') {
+        //     regInfo = '.*' + infoes[1]
+        //     title = infoes[1]
+        //   } else {
+        //     regInfo = infoes[0] + ".*"
+        //     title = infoes[0]
+        //   }
+        // }else if (userType == '2'){
+        //   level = 3
+        //   regInfo = "",
+        //   title = infoes[1]
+        // }
+
+
+        let serialNumber = this.data.serialNumber
+          var department = ""
+          var userType = "" 
+          var regInfo = ""
+          var title = ""  
+          var infoes = ""  
+          // var superuser = ""
+          if(serialNumber=="0") {
+            var department = res.data[0].company_department
+            var userType = res.data[0].usertype  
+            var infoes = department.split(' ')            
+            // var superuser = res.data[0].superuser            
+          }else {
+            var department = res.data[0][`company_department${serialNumber}`]
+            var userType = res.data[0][`usertype${serialNumber}`]  
+            var infoes = department.split(' ')
+            // var superuser = res.data[0].superuser
+          }
+
+          var level = 1          
+            if (userType == '1') {
+              level = 1
+                regInfo = infoes[0] + ".*"
+                title = infoes[0]           
+            } else if (userType == '2') {
+              level = 2
+              regInfo = "",
+                title = infoes[1]
+            }
+
+        console.log('0cur',cur,title);
+        this.setData({
+          currentDate: cur,
+          titleInfo: title,
+          companyReg: regInfo,
+          department: department,
+          authorityLevel: level
+        })
+
+        // this.analysisLevel(level)
+      },
+      fail: err => {
+        console.log("error: ", err)
+      }
+    })
+
+  },
 
 });
