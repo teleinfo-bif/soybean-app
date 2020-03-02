@@ -225,7 +225,7 @@ Page({
             company_count: res.data[0].company_count,
             record_id: res.data[0]._id
           })
-          console.log('w',this.data.company_count==undefined)
+          // console.log('w',this.data.company_count==undefined)
         },
         fail: err => {
           console.log(err)
