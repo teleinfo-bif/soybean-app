@@ -133,7 +133,7 @@ let fields = [
     }
   },
   {
-    title: "体温",
+    title: "体温（℃）",
     type: "input",
     prop: "temperature",
     props: {
