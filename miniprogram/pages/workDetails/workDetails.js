@@ -42,12 +42,12 @@ Page({
     var healthyDatas = datas
     for (var i = 0; i < healthyDatas.length; i++) {
       if (healthyDatas[i].workStatusFlag == '0') {
-        var zaigangs = {}
+        var zaigang = {}
         zaigang['id'] = healthyDatas[i]._id
         zaigang['openid'] = healthyDatas[i]._openid
         zaigang['name'] = healthyDatas[i].name
 
-        zaigangs.push(quezhen)
+        zaigangs.push(zaigang)
       } else if (healthyDatas[i].workStatusFlag == '1') {
         var home = {}
         home['id'] = healthyDatas[i]._id
