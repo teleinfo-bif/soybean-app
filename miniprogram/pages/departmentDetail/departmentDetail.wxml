@@ -29,7 +29,7 @@
       </view>
 
       <view class="group-item-icons" bindtap="gotoDetails" data-name="{{item.name}}">
-        <image class="group-item-icon" src="../../images/xiangqingxinxi2x.png" />            
+        <image class="group-item-icon" src="../../images/detail.png" />            
       </view>
     </view>
    
