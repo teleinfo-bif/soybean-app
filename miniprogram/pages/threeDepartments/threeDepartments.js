@@ -46,6 +46,7 @@ Page({
 
      success: res => {
       console.log("res: ", res.result)
+
       var departmentNames = res.result[0]
       var nums = res.result[1]
 

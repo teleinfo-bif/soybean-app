@@ -61,8 +61,8 @@
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
           <!-- <view class="group-item-name">{{department}}</view> -->
         </view>
-        <view class="group-item-title" bindtap="gotoDetailClick" data-type="{{item.groupType}}" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}">
-          <!-- <image class="group-item-icon" src="../../images/tongjixinxi2x.png" /> -->
+        <view class="group-item-title"  data-type="{{item.groupType}}" >
+          <image class="group-item-icon" src="../../images/xiangqingxinxi2x.png" bindtap="gotoDetailClick" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}"/>
           <view class="group-item-name">{{item.department}}</view>
         </view>
 
