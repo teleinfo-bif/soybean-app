@@ -59,6 +59,15 @@
         </view>
         <view class="personal-divide"></view>
 
+        <!-- BID 地址 -->
+        <view class="personal-info-hd">
+          <text class="info-label">BID地址</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="bid_address" type="text"  disabled="true" value="{{bid_address}}"></input>
+        </view>
+        <view class="personal-divide"></view>
+
         <!-- 单位名称 -->
         <view class="personal-info-picker-company">
           <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">

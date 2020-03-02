@@ -22,6 +22,8 @@ Page({
     certificate_type: ["大陆身份证", "港澳身份证","台湾身份证", "军官证", "护照"],
     certificate_type_index: 0,
     certificate_number:"",
+    bid_address: "",
+    private_key: "",
     
     multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
@@ -329,6 +331,35 @@ Page({
     return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s
   },
 
+    /**
+   * 生成bid地址
+   */
+
+  getBidAddress: function(e) {
+
+    if (this.data.bid_address != undefined && this.data.bid_address != "") {
+      console.log("current bid address: ", this.data.bid_address)
+      return
+    }
+
+    console.log("generate bid address")
+    wx.cloud.callFunction({
+      name: "generateAddress",
+      data: {},
+      success: res => {
+        console.log("generate bid address: ", res)
+        console.log( `bid_address: ${res.result.address}, privateKey: ${res.result.privateKey}`)
+        this.setData({
+          bid_address: res.result.address,
+          private_key: res.result.privateKey,
+        })
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+  },
+
   /**
    *  从数据库中获取各单位及相应部门名称
    */
@@ -401,7 +432,6 @@ Page({
       // _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
-          console.log(res.data)
           this.setData({
             user_info_data: res.data[0],
             record_id: res.data[0]._id,
@@ -409,6 +439,8 @@ Page({
             placeholder_phone: res.data[0].phone,
             placeholder_card_type: res.data[0].certificate_type,
             placeholder_card_number: res.data[0].certificate_number,
+            bid_address: res.data[0].bid_address,
+            private_key: res.data[0].private_key,
             placeholder_company_name: res.data[0].company_department,
             placeholder_company_district: res.data[0].company_district,
             placeholder_company_detail: res.data[0].company_detail,
@@ -422,6 +454,8 @@ Page({
             buttons_display: "display: none",
             phone_display: "display: none"
           })
+
+          this.getBidAddress()
 
           wx.showToast({
             icon: 'success',
@@ -524,6 +558,8 @@ Page({
             phone: e.detail.value.phone,
             certificate_type: e.detail.value.certificate_type,
             certificate_number: e.detail.value.certificate_number,
+            bid_address: e.detail.value.bid_address,
+            private_key: this.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
@@ -559,6 +595,8 @@ Page({
             // phone: e.detail.value.phone,
             // certificate_type: e.detail.value.certificate_type,
             // certificate_number: e.detail.value.certificate_number,
+            bid_address: e.detail.value.bid_address,
+            private_key: this.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
