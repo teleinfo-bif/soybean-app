@@ -57,13 +57,16 @@
     <view class="group-items">
 
       <view class="group-item" wx:for="{{departments}}" wx:key="*this">
-        <view class="group-item-title" wx:if="{{isManagerFlag == '1'}}" bindtap="gotoStatistics" data-type="{{item.groupType}}" data-name="{{item.department}}"  data-xty="{{item.isXintongyuan}}"  data-num="{{item.number}}" data-userType="{{item.userType}}">
-          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
-          <!-- <view class="group-item-name">{{department}}</view> -->
-        </view>
-        <view class="group-item-title" bindtap="gotoDetailClick" data-type="{{item.groupType}}" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}">
-          <!-- <image class="group-item-icon" src="../../images/tongjixinxi2x.png" /> -->
+        <view class="group-item-title"  data-type="{{item.groupType}}" >
           <view class="group-item-name">{{item.department}}</view>
+        </view>
+        <view class="group-item-right" >
+          <view class="group-item-title" wx:if="{{isManagerFlag == '1' || isSuperUserFlag == '1' }}" bindtap="gotoStatistics" data-type="{{item.groupType}}" data-name="{{item.department}}"  data-xty="{{item.isXintongyuan}}"  data-num="{{item.number}}" data-userType="{{item.userType}}">
+            <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+          </view>
+          <view class="group-item-title"  data-type="{{item.groupType}}" >
+            <image class="group-item-icon" src="../../images/detail.png" bindtap="gotoDetailClick" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}"/>
+          </view>
         </view>
 
       </view>
@@ -201,7 +204,7 @@
       </navigator>
 
       <navigator url="" bindtap="gotomemberDetailClick" class="weui-grid" hover-class="weui-grid_active">
-        <image class="weui-grid__icon" src="../../images/xiangqingxinxi3x.png" />
+        <image class="weui-grid__icon" src="../../images/detail.png" />
         <view class="weui-grid__label">详细信息</view>
       </navigator>
     </view>

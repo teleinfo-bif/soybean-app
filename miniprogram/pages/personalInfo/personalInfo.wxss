@@ -3,6 +3,7 @@
 .page { 
   background-color: rgba(249, 249, 249, 1);
   margin-bottom: 50rpx;
+  width:100%;
 }
 
 .personal{
@@ -254,3 +255,15 @@
   border-radius: 0rpx;
 }
 
+
+
+.group-title-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.group-title-icon-item {
+  font-size: 20rpx;
+}

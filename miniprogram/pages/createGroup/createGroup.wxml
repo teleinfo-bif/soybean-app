@@ -11,7 +11,7 @@
 
         <!-- 头像 -->
         <view class="personal-info-hd">
-            <text class="info-label">1.上传组织头像</text>
+            <text class="info-label one">步骤1 上传机构头像</text>
         </view>
         <view class="add-img" bind:tap="chooseImage">
             <image wx:if="{{!groupAvatarShow}}" src="../../images/group_name.png"></image>
@@ -21,7 +21,7 @@
 
         <!-- 组织名称 -->
         <view class="personal-info-hd">
-          <text class="info-label">2.组织名称</text>
+          <text class="info-label">步骤2 请输入机构名称</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="group_name" placeholder-class="placeholder-style" placeholder="{{placeholder_group_name}}" maxlength="20"></input>
@@ -30,26 +30,34 @@
         
         <!-- 组织介绍 -->
         <view class="personal-info-hd">
-          <text class="info-label">3.组织介绍</text>
+          <text class="info-label">步骤3 请输入机构介绍信息</text>
         </view>
         <view class="personal-info-td">
-            <textarea class="introduce-input" name="group_introduce" placeholder="{{placeholder_group_introduce}}" maxlength="200"/>
+            <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200"/>
         </view>
         <view class="personal-divide"></view>
 
         <!-- 导入架构 -->
         <view class="personal-info-hd">
-          <text class="info-label">4.导入架构</text>
-          <text class="download-info" bindtap="downloadStructure">(下载模板)</text>
-        </view>
-        <view class="personal-info-td">
+          <text class="info-label">步骤4 发送机构架构</text>(点击
+          <view style="display:inline-block" bindtap="downloadStructure">
+            <image class="info-label-img" src="../../images/group_download.png" />
+            <text class="download-info" >下载模板，</text>
+          </view> 
+          完成填写后发送到以下邮箱)
+          
+        </view> 
+        <view class="download-info-mail-item">
+          <view class="download-info-mail">service@teleinfo.cn</view>
+        </view>     
+        <!-- <view class="personal-info-td">
             <textarea class="introduce-input" name="group_strucure"  placeholder="{{placeholder_group_strucure}}" />
-        </view>
+        </view> -->
         <view class="personal-divide"></view>
 
         <!-- 姓名 -->
         <view class="personal-info-hd">
-          <text class="info-label">5.姓名</text>
+          <text class="info-label">步骤5 请输入您的姓名</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="group_applicant" maxlength="5" placeholder-class="placeholder-style" placeholder="{{placeholder_group_apply_name}}" value="{{applicant}}"></input>
@@ -59,7 +67,7 @@
 
         <!-- 联系方式 -->
         <view class="personal-info-hd">
-          <text class="info-label">6.联系方式</text>
+          <text class="info-label">步骤6 请输入您的联系方式</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input"  type="number" name="group_phone" placeholder-class="placeholder-style" maxlength="11" placeholder="{{placeholder_group_apply_phone}}" value="{{phone}}"></input>

@@ -87,6 +87,37 @@ Page({
   //   })
   // },
 
+  sortHealthyState: function(datas) {
+    var temp = datas
+    var ret = []
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i]['isQueZhenFlag'] == '0') {
+        ret.push(temp[i])
+      }
+    }
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i]['bodyStatusFlag' != '0'] && temp[i]['isQueZhenFlag'] == '1'){
+        ret.push(temp[i])
+      }
+    }
+
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i]['bodyStatusFlag'] == '0') {
+        ret.push(temp[i])
+      }
+    }
+
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i]['temperature'] == null || temp[i]['temperature'] == undefined) {
+        ret.push(temp[i])
+      }
+    }
+
+    console.log("before sort, datas length: ", temp.length)
+    console.log("after sort, datas length: ", ret.length)
+    return ret 
+  },
+
   parseDatas: function(infoDatas, healthyDatas) {
     
     var temp = []
@@ -103,7 +134,11 @@ Page({
       }
 
       temp.push(tempTopic)
+      
     }
+
+    // 排序： 确诊、异常、正常、未打卡
+    temp = this.sortHealthyState(temp)
    
     console.log("temp datas: ", temp)
 
@@ -320,17 +355,29 @@ Page({
     let name = decodeURIComponent(options.name)
     let date = decodeURIComponent(options.date)
     let level = decodeURIComponent(options.level)
+    let prefix = decodeURIComponent(options.prefix)
+
+    console.log('prefix: ', prefix)
 
     if (level != undefined && level == 2) {
+      var reg = ''
+      if (prefix == '0') {
+        reg = '.*' + name
+      } else if (prefix == '1'){
+        reg = name + '.*'
+      }
       this.setData({
         currentDate: date,
-        companyReg: name + '.*'
+        companyReg: reg,
+        titleInfo: name,
+        authorityLevel: 2,
       })
       this.analysisLevel(2)
     }else if (level != undefined && level == 3) {
       this.setData({
         currentDate: date,
-        department: name
+        department: name,
+        authorityLevel: 3,
       })
       this.analysisLevel(3)
 

@@ -35,6 +35,7 @@ Page({
     disabled: false,
     forever_disabled: false,
     choice_color: "color: #1759EF",
+    choice_color_1: "color: #1759EF",
     forever_choice_color: "color: #1759EF",
     record_id: "",
     placeholder_name: "请输入姓名",
@@ -71,6 +72,7 @@ Page({
     console.log('&&&reset***')
     this.setData({
       placeholder_company_name:'',
+      placeholder_company_name_0: '',
       placeholder_company_district:'',
       placeholder_company_detail:'',
       placeholder_home_district:'',
@@ -247,7 +249,17 @@ Page({
       company_name_0_index: parseInt(e.detail.value),
       value_company_name_0: this.data.company_name_items[e.detail.value]
     })
-
+    if (e.detail.value == 1){
+      this.setData({
+        isFisrtNoFlag: true,
+        choice_color_1: "color: #999999"
+      })
+    } else if (e.detail.value == 0) {
+      this.setData({
+        isFisrtNoFlag: false,
+        choice_color_1: "color: #1759EF"
+      })
+    }
     console.log(this.data.value_company_name_0)
   },
   /**
@@ -462,6 +474,7 @@ Page({
             disabled: true,
             forever_disabled: true,
             choice_color: "color: #999999",
+            choice_color_1: "color: #999999",
             forever_choice_color: "color: #999999",
             personal_info_change: "personal-change-show",
             buttons_display: "display: none",
@@ -493,7 +506,8 @@ Page({
     this.setData({
       disabled: false,
       choice_color: "color: #1759EF",
-
+      choice_color_1: "color: #1759EF",
+      isFisrtNoFlag:false,
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,
       // value_card_type: this.data.placeholder_card_type,
@@ -508,6 +522,17 @@ Page({
       buttons_display: "display: flex",
 
     })
+    if (this.data.placeholder_company_name_0 == '无') {
+      this.setData({
+        isFisrtNoFlag: true,
+        choice_color_1: "color: #999999",
+      })
+    } else {
+      this.setData({
+        isFisrtNoFlag: false,
+        choice_color_1: "color: #1759EF",
+      })
+    }
 
     console.log(this.data.certificate_type_index)
   },
@@ -795,4 +820,61 @@ Page({
   // onShareAppMessage: function () {
 
   // }
+
+
+  createGroup: function (e) {
+    console.log("跳转创建组织页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          wx.navigateTo({
+            url: '../createGroup/createGroup'
+          })
+          // db.collection('applications_info').where({
+          //   _openid: app.globalData.openid,
+          //   status: 'waiting'
+          // }).get({
+          //   success: res => {
+          //     console.log('application:',res)
+          //     if (res.data.length > 0) {
+          //       wx.showToast({
+          //         icon: 'none',
+          //         title: '您有待审核的创建群组申请'
+          //       })           
+          //     } else {
+          //       wx.navigateTo({
+          //         url: '../createGroup/createGroup'
+          //       })
+          //     }
+          //   },
+          //   fail: err => {
+          //     wx.showToast({
+          //       icon: 'none',
+          //       title: '请稍后'
+          //     })
+          //     console.log(err)
+          //   }
+          // })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '请稍后'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+
 })

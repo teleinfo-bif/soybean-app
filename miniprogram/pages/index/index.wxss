@@ -278,7 +278,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: space-between;
 }
 
 .group-item-title {
@@ -290,7 +290,11 @@
 .group-item-icon-manger {
   font-size: 20rpx;
 }
-
+.group-item-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .group-item-name {
   margin-left: 10rpx;
   font-size: 30rpx;
