@@ -105,7 +105,7 @@ let fields = [
     type: "input",
     prop: "temperature",
     props: {
-      placeholder: "请输入体温",
+      placeholder: "温度超过37.2度不能视为健康，请重新选择健康状况!",
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value);
       },
@@ -526,7 +526,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     const userId = options.id;
 
     this.initFormData();
@@ -537,7 +537,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
@@ -554,25 +554,25 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function () { }
 });
