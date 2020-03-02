@@ -613,7 +613,7 @@ Page({
         list.forEach((item,index,array)=>{
           //执行代码
           if (superuser != null && superuser == "1" && item.isXintongyuan) {
-            title = "中国信息通信技术研究院"
+            title = "中国信息通信研究院"
             groupType = "2"
           }else if (item.userType == '1'){
             title = item.infoes[0]
