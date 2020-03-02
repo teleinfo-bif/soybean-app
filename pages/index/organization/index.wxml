@@ -2,7 +2,7 @@
 <block wx:if="{{groupList.length > 0}}">
   <view class="organization">
     <view class="organization_head van-hairline--bottom">
-      <view class="organization_head-text">我的组织</view>
+      <view class="organization_head-text">今日数据</view>
       <view class="organization_head-btn"></view>
     </view>
     <view class="organization_content">

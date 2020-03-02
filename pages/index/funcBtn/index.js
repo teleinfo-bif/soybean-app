@@ -9,7 +9,7 @@ Component({
   properties: {
     btnData: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   attached() {
@@ -37,9 +37,9 @@ Component({
       } else {
         wx.showModal({
           title: "温馨提示",
-          content: "请您先录入个人信息",
+          content: "请您继续完善身份信息",
           showCancel: false,
-          confirmText: "去录入",
+          confirmText: "去完善",
           success(res) {
             if (res.confirm) {
               wx.navigateTo({
