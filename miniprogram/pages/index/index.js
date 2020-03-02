@@ -19,6 +19,7 @@ Page({
     // department: '',//所在部门
     departments: [],//所在的部门群组s
     todayClickFlag: "0",
+    isRegistered: false,
     groupType: '1',//2是管理员1非管理员
     swiperPages: [
       "../epidemiNews/epidemiNews",
@@ -246,6 +247,7 @@ Page({
         if (res.data.length == 0) {
           that.setData({
             loginUserInfo: "用户注册",
+            isRegistered: false
           })
 
           return
@@ -259,6 +261,7 @@ Page({
           userinfo: res.data,
           // loginUserInfo: "您好， " + res.data[0].name + '!',
           loginUserInfo: res.data[0].name,
+          isRegistered: true
         })
 
         // app.globalData.userBaseInfo = res.data[0]

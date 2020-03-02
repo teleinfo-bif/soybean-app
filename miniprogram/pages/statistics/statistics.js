@@ -158,6 +158,7 @@ Page({
     }
     return sum
   },
+  
   initChats: function(e) {
     // var windowWidth = 200;
 
@@ -420,6 +421,7 @@ Page({
       url: '../workDetails/workDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
     })
   },
+
   getCurrentDay: function(e){
     var date = new Date();
     var seperator1 = "-";
@@ -508,6 +510,7 @@ setCasesPercents: function(e) {
       totalworksNumber:total
     })
   },
+
 printDatas: function(e) {
   console.log("should filled number: ", this.data.shouldFilledNumber)
   console.log("has filled number:    ", this.data.hasFilledNumber)
@@ -671,6 +674,7 @@ parseDatas: function(datas) {
     var doneNumber = this.getLimitDone(healthyDatas);
     var unDoneNumber = this.getLimitUn(healthyDatas);
     var homeNumber = this.getLimitHome(healthyDatas);
+
   this.setData({
     // shouldFilledNumber: should,
     hasFilledNumber: filled,

@@ -45,7 +45,7 @@
 
   <!-- <button class='test' bindtap='testQR'>测试</button>
 <image src='{{imgQR}}'> </image> -->
-<view class="group_no" wx:if="{{!userInfoFlagYes}}">
+<view class="group_no" wx:if="{{!isRegistered}}">
 </view>
   <view class="group" wx:else>
     <view class="group-title">
@@ -70,6 +70,8 @@
         </view>
 
       </view>
+
+
      <view class="page-container" wx:if="{{isManagerFlag == '2'}}">
        <view wx:if="{{todayClickFlag=='0'}}" class="template">
             <view class="template-title">
