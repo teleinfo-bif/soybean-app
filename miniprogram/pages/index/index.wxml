@@ -8,7 +8,7 @@
       <image class="userinfo-img2" src="../../images/bianji3x.png" mode="scaleToFill"></image>
     </view>
     <view class="userinfo-put" hover-class="userinfo-put_active">
-      <button class="user-info-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">用户注册</button>
+      <button class="user-info-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">{{loginUserInfo}}</button>
     </view>
     <view class="dayuhao-container">
       <image class="dayuhao" src="../../images/dayuhao.png" />
