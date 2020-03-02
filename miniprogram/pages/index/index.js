@@ -578,6 +578,9 @@ Page({
         url: '../departmentDetail/departmentDetail?department='+ department + "&serialNumber=" + serialNumber + "&isXintongyuan=" + isXintongyuan  + "&userType=" + userType + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
     } else if (userType == '1'){
+      // wx.navigateTo({
+      //   url: "../totaluserdetail/totaluserdetail",
+      // })
       console.log("enter to three ...")
       var flag = this.isInSubsidiaryCompanies(name)
       var flag2 = this.isInSingleTwoDeparments(name)
@@ -600,10 +603,16 @@ Page({
         })
       }
 
-      // wx.navigateTo({
-      //   url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
-      // })
-    }else {
+      wx.navigateTo({
+        url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
+      })
+    } else if (userType == '2') {
+      wx.navigateTo({
+        url: "../totaluserdetail/totaluserdetail", 
+      })
+    }
+    
+    else {
       wx.navigateTo({
         url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + serialNumber
       })
@@ -701,6 +710,7 @@ Page({
           }else if (item.userType == '2'){
             regInfo = ""
             title = item.infoes[1]
+            groupType = "2"
           } else {
             regInfo = ""
             if (this.isInSingleTwoDeparments(item.infoes[0])){

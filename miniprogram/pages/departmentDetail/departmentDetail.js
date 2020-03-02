@@ -314,7 +314,7 @@ Page({
     console.log(e.currentTarget.dataset.name)
     var name = e.currentTarget.dataset.name; 
     wx.navigateTo({
-      url: '../statistics/statistics?name=' + name + '&&date=' + this.data.currentDate + '&&level=2'
+      url: '../statistics/statistics?name=' + name + '&&date=' + this.data.currentDate + '&&level=2&&title=' + name
     })
   },
 

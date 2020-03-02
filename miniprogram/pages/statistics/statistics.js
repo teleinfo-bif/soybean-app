@@ -21,6 +21,8 @@ Page({
       date: "2020-02-01",
     },
 
+    titleText: "统计信息",
+
     shouldText: "应填写人数",
     filledInText: "已填写人数",
     confirmedText: "确诊人数",
@@ -158,7 +160,7 @@ Page({
     }
     return sum
   },
-  
+
   initChats: function(e) {
     // var windowWidth = 200;
 
@@ -1022,7 +1024,8 @@ parseDatas: function(datas) {
           showDate: currentDate,
           companyDepartment: company,
           regCompanyInfo: regInfo,
-          authorityLevel: level
+          authorityLevel: level,
+          titleText: title
         })
 
         this.analysisLevel(level)
@@ -1126,6 +1129,7 @@ parseDatas: function(datas) {
     let name = decodeURIComponent(options.name)
     let date = decodeURIComponent(options.date)
     let level = decodeURIComponent(options.level)
+    let title = decodeURIComponent(options.title)
 
     console.log('name: ', name,options.title)
     console.log('date: ', date)
@@ -1137,6 +1141,7 @@ parseDatas: function(datas) {
           showDate: date,
           regCompanyInfo: name + '.*',
           authorityLevel: 2,
+          titleText: name
         }
       )
       
@@ -1145,6 +1150,7 @@ parseDatas: function(datas) {
       this.setData({
         showDate: date,
         companyDepartment: name,
+        titleText:title,
         authorityLevel: 3,
       })
       this.analysisLevel(3)
