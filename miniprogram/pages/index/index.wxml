@@ -3,8 +3,16 @@
   <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
   <view class="head_title">泰尔通</view>
 
-  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" hover-class="userinfo-put_active">
-    <button class="get-avatar" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">快来登录吧</button>
+  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" bindtap="userInfoPut" hover-class="userinfo-put_active">
+    <view class="userinfo-img-container">
+      <image class="userinfo-img2" src="../../images/bianji3x.png" mode="scaleToFill"></image>
+    </view>
+    <view class="userinfo-put" hover-class="userinfo-put_active">
+      <button class="user-info-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">用户注册</button>
+    </view>
+    <view class="dayuhao-container">
+      <image class="dayuhao" src="../../images/dayuhao.png" />
+    </view>
   </view>
 
   <view wx:else class="putuserinfobutton" hover-class="userinfo-put_active" bindtap="userInfoPut">
@@ -12,9 +20,9 @@
       <image class="userinfo-img" src="{{avatarUrl}}" mode="scaleToFill"></image>
     </view>
     <view class="userinfo-put" hover-class="userinfo-put_active">{{loginUserInfo}}
-      <view class="dayuhao-container">
-        <image class="dayuhao" src="../../images/dayuhao.png" />
-      </view>
+    </view>
+    <view class="dayuhao-container">
+      <image class="dayuhao" src="../../images/dayuhao.png" />
     </view>
   </view>
 
@@ -31,7 +39,7 @@
 
     <navigator url="" class="weui-grid weui-grid-move" hover-class="weui-grid_active" bindtap="gotoHealthyQR">
       <image class="weui-grid__icon_jk" src="../../images/jiankangma13x.png" />
-      <view class="weui-grid__label weui-grid__label-move" >健康码</view>
+      <view class="weui-grid__label weui-grid__label-move">健康码</view>
     </navigator>
   </view>
 
@@ -62,30 +70,6 @@
         </view>
 
       </view>
-
-
-      <!-- <view class="group-item">
-        <view class="group-item-title" bindtap="gotoDetailClick">
-          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
-          <view class="group-item-name">{{department}}</view>
-        </view>
-        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
-        </view>
-      </view>
-     -->
-
-
-
-      <!-- <view class="group-item">
-        <view class="group-item-title" bindtap="gotoDetailClick">
-          <image class="group-item-icon" src="../../images/title-icon.png" />
-          <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view>
-          <view class="group-item-name">{{department}}</view>
-        </view>
-        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
-          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
-        </view>
-      </view> -->
     </view>
   </view>
 
@@ -95,7 +79,6 @@
     <swiper ndicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{swiperPages}}" wx:key="*this">
         <swiper-item class="swiper-item-container">
-          <!-- <view class="swiper-item {{item}}"></view> -->
           <view class="swiper-item">
             <navigator url="{{item}}" hover-class="navigator-hover">
               <image class="swiper-item-image" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
@@ -163,11 +146,8 @@
   </view>  
   </view> -->
 
-  <!-- <view class="copyright">中国信息通信研究院 出品</view> -->
-
-
   <view class="logo">
-    <view class="copyright-view">中国信息通信研究院 出品</view>
+    <view class="copyright-view">中国信息通信研究院</view>
   </view>
 
 </view>

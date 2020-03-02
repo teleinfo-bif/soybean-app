@@ -14,7 +14,7 @@ Page({
     poiList: [],
     isManagerFlag: '0',
     isSuperUserFlag: '0',
-    loginUserInfo: "用户注册",
+    loginUserInfo: "",
     department: '',//所在部门
     todayClickFlag: "0",
     groupType: '1',
@@ -204,6 +204,14 @@ Page({
     }).get({
       success: res => {
         console.log("datas: ", res)
+        if (res.data.length == 0) {
+          that.setData({
+            loginUserInfo: "用户注册",
+          })
+
+          return
+        }
+
         that.userinfo = res.data;
 
         var department = res.data[0].company_department
@@ -215,7 +223,7 @@ Page({
         var userType = res.data[0].usertype
         
         if (superuser != null && superuser == "1") {
-          title = "中国信息通信技术研究院"
+          title = "中国信息通信研究院"
           groupType = "2"
         }else if (userType == '1'){
           title = infoes[0]
