@@ -877,7 +877,7 @@ parseDatas: function(datas) {
 
         var infoes = company.split(' ')
         var regInfo = ""
-        var title = ""
+        var title = this.data.department
 
         if (superUser != null && superUser == "1") {
           level = 1
@@ -1003,13 +1003,18 @@ parseDatas: function(datas) {
    */
   onLoad: function (options) {
     let name = decodeURIComponent(options.name)
-    console.log('name: ', name)
+    console.log('name: ', name,options.title)
     if(name !=="undefined") {
       this.initDatas2(name, this.getCurrentDay())
     }else {
       this.initDatas(this.getCurrentDay())
     }
-    
+
+    this.setData({
+    ["title.text"]: options.title,
+    department: options.title
+    })
+    console.log(this.data.title)
 
   
     // var d1 = new Date('2020-02-01')
