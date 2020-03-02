@@ -68,7 +68,7 @@
             </view>
             <view class="personal-info-td-company">
             <text class='conpany_title'>中国信息通信研究院</text>
-              <textarea class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
+              <textarea class="info-text" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
             </view>
           </picker>
         </view>
