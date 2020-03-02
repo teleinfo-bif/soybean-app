@@ -126,11 +126,12 @@ Page({
             department: department,
             authorityLevel: level
           })
-  
+          wx.hideLoading()
           // this.analysisLevel(level)
         },
         fail: err => {
           console.log("error: ", err)
+          wx.hideLoading()
         }
       })
 
@@ -198,11 +199,12 @@ Page({
             department: department,
             authorityLevel: level
           })
-  
+          wx.hideLoading()
           // this.analysisLevel(level)
         },
         fail: err => {
           console.log("error: ", err)
+          wx.hideLoading()
         }
       })
 

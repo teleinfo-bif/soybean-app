@@ -60,7 +60,7 @@
         <view class="personal-divide"></view>
 
         <!-- 单位名称 -->
-        <view class="personal-info-picker">
+        <view class="personal-info-picker-company">
           <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
               <text class="info-label">单位名称</text>
@@ -68,7 +68,7 @@
             </view>
             <view class="personal-info-td-company">
             <text class='conpany_title'>中国信息通信研究院</text>
-              <textarea class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
+              <textarea class="info-text" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
             </view>
           </picker>
         </view>
