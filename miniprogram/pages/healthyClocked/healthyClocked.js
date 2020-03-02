@@ -60,7 +60,12 @@ Page({
     ],
     index: 0,
     user_id: app.globalData.openid,
-    date: getCurrentDay()
+    date: getCurrentDay(),
+    workStatusItems: [
+      { name: '已在岗', value: '0' },
+      { name: '远程办公', value: '1' },
+      { name: '未复工', value: '2' }
+    ],
   },
 
   onLoad: function (options) {
@@ -124,6 +129,16 @@ Page({
           }
           this.setData({
             trafficToolItems: trafficToolItems
+          });
+
+          //在岗状态
+          var workStatusItems = this.data.workStatusItems;
+          console.log("workStatusItems的内容为：" + workStatusItems);
+          for (var i = 0; i < workStatusItems.length; ++i) {
+            workStatusItems[i].checked = workStatusItems[i].value == res.data[0].workStatusFlag;
+          }
+          this.setData({
+            workStatusItems: workStatusItems
           });
           
           var radioNoGoBackItems = this.data.radioNoGoBackItems;
