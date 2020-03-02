@@ -61,7 +61,7 @@
 
         <!-- BID 地址 -->
         <view class="personal-info-hd">
-          <text class="info-label">BID地址</text>
+          <text class="info-label">永久数字ID</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="bid_address" type="text"  disabled="true" value="{{bid_address}}"></input>

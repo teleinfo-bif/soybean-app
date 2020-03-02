@@ -3,6 +3,7 @@
 .page { 
   background-color: rgba(249, 249, 249, 1);
   margin-bottom: 50rpx;
+  width:100%;
 }
 
 .personal{
