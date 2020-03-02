@@ -333,6 +333,7 @@ Page({
   // 根据是否在北京设置需要显示的字段，在北京显示是否离开北京，返回日期，不在北京显示原因日期
   setFields(atBeijing = false, leaved = false) {
     // console.log("atBeijing:", atBeijing, " leaved:", leaved);
+
     let fields = fields;
     if (atBeijing) {
       // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
@@ -437,7 +438,7 @@ Page({
       // console.log("today data", data);
       let formData = Object.assign({}, this.data.data, data.records[0]);
       let atBeijing =
-        (formData.address && formData.address.indexOf("北京市") > -1) || false;
+        (formData.address && formData.address.startsWith("北京市")) || false;
       // 服务端没有其它城市返回字段，根据返京日期判断
       // formData["leave"] = formData.gobacktime ? 2 : 1;
       const leaved = formData["leave"] == "2";
@@ -451,7 +452,9 @@ Page({
         },
         data: {
           ...data.records[0],
-          ...this.data.userFilledInfo
+          ...this.data.userFilledInfo,
+          name: data.records[0].userName,
+          phone: data.records[0].phone
         }
       });
       this.setFields(atBeijing, leaved);

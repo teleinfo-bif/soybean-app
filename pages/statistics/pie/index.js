@@ -4,7 +4,7 @@ const titles = ["健康情况", "地区分布", "就诊情况"];
 const colors = ["#aa4438", "#ffaa00", "#f2d45e", "#4169E1"];
 function setOption(chart, data, index = 0) {
   const option = {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -109,7 +109,7 @@ Component({
     },
     data: {
       type: Array,
-      default: () => { },
+      default: () => {},
       observer() {
         // const order = [];
         if (this.data.data.length > 0) {
@@ -149,10 +149,15 @@ Component({
       const series = [];
 
       const colors = ["#aa4438", "#f2d45e", "#ffaa00", "#4169E1"];
+      const emptyData = this.data.data.filter(item => {
+        return item.value != 0;
+      });
+      console.log(emptyData);
       this.data.data.forEach((item, index) => {
         series.push({
           name: item.name,
-          data: item.value,
+          data: emptyData.length > 0 ? item.value : 1,
+          // data: 0,
           stroke: false,
           color:
             this.data.data.length == 3 && index == 2

@@ -3,8 +3,13 @@ import { getUserFilledInfo } from "./api/api";
 import { tokenKey, userFilledInfofoKey } from "./api/request";
 // var crypto = require("/crypto-js/index");
 // console.log(crypto.sha256);
+
 App({
   initRequest: false,
+  callbackList: [],
+  async init2(callback) {
+    this.callbackList.push(callback);
+  },
   async init(refreshUserInfo = false) {
     if (this.globalData.appInit == false || refreshUserInfo) {
       console.log("app init 开始初始化");

@@ -38,9 +38,7 @@
               </block>
               <block wx:elif="{{item.healthy != 1}}">
                 <view class="status-circle status-circle-yellow"></view>
-                <!-- <view wx:if="{{item.healthy == 2}}">异常</view> -->
                 <view>异常</view>
-                <!-- <view wx:else>--</view> -->
               </block>
               <block wx:else>
                 <view class="status-circle status-circle-green"></view>

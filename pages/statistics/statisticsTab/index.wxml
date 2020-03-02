@@ -19,7 +19,7 @@
         <block wx:else>打卡详情</block>
       </view>
       <view class="people-item_status">
-        <block wx:if="{{ item.healthy == 1}}">
+        <!-- <block wx:if="{{ item.healthy == 1}}">
           <view class="status-circle status-circle-green"></view>
           <view>正常</view>
         </block>
@@ -33,6 +33,25 @@
         </block>
         <block wx:else>
           <view class="status-circle status-circle-red"></view>
+          <view>--</view>
+        </block> -->
+        <block wx:if="{{item.clockInId != 0}}">
+          <block wx:if="{{ item.comfirmed == 2 || item.admitting == 2}}">
+            <view class="status-circle status-circle-red"></view>
+            <view wx:if="{{ item.comfirmed == 2}}">确诊</view>
+            <view wx:else>就诊</view>
+          </block>
+          <block wx:elif="{{item.healthy != 1}}">
+            <view class="status-circle status-circle-yellow"></view>
+            <view>异常</view>
+          </block>
+          <block wx:else>
+            <view class="status-circle status-circle-green"></view>
+            <view>正常</view>
+          </block>
+        </block>
+        <block wx:else="{{item.clockInId == 0}}">
+          <view class="status-circle status-circle-gray"></view>
           <view>--</view>
         </block>
       </view>
