@@ -48,6 +48,11 @@ Page({
       { name: '其他', value: '4' }
     ],
     trafficToolStatusFlag:'',
+    workStatusItems: [
+      { name: '已在岗', value: '0' },
+      { name: '远程办公', value: '1' },
+      { name: '未复工', value: '2' }
+    ],
   },
 
   currentDate: function (e) {
@@ -117,7 +122,7 @@ Page({
         isLeaveBjFlag: this.isLeaveBjFlag,
         suregobackdate: latestInfo[0].return_date,
         trainnumber: latestInfo[0].traffic,
-
+        
         isInBeijing: latestInfo[0].is_in_beijing,
         whetherLeaveBeijing: latestInfo[0].ever_leave_beijing,
         outBejingReason: latestInfo[0].out_reason,
@@ -125,7 +130,9 @@ Page({
         leaveBeijingDate: latestInfo[0].leave_date,
         returnBeijingDate: latestInfo[0].return_date,
         traffic: latestInfo[0].traffic,
-        trafficToolStatusFlag: latestInfo[0].trafficToolStatusFlag
+        trafficToolStatusFlag: latestInfo[0].trafficToolStatusFlag,
+        workStatusFlag: latestInfo[0].workStatusFlag
+        
       })
 
       console.log("### noGoBackFlag: ", this.noGoBackFlag)
@@ -333,6 +340,7 @@ Page({
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
     console.log("=====乘坐交通工具====:" + this.trafficToolStatusFlag);
+    console.log("====在岗状态====:" + this.data.workStatusFlag);
     var name = e.detail.value.name
     var temperature = e.detail.value.temperature
     var bodyStatusFlag = this.bodyStatusFlag
@@ -341,7 +349,8 @@ Page({
     var goHBFlag = this.goHBFlag
     var place = e.detail.value.place
     var trafficToolStatusFlag = this.trafficToolStatusFlag
-
+    var workStatusFlag = this.data.workStatusFlag
+  
     if (name == null || name == '') {
       wx.showToast({
         icon: 'none',
@@ -388,6 +397,13 @@ Page({
       wx.showToast({
         icon: 'none',
         title: '目前健康状态不能为空'
+      });
+      return;
+    }
+    if (workStatusFlag == null || workStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '目前在岗状态不能为空'
       });
       return;
     }
@@ -650,6 +666,7 @@ Page({
     console.log("是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉:" + this.goHBFlag);
     console.log("其他备注信息:" + e.detail.value.remark);
     console.log("=====乘坐交通工具====:" + this.trafficToolStatusFlag);
+    console.log("=====在岗状态====:" + this.data.workStatusFlag);
 
     var name = e.detail.value.name
     var phone = e.detail.value.phone
@@ -672,7 +689,7 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
     var trafficToolStatusFlag = this.trafficToolStatusFlag
-
+    var workStatusFlag =  this.data.workStatusFlag
 
     var date = new Date();
     var Y = date.getFullYear() + '-';
@@ -699,7 +716,8 @@ Page({
           leave_date: this.data.leaveBeijingDate,
           return_date: this.data.returnBeijingDate,
           traffic: this.data.traffic,
-          trafficToolStatusFlag: this.trafficToolStatusFlag
+          trafficToolStatusFlag: this.trafficToolStatusFlag,
+          workStatusFlag: this.data.workStatusFlag
         }
       })
 
@@ -717,7 +735,8 @@ Page({
           leave_date: this.data.leaveBeijingDate,
           return_date: this.data.returnBeijingDate,
           traffic: this.data.traffic,
-          trafficToolStatusFlag: this.data.trafficToolStatusFlag
+          trafficToolStatusFlag: this.data.trafficToolStatusFlag,
+          workStatusFlag: this.data.workStatusFlag
         }
       })
     }
@@ -744,7 +763,8 @@ Page({
         remark: remark,
         date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
-        trafficToolStatusFlag: this.data.trafficToolStatusFlag
+        trafficToolStatusFlag: this.data.trafficToolStatusFlag,
+        workStatusFlag: this.data.workStatusFlag
         // userinfo: that.userinfo
       },
       success: res => {
@@ -792,6 +812,14 @@ Page({
     console.log('radio发生change事件，携带value值为：', e.detail.value);
     this.goHBFlag = e.detail.value
     // this.radioChange(e)
+  },
+  // 在岗状态
+  workStatusChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.workStatusFlag = e.detail.value
+    this.setData({
+      workStatusFlag: e.detail.value
+    });
   },
 
   // 2020-02-10 后是否离开北京

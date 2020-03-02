@@ -207,6 +207,18 @@
       <view class='devide-middle'/>
 
 
+        <!--在岗状态-->
+        <view class="clock_form__title">目前在岗状态</view>
+        <view class='clock-radio'>
+          <radio-group class="radio-group" bindchange="">
+            <label wx:for="{{workStatusItems}}" wx:key="index">
+              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+               <view  wx:if='{{index != workStatusItems.length-1}}'class='devide-radio'/>
+            </label>
+          </radio-group>
+        </view>
+       <view class='devide-middle'/>
+
       <view class="clock_form__title">其他</view>
       <view class="">
           <view class="clock_form_input">

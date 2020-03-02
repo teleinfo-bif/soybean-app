@@ -250,7 +250,7 @@ Page({
           regInfo = "",
           title = infoes[1]
         }
-        console.log('0cur',cur,title);
+        console.log('cur',cur,title);
         this.setData({
           currentDate: cur,
           titleInfo: title,
@@ -290,9 +290,17 @@ Page({
   },
   gotoStatistics: function(e) {
     console.log(e.currentTarget.dataset.name)
-    var name = e.currentTarget.dataset.name;
+    var name = e.currentTarget.dataset.name; 
     wx.navigateTo({
-      url: '../statistics/statistics?name=' + name
+      url: '../statistics/statistics?name=' + name + '&&date=' + this.data.currentDate + '&&level=2'
+    })
+  },
+
+  gotoDetails: function(e) {
+    console.log("data set name: ", e.currentTarget.dataset.name)
+    var name = e.currentTarget.dataset.name
+    wx.navigateTo({
+      url: '../totaluserdetail/totaluserdetail?name='+ name + '&&date=' + this.data.currentDate + '&&level=2'
     })
   },
 
@@ -498,9 +506,14 @@ Page({
     })
 
   },
-  gotoUsers: function() {
+  gotoUsers: function(e) {
+
+    console.log(e.currentTarget.dataset.name)
+    var name = e.currentTarget.dataset.name; 
+    console.log("name: ", name)
+
     wx.navigateTo({
-      url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + this.data.serialNumber
+      url: '../threeDepartments/threeDepartments?name=' + name + '&&date=' + this.data.currentDate
     })
   },
 
