@@ -603,9 +603,9 @@ Page({
         })
       }
 
-      wx.navigateTo({
-        url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
-      })
+      // wx.navigateTo({
+      //   url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
+      // })
     } else if (userType == '2') {
       wx.navigateTo({
         url: "../totaluserdetail/totaluserdetail", 
