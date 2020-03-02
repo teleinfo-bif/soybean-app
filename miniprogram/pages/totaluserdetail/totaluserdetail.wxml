@@ -43,8 +43,8 @@
       </label>
       <label wx:elif="{{item.goHospitalFlag == '0'}}">
         <view>
-          <view class="tree-children-status-red"></view>
-          <view class="tree-children-status-text">就诊</view>
+          <view class="tree-children-status-yellow"></view>
+          <view class="tree-children-status-text">异常</view>
         </view>
       </label>
       <label wx:elif="{{item.bodyStatusFlag == '1' || item.bodyStatusFlag == '2'}}">
