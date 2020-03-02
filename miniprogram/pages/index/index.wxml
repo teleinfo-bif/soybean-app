@@ -38,8 +38,8 @@
     </navigator>
 
     <navigator url="" class="weui-grid weui-grid-move" hover-class="weui-grid_active" bindtap="gotoHealthyQR">
-      <image class="weui-grid__icon_jk" src="../../images/jiankangma13x.png" />
-      <view class="weui-grid__label weui-grid__label-move">健康码</view>
+      <image class="weui-grid__icon_jk" src="../../images/jjiankangmaactive3x.png" />
+      <view class="weui-grid__label">健康码</view>
     </navigator>
   </view>
 
@@ -61,8 +61,8 @@
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
           <!-- <view class="group-item-name">{{department}}</view> -->
         </view>
-        <view class="group-item-title" bindtap="gotoDetailClick" data-type="{{item.groupType}}" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}">
-          <!-- <image class="group-item-icon" src="../../images/tongjixinxi2x.png" /> -->
+        <view class="group-item-title"  data-type="{{item.groupType}}" >
+          <image class="group-item-icon" src="../../images/xiangqingxinxi2x.png" bindtap="gotoDetailClick" data-name="{{item.department}}" data-xty="{{item.isXintongyuan}}" data-num="{{item.number}}" data-userType="{{item.userType}}"/>
           <view class="group-item-name">{{item.department}}</view>
         </view>
 

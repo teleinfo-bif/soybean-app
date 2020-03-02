@@ -7,13 +7,17 @@ Page({
   data: {
     department: '',
     clickdetail: [],
+    subsidiaryCompany: ['通信网络安全专业委员会', '迪瑞克通信工程咨询有限责任公司', '华瑞赛维通信技术有限公司', '华瑞网研科技有限公司', '金元宾馆', '瑞特电信技术公司', '思维力咨询有限责任公司', '泰尔赛科科技有限公司', '五龙电信技术公司', '海淀亚信技术公司', '增值服务专业委员会', '通信标准化协会', '北京泰尔信科物业管理有限公司', '北京泰尔英福网络科技有限责任公司', '重庆电子信息中小企业公共服务有限公司', '南方分院派遣', '中国通信企业协会信息通信服务工作委员会', '部科技委办公室','信通院（武汉）科技创新中心有限公司'],
 
+    noThreeDepartments: ['院领导', '办公室（保密办公室）', '党群工作部（离退休干部办公室）', '纪检监察审计部', '科技发展部', '业务发展部', '人力资源部', '财务部', '国际合作部', '资产管理部', '实验室质量管理部', '互联网行业促进中心', '雄安研究院保定分院工作筹备组', '政务专项办'],
+    prefix: '0',
     todayClickFlag: '0',     // 今日是否打卡标志，默认未打卡
     currentDate: "",
     companyReg: "",
     department: "",
     titleInfo: "",
     authorityLevel: 0,       // 权限级别: 1 院级管理者，可查看全部；2 二级部门； 3 三级部门
+    
     
   },
 
@@ -29,7 +33,25 @@ Page({
   },
 
   
+  isInSubsidiaryCompanies: function(name) {
+    var datas = this.data.subsidiaryCompany
+    for (var i = 0; i < datas.length; i++) {
+      if (name == datas[i]) {
+        return true 
+      }
+    }
+    return false
+  },
 
+  isInSingleTwoDeparments: function(name) {
+    var datas = this.data.noThreeDepartments
+    for (var i = 0; i < datas.length; i++) {
+      if (name == datas[i]) {
+        return true
+      }
+    }
+    return false
+  },
   // parseDatas: function(datas) {
   //   // console.log("datas temp datas: ", datas)
   //   var temp = []
@@ -297,11 +319,39 @@ Page({
   },
 
   gotoDetails: function(e) {
-    console.log("data set name: ", e.currentTarget.dataset.name)
-    var name = e.currentTarget.dataset.name
-    wx.navigateTo({
-      url: '../totaluserdetail/totaluserdetail?name='+ name + '&&date=' + this.data.currentDate + '&&level=2'
-    })
+
+    console.log(e.currentTarget.dataset.name)
+    var name = e.currentTarget.dataset.name;
+    console.log("name: ", name)
+
+    var flag = this.isInSubsidiaryCompanies(name)
+    var flag2 = this.isInSingleTwoDeparments(name)
+    var pre = '0'
+
+
+    if (flag || flag2) {
+      // var regName = ".*" + name
+      if (flag) {
+        pre = '0'
+      }
+      if (flag2) {
+        pre = '1'
+      }
+      wx.navigateTo({
+        url: '../totaluserdetail/totaluserdetail?name=' + name + '&&date=' + this.data.currentDate + '&&level=2&&prefix=' + pre,
+      })
+    }else {
+      pre = '1'
+      wx.navigateTo({
+        url: '../threeDepartments/threeDepartments?name=' + name + '&&date=' + this.data.currentDate
+      })
+    }
+    
+    // console.log("data set name: ", e.currentTarget.dataset.name)
+    // var name = e.currentTarget.dataset.name
+    // wx.navigateTo({
+    //   url: '../totaluserdetail/totaluserdetail?name='+ name + '&&date=' + this.data.currentDate + '&&level=2'
+    // })
   },
 
 

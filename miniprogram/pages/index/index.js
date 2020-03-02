@@ -34,7 +34,33 @@ Page({
 
     userInfoFlagYes: true,
     userInfoFlagNo: false,
+
+    subsidiaryCompany: ['通信网络安全专业委员会', '迪瑞克通信工程咨询有限责任公司', '华瑞赛维通信技术有限公司', '华瑞网研科技有限公司', '金元宾馆', '瑞特电信技术公司', '思维力咨询有限责任公司', '泰尔赛科科技有限公司', '五龙电信技术公司', '海淀亚信技术公司', '增值服务专业委员会', '通信标准化协会', '北京泰尔信科物业管理有限公司', '北京泰尔英福网络科技有限责任公司', '重庆电子信息中小企业公共服务有限公司', '南方分院派遣', '中国通信企业协会信息通信服务工作委员会', '部科技委办公室', '信通院（武汉）科技创新中心有限公司'],
+
+    noThreeDepartments: ['院领导', '办公室（保密办公室）', '党群工作部（离退休干部办公室）', '纪检监察审计部', '科技发展部', '业务发展部', '人力资源部', '财务部', '国际合作部', '资产管理部', '实验室质量管理部', '互联网行业促进中心', '雄安研究院保定分院工作筹备组', '政务专项办'],
+
   },
+
+  isInSubsidiaryCompanies: function (name) {
+    var datas = this.data.subsidiaryCompany
+    for (var i = 0; i < datas.length; i++) {
+      if (name == datas[i]) {
+        return true
+      }
+    }
+    return false
+  },
+
+  isInSingleTwoDeparments: function (name) {
+    var datas = this.data.noThreeDepartments
+    for (var i = 0; i < datas.length; i++) {
+      if (name == datas[i]) {
+        return true
+      }
+    }
+    return false
+  },
+
   testQR: function () {
     var that = this
     wx.request({
@@ -550,9 +576,30 @@ Page({
       })
     } else if (userType == '1'){
       console.log("enter to three ...")
-      wx.navigateTo({
-        url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
-      })
+      var flag = this.isInSubsidiaryCompanies(name)
+      var flag2 = this.isInSingleTwoDeparments(name)
+      var pre = ''
+
+      if (flag || flag2) {
+        // var regName = ".*" + name
+        if (flag) {
+          pre = '0'
+        }
+        if (flag2) {
+          pre = '1'
+        }
+        wx.navigateTo({
+          url: '../totaluserdetail/totaluserdetail?name=' + name + '&&date=' + this.getCurrenteDate() + '&&level=2&&prefix=' + pre,
+        })
+      } else {
+        wx.navigateTo({
+          url: '../threeDepartments/threeDepartments?name=' + name + '&&date=' + this.getCurrenteDate()
+        })
+      }
+
+      // wx.navigateTo({
+      //   url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
+      // })
     }else {
       wx.navigateTo({
         url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + serialNumber
@@ -642,18 +689,24 @@ Page({
             // level = 2
             if (item.infoes[0] == '院属公司及协会') {
               regInfo = '.*' + item.infoes[1]
-              title = item.infoes[1]
+              title = item.infoes[1] 
             } else {
               regInfo = item.infoes[0] + ".*"
               title = item.infoes[0]
               groupType = "2"
             }
           }else if (item.userType == '2'){
-            regInfo = "",
+            regInfo = ""
             title = item.infoes[1]
           } else {
-            regInfo = "",
-            title = item.infoes[1]
+            regInfo = ""
+            if (this.isInSingleTwoDeparments(item.infoes[0])){
+              title = item.infoes[0]
+            }else {
+              title = item.infoes[1]
+            }
+
+            console.log("infoes: ", item.infoes)
           }
           groupTypeList.push({
             department:title,
