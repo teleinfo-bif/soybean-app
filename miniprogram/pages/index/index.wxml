@@ -55,17 +55,9 @@
       </view> -->
     </view>
     <view class="group-items">
-<<<<<<< HEAD
-
-
-
 
       <view class="group-item" wx:for="{{departments}}" wx:key="*this">
-        <view class="group-item-title" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}" bindtap="gotoStatistics" data-type="{{item.groupType}}" data-name="{{item.department}}"  data-xty="{{item.isXintongyuan}}"  data-num="{{item.number}}" data-userType="{{item.userType}}">
-=======
-      <view class="group-item" wx:if="{{isManagerFlag == '1'}}">
-        <view class="group-item-title" bindtap="gotoStatistics">
->>>>>>> tag
+        <view class="group-item-title" wx:if="{{isManagerFlag == '1'}}" bindtap="gotoStatistics" data-type="{{item.groupType}}" data-name="{{item.department}}"  data-xty="{{item.isXintongyuan}}"  data-num="{{item.number}}" data-userType="{{item.userType}}">
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
           <!-- <view class="group-item-name">{{department}}</view> -->
         </view>
@@ -75,8 +67,6 @@
         </view>
 
       </view>
-<<<<<<< HEAD
-=======
      <view class="page-container" wx:if="{{isManagerFlag == '2'}}">
        <view wx:if="{{todayClickFlag=='0'}}" class="template">
             <view class="template-title">
@@ -164,7 +154,6 @@
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
         </view>
       </view> -->
->>>>>>> tag
     </view>
   </view>
 
