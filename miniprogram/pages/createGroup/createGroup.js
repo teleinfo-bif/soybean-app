@@ -100,7 +100,7 @@ Page({
       warn = "请填写您的机构名称!"
     } else if (e.detail.value.group_introduce == "") {
       warn = "请填写您的机构介绍!"
-    } else if (e.detail.value.group_introduce.length < 20) {
+    } else if (e.detail.value.group_introduce.length < 10) {
       warn = "机构介绍的字数应为10-200!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
