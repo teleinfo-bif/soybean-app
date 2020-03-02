@@ -64,6 +64,13 @@ Page({
 
   resetBtn(){
     console.log('&&&reset***')
+    this.setData({
+      placeholder_company_name:'',
+      placeholder_company_district:'',
+      placeholder_company_detail:'',
+      placeholder_home_district:'',
+      placeholder_home_detail:''
+    })
   },
   /** 
    * 身份验证相关
@@ -501,9 +508,9 @@ Page({
       warn = "请输入您的单位详细地址!"
     } else if (e.detail.value.home_location == "") {
       warn = "请选择您的家庭所在地区!"
-    } else if (e.detail.value.home_detail == "") {
+    } /* else if (e.detail.value.home_detail == "") {
       warn = "请输入您的家庭详细地址"
-    } else {
+    }  */else {
       flag = true 
 
 
