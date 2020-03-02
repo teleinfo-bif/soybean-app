@@ -67,12 +67,12 @@ let fields = [
     }
   },
   {
-    title: "返京(计划)日期",
+    title: "返京日期",
     type: "date",
     prop: "gobacktime",
     hide: true,
     props: {
-      placeholder: "请输入返京(计划)日期",
+      placeholder: "请输入返京日期",
       end: ""
     }
   },
@@ -331,7 +331,7 @@ Page({
       saveClock(formData).then(res => {
         // console.log(res);
         wx.navigateTo({
-          url: "/pages/clock/status/index"
+          url: "/pages/status/index?msg=打卡成功"
         });
       });
     }
@@ -377,8 +377,16 @@ Page({
     // console.log("atBeijing:", atBeijing, " leaved:", leaved);
     let { fields } = this.data;
     fields.forEach(item => {
+      // 如果再北京，返回时间最大是今天
       if (item.prop === "gobacktime") {
         item.props.end = atBeijing ? getyyyyMMdd(new Date()) : "";
+      }
+      // 在北京显示返京日期，否则显示计划返京日期
+      if (item.prop === "gobacktime") {
+        item.title = atBeijing ? "返京日期" : "计划返京日期";
+        item.props.placeholder = atBeijing
+          ? "请输入返京日期"
+          : "请输入计划返京日期";
       }
     });
     this.setData(

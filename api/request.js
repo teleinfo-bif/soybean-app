@@ -20,6 +20,9 @@ async function getOpenId() {
         wx.request({
           url: baseURL + "/wx/user/login",
           data: params,
+          header: {
+            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
+          },
           success: data => {
             console.log("tokenKey", data.data);
             wx.setStorageSync(tokenKey, data.data.data);

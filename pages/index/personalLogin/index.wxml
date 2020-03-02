@@ -2,9 +2,10 @@
   <view class="entering-box">
     <view class="entering-box_icon">
       <!-- <at-icon compid="{{$compid__0}}"></at-icon> -->
-      <van-icon name="edit" />
+      <image wx:if="{{userFilledInfo.userRegisted}}" class="" src="{{userFilledInfo.avatarUrl}}" mode="aspectFit" lazy-load="false" binderror="" bindload=""></image>
+      <van-icon wx:else name="edit" />
     </view>
-    <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
+    <view wx:if="{{userFilledInfo.userRegisted}}" class="entering-box_text">
       您好，{{userFilledInfo.name}}
     </view>
     <text wx:else class="entering-box_text">用户注册</text>

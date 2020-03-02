@@ -1,7 +1,7 @@
 // pages/clock/index.js
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import { getTodayClock, saveClock } from "../../api/api.js";
+import { getTodayClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -293,33 +293,6 @@ Page({
       }
     });
     this.setData({ fields, data });
-  },
-  // 重置按钮
-  formCancel() {
-    let { data } = this.data;
-    for (let prop in data) {
-      if (prop != "userName" && prop != "phone") {
-        data[prop] = null;
-      }
-    }
-    this.setData({
-      data
-    });
-  },
-  // 提交按钮
-  formSubmit() {
-    const validate = this.selectComponent("#form").validate();
-    if (validate) {
-      const formData = this.data.data;
-      formData.userId = this.data.userFilledInfo.id;
-      // console.log("formData", formData);
-      saveClock(formData).then(res => {
-        // console.log(res);
-        wx.navigateTo({
-          url: "/pages/clock/status/index"
-        });
-      });
-    }
   },
   // 初始化this.data.data
   initFormData() {

@@ -10,7 +10,7 @@
         </navigator>
       </view>
       <view class="block-success_icon">
-        <image mode="aspectFit" src="../../static/images/yidaka@3x.png" alt="已打卡" />
+        <image mode="aspectFit" src="../../static/images/success@3x.png" alt="已打卡" />
       </view>
       <view class="block-success_text">今日已打卡</view>
     </view>

@@ -5,19 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    app
+    app,
+    msg: "提交成功"
   },
 
-  navigateTo(e) {
-    wx.navigateTo({
-      url: e.currentTarget.dataset.path
-    });
-  },
+  // navigateTo(e) {
+  //   wx.navigateTo({
+  //     url: e.currentTarget.dataset.path
+  //   });
+  // },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    const { msg = "提交成功" } = options;
+    this.setData({
+      msg
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

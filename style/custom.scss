@@ -89,11 +89,18 @@ picker.select-picker {
 
 button.btn-lucency-filled {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
   display: block;
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
-  background-color: red;
+  line-height: 1;
+  background: none;
+
   &::after {
     border: none;
   }

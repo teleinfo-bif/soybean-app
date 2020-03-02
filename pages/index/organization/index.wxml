@@ -12,11 +12,11 @@
           <image class="btn" src="{{item.logo?item.logo:'../../../static/images/defaultlogo.png'}}" />
         </view>
         <!-- 中间群组名称 -->
-        <view class="organization_item-name" data-groupName="{{item.name}}" data-children="{{item.children}}" data-groupId="{{item.id}}" bind:tap="navigateToGroupIndex">
+        <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
           {{item.name}}
         </view>
         <!-- 右侧操作按钮 -->
-        <view class="organization_item-btn">
+        <view wx:if="{{item.permission}}" class="organization_item-btn">
           <view>
             <navigator url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}">
               <image class="btn" src="../../../static/images/stastic@3x.png" />

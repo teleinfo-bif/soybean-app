@@ -1,7 +1,7 @@
 <!-- pages/enteringInfo/index.wxml -->
 <view>
   <view class="form-header">
-    <view>基本信息</view>
+    <view>身份信息</view>
     <view wx:if="{{userFilledInfo.userRegisted}}" bindtap="setEditState" class="btn-edit">
       {{!edit? '修改':'取消'}}
     </view>
@@ -14,7 +14,7 @@
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
-      !userRegisted  ? '提 交' : '更 新'}}</van-button>
+      !userRegisted  ? '注 册' : '更 新'}}</van-button>
   </view>
   <view wx:if="{{userFilledInfo.userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>
 </view>

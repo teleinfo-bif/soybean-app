@@ -1,9 +1,65 @@
 <!-- pages/group/groupIndex/index.wxml -->
-<view class="" hover-class="none" hover-stop-propagation="false">
-  <button class="btn-lucency-filled" open-type='share'>
-    <image style="float: right;width: 100rpx;height: 100rpx;" src="../../../static/images/fenxiang.png" />
-  </button>
+<van-tabs wx:if="{{isGroup === true}}" custom-class="tab" bind:click="onTabClick" swipeable color="#4F7EF2" sticky>
+  <van-tab title="部门 {{children.length||''}}"></van-tab>
+  <van-tab title="人员 {{memberData.total||''}}"></van-tab>
+</van-tabs>
+<!-- 统计信息分享按钮 -->
+<view class="top-box">
+  <view class="top-box_count">
+    <view wx:if="{{isGroup === true &&activeTab == 0}}">部门：{{children.length}}</view>
+    <view wx:if="{{isGroup != true ||  activeTab == 1}}">人数：{{memberData.total || '-'}}</view>
+  </view>
+  <view class="share-box">
+    <button class="btn-lucency-filled" open-type='share'>
+      <image src="../../../static/images/fenxiang.png" />
+    </button>
+  </view>
 </view>
-<view class="" wx:for="{{children}}" wx:key="index" hover-class="none" hover-stop-propagation="false">
-  {{item.name}}
+<view wx:if="{{isGroup === true &&activeTab == 0}}" class="" hover-class="none" hover-stop-propagation="false">
+  <!-- 每一行 -->
+  <view wx:for="{{children}}" wx:key="index" class="row-item">
+    <!-- 左侧名字 -->
+    <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+      {{item.name}}
+    </view>
+    <view wx:else class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+      {{item.name}}
+    </view>
+    <!-- 右侧操作按钮 -->
+    <view class="row-item_right">
+      <!-- <view class="row-item_right-number">100</view> -->
+      <view class="row-item_right-statistic">
+        <navigator class="" target="" url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
+          <image class="btn-statistic" src="../../../static/images/stastic@3x.png" />
+        </navigator>
+        <navigator class="" target="" url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
+          <image class="btn-statistic" src="../../../static/images/deatil_data@3x.png" />
+        </navigator>
+      </view>
+    </view>
+  </view>
 </view>
+<!-- 展示下级部门信息 -->
+<scroll-view wx:if="{{isGroup != true ||  activeTab == 1}}" class="scrollview" scroll-x="false" scroll-y="true" upper-threshold="50" lscroll-top="{{topNum}}" enable-back-to-top="true" bindscrolltoupper="" bindscrolltolower="lower" bindscroll="">
+  <view class="" hover-class="none" hover-stop-propagation="false">
+    <!-- 每一行 -->
+    <view wx:for="{{memberData.records}}" wx:key="index" class="row-item">
+      <!-- 左侧名字 -->
+      <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+        {{item.name}}
+      </view>
+      <view wx:else class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+        {{item.name}}
+      </view>
+      <!-- 右侧操作按钮 -->
+      <view class="row-item_right">
+        <view class="row-item_right_btn row-item_right_btn-setting">设置管理</view>
+        <view class="row-item_right_btn row-item_right_btn-delete">删除</view>
+        <!-- <view class="row-item_right-statistic">
+        <image class="btn-statistic" src="../../../static/images/stastic@3x.png" />
+        <image class="btn-statistic" src="../../../static/images/deatil_data@3x.png" />
+      </view> -->
+      </view>
+    </view>
+  </view>
+</scroll-view>

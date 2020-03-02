@@ -96,8 +96,8 @@ Page({
     );
   },
   onscroll(e, b) {
-    console.log(e);
-    console.log(b);
+    // console.log(e);
+    // console.log(b);
   },
 
   getData() {

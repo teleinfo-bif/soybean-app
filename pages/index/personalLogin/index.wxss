@@ -13,7 +13,6 @@
   border-radius: 44rpx;
   font-size: 30rpx;
 }
-
 .entering-box_icon {
   display: flex;
   justify-content: center;
@@ -24,7 +23,9 @@
   background: #ecedf1;
   border-radius: 50%;
 }
-
+.entering-box_icon image {
+  border-radius: 50%;
+}
 .entering-box_text {
   padding-left: 30rpx;
 }

@@ -120,7 +120,7 @@ Page({
         saveOrUpdateUserInfo(formData).then(async data => {
           await app.init(true);
           wx.navigateTo({
-            url: "/pages/status/index"
+            url: "/pages/status/index?msg=注册成功"
           });
         });
       } else {
@@ -128,7 +128,7 @@ Page({
         saveOrUpdateUserInfo(formData).then(async data => {
           await app.init(true);
           wx.navigateTo({
-            url: "/pages/status/index"
+            url: "/pages/status/index?msg=更新成功"
           });
         });
       }

@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/status/index",
+
     "pages/clockOthers/index",
     "pages/statistics/statisticsTab/index",
     "pages/personal/index",
@@ -8,7 +10,6 @@
     "pages/clockRecords/index",
     "pages/detail/index",
     "pages/statistics/index",
-    "pages/status/index",
     "pages/clock/status/index",
     "pages/index/organization/index",
     "pages/group/groupIndex/index",

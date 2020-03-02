@@ -19,7 +19,7 @@ function setOption(chart, data, index = 0) {
       containLabel: true
     },
     title: {
-      text: "统计图",
+      text: "",
       left: "center",
       top: "center",
       padding: [24, 0],
