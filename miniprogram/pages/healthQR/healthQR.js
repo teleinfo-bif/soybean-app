@@ -145,13 +145,19 @@ Page({
             currentAddress: res.data[0].place,
             returnDate: res.data[0].suregobackdate
           });
-          if (res.data[0].isLeaveBjFlag == 0){
+          if (res.data[0].isGoBackFlag == 0  && res.data[0].isLeaveBjFlag == 0){
             this.setData({
               isLeave:true
             })
-          } else if (res.data[0].isLeaveBjFlag == 1) {
+          } 
+          if (res.data[0].isGoBackFlag == 0 && res.data[0].isLeaveBjFlag == 1) {
             this.setData({
               isLeave: false
+            })
+          }
+          if (res.data[0].isGoBackFlag == 1 ) {
+            this.setData({
+              isLeave: true
             })
           }
           if (res.data[0].bodyStatusFlag == 0){
