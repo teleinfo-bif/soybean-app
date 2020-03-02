@@ -67,11 +67,24 @@
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td-company">
-              <text class=''>中国信息通信研究院</text>
-              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></input>
+            <text class='conpany_title'>中国信息通信研究院</text>
+              <textarea class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
             </view>
           </picker>
         </view>
+        <!--单位1级名称-->
+<!--                 <view class="personal-info-picker">
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
+            <view class="personal-info-hd">
+             
+              <text class="info-choice" style="{{choice_color}}"> 选择</text>
+            </view>
+            <view class="personal-info-td-company">
+              <input class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></input>
+            </view>
+          </picker>
+        </view> -->
+
         <view class="personal-divide"></view>
 
         <!-- 单位所在地区 -->
