@@ -7,10 +7,11 @@ var wxCharts = require('../../utils/wxcharts.js');
 var ringChart = null;
 var ringChart2 = null;
 var ringChart3 = null;
-
+var ringChart4 = null;
 const db = wx.cloud.database({
   env: "soybean-uat"
 })
+const _ = db.command
 
 Page({
   data: {
@@ -26,15 +27,18 @@ Page({
     returnJingText: "返京人数",
     leaveJingText: "离京未返京人数",
     stateBadText: "非健康人数",
-
+    doneText: "已在岗人数",
+    unDoneText: "未复工人数",
+    homeText: "远程办公人数",
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
     returnBeijingNumber: 0,
     outBeijingNumber: 0,
     healthyBadNumber: 0,
-
+    doneNumber:0,
+    unDoneNumber:0,
+    homeNumber:0,
     
-
     // healthy datas
     totalStateNumber: 0,
     stateGoodNumber: 0,
@@ -63,12 +67,18 @@ Page({
     outIsolateNumber: 0,
     otherCasesNumber: 0,
     totalCasesNumber: 0,
+    
+    totalworksNumber: 0,
 
     confirmedPercent: 0,
     isolatePercent: 0,
     outIsolatePercent: 0,
     otherCasesPercent: 0,
 
+    doneP:0,
+    unP:0,
+    homeP:0,
+    otherP:0,
 
     showDate: "",
 
@@ -121,7 +131,33 @@ Page({
       this.analysisLevel(this.data.authorityLevel)
     }
   },
-
+  getLimitDone:function(datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "0") {
+        sum += 1
+      }
+    }
+    return sum
+  },
+  getLimitUn: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "2") {
+        sum += 1
+      }
+    }
+    return sum
+  },
+  getLimitHome: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "1") {
+        sum += 1
+      }
+    }
+    return sum
+  },
   initChats: function(e) {
     // var windowWidth = 200;
 
@@ -303,6 +339,63 @@ Page({
     setTimeout(() => {
       ringChart3.stopAnimation();
     }, 500);
+
+
+    ringChart4 = new wxCharts({
+      animation: true,
+      canvasId: 'ringCanvas4',
+      type: 'ring',
+      extra: {
+        ringWidth: this.data.ringHou,
+        pie: {
+          offsetAngle: -45
+        }
+      },
+      // title: {
+      //   name: '70%',
+      //   color: '#7cb5ec',
+      //   fontSize: 25
+      // },
+      // subtitle: {
+      //   name: '收益率',
+      //   color: '#666666',
+      //   fontSize: 15
+      // },
+      series: [{
+        name: '已在岗',
+        data: this.data.confirmedNumber,
+        stroke: false,
+        color: "#aa4438",
+      },
+      {
+        name: '远程办公',
+        data: this.data.isolateNumber,
+        stroke: false,
+        color: "#ffaa00",
+      },
+      {
+        name: '未复工',
+        data: this.data.outIsolateNumber,
+        stroke: false,
+        color: "#f2d45e",
+      },
+      ],
+      disablePieStroke: false,
+      width: this.data.ringWidth,
+      height: this.data.ringHeight,
+      dataLabel: false,
+      legend: false,
+      background: this.data.ringBackGround,
+      padding: 0
+    });
+
+
+    ringChart4.addEventListener('renderComplete', () => {
+      console.log('renderComplete');
+    });
+    setTimeout(() => {
+      ringChart4.stopAnimation();
+    }, 500);
   },
 
   touchHandler1: function (e) {
@@ -322,7 +415,11 @@ Page({
       url: '../seperateDetails/seperateDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
     })
   },
-
+  touchHandler4: function (e) {
+    wx.navigateTo({
+      url: '../workDetails/workDetails?date=' + this.data.showDate + '&&level=' + this.data.authorityLevel + '&&companyReg=' + this.data.regCompanyInfo + '&&department=' + this.data.companyDepartment,
+    })
+  },
   getCurrentDay: function(e){
     var date = new Date();
     var seperator1 = "-";
@@ -396,7 +493,21 @@ setCasesPercents: function(e) {
     totalCasesNumber: total,
   })
 },
+//复工情况百分比
+  setWorkPercents: function (e) {
+    var total = this.data.doneNumber + this.data.unDoneNumber + this.data.homeNumber
 
+    var doneP = (this.data.doneNumber / total * 100).toFixed(2)
+    var unP = (this.data.unDoneNumber / total * 100).toFixed(2)
+    var homeP = (this.data.homeNumber / total * 100).toFixed(2)
+
+    this.setData({
+      doneP,
+      unP,
+      homeP,
+      totalworksNumber:total
+    })
+  },
 printDatas: function(e) {
   console.log("should filled number: ", this.data.shouldFilledNumber)
   console.log("has filled number:    ", this.data.hasFilledNumber)
@@ -556,7 +667,10 @@ parseDatas: function(datas) {
   var isoNum = this.getIsoNumber(healthyDatas)
   var outIsoNum = beijingUnconfirmed - isoNum
   var othercases = filled - confirmed - isoNum - outIsoNum
-
+  
+    var doneNumber = this.getLimitDone(healthyDatas);
+    var unDoneNumber = this.getLimitUn(healthyDatas);
+    var homeNumber = this.getLimitHome(healthyDatas);
   this.setData({
     // shouldFilledNumber: should,
     hasFilledNumber: filled,
@@ -579,7 +693,11 @@ parseDatas: function(datas) {
     confirmedNumber: confirmed,
     isolateNumber: isoNum,
     outIsolateNumber: outIsoNum,
-    otherCasesNumber: othercases
+    otherCasesNumber: othercases,
+
+    doneNumber,
+    unDoneNumber,
+    homeNumber,
   })
 
   }
@@ -587,7 +705,7 @@ parseDatas: function(datas) {
   this.setHealthyPercents()
   this.setAreaPercents()
   this.setCasesPercents()
-
+  this.setWorkPercents()
   this.initChats()
   // this.printDatas()
 
@@ -866,7 +984,6 @@ parseDatas: function(datas) {
       _openid: app.globalData.openid
     }).get({
       success: res => {
-        console.log(res)
         console.log("user info: ", res)
 
         var superUser = res.data[0].superuser;
@@ -1001,7 +1118,7 @@ parseDatas: function(datas) {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
     let name = decodeURIComponent(options.name)
     let date = decodeURIComponent(options.date)
     let level = decodeURIComponent(options.level)
@@ -1029,13 +1146,12 @@ parseDatas: function(datas) {
     else {
       this.initDatas(this.getCurrentDay())
     }
-
+   
     this.setData({
     ["title.text"]: options.title,
     department: options.title
     })
     console.log(this.data.title)
-
   
     // var d1 = new Date('2020-02-01')
     // var d2 = new Date('2020-02-15')
@@ -1086,6 +1202,33 @@ parseDatas: function(datas) {
   onReachBottom: function () {
 
   },
+  countMount:async function countMount(openid) {
+    let doneCount = await db.collection('user_healthy').where(
+      _.and([{
+        "date": this.data.showDate
+      }, {
+        "workStatusFlag": "0",
+      }, {
+        "company_department": db.RegExp({
+          regexp: this.data.companyDepartment,
+        })
+      }]
+    )).count()
+    // let unDoneCount = await db.collection('user_healthy').where({
+    //   workStatusFlag: "2",
+    //   _openid: openid
+    // }).count()
+    // let homeCount = await db.collection('user_healthy').where({
+    //   workStatusFlag: "1",
+    //   _openid: openid
+    // }).count()
+    // let count = {
+    //   doneCount,
+    //   unDoneCount,
+    //   homeCount
+    // }
+    return doneCount.total
+  },
 
   initDatas2: function(name, currentDate) {
     // const db = wx.cloud.database()
@@ -1095,7 +1238,7 @@ parseDatas: function(datas) {
       regCompanyInfo: name,
       authorityLevel: 2
     })
-
+   
     this.analysisLevel(2)
     // db.collection('user_info').where({
     //   _openid: app.globalData.openid
