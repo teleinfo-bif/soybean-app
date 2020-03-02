@@ -70,16 +70,15 @@
     </view>
     
   </view>
- <view class="dashboard-1">
+    <!-- 看板 -->
+  <view class="dashboard" style='height:150rpx;'>
     <view class="dashboard-show move-right">
       <view class="dashboard-show-data">{{doneNumber}}</view>
       <view>
         <view class="dashboard-show-text split-before">{{doneText}}</view>
         <view class="split"></view>
       </view>
-
     </view>
-
     <view class="dashboard-show">
       <view class="dashboard-show-data">{{homeNumber}}</view>
       <view>
@@ -87,28 +86,25 @@
         <view class="split"></view>
       </view>
     </view>
-
     <view class="dashboard-show">
-
       <view class="dashboard-show-data">
         <text class="confirmed-text">{{unDoneNumber}}</text>
       </view>
-
       <view>
         <view class="dashboard-show-text split-before" >
           <text class="confirmed-text">{{unDoneText}}</text>
         </view>
       </view>
-
-     
     </view>
     
   </view>
+ 
   <!-- 健康状况 -->
   <view class="template">
-    <view class="template-title">
+     <view class="template-title"  style='margin-top:-60rpx;'>
       <view class="template-title-text">健康情况</view>
       <view class="template-title-total">总人数 {{totalStateNumber}}人</view>
+      <view class="clearfix"></view>
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
@@ -152,6 +148,7 @@
           </view>
         </view>
       </view>
+      <view class="clearfix"></view>
     </view>
   </view>
 
@@ -160,6 +157,7 @@
     <view class="template-title">
       <view class="template-title-text">所在地区分布情况</view>
       <view class="template-title-total">总人数 {{totalAreaNumber}}人</view>
+      <view class="clearfix"></view>
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
@@ -214,9 +212,9 @@
           </view>
         </view>
       </view>
+      <view class="clearfix"></view>
     </view>
   </view>
-
 
   <!-- 就诊住院情况统计 -->
 
@@ -224,6 +222,7 @@
     <view class="template-title">
       <view class="template-title-text">就诊住院情况</view>
       <view class="template-title-total">总人数 {{totalCasesNumber}}人</view>
+      <view class="clearfix"></view>
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
@@ -278,14 +277,15 @@
           </view>
         </view>
       </view>
+      <view class="clearfix"></view>
     </view>
   </view>
-<!-- 复工情况统计 -->
-
+   <!-- 复工情况统计 -->
   <view class="template">
     <view class="template-title">
       <view class="template-title-text">复工情况</view>
       <view class="template-title-total">总人数 {{totalworksNumber}}人</view>
+      <view class="clearfix"></view>
     </view>
     <view class="template-show">
       <view class="template-show-ring container">
@@ -332,6 +332,7 @@
           </view>
         </view>
       </view>
+      <view class="clearfix"></view>
     </view>
   </view>
 

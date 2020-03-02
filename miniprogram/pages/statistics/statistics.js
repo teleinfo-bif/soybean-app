@@ -363,19 +363,19 @@ Page({
       // },
       series: [{
         name: '已在岗',
-        data: this.data.confirmedNumber,
+        data: this.data.doneNumber,
         stroke: false,
         color: "#aa4438",
       },
       {
         name: '远程办公',
-        data: this.data.isolateNumber,
+        data: this.data.homeNumber,
         stroke: false,
         color: "#ffaa00",
       },
       {
         name: '未复工',
-        data: this.data.outIsolateNumber,
+        data: this.data.unDoneNumber,
         stroke: false,
         color: "#f2d45e",
       },
@@ -443,10 +443,16 @@ Page({
 setHealthyPercents: function(e) {
 
   var total = this.data.stateGoodNumber + this.data.stateOthersNumber + this.data.stateServerNumber
-
-  var goodP = (this.data.stateGoodNumber / total * 100).toFixed(2)
-  var otherP = (this.data.stateOthersNumber / total * 100).toFixed(2) 
-  var serverP = (this.data.stateServerNumber / total * 100).toFixed(2)
+ if(total == 0){
+   var goodP = 0.00
+   var otherP = 0.00
+   var serverP = 0.00
+ }else{
+   var goodP = (this.data.stateGoodNumber / total * 100).toFixed(2)
+   var otherP = (this.data.stateOthersNumber / total * 100).toFixed(2)
+   var serverP = (this.data.stateServerNumber / total * 100).toFixed(2)
+ }
+ 
 
   this.setData({
     totalStateNumber: total,
@@ -460,12 +466,17 @@ setHealthyPercents: function(e) {
 
 setAreaPercents: function(e) {
   var total = this.data.beijingNumber + this.data.wuhanNumber + this.data.hubeiNumber + this.data.othersNumber
-
+  if (total == 0) {
+    var bjPercent = 0.00
+    var whPercent= 0.00
+    var othPercent = 0.00
+    var hbPercent = 0.00
+  } else {
   var bjPercent = (this.data.beijingNumber / total * 100).toFixed(2)
   var whPercent = (this.data.wuhanNumber / total * 100).toFixed(2)
   var hbPercent = (this.data.hubeiNumber / total * 100).toFixed(2)
   var othPercent = (this.data.othersNumber / total * 100).toFixed(2)
-
+  }
   this.setData({
     beijingPercent: bjPercent,
     wuhanPercent: whPercent,
@@ -479,11 +490,18 @@ setAreaPercents: function(e) {
 
 setCasesPercents: function(e) {
   var total = this.data.confirmedNumber + this.data.isolateNumber + this.data.outIsolateNumber + this.data.otherCasesNumber
-
-  var conP = (this.data.confirmedNumber / total * 100).toFixed(2)
-  var isoP = (this.data.isolateNumber / total * 100).toFixed(2)
-  var outIsoP = (this.data.outIsolateNumber / total * 100).toFixed(2)
-  var otherP = (this.data.otherCasesNumber / total * 100).toFixed(2)
+  if(total == 0){
+    var conP = 0.00
+    var isoP = 0.00
+    var outIsoP = 0.00
+    var otherP  = 0.00
+  }else{
+    var conP = (this.data.confirmedNumber / total * 100).toFixed(2)
+    var isoP = (this.data.isolateNumber / total * 100).toFixed(2)
+    var outIsoP = (this.data.outIsolateNumber / total * 100).toFixed(2)
+    var otherP = (this.data.otherCasesNumber / total * 100).toFixed(2)
+  }
+  
 
   this.setData({
     confirmedPercent: conP,
@@ -496,11 +514,16 @@ setCasesPercents: function(e) {
 //复工情况百分比
   setWorkPercents: function (e) {
     var total = this.data.doneNumber + this.data.unDoneNumber + this.data.homeNumber
-
-    var doneP = (this.data.doneNumber / total * 100).toFixed(2)
-    var unP = (this.data.unDoneNumber / total * 100).toFixed(2)
-    var homeP = (this.data.homeNumber / total * 100).toFixed(2)
-
+    if(total == 0){
+      var doneP = 0.00
+      var unP = 0.00
+      var homeP = 0.00
+    }else{
+      var doneP = (this.data.doneNumber / total * 100).toFixed(2)
+      var unP = (this.data.unDoneNumber / total * 100).toFixed(2)
+      var homeP = (this.data.homeNumber / total * 100).toFixed(2)
+    }
+  
     this.setData({
       doneP,
       unP,
