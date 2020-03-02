@@ -23,7 +23,7 @@ Page({
     var name = e.currentTarget.dataset.name;
     var departName = this.data.department + ' ' + name
     wx.navigateTo({
-      url: '../statistics/statistics?name=' + departName + '&&date=' + this.data.currentDate + '&&level=3'
+      url: '../statistics/statistics?name=' + departName + '&&date=' + this.data.currentDate + '&&level=3&&title=' + name 
     })
   },
 
@@ -46,6 +46,7 @@ Page({
 
      success: res => {
       console.log("res: ", res.result)
+
       var departmentNames = res.result[0]
       var nums = res.result[1]
 

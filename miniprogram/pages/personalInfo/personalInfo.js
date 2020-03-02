@@ -22,6 +22,8 @@ Page({
     certificate_type: ["大陆身份证", "港澳身份证","台湾身份证", "军官证", "护照"],
     certificate_type_index: 0,
     certificate_number:"",
+    bid_address: "",
+    private_key: "",
     
     multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
@@ -33,6 +35,7 @@ Page({
     disabled: false,
     forever_disabled: false,
     choice_color: "color: #1759EF",
+    choice_color_1: "color: #1759EF",
     forever_choice_color: "color: #1759EF",
     record_id: "",
     placeholder_name: "请输入姓名",
@@ -44,6 +47,7 @@ Page({
     placeholder_company_detail: "请输入单位详细地址",
     placeholder_home_district: "请选择家庭所在城市及区",
     placeholder_home_detail: "请输入家庭详细地址",
+    placeholder_company_name_0:"请选择公司名称",
 
     value_name: "",
     value_phone: "",
@@ -54,11 +58,13 @@ Page({
     value_company_detail: "",
     value_home_district: "",
     value_home_detail: "",
+    value_company_name_0:"",
 
     buttons_display: "display: flex",
     phone_display: "display: block",
 
-    healthyDatas: []
+    healthyDatas: [],
+    company_name_items:['中国信息通信研究院','无']
 
   },
 
@@ -66,6 +72,7 @@ Page({
     console.log('&&&reset***')
     this.setData({
       placeholder_company_name:'',
+      placeholder_company_name_0: '',
       placeholder_company_district:'',
       placeholder_company_detail:'',
       placeholder_home_district:'',
@@ -236,6 +243,25 @@ Page({
     console.log(this.data.value_card_type)
   },
 
+  //一级单位名称
+  companyName0PickerChange: function (e) {
+    this.setData({
+      company_name_0_index: parseInt(e.detail.value),
+      value_company_name_0: this.data.company_name_items[e.detail.value]
+    })
+    if (e.detail.value == 1){
+      this.setData({
+        isFisrtNoFlag: true,
+        choice_color_1: "color: #999999"
+      })
+    } else if (e.detail.value == 0) {
+      this.setData({
+        isFisrtNoFlag: false,
+        choice_color_1: "color: #1759EF"
+      })
+    }
+    console.log(this.data.value_company_name_0)
+  },
   /**
    * 单位部门的选择
    */
@@ -329,6 +355,35 @@ Page({
     return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s
   },
 
+    /**
+   * 生成bid地址
+   */
+
+  getBidAddress: function(e) {
+
+    if (this.data.bid_address != undefined && this.data.bid_address != "") {
+      console.log("current bid address: ", this.data.bid_address)
+      return
+    }
+
+    console.log("generate bid address")
+    wx.cloud.callFunction({
+      name: "generateAddress",
+      data: {},
+      success: res => {
+        console.log("generate bid address: ", res)
+        console.log( `bid_address: ${res.result.address}, privateKey: ${res.result.privateKey}`)
+        this.setData({
+          bid_address: res.result.address,
+          private_key: res.result.privateKey,
+        })
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+  },
+
   /**
    *  从数据库中获取各单位及相应部门名称
    */
@@ -401,7 +456,6 @@ Page({
       // _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
-          console.log(res.data)
           this.setData({
             user_info_data: res.data[0],
             record_id: res.data[0]._id,
@@ -409,19 +463,25 @@ Page({
             placeholder_phone: res.data[0].phone,
             placeholder_card_type: res.data[0].certificate_type,
             placeholder_card_number: res.data[0].certificate_number,
+            bid_address: res.data[0].bid_address,
+            private_key: res.data[0].private_key,
             placeholder_company_name: res.data[0].company_department,
             placeholder_company_district: res.data[0].company_district,
             placeholder_company_detail: res.data[0].company_detail,
             placeholder_home_district: res.data[0].home_district,
             placeholder_home_detail: res.data[0].home_detail,
+            placeholder_company_name_0: res.data[0].company_name,
             disabled: true,
             forever_disabled: true,
             choice_color: "color: #999999",
+            choice_color_1: "color: #999999",
             forever_choice_color: "color: #999999",
             personal_info_change: "personal-change-show",
             buttons_display: "display: none",
             phone_display: "display: none"
           })
+
+          this.getBidAddress()
 
           wx.showToast({
             icon: 'success',
@@ -446,7 +506,8 @@ Page({
     this.setData({
       disabled: false,
       choice_color: "color: #1759EF",
-
+      choice_color_1: "color: #1759EF",
+      isFisrtNoFlag:false,
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,
       // value_card_type: this.data.placeholder_card_type,
@@ -458,9 +519,20 @@ Page({
       value_home_detail: this.data.placeholder_home_detail,
 
       certificate_type_index: this.getCardType(),
-       buttons_display: "display: flex",
+      buttons_display: "display: flex",
 
     })
+    if (this.data.placeholder_company_name_0 == '无') {
+      this.setData({
+        isFisrtNoFlag: true,
+        choice_color_1: "color: #999999",
+      })
+    } else {
+      this.setData({
+        isFisrtNoFlag: false,
+        choice_color_1: "color: #1759EF",
+      })
+    }
 
     console.log(this.data.certificate_type_index)
   },
@@ -524,12 +596,15 @@ Page({
             phone: e.detail.value.phone,
             certificate_type: e.detail.value.certificate_type,
             certificate_number: e.detail.value.certificate_number,
+            bid_address: e.detail.value.bid_address,
+            private_key: this.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
             home_district: e.detail.value.home_location,
             home_detail: e.detail.value.home_detail,
-            usertype:'0'
+            usertype:'0',
+            company_name: e.detail.value.company_name_0,
           },
             success: res=> {
             console.log(res)
@@ -559,11 +634,14 @@ Page({
             // phone: e.detail.value.phone,
             // certificate_type: e.detail.value.certificate_type,
             // certificate_number: e.detail.value.certificate_number,
+            bid_address: e.detail.value.bid_address,
+            private_key: this.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
             home_district: e.detail.value.home_location,
-            home_detail: e.detail.value.home_detail
+            home_detail: e.detail.value.home_detail,
+            company_name: e.detail.value.company_name_0
           },
 
           success: res => {
@@ -742,4 +820,61 @@ Page({
   // onShareAppMessage: function () {
 
   // }
+
+
+  createGroup: function (e) {
+    console.log("跳转创建组织页面")
+    const db = wx.cloud.database()
+    db.collection('user_info').where({
+      _openid: app.globalData.openid
+    }).get({
+      success: res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          wx.navigateTo({
+            url: '../createGroup/createGroup'
+          })
+          // db.collection('applications_info').where({
+          //   _openid: app.globalData.openid,
+          //   status: 'waiting'
+          // }).get({
+          //   success: res => {
+          //     console.log('application:',res)
+          //     if (res.data.length > 0) {
+          //       wx.showToast({
+          //         icon: 'none',
+          //         title: '您有待审核的创建群组申请'
+          //       })           
+          //     } else {
+          //       wx.navigateTo({
+          //         url: '../createGroup/createGroup'
+          //       })
+          //     }
+          //   },
+          //   fail: err => {
+          //     wx.showToast({
+          //       icon: 'none',
+          //       title: '请稍后'
+          //     })
+          //     console.log(err)
+          //   }
+          // })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '请先录入用户信息'
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '请稍后'
+        })
+        console.log(err)
+      }
+    })
+  },
+
+
 })

@@ -13,11 +13,13 @@ Page({
     groupAvatar: '',
     applicant: '',
     phone: '',
-    placeholder_group_name: '请输入组织名称',
-    placeholder_group_introduce: '请输入组织介绍信息，10-200字',
+    placeholder_group_name: '请输入机构名称',
+    placeholder_group_introduce: '请输入机构介绍信息，10-200字',
     placeholder_group_strucure: '请在此处粘贴您的架构文件链接',
     placeholder_group_apply_name: '请输入您的名字',
     placeholder_group_apply_phone: '请输入您的联系方式',
+    company_count: "",//已加入几个组织
+    record_id: ""
   },
 
   /**
@@ -85,7 +87,7 @@ Page({
 
 
   submitUserInfo: function (e) {
-    console.log("组织提交: ", e.detail.value)
+    console.log("机构提交: ", e.detail.value)
     wx.showLoading({
       title: '信息提交中',
     })
@@ -95,13 +97,11 @@ Page({
     var flag = false
 
     if (e.detail.value.group_name == "") {
-      warn = "请填写您的组织名称!"
+      warn = "请填写您的机构名称!"
     } else if (e.detail.value.group_introduce == "") {
-      warn = "请填写您的组织介绍!"
-    } else if (e.detail.value.group_introduce.length < 20) {
-      warn = "组织介绍的字数应为10-200!"
-    } else if (e.detail.value.group_strucure == "") {
-      warn = "请填写您的架构文件!"
+      warn = "请填写您的机构介绍!"
+    } else if (e.detail.value.group_introduce.length < 10) {
+      warn = "机构介绍的字数应为10-200!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
     } else if (e.detail.value.group_phone == "") {
@@ -109,35 +109,84 @@ Page({
     } else {
       flag = true
 
-
     console.log("add group info to database")
     db.collection("applications_info").add({
         data: {
           created_at: that.getCurrentDateTime(),
           name: e.detail.value.group_name,
           introduce: e.detail.value.group_introduce,
-          strucure: e.detail.value.group_strucure,
+          strucure: "",
           applicant: e.detail.value.group_applicant,
           phone: e.detail.value.group_phone,
           avatar: this.data.groupAvatar,
           status: "waiting",//wating等待审核finish创建完成reject拒绝
         },
         success: res => {
-          console.log(res)
-
-          wx.showModal({
-            showCancel: false,
-            title: '提示',
-            content: "提交成功，请等待2小时 请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击组织名称，在组织详情页分享邀请好友加入",
-            success(res){
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../index/index',
-                })
+          console.log('1',res)
+          db.collection("company_info").add({
+            data: {
+              company_name: e.detail.value.group_name,
+              departments: [],
+              name: ""
+            },
+            success: res => {
+              console.log('2',res)
+              var count = 0
+              var company_department = ""
+              var usertype = ""
+              if(this.data.company_count==undefined){
+                  count = 2
+                  company_department = "company_department" + "1"
+                  usertype = "usertype" + "1"
+              }else {
+                company_department = `company_department${this.data.company_count}`
+                usertype = `usertype${this.data.company_count}`
+                count = this.data.company_count + 1               
               }
+              db.collection("user_info").doc(this.data.record_id).update({
+                  data: {
+                    company_count: count,
+                    [company_department] : e.detail.value.group_name,
+                    [usertype]: "1"
+                  },
+                  success: res => {
+                    console.log('3',res)
+
+                    wx.showModal({
+                      showCancel: false,
+                      title: '提示',
+                      content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
+                      success(res){
+                        if (res.confirm) {
+                          wx.reLaunch({
+                            url: '../index/index',
+                          })
+                        }
+                      }
+                    })
+                    wx.hideLoading()
+
+                  },
+                  fail: err => {
+                    console.log(err)
+                    wx.showModal({
+                      title: '提示',
+                      content: "创建失败"
+                    })
+                    wx.hideLoading()
+                  }
+              }) 
+
+            },
+            fail: err => {
+              console.log(err)
+              wx.showModal({
+                title: '提示',
+                content: "创建失败"
+              })
+              wx.hideLoading()
             }
           })
-          wx.hideLoading()
         },
 
         fail: err => {
@@ -173,7 +222,10 @@ Page({
           this.setData({
             applicant: res.data[0].name,
             phone: res.data[0].phone,
+            company_count: res.data[0].company_count,
+            record_id: res.data[0]._id
           })
+          // console.log('w',this.data.company_count==undefined)
         },
         fail: err => {
           console.log(err)
@@ -201,7 +253,7 @@ Page({
     console.log('下载模板')
     wx.cloud.getTempFileURL({
       fileList: [{
-        fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位组织架构模板.xls',
+        fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位机构架构模板.xls',
         maxAge: 60 * 60, // one hour
       }]
     }).then(res => {

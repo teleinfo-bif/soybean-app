@@ -2,7 +2,7 @@
   <!-- 统计信息 -->
   <view class="title">
     <image class="title-image" src="{{title.image}}"></image>
-    <text class="title-text">{{title.text}}</text>
+    <text class="title-text">{{titleText}}</text>
 
     <view class="title-time section">
       <picker mode="date" value="{{showDate}}" start="2019-05-01" bindchange="bindDateChange">
