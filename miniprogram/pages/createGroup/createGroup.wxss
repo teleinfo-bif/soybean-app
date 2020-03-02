@@ -86,8 +86,9 @@ page {
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     color:rgba(51,51,51,1);
-    height: 75rpx;
-    margin-left:30rpx;
+    /* height: 75rpx; */
+    padding-left:30rpx;
+    padding-right:30rpx;
     margin-top:20rpx;
   }
   
@@ -147,6 +148,7 @@ page {
   
   .placeholder-style {
     color: #999999;
+    font-size: 28rpx;
   /*   margin-left: 10rpx;
     margin-top: -5rpx;
     
@@ -176,4 +178,27 @@ page {
   }
   .download-info {
     text-decoration:underline,  
+  }
+  .info-label {
+    display: inline-block;
+  }
+
+  .info-label-img {
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .download-info-mail {
+    text-align: center;
+    font-size:18px;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+  }
+  .download-info-mail-item {
+    padding-top: 10rpx;
+    padding-bottom: 15rpx;
+  }
+
+  .one {
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
   }

@@ -144,7 +144,10 @@
 
 
 
-
-
   </view>
+
+  <view class="group-title-icon"  bindtap="createGroup">
+        <view class="group-title-icon-item">注册新机构></view>
+  </view>
+
 </view>

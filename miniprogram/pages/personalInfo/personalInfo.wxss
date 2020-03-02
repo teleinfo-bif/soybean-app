@@ -197,3 +197,15 @@
   border-radius: 0rpx;
 }
 
+
+
+.group-title-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.group-title-icon-item {
+  font-size: 20rpx;
+}
