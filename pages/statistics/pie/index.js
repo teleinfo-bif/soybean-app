@@ -4,6 +4,7 @@ const titles = ["健康情况", "地区分布", "就诊情况"];
 const colors = ["#aa4438", "#ffaa00", "#f2d45e", "#4169E1"];
 function setOption(chart, data, index = 0) {
   const option = {
+    backgroundColor: '#fff',
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -98,7 +99,7 @@ Component({
     },
     data: {
       type: Array,
-      default: () => {},
+      default: () => { },
       observer() {
         const order = [];
         if (this.data.data.length > 0) {
