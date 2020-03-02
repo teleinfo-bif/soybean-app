@@ -44,6 +44,7 @@ Page({
     placeholder_company_detail: "请输入单位详细地址",
     placeholder_home_district: "请选择家庭所在城市及区",
     placeholder_home_detail: "请输入家庭详细地址",
+    placeholder_company_name_0:"请选择公司名称",
 
     value_name: "",
     value_phone: "",
@@ -54,11 +55,13 @@ Page({
     value_company_detail: "",
     value_home_district: "",
     value_home_detail: "",
+    value_company_name_0:"",
 
     buttons_display: "display: flex",
     phone_display: "display: block",
 
-    healthyDatas: []
+    healthyDatas: [],
+    company_name_items:['中国信息通信研究院','无']
 
   },
 
@@ -236,6 +239,15 @@ Page({
     console.log(this.data.value_card_type)
   },
 
+  //一级单位名称
+  companyName0PickerChange: function (e) {
+    this.setData({
+      company_name_0_index: parseInt(e.detail.value),
+      value_company_name_0: this.data.company_name_items[e.detail.value]
+    })
+
+    console.log(this.data.value_company_name_0)
+  },
   /**
    * 单位部门的选择
    */
@@ -414,6 +426,7 @@ Page({
             placeholder_company_detail: res.data[0].company_detail,
             placeholder_home_district: res.data[0].home_district,
             placeholder_home_detail: res.data[0].home_detail,
+            placeholder_company_name_0: res.data[0].company_name,
             disabled: true,
             forever_disabled: true,
             choice_color: "color: #999999",
@@ -458,7 +471,7 @@ Page({
       value_home_detail: this.data.placeholder_home_detail,
 
       certificate_type_index: this.getCardType(),
-       buttons_display: "display: flex",
+      buttons_display: "display: flex",
 
     })
 
@@ -529,7 +542,8 @@ Page({
             company_detail: e.detail.value.company_detail,
             home_district: e.detail.value.home_location,
             home_detail: e.detail.value.home_detail,
-            usertype:'0'
+            usertype:'0',
+            company_name: e.detail.value.company_name_0,
           },
             success: res=> {
             console.log(res)
@@ -563,7 +577,8 @@ Page({
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
             home_district: e.detail.value.home_location,
-            home_detail: e.detail.value.home_detail
+            home_detail: e.detail.value.home_detail,
+            company_name: e.detail.value.company_name_0
           },
 
           success: res => {

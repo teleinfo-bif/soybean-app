@@ -75,16 +75,47 @@
 }
 
 
+
 .personal-info-td {
   margin-bottom:30rpx;
   margin-left:30rpx;
 /*   border-bottom: 2rpx solid #F5F5F5; 
   padding-left: 30rpx; */
 }
+.personal-info-td {
+  margin-left:30rpx;
+/*   border-bottom: 2rpx solid #F5F5F5; 
+  padding-left: 30rpx; */
+}
 
 .personal-info-picker-company {
-  height:300rpx;
+  height:200rpx;
 }
+.company-all{
+  display: flex;
+  flex-direction: column;
+}
+.company-picker-1{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 100rpx;
+}
+.company-picker-2{
+  display: flex;
+  flex-direction: column;
+ /*  height: 210rpx; */
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+  margin-left: 30rpx;
+  width:100%;
+  margin-top:18rpx;
+  margin-bottom: 30rpx;
+}
+
 .conpany_title{
   font-size:32rpx;
   font-family:PingFangSC-Regular,PingFang SC;
@@ -102,6 +133,32 @@
   color: #999999;
   line-height: 35rpx;
   font-size: 30rpx;
+}
+.company-picker-1{
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+  margin-left: 30rpx;
+  width:100%;
+}
+.textarea-company{
+  width:700rpx;
+  margin-top:10rpx;
+}
+.textarea-company-2{
+  width:700rpx;
+  margin-top:10rpx;
+  height:130rpx;
+}
+.company-picker-1-choice{
+  float: right;
+  margin-right:60rpx;
+}
+.company-picker-2-choice{
+  float: right;
+  margin-right:30rpx;
 }
 .info-input{
   width: 90%;

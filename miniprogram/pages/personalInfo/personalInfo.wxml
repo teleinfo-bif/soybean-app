@@ -60,7 +60,7 @@
         <view class="personal-divide"></view>
 
         <!-- 单位名称 -->
-        <view class="personal-info-picker-company">
+<!--         <view class="personal-info-picker">
           <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
               <text class="info-label">单位名称</text>
@@ -68,10 +68,46 @@
             </view>
             <view class="personal-info-td-company">
             <text class='conpany_title'>中国信息通信研究院</text>
-              <textarea class="info-text" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
+              <textarea class="info-input" placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
             </view>
           </picker>
+        </view> -->
+
+          
+          <view class="personal-info-hd">
+              <text class="info-label">单位名称</text>      
+          </view>
+       
+         <view class="company-picker-1" >
+            <view class='company-picker-1-1'>
+              <picker mode='selector' bindchange="companyName0PickerChange" value="{{index}}" range="{{company_name_items}}" disabled="{{disabled}}">        
+                  <text class="company-picker-1-choice" style="{{choice_color}}"> 选择</text>
+              </picker>
+            </view>
+                <textarea class="textarea-company" auto-height='true' placeholder-class="placeholder-style" placeholder="{{placeholder_company_name_0}}" name="company_name_0" value="{{value_company_name_0}}" disabled="disabled">
+                </textarea>
         </view>
+        <view class="company-picker-2" >
+            <view class='company-picker-1-1'>
+              <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">         
+                  <text class="company-picker-1-choice" style="{{choice_color}}"> 选择</text>
+              </picker>
+            </view>
+                <textarea class="textarea-company-2"  placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled">
+                </textarea>
+        </view>
+
+<!--         <view class="company-picker-2" >
+          <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
+            <view class="">
+              <text class="info-choice" style="{{choice_color}}"> 选择2</text>
+            </view>
+          </picker>
+          <view class="personal-info-td">
+              <textarea class="info-input" auto-height='true' placeholder-class="placeholder-style" placeholder="{{placeholder_company_name}}" name="company_name" value="{{value_company_name}}" disabled="disabled"></textarea>
+          </view>
+        </view> -->
+        
         <!--单位1级名称-->
 <!--                 <view class="personal-info-picker">
           <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">
