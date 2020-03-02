@@ -1,0 +1,76 @@
+/* pages/code/code.wxss */
+.container-x {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.codeBanner{
+  z-index: 999;
+  height:256rpx;
+  width:100%;
+
+}
+.QRbg{
+  width: 670rpx;
+  height: 878rpx;
+  box-shadow: 0rpx 6rpx 17rpx 0rpx rgba(0, 0, 0, 0.15) ;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius:20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:-10rpx;
+  background-color: white;
+  align-content: center;
+}
+.QRPart-1{
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.QRPart-1-1{
+  font-size:48rpx;
+  font-family:PingFangSC-Semibold,PingFang SC;
+  font-weight:600;
+  color:rgba(51,51,51,1);
+  line-height:67rpx;
+  letter-spacing:2rpx;
+}
+.QRPart-1-2{
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:40rpx;
+  margin-top:10rpx;
+
+}
+.QRImg{
+  width:400rpx;
+  height:400rpx;
+  margin-top:70rpx;
+}
+.QRPart-hint{
+  width:420rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:40rpx;
+  text-align: center;
+  margin-top:45rpx;
+}
+.QRPart-submit-btn{
+  width:520rpx;
+  height: 80rpx;
+  background-color: rgba(36, 184, 124, 1);
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:80rpx;
+  margin-top: 39rpx;
+}

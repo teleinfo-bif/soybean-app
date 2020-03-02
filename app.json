@@ -13,7 +13,8 @@
     "pages/clock/status/index",
     "pages/index/organization/index",
     "pages/group/groupIndex/index",
-    "pages/group/shareJoin/index"
+    "pages/group/shareJoin/index",
+    "pages/healthQR/healthQR"
   ],
   "window": {
     "backgroundTextStyle": "light",
