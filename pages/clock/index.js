@@ -36,7 +36,7 @@ let fields = [
   },
   {
     title: "打卡地点",
-    type: "map",
+    type: "geo",
     prop: "address",
     props: {
       placeholder: "请输入打卡地点"
@@ -256,7 +256,8 @@ Page({
     fields: fields,
     data: {
       address: ""
-    }
+    },
+    baseAddress: ""
   },
   onFormChange(e) {
     console.log("onFormChange", e);
@@ -359,6 +360,7 @@ Page({
     if (validate) {
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
+      formData.address = this.data.baseAddress + formData.address;
       // console.log("formData", formData);
       saveClock(formData).then(res => {
         // console.log(res);
@@ -480,6 +482,11 @@ Page({
       }
     });
   },
+  onChangeBaseAddress(e) {
+    this.setData({
+      baseAddress: e.detail
+    });
+  },
   // 地址选项变化
   onAddressChange(location, chooseLocation) {
     var currentCity = chooseLocation
@@ -487,15 +494,31 @@ Page({
       : location.result.ad_info.city;
     // console.log(res.result.ad_info.city);
     let atBeijing = currentCity == "北京市";
+    const { fields } = this.data;
+    let baseAddress = null;
+    fields.forEach(item => {
+      if (item.prop == "address") {
+        // debugger;
+        item.props["location"] = location;
+        baseAddress =
+          location.result.address_component.province +
+          location.result.address_component.district;
+        item.props["baseAddress"] = baseAddress;
+      }
+    });
 
+    console.log(location);
     this.setData({
       atBeijing,
       leaved: !atBeijing,
       goBack: !atBeijing,
       address: chooseLocation ? location : location.result,
+      baseAddress,
+      fields,
       data: {
         ...this.data.data,
-        address: chooseLocation ? location.address : location.result.address
+        // address: chooseLocation ? location.address : location.result.address,
+        address: location.result.address_component.street_number
       }
     });
     this.setFields(atBeijing, false);
@@ -564,11 +587,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const userId = options.id;
-
-    this.initFormData();
-    this.initUserInfo();
-    this.getUserTodyClockData();
+    if (!app.globalData.appInit) {
+      app.init(() => {
+        console.log("进入回调");
+        this.initFormData();
+        this.initUserInfo();
+        this.getUserTodyClockData();
+      });
+    } else {
+      this.initFormData();
+      this.initUserInfo();
+      this.getUserTodyClockData();
+    }
   },
 
   /**

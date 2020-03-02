@@ -2,11 +2,11 @@
   "pages": [
     "pages/index/index",
     "pages/status/index",
+    "pages/clock/index",
 
     "pages/clockOthers/index",
     "pages/statistics/statisticsTab/index",
     "pages/personal/index",
-    "pages/clock/index",
     "pages/clockRecords/index",
     "pages/detail/index",
     "pages/statistics/index",

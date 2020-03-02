@@ -49,14 +49,15 @@ Page({
   // 获取当前群组的用户信息
   getData() {
     const { groupId, memberData } = this.data;
-    let { current = 0, pages = 0 } = this.data.memberData;
+    let { current = 0, pages = 0 } = memberData;
     if (current == 0 || current < pages) {
       getGroupCurrentUserList({
         current: ++current,
         groupId,
         size: 20
       }).then(data => {
-        if (memberData.total != undefined) {
+        // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+        if (memberData.total != undefined && current == data.current) {
           let memerList = memberData.records.concat(data.records);
           this.setData({
             memberData: {

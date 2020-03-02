@@ -45,6 +45,10 @@
         <block wx:elif="{{item.type === 'map' && !disable}}">
           <my-map props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-map>
         </block>
+        <!-- geo位置定位 -->
+        <block wx:elif="{{item.type === 'geo' && !disable}}">
+          <my-geoAddress props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:baseAddress="onChangeBaseAddress" bind:change="onGeoChange"></my-geoAddress>
+        </block>
         <!-- 手机号 -->
         <block wx:elif="{{item.type === 'phone' && !disable}}">
           <my-phone props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-phone>

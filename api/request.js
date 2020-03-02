@@ -1,8 +1,6 @@
-// 获取小程序全局配置（变量、函数等）
+// 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
-// 从storage中获取openid
-
 const appid = "wxd69df881f0c947dc";
 
 // 定义网络请求API地址
@@ -10,7 +8,11 @@ const baseURL = "https://admin.bidspace.cn/bid-soybean";
 
 let fedToken = getTokenStorage();
 let userFilledInfo = null;
-
+/**
+ *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
+ *
+ * @returns {fedToken, userFilledInfo}
+ */
 async function appInit() {
   const sessionValite = await checkSessionKey();
   if (!(sessionValite && fedToken.openid)) {
@@ -21,9 +23,13 @@ async function appInit() {
   }
   if (!userFilledInfo) {
     console.log("提醒：userInfo无效，重新请求userInfo");
-    userFilledInfo = await getUserInfo({
-      openid: fedToken.openid
-    });
+    try {
+      userFilledInfo = await getUserInfo({
+        openid: fedToken.openid
+      });
+    } catch (e) {
+      console.error("userInfo失败", e);
+    }
     console.log("返回：userInfo值是:", userFilledInfo);
   }
   return {
@@ -32,10 +38,6 @@ async function appInit() {
   };
 }
 
-async function start() {
-  await appInit();
-}
-// start();
 // 获取用户openId
 async function getOpenId() {
   return new Promise((resolve, reject) => {
@@ -53,7 +55,7 @@ async function getOpenId() {
           },
           success: data => {
             console.log("tokenKey", data.data);
-            wx.setStorageSync(tokenKey, data.data.data);
+            // wx.setStorageSync(tokenKey, data.data.data);
             resolve(data.data.data);
           },
           fail: res => {
@@ -74,7 +76,7 @@ async function getUserInfo(params) {
       success: data => {
         const userFilledInfo = data.data.data;
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-        wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
+        // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
         resolve(userFilledInfo);
       },
       fail: res => {
@@ -123,7 +125,7 @@ const Request = async ({ url, params, method, ...other } = {}) => {
   // 先取localstorage里面openid,userid,
   // let token = getTokenStorage();
   // let userInfo = getUserStorage();
-
+  console.log(url);
   const sessionValidate = await checkSessionKey();
   // console.log("await checkSessionKey()", sessionValidate);
 
@@ -139,12 +141,11 @@ const Request = async ({ url, params, method, ...other } = {}) => {
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
   }
-
+  console.log("userFilledInfo", userFilledInfo);
   if (
     (url != "/user/exist" && typeof userFilledInfo != "object") ||
-    !userFilledInfo.id
+    !userFilledInfo.userRegisted
   ) {
-    debugger;
     console.log(
       "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
     );
@@ -325,6 +326,7 @@ const _delete = (url, params = {}) => {
     method: "delete"
   });
 };
+
 // post - application/x-www-form-urlencoded
 const _postParams = (url, params = {}) => {
   return Request({

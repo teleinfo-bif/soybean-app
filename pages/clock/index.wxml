@@ -16,7 +16,7 @@
     </view>
   </block>
   <view class="form-header">健康打卡</view>
-  <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
+  <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:baseAddress="onChangeBaseAddress" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
   <view wx:if="{{!clocked}}" class="btn-wrap">
     <van-button bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
