@@ -515,9 +515,10 @@ Page({
     return shareObj;
   },
 
-  gotoStatistics: function() {
+  gotoStatistics: function(e) {
+    let department = e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: '../statistics/statistics'
+      url: '../statistics/statistics?title='+department
     })
   },
   gotoDetailClick: function(e) {
