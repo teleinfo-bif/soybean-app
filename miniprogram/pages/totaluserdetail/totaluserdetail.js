@@ -96,7 +96,7 @@ Page({
       }
     }
     for (var i = 0; i < temp.length; i++) {
-      if (temp[i]['bodyStatusFlag' != '0'] && temp[i]['isQueZhenFlag'] == '1'){
+      if (temp[i]['bodyStatusFlag'] != '0' && temp[i]['isQueZhenFlag'] == '1'){
         ret.push(temp[i])
       }
     }
@@ -141,6 +141,7 @@ Page({
     temp = this.sortHealthyState(temp)
    
     console.log("temp datas: ", temp)
+   
 
     this.setData({
       clickdetail: temp
