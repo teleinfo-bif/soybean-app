@@ -1,5 +1,20 @@
 //index.js
 const app = getApp()
+function getCurrentDay() {
+  let date = new Date();
+  let seperator1 = "-";
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  let currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
 
 Page({
   data: {
@@ -33,6 +48,10 @@ Page({
 
     userInfoFlagYes: true,
     userInfoFlagNo: false,
+    temperature: "--",
+    date: getCurrentDay(),
+    bodyStatusFlag: "--",
+    datas:[]
   },
   testQR: function () {
     var that = this
@@ -66,7 +85,6 @@ Page({
       })
       return
     }
-    
     that.getSessionCode();
     // this.onGetOpenid()
     // 获取用户信息
@@ -101,7 +119,6 @@ Page({
       }
     })
     this.onGetOpenid()
-
   },
 
 
@@ -131,7 +148,12 @@ Page({
         console.log(res)
         //今日已打卡
         if (res.data.length > 0) {
+          console.log("今日已打卡")
           that.data.todayClickFlag = '1'
+          that.onQuery();
+          that.setData({
+            todayClickFlag: "1"
+          })
         }
         that.getUserManagerFlag();
       },
@@ -167,6 +189,7 @@ Page({
   getUserManagerFlag: function () {
     let that = this
     const db = wx.cloud.database()
+    // this.onQuery();
     console.log("查询当前用户是否为管理员：" + app.globalData.openid);
     db.collection('user_info').where({
       _openid: app.globalData.openid,
@@ -182,6 +205,8 @@ Page({
           this.setData({
             isManagerFlag: '2'            
           })
+          
+          
         }
         this.getSuperUser();
       },
@@ -194,7 +219,47 @@ Page({
       }
     })
   },
+  //查询体温
+  onQuery: function () {
+    const db = wx.cloud.database();
+    var that = this;
+    // 获取总数
 
+    let user_id = that.data.user_id
+    if (user_id == null || user_id == '' || user_id.length < 20) {
+      user_id = app.globalData.openid
+    }
+    console.log("user_id" + user_id);
+    db.collection('user_healthy').where({
+      _openid: that.data.user_id
+    }).count({
+      success: function (res) {
+        console.log("群组分页查询记录数为：" + res.total)
+        that.data.totalCount = res.total;
+      }
+    })
+
+    db.collection('user_healthy').where({
+      _openid: that.data.user_id
+    }).limit(1) // 限制返回数量为 1 条
+      .orderBy('addtime', 'desc').get({
+        success: res => {
+          that.data.datas = res.data;
+          this.setData({
+            datas: that.data.datas
+          })
+          wx.hideLoading();
+          wx.hideNavigationBarLoading();//隐藏加载
+          wx.stopPullDownRefresh();
+          console.log('[数据库] [查询记录] 成功: ', res)
+        },
+        fail: err => {
+          wx.hideLoading();
+          wx.stopPullDownRefresh();
+          console.error('[数据库] [查询记录] 失败：', err)
+        }
+      })
+  },
 
   //查询用户基本信息
   qryUserInfo: function () {
@@ -433,12 +498,8 @@ Page({
                 userInfoFlagYes: true,
                 userInfoFlagNo: false
               })
-              // wx.reLaunch({
-              //   url: 'index',
-              // })
-
-              wx.navigateTo({
-                url: '../personalInfo/personalInfo',
+              wx.reLaunch({
+                url: 'index',
               })
             },
             fail(res) {

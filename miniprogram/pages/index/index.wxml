@@ -3,12 +3,12 @@
   <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
   <view class="head_title">泰尔通</view>
 
-  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" hover-class="userinfo-put_active">
+  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" bindtap="userInfoPut" hover-class="userinfo-put_active">
     <view class="userinfo-img-container">
       <image class="userinfo-img2" src="../../images/bianji3x.png" mode="scaleToFill"></image>
     </view>
     <view class="userinfo-put" hover-class="userinfo-put_active">
-      <button class="user-info-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">{{loginUserInfo}}</button>
+      <button class="user-info-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">用户注册</button>
     </view>
     <view class="dayuhao-container">
       <image class="dayuhao" src="../../images/dayuhao.png" />
@@ -45,7 +45,9 @@
 
   <!-- <button class='test' bindtap='testQR'>测试</button>
 <image src='{{imgQR}}'> </image> -->
-  <view class="group">
+<view class="group_no" wx:if="{{!userInfoFlagYes}}">
+</view>
+  <view class="group" wx:else>
     <view class="group-title">
       <view class="group-title-name">今日数据</view>
       <!-- <view class="group-title-icon"  bindtap="createGroup">
@@ -53,12 +55,17 @@
       </view> -->
     </view>
     <view class="group-items">
+<<<<<<< HEAD
 
 
 
 
       <view class="group-item" wx:for="{{departments}}" wx:key="*this">
         <view class="group-item-title" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}" bindtap="gotoStatistics" data-type="{{item.groupType}}" data-name="{{item.department}}"  data-xty="{{item.isXintongyuan}}"  data-num="{{item.number}}" data-userType="{{item.userType}}">
+=======
+      <view class="group-item" wx:if="{{isManagerFlag == '1'}}">
+        <view class="group-item-title" bindtap="gotoStatistics">
+>>>>>>> tag
           <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
           <!-- <view class="group-item-name">{{department}}</view> -->
         </view>
@@ -68,6 +75,96 @@
         </view>
 
       </view>
+<<<<<<< HEAD
+=======
+     <view class="page-container" wx:if="{{isManagerFlag == '2'}}">
+       <view wx:if="{{todayClickFlag=='0'}}" class="template">
+            <view class="template-title">
+      <view class="template-title-text" >
+        <view class="red-gray"></view>
+        <view>未知</view>
+      </view>
+
+      <view class="template-show">
+      <view class="template-show-temperature">
+        <view class="template-show-icon">
+          <image class="template-show-temperature-icon" src="../../images/wenduji.png"></image>
+        </view>
+        <view class="template-show-data"> <text>未知</text> <text class="template-show-data-split"></text></view>
+        <view class="template-show-text">体温(℃)</view>
+      </view>
+      <view class="template-show-status">
+        <view class="template-show-icon">
+          <image class="template-show-status-icon" src="../../images/xintiao.png"></image>
+        </view>
+        <view class="template-show-data" >未知</view>
+        <view class="template-show-text">症状表现</view>
+      </view>
+    </view>
+    </view>
+  </view>
+
+  <view wx:for="{{datas}}" wx:if="{{todayClickFlag=='1' && datas.length>0}}" wx:key="key" class="template">
+    <view class="template-title">
+      <view class="template-title-text" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}">
+        <view class="red-green"></view>
+        <view>正常</view>
+      </view>
+      <view class="template-title-text" wx:elif="{{item.temperature > 37.3|| item.goHospitalFlag=='1'||item.bodyStatusFlag=='2'||item.bodyStatusFlag=='1'}}">
+        <view class="red-dot"></view>
+        <view>异常</view>
+      </view>
+      <view class="template-title-text" wx:else>
+        <view class="red-gray"></view>
+        <view>未知</view>
+      </view>
+      <!-- <view class="template-title-date">{{item.date}}</view> -->
+    </view>
+    <view class="template-show">
+      <view class="template-show-temperature">
+        <view class="template-show-icon">
+          <image class="template-show-temperature-icon" src="../../images/wenduji.png"></image>
+        </view>
+        <view class="template-show-data"> <text>{{item.temperature}}</text> <text class="template-show-data-split"></text></view>
+        <view class="template-show-text">体温(℃)</view>
+      </view>
+      <view class="template-show-status">
+        <view class="template-show-icon">
+          <image class="template-show-status-icon" src="../../images/xintiao.png"></image>
+        </view>
+        <view class="template-show-data" wx:if="{{item.bodyStatusFlag == '0'}}">健康</view>
+        <view class="template-show-data" wx:elif="{{item.bodyStatusFlag == '1'}}">发烧、咳嗽</view>
+        <view class="template-show-data" wx:elif="{{item.bodyStatusFlag == '2'}}">其他</view>
+        <view class="template-show-data" wx:else>--</view>
+        <view class="template-show-text">症状表现</view>
+      </view>
+    </view>
+  </view>
+      </view>
+
+      <!-- <view class="group-item">
+        <view class="group-item-title" bindtap="gotoDetailClick">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+        </view>
+      </view>
+     -->
+
+
+
+      <!-- <view class="group-item">
+        <view class="group-item-title" bindtap="gotoDetailClick">
+          <image class="group-item-icon" src="../../images/title-icon.png" />
+          <view class="group-item-icon-manger" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">管理员</view>
+          <view class="group-item-name">{{department}}</view>
+        </view>
+        <view class="group-item-icons" bindtap="gotoStatistics" wx:if="{{isManagerFlag == '1' || isManagerFlag == '2'}}">
+          <image class="group-item-icon" src="../../images/tongjixinxi2x.png" />
+        </view>
+      </view> -->
+>>>>>>> tag
     </view>
   </view>
 
