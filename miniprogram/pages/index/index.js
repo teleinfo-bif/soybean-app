@@ -433,11 +433,13 @@ Page({
                 userInfoFlagYes: true,
                 userInfoFlagNo: false
               })
-              wx.reLaunch({
-                url: 'index',
-              })
+              // wx.reLaunch({
+              //   url: 'index',
+              // })
 
-              this.userInfoPut()
+              wx.navigateTo({
+                url: '../personalInfo/personalInfo',
+              })
             },
             fail(res) {
               console.log("获取用户信息失败", res)
