@@ -6,7 +6,7 @@
   align-items: center;
   top: -44rpx;
   left: 30rpx;
-  width: 460rpx;
+  width: 340rpx;
   height: 88rpx;
   background: #fff;
   box-shadow: 0 5rpx 27rpx 0 rgba(194, 199, 225, 0.47);
