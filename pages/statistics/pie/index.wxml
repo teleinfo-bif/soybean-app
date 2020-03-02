@@ -9,7 +9,8 @@
   </view>
   <view class="box-content">
     <view class="pie-box">
-      <ec-canvas bindtap="onPieClick" id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+      <!-- <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas> -->
+      <canvas canvas-id="{{eleid}}" type="" class="canvas" bindtouchstart="touchHandler"></canvas>
     </view>
     <view>
       <!-- <view class="legend-item legend-item-head"> -->

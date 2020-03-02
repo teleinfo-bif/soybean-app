@@ -22,6 +22,7 @@
   height: 64rpx;
   background: #ecedf1;
   border-radius: 50%;
+  overflow: hidden;
 }
 .entering-box_icon image {
   border-radius: 50%;

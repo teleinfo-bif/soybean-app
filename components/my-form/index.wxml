@@ -5,7 +5,7 @@
       <!-- form-label文字 -->
       <view class="my-form_item_head">
         <view class="my-form_item_head-left">
-          <view wx:if="{{item.props.require != false}}" class="must-filled-star">*</view>
+          <view wx:if="{{item.require != false}}" class="must-filled-star">*</view>
           {{item.title}}
         </view>
       </view>

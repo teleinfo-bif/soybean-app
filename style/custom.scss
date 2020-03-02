@@ -28,7 +28,7 @@
       }
     }
     &__title {
-      font-size: 28rpx !important;
+      font-size: 32rpx !important;
     }
   }
 
@@ -36,7 +36,7 @@
     margin-top: 13rpx;
     &__label {
       flex: 1;
-      font-size: 28rpx;
+      font-size: 32rpx;
     }
   }
 
@@ -50,10 +50,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    height: 44rpx;
-    padding: 20rpx 0rpx;
+    // height: 44rpx;
+    padding: 10rpx 0rpx 10rpx;
     padding-left: 5rpx;
-    margin-bottom: 20rpx;
+    // margin-bottom: 10rpx;
     font-size: 28rpx;
     line-height: 28rpx;
   }

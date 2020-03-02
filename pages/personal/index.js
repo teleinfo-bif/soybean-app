@@ -63,19 +63,19 @@ Page({
         title: "家庭所在城市及区",
         type: "area",
         prop: "homeAddress",
+        require: false,
         props: {
-          placeholder: "请选择家庭所在区及街道、社区",
-          require: false
+          placeholder: "请选择家庭所在区及街道、社区"
         }
       },
       {
         title: "家庭详细地址",
         type: "map",
         prop: "detailAddress",
+        require: false,
         props: {
           placeholder: "请输入家庭详细地址",
-          addressKey: "",
-          require: false
+          addressKey: ""
         }
       }
     ],

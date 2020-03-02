@@ -77,6 +77,23 @@ let fields = [
     }
   },
   {
+    title: "交通工具",
+    type: "radio",
+    prop: "flightType",
+    hide: true,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "飞机" },
+        { id: 2, name: "火车" },
+        { id: 3, name: "汽车" },
+        { id: 4, name: "轮船" },
+        { id: 5, name: "其他" }
+      ]
+    }
+  },
+  {
     title: "返京所乘车次/航班/车牌",
     type: "input",
     prop: "flight",
@@ -97,6 +114,21 @@ let fields = [
       options: [
         { id: 1, name: "身体原因" },
         { id: 2, name: "当地未放行" }
+      ]
+    }
+  },
+  {
+    title: "您的在岗状态 ",
+    type: "radio",
+    prop: "worktype",
+    hide: false,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "已在岗" },
+        { id: 2, name: "在家办公" },
+        { id: 3, name: "未复工" }
       ]
     }
   },
@@ -410,7 +442,8 @@ Page({
               "nobackreason",
               "leavetime",
               "gobacktime",
-              "flight"
+              "flight",
+              "flightType"
             ]);
             // this.setFieldsHide(["reason", "gobacktime", "reason"]);
           }

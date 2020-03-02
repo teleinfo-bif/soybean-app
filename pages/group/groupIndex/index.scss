@@ -8,6 +8,7 @@ page {
   height: 100%;
 }
 .top-box {
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;

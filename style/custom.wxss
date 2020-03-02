@@ -18,12 +18,12 @@
     .my-form_item .van-cell-item__right {
       width: 50%; }
     .my-form_item .van-cell__title {
-      font-size: 28rpx !important; }
+      font-size: 32rpx !important; }
   .my-form_item .van-radio {
     margin-top: 13rpx; }
     .my-form_item .van-radio__label {
       flex: 1;
-      font-size: 28rpx; }
+      font-size: 32rpx; }
   .my-form_item .must-filled-star {
     position: absolute;
     color: #f00;
@@ -33,10 +33,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    height: 44rpx;
-    padding: 20rpx 0rpx;
+    padding: 10rpx 0rpx 10rpx;
     padding-left: 5rpx;
-    margin-bottom: 20rpx;
     font-size: 28rpx;
     line-height: 28rpx; }
   .my-form_item_content {

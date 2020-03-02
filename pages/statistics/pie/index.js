@@ -1,4 +1,4 @@
-import * as echarts from "../../../components/ec-canvas/echarts";
+var wxCharts = require("../../../utils/wxcharts/wxcharts.min.js");
 
 const titles = ["健康情况", "地区分布", "就诊情况"];
 const colors = ["#aa4438", "#ffaa00", "#f2d45e", "#4169E1"];
@@ -38,6 +38,7 @@ function setOption(chart, data, index = 0) {
         type: "pie",
         radius: ["43%", "50%"],
         hoverAnimation: false,
+        avoidLabelOverlap: false,
         color: colors,
         label: {
           normal: {
@@ -51,12 +52,17 @@ function setOption(chart, data, index = 0) {
   };
   chart.setOption(option);
 }
+let ecComponent = null;
 // pages/statistics/pie/index.js
 Component({
   lifetimes: {
     attached() {
-      this.ecComponent = this.selectComponent("#mychart-dom-pie");
+      ecComponent = this.selectComponent("#ringCanvas");
+      // this.initChats();
       // this.initEcharts();
+    },
+    ready() {
+      // this.initChats();
     }
     // onLoad() {
     //   console.log(this);
@@ -72,6 +78,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    eleid: {
+      type: String,
+      default: "ringCanvas"
+    },
     type: {
       type: String,
       default: ""
@@ -100,9 +110,10 @@ Component({
       type: Array,
       default: () => {},
       observer() {
-        const order = [];
+        // const order = [];
         if (this.data.data.length > 0) {
-          this.initEcharts();
+          // this.initEcharts();
+          this.initChats();
         }
       }
     }
@@ -115,7 +126,8 @@ Component({
   data: {
     ec: {
       lazyLoad: true
-    }
+    },
+    ringChart: null
   },
 
   /**
@@ -123,29 +135,55 @@ Component({
    */
   methods: {
     // 初始化
-    initEcharts() {
-      this.ecComponent.init((canvas, width, height) => {
-        // 获取组件的 canvas、width、height 后的回调函数
-        // 在这里初始化图表
-        const chart = echarts.init(canvas, null, {
-          width: width,
-          height: height
-        });
-        setOption(chart, this.data.data);
 
-        // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
-        this.chart = chart;
-
-        // 注意这里一定要返回 chart 实例，否则会影响事件处理等
-        return chart;
-      });
-    },
     // pie图点击跳转
-    onPieClick() {
+    touchHandler() {
       const { groupId, type, clockInTime } = this.data;
       wx.navigateTo({
         url: `/pages/statistics/statisticsTab/index?groupId=${groupId}&type=${type}&clockInTime=${clockInTime}`
       });
+    },
+    initChats(e) {
+      // var windowWidth = 200;
+      const series = [];
+
+      const colors = ["#aa4438", "#f2d45e", "#ffaa00", "#4169E1"];
+      this.data.data.forEach((item, index) => {
+        series.push({
+          name: item.name,
+          data: item.value,
+          stroke: false,
+          color:
+            this.data.data.length == 3 && index == 2
+              ? colors[++index]
+              : colors[index]
+        });
+      });
+      const { eleid } = this.data;
+      this.data.ringChart = new wxCharts({
+        componentInstance: this,
+        animation: true,
+        canvasId: eleid,
+        type: "ring",
+        extra: {
+          ringWidth: 10,
+          pie: {
+            offsetAngle: -45
+          }
+        },
+        series: series,
+        disablePieStroke: false,
+        width: 170,
+        height: 170,
+        dataLabel: false,
+        legend: false,
+        background: "#fff",
+        padding: 0
+      });
+      // debugger;
+      // setTimeout(() => {
+      //   this.data.ringChart.stopAnimation();
+      // }, 500);
     }
   }
 });
