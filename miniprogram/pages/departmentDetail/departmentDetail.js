@@ -217,8 +217,8 @@ Page({
     const that = this;
     var cur = this.getCurrentDay()
     const db = wx.cloud.database()
-    this.getCompanyDepartments()
-
+    // this.getCompanyDepartments()
+    this.getDepartmentsAndUsers(this.data.department)
     db.collection('user_info').where({
       _openid: app.globalData.openid
     }).get({
@@ -314,13 +314,13 @@ Page({
       isSuperUserFlag: isSuperUserFlag
     })   
     if(isXintongyuan=="true" && isSuperUserFlag=='1'){
-      this.initDatas2()
+      this.initDatas2()  //信通院一级权限
     }else if(isXintongyuan=="true" && isSuperUserFlag!='1') {
-      this.initDatas()
+      this.initDatas()  //信通院非一级权限
     } else if(isXintongyuan=="false" && userType!='1') {
-      this.initDatas()
+      this.initDatas()  //非信通院非一级权限
     } else if(isXintongyuan=="false" && userType=='1') {
-      this.initDatas3()
+      this.initDatas3()   //非信通院一级权限
     }
   
    
@@ -497,6 +497,11 @@ Page({
       }
     })
 
+  },
+  gotoUsers: function() {
+    wx.navigateTo({
+      url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + this.data.serialNumber
+    })
   },
 
 
