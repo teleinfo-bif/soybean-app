@@ -112,6 +112,17 @@ Page({
 
   },
 
+  getCurrenteDate: function() {
+    let that = this;
+    //获取当天日期
+    var date = new Date();
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    
+    console.log("查询健康打卡日期的值为：" + Y + M + D);
+    return Y + M + D
+  },
 
   //查询当前打卡信息
   qryHealthyTodayInfo: function () {
@@ -528,11 +539,20 @@ Page({
     let serialNumber = e.currentTarget.dataset.num;
     let userType = e.currentTarget.dataset.usertype
     // console.log(e.currentTarget.dataset)
-    if(type == '2' ){
+
+    var name = decodeURIComponent(department)
+
+    console.log("@@@@@ userType: ", userType)
+    if (this.data.isSuperUserFlag == '1'){
       wx.navigateTo({
         url: '../departmentDetail/departmentDetail?department='+ department + "&serialNumber=" + serialNumber + "&isXintongyuan=" + isXintongyuan  + "&userType=" + userType + "&isSuperUserFlag=" + this.data.isSuperUserFlag
       })
-    } else {
+    } else if (userType == '1'){
+      console.log("enter to three ...")
+      wx.navigateTo({
+        url: "../threeDepartments/threeDepartments?name=" + name + '&&date=' + this.getCurrenteDate(), 
+      })
+    }else {
       wx.navigateTo({
         url: '../totaluserdetail2/totaluserdetail2?serialNumber=' + serialNumber
       })

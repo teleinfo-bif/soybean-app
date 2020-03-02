@@ -24,7 +24,8 @@
     "pages/submitSuccess/submitSuccess",
     "pages/modifySuccess/modifySuccess",
     "pages/createGroup/createGroup",
-    "pages/healthQR/healthQR"
+    "pages/healthQR/healthQR",
+    "pages/threeDepartments/threeDepartments"
   ],
   "permission": {
     "scope.userLocation": {
