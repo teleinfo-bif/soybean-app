@@ -72,7 +72,7 @@
       </view>
 
 
-     <view class="page-container" wx:if="{{isManagerFlag == '2'}}">
+     <!-- <view class="page-container" wx:if="{{isManagerFlag == '2'}}">
        <view wx:if="{{todayClickFlag=='0'}}" class="template">
             <view class="template-title">
       <view class="template-title-text" >
@@ -97,9 +97,9 @@
       </view>
     </view>
     </view>
-  </view>
+  </view> -->
 
-  <view wx:for="{{datas}}" wx:if="{{todayClickFlag=='1' && datas.length>0}}" wx:key="key" class="template">
+  <!-- <view wx:for="{{datas}}" wx:if="{{todayClickFlag=='1' && datas.length>0}}" wx:key="key" class="template">
     <view class="template-title">
       <view class="template-title-text" wx:if="{{item.temperature < 37.3&& item.goHospitalFlag=='1'&&item.bodyStatusFlag=='0'}}">
         <view class="red-green"></view>
@@ -112,9 +112,9 @@
       <view class="template-title-text" wx:else>
         <view class="red-gray"></view>
         <view>未知</view>
-      </view>
+      </view> -->
       <!-- <view class="template-title-date">{{item.date}}</view> -->
-    </view>
+    <!-- </view>
     <view class="template-show">
       <view class="template-show-temperature">
         <view class="template-show-icon">
@@ -135,7 +135,7 @@
       </view>
     </view>
   </view>
-      </view>
+      </view> -->
 
       <!-- <view class="group-item">
         <view class="group-item-title" bindtap="gotoDetailClick">
