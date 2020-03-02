@@ -68,8 +68,42 @@
         <text class="unhealthy">{{stateBadText}}</text>
       </view>
     </view>
+    
   </view>
+ <view class="dashboard-1">
+    <view class="dashboard-show move-right">
+      <view class="dashboard-show-data">{{doneNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{doneText}}</view>
+        <view class="split"></view>
+      </view>
 
+    </view>
+
+    <view class="dashboard-show">
+      <view class="dashboard-show-data">{{homeNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{homeText}}</view>
+        <view class="split"></view>
+      </view>
+    </view>
+
+    <view class="dashboard-show">
+
+      <view class="dashboard-show-data">
+        <text class="confirmed-text">{{unDoneNumber}}</text>
+      </view>
+
+      <view>
+        <view class="dashboard-show-text split-before" >
+          <text class="confirmed-text">{{unDoneText}}</text>
+        </view>
+      </view>
+
+     
+    </view>
+    
+  </view>
   <!-- 健康状况 -->
   <view class="template">
     <view class="template-title">
@@ -239,6 +273,60 @@
             <view class="table-row-content">
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{otherCasesPercent}} %</view>
+            </view>
+
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 复工情况统计 -->
+
+  <view class="template">
+    <view class="template-title">
+      <view class="template-title-text">复工情况</view>
+      <view class="template-title-total">总人数 {{totalworksNumber}}人</view>
+    </view>
+    <view class="template-show">
+      <view class="template-show-ring container">
+        <canvas canvas-id="ringCanvas4" class="canvas" bindtouchstart="touchHandler4"></canvas>
+        <!-- <ff-canvas id="ring-dom" canvas-id="ring" opts="{{ opts }}"></ff-canvas> -->
+      </view>
+      <view class="template-show-table">
+        <view class="table-col-2">
+          <view class="table-col-title">分布情况:</view>
+          <view class="table-row">
+
+            <view class="table-row-content">
+              <view class="ring-icon5"></view>
+              <view class="table-row-content-text">已在岗 {{doneNumber}} 人</view>
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon6"></view>
+              <view class="table-row-content-text">远程办公 {{homeNumber}} 人</view>
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon7"></view>
+              <view class="table-row-content-text">未复工{{unDoneNumber}} 人</view>
+            </view>
+
+          </view>
+        </view>
+        <view class="table-col-2">
+          <view class="table-col-title2">占比率:</view>
+          <view class="table-row">
+
+            <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{doneP}} %</view>
+            </view>
+            <view class="table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{homeP}} %</view>
+            </view>
+            <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{unP}} %</view>
             </view>
 
           </view>
