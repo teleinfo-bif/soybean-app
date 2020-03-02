@@ -56,37 +56,44 @@ Page({
      */
     // console.log()
     const { groupId, timeStamp } = options;
-    const { userFilledInfo } = await app.init(true);
-    console.log("======options=====", options);
-    console.log("======options=====", userFilledInfo);
-    const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
-    const _this = this;
-    wx.showModal({
-      title: "",
-      content: `groupId:${groupId} \n timeStamp: ${timeStamp}\n有效状态是: ${userful},`,
-      showCancel: true,
-      cancelText: "取消",
-      cancelColor: "#000000",
-      confirmText: "确定",
-      confirmColor: "#3CC51F",
-      success() {
-        if (userFilledInfo.userRegisted) {
-          console.log("用户已经注册，准备执行this.joinGroup");
-          _this.shareJoniGroup({
-            groupId,
-            userId: userFilledInfo.id
-          });
-        } else {
-          wx.showModal({
-            title: "",
-            content: `您还没有注册，去注册。`,
-            showCancel: true,
-            cancelColor: "#000000",
-            confirmText: "去注册",
-            confirmColor: "#3CC51F"
-          });
+    // 这里需要先判断再调用
+    // 这里需要先判断再调用
+    // 这里需要先判断再调用
+    // 这里需要先判断再调用
+    // 这里需要先判断再调用app.init 如果有状态就直接用
+    app.init(globalData => {
+      const { userFilledInfo } = globalData;
+      console.log("======options=====", options);
+      console.log("======options=====", userFilledInfo);
+      const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
+      const _this = this;
+      wx.showModal({
+        title: "",
+        content: `groupId:${groupId} \n timeStamp: ${timeStamp}\n有效状态是: ${userful},`,
+        showCancel: true,
+        cancelText: "取消",
+        cancelColor: "#000000",
+        confirmText: "确定",
+        confirmColor: "#3CC51F",
+        success() {
+          if (userFilledInfo.userRegisted) {
+            console.log("用户已经注册，准备执行this.joinGroup");
+            _this.shareJoniGroup({
+              groupId,
+              userId: userFilledInfo.id
+            });
+          } else {
+            wx.showModal({
+              title: "",
+              content: `您还没有注册，去注册。`,
+              showCancel: true,
+              cancelColor: "#000000",
+              confirmText: "去注册",
+              confirmColor: "#3CC51F"
+            });
+          }
         }
-      }
+      });
     });
   },
 

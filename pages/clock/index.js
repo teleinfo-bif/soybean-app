@@ -516,11 +516,13 @@ Page({
   // 初始化用户信息
   async initUserInfo() {
     let { globalData } = app;
-    if (!app.globalData.userFilledInfo.userRegisted) {
-      globalData = await app.init(true);
+    if (!app.globalData.appInit) {
+      app.init(globalData => {
+        this.setUserFilledInfo(globalData.userFilledInfo);
+      });
+    } else {
+      this.setUserFilledInfo(globalData.userFilledInfo);
     }
-
-    this.setUserFilledInfo(globalData.userFilledInfo);
   },
 
   // 获取用户今日打卡信息

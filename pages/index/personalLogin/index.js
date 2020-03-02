@@ -6,9 +6,10 @@ Component({
       console.log("录入身份信息 init");
       if (!app.globalData.userFilledInfo) {
         // ;
-        let globalData = await app.init();
-        this.setData({
-          globalData: globalData
+        app.init(globalData => {
+          this.setData({
+            globalData: globalData
+          });
         });
       }
     },

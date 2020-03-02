@@ -1,37 +1,23 @@
 //app.js
 import { getUserFilledInfo } from "./api/api";
-import { tokenKey, userFilledInfofoKey } from "./api/request";
+import { appInit } from "./api/request";
 // var crypto = require("/crypto-js/index");
 // console.log(crypto.sha256);
 
 App({
   initRequest: false,
   callbackList: [],
-  async init2(callback) {
+  async init(callback) {
     this.callbackList.push(callback);
+    return;
   },
-  async init(refreshUserInfo = false) {
-    if (this.globalData.appInit == false || refreshUserInfo) {
-      console.log("app init 开始初始化");
-      const userFilledInfo = wx.getStorageSync(userFilledInfofoKey);
-      const fedToken = wx.getStorageSync(tokenKey);
-      this.globalData.fedToken = fedToken;
-
-      // debugger;
-      if (!refreshUserInfo && userFilledInfo && userFilledInfo.userRegisted) {
-        this.setGloableUserInfo(userFilledInfo);
-        console.log("初始化未完成，", this.globalData);
-        return this.globalData;
-      } else {
-        let userFilledInfo = await getUserFilledInfo();
-        this.setGloableUserInfo(userFilledInfo);
-        console.log("app.init return globalData:", this.globalData);
-        return this.globalData;
-      }
-    } else {
-      console.log("app.init return globalData:", this.globalData);
-      return this.globalData;
-    }
+  async refreshUserInfo(refreshUserInfo = false) {
+    let userFilledInfo = await getUserFilledInfo();
+    console.log("=======");
+    console.log("更新用户信息成功", userFilledInfo);
+    console.log("=======");
+    this.setGloableUserInfo(userFilledInfo);
+    return userFilledInfo;
 
     // console.log("app.js init userFilledInfo:", userFilledInfo);
     // console.log("app.js init fedToken:", fedToken);
@@ -43,12 +29,24 @@ App({
 
     this.globalData.userId = userFilledInfo.id;
     this.globalData.appInit = true;
+    this.callbackList.forEach(callback => {
+      console.log(callback);
+      callback(this.globalData);
+    });
     console.log("app init 完成初始化");
     console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
   },
 
   onLaunch: async function() {
-    await this.init(true);
+    const initData = await appInit();
+    this.globalData = {
+      ...this.globalData,
+      ...initData
+    };
+    console.log("================================");
+    console.log(this.globalData);
+    console.log("================================");
+    await this.setGloableUserInfo(initData.userFilledInfo);
 
     // 获取用户信息
     wx.getSetting({

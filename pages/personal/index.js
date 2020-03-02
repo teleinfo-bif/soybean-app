@@ -4,7 +4,7 @@ const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
 
 // import Notify from "vant-weapp/dist/notify/notify";
-import { delUserInfo, saveOrUpdateUserInfo } from "../../api/api.js";
+import { saveOrUpdateUserInfo } from "../../api/api.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
 Page({
   /**
@@ -120,7 +120,7 @@ Page({
       // console.log(formData);
       if (!this.data.userFilledInfo.userRegisted) {
         saveOrUpdateUserInfo(formData).then(async data => {
-          await app.init(true);
+          await app.refreshUserInfo();
           wx.navigateTo({
             url: "/pages/status/index?msg=注册成功"
           });
@@ -128,36 +128,13 @@ Page({
       } else {
         formData["id"] = formData.id;
         saveOrUpdateUserInfo(formData).then(async data => {
-          await app.init(true);
+          await app.refreshUserInfo();
           wx.navigateTo({
             url: "/pages/status/index?msg=更新成功"
           });
         });
       }
     }
-  },
-  // 删除
-  del() {
-    delUserInfo({ ids: [app.globalData.userFilledInfo.id].join(",") }).then(
-      async res => {
-        // console.log(this.data.data);
-        let { data } = this.data;
-        Object.keys(data).forEach(key => {
-          data[key] = null;
-        });
-        app.globalData.userFilledInfo = {};
-        app.globalData.userRegisted = false;
-        this.setData({
-          userRegisted: false,
-          data
-        });
-        wx.clearStorageSync();
-        await app.init(true);
-        wx.navigateTo({
-          url: "/pages/index/index"
-        });
-      }
-    );
   },
   // 重置
   formCancel() {
@@ -218,21 +195,23 @@ Page({
    */
   onLoad: async function(options) {
     console.log(this.data.fields[3].props.validate);
-    if (!app.globalData.userFilledInfo) {
+    const { globalData } = app;
+    if (!globalData.appInit) {
       // await app.init();
+      app.init(globalData => {
+        this.setData({
+          globalData: globalData,
+          userFilledInfo: globalData.userFilledInfo
+        });
+        this.setFieldsDisable(globalData.userFilledInfo);
+      });
+    } else {
+      this.setData({
+        globalData: globalData,
+        userFilledInfo: globalData.userFilledInfo
+      });
+      this.setFieldsDisable(globalData.userFilledInfo);
     }
-    const globalData = await app.init();
-    this.setData({
-      globalData: globalData,
-      userFilledInfo: globalData.userFilledInfo
-    });
-    this.setFieldsDisable(globalData.userFilledInfo);
-    // this.setData({
-    //   edit: app.globalData.userFilledInfo.userRegisted
-    // })
-    // if () {
-
-    // }
   },
 
   /**
