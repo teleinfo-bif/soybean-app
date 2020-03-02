@@ -369,7 +369,7 @@
   font-size: 25rpx;
   bottom:0px;
   color: #acabab;
-  background-color: #fff;
+  background-color: #f5f5f5;
   z-index: -1;
 }
 .page-container .template {
