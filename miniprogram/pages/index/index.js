@@ -14,7 +14,7 @@ Page({
     poiList: [],
     isManagerFlag: '0',
     isSuperUserFlag: '0',
-    loginUserInfo: "用户注册",
+    loginUserInfo: "",
     // department: '',//所在部门
     departments: [],//所在的部门群组s
     todayClickFlag: "0",
@@ -205,6 +205,14 @@ Page({
     }).get({
       success: res => {
         console.log("datas: ", res)
+        if (res.data.length == 0) {
+          that.setData({
+            loginUserInfo: "用户注册",
+          })
+
+          return
+        }
+
         that.userinfo = res.data;
 
         that.setData({

@@ -71,24 +71,10 @@
   margin-top: 340rpx;
 }
 
-.userinfo-put {
-  float: left;
-  font-size: 36rpx;
-  color: #333;
-  text-align: left;
-  padding-left: 0;
-  margin-left: 20rpx;
-  margin-top: 24rpx;
-}
-
-.userinfo-put_active {
-  background-color: #ccc;
-}
-
 .userinfo-img-container {
   width: 64rpx;
   height: 64rpx;
-  border-radius: 30rpx;
+  border-radius: 35rpx;
   padding-left: 0;
   margin-left: 20rpx;
   margin-top: 15rpx;
@@ -96,17 +82,73 @@
   background-color: #ecedf1;
 }
 
-.userinfo-img2 {
-  width: 64rpx;
-  height: 64rpx;
-  margin: auto;
-}
-
 .userinfo-img {
   width: 64rpx;
   height: 64rpx;
   border-radius: 30rpx;
   margin: auto;
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
+}
+
+.userinfo-img2 {
+  
+  width: 44rpx;	  
+  height: 44rpx;	
+  margin-left: 10rpx;	 
+  font-size: 30rpx;	 
+  line-height: 70rpx;	
+  color: #333333;
+  margin-top: 10rpx;
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
+}
+
+.userinfo-put {
+  float: left;
+  font-size: 36rpx;
+  color: #333;
+  text-align: left;
+  margin-left: 20rpx;
+  width: 280rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+ 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
+}
+
+.userinfo-put_active {
+  background-color: #ccc;
+}
+
+.user-info-btn {
+  font-size: 30rpx;
+  color: #333333;
+  text-align: left;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin-left: -25rpx;
+}
+
+.dayuhao-container {
+  float: right;
+  width: 40rpx;
+  height: 100rpx;
+}
+
+.dayuhao {
+  float: right;
+  margin-top: 22rpx;
+  width: 30rpx;
+  height: 55rpx;
 }
 
 .head_title {
@@ -140,13 +182,14 @@
   margin-top: 20rpx;
   background-color: #fff;
   border-radius: 20rpx;
+
   /* border-style: dotted;
   border-width: 2rpx; *//* box-shadow:[inset] x-offset y-offset blur-radius spread-radiuscolor *//* box-shadow:[inset] -10rpx 20rpx 40rpx 0rpx rgba(194, 199, 225, 0.47);
   -webkit-box-shadow: -5px 10px 20px 0px rgba(194, 199, 225, 0.47); *//* opacity: 1; */
 }
 
 .weui-grid-move {
-  margin-left: 13rpx;
+  margin-left: 16rpx;
 }
 
 .weui-grid__icon {
@@ -175,6 +218,7 @@
   font-size: 30rpx;
   color: #333;
   margin-top: -20rpx;
+
   /* border-style: dotted;
   border-width: 2rpx; */
 }
@@ -288,23 +332,6 @@
   display: none;
 }
 
-.dayuhao {
-  float: right;
-  line-height: 100rpx;
-  /* margin-left: 130rpx; */
-  width: 35rpx;
-  padding-left: 180rpx;
-  height: 45rpx;
-  /* 
-  border-width: 2rpx;
-  border-style: dotted; */
-}
-
-.dayuhao-container {
-  float: right;
-  margin-top: 5rpx;
-}
-
 .footer-copy-right {
   box-sizing: border-box;
   position: absolute;
@@ -325,9 +352,6 @@
   border-width: 2rpx; */
 }
 
-
-
-
 .logo{
   width: 100%;
   position: fixed;
@@ -341,6 +365,7 @@
   text-align: center;
   width: 100%;
   height: 50rpx;
+  line-height: 50rpx;
   font-size: 25rpx;
   bottom:0px;
   color: #acabab;

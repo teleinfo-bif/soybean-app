@@ -233,7 +233,7 @@ Page({
 
         if (superuser != null && superuser == "1") {
           level = 1
-          title = "中国信息通信技术研究院"
+          title = "中国信息通信研究院"
         }else if (userType == '1'){
           level = 2
           if (infoes[0] == '院属公司及协会') {
