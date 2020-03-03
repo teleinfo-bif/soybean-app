@@ -1170,10 +1170,10 @@ parseDatas: function(datas) {
       departmentName: name
     })
 
-    console.log('---------name: ', name)
-    console.log('---------title: ', options.title)
-    console.log('---------date: ', date)
-    console.log('---------level: ', level)
+    console.log('name: ', name)
+    console.log('title: ', options.title)
+    console.log('date: ', date)
+    console.log('level: ', level)
 
     if(level != undefined && level == 2) {
       this.setData(

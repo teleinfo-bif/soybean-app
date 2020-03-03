@@ -884,7 +884,7 @@ function departmentReg(userInfo, level, specificDepartment) {
     let reg = "*"
     let group = ""
 
-    if (level != undefined && specificDepartment != undefined) {
+    if (level != undefined && specificDepartment != undefined && level != "undefined" && specificDepartment != "undefined") {
         if ( level != "" && specificDepartment != "") {
             let currentLevel = Number(level) - 1
             let regexp = buildRegexp(specificDepartment, currentLevel) //查看指定部门的人员
