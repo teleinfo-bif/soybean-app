@@ -1,6 +1,6 @@
 var wxCharts = require("../../../utils/wxcharts/wxcharts.min.js");
 
-const titles = ["健康情况", "地区分布", "就诊情况"];
+const titles = ["健康情况", "地区分布", "就诊情况","复工情况"];
 const colors = ["#aa4438", "#ffaa00", "#f2d45e", "#4169E1"];
 function setOption(chart, data, index = 0) {
   const option = {

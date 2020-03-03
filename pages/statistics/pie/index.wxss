@@ -8,7 +8,7 @@
   .echarts-box.first {
     top: -30;
     height: 440rpx;
-    padding-top: 20px; }
+    padding-top: 0rpx; }
 
 .echarts-box {
   width: 750rpx;
