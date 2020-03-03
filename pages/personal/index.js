@@ -67,6 +67,16 @@ Page({
         }
       },
       {
+        title: "永久数字ID",
+        type: "input",
+        prop: "bidAddress",
+        hide: true,
+        props: {
+          placeholder: "永久数字ID",
+          require: false
+        }
+      },
+      {
         title: "家庭所在城市及区",
         type: "area",
         prop: "homeAddress",
@@ -113,9 +123,6 @@ Page({
     if (prop == "idType") {
       fields.forEach(item => {
         if (item.prop == "idNumber") {
-          // console.log(value);
-          // console.log(typeof value);
-          // console.log(idRegs[value.id - 1]);
           item.props.validate = function(val) {
             return idRegs[value.id - 1].test(val);
           };
@@ -174,7 +181,6 @@ Page({
       data
     });
   },
-
   // 已填写设置禁用字段
   setFieldsDisable(resData = {}) {
     let fields = this.data.fields;
@@ -182,6 +188,10 @@ Page({
     let userRegisted = resData.userRegisted;
 
     fields.forEach(item => {
+      // 控制bid显示隐藏
+      if (item.prop == "bidAddress") {
+        item.hide = !userRegisted;
+      }
       return (item["props"]["disable"] = userRegisted);
     });
 
@@ -204,8 +214,10 @@ Page({
       });
     }
   },
+  //
   setFieldsEditable() {
     let fields = this.data.fields;
+    let { userRegisted } = app.globalData.userFilledInfo;
 
     fields.forEach(item => {
       if (item.prop == "homeAddress" || item.prop == "detailAddress") {
@@ -225,7 +237,6 @@ Page({
     console.log(this.data.fields[3].props.validate);
     const { globalData } = app;
     if (!globalData.appInit) {
-      // await app.init();
       app.init(globalData => {
         this.setData({
           globalData: globalData,

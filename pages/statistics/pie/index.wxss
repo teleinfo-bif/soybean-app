@@ -6,10 +6,10 @@
   .echarts-box .legend-box {
     padding-top: 50rpx; }
   .echarts-box.first {
-    top: -30;
-    height: 440rpx;
-    padding-top: 20px; }
-
+    height: 423rpx;
+    padding-top: 0rpx; 
+    margin-bottom:0rpx;
+        }
 .echarts-box {
   width: 750rpx;
   height: 423rpx;

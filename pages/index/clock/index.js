@@ -12,12 +12,12 @@ Component({
     head: "我所在的部门",
     healthSign: {
       text: "健康打卡",
-      img: "../../../static/images/health_sign@3x.png",
+      img: "../../../static/images/jiankangdaka3x.png",
       path: "/pages/clock/index"
     },
     healthCode: {
       text: "健康码",
-      img: "../../../static/images/health_code@3x.png",
+      img: "../../../static/images/jjiankangmaactive3x.png",
       path: "/pages/healthQR/healthQR",
       disable: true
     }

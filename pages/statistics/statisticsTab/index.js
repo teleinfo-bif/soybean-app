@@ -57,6 +57,20 @@ Page({
           type: 4
         }
       ],
+      job: [
+        {
+          name: "已在岗",
+          type: 1
+        },
+        {
+          name: "远程办公",
+          type: 2
+        },
+        {
+          name: "未复工",
+          type: 3
+        },
+      ],
       region: [
         {
           name: "武汉",
@@ -113,8 +127,11 @@ Page({
     let { current, pages } = allData[activeIndex];
     if (current == 0 || current < pages) {
       let params = {};
-      params[type] = currentTab[activeIndex].type;
-
+      if(type=='job'){
+        params['jobstatus'] = currentTab[activeIndex].type;
+      }else{
+        params[type] = currentTab[activeIndex].type;
+      }
       getGroupCensusList({
         url,
         groupId,
@@ -122,11 +139,14 @@ Page({
         clockInTime,
         ...params
       }).then(data => {
-        allData[activeIndex] = {
-          ...data,
-          records: allData[activeIndex].records.concat(data.records)
-        };
-        this.setData({ allData });
+        console.log(3333333,current,pages);
+        if (current == 1 || current <= pages+1){
+          allData[activeIndex] = {
+            ...data,
+            records: allData[activeIndex].records.concat(data.records)
+          };
+          this.setData({ allData });
+        }
       });
     }
   },

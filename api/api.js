@@ -35,14 +35,14 @@ export const getOpenId = () => {
 
 // 获取用户获取的个人信息
 export const getUserPhone = async params => {
-  const sessionState = await Request.checkSessionKey();
-  console.log("发送获取手机之前验证session：", sessionState);
+  // const sessionState = await Request.checkSessionKey();
+  // console.log("发送获取手机之前验证session：", sessionState);
 
-  if (!sessionState) {
-    console.log("重新获取sessionkey");
-    await Request.getTokenStorage();
-    params.sessionKey = data.sessionKey;
-  }
+  // if (!sessionState) {
+  //   console.log("重新获取sessionkey");
+  //   await Request.getOpenId();
+  //   params.sessionKey = data.sessionKey;
+  // }
   params = Object.assign({}, params, { appid });
   return Request._get("/wx/user/phone", params);
 };
@@ -52,7 +52,7 @@ export const getUserFilledInfo = async params => {
   return Request._get("/user/exist", params).then(data => {
     const userFilledInfo = data;
     userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-    wx.setStorageSync(Request.userFilledInfofoKey, userFilledInfo);
+    // wx.setStorageSync(Request.userFilledInfofoKey, userFilledInfo);
     return data;
   });
 };
