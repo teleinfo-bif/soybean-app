@@ -1,6 +1,6 @@
 <!-- pages/code/code.wxml -->
 <view class="container-x">
-  <image class='codeBanner' src='/static/images/bannerQR.png'></image>
+  <image class='codeBanner' src=''></image>
   <view class='QRbg'>
     <view class='QRPart-1'>
       <view class='QRPart-1-1'>{{realName}}</view>
