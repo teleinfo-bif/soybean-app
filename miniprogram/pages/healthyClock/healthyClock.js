@@ -54,6 +54,7 @@ Page({
       { name: '远程办公', value: '1' },
       { name: '未复工', value: '2' }
     ],
+    workStatusFlag:''
   },
 
   currentDate: function (e) {
@@ -131,8 +132,7 @@ Page({
         leaveBeijingDate: latestInfo[0].leave_date,
         returnBeijingDate: latestInfo[0].return_date,
         traffic: latestInfo[0].traffic,
-        trafficToolStatusFlag: latestInfo[0].trafficToolStatusFlag,
-        workStatusFlag: latestInfo[0].workStatusFlag
+        trafficToolStatusFlag: latestInfo[0].trafficToolStatusFlag
         
       })
 
@@ -292,6 +292,8 @@ Page({
               place: address
             });
             var currentCity = res.result.ad_info.city;
+            console.log('=========打卡地点省=======', res.result.ad_info.province)
+            console.log('=========打卡地点市=======', res.result.ad_info.city)
             //是否在京   1-未返京   0-已返京
             if (currentCity == '北京市') {
               that.setData({
@@ -407,13 +409,7 @@ Page({
       });
       return;
     }
-    if (workStatusFlag == null || workStatusFlag == '') {
-      wx.showToast({
-        icon: 'none',
-        title: '目前在岗状态不能为空'
-      });
-      return;
-    }
+
 
     if (bodyStatusFlag == '3') {
       var bodystatusotherremark = e.detail.value.bodystatusotherremark
@@ -640,7 +636,13 @@ Page({
       return;
     }
 
-
+    if (workStatusFlag == null || workStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '目前在岗状态不能为空'
+      });
+      return;
+    }
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)
     //敏感字符检测
