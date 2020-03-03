@@ -146,3 +146,9 @@ white-space: nowrap;
     float: left;
   }
   
+  .group-item-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }

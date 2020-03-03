@@ -145,4 +145,9 @@ white-space: nowrap;
     margin-left: 20rpx;
     float: left;
   }
-  
+  .group-item-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }
