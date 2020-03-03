@@ -61,9 +61,11 @@ Component({
     navigateToGroupIndex(e) {
       console.log(e.currentTarget.dataset.groupname);
       const { data } = e.currentTarget.dataset;
-      wx.navigateTo({
-        url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
-      });
+      if (data.permission) {
+        wx.navigateTo({
+          url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
+        });
+      }
     }
   }
 });
