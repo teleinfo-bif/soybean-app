@@ -51,7 +51,7 @@
     </view>
    
   </view>
- <view class="statistic-box"  style='margin-top:10rpx;height:200rpx;margin-bottom:40rpx;'>
+ <view class="statistic-box"  style='margin-top:10rpx;height:200rpx;margin-bottom:60rpx;'>
    <view class="statistic-box_row1">
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.onJob}}</view>
