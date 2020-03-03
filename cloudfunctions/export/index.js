@@ -100,6 +100,10 @@ function buildRegexp(input, userType) {
     if (departments[1] == "院属公司及协会") {
         //.*(院属公司及协会)
         regexpStr = `.*(${departments[1]})`
+        // group = group + " " + input
+    } else if (input == "北京泰尔英福网络科技有限责任公司") {
+        regexpStr = `.*(${departments[0]})`
+        // group = group + " " + input
     }
 
     return {
