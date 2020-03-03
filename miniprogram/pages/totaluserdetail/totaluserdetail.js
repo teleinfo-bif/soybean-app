@@ -330,8 +330,13 @@ Page({
           }
         }else if (userType == '2'){
           level = 3
-          regInfo = "",
-          title = infoes[1]
+          regInfo = ""
+          if (infoes[1] == "") {
+            title = infoes[0]
+          } else {
+            title = infoes[1]
+          }
+          
         }
 
         this.setData({
@@ -357,6 +362,7 @@ Page({
     let date = decodeURIComponent(options.date)
     let level = decodeURIComponent(options.level)
     let prefix = decodeURIComponent(options.prefix)
+    let title = decodeURIComponent(options.title)
 
     console.log('prefix: ', prefix)
 
@@ -379,6 +385,7 @@ Page({
         currentDate: date,
         department: name,
         authorityLevel: 3,
+        titleInfo: title
       })
       this.analysisLevel(3)
 

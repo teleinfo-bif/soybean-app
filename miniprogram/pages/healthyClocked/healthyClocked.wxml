@@ -52,7 +52,7 @@
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange">
             <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
-              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+              <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
             <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
             </label>
           </radio-group>
@@ -212,7 +212,7 @@
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="">
             <label wx:for="{{workStatusItems}}" wx:key="index">
-              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+              <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
                <view  wx:if='{{index != workStatusItems.length-1}}'class='devide-radio'/>
             </label>
           </radio-group>

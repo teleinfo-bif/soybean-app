@@ -32,7 +32,7 @@ Page({
     var name = e.currentTarget.dataset.name
     var departName = this.data.department + ' ' + name
     wx.navigateTo({
-      url: '../totaluserdetail/totaluserdetail?name=' + departName + '&&date=' + this.data.currentDate + '&&level=3'
+      url: '../totaluserdetail/totaluserdetail?name=' + departName + '&&date=' + this.data.currentDate + '&&level=3&&title=' + name
     })
   },
 

@@ -510,15 +510,6 @@ Page({
       }
 
       if (isLeaveBjFlag == '0') {
-        var leavedate = e.detail.value.leavedate
-        if (leavedate == null || leavedate == '') {
-          wx.showToast({
-            icon: 'none',
-            title: '请选择离京日期'
-          });
-          return;
-        }
-
         var current = new Date('2020-01-10')
         var ldate = new Date(leavedate)
         console.log(ldate);
@@ -531,6 +522,15 @@ Page({
             icon: 'none',
             title: '离京日期选择2020年1月10日以后的日期',
             duration: 3000,
+          });
+          return;
+        }
+
+        var leavedate = e.detail.value.leavedate
+        if (leavedate == null || leavedate == '') {
+          wx.showToast({
+            icon: 'none',
+            title: '请选择离京日期'
           });
           return;
         }

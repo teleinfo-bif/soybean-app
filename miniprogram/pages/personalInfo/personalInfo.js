@@ -64,7 +64,7 @@ Page({
     phone_display: "display: block",
 
     healthyDatas: [],
-    company_name_items:['中国信息通信研究院','无']
+    company_name_items:['中国信息通信研究院']
 
   },
 

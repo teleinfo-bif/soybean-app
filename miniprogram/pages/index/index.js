@@ -558,10 +558,19 @@ Page({
 
   gotoStatistics: function(e) {
     let department = e.currentTarget.dataset.name;
-    wx.navigateTo({
-      url: '../statistics/statistics?title='+department
-    })
+    if (this.data.isManagerFlag == '2') {
+      console.log("111111")
+      wx.navigateTo({
+        url: '../statistics/statistics'
+      })
+    }else {
+      console.log("2222222")
+      wx.navigateTo({
+        url: '../statistics/statistics?title='+department
+      })
+    }
   },
+
   gotoDetailClick: function(e) {
     let department = e.currentTarget.dataset.name;
     let type = e.currentTarget.dataset.type;
@@ -709,7 +718,13 @@ Page({
             }
           }else if (item.userType == '2'){
             regInfo = ""
-            title = item.infoes[1]
+            console.log("item infoes length: ", item.infoes.length)
+            console.log("item infoes: ", item.infoes)
+            if (item.infoes[1] == "") {
+              title = item.infoes[0]
+            }else {
+              title = item.infoes[1]
+            }
             groupType = "2"
           } else {
             regInfo = ""

@@ -87,7 +87,7 @@
               <text class="info-label">单位名称</text>      
           </view>
        
-         <view class="company-picker-1" >
+<!--          <view class="company-picker-1" >
             <view class='company-picker-1-1'>
               <picker mode='selector' bindchange="companyName0PickerChange" value="{{index}}" range="{{company_name_items}}" disabled="{{disabled}}">        
                   <text class="company-picker-1-choice" style="{{choice_color}}"> 选择</text>
@@ -95,7 +95,7 @@
             </view>
                 <textarea class="textarea-company" auto-height='true' placeholder-class="placeholder-style" placeholder="{{placeholder_company_name_0}}" name="company_name_0" value="{{value_company_name_0}}" disabled="disabled">
                 </textarea>
-        </view>
+        </view> -->
         <view class="company-picker-2" >
             <view class='company-picker-1-1'>
               <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{isFisrtNoFlag}}">         
