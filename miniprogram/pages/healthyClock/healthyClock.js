@@ -37,6 +37,7 @@ Page({
     planReturnBejingDate: "",
     leaveBeijingDate: "",
     returnBeijingDate: "",
+
     userLatestInfo: [],
     disableAtHospital:false,
     disableDiagnosis:false,
@@ -471,6 +472,8 @@ Page({
     if (app.globalData.isGoBackFlag == '1') {//未返京
       var noGoBackFlag = this.noGoBackFlag
       var gobackdate = e.detail.value.gobackdate
+      var leaveDate = e.detail.value.leavedate
+
       if (noGoBackFlag == null || noGoBackFlag == '') {
         wx.showToast({
           icon: 'none',
@@ -478,6 +481,15 @@ Page({
         });
         return;
       }
+
+      if (leaveDate == null || leaveDate == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '请选择离京日期'
+        });
+        return;
+      }
+
       if (gobackdate == null || gobackdate == '') {
         wx.showToast({
           icon: 'none',
@@ -498,12 +510,15 @@ Page({
 
       this.setData({
         outBejingReason: parseInt(noGoBackFlag),
-        planReturnBejingDate: gobackdate
+        planReturnBejingDate: gobackdate,
+        leaveBeijingDate: leaveDate
       })
 
     }
+
     console.log("this.app.globalData.isGoBackFlag" + app.globalData.isGoBackFlag);
     console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
+
     if (app.globalData.isGoBackFlag == '0') {//已返京
       var isLeaveBjFlag = this.isLeaveBjFlag
 

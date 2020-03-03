@@ -28,6 +28,10 @@
   /* background-color: #ffffff; */
 }
 
+/* .leave-jing {
+  
+} */
+
 .personal-icon{
   width: 12rpx;
   height: 40rpx;

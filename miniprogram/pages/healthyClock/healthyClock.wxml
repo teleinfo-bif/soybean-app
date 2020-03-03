@@ -62,6 +62,23 @@
         <view class='devide-middle'/>
 
         <view class="clock_form__title">
+         离京日期
+        </view>
+        <view class="">
+          <view class=" ">
+            <view class="clock_form_input">
+              <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
+                <view class="weui-input" style="width:87%;float:left;">{{leavedate}}</view>
+                <view style="align:right;width:10%;display:inline;color:#1759EF">
+                  <a bindtap="gobackDateChange">选择</a>
+                </view>
+              </picker>
+            </view>
+          </view>
+        </view>
+        <view class='devide-middle'/>
+
+        <view class="clock_form__title">
           计划返京日期
         </view>
         <view class="">
@@ -95,7 +112,7 @@
         </view>
        <view class='devide-middle'/>
 
-      <view wx:if="{{isInBeijing != '0' || isLeaveBjFlag == '0'}}">
+      <view wx:if="{{isLeaveBjFlag == '0'}}">
         <view class="clock_form__title">
             离京日期
           </view>
