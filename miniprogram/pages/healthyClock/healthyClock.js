@@ -292,8 +292,17 @@ Page({
               place: address
             });
             var currentCity = res.result.ad_info.city;
-            console.log('=========打卡地点省=======', res.result.ad_info.province)
-            console.log('=========打卡地点市=======', res.result.ad_info.city)
+/*             console.log('=========打卡地点省=======', res.result.ad_info.province)
+            console.log('=========打卡地点市=======', res.result.ad_info.city) */
+            var str_before = that.data.place.split('市')[0]
+            var str_after = that.data.place.split('市')[1]
+            console.log('=========打卡地点省=======', str_before)
+            console.log('=========打卡地点市=======', str_after)
+            that.setData({
+              str_before: str_before+'市',
+              str_after: str_after
+            })
+
             //是否在京   1-未返京   0-已返京
             if (currentCity == '北京市') {
               that.setData({
@@ -334,6 +343,7 @@ Page({
     console.log("姓名:" + e.detail.value.name);
     console.log("手机号" + e.detail.value.phone);
     console.log("打卡地点" + e.detail.value.place);
+    console.log("打卡地点固定" + e.detail.value.place_before);
     console.log("是否在京:" + this.workPlaceFlag);
     console.log("未返京原因:" + this.noGoBackFlag);
     console.log("计划返京日期:" + e.detail.value.gobackdate);
@@ -356,10 +366,10 @@ Page({
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
     var goHBFlag = this.goHBFlag
-    var place = e.detail.value.place
+    var place = e.detail.value.place_before + e.detail.value.place 
     var trafficToolStatusFlag = this.trafficToolStatusFlag
     var workStatusFlag = this.data.workStatusFlag
-  
+    console.log('=====地址====',place)
     if (name == null || name == '') {
       wx.showToast({
         icon: 'none',
@@ -693,7 +703,7 @@ Page({
 
     var name = e.detail.value.name
     var phone = e.detail.value.phone
-    var place = e.detail.value.place
+    var place = e.detail.value.place_before + e.detail.value.place
     var gobackdate = e.detail.value.gobackdate
     var trainnumber = e.detail.value.trainnumber
     var leavedate = e.detail.value.leavedate
