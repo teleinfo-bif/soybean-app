@@ -6,6 +6,9 @@ const app = getApp();
 // import Notify from "vant-weapp/dist/notify/notify";
 import { saveOrUpdateUserInfo } from "../../api/api.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
+const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
+const idRegs = [idNumberReg, huzhao, junguan];
 Page({
   /**
    * 页面的初始数据
@@ -28,6 +31,9 @@ Page({
         prop: "phone",
         props: {
           placeholder: "请输入手机号码",
+          // validate(value) {
+          //   return /^1[3456789]\d{9}$/.test(value);
+          // }
           validate(value) {
             return /^1[3456789]\d{9}$/.test(value);
           }
@@ -54,6 +60,7 @@ Page({
         prop: "idNumber",
         props: {
           placeholder: "请输入证件号码",
+          idType: 1,
           validate(value) {
             return idNumberReg.test(value);
           }
@@ -94,14 +101,33 @@ Page({
   },
   onFormChange(e) {
     let itemData = {};
-    itemData[e.detail.prop] = e.detail.value;
+    const { prop, value } = e.detail;
+    itemData[prop] = value;
     // let data = Object.assign(this.data.data, itemData);
     let data = {
       ...this.data.data,
       ...itemData
     };
-    // this.setData({});
-    this.data.data = data;
+    let { fields } = this.data;
+    // 修改身份类型的时候，动态修改验证规则
+    if (prop == "idType") {
+      fields.forEach(item => {
+        if (item.prop == "idNumber") {
+          // console.log(value);
+          // console.log(typeof value);
+          // console.log(idRegs[value.id - 1]);
+          item.props.validate = function(val) {
+            return idRegs[value.id - 1].test(val);
+          };
+        }
+      });
+    }
+    this.setData({
+      data,
+      fields
+    });
+    // this.data.data = data;
+    // this.data.fields = fields;
   },
   // 提交/更新
   async formSubmit() {
@@ -112,7 +138,9 @@ Page({
         typeof formData.idType == "object"
           ? formData.idType.id
           : formData.idType;
-      formData.homeAddress = formData.homeAddress.join("-");
+      formData.homeAddress = Array.isArray(formData)
+        ? formData.homeAddress.join("-")
+        : "";
       formData = {
         ...formData,
         ...app.globalData.userInfo
