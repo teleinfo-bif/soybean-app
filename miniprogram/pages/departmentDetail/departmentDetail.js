@@ -313,6 +313,8 @@ Page({
   gotoStatistics: function(e) {
     console.log(e.currentTarget.dataset.name)
     var name = e.currentTarget.dataset.name; 
+
+    console.log("--------" + '../statistics/statistics?name=' + name + '&&date=' + this.data.currentDate + '&&level=2&&title=' + name)
     wx.navigateTo({
       url: '../statistics/statistics?name=' + name + '&&date=' + this.data.currentDate + '&&level=2&&title=' + name
     })

@@ -93,7 +93,10 @@ Page({
     authorityLevel : 0,
 
     regCompanyInfo: "",
-    companyDepartment: ""
+    companyDepartment: "",
+
+    departmentLevel: "2",
+    departmentName: ""
 
   },
 
@@ -1065,19 +1068,23 @@ parseDatas: function(datas) {
   },
 
   exportExcel: function () {
+    let that = this
     // console.log("get date is ", date)
     wx.showLoading({
       title: '数据加载中',
     })
-    let currentDate = this.data.showDate
+    let currentDate = that.data.showDate
     if (currentDate == undefined) {
-      currentDate = this.getCurrentDay()
+      currentDate = that.getCurrentDay()
     }
+
     wx.cloud.callFunction({
       name: "export",
       data: {
-        date: this.data.showDate,
-        user_id: app.globalData.openid
+        date: that.data.showDate,
+        user_id: app.globalData.openid,
+        level: that.data.departmentLevel,
+        specificDepartment: that.data.departmentName,
       },
       success: res => {
         console.log("export", res)
@@ -1148,15 +1155,21 @@ parseDatas: function(datas) {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
+  onLoad: function (options) {
     let name = decodeURIComponent(options.name)
     let date = decodeURIComponent(options.date)
     let level = decodeURIComponent(options.level)
     let title = decodeURIComponent(options.title)
 
-    console.log('name: ', name,options.title)
-    console.log('date: ', date)
-    console.log('level: ', level)
+    this.setData({
+      departmentLevel: level,
+      departmentName: name
+    })
+
+    console.log('---------name: ', name)
+    console.log('---------title: ', options.title)
+    console.log('---------date: ', date)
+    console.log('---------level: ', level)
 
     if(level != undefined && level == 2) {
       this.setData(
@@ -1238,33 +1251,33 @@ parseDatas: function(datas) {
   onReachBottom: function () {
 
   },
-  countMount:async function countMount(openid) {
-    let doneCount = await db.collection('user_healthy').where(
-      _.and([{
-        "date": this.data.showDate
-      }, {
-        "workStatusFlag": "0",
-      }, {
-        "company_department": db.RegExp({
-          regexp: this.data.companyDepartment,
-        })
-      }]
-    )).count()
-    // let unDoneCount = await db.collection('user_healthy').where({
-    //   workStatusFlag: "2",
-    //   _openid: openid
-    // }).count()
-    // let homeCount = await db.collection('user_healthy').where({
-    //   workStatusFlag: "1",
-    //   _openid: openid
-    // }).count()
-    // let count = {
-    //   doneCount,
-    //   unDoneCount,
-    //   homeCount
-    // }
-    return doneCount.total
-  },
+  // countMount:async function countMount(openid) {
+  //   let doneCount = await db.collection('user_healthy').where(
+  //     _.and([{
+  //       "date": this.data.showDate
+  //     }, {
+  //       "workStatusFlag": "0",
+  //     }, {
+  //       "company_department": db.RegExp({
+  //         regexp: this.data.companyDepartment,
+  //       })
+  //     }]
+  //   )).count()
+  //   // let unDoneCount = await db.collection('user_healthy').where({
+  //   //   workStatusFlag: "2",
+  //   //   _openid: openid
+  //   // }).count()
+  //   // let homeCount = await db.collection('user_healthy').where({
+  //   //   workStatusFlag: "1",
+  //   //   _openid: openid
+  //   // }).count()
+  //   // let count = {
+  //   //   doneCount,
+  //   //   unDoneCount,
+  //   //   homeCount
+  //   // }
+  //   return doneCount.total
+  // },
 
   initDatas2: function(name, currentDate) {
     // const db = wx.cloud.database()

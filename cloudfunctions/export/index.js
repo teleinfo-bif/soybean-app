@@ -83,20 +83,20 @@ function buildRegexp(input, userType) {
     let departments = input.split(" ")
 
     let regexpStr = "*"
-    let group = ""
+    let group = "中国信息通信研究院"
     // let regexpStr= input.replace(new RegExp(' ', "g"), "\\s{1}") //^((湖\s{1}北\s{1}的)){1}
-    if (userType == -1) { //一级管理员
+    if (userType == -1 || userType == 0) { //一级管理员
         regexpStr = ".*"
-        group = "中国信息通信研究院"
+        // group = "中国信息通信研究院"
     } else if (userType == 1) { //二级管理员
         regexpStr = `^((${departments[0]})){1}`
-        group = departments[0]
+        group = group + " " + departments[0]
     } else if (userType == 2) { //三级管理员
         let tmp = input.replace(new RegExp(' ', "g"), "\\s")
         regexpStr = `^((${tmp}))$`
-        group = input
+        group = group + " " + input
     }
-    
+
     if (departments[1] == "院属公司及协会") {
         //.*(院属公司及协会)
         regexpStr = `.*(${departments[1]})`
@@ -223,7 +223,7 @@ async function getSegregateV(openId, dateTimeStr) {
 
     let tmpDate = getDayString(new Date(dateTimeStr), -14)
 
-    if (clockDatas.data == undefined || clockDatas.data.length == 0 || 
+    if (clockDatas.data == undefined || clockDatas.data.length == 0 ||
         clockDatas.data[0].suregobackdate == undefined || clockDatas.data[0].suregobackdate == "") {
         return "0" //其它
     } else if (new Date(clockDatas.data[0].suregobackdate) > new Date(tmpDate)) {
@@ -381,11 +381,11 @@ async function getRow3(userInfo, dateTimeStr, group, department) {
 
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
                 if (isSegregating == "0") {
-                     //途径湖北的人数，完成隔离
-                     fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
+                    //途径湖北的人数，完成隔离
+                    fromHBAndSegregatedCount = fromHBAndSegregatedCount + 1
                 } else {
                     //途径湖北的人数，正在隔离
-                    fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1  
+                    fromHBAndSegregatingCount = fromHBAndSegregatingCount + 1
                 }
             }
 
@@ -399,11 +399,11 @@ async function getRow3(userInfo, dateTimeStr, group, department) {
 
                 let isSegregating = await getSegregateV(item._id, dateTimeStr)
                 if (isSegregating == "0") {
-                     //途径非湖北地区的人数，完成隔离
-                     fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
+                    //途径非湖北地区的人数，完成隔离
+                    fromNotHBAndSegregatedCount = fromNotHBAndSegregatedCount + 1
                 } else {
                     //途径非湖北地区的人数，正在隔离
-                    fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1  
+                    fromNotHBAndSegregatingCount = fromNotHBAndSegregatingCount + 1
                 }
             }
 
@@ -590,11 +590,11 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     //是否从其他城市返回
     let isRetured = false
     let recentIds = intersecteArray(recentNotInBjIds, [data._openid])
-    if (data.place.substring(0, 2) == "北京" && 
-            (data.isGoBackFlag == "0" && data.isLeaveBjFlag == "0" || recentIds.length == 1)) {
+    if (data.place.substring(0, 2) == "北京" &&
+        (data.isGoBackFlag == "0" && data.isLeaveBjFlag == "0" || recentIds.length == 1)) {
         isRetured = true
     }
-    
+
     if (isRetured) {
         row.push("是") //离开过北京
     } else if (data.place.substring(0, 2) == "北京") {
@@ -880,6 +880,54 @@ async function getDetails(dateTimeStr, department) {
     return rowDatas
 }
 
+function departmentReg(userInfo, level, specificDepartment) {
+    let reg = "*"
+    let group = ""
+
+    if (level != undefined && specificDepartment != undefined) {
+        if ( level != "" && specificDepartment != "") {
+            let currentLevel = Number(level) - 1
+            let regexp = buildRegexp(specificDepartment, currentLevel) //查看指定部门的人员
+            return {
+                reg: regexp.regexpStr,
+                group: regexp.gorup
+            }
+        }
+    }
+
+    if (userInfo.usertype != undefined && userInfo.usertype == "1") { //^((湖\s{1}北\s{1}的)){1}
+        if (userInfo.company_department == undefined || userInfo.company_department == "") {
+            reg = "*"  //没有部门的人
+            group = userInfo.company_department
+        } else {
+            let regexp = buildRegexp(userInfo.company_department, "1")
+            reg = regexp.regexpStr //二级部门管理员，能看到自己所在部门的信息
+            group = regexp.gorup
+        }
+    } else if (userInfo.usertype != undefined && userInfo.usertype == "2") {
+        reg = userInfo.company_department //部门管理员，能看到自己所在部门的信息
+        if (userInfo.company_department == undefined || userInfo.company_department == "") {
+            reg = "*"
+            group = userInfo.company_department
+        } else {
+            let regexp = buildRegexp(userInfo.company_department, "2") //三级管理员
+            reg = regexp.regexpStr
+            group = regexp.gorup
+        }
+    }
+
+    if (userInfo.superuser != undefined && userInfo.superuser == "1") {
+        let regexp = buildRegexp(userInfo.company_department, "-1") //超级管理员，能看到所有人的信息
+        reg = regexp.regexpStr
+        group = regexp.gorup
+    }
+
+    return {
+        reg: reg,
+        group: group
+    }
+}
+
 exports.main = async (event, context) => {
     try {
         let dateTimeStr = event.date
@@ -899,36 +947,9 @@ exports.main = async (event, context) => {
         let userInfo = user.data[0]
         let dataCVS = `统计信息表-${userInfo.name}-${Number(new Date())}.xlsx`
 
-        let department = "*"
-        let group = ""
-        if (userInfo.usertype != undefined && userInfo.usertype == "1") { //^((湖\s{1}北\s{1}的)){1}
-            if (userInfo.company_department == undefined || userInfo.company_department == "") {
-                department = "*"  //没有部门的人
-                group = userInfo.company_department
-            } else {
-                let regexp = buildRegexp(userInfo.company_department, "1")
-                department = regexp.regexpStr //二级部门管理员，能看到自己所在部门的信息
-                group = regexp.gorup
-            }
-        } else if (userInfo.usertype != undefined && userInfo.usertype == "2") {
-            department = userInfo.company_department //部门管理员，能看到自己所在部门的信息
-            if (userInfo.company_department == undefined || userInfo.company_department == "") {
-                department = "*"  
-                group = userInfo.company_department
-            } else {
-                let regexp = buildRegexp(userInfo.company_department, "2") //三级管理员
-                department = regexp.regexpStr
-                group = regexp.gorup
-            }
-        } 
-        
-        if (userInfo.superuser != undefined && userInfo.superuser == "1") {
-            let regexp = buildRegexp(userInfo.company_department, "-1") //超级管理员，能看到所有人的信息
-                department = regexp.regexpStr
-                group = regexp.gorup
-        }
+        let department = departmentReg(userInfo, event.level, event.specificDepartment)
 
-        if (department == "*") { //没权限，返回空表
+        if (department.reg == "*") { //没权限，返回空表
             return await cloud.uploadFile({
                 cloudPath: dataCVS,
                 fileContent: await xlsx.build([{
@@ -941,7 +962,7 @@ exports.main = async (event, context) => {
         let alldata = [];
         let row1 = ['单位名称', '当日新增来京人员总数', '来京人员累计总数(含当日新增) (A)', '从湖北省或途径湖北来京员工人数', '', '', '', '', '从湖北省以外地区来京员工人数', '', '', '', '', '联系人', '电话']
         let row2 = ['', '', '', '人数合计(B)', '其中未返京人数(C)', '其中已返京人数(D)', '已返京人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返京人数(F)', '其中已返京人数(G)', '已返京人员中自行隔离(14天)人数', '过隔离期人数']
-        let row3 = await getRow3(userInfo, dateTimeStr, group, department)
+        let row3 = await getRow3(userInfo, dateTimeStr, department.group, department.reg)
         let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         let row5 = ['提交人', '提交时间', '部门', '是否填写', '离京时间/计划离京时间', '联系电话', '在京居住地址', '未返京原因（身体不适/当地未放行等）', '计划返京时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '其他不适症状', '可在这里补充希望获得的帮助']
 
@@ -951,11 +972,13 @@ exports.main = async (event, context) => {
         alldata.push(row4);
         alldata.push(row5);
 
-        let details = await getDetails(dateTimeStr, department);
+        let details = await getDetails(dateTimeStr, department.reg);
 
         details.forEach(item => {
             alldata.push(item)
         })
+
+        // alldata.push([userInfo, event.level, event.specificDepartment])
 
         const ranges = [
             { s: { c: 0, r: 0 }, e: { c: 0, r: 1 } },
@@ -981,7 +1004,7 @@ exports.main = async (event, context) => {
         })
 
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return e
     }
 }
