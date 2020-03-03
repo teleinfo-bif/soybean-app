@@ -64,7 +64,8 @@ Page({
     phone_display: "display: block",
 
     healthyDatas: [],
-    company_name_items:['中国信息通信研究院']
+    company_name_items:['中国信息通信研究院'],
+    isFisrtNoFlag:true
 
   },
 
@@ -520,6 +521,7 @@ Page({
 
       certificate_type_index: this.getCardType(),
       buttons_display: "display: flex",
+      isFisrtNoFlag:false
 
     })
     if (this.data.placeholder_company_name_0 == '无') {
