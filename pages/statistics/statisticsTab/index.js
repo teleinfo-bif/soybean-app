@@ -57,6 +57,20 @@ Page({
           type: 4
         }
       ],
+      work: [
+        {
+          name: "已在岗",
+          type: 1
+        },
+        {
+          name: "远程办公",
+          type: 2
+        },
+        {
+          name: "未复工",
+          type: 3
+        },
+      ],
       region: [
         {
           name: "武汉",
