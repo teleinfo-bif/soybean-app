@@ -1040,10 +1040,10 @@ parseDatas: function(datas) {
 
         }else if (userType == '2'){
           level = 3
-          if (infoes.length == 2) {
-            title = infoes[1]
-          }else if (infoes.length == 1) {
+          if (infoes[1] == ""){
             title = infoes[0]
+          }else {
+            title = infoes[1]
           }
         } 
 

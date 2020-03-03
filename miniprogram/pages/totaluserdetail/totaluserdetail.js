@@ -330,8 +330,13 @@ Page({
           }
         }else if (userType == '2'){
           level = 3
-          regInfo = "",
-          title = infoes[1]
+          regInfo = ""
+          if (infoes[1] == "") {
+            title = infoes[0]
+          } else {
+            title = infoes[1]
+          }
+          
         }
 
         this.setData({
