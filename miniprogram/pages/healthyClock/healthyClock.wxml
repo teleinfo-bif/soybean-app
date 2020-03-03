@@ -44,25 +44,11 @@
       </view>
       <view class='devide-middle'/>
 
+
+
       <view wx:if="{{isGoBackFlag == '1'}}">
         <!--未返京开始-->
-        <view class="clock_form__title">
-            离京日期
-          </view>
-          <view class=" ">
-            <view class="weui-cell ">
-              <view class="clock_form_input-date">
-                <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="{{date}}" bindchange="leaveDateChange">
-                  <view class="weui-input-date" style="width:585rpx;float:left;">{{leavedate}}</view>
-                  <view style="float:right;width:90rpx;display:inline;color:#1759EF">
-                    <a bindtap="leaveDateChange">选择</a>
-                  </view>
-                </picker>
-              </view>
-            </view>
-          </view>
-          <view class='devide-middle'/>
-
+   
         <view class="clock_form__title">未返京原因
         </view>
         <view class='clock-radio'>
@@ -108,10 +94,10 @@
         </view>
         </view>
        <view class='devide-middle'/>
-       
-        <view wx:if="{{isLeaveBjFlag == '0'}}">
-          <!--14天内离京开始-->
-          <view class="clock_form__title">
+
+      <view wx:if="{{isGoBackFlag == '1' || isInBeijing == 1}} ">
+
+        <view class="clock_form__title">
             离京日期
           </view>
           <view class=" ">
@@ -127,6 +113,10 @@
             </view>
           </view>
           <view class='devide-middle'/>
+      </view>
+       
+        <view wx:if="{{isLeaveBjFlag == '0'}}">
+          <!--14天内离京开始-->
 
           <view class="clock_form__title">
             返京日期
