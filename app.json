@@ -14,7 +14,8 @@
     "pages/index/organization/index",
     "pages/group/groupIndex/index",
     "pages/group/shareJoin/index",
-    "pages/healthQR/healthQR"
+    "pages/healthQR/healthQR",
+    "pages/group/createGroup/createGroup"
   ],
   "window": {
     "backgroundTextStyle": "light",

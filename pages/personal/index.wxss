@@ -27,3 +27,13 @@ page {
   margin-bottom: 50rpx;
   display: flex;
   justify-content: center; }
+
+
+.group-create-location {
+  text-align: center;
+  font-size: 28rpx;  
+  width: 750rpx;
+  z-index: 100;
+  position: absolute;
+}
+
