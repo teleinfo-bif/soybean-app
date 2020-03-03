@@ -40,7 +40,7 @@
       <view class="">
         <view class="clock_form_input">
           <input class="weui-input" name="place_before" value="{{str_before}}" placeholder="" disabled="true" placeholder-class="placeholder-style" />
-          <input class="weui-input" name="place" value="{{str_after}}" placeholder="请获取打卡地点"  placeholder-class="placeholder-style" />
+          <input class="weui-input" maxlength='10' name="place" value="{{str_after}}" placeholder="请获取打卡地点"  placeholder-class="placeholder-style" />
          <!--  <input class="weui-input" name="place" value="{{place}}" placeholder="请获取打卡地点" disabled="true" placeholder-class="placeholder-style" /> -->
         </view>
       </view>
