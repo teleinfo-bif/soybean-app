@@ -456,14 +456,11 @@ Page({
     // 获取用户信息
     wx.getSetting({
       success(res) {
-        console.log("------------- res", res)
         if (res.authSetting['scope.userInfo']) {
           console.log("已授权=====")
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           wx.getUserInfo({
             success(res) {
-
-              console.log("------------- res1", res)
 
               console.log("获取用户信息成功", res)
               app.globalData.nickName = res.userInfo.nickName
@@ -474,8 +471,11 @@ Page({
                 userInfoFlagYes: true,
                 userInfoFlagNo: false
               })
-              wx.reLaunch({
-                url: 'index',
+              // wx.reLaunch({
+              //   url: 'index',
+              // })
+              wx.navigateTo({
+                url: '../personalInfo/personalInfo',
               })
             },
             fail(res) {

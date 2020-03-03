@@ -3,7 +3,7 @@
   <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
   <view class="head_title">泰尔通</view>
 
-  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" bindtap="userInfoPut" hover-class="userinfo-put_active">
+  <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" hover-class="userinfo-put_active">
     <view class="userinfo-img-container">
       <image class="userinfo-img2" src="../../images/bianji3x.png" mode="scaleToFill"></image>
     </view>
