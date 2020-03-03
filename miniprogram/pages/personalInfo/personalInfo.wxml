@@ -109,7 +109,7 @@
 
         <view class="company-picker-2" >
             <view class='company-picker-1-1'>
-              <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{isFisrtNoFlag}}">         
+              <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" disabled="{{disabled}}">         
                   <text class="company-picker-1-choice" style="{{choice_color_1}}"> 选择</text>
               </picker>
             </view>
