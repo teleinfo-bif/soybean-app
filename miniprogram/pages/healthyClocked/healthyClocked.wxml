@@ -80,7 +80,7 @@
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{isLeaveBjRadioItems}}" wx:key="index">
-              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+              <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true" />{{item.name}}
                <view  wx:if='{{index != isLeaveBjRadioItems.length-1}}'class='devide-radio'/>
             </label>
           </radio-group>

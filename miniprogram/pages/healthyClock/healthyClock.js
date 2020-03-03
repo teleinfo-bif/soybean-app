@@ -306,8 +306,14 @@ Page({
               });
               app.globalData.isGoBackFlag = '1'
             }
+            if (that.data.isInBeijing == '1') { 
+              that.setData({
+                
+              })
+            }
 
           }
+          
         })
       },
       fail: err => {
