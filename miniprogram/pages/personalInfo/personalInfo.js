@@ -457,6 +457,10 @@ Page({
       // _id: "e30d61715e4fb437020bb81b754a6f6d"
     }).get({
         success: res => {
+          if (res.data.length == 0) {
+            this.getBidAddress()
+          }
+
           this.setData({
             user_info_data: res.data[0],
             record_id: res.data[0]._id,
@@ -481,8 +485,10 @@ Page({
             buttons_display: "display: none",
             phone_display: "display: none"
           })
-
-          this.getBidAddress()
+          
+          if (res.data.length > 0) {
+            this.getBidAddress()
+          }
 
           wx.showToast({
             icon: 'success',
@@ -599,7 +605,7 @@ Page({
             certificate_type: e.detail.value.certificate_type,
             certificate_number: e.detail.value.certificate_number,
             bid_address: e.detail.value.bid_address,
-            private_key: this.private_key,
+            private_key: that.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
@@ -609,7 +615,6 @@ Page({
             company_name: e.detail.value.company_name_0,
           },
             success: res=> {
-            console.log(res)
         
               wx.navigateTo({
                 url: '../../pages/msg/msg_success',
@@ -618,6 +623,7 @@ Page({
             },
 
             fail: err => {
+
               console.log(err)
               wx.navigateTo({
                 url: '../../pages/msg/msg_fail',
@@ -637,7 +643,7 @@ Page({
             // certificate_type: e.detail.value.certificate_type,
             // certificate_number: e.detail.value.certificate_number,
             bid_address: e.detail.value.bid_address,
-            private_key: this.data.private_key,
+            private_key: that.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
             company_detail: e.detail.value.company_detail,
@@ -665,9 +671,6 @@ Page({
         })
 
       }
-
-      
-
     }
 
     if (!flag) {
