@@ -54,15 +54,15 @@
  <view class="statistic-box"  style='margin-top:10rpx;height:200rpx;margin-bottom:40rpx;'>
    <view class="statistic-box_row1">
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.goBackBeijing}}</view>
+        <view class="statistic-box_item_value">{{data.totality.onJob}}</view>
         <view class="statistic-box_item_label">已在岗人数</view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.notInbeijing}}</view>
+        <view class="statistic-box_item_value">{{data.totality.awayJob}}</view>
         <view class="statistic-box_item_label">远程办公人数</view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value">{{data.totality.abnormalbody}}</view>
+        <view class="statistic-box_item_value">{{data.totality.haveNoJob}}</view>
         <view class="statistic-box_item_label">未复工人数</view>
       </view>
     </view>
@@ -73,5 +73,5 @@
   <pie first="{{true}}" eleid="test1" type="healthy" groupId="{{groupId}}" title="健康情况" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
   <pie type="region" eleid="test2" groupId="{{groupId}}" title="所在地区分布情况" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
   <pie type="hospitalization" eleid="test3" groupId="{{groupId}}" title="就诊住院情况" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
-   <pie type="hospitalization" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+   <pie type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>

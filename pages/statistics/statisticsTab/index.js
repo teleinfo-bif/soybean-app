@@ -57,7 +57,7 @@ Page({
           type: 4
         }
       ],
-      work: [
+      job: [
         {
           name: "已在岗",
           type: 1
@@ -127,8 +127,11 @@ Page({
     let { current, pages } = allData[activeIndex];
     if (current == 0 || current < pages) {
       let params = {};
-      params[type] = currentTab[activeIndex].type;
-
+      if(type=='job'){
+        params['jobstatus'] = currentTab[activeIndex].type;
+      }else{
+        params[type] = currentTab[activeIndex].type;
+      }
       getGroupCensusList({
         url,
         groupId,
