@@ -95,8 +95,7 @@
         </view>
        <view class='devide-middle'/>
 
-      <view wx:if="{{isGoBackFlag == '1' || isInBeijing == 1}} ">
-
+      <view wx:if="{{isInBeijing != '0' || isLeaveBjFlag == '0'}}">
         <view class="clock_form__title">
             离京日期
           </view>
