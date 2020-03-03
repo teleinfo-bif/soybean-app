@@ -924,6 +924,12 @@ Page({
     //  this.radioChange(e)
   },
 
+  // leaveDateChange: function(e) {
+  //   this.setData({
+  //     leavedate: e.detail.value
+  //   })
+  // },
+
   //计划返京日期
   gobackDateChange: function (e) {
     console.log('日期选择改变，携带值为', e.detail.value)

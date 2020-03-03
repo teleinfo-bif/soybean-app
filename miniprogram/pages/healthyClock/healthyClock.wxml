@@ -67,10 +67,10 @@
         <view class="">
           <view class=" ">
             <view class="clock_form_input">
-              <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
+              <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="2020-12-29" bindchange="leaveDateChange">
                 <view class="weui-input" style="width:87%;float:left;">{{leavedate}}</view>
                 <view style="align:right;width:10%;display:inline;color:#1759EF">
-                  <a bindtap="gobackDateChange">选择</a>
+                  <a bindtap="leaveDateChange">选择</a>
                 </view>
               </picker>
             </view>
