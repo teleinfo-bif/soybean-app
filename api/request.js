@@ -49,6 +49,7 @@ async function getOpenId() {
           },
           success: data => {
             console.log("tokenKey", data.data);
+            fedToken = data.data.data;
             // wx.setStorageSync(tokenKey, data.data.data);
             resolve(data.data.data);
           },
@@ -68,8 +69,9 @@ async function getUserInfo(params) {
       url: baseURL + "/user/exist",
       data: params,
       success: data => {
-        const userFilledInfo = data.data.data;
+        userFilledInfo = data.data.data;
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
+
         // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
         resolve(userFilledInfo);
       },
