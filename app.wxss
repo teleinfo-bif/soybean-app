@@ -1,8 +1,8 @@
-@import "./style/custom.wxss";
-@import "./static/fonts/iconfont.wxss";
+@import "/style/custom.wxss";
+@import "/static/fonts/iconfont.wxss";
 /* @import "/vant-weapp/index.wxss"; */
 /* @import "/@vant/weapp/dist/common/index.wxss"; */
 page {
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #333;
 }

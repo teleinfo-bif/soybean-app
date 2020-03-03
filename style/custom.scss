@@ -1,4 +1,14 @@
-.my-form {
+.my-form_item {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // height: 120rpx ;
+  padding: 20rpx 30rpx 20rpx;
+  background-color: #fff;
+  // overflow: hidden;
+  border-bottom: 1rpx solid #f2f2f2;
+
   .van-cell {
     padding-right: 30rpx;
 
@@ -10,22 +20,52 @@
       padding: 0;
       height: 100%;
       margin-left: 0 !important;
-      font-size: 28rpx !important;
+      font-size: 32rpx !important;
     }
-
+    &-item {
+      &__right {
+        width: 50%;
+      }
+    }
     &__title {
-      font-size: 24rpx !important;
+      font-size: 32rpx !important;
     }
   }
 
   .van-radio {
-    margin-top: 10rpx;
+    margin-top: 13rpx;
     &__label {
       flex: 1;
-      font-size: 28rpx;
+      font-size: 32rpx;
     }
   }
+
+  .must-filled-star {
+    position: absolute;
+    color: #f00;
+    left: 15rpx;
+  }
+  &_head {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    // height: 44rpx;
+    padding: 10rpx 0rpx 10rpx;
+    padding-left: 5rpx;
+    // margin-bottom: 10rpx;
+    font-size: 28rpx;
+    line-height: 28rpx;
+  }
+
+  &_content {
+    position: relative;
+    // margin: 0 30rpx;
+    // background-color: blue;
+    // border-bottom: 1rpx solid #f2f2f2;
+  }
 }
+
 .color {
   color: #4f7ef2;
 }
@@ -64,7 +104,7 @@ picker.select-picker {
   right: 30rpx;
   top: -45rpx;
   color: #1759ef;
-  font-size: 24rpx !important;
+  font-size: 28rpx !important;
 }
 
 .select-picker {
@@ -89,11 +129,18 @@ picker.select-picker {
 
 button.btn-lucency-filled {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
   display: block;
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
-  background-color: red;
+  line-height: 1;
+  background: none;
+
   &::after {
     border: none;
   }

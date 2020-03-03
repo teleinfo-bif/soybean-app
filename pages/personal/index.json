@@ -11,5 +11,5 @@
     "my-form": "../components/my-form",
     "van-notify": "vant-weapp/notify"
   },
-  "navigationBarTitleText": "录入个人信息"
+  "navigationBarTitleText": "身份信息"
 }

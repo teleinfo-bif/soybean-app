@@ -69,6 +69,15 @@ Component({
       const prop = e.currentTarget.dataset.prop;
       this.triggerChange(prop, value);
     },
+    onGeoChange(e) {
+      const value = e.detail;
+      const prop = e.currentTarget.dataset.prop;
+      this.triggerChange(prop, value);
+    },
+    onChangeBaseAddress(e) {
+      const value = e.detail;
+      this.triggerEvent("baseAddress", value);
+    },
     triggerChange(prop, value, other = null) {
       // console.log("====picker idtype =======");
       this.setData({

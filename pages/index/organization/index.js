@@ -19,7 +19,18 @@ Component({
   lifetimes: {
     async attached() {
       // console.log("-----管理组织-----");
-      await this.getData();
+      let { globalData } = app;
+      if (app.globalData.userFilledInfo.userRegisted == null) {
+        app.init(globalData => {
+          this.setData({
+            globalData,
+            userFilledInfo: globalData.userFilledInfo
+          });
+          this.getData();
+        });
+      } else {
+        this.getData();
+      }
     }
   },
 
@@ -28,21 +39,9 @@ Component({
    */
   methods: {
     async getData() {
-      // const { userRegisted } = this.data.globalData;
-      let { globalData } = app;
-      if (app.globalData.userFilledInfo.userRegisted == null) {
-        globalData = await app.init();
-        this.setData({
-          globalData,
-          userFilledInfo: globalData.userFilledInfo
-        });
-      }
-      console.log(
-        "------------群组中用户注册状态",
-        globalData.userFilledInfo.userRegisted
-      );
+      const { userFilledInfo } = app.globalData;
 
-      if (globalData.userFilledInfo.userRegisted) {
+      if (userFilledInfo.userRegisted) {
         // debugger
         getUserGroupTree({}).then(data => {
           console.log(
@@ -61,11 +60,9 @@ Component({
     },
     navigateToGroupIndex(e) {
       console.log(e.currentTarget.dataset.groupname);
-      const { groupname, children, groupid } = e.currentTarget.dataset;
+      const { data } = e.currentTarget.dataset;
       wx.navigateTo({
-        url: `/pages/group/groupIndex/index?groupName=${groupname}&groupId=${groupid}&children=${JSON.stringify(
-          children
-        )}`
+        url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
       });
     }
   }

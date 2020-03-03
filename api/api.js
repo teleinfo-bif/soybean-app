@@ -5,13 +5,17 @@ const appid = "wxd69df881f0c947dc";
 // const appid = "wx5b2106519f2fb6c6";
 
 // 获取用户openId
+/**
 export const getOpenId = () => {
   return new Promise((resolve, reject) => {
     wx.login({
       success: res => {
         let params = {
           appid,
-          code: res.code
+          code: res.code,
+          header: {
+            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
+          }
         };
         Request._get("/wx/user/login", params)
           .then(data => {
@@ -26,7 +30,8 @@ export const getOpenId = () => {
       }
     });
   });
-};
+}; 
+ */
 
 // 获取用户获取的个人信息
 export const getUserPhone = async params => {
@@ -105,4 +110,15 @@ export const getGroupBlockList = async params => {
 // 获取群组打卡分类信息
 export const getGroupCensusList = async params => {
   return Request._get(`/wx/clockln/census/${params.url}`, params);
+};
+
+// 获取群组打卡分类信息
+export const getGroupCurrentUserList = async params => {
+  return Request._get(`/wx/group/user/current`, params);
+};
+
+// 用户加入群组
+export const joinGroup = async params => {
+  console.log("/wx/usergroup/save----params", params);
+  return Request._post(`/wx/usergroup/save`, params);
 };

@@ -1,7 +1,7 @@
 // pages/clock/index.js
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import { getTodayClock, saveClock } from "../../api/api.js";
+import { getTodayClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -91,7 +91,7 @@ let fields = [
     }
   },
   {
-    title: "体温",
+    title: "体温（℃）",
     type: "input",
     prop: "temperature",
     props: {
@@ -294,33 +294,6 @@ Page({
     });
     this.setData({ fields, data });
   },
-  // 重置按钮
-  formCancel() {
-    let { data } = this.data;
-    for (let prop in data) {
-      if (prop != "userName" && prop != "phone") {
-        data[prop] = null;
-      }
-    }
-    this.setData({
-      data
-    });
-  },
-  // 提交按钮
-  formSubmit() {
-    const validate = this.selectComponent("#form").validate();
-    if (validate) {
-      const formData = this.data.data;
-      formData.userId = this.data.userFilledInfo.id;
-      // console.log("formData", formData);
-      saveClock(formData).then(res => {
-        // console.log(res);
-        wx.navigateTo({
-          url: "/pages/clock/status/index"
-        });
-      });
-    }
-  },
   // 初始化this.data.data
   initFormData() {
     let data = {};
@@ -360,6 +333,7 @@ Page({
   // 根据是否在北京设置需要显示的字段，在北京显示是否离开北京，返回日期，不在北京显示原因日期
   setFields(atBeijing = false, leaved = false) {
     // console.log("atBeijing:", atBeijing, " leaved:", leaved);
+
     let fields = fields;
     if (atBeijing) {
       // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
@@ -449,11 +423,13 @@ Page({
   // 初始化用户信息
   async initUserInfo() {
     let { globalData } = app;
-    if (!app.globalData.userFilledInfo.userRegisted) {
-      globalData = await app.init(true);
+    if (!app.globalData.userFilledInfo.appInit) {
+      app.init(globalData => {
+        this.setUserFilledInfo(globalData.userFilledInfo);
+      });
+    } else {
+      this.setUserFilledInfo(globalData.userFilledInfo);
     }
-
-    this.setUserFilledInfo(globalData.userFilledInfo);
   },
 
   // 获取用户今日打卡信息
@@ -464,7 +440,7 @@ Page({
       // console.log("today data", data);
       let formData = Object.assign({}, this.data.data, data.records[0]);
       let atBeijing =
-        (formData.address && formData.address.indexOf("北京市") > -1) || false;
+        (formData.address && formData.address.startsWith("北京市")) || false;
       // 服务端没有其它城市返回字段，根据返京日期判断
       // formData["leave"] = formData.gobacktime ? 2 : 1;
       const leaved = formData["leave"] == "2";
@@ -478,7 +454,9 @@ Page({
         },
         data: {
           ...data.records[0],
-          ...this.data.userFilledInfo
+          ...this.data.userFilledInfo,
+          name: data.records[0].userName,
+          phone: data.records[0].phone
         }
       });
       this.setFields(atBeijing, leaved);
@@ -488,7 +466,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     const { userId, name = "", phone = "" } = options;
     console.log(name, phone);
     this.setData(
@@ -509,7 +487,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
@@ -526,25 +504,25 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function () { }
 });

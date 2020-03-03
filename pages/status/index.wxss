@@ -1,17 +1,24 @@
 page {
   box-sizing: border-box;
   height: 100%;
-  padding: 20rpx 30rpx 0; }
+  padding: 0 30rpx 0; }
+
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.status_icon {
+  margin-top: 250rpx; }
+  .status_icon image {
+    width: 150rpx;
+    height: 150rpx; }
 
 .status_msg {
-  padding: 0 10rpx;
-  display: flex;
   align-items: center;
-  font-size: 50rpx;
-  color: #000;
-  font-weight: bold; }
-  .status_msg text {
-    margin-left: 20rpx; }
+  font-size: 30rpx;
+  color: #000; }
 
 .status_text {
   margin-top: 10rpx;
@@ -19,7 +26,11 @@ page {
   font-size: 30rpx; }
 
 .btn-item {
-  margin-top: 40rpx; }
+  width: 260rpx;
+  margin: 300rpx auto 0;
+  text-align: center;
+  display: flex;
+  justify-content: center; }
 
 .btn_go-home {
   color: #000 !important; }

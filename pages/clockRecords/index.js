@@ -9,18 +9,9 @@ Page({
   // behaviors: [beahavior_userInfo],
   data: {
     otherUserId: "",
-    requestInit: false,
     currentDate: new Date().getTime(),
     showDateText: "",
-    clockData: {
-      current: 0,
-      pages: 0,
-      searchCount: true,
-      size: 0,
-      total: 0,
-      records: []
-    },
-    clockList: [],
+    clockData: {},
     // minDate: ,
     formatter(type, value) {
       if (type === "year") {
@@ -84,20 +75,33 @@ Page({
     });
   },
 
+  // 请求scrow-view 列表方法
   getData() {
-    let { requestInit } = this.data;
-    let { pages, current } = this.data.clockData;
-    if (!requestInit || pages > current) {
-      // 请求别人的userId
+    const { clockData } = this.data;
+    let { current = 0, pages = 0 } = clockData;
+    if (current == 0 || current < pages) {
       getUserClockList({
         current: ++current,
+        size: 20,
         userId: this.data.otherUserId || app.globalData.userFilledInfo.id
-      }).then(res => {
-        this.setData({
-          clockData: res,
-          clockList: this.data.clockList.concat(res.records)
-        });
+      }).then(data => {
+        // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+        if (memberData.total != undefined && current == data.current) {
+          let clockData = clockData.records.concat(data.records);
+          this.setData({
+            memberData: {
+              ...data,
+              records: clockData
+            }
+          });
+        } else {
+          this.setData({
+            clockData: data
+          });
+        }
       });
+    } else {
+      console.log("group user has nomore data");
     }
   },
 

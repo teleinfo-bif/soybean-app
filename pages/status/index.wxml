@@ -1,20 +1,21 @@
 <!-- pages/status/index.wxml -->
 <view class="page">
   <view class="status">
-    <view class="status_msg">
-      <van-icon color="#1759EF" name="passed" />
-      <text>注册成功</text>
+    <view class="status_icon">
+      <image src="../../static/images/success@3x.png" />
     </view>
-    <view class="status_text">您已经注册成功，可立即去打卡</view>
+    <view class="status_msg">
+      <text>{{msg}}</text>
+    </view>
   </view>
   <view class="btn-item">
-    <van-button bind:click="navigateTo" data-path='/pages/clock/index' round="{{true}}" type="primary" color="#1759EF" block>
-      健康打卡
-    </van-button>
+    <navigator url="/pages/index/index">
+      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
+    </navigator>
   </view>
-  <view class="btn-item">
+  <!-- <view class="btn-item">
     <van-button bind:click="navigateTo" data-path='/pages/index/index' custom-style="" round="{{true}}" type="primary" color="#dddddd" block>
       <text class="btn_go-home">返回首页</text>
     </van-button>
-  </view>
+  </view> -->
 </view>

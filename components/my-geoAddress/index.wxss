@@ -1,0 +1,29 @@
+.map-picker {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 3; }
+  .map-picker.hide {
+    height: 0; }
+  .map-picker view {
+    position: absolute;
+    right: 30rpx;
+    top: -45rpx;
+    color: #1759ef;
+    font-size: 24rpx !important; }
+
+.geo-item {
+  display: flex;
+  align-items: center; }
+  .geo-item .myinput {
+    flex: 1; }
+  .geo-item .geo-item-fade {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    border: 3px solid red;
+    background-color: red; }

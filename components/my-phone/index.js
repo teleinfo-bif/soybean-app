@@ -53,28 +53,13 @@ Component({
     },
     async getPhoneNumber(e) {
       let { fedToken } = app.globalData;
-      if (!fedToken.sessionKey) {
-        // debugger;
-        let globalData = await app.init();
-        fedToken = globalData.fedToken;
-      }
+      // 此处没有判断token的有效状态
       let requestData = {
         encryptedData: e.detail.encryptedData,
         iv: e.detail.iv,
         sessionKey: fedToken.sessionKey
       };
       this.getPhoneNumberFromServer(requestData);
-      // if (app.globalData.sessionKey) {
-      //   requestData.sessionKey;
-      //   this.getPhoneNumberFromServer(requestData);
-      // } else {
-      //   getOpenId().then(({ sessionKey }) => {
-      //     requestData.sessionKey = sessionKey;
-      //     this.getPhoneNumberFromServer(requestData);
-      //   });
-      // }
-      if (e.detail.errMsg == "getPhoneNumber:ok") {
-      }
     },
 
     onChange(e) {

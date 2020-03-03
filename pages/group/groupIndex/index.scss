@@ -1,0 +1,71 @@
+page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+}
+.scrollview {
+  height: 100%;
+}
+.top-box {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110rpx;
+  margin: 10rpx 15rpx;
+  padding: 30rpx 20rpx 30rpx 20rpx;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
+  border-radius: 10rpx;
+  &_count {
+  }
+}
+.share-box {
+  position: relative;
+  width: 60rpx;
+  height: 60rpx;
+  image {
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.row-item {
+  display: flex;
+  margin: 10rpx 30rpx 0;
+  padding: 0 30rpx;
+  height: 100rpx;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
+  border-radius: 10rpx;
+
+  &_left {
+  }
+  &_right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-statistic {
+      display: flex;
+      align-items: center;
+    }
+    .btn-statistic {
+      display: inline-block;
+      margin-left: 15rpx;
+      width: 60rpx;
+      height: 60rpx;
+    }
+    &_btn {
+      margin-left: 15rpx;
+      &-setting {
+        color: #1759ef;
+      }
+      &-delete {
+        color: red;
+      }
+    }
+  }
+}

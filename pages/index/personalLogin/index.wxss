@@ -6,14 +6,13 @@
   align-items: center;
   top: -44rpx;
   left: 30rpx;
-  width: 460rpx;
+  width: 340rpx;
   height: 88rpx;
   background: #fff;
   box-shadow: 0 5rpx 27rpx 0 rgba(194, 199, 225, 0.47);
   border-radius: 44rpx;
   font-size: 30rpx;
 }
-
 .entering-box_icon {
   display: flex;
   justify-content: center;
@@ -23,8 +22,11 @@
   height: 64rpx;
   background: #ecedf1;
   border-radius: 50%;
+  overflow: hidden;
 }
-
+.entering-box_icon image {
+  border-radius: 50%;
+}
 .entering-box_text {
   padding-left: 30rpx;
 }

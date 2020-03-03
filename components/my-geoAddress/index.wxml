@@ -1,0 +1,12 @@
+<block wx:if="{{true}}">
+  <view class="geo-item">
+    <view class="" style="font-size: 32rpx;">{{baseAddress}}</view>
+    <!-- <view class="">{{props.p}}</view> -->
+    <my-input props="{{props}}" class="myinput" bind:change="ontest" value="{{streetNumber}}"></my-input>
+    <view wx:if="{{props.disable != true}}" bindtap="onChange" class="map-picker {{noPermission ? 'show' : 'hide'}}">
+      <view bindTap="test">获取地点</view>
+    </view>
+    <!-- <view wx:if="{{true}}" bind:tap="showMsg" class="geo-item-fade"></view> -->
+  </view>
+</block>
+<!-- <button bind:tap="test">test</button> -->

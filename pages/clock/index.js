@@ -36,7 +36,7 @@ let fields = [
   },
   {
     title: "打卡地点",
-    type: "map",
+    type: "geo",
     prop: "address",
     props: {
       placeholder: "请输入打卡地点"
@@ -67,13 +67,30 @@ let fields = [
     }
   },
   {
-    title: "返京(计划)日期",
+    title: "返京日期",
     type: "date",
     prop: "gobacktime",
     hide: true,
     props: {
-      placeholder: "请输入返京(计划)日期",
+      placeholder: "请输入返京日期",
       end: ""
+    }
+  },
+  {
+    title: "交通工具",
+    type: "radio",
+    prop: "flightType",
+    hide: true,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "飞机" },
+        { id: 2, name: "火车" },
+        { id: 3, name: "汽车" },
+        { id: 4, name: "轮船" },
+        { id: 5, name: "其他" }
+      ]
     }
   },
   {
@@ -101,11 +118,26 @@ let fields = [
     }
   },
   {
-    title: "体温",
+    title: "您的在岗状态 ",
+    type: "radio",
+    prop: "worktype",
+    hide: false,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "已在岗" },
+        { id: 2, name: "在家办公" },
+        { id: 3, name: "未复工" }
+      ]
+    }
+  },
+  {
+    title: "体温（℃）",
     type: "input",
     prop: "temperature",
     props: {
-      placeholder: "请输入体温",
+      placeholder: "温度超过37.2度不能视为健康，请重新选择健康状况!",
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value);
       },
@@ -224,7 +256,8 @@ Page({
     fields: fields,
     data: {
       address: ""
-    }
+    },
+    baseAddress: ""
   },
   onFormChange(e) {
     console.log("onFormChange", e);
@@ -327,11 +360,12 @@ Page({
     if (validate) {
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
+      formData.address = this.data.baseAddress + formData.address;
       // console.log("formData", formData);
       saveClock(formData).then(res => {
         // console.log(res);
         wx.navigateTo({
-          url: "/pages/clock/status/index"
+          url: "/pages/status/index?msg=打卡成功"
         });
       });
     }
@@ -377,8 +411,16 @@ Page({
     // console.log("atBeijing:", atBeijing, " leaved:", leaved);
     let { fields } = this.data;
     fields.forEach(item => {
+      // 如果再北京，返回时间最大是今天
       if (item.prop === "gobacktime") {
         item.props.end = atBeijing ? getyyyyMMdd(new Date()) : "";
+      }
+      // 在北京显示返京日期，否则显示计划返京日期
+      if (item.prop === "gobacktime") {
+        item.title = atBeijing ? "返京日期" : "计划返京日期";
+        item.props.placeholder = atBeijing
+          ? "请输入返京日期"
+          : "请输入计划返京日期";
       }
     });
     this.setData(
@@ -402,7 +444,8 @@ Page({
               "nobackreason",
               "leavetime",
               "gobacktime",
-              "flight"
+              "flight",
+              "flightType"
             ]);
             // this.setFieldsHide(["reason", "gobacktime", "reason"]);
           }
@@ -439,6 +482,11 @@ Page({
       }
     });
   },
+  onChangeBaseAddress(e) {
+    this.setData({
+      baseAddress: e.detail
+    });
+  },
   // 地址选项变化
   onAddressChange(location, chooseLocation) {
     var currentCity = chooseLocation
@@ -446,15 +494,31 @@ Page({
       : location.result.ad_info.city;
     // console.log(res.result.ad_info.city);
     let atBeijing = currentCity == "北京市";
+    const { fields } = this.data;
+    let baseAddress = null;
+    fields.forEach(item => {
+      if (item.prop == "address") {
+        // debugger;
+        item.props["location"] = location;
+        baseAddress =
+          location.result.address_component.province +
+          location.result.address_component.district;
+        item.props["baseAddress"] = baseAddress;
+      }
+    });
 
+    console.log(location);
     this.setData({
       atBeijing,
       leaved: !atBeijing,
       goBack: !atBeijing,
       address: chooseLocation ? location : location.result,
+      baseAddress,
+      fields,
       data: {
         ...this.data.data,
-        address: chooseLocation ? location.address : location.result.address
+        // address: chooseLocation ? location.address : location.result.address,
+        address: location.result.address_component.street_number
       }
     });
     this.setFields(atBeijing, false);
@@ -475,11 +539,13 @@ Page({
   // 初始化用户信息
   async initUserInfo() {
     let { globalData } = app;
-    if (!app.globalData.userFilledInfo.userRegisted) {
-      globalData = await app.init(true);
+    if (!app.globalData.appInit) {
+      app.init(globalData => {
+        this.setUserFilledInfo(globalData.userFilledInfo);
+      });
+    } else {
+      this.setUserFilledInfo(globalData.userFilledInfo);
     }
-
-    this.setUserFilledInfo(globalData.userFilledInfo);
   },
 
   // 获取用户今日打卡信息
@@ -492,7 +558,9 @@ Page({
         (formData.address && formData.address.indexOf("北京市") > -1) || false;
       // 服务端没有其它城市返回字段，根据返京日期判断
       // formData["leave"] = formData.gobacktime ? 2 : 1;
-      formData["leave"] = formData.leave;
+      // formData["leave"] = formData.leave;
+      formData["leave"] = atBeijing ? null : 2;
+
       // let formFields = this.data.fields;
       if (data.total > 0) {
         this.setData({
@@ -519,11 +587,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const userId = options.id;
-
-    this.initFormData();
-    this.initUserInfo();
-    this.getUserTodyClockData();
+    if (!app.globalData.appInit) {
+      app.init(() => {
+        console.log("进入回调");
+        this.initFormData();
+        this.initUserInfo();
+        this.getUserTodyClockData();
+      });
+    } else {
+      this.initFormData();
+      this.initUserInfo();
+      this.getUserTodyClockData();
+    }
   },
 
   /**

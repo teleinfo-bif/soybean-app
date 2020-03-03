@@ -23,16 +23,21 @@ Page({
   },
   onLoad: async function() {
     this.setBarHeight();
-    let globalData;
-    if (!app.globalData.userFilledInfo.userRegisted) {
-      globalData = await app.init(true);
+    // let { userFilledInfo } = app.globalData;
+    if (!app.globalData.appInit) {
+      app.init(globalData => {
+        this.setData({
+          globalData: globalData,
+          userFilledInfo: globalData.userFilledInfo
+        });
+      });
     } else {
-      globalData = app.globalData;
+      this.setData({
+        globalData: app.globalData,
+        userFilledInfo: app.globalData.userFilledInfo
+      });
     }
-    this.setData({
-      globalData: globalData,
-      userFilledInfo: globalData.userFilledInfo
-    });
+
     // 动态设置小程序的顶部标题
   },
   getUserInfo: function(e) {

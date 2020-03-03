@@ -10,7 +10,7 @@
         </navigator>
       </view>
       <view class="block-success_icon">
-        <image mode="aspectFit" src="../../static/images/yidaka@3x.png" alt="已打卡" />
+        <image mode="aspectFit" src="../../static/images/success@3x.png" alt="已打卡" />
       </view>
       <view class="block-success_text">今日已打卡</view>
     </view>
@@ -18,11 +18,4 @@
   <view class="form-header">健康打卡</view>
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
-  <view wx:if="{{!clocked}}" class="btn-wrap">
-    <van-button bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
-    <view style="width: 35rpx;"></view>
-    <van-button bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">
-      提 交
-    </van-button>
-  </view>
 </view>

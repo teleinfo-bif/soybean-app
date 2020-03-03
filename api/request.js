@@ -1,12 +1,42 @@
-// 获取小程序全局配置（变量、函数等）
+// 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
-// 从storage中获取openid
-
 const appid = "wxd69df881f0c947dc";
 
 // 定义网络请求API地址
 const baseURL = "https://admin.bidspace.cn/bid-soybean";
+
+let fedToken = getTokenStorage();
+let userFilledInfo = null;
+/**
+ *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
+ *
+ * @returns {fedToken, userFilledInfo}
+ */
+async function appInit() {
+  const sessionValite = await checkSessionKey();
+  if (!(sessionValite && fedToken.openid)) {
+    console.log("提醒：token或者session无效，重新请求token");
+    fedToken = await getOpenId();
+    // 本来到这里初始化结束，但是必须要有请求的userId
+    console.log("返回：token值是:", fedToken);
+  }
+  if (!userFilledInfo) {
+    console.log("提醒：userInfo无效，重新请求userInfo");
+    try {
+      userFilledInfo = await getUserInfo({
+        openid: fedToken.openid
+      });
+    } catch (e) {
+      console.error("userInfo失败", e);
+    }
+    console.log("返回：userInfo值是:", userFilledInfo);
+  }
+  return {
+    fedToken: fedToken,
+    userFilledInfo: userFilledInfo
+  };
+}
 
 // 获取用户openId
 async function getOpenId() {
@@ -20,9 +50,12 @@ async function getOpenId() {
         wx.request({
           url: baseURL + "/wx/user/login",
           data: params,
+          header: {
+            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
+          },
           success: data => {
             console.log("tokenKey", data.data);
-            wx.setStorageSync(tokenKey, data.data.data);
+            // wx.setStorageSync(tokenKey, data.data.data);
             resolve(data.data.data);
           },
           fail: res => {
@@ -43,7 +76,7 @@ async function getUserInfo(params) {
       success: data => {
         const userFilledInfo = data.data.data;
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-        wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
+        // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
         resolve(userFilledInfo);
       },
       fail: res => {
@@ -86,35 +119,46 @@ function getUserStorage() {
 
 // 封装网络请求开始
 const Request = async ({ url, params, method, ...other } = {}) => {
+  // await start();
+  // console.log(token);
+  // debugger;
   // 先取localstorage里面openid,userid,
-  let token = getTokenStorage();
-  let userInfo = getUserStorage();
-
+  // let token = getTokenStorage();
+  // let userInfo = getUserStorage();
+  console.log(url);
   const sessionValidate = await checkSessionKey();
   // console.log("await checkSessionKey()", sessionValidate);
 
-  if (!token || token == "" || token.openid == undefined || !sessionValidate) {
+  if (
+    !fedToken ||
+    fedToken == "" ||
+    fedToken.openid == undefined ||
+    !sessionValidate
+  ) {
     console.log(
       "提醒：storage读取openID、sessionkey失败，正在重新获取openID、sessionkey..."
     );
-    token = await getOpenId();
-    console.log("返回数据：获取的用户", token);
+    fedToken = await getOpenId();
+    console.log("返回数据：获取的用户", fedToken);
   }
-
-  if ((url != "/user/exist" && typeof userInfo != "object") || !userInfo.id) {
+  console.log("userFilledInfo", userFilledInfo);
+  if (
+    (url != "/user/exist" && typeof userFilledInfo != "object") ||
+    !userFilledInfo.userRegisted
+  ) {
     console.log(
       "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
     );
-    userInfo = await getUserInfo({ openid: token.openid });
-    console.log("返回数据：获取的用户", userInfo);
+    userFilledInfo = await getUserInfo({ openid: fedToken.openid });
+    console.log("返回数据：获取的用户", userFilledInfo);
   }
   console.log("params.userId", params, params.userId);
 
   // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
   let data = Object.assign({}, params, {
-    openid: token.openid ? token.openid : "",
-    wechatId: token.openid ? token.openid : "",
-    userId: params.userId ? params.userId : userInfo.id || ""
+    openid: fedToken.openid ? fedToken.openid : "",
+    wechatId: fedToken.openid ? fedToken.openid : "",
+    userId: params.userId ? params.userId : userFilledInfo.id || ""
   });
 
   // 添加请求加载等待
@@ -282,6 +326,7 @@ const _delete = (url, params = {}) => {
     method: "delete"
   });
 };
+
 // post - application/x-www-form-urlencoded
 const _postParams = (url, params = {}) => {
   return Request({
@@ -307,5 +352,6 @@ module.exports = {
   userFilledInfofoKey,
   tokenKey,
   checkSessionKey,
-  getTokenStorage
+  getTokenStorage,
+  appInit
 };
