@@ -139,11 +139,14 @@ Page({
         clockInTime,
         ...params
       }).then(data => {
-        allData[activeIndex] = {
-          ...data,
-          records: allData[activeIndex].records.concat(data.records)
-        };
-        this.setData({ allData });
+        console.log(3333333,current,pages);
+        if (current == 1 || current <= pages+1){
+          allData[activeIndex] = {
+            ...data,
+            records: allData[activeIndex].records.concat(data.records)
+          };
+          this.setData({ allData });
+        }
       });
     }
   },
