@@ -8,6 +8,9 @@
     <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">{{userFilledInfo.name}}</view>
     <text wx:else class="entering-box_text">用户注册</text>
     <button class="test" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>
+     <view class="dayuhao-container">
+      <image class="dayuhao" src="../../../static/images/dayuhao.png" />
+    </view>
   </view>
 </view>
 <!-- <button bindtap="test">test</button> -->

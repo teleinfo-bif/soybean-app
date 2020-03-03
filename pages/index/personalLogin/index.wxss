@@ -4,15 +4,16 @@
   position: relative;
   display: flex;
   align-items: center;
-  top: -44rpx;
+  top: -54rpx;
   left: 30rpx;
-  width: 340rpx;
-  height: 88rpx;
+  width: 400rpx;
+  height: 100rpx;
   background: #fff;
-  box-shadow: 0 5rpx 27rpx 0 rgba(194, 199, 225, 0.47);
+  /* box-shadow: 0 5rpx 27rpx 0 rgba(194, 199, 225, 0.47); */
   border-radius: 44rpx;
-  font-size: 30rpx;
+  font-size: 36rpx;
 }
+
 .entering-box_icon {
   display: flex;
   justify-content: center;
@@ -24,11 +25,28 @@
   border-radius: 50%;
   overflow: hidden;
 }
+
 .entering-box_icon image {
   border-radius: 50%;
 }
+
 .entering-box_text {
   padding-left: 30rpx;
+  width: 240rpx;
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
+}
+
+.dayuhao-container {
+  width: 40rpx;
+  height: 100rpx;
+}
+
+.dayuhao {
+  margin-top: 22rpx;
+  width: 30rpx;
+  height: 55rpx;
 }
 
 .test {
@@ -39,6 +57,7 @@
   height: 100%;
   background-color: transparent;
 }
+
 .test::after {
   border: none;
 }

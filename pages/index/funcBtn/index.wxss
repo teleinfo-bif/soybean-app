@@ -1,30 +1,33 @@
 /* pages/index/FuncBtn/FuncBtn.wxss */
 
-.func-btn,
-.module_content {
+.func-btn, .module_content {
   display: flex;
   justify-content: space-between;
 }
+
 .func-btn {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   /* margin-top: 20rpx; */
-  width: 335rpx;
+  width: 330rpx;
   height: 300rpx;
   background: rgba(255, 255, 255, 1);
-  box-shadow: 0rpx 5rpx 27rpx 0rpx rgba(194, 199, 225, 0.47);
-  border-radius: 6rpx;
+  /* box-shadow: 0rpx 5rpx 27rpx 0rpx rgba(194, 199, 225, 0.47); */
+  border-radius: 35rpx;
 }
+
 .func-btn_icon {
-  width: 122rpx;
-  height: 122rpx;
+  width: 180rpx;
+  height: 180rpx;
 }
+
 .func-btn_text {
   margin-top: 10rpx;
   font-size: 30rpx;
   line-height: 30rpx;
 }
+
 .func-btn_disable {
   color: #e1e1e1;
 }
