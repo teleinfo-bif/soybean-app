@@ -9,6 +9,7 @@
 .personal{
   background-color: #ffffff;
   font-family: PingFangSC-Regular;
+  width:100%;
 }
 
 .personal-title{
