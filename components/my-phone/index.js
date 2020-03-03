@@ -1,4 +1,5 @@
 import { getUserPhone } from "../../api/api.js";
+import { checkSessionKey } from "../../api/request.js";
 const app = getApp();
 Component({
   options: {
@@ -53,6 +54,13 @@ Component({
     },
     async getPhoneNumber(e) {
       let { fedToken } = app.globalData;
+      const sessionState = await checkSessionKey();
+      console.log("点击获取手机号按钮，session状态是", sessionState);
+      if (!sessionState) {
+        console.log("sessionKey无效重新获取sessionKey");
+        fedToken = awaitgetOpenId();
+        app.globalData.fedToken = fedToken;
+      }
       // 此处没有判断token的有效状态
       let requestData = {
         encryptedData: e.detail.encryptedData,
