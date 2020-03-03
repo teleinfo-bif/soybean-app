@@ -558,10 +558,19 @@ Page({
 
   gotoStatistics: function(e) {
     let department = e.currentTarget.dataset.name;
-    wx.navigateTo({
-      url: '../statistics/statistics?title='+department
-    })
+    if (this.data.isManagerFlag == '2') {
+      console.log("111111")
+      wx.navigateTo({
+        url: '../statistics/statistics'
+      })
+    }else {
+      console.log("2222222")
+      wx.navigateTo({
+        url: '../statistics/statistics?title='+department
+      })
+    }
   },
+
   gotoDetailClick: function(e) {
     let department = e.currentTarget.dataset.name;
     let type = e.currentTarget.dataset.type;

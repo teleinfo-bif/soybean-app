@@ -1040,7 +1040,11 @@ parseDatas: function(datas) {
 
         }else if (userType == '2'){
           level = 3
-          title = company
+          if (infoes.length == 2) {
+            title = infoes[1]
+          }else if (infoes.length == 1) {
+            title = infoes[0]
+          }
         } 
 
         this.setData({
