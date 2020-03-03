@@ -1,6 +1,8 @@
 <block wx:if="{{true}}">
   <view class="geo-item">
-    <view class="" style="font-size: 32rpx;">{{baseAddress}}</view>
+    <view wx:if="{{baseAddress!=''}}" class="" style="font-size: 32rpx;margin-right:5rpx">
+      {{baseAddress}}
+    </view>
     <!-- <view class="">{{props.p}}</view> -->
     <my-input props="{{props}}" class="myinput" bind:change="ontest" value="{{streetNumber}}"></my-input>
     <view wx:if="{{props.disable != true}}" bindtap="onChange" class="map-picker {{noPermission ? 'show' : 'hide'}}">
