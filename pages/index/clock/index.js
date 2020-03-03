@@ -18,7 +18,7 @@ Component({
     healthCode: {
       text: "健康码",
       img: "../../../static/images/health_code@3x.png",
-      path: "",
+      path: "/pages/healthQR/healthQR",
       disable: true
     }
   },
