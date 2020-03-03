@@ -6,7 +6,7 @@ const appid = "wxd69df881f0c947dc";
 // 定义网络请求API地址
 const baseURL = "https://admin.bidspace.cn/bid-soybean";
 
-let fedToken = getTokenStorage();
+let fedToken = null;
 let userFilledInfo = null;
 /**
  *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
@@ -14,24 +14,18 @@ let userFilledInfo = null;
  * @returns {fedToken, userFilledInfo}
  */
 async function appInit() {
-  const sessionValite = await checkSessionKey();
-  if (!(sessionValite && fedToken.openid)) {
-    console.log("提醒：token或者session无效，重新请求token");
-    fedToken = await getOpenId();
-    // 本来到这里初始化结束，但是必须要有请求的userId
-    console.log("返回：token值是:", fedToken);
+  // 本来到这里初始化结束，但是必须要有请求的userId
+  console.log("提醒：请求token,userFilledInfo");
+  fedToken = await getOpenId();
+  console.log("init返回：token值是:", fedToken);
+  try {
+    userFilledInfo = await getUserInfo({
+      openid: fedToken.openid
+    });
+  } catch (e) {
+    console.error("userInfo失败", e);
   }
-  if (!userFilledInfo) {
-    console.log("提醒：userInfo无效，重新请求userInfo");
-    try {
-      userFilledInfo = await getUserInfo({
-        openid: fedToken.openid
-      });
-    } catch (e) {
-      console.error("userInfo失败", e);
-    }
-    console.log("返回：userInfo值是:", userFilledInfo);
-  }
+  console.log("init返回：userInfo值是:", userFilledInfo);
   return {
     fedToken: fedToken,
     userFilledInfo: userFilledInfo
@@ -234,17 +228,17 @@ const getUrl = url => {
   return url;
 };
 //获取用户userToken
-function getHeader() {
-  // 判断登录token是否存在
-  if (wx.getStorageSync("userToken")) {
-    // 获取token并设置请求头
-    var token = wx.getStorageSync("userToken");
-    let auth = {
-      Authorization: token.token_type + " " + token.access_token
-    };
-    return auth;
-  }
-}
+// function getHeader() {
+//   // 判断登录token是否存在
+//   if (wx.getStorageSync("userToken")) {
+//     // 获取token并设置请求头
+//     var token = wx.getStorageSync("userToken");
+//     let auth = {
+//       Authorization: token.token_type + " " + token.access_token
+//     };
+//     return auth;
+//   }
+// }
 // 重构请求方式
 const _fetch = content => {
   return Request({
@@ -353,5 +347,6 @@ module.exports = {
   tokenKey,
   checkSessionKey,
   getTokenStorage,
-  appInit
+  appInit,
+  getOpenId
 };
