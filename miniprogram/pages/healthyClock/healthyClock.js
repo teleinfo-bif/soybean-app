@@ -328,10 +328,40 @@ Page({
           
         })
       },
-      fail: err => {
+      fail: function () {
+        wx.hideLoading()
+        wx.showModal({
+          title: '警告',
+          content: '您点击了拒绝授权,将无法正常获取地理位置,点击确定重新获取授权。',
+          success: function (res) {
+            if (res.confirm) {
+              //重点:从这里开始就是重新授权调取
+              wx.openSetting({
+                success: (res) => {
+                  //如果用户重新同意了授权登录scope.userLocation是表示位置授权 true/false
+                  if (res.authSetting["scope.userLocation"]) { 
+                    wx.showToast({
+                      //弹窗提示
+                      title: "授权成功",
+                      icon: "success",
+                      duration: 1000
+                    });
+                  }
+                }, fail: function (res) {
+
+                }
+              })
+              //重点:调取结束
+            }
+          }
+        })
+      },
+
+/*       fail: err => {
         wx.hideLoading()
         console.error('用户当前位置信息获取失败', err)
-      }
+        
+      } */
     });
   },
 
