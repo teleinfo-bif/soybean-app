@@ -86,10 +86,10 @@ Page({
         userId: this.data.otherUserId || app.globalData.userFilledInfo.id
       }).then(data => {
         // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
-        if (memberData.total != undefined && current == data.current) {
+        if (clockData.total != undefined && current == data.current) {
           let clockData = clockData.records.concat(data.records);
           this.setData({
-            memberData: {
+            clockData: {
               ...data,
               records: clockData
             }
