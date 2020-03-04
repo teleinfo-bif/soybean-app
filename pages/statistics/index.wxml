@@ -75,3 +75,7 @@
   <pie type="hospitalization" eleid="test3" groupId="{{groupId}}" title="就诊住院情况" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
    <pie type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>
+
+<view class="foot">
+    <button class="button-export" bindtap="exportExcel">导出报告</button>
+</view>

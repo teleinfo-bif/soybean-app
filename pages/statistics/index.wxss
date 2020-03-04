@@ -187,3 +187,26 @@ page {
   background: white; }
   .health-box .legend-box {
     padding-top: 50rpx; }
+
+
+.foot {
+  width: 100%;
+  height: 155rpx;
+  background: #F5F5F5;
+  padding-top: 30rpx;
+}
+  
+  .button-export {
+      display: block;
+      background:  #1759EF;
+      width: 300rpx;
+      height: 90rpx;
+      margin: auto;
+      text-align: center;
+      font-size:32rpx;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:90rpx;
+      border-radius: 10rpx;
+  }
