@@ -18,9 +18,9 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1759EF",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "信本聪",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
   "permission": {

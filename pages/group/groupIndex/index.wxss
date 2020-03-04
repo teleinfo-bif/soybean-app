@@ -6,7 +6,6 @@ page {
 
 .scrollview {
   height: 100%; }
-
 .top-box {
   box-sizing: border-box;
   display: flex;
@@ -47,8 +46,8 @@ page {
     .row-item_right .btn-statistic {
       display: inline-block;
       margin-left: 15rpx;
-      width: 60rpx;
-      height: 60rpx; }
+      width: 72rpx;
+      height: 72rpx; }
     .row-item_right_btn {
       margin-left: 15rpx; }
       .row-item_right_btn-setting {

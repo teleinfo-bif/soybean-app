@@ -41,7 +41,8 @@
     position: relative; }
 
 .color {
-  color: #4f7ef2; }
+  color: #4f7ef2;  
+  }
 
 picker.select-picker {
   background-color: transparent;

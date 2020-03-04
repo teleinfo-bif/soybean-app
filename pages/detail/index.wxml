@@ -5,7 +5,7 @@
     <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
       <view class="head">
         <view class="head-title">
-          <image class="btn" src="../../static/images/deatil_data@3x.png" />
+          <image class="btn" src="../../static/images/detail.png" />
           <Text class="head-title1">{{groupName}}</Text>
         </view>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">

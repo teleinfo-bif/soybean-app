@@ -78,6 +78,6 @@
 }
 
 .organization_item-btn view, .organization_item-btn .btn {
-  width: 60rpx;
-  height: 60rpx;
+  width: 72rpx;
+  height: 72rpx;
 }

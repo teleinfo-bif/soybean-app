@@ -36,12 +36,17 @@ page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px auto 0;
+  margin: 15rpx auto 0;
   width: 690rpx;
   height: 262rpx;
   background: white;
   box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
   border-radius: 6rpx; }
+  .statistic-box1{
+  margin-top: 15rpx;
+  height: 180rpx;
+  margin-bottom: 38rpx;
+  }
   .statistic-box_row {
     display: flex;
     width: 100%;
@@ -165,7 +170,7 @@ page {
 
 .statistic-box_item_label {
   margin-top: 15rpx;
-  color: #999;
+  color: #333;
   font-size: 24rpx;
   line-height: 1; }
 
