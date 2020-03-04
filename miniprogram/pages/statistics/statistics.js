@@ -318,15 +318,15 @@ Page({
         stroke: false,
         color: "#ffaa00",
       },
+      // {
+      //   name: '出隔离人数',
+      //   data: this.data.outIsolateNumber,
+      //   stroke: false,
+      //   color: "#f2d45e",
+      // },
       {
-        name: '出隔离人数',
+        name: '非隔离期人数',
         data: this.data.outIsolateNumber,
-        stroke: false,
-        color: "#f2d45e",
-      },
-      {
-        name: '其他人数',
-        data: this.data.otherCasesNumber,
         stroke: false,
         color: "#4169E1"
       }
@@ -498,17 +498,17 @@ setAreaPercents: function(e) {
 // 就诊情况百分比
 
 setCasesPercents: function(e) {
-  var total = this.data.confirmedNumber + this.data.isolateNumber + this.data.outIsolateNumber + this.data.otherCasesNumber
+  var total = this.data.confirmedNumber + this.data.isolateNumber + this.data.outIsolateNumber 
   if(total == 0){
     var conP = 0.00
     var isoP = 0.00
     var outIsoP = 0.00
-    var otherP  = 0.00
+    
   }else{
     var conP = (this.data.confirmedNumber / total * 100).toFixed(2)
     var isoP = (this.data.isolateNumber / total * 100).toFixed(2)
     var outIsoP = (this.data.outIsolateNumber / total * 100).toFixed(2)
-    var otherP = (this.data.otherCasesNumber / total * 100).toFixed(2)
+    // var otherP = (this.data.otherCasesNumber / total * 100).toFixed(2)
   }
   
 
@@ -516,7 +516,7 @@ setCasesPercents: function(e) {
     confirmedPercent: conP,
     isolatePercent: isoP,
     outIsolatePercent: outIsoP,
-    otherCasesPercent: otherP,
+    // otherCasesPercent: otherP,
     totalCasesNumber: total,
   })
 },
@@ -655,10 +655,11 @@ getIsoNumber: function(datas) {
   var sum = 0;
   for (var i = 0; i < datas.length; i++) {
     if (datas[i].isLeaveBjFlag != null && datas[i].isLeaveBjFlag == "0" && datas[i].isQueZhenFlag == '1'){
-      var backDate = new Date(datas[i].suregobackdate)
-      if (this.judgeIsolate(backDate)) {
-        sum += 1
-      }
+      sum += 1
+      // var backDate = new Date(datas[i].suregobackdate)
+      // if (this.judgeIsolate(backDate)) {
+      //   sum += 1
+      // }
     }
     
   }
@@ -698,8 +699,8 @@ parseDatas: function(datas) {
 
   var beijingUnconfirmed = this.getBeijingUnconfirmed(healthyDatas)
   var isoNum = this.getIsoNumber(healthyDatas)
-  var outIsoNum = beijingUnconfirmed - isoNum
-  var othercases = filled - confirmed - isoNum - outIsoNum
+  var outIsoNum = filled - confirmed - isoNum
+  // var othercases = filled - confirmed - isoNum - outIsoNum
   
     var doneNumber = this.getLimitDone(healthyDatas);
     var unDoneNumber = this.getLimitUn(healthyDatas);
@@ -727,7 +728,7 @@ parseDatas: function(datas) {
     confirmedNumber: confirmed,
     isolateNumber: isoNum,
     outIsolateNumber: outIsoNum,
-    otherCasesNumber: othercases,
+    // otherCasesNumber: othercases,
 
     doneNumber,
     unDoneNumber,
