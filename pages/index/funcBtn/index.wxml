@@ -1,5 +1,5 @@
 <!-- pages/index/FuncBtn/FuncBtn.wxml -->
-<view class="func-btn" data-path='{{btnData.path}}' bindtap="toNextPage">
+<view class="func-btn" data-path='{{btnData.path}}' bindtap="toNextPage" data-data="{{btnData}}">
   <view>
     <image class="func-btn_icon" src="{{btnData.img}}" role="img"></image>
   </view>
