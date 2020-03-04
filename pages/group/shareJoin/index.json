@@ -1,3 +1,10 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "banner": "../../index/banner/banner",
+    "van-icon": "vant-weapp/icon",
+    "clock": "../../index/clock/index"
+  },
+  "navigationBarTitleText": "信本聪",
+  "navigationStyle": "custom",
+  "backgroundColor": "#F5F5F5"
 }

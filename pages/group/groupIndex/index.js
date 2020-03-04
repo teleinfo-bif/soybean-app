@@ -1,7 +1,16 @@
 // pages/group/groupIndex/index.js
 import { getGroupCurrentUserList } from "../../../api/api";
 const app = getApp();
-
+function getyyyyMMdd(date) {
+  var d = date || new Date();
+  var curr_date = d.getDate();
+  var curr_month = d.getMonth() + 1;
+  var curr_year = d.getFullYear();
+  String(curr_month).length < 2 ? (curr_month = "0" + curr_month) : curr_month;
+  String(curr_date).length < 2 ? (curr_date = "0" + curr_date) : curr_date;
+  var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
+  return yyyyMMdd;
+}
 Page({
   /**
    * 页面的初始数据
@@ -13,7 +22,8 @@ Page({
     children: {},
     groupName: "",
     isGroup: true,
-    memberData: {}
+    memberData: {},
+    clockInTime:''
   },
 
   // tab点击事件
@@ -85,9 +95,9 @@ Page({
     const data = JSON.parse(options.data);
     const { isGroup = true } = options;
     const { id, name, children, managers = "" } = data;
-    wx.setNavigationBarTitle({
-      title: data.name
-    });
+    // wx.setNavigationBarTitle({
+    //   title: data.name
+    // });
     this.setData(
       {
         children: children,
@@ -95,7 +105,8 @@ Page({
         groupName: name,
         managers: "" ? "" : managers.split(","),
         data,
-        isGroup
+        isGroup,
+        clockInTime: getyyyyMMdd(new Date())
       },
       this.getData
     );
@@ -146,7 +157,7 @@ Page({
 
       desc: "分享页面的内容",
 
-      path: `/pages/group/shareJoin/index?groupId=${this.data.groupId}&timeStamp=${timeStamp}`,
+      path: `/pages/group/shareJoin/index?groupId=${this.data.groupId}&timeStamp=${timeStamp}&groupName=${this.data.groupName}`,
       imageUrl: "../../../static/images/share.jpg",
       success: res => {
         console.log("转发成功", res);

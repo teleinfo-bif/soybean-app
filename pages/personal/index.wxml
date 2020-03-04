@@ -18,3 +18,8 @@
   </view>
   <view wx:if="{{userFilledInfo.userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>
 </view>
+
+<!-- 注册新机构链接 -->
+<view wx:if="{{userFilledInfo.userRegisted}}" class="group-create-location"  bindtap="createGroup">
+    注册新机构>
+</view>

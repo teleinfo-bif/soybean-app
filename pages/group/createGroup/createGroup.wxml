@@ -1,0 +1,67 @@
+<!-- pages/createGroup/createGroup.wxml -->
+<view class="page">
+  <view class="personal">
+    <!-- 报表 -->
+    <form class="personal-form" bindsubmit="submitUserInfo">
+      <view class="personal-view">
+        <!-- 头像 -->
+        <view class="personal-info-hd">
+          <text class="info-label one">步骤1 上传机构头像</text>
+        </view>
+        <view class="add-img" bind:tap="chooseImage">
+          <image wx:if="{{!groupAvatarShow}}" src="{{groupNotAvatarShow}}"></image>
+          <image wx:if="{{groupAvatarShow}}" src="{{groupAvatarShow}}"></image>
+        </view>
+        <view class="personal-divide"></view>
+        <!-- 组织名称 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤2 请输入机构名称</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="group_name" placeholder-class="placeholder-style" placeholder="{{placeholder_group_name}}" maxlength="20"></input>
+        </view>
+        <view class="personal-divide"></view>
+        <!-- 组织介绍 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤3 请输入机构介绍信息</text>
+        </view>
+        <view class="personal-info-td">
+          <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
+        </view>
+        <view class="personal-divide"></view>
+        <!-- 导入架构 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤4 发送机构架构</text>         
+          <view style="display:inline-block" bindtap="downloadStructure">
+            (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
+            <text class="download-info">下载模板)</text>
+          </view>
+        </view>
+        <view class="download-info-mail-item">
+          <input class="file-input" name="group_file" value="{{uploadFileName}}" placeholder-class="placeholder-style" placeholder="{{placeholder_group_file}}" disabled="{{true}}"></input>        
+          <button class="file-input-button" bindtap="chooseFile">选择</button>
+        </view>
+        <view class="personal-divide"></view>
+        <!-- 姓名 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤5 请输入您的姓名</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="group_applicant" maxlength="5" placeholder-class="placeholder-style" placeholder="{{placeholder_group_apply_name}}" value="{{applicant}}"></input>
+        </view>
+        <view class="personal-divide"></view>
+        <!-- 联系方式 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤6 请输入您的联系方式</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" type="number" name="group_phone" placeholder-class="placeholder-style" maxlength="11" placeholder="{{placeholder_group_apply_phone}}" value="{{phone}}"></input>
+        </view>
+        <view class="personal-divide"></view>
+      </view>
+      <view class="personal-buttons">
+        <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
+      </view>
+    </form>
+  </view>
+</view>

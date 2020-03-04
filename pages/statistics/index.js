@@ -114,5 +114,20 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function() {},
+
+
+  exportExcel: function () {
+    const { groupId } = this.data
+    let url = `https://admin.bidspace.cn/bid-soybean/download/annex.xlsx?groupid=${groupId}`
+    wx.setClipboardData({
+      data: url,
+      success: function (res) {
+        wx.showToast({
+          icon: 'none',
+          title: "导出文件下载链接已保存到您的剪贴板"
+        });
+      }
+    })
+  },
 });

@@ -94,7 +94,35 @@ Page({
           placeholder: "请输入家庭详细地址",
           addressKey: ""
         }
-      }
+      },
+      {
+        title: "单位名称",
+        type: "input",
+        prop: "companyName",
+        require: false,
+        props: {
+          placeholder: "请输入单位名称",
+        }
+      },      
+      {
+        title: "单位所在城市及区",
+        type: "area",
+        prop: "companyAddress",
+        require: false,
+        props: {
+          placeholder: "请选择单位所在区及街道、社区"
+        }
+      },
+      {
+        title: "单位详细地址",
+        type: "input",
+        prop: "companyDetailAddress",
+        require: false,
+        props: {
+          placeholder: "请输入公司详细地址",
+          addressKey: ""
+        }
+      },
     ],
     data: {},
     userFilledInfo: {},
@@ -148,6 +176,9 @@ Page({
       formData.homeAddress = Array.isArray(formData)
         ? formData.homeAddress.join("-")
         : "";
+      formData.companyAddress = Array.isArray(formData)
+        ? formData.companyAddress.join("-")
+        : "";        
       formData = {
         ...formData,
         ...app.globalData.userInfo
@@ -220,7 +251,7 @@ Page({
     let { userRegisted } = app.globalData.userFilledInfo;
 
     fields.forEach(item => {
-      if (item.prop == "homeAddress" || item.prop == "detailAddress") {
+      if (item.prop == "homeAddress" || item.prop == "detailAddress" || item.prop == "companyAddress" || item.prop == "companyDetailAddress") {
         return (item["props"]["disable"] = !this.data.edit);
       }
     });
@@ -284,18 +315,9 @@ Page({
    */
   onUnload: function() {},
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
+  createGroup: function (e) {
+      wx.navigateTo({
+        url: '/pages/group/createGroup/createGroup'
+      })
+  },
 });

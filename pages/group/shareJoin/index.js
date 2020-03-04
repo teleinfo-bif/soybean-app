@@ -8,7 +8,9 @@ Page({
    */
   data: {
     groupId: "",
-    userId: ""
+    userId: "",
+    timeStamp: "",
+    groupName: ""
   },
 
   shareJoniGroup(
@@ -26,12 +28,12 @@ Page({
           duration: 1500,
           mask: false,
           success: result => {
-            wx.navigateTo({
-              url: "/pages/index/index",
-              success: result => {},
-              fail: () => {},
-              complete: () => {}
-            });
+            // wx.navigateTo({
+            //   url: "/pages/index/index",
+            //   success: result => {},
+            //   fail: () => {},
+            //   complete: () => {}
+            // });
           },
           fail: () => {},
           complete: () => {}
@@ -43,7 +45,12 @@ Page({
         //   success:
         // })
       })
-      .catch(e => {});
+      .catch(e => { });
+      setTimeout(function () {
+        wx.navigateTo({
+          url: "/pages/index/index",
+        })
+      }, 1000)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -55,46 +62,138 @@ Page({
      * 调用接口加群 返回首页
      */
     // console.log()
-    const { groupId, timeStamp } = options;
+    const { groupId, timeStamp, groupName } = options;
+    console.log("======options=====", options);
     // 这里需要先判断再调用
     // 这里需要先判断再调用
     // 这里需要先判断再调用
     // 这里需要先判断再调用
     // 这里需要先判断再调用app.init 如果有状态就直接用
-    app.init(globalData => {
-      const { userFilledInfo } = globalData;
-      console.log("======options=====", options);
-      console.log("======options=====", userFilledInfo);
-      const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
-      const _this = this;
+    if (!app.globalData.appInit) {
+      app.init(globalData => {
+        this.setData({
+          globalData: globalData,
+          userFilledInfo: globalData.userFilledInfo,
+          groupId: groupId,
+          timeStamp: timeStamp,
+          groupName: groupName,
+        });
+        this.userPrompt()
+      });
+    } else {
+      this.setData({
+        globalData: app.globalData,
+        userFilledInfo: app.globalData.userFilledInfo,
+        groupId: groupId,
+        timeStamp: timeStamp,
+        groupName: groupName,
+      });
+      this.userPrompt()
+    }
+
+
+    // app.init(globalData => {
+    //   const { userFilledInfo } = globalData;
+    //   console.log("======options=====", options);
+    //   console.log("======options=====", userFilledInfo);
+    //   const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
+    //   const _this = this;
+    //   wx.showModal({
+    //     title: "",
+    //     content: `groupId:${groupId} \n timeStamp: ${timeStamp}\n有效状态是: ${userful},`,
+    //     showCancel: true,
+    //     cancelText: "取消",
+    //     cancelColor: "#000000",
+    //     confirmText: "确定",
+    //     confirmColor: "#3CC51F",
+    //     success() {
+    //       if (userFilledInfo.userRegisted) {
+    //         console.log("用户已经注册，准备执行this.joinGroup");
+    //         _this.shareJoniGroup({
+    //           groupId,
+    //           userId: userFilledInfo.id
+    //         });
+    //       } else {
+    //         wx.showModal({
+    //           title: "",
+    //           content: `您还没有注册，去注册。`,
+    //           showCancel: true,
+    //           cancelColor: "#000000",
+    //           confirmText: "去注册",
+    //           confirmColor: "#3CC51F"
+    //         });
+    //       }
+    //     }
+    //   });
+    // });
+  },
+
+  userPrompt: function () {
+    const { groupId, timeStamp, groupName, userFilledInfo } = this.data
+    const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
+    const _this = this;
+    if(!userful){
+      wx.navigateTo({
+        url: "/pages/index/index",
+        success: result => {},
+        fail: () => {},
+        complete: () => {}
+      });
+      return
+    }
+    if (userFilledInfo.userRegisted) {
       wx.showModal({
         title: "",
-        content: `groupId:${groupId} \n timeStamp: ${timeStamp}\n有效状态是: ${userful},`,
+        content: `确定要加入 ${groupName} 组织吗？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
         confirmText: "确定",
         confirmColor: "#3CC51F",
-        success() {
-          if (userFilledInfo.userRegisted) {
+        success(res) {
+          if (res.confirm) {
             console.log("用户已经注册，准备执行this.joinGroup");
             _this.shareJoniGroup({
               groupId,
               userId: userFilledInfo.id
             });
-          } else {
-            wx.showModal({
-              title: "",
-              content: `您还没有注册，去注册。`,
-              showCancel: true,
-              cancelColor: "#000000",
-              confirmText: "去注册",
-              confirmColor: "#3CC51F"
+          } else if (res.cancel) {
+            wx.navigateTo({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          }
+        }
+      })
+    } else {
+      wx.showModal({
+        title: "",
+        content: `您还没有注册，去注册。`,
+        showCancel: false,
+        cancelColor: "#000000",
+        confirmText: "去注册",
+        confirmColor: "#3CC51F",
+        success(res) { 
+          if (res.confirm) {
+            wx.navigateTo({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          } else if (res.cancel) {
+            wx.navigateTo({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
       });
-    });
+    }
   },
 
   /**
@@ -120,15 +219,4 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
 });
