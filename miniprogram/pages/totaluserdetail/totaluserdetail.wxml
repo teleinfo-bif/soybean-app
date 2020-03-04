@@ -7,7 +7,7 @@
 
     <view class="title-time-info">
       <view class="title-time-text">
-        <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{currentdate}}" bindchange="qryClickInfoByDate">
+        <picker mode="date" name="date" value="{{currentDate}}" start="2019-11-01" end="{{today}}" bindchange="qryClickInfoByDate">
           <text>{{currentDate}}</text>
         </picker>
       </view>
@@ -26,7 +26,7 @@
       <label wx:if="{{item.temperature > 0}}">已打卡</label>
       <label wx:else="{{item.temperature > 0}}">未打卡</label>
       <label>
-        <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{date}}">
+        <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">
             打卡详情
           </view>

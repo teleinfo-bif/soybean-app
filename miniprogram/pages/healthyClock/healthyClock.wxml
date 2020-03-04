@@ -48,61 +48,7 @@
 
 
 
-    <view wx:if="{{isGoBackFlag == '1'}}">
-        <!--未返京开始-->
-   
-      <view class="clock_form__title">未返回工作地原因
-
-          <view class='clock-radio'>
-            <radio-group class="radio-group" bindchange="noGoBackRadioChange">
-              <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
-                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
-                <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
-              </label>
-           </radio-group>
-         </view>
-
-      </view>
-     </view>
-        
-        <view class='devide-middle'/>
-
-        <!-- <view class="clock_form__title">
-         离京日期
-        </view>
-        <view class="">
-          <view class=" ">
-            <view class="clock_form_input">
-              <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="2020-12-29" bindchange="leaveDateChange">
-                <view class="weui-input" style="width:87%;float:left;">{{leavedate}}</view>
-
-                <view style="align:right;width:10%;display:inline;color:#1759EF">
-                  <a bindtap="leaveDateChange">选择</a>
-                </view>
-              </picker>
-            </view>
-          </view>
-        </view>
-        <view class='devide-middle'/> -->
-       <view wx:if="{{isGoBackFlag == '1'}}">
-        <view class="clock_form__title">
-          计划返回工作地日期
-        <view class="">
-          <view class=" ">
-            <view class="clock_form_input">
-              <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
-                <view class="weui-input" style="width:87%;float:left;">{{gobackdate}}</view>
-                <view style="align:right;width:22%;display:inline;color:#1759EF;">
-                  <a bindtap="gobackDateChange">选择</a>
-                </view>
-              </picker>
-            </view>
-          </view>
-        </view>
-        <view class='devide-middle'/>
-      </view>
-      </view>
-      <!--未返京结束-->
+    
 
 
 
@@ -144,7 +90,7 @@
           <!--14天内离京开始-->
 
           <view class="clock_form__title">
-            返回日期
+            返回当前所在地日期
           </view>
           <view class="">
             <view class="weui-cell ">
@@ -187,6 +133,63 @@
         <!--14天内离京结束-->
       </view>
       <!--已返京结束-->
+
+  
+  <view wx:if="{{isGoBackFlag == '1'}}">
+        <!--未返京开始-->
+   
+      <view class="clock_form__title">未返回{{workPlace}}原因
+
+          <view class='clock-radio'>
+            <radio-group class="radio-group" bindchange="noGoBackRadioChange">
+              <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
+                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+                <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
+              </label>
+           </radio-group>
+         </view>
+
+      </view>
+     </view>
+        
+        <view class='devide-middle'/>
+
+        <!-- <view class="clock_form__title">
+         离京日期
+        </view>
+        <view class="">
+          <view class=" ">
+            <view class="clock_form_input">
+              <picker mode="date" name="leavedate" value="{{leavedate}}" start="2019-01-01" end="2020-12-29" bindchange="leaveDateChange">
+                <view class="weui-input" style="width:87%;float:left;">{{leavedate}}</view>
+
+                <view style="align:right;width:10%;display:inline;color:#1759EF">
+                  <a bindtap="leaveDateChange">选择</a>
+                </view>
+              </picker>
+            </view>
+          </view>
+        </view>
+        <view class='devide-middle'/> -->
+       <view wx:if="{{isGoBackFlag == '1'}}">
+        <view class="clock_form__title">
+          计划返回{{workPlace}}日期
+        <view class="">
+          <view class=" ">
+            <view class="clock_form_input">
+              <picker mode="date" name="gobackdate" value="{{gobackdate}}" start="2019-01-01" end="2020-12-29" bindchange="gobackDateChange">
+                <view class="weui-input" style="width:87%;float:left;">{{gobackdate}}</view>
+                <view style="align:right;width:22%;display:inline;color:#1759EF;">
+                  <a bindtap="gobackDateChange">选择</a>
+                </view>
+              </picker>
+            </view>
+          </view>
+        </view>
+        <view class='devide-middle'/>
+      </view>
+      </view>
+      <!--未返京结束-->
 
       <view class="clock_form__title">当日体温</view>
       <view class="">

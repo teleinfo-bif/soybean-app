@@ -8,6 +8,7 @@ Page({
     titleInfo: "",
     currentDate: "",
     departmentName: "",
+    today: "",
     clickdetail: [],
   },
 
@@ -63,6 +64,7 @@ Page({
         department: name,
         currentDate: date,
         clickdetail: temp,
+        today: this.getCurrentDay()
       })
      },
 
@@ -76,6 +78,17 @@ Page({
 
 
      
+  },
+
+  getCurrentDay: function (e) {
+    //获取当天日期
+    var date = new Date();
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+    console.log("当前时间：" + Y + M + D);
+
+    return Y + M + D
   },
 
   /**

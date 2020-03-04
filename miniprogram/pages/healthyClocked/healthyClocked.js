@@ -59,6 +59,7 @@ Page({
       { name: '当地未放行', value: '1' }
     ],
     index: 0,
+    workPlace: "",
     user_id: app.globalData.openid,
     date: getCurrentDay(),
     workStatusItems: [
@@ -82,7 +83,8 @@ Page({
     
     this.setData({
       user_id: user_id,
-      date: date
+      date: date,
+      workPlace: app.globalData.workPlace
     })
 
 

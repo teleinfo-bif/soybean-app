@@ -10,6 +10,7 @@ Page({
     companyReg: "",
     department: "",
     titleInfo: "",
+    today: "",
     authorityLevel: 0,       // 权限级别: 1 院级管理者，可查看全部；2 二级部门； 3 三级部门
     
   },
@@ -150,6 +151,9 @@ Page({
   },
 
   analysisLevel: function(level) {
+    this.setData({
+      today: this.getCurrentDay()
+    })
 
     wx.showLoading({
       title: '加载中...',

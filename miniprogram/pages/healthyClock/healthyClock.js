@@ -54,7 +54,8 @@ Page({
       { name: '远程办公', value: '1' },
       { name: '未复工', value: '2' }
     ],
-    workStatusFlag:''
+    workStatusFlag:'',
+    workPlace: ''
   },
 
   currentDate: function (e) {
@@ -159,6 +160,10 @@ Page({
       key: 'UY2BZ-MLI6O-V2CWK-SERF5-ZNSI2-XRFOJ'
     });
 
+    this.setData({
+      workPlace: app.globalData.workPlace
+    })
+
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid
@@ -175,6 +180,7 @@ Page({
     })
     this.qryHealthyTodayInfo()
     this.qryUserLatestInfo()
+
 
   },
 
@@ -320,6 +326,9 @@ Page({
             console.log("work place: ", app.globalData.workPlace)
             var reg = new RegExp('.*' + app.globalData.workPlace)
             var currentPlace = str_before + '市'
+
+            app.globalData.localPlace = currentPlace
+
             console.log("reg = ", reg)
             console.log("current place: ", currentPlace)
           

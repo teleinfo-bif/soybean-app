@@ -96,7 +96,9 @@ Page({
     companyDepartment: "",
 
     departmentLevel: "2",
-    departmentName: ""
+    departmentName: "",
+
+    workPlace: "",
 
   },
 
@@ -1165,9 +1167,17 @@ parseDatas: function(datas) {
     let level = decodeURIComponent(options.level)
     let title = decodeURIComponent(options.title)
 
+    var work = app.globalData.workPlace
+
+    var returnText = "返" + work + "人数"
+    var leaveText = "离" + work + "未返" + work + "人数"
+
     this.setData({
       departmentLevel: level,
-      departmentName: name
+      departmentName: name,
+      workPlace: app.globalData.workPlace,
+      returnJingText: returnText,
+      leaveJingText: leaveText
     })
 
     console.log('name: ', name)

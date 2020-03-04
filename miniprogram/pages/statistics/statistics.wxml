@@ -183,7 +183,7 @@
             </view>
             <view class="table-row-content">
               <view class="ring-icon4"></view>
-              <view class="table-row-content-text">北京 {{beijingNumber}} 人</view>
+              <view class="table-row-content-text">查看人单位所在城市 {{beijingNumber}} 人</view>
             </view>
 
           </view>
