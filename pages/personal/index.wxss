@@ -35,5 +35,6 @@ page {
   width: 750rpx;
   z-index: 100;
   position: absolute;
+  padding-bottom: 20rpx;
 }
 

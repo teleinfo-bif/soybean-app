@@ -146,7 +146,7 @@ Page({
 
       desc: "分享页面的内容",
 
-      path: `/pages/group/shareJoin/index?groupId=${this.data.groupId}&timeStamp=${timeStamp}`,
+      path: `/pages/group/shareJoin/index?groupId=${this.data.groupId}&timeStamp=${timeStamp}&groupName=${this.data.groupName}`,
       imageUrl: "../../../static/images/share.jpg",
       success: res => {
         console.log("转发成功", res);

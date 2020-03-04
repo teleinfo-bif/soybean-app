@@ -31,17 +31,15 @@
         <view class="personal-divide"></view>
         <!-- 导入架构 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤4 发送机构架构</text>
-          (点击
+          <text class="info-label">步骤4 发送机构架构</text>         
           <view style="display:inline-block" bindtap="downloadStructure">
-            <image class="info-label-img" src="{{groupDownloadIcon}}" />
+            (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
             <text class="download-info">下载模板)</text>
           </view>
         </view>
         <view class="download-info-mail-item">
-          <input class="info-input" name="group_file" placeholder-class="placeholder-style" placeholder="{{placeholder_group_file}}"></input>
-        
-          <button bindtap="chooseFile">选择</button>
+          <input class="file-input" name="group_file" value="{{uploadFileName}}" placeholder-class="placeholder-style" placeholder="{{placeholder_group_file}}" disabled="{{true}}"></input>        
+          <button class="file-input-button" bindtap="chooseFile">选择</button>
         </view>
         <view class="personal-divide"></view>
         <!-- 姓名 -->

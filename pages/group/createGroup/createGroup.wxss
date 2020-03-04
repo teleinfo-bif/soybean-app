@@ -157,11 +157,36 @@ page {
     font-weight:400;
     color:rgba(153,153,153,1);
 }
-/* .download-info-mail-item {
-    padding-top: 10rpx;
-    padding-bottom: 15rpx;
-} */
+
+
 .one {
     margin-top: 10rpx;
     margin-bottom: 10rpx;
+}
+
+.download-info-mail-item {
+    margin-top: 40rpx;
+    margin-bottom: 30rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.file-input {
+    width: 500rpx;
+    border: 1rpx solid rgba(153,153,153,1);
+    border-radius: 10rpx;
+    height: 60rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+}
+.file-input-button {
+    width:100rpx;
+    padding: 0;
+    margin: 0;
+    font-size: 28rpx;
+    height: 60rpx;
+    line-height: 60rpx;
 }

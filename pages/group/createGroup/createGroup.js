@@ -6,12 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    disabled: true,
     groupAvatarShow: '',
     groupNotAvatarShow: '../../../static/images/group_name.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
     groupAvatar: '',
     applicant: '',
     phone: '',
+    uploadFileName: '',//上传的文件名
+    uploadFilePath: '',//上传的文件路径，备用
     placeholder_group_name: '请输入机构名称',
     placeholder_group_introduce: '请输入机构介绍信息，10-200字',
     placeholder_group_strucure: '请在此处粘贴您的架构文件链接',
@@ -36,7 +39,7 @@ Page({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo
         });
-        // this.setFieldsDisable(globalData.userFilledInfo);
+        this.queryUserInfo()
       });
     } else {
       console.log('globalData',globalData);
@@ -44,10 +47,10 @@ Page({
         globalData: globalData,
         userFilledInfo: globalData.userFilledInfo
       });
-      // this.setFieldsDisable(globalData.userFilledInfo);
+      this.queryUserInfo()
     }
 
-    // this.queryUserInfo()
+    
   },
 
   /**
@@ -80,6 +83,7 @@ Page({
   
   chooseImage: function() {
     const that = this;
+    const bid = this.data.userFilledInfo.bidAddress
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
@@ -88,12 +92,16 @@ Page({
         const tempFilePath = res.tempFilePaths[0]
         var key = tempFilePath.substr(tempFilePath.lastIndexOf('/') + 1)
         // console.log('tempFilePaths:', tempFilePath)
-        wx.cloud.uploadFile({
-          cloudPath: 'groupAvatar/'+ key, // 上传至云端的路径
-          filePath: tempFilePath, // 小程序临时文件路径
-          success: res => {
-            // 返回文件 ID
-            // console.log(res.fileID)
+        wx.uploadFile({
+          url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
+          filePath: tempFilePath,
+          name: 'file',
+          formData: {
+            'bid': bid
+          },
+          success (res){
+            const data = res.data
+            console.log("uploadImage", res)
             that.setData({
               groupAvatar: res.fileID,
               groupAvatarShow: tempFilePath
@@ -112,8 +120,25 @@ Page({
       type: 'file',
       success (res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        const tempFilePaths = res.tempFiles
-        console.log('22',tempFilePaths)
+        const tempFile = res.tempFiles[0]
+        let name = tempFile.name
+        let path = tempFile.path
+        that.setData({
+          uploadFileName: name,
+          uploadFilePath: path
+        })
+        wx.uploadFile({
+          url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'user': 'test'
+          },
+          success (res){
+            const data = res.data
+            //do something
+          }
+        })
       }
     })
     // wx.chooseImage({
@@ -265,27 +290,31 @@ Page({
 
     }
   },
-
+  //需要修改成现有的
   queryUserInfo: function(e) {
-    console.log("openid: ", app.globalData.openid)
-    db.collection('user_info').where({
-      _openid: app.globalData.openid
-      // _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
-    }).get({
-        success: res => {
-          console.log(res.data)
-          this.setData({
-            applicant: res.data[0].name,
-            phone: res.data[0].phone,
-            company_count: res.data[0].company_count,
-            record_id: res.data[0]._id
-          })
-          // console.log('w',this.data.company_count==undefined)
-        },
-        fail: err => {
-          console.log(err)
-        }
-      })
+    this.setData({
+      applicant: this.data.userFilledInfo.name,
+      phone: this.data.userFilledInfo.phone
+    })
+
+    
+    // db.collection('user_info').where({
+    //   _openid: app.globalData.openid
+    //   // _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
+    // }).get({
+    //     success: res => {
+    //       console.log(res.data)
+    //       this.setData({
+    //         applicant: res.data[0].name,
+    //         phone: res.data[0].phone,
+    //         company_count: res.data[0].company_count,
+    //         record_id: res.data[0]._id
+    //       })
+    //     },
+    //     fail: err => {
+    //       console.log(err)
+    //     }
+    //   })
   },
 
   /**
@@ -306,27 +335,28 @@ Page({
 
   downloadStructure: function() {
     console.log('下载模板')
-    wx.cloud.getTempFileURL({
-      fileList: [{
-        fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位机构架构模板.xls',
-        maxAge: 60 * 60, // one hour
-      }]
-    }).then(res => {
-      // get temp file URL
-      console.log(res.fileList)
-      let tempFileURL = res.fileList[0].tempFileURL
-      wx.setClipboardData({
-        data: tempFileURL,
-        success: function (res) {
-          wx.showToast({
-            icon: 'none',
-            title: "导出文件下载链接已保存到您的剪贴板"
-          });
-        }
-      })
-    }).catch(error => {
-      // handle error
-    })
+    //等待后端接口
+    // wx.cloud.getTempFileURL({
+    //   fileList: [{
+    //     fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位机构架构模板.xls',
+    //     maxAge: 60 * 60, // one hour
+    //   }]
+    // }).then(res => {
+    //   // get temp file URL
+    //   console.log(res.fileList)
+    //   let tempFileURL = res.fileList[0].tempFileURL
+    //   wx.setClipboardData({
+    //     data: tempFileURL,
+    //     success: function (res) {
+    //       wx.showToast({
+    //         icon: 'none',
+    //         title: "导出文件下载链接已保存到您的剪贴板"
+    //       });
+    //     }
+    //   })
+    // }).catch(error => {
+    //   // handle error
+    // })
   },
 
 })
