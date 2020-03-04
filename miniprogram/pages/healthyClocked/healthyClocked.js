@@ -108,6 +108,7 @@ Page({
         console.log(res)
         //今日已打卡
         if(res.data.length > 0){
+          console.log("@@@@@@@@@@@@@@ clickdata.isGoBackFlag: ", res.data[0])
           this.setData({
             clickdata:res.data[0]
           });

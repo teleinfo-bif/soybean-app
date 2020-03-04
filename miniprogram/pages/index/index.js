@@ -255,6 +255,8 @@ Page({
 
         that.userinfo = res.data;
 
+        
+
         that.setData({
           name: res.data[0].name,
           phone: res.data[0].phone,
@@ -263,6 +265,11 @@ Page({
           loginUserInfo: res.data[0].name,
           isRegistered: true
         })
+
+        console.log("company: ", res.data[0].company_district)
+        var infoes = res.data[0].company_district.split(' ')
+        console.log("infoes: ", infoes)
+        app.globalData.workPlace = infoes[1]
 
         // app.globalData.userBaseInfo = res.data[0]
         // console.log("base info index:", app.gloabalData.userBaseInfo)

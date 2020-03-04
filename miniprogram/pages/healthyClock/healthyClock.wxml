@@ -33,7 +33,7 @@
 
       <view class="clock_form__title">
         <text style="">打卡地点</text>
-              <text style="float:right;width:10%;display:inline;color:#1759EF; margin-right:20rpx" bindtap="onShow">获取</text>
+            <text style="float:right;width:10%;display:inline;color:#1759EF; margin-right:20rpx" bindtap="onShow">获取</text>
 
       </view>
       
@@ -48,22 +48,26 @@
 
 
 
-      <view wx:if="{{isGoBackFlag == '1'}}">
+    <view wx:if="{{isGoBackFlag == '1'}}">
         <!--未返京开始-->
    
-        <view class="clock_form__title">未返京原因
-        </view>
-        <view class='clock-radio'>
-          <radio-group class="radio-group" bindchange="noGoBackRadioChange">
-            <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
-              <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
-            <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
-            </label>
-          </radio-group>
-        </view>
+      <view class="clock_form__title">未返回工作地原因
+
+          <view class='clock-radio'>
+            <radio-group class="radio-group" bindchange="noGoBackRadioChange">
+              <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
+                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+                <view  wx:if='{{index != radioNoGoBackItems.length-1}}'class='devide-radio'/> 
+              </label>
+           </radio-group>
+         </view>
+
+      </view>
+     </view>
+        
         <view class='devide-middle'/>
 
-        <view class="clock_form__title">
+        <!-- <view class="clock_form__title">
          离京日期
         </view>
         <view class="">
@@ -79,11 +83,10 @@
             </view>
           </view>
         </view>
-        <view class='devide-middle'/>
-
+        <view class='devide-middle'/> -->
+       <view wx:if="{{isGoBackFlag == '1'}}">
         <view class="clock_form__title">
-          计划返京日期
-        </view>
+          计划返回工作地日期
         <view class="">
           <view class=" ">
             <view class="clock_form_input">
@@ -98,11 +101,14 @@
         </view>
         <view class='devide-middle'/>
       </view>
+      </view>
       <!--未返京结束-->
 
-      <view wx:if="{{isGoBackFlag == '0'}}">
+
+
+      <!-- <view wx:if="{{isGoBackFlag == '0'}}"> -->
         <!--已返京开始-->
-        <view class="clock_form__title">是否离过京(2020年1月10日以后)</view>
+        <view class="clock_form__title">14天内是否离开过当前所在地</view>
         <view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
@@ -112,10 +118,10 @@
             </label>
           </radio-group>
         </view>
-        </view>
+        <!-- </view> -->
        <view class='devide-middle'/>
 
-      <view wx:if="{{isLeaveBjFlag == '0'}}">
+      <!-- <view wx:if="{{isLeaveBjFlag == '0'}}">
         <view class="clock_form__title">
             离京日期
           </view>
@@ -132,13 +138,13 @@
             </view>
           </view>
           <view class='devide-middle'/>
-      </view>
+      </view> -->
        
         <view wx:if="{{isLeaveBjFlag == '0'}}">
           <!--14天内离京开始-->
 
           <view class="clock_form__title">
-            返京日期
+            返回日期
           </view>
           <view class="">
             <view class="weui-cell ">
@@ -167,7 +173,7 @@
         </view>
        <view class='devide-middle'/>
 
-      <view class="clock_form__title">返京所乘车次/航班/车牌</view>
+      <view class="clock_form__title">返回所乘车次/航班/车牌</view>
           <view class="">
             <view class="">
               <view class="clock_form_input">
