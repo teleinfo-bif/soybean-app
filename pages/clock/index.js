@@ -79,7 +79,7 @@ let fields = [
   {
     title: "交通工具",
     type: "radio",
-    prop: "flightType",
+    prop: "transport",
     hide: true,
     props: {
       itemKey: "id",
@@ -87,9 +87,13 @@ let fields = [
       options: [
         { id: 1, name: "飞机" },
         { id: 2, name: "火车" },
-        { id: 3, name: "汽车" },
-        { id: 4, name: "轮船" },
-        { id: 5, name: "其他" }
+        { id: 3, name: "自驾" },
+        { id: 4, name: "地铁" },
+        { id: 5, name: "客车" },
+        { id: 6, name: "公交" },
+        { id: 7, name: "出租车" },
+        { id: 8, name: "轮船" },
+        { id: 0, name: "其他" }
       ]
     }
   },
@@ -120,7 +124,7 @@ let fields = [
   {
     title: "您的在岗状态 ",
     type: "radio",
-    prop: "worktype",
+    prop: "jobstatus",
     hide: false,
     props: {
       itemKey: "id",
@@ -142,6 +146,29 @@ let fields = [
         return /^\d+(\.\d+)?$/.test(value);
       },
       errorMsg: "体温请输入数字和小数点"
+    }
+  },
+  {
+    title: "目前健康状况",
+    type: "radio",
+    prop: "healthy",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "健康" },
+        { id: 2, name: "有发烧、咳嗽等症状" },
+        { id: 0, name: "其他症状" }
+      ]
+    }
+  },
+  {
+    title: "其他症状",
+    type: "input",
+    prop: "otherhealthy",
+    hide: true,
+    props: {
+      placeholder: "请输入其他症状"
     }
   },
   {
@@ -168,29 +195,6 @@ let fields = [
         { id: 1, name: "否" },
         { id: 2, name: "是" }
       ]
-    }
-  },
-  {
-    title: "目前健康状况",
-    type: "radio",
-    prop: "healthy",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "健康" },
-        { id: 2, name: "有发烧、咳嗽等症状" },
-        { id: 0, name: "其他症状" }
-      ]
-    }
-  },
-  {
-    title: "其他症状",
-    type: "input",
-    prop: "otherhealthy",
-    hide: true,
-    props: {
-      placeholder: "请输入其他症状"
     }
   },
   {
@@ -445,7 +449,7 @@ Page({
               "leavetime",
               "gobacktime",
               "flight",
-              "flightType"
+              "transport"
             ]);
             // this.setFieldsHide(["reason", "gobacktime", "reason"]);
           }
