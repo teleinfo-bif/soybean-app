@@ -19,8 +19,8 @@
           </view>
         </view>
       </view>
-      <block wx:if="{{clockList.length> 0}}">
-        <view class="people-item" wx:for="{{ clockList }}" wx:key="index">
+      <block wx:if="{{clockData.total> 0}}">
+        <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>
           <view class="people-item_sign">{{item.clockInId != 0 ? '已打卡': '未打卡'}}</view>
           <view wx:if="{{permission == 'true'}}" class="people-item_detail ">
@@ -52,7 +52,7 @@
           </view>
         </view>
       </block>
-      <view wx:if="{{clockList.length== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
+      <view wx:if="{{clockData.total== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
         暂无详细信息
       </view>
       <view wx:if="{{clockData.pages > 1 && clockData.pages == clockData.current}}" class="no-more-msg">

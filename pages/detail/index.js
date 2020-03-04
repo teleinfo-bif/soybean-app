@@ -24,19 +24,12 @@ Page({
     groupName: "",
     permission: "",
     clockInTime: "",
-    clockData: {
-      current: 0,
-      pages: 0,
-      searchCount: true,
-      size: 0,
-      total: 0,
-      records: []
-    },
+    clockData: {},
     clockList: [],
     show: false,
     currentDate: new Date().getTime(),
     showDateText: "",
-    // minDate: ,
+    requestStutus: false,
     formatter(type, value) {
       if (type === "year") {
         return `${value}年`;
@@ -54,22 +47,39 @@ Page({
       }
     ]
   },
-
   getData() {
-    let { requestInit, clockInTime, groupId } = this.data;
-    let { pages, current } = this.data.clockData;
-    if (!requestInit || pages > current) {
-      getGroupBlockList({
-        current: ++current,
-        groupId,
-        clockInTime: clockInTime
-      }).then(res => {
-        this.setData({
-          requestInit: true,
-          clockData: res,
-          clockList: this.data.clockList.concat(res.records)
-        });
-      });
+    let { requestStutus, clockData, clockInTime, groupId } = this.data;
+    let { pages = 0, current = 0 } = clockData;
+    if (!requestStutus && (current == 0 || pages > current)) {
+      this.setData(
+        {
+          requestStutus: true
+        },
+        () => {
+          // 写在回调中保证生效
+          getGroupBlockList({
+            current: ++current,
+            groupId,
+            clockInTime: clockInTime
+          }).then(res => {
+            if (clockData.total != undefined && current == res.current) {
+              let clockList = clockData.records.concat(res.records);
+              this.setData({
+                requestStutus: false,
+                clockData: {
+                  ...res,
+                  records: clockList
+                }
+              });
+            } else {
+              this.setData({
+                requestStutus: false,
+                clockData: res
+              });
+            }
+          });
+        }
+      );
     }
   },
   onChange(e) {
@@ -136,7 +146,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options);
     let { groupId, groupName, permission } = options;
     this.setData(
@@ -157,35 +167,35 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () { },
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () { },
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () { },
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () { },
+  onPullDownRefresh: function() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () { },
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () { }
+  onShareAppMessage: function() {}
 });
