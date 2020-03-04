@@ -17,6 +17,7 @@ Page({
   data: {
     clockInTime: getyyyyMMdd(new Date()),
     type: "",
+    flag:true,//标记是否刷新
     groupId: "",
     currentTab: {},
     currentTabList: [], //当前现实的tab的数据情况
@@ -93,8 +94,10 @@ Page({
   },
   lower(e) {
     // console.log(e);
-    // console.log("到底了");
-    this.getData();
+    console.log("到底了");
+    if(this.data.flag){
+      this.getData();
+    }
   },
   onClick(e) {
     const activeIndex = e.detail.index;
@@ -125,6 +128,9 @@ Page({
       allData
     } = this.data;
     let { current, pages } = allData[activeIndex];
+    this.setData({
+      flag:false
+    })
     if (current == 0 || current < pages) {
       let params = {};
       if(type=='job'){
@@ -139,11 +145,15 @@ Page({
         clockInTime,
         ...params
       }).then(data => {
-        allData[activeIndex] = {
-          ...data,
-          records: allData[activeIndex].records.concat(data.records)
-        };
-        this.setData({ allData });
+
+          allData[activeIndex] = {
+            ...data,
+            records: allData[activeIndex].records.concat(data.records)
+          };
+          this.setData({ allData });
+          this.setData({
+            flag:true
+          })
       });
     }
   },
