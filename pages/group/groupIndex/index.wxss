@@ -25,7 +25,13 @@ page {
   .share-box image {
     width: inherit;
     height: inherit; }
-
+.row-item_left{
+  white-space: nowrap; 
+  width: 390rpx; 
+  display:inline-block;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
 .row-item {
   display: flex;
   margin: 10rpx 30rpx 0;
