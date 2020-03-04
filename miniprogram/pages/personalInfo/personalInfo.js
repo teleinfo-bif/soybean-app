@@ -486,7 +486,7 @@ Page({
             phone_display: "display: none"
           })
           
-          if (res.data.length > 0) {
+          if (res.data.length > 0 || this.data.bid_address == undefined  || this.data.bid_address == "") {
             this.getBidAddress()
           }
 
