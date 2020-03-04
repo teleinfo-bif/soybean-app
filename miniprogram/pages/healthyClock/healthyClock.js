@@ -76,6 +76,18 @@ Page({
     return true
   },
 
+  isIn14Days: function(back) {
+    var days14Diffms = 1209600000
+    var backDate = new Date(back)
+    var current = this.currentDate()
+    var currentDate = new Date(current)
+
+    if (currentDate.getTime() - backDate.getTime() < days14Diffms ){
+      return true
+    }
+    return false
+  },
+
   initDatas: function (e) {
 
     if (this.data.userLatestInfo.length > 0) {
@@ -296,6 +308,7 @@ Page({
             console.log('=========打卡地点市=======', res.result.ad_info.city) */
             var str_before = that.data.place.split('市')[0]
             var str_after = that.data.place.split('市')[1]
+            console.log("========= current city =========", currentCity)
             console.log('=========打卡地点省=======', str_before)
             console.log('=========打卡地点市=======', str_after)
             that.setData({
@@ -304,7 +317,16 @@ Page({
             })
 
             //是否在京   1-未返京   0-已返京
-            if (currentCity == '北京市') {
+            console.log("work place: ", app.globalData.workPlace)
+            var reg = new RegExp('.*' + app.globalData.workPlace)
+            var currentPlace = str_before + '市'
+            console.log("reg = ", reg)
+            console.log("current place: ", currentPlace)
+          
+            var flag = reg.test(currentPlace)
+
+            console.log("@@@@@@@@@@@@@ flag = ", flag)
+            if (flag ){
               that.setData({
                 isGoBackFlag: '0',
                 isInBeijing: 0,
@@ -508,28 +530,28 @@ Page({
     if (app.globalData.isGoBackFlag == '1') {//未返京
       var noGoBackFlag = this.noGoBackFlag
       var gobackdate = e.detail.value.gobackdate
-      var leaveDate = e.detail.value.leavedate
+      var leaveDate = ""
 
       if (noGoBackFlag == null || noGoBackFlag == '') {
         wx.showToast({
           icon: 'none',
-          title: '请选择未返京原因'
+          title: '请选择未返工作地点原因'
         });
         return;
       }
 
-      if (leaveDate == null || leaveDate == '') {
-        wx.showToast({
-          icon: 'none',
-          title: '请选择离京日期'
-        });
-        return;
-      }
+      // if (leaveDate == null || leaveDate == '') {
+      //   wx.showToast({
+      //     icon: 'none',
+      //     title: '请选择离京日期'
+      //   });
+      //   return;
+      // }
 
       if (gobackdate == null || gobackdate == '') {
         wx.showToast({
           icon: 'none',
-          title: '请选择计划返京日期'
+          title: '请选择计划返回工作地点日期'
         });
         return;
       }
@@ -538,7 +560,7 @@ Page({
       if (!this.dateJudge(gobackdate)) {
         wx.showToast({
           icon: 'none',
-          title: '返京日期应不小于当天',
+          title: '返回工作地点日期应不小于当天',
           duration: 2500,
         });
         return;
@@ -555,71 +577,79 @@ Page({
     console.log("this.app.globalData.isGoBackFlag" + app.globalData.isGoBackFlag);
     console.log("this.isLeaveBjFlag" + this.isLeaveBjFlag);
 
-    if (app.globalData.isGoBackFlag == '0') {//已返京
+    // if (app.globalData.isGoBackFlag == '0') {//已返京
       var isLeaveBjFlag = this.isLeaveBjFlag
 
       if (isLeaveBjFlag == null || isLeaveBjFlag == '') {
         wx.showToast({
           icon: 'none',
-          title: '请选择2020年1月10日以后是否离过京'
+          title: '请选择14天内是否离开过当前所在地'
         });
         return;
       }
 
       if (isLeaveBjFlag == '0') {
-        var current = new Date('2020-01-10')
-        var ldate = new Date(leavedate)
-        console.log(ldate);
-        console.log(ldate.getTime());
-        console.log(current.getTime());
-        console.log(ldate.getTime() - current.getTime())
-        var ms = current.getTime() - ldate.getTime()
-        if (ms > 0) {
-          wx.showToast({
-            icon: 'none',
-            title: '离京日期选择2020年1月10日以后的日期',
-            duration: 3000,
-          });
-          return;
-        }
+        // var current = new Date('2020-01-10')
+        // var ldate = new Date(leavedate)
+        // console.log(ldate);
+        // console.log(ldate.getTime());
+        // console.log(current.getTime());
+        // console.log(ldate.getTime() - current.getTime())
+        // var ms = current.getTime() - ldate.getTime()
+        // if (ms > 0) {
+        //   wx.showToast({
+        //     icon: 'none',
+        //     title: '离京日期选择2020年1月10日以后的日期',
+        //     duration: 3000,
+        //   });
+        //   return;
+        // }
 
-        var leavedate = e.detail.value.leavedate
-        if (leavedate == null || leavedate == '') {
-          wx.showToast({
-            icon: 'none',
-            title: '请选择离京日期'
-          });
-          return;
-        }
+        // var leavedate = e.detail.value.leavedate
+        // if (leavedate == null || leavedate == '') {
+        //   wx.showToast({
+        //     icon: 'none',
+        //     title: '请选择离京日期'
+        //   });
+        //   return;
+        // }
 
         var suregobackdate = e.detail.value.suregobackdate
         if (suregobackdate == null || suregobackdate == '') {
           wx.showToast({
             icon: 'none',
-            title: '请选择返京日期'
+            title: '请选择返回日期'
           });
           return;
         }
 
-        var bdate = new Date(suregobackdate)
-        var msback = current.getTime() - bdate.getTime()
-        if (msback > 0) {
+        if (!this.isIn14Days(suregobackdate)) {
           wx.showToast({
             icon: 'none',
-            title: '返京日期选择2020年1月10日以后的日期',
-            duration: 3000,
+            title: '返回日期请选择14天以内的!'
           });
           return;
         }
 
-        if (ldate.getTime() > bdate.getTime()) {
-          wx.showToast({
-            icon: 'none',
-            title: '返京日期应大于离京日期',
-            duration: 3000,
-          });
-          return;
-        }
+        // var bdate = new Date(suregobackdate)
+        // var msback = current.getTime() - bdate.getTime()
+        // if (msback > 0) {
+        //   wx.showToast({
+        //     icon: 'none',
+        //     title: '返京日期选择2020年1月10日以后的日期',
+        //     duration: 3000,
+        //   });
+        //   return;
+        // }
+
+        // if (ldate.getTime() > bdate.getTime()) {
+        //   wx.showToast({
+        //     icon: 'none',
+        //     title: '返京日期应大于离京日期',
+        //     duration: 3000,
+        //   });
+        //   return;
+        // }
 
         var trafficToolStatusFlag = this.data.trafficToolStatusFlag
         if (trafficToolStatusFlag == null || trafficToolStatusFlag == '') {
@@ -641,13 +671,13 @@ Page({
       }
 
       this.setData({
-        leaveBeijingDate: leavedate,
+        leaveBeijingDate: leaveDate,
         returnBeijingDate: suregobackdate,
         traffic: trainnumber,
         
 
       })
-    }
+    // }
     if (isQueZhenFlag == null || isQueZhenFlag == '') {
       if (this.data.bodyStatusFlag != 0){
         wx.showToast({
