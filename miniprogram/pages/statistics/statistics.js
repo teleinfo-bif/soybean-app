@@ -29,7 +29,7 @@ Page({
     returnJingText: "返京人数",
     leaveJingText: "离京未返京人数",
     stateBadText: "非健康人数",
-    doneText: "已在岗人数",
+    doneText: "在岗人数",
     unDoneText: "未复工人数",
     homeText: "远程办公人数",
     shouldFilledNumber: 0,
@@ -368,7 +368,7 @@ Page({
       //   fontSize: 15
       // },
       series: [{
-        name: '已在岗',
+        name: '在岗',
         data: this.data.doneNumber,
         stroke: false,
         color: "#aa4438",

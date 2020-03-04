@@ -299,7 +299,7 @@
 
             <view class="table-row-content">
               <view class="ring-icon5"></view>
-              <view class="table-row-content-text">已在岗 {{doneNumber}} 人</view>
+              <view class="table-row-content-text">在岗 {{doneNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon6"></view>

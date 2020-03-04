@@ -62,7 +62,7 @@ Page({
     user_id: app.globalData.openid,
     date: getCurrentDay(),
     workStatusItems: [
-      { name: '已在岗', value: '0' },
+      { name: '在岗', value: '0' },
       { name: '远程办公', value: '1' },
       { name: '未复工', value: '2' }
     ],
