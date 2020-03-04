@@ -47,7 +47,7 @@ Page({
       })
       .catch(e => { });
       setTimeout(function () {
-        wx.navigateTo({
+        wx.redirectTo({
           url: "/pages/index/index",
         })
       }, 1000)
