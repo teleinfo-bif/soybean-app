@@ -6,7 +6,7 @@
       <view class="head">
         <view class="head-title">
           <image class="btn" src="../../static/images/deatil_data@3x.png" />
-          <Text>{{groupName}}</Text>
+          <Text class="head-title1">{{groupName}}</Text>
         </view>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
           <view>
