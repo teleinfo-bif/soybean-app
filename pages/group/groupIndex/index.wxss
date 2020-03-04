@@ -78,3 +78,10 @@ page {
     align-items: center; }
   .head .head-date-text {
     color: #3891ff; }
+  .head-title{
+  white-space: nowrap; 
+  width: 400rpx; 
+  display:inline-block;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  }
