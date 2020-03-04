@@ -57,13 +57,16 @@ Component({
               val.children.map((value,index)=>{
                 if (value.managers.indexOf(app.globalData.userFilledInfo.id>-1))
                 {
-                  ids+=value.id
+                  ids+=value.id+","
                 }
               })
             } 
           })
           data.map((val,index)=>{
-            if(ids.indexOf(val.id) ==-1){
+            if (val.children.length == 0 && ids.indexOf(val.id) ==-1){
+              dataNew.push(val)
+            }
+            if (val.children.length> 0){
               dataNew.push(val)
             }
           })

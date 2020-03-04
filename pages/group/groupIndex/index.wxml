@@ -15,7 +15,7 @@
     </button>
   </view>
 </view> -->
- <view class="head">
+ <view class="head" style='height:88rpx;'>
         <view class="head-title">
           <Text>{{groupName}}</Text>
         </view>
@@ -34,10 +34,10 @@
   <!-- 每一行 -->
   <view wx:for="{{children}}" wx:key="index" class="row-item">
     <!-- 左侧名字 -->
-    <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+    <!-- <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
       {{item.name}}
-    </view>
-    <view wx:else class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+    </view> -->
+    <view  class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
       {{item.name}}
     </view>
     <!-- 右侧操作按钮 -->
@@ -60,10 +60,10 @@
     <!-- 每一行 -->
     <view wx:for="{{memberData.records}}" wx:key="index" class="row-item">
       <!-- 左侧名字 -->
-      <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+      <!-- <view wx:if="{{item.name=='后勤服务中心'}}" style="color: red;" class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
         {{item.name}}
-      </view>
-      <view wx:else class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
+      </view> -->
+      <view  class="row-item_left" bind:tap="nextLevelGroup" data-data="{{item}}">
         {{item.name}}
       </view>
       <!-- 右侧操作按钮 -->
