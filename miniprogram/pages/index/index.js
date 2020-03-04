@@ -87,6 +87,11 @@ Page({
     })
   },
   onLoad: function () {
+
+    // var address = '河北省张家口市桥西区温馨家园'
+    // var infoes = address.split('市')
+    // console.log("@@@@@@@@@@@ infoes: ", infoes)
+    
     var that = this;
     if (!wx.cloud) {
       wx.redirectTo({

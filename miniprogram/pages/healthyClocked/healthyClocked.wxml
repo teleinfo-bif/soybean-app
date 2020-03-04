@@ -47,7 +47,7 @@
 
       <!-- <view wx:if="{{clickdata.isGoBackFlag == '0'}}"> -->
         <!--已返京开始-->
-        <view class="clock_form__title">14天内是否离开过当前所在地</view>
+        <view class="clock_form__title">14天内是否离开过{{localPlace}}</view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="LeaveBjChange">
             <label wx:for="{{isLeaveBjRadioItems}}" wx:key="index">
@@ -72,7 +72,7 @@
             </view>
           <view class='devide-middle'/> -->
 
-          <view class="clock_form__title">返回当前所在地日期</view>
+          <view class="clock_form__title">返回{{localPlace}}日期</view>
           
             <view class="">
               <view class="clock_form_input">
@@ -84,7 +84,7 @@
           
           <view class='devide-middle'/>
 
-        <view class="clock_form__title">交通工具</view>
+        <view class="clock_form__title">返回{{localPlace}}所乘交通工具</view>
           <view class='clock-radio'>
             <radio-group class="radio-group" bindchange="trafficToolItemsChange">
               <label wx:for="{{trafficToolItems}}" wx:key="{{index}}">
@@ -95,7 +95,7 @@
           </view>
         <view class='devide-middle'/>
 
-          <view class="clock_form__title">返京所乘车次/航班/车牌</view>
+          <view class="clock_form__title">返{{localPlace}}所乘车次/航班/车牌</view>
           <view class="">
             <view class="">
               <view class="clock_form_input">
@@ -112,7 +112,7 @@
 
  <view wx:if="{{clickdata.isGoBackFlag == '1'}}">
         <!--未返京开始-->
-        <view class="clock_form__title">未返回{{workPlace}}原因</view>
+        <view class="clock_form__title">未返回工作地{{workPlace}}原因</view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="noGoBackRadioChange">
             <label wx:for="{{radioNoGoBackItems}}" wx:key="index">
@@ -135,7 +135,7 @@
         <view class='devide-middle'/> -->
 
 
-        <view class="clock_form__title">计划返回{{workPlace}}日期</view>
+        <view class="clock_form__title">计划返回工作地{{workPlace}}日期</view>
         <view class="">
           <view class=" ">
             <view class="clock_form_input">
