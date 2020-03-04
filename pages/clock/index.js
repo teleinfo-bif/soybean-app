@@ -11,7 +11,7 @@ function getyyyyMMdd(date) {
 }
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import { getTodayClock, saveClock } from "../../api/api.js";
+import { getTodayClock, getUserClockList, saveClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -541,13 +541,42 @@ Page({
           data: formData
         });
       } else {
+        // 未打卡开始获取位置信息，获取之前的打卡记录
         this.initAddress();
+        this.getUserClockListData();
         this.setData({
           clocked: false
         });
       }
       // 设置表单显示的字段
       this.setFields(formData);
+    });
+  },
+  // 获取用户打卡记录
+  getUserClockListData() {
+    getUserClockList({}).then(resData => {
+      // 需要自动填写的字段
+      if (resData.total > 0) {
+        const autoFilledProps = [
+          "leave",
+          "leavetime",
+          "gobacktime",
+          "transport",
+          "flight",
+          "nobackreason"
+        ];
+        const previousLockData = resData.records[0];
+        let { data } = this.data;
+        autoFilledProps.forEach(prop => {
+          data[prop] = previousLockData[prop];
+        });
+        this.setData({
+          data
+        });
+        this.setFields(previousLockData);
+      } else {
+        console.log("提醒：没有打卡数据，无需自动填写");
+      }
     });
   },
 
