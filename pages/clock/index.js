@@ -11,7 +11,7 @@ function getyyyyMMdd(date) {
 }
 // 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
 // 如果当前不在北京，询问未返京原因，返京日期
-import { getTodayClock, saveClock } from "../../api/api.js";
+import { getTodayClock, getUserClockList, saveClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
@@ -42,7 +42,6 @@ let fields = [
       placeholder: "请输入打卡地点"
     }
   },
-
   {
     title: "是否离开过北京（2020年1月10日以后）",
     type: "radio",
@@ -79,7 +78,7 @@ let fields = [
   {
     title: "交通工具",
     type: "radio",
-    prop: "flightType",
+    prop: "transport",
     hide: true,
     props: {
       itemKey: "id",
@@ -87,9 +86,14 @@ let fields = [
       options: [
         { id: 1, name: "飞机" },
         { id: 2, name: "火车" },
-        { id: 3, name: "汽车" },
-        { id: 4, name: "轮船" },
-        { id: 5, name: "其他" }
+        // { id: 3, name: "自驾" },
+        // { id: 4, name: "地铁" },
+        // { id: 5, name: "客车" },
+        { id: 5, name: "汽车" },
+        // { id: 6, name: "公交" },
+        // { id: 7, name: "出租车" },
+        { id: 8, name: "轮船" },
+        { id: 0, name: "其他" }
       ]
     }
   },
@@ -117,21 +121,7 @@ let fields = [
       ]
     }
   },
-  {
-    title: "您的在岗状态 ",
-    type: "radio",
-    prop: "worktype",
-    hide: false,
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "已在岗" },
-        { id: 2, name: "在家办公" },
-        { id: 3, name: "未复工" }
-      ]
-    }
-  },
+
   {
     title: "体温（℃）",
     type: "input",
@@ -142,6 +132,29 @@ let fields = [
         return /^\d+(\.\d+)?$/.test(value);
       },
       errorMsg: "体温请输入数字和小数点"
+    }
+  },
+  {
+    title: "目前健康状况",
+    type: "radio",
+    prop: "healthy",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "健康" },
+        { id: 2, name: "有发烧、咳嗽等症状" },
+        { id: 0, name: "其他症状" }
+      ]
+    }
+  },
+  {
+    title: "其他症状",
+    type: "input",
+    prop: "otherhealthy",
+    hide: true,
+    props: {
+      placeholder: "请输入其他症状"
     }
   },
   {
@@ -171,29 +184,6 @@ let fields = [
     }
   },
   {
-    title: "目前健康状况",
-    type: "radio",
-    prop: "healthy",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "健康" },
-        { id: 2, name: "有发烧、咳嗽等症状" },
-        { id: 0, name: "其他症状" }
-      ]
-    }
-  },
-  {
-    title: "其他症状",
-    type: "input",
-    prop: "otherhealthy",
-    hide: true,
-    props: {
-      placeholder: "请输入其他症状"
-    }
-  },
-  {
     title: "是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北",
     type: "radio",
     prop: "wuhan",
@@ -207,35 +197,27 @@ let fields = [
     }
   },
   {
+    title: "您的在岗状态 ",
+    type: "radio",
+    prop: "jobstatus",
+    hide: false,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "在岗" },
+        { id: 2, name: "在家办公" },
+        { id: 3, name: "未复工" }
+      ]
+    }
+  },
+  {
     title: "其他备注信息",
     type: "input",
     prop: "remarks",
     require: false,
     props: {
       placeholder: "请输入备注信息"
-    }
-  }
-];
-let transport = [
-  {
-    title: "是否从其他城市返回",
-    type: "radio",
-    prop: "otherCity",
-    hide: false,
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "飞机" },
-        { id: 2, name: "火车" },
-        { id: 3, name: "自驾" },
-        { id: 4, name: "地铁" },
-        { id: 5, name: "客车" },
-        { id: 6, name: "公交" },
-        { id: 7, name: "出租车" },
-        { id: 8, name: "轮船" },
-        { id: 9, name: "其他" }
-      ]
     }
   }
 ];
@@ -270,7 +252,9 @@ Page({
 
     // 根据填选是否离开，显示返回日期
     if (prop === "leave") {
-      this.setFields(this.data.atBeijing, value.toString() === "2");
+      // this.setFieldsHide(["leave"], this.data.atBeijing, value == 2);
+
+      this.setFields(data);
     } else if (
       prop === "comfirmed" ||
       prop === "admitting" ||
@@ -361,16 +345,20 @@ Page({
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
+      const atBeijing = formData.address.startsWith("北京市");
+      // 如果未打卡，不在北京，默认离开2,没离开不能默认离开，因为涉及自动填选的选中状态
+      if (!atBeijing && data["leave"] == null) {
+        formData["leave"] = 2;
+      }
       // console.log("formData", formData);
       saveClock(formData).then(res => {
-        // console.log(res);
         wx.navigateTo({
           url: "/pages/status/index?msg=打卡成功"
         });
       });
     }
   },
-  // 初始化this.data.data
+  // 初始化this.data.data,赋值
   initFormData() {
     let data = {};
     this.data.fields.forEach(item => {
@@ -406,10 +394,21 @@ Page({
       fields
     });
   },
-  // 根据是否在北京设置需要显示的字段，在北京显示是否离开北京，返回日期，不在北京显示原因日期
-  setFields(atBeijing = false, leaved = false) {
-    // console.log("atBeijing:", atBeijing, " leaved:", leaved);
-    let { fields } = this.data;
+  /**
+   *设置表单隐藏
+   *
+   * @param {*} data userfilledData
+   */
+  setFields(formData) {
+    let { fields, baseAddress, clocked } = this.data;
+    // 判断是否在北京，未打卡用baseaddress，打完卡用address
+    const atBeijing = clocked
+      ? formData.address.startsWith("北京市")
+      : (typeof baseAddress == "string" && baseAddress.startsWith("北京市")) ||
+        false;
+    let leave = formData["leave"] == "2";
+
+    // 根据在京状态修改返回日期的最大时间限制和返京label提示
     fields.forEach(item => {
       // 如果再北京，返回时间最大是今天
       if (item.prop === "gobacktime") {
@@ -428,36 +427,26 @@ Page({
         fields
       },
       () => {
-        if (atBeijing) {
-          // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
-          // 在北京 & 从其它地方返回  显示离京时间leavetime 返程日期gobacktime，隐藏未返程原因，reason
-          // 不在北京 隐藏从其它城市返回otherCity
+        // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
+        // 在北京 & 从其它地方返回  显示离京时间leavetime 返程日期gobacktime，隐藏未返程原因，reason
+        // 不在北京 隐藏从其它城市返回otherCity
 
-          // 在北京设置返京最大限度为今天
-
-          // 在北京，离开且已经返回
-          if (leaved) {
-            this.setFieldsHide(["nobackreason"]);
-          } else {
-            // 在北京且未离开
-            this.setFieldsHide([
-              "nobackreason",
-              "leavetime",
-              "gobacktime",
-              "flight",
-              "flightType"
-            ]);
-            // this.setFieldsHide(["reason", "gobacktime", "reason"]);
-          }
+        this.setFieldsHide(["leave"], !atBeijing);
+        if (leave) {
+          this.setFieldsHide(["nobackreason"]);
         } else {
-          // 不在北京切且返回
-          // this.setFieldsHide(["otherCity", "gobacktime2"], true);
-          this.setFieldsHide(["leave"], false);
+          // 在北京且未离开
+          this.setFieldsHide([
+            "nobackreason",
+            "leavetime",
+            "gobacktime",
+            "flight",
+            "transport"
+          ]);
         }
       }
     );
   },
-  // 根据是否离开北京
   // 初始化位置信息
   initAddress() {
     wx.getSetting({
@@ -482,6 +471,7 @@ Page({
       }
     });
   },
+  // 修改打卡地点
   onChangeBaseAddress(e) {
     this.setData({
       baseAddress: e.detail
@@ -508,6 +498,10 @@ Page({
     });
 
     console.log(location);
+    const formData = {
+      ...this.data.data,
+      address: location.result.address_component.street_number
+    };
     this.setData({
       atBeijing,
       leaved: !atBeijing,
@@ -515,15 +509,10 @@ Page({
       address: chooseLocation ? location : location.result,
       baseAddress,
       fields,
-      data: {
-        ...this.data.data,
-        // address: chooseLocation ? location.address : location.result.address,
-        address: location.result.address_component.street_number
-      }
+      data: formData
     });
-    this.setFields(atBeijing, false);
+    this.setFields(formData);
   },
-
   // 设置用户填入信息
   setUserFilledInfo(userFilledInfo) {
     let { data } = this.data;
@@ -536,51 +525,66 @@ Page({
     });
   },
 
-  // 初始化用户信息
-  async initUserInfo() {
-    let { globalData } = app;
-    if (!app.globalData.appInit) {
-      app.init(globalData => {
-        this.setUserFilledInfo(globalData.userFilledInfo);
-      });
-    } else {
-      this.setUserFilledInfo(globalData.userFilledInfo);
-    }
-  },
-
   // 获取用户今日打卡信息
   getUserTodyClockData() {
-    // console.log("====getUserTodyClockData====");
     getTodayClock({}).then(data => {
-      // console.log("today data", data);
-      let formData = Object.assign({}, this.data.data, data.records[0]);
-      let atBeijing =
-        (formData.address && formData.address.indexOf("北京市") > -1) || false;
-      // 服务端没有其它城市返回字段，根据返京日期判断
-      // formData["leave"] = formData.gobacktime ? 2 : 1;
-      // formData["leave"] = formData.leave;
-      formData["leave"] = atBeijing ? null : 2;
-
-      // let formFields = this.data.fields;
-      if (data.total > 0) {
+      const resData = data;
+      // 打卡数据合并到data中，今日未打卡返回的数据在是{}
+      let formData = {
+        ...this.data.data,
+        ...resData.records[0]
+      };
+      // 判断打过卡
+      if (resData.total > 0) {
         this.setData({
-          atBeijing,
           clocked: true,
-          leaved: !atBeijing,
-          goBack: !atBeijing,
           data: formData
         });
       } else {
+        // 未打卡开始获取位置信息，获取之前的打卡记录
         this.initAddress();
+        this.getUserClockListData();
         this.setData({
-          clocked: false,
-          atBeijing,
-          leaved: !atBeijing,
-          goBack: !atBeijing
+          clocked: false
         });
       }
-      this.setFields(atBeijing, formData["leave"] == "2");
+      // 设置表单显示的字段
+      this.setFields(formData);
     });
+  },
+  // 获取用户打卡记录
+  getUserClockListData() {
+    getUserClockList({}).then(resData => {
+      // 需要自动填写的字段
+      if (resData.total > 0) {
+        const autoFilledProps = [
+          "leave",
+          "leavetime",
+          "gobacktime",
+          "transport",
+          "flight",
+          "nobackreason"
+        ];
+        const previousLockData = resData.records[0];
+        let { data } = this.data;
+        autoFilledProps.forEach(prop => {
+          data[prop] = previousLockData[prop];
+        });
+        this.setData({
+          data
+        });
+        this.setFields(previousLockData);
+      } else {
+        console.log("提醒：没有打卡数据，无需自动填写");
+      }
+    });
+  },
+
+  // 页面初始化
+  initPage() {
+    this.initFormData();
+    this.setUserFilledInfo(app.globalData.userFilledInfo);
+    this.getUserTodyClockData();
   },
 
   /**
@@ -590,14 +594,10 @@ Page({
     if (!app.globalData.appInit) {
       app.init(() => {
         console.log("进入回调");
-        this.initFormData();
-        this.initUserInfo();
-        this.getUserTodyClockData();
+        this.initPage();
       });
     } else {
-      this.initFormData();
-      this.initUserInfo();
-      this.getUserTodyClockData();
+      this.initPage();
     }
   },
 

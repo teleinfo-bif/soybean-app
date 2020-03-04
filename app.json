@@ -10,7 +10,6 @@
     "pages/clockRecords/index",
     "pages/detail/index",
     "pages/statistics/index",
-    "pages/clock/status/index",
     "pages/index/organization/index",
     "pages/group/groupIndex/index",
     "pages/group/shareJoin/index",
