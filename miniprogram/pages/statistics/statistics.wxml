@@ -171,7 +171,7 @@
 
             <view class="table-row-content">
               <view class="ring-icon5"></view>
-              <view class="table-row-content-text">武汉 {{wuhanNumber}} 人</view>
+              <view class="table-row-content-text">武汉市 {{wuhanNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon6"></view>
@@ -183,7 +183,7 @@
             </view>
             <view class="table-row-content">
               <view class="ring-icon4"></view>
-              <view class="table-row-content-text">北京 {{beijingNumber}} 人</view>
+              <view class="table-row-content-text">{{workPlace}} {{beijingNumber}} 人</view>
             </view>
 
           </view>
@@ -236,19 +236,19 @@
 
             <view class="table-row-content">
               <view class="ring-icon5"></view>
-              <view class="table-row-content-text">确诊 {{confirmedNumber}} 人</view>
+              <view class="table-row-content-text">确诊隔离{{confirmedNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon6"></view>
-              <view class="table-row-content-text">隔离期 {{isolateNumber}} 人</view>
+              <view class="table-row-content-text">一般隔离{{isolateNumber}} 人</view>
             </view>
-            <view class="table-row-content">
+            <!-- <view class="table-row-content">
               <view class="ring-icon7"></view>
               <view class="table-row-content-text">出隔离期 {{outIsolateNumber}} 人</view>
-            </view>
+            </view> -->
             <view class="table-row-content">
               <view class="ring-others"></view>
-              <view class="table-row-content-text">其他 {{otherCasesNumber}} 人</view>
+              <view class="table-row-content-text">非隔离 {{outIsolateNumber}} 人</view>
             </view>
 
           </view>

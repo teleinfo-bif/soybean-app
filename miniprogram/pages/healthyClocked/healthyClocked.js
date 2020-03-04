@@ -59,6 +59,7 @@ Page({
       { name: '当地未放行', value: '1' }
     ],
     index: 0,
+    workPlace: "",
     user_id: app.globalData.openid,
     date: getCurrentDay(),
     workStatusItems: [
@@ -66,6 +67,7 @@ Page({
       { name: '远程办公', value: '1' },
       { name: '未复工', value: '2' }
     ],
+    localPlace: ""
   },
 
   onLoad: function (options) {
@@ -82,7 +84,8 @@ Page({
     
     this.setData({
       user_id: user_id,
-      date: date
+      date: date,
+      workPlace: app.globalData.workPlace
     })
 
 
@@ -109,8 +112,12 @@ Page({
         //今日已打卡
         if(res.data.length > 0){
           console.log("@@@@@@@@@@@@@@ clickdata.isGoBackFlag: ", res.data[0])
+          var place = res.data[0].place
+          var infoes = place.split('市')
+
           this.setData({
-            clickdata:res.data[0]
+            clickdata:res.data[0],
+            localPlace: infoes[0] + '市',
           });
 
           var radioHealthyStatusItems = this.data.radioHealthyStatusItems;

@@ -16,6 +16,7 @@ Page({
     companyReg: "",
     department: "",
     titleInfo: "",
+    today: "",
     authorityLevel: 0,       // 权限级别: 1 院级管理者，可查看全部；2 二级部门； 3 三级部门
     
     
@@ -359,6 +360,7 @@ Page({
 
 
   onLoad: function (options) {    
+
     console.log("options: ", options)
     let department = options.department
     let serialNumber = options.serialNumber
@@ -371,7 +373,8 @@ Page({
       serialNumber: serialNumber,
       isXintongyuan: isXintongyuan,
       userType: userType,
-      isSuperUserFlag: isSuperUserFlag
+      isSuperUserFlag: isSuperUserFlag,
+      today: this.getCurrentDay()
     })   
     if(isXintongyuan=="true" && isSuperUserFlag=='1'){
       this.initDatas2()  //信通院一级权限
