@@ -21,14 +21,7 @@ Page({
       }
       return value;
     },
-
-    list: [
-      {
-        name: "测试1",
-        sign: true,
-        status: 0
-      }
-    ]
+    requestStutus: false
   },
 
   // behaviorCallback() {
@@ -77,28 +70,35 @@ Page({
 
   // 请求scrow-view 列表方法
   getData() {
-    const { clockData } = this.data;
+    const { requestStutus, clockData } = this.data;
     let { current = 0, pages = 0 } = clockData;
-    if (current == 0 || current < pages) {
-      getUserClockList({
-        current: ++current,
-        size: 20,
-        userId: this.data.otherUserId || app.globalData.userFilledInfo.id
-      }).then(data => {
-        // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
-        if (memberData.total != undefined && current == data.current) {
-          let clockData = clockData.records.concat(data.records);
-          this.setData({
-            memberData: {
-              ...data,
-              records: clockData
-            }
-          });
-        } else {
-          this.setData({
-            clockData: data
-          });
-        }
+    if (!requestStutus && (current == 0 || pages > current)) {
+      this.setData({ requestStutus: true }, () => {
+        getUserClockList({
+          current: ++current,
+          size: 20,
+          userId: this.data.otherUserId || app.globalData.userFilledInfo.id
+        }).then(data => {
+          // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+          if (
+            clockData.total != undefined &&
+            clockData.current == data.current
+          ) {
+            let clockData = clockData.records.concat(data.records);
+            this.setData({
+              requestStutus: false,
+              clockData: {
+                ...data,
+                records: clockData
+              }
+            });
+          } else {
+            this.setData({
+              requestStutus: false,
+              clockData: data
+            });
+          }
+        });
       });
     } else {
       console.log("group user has nomore data");
