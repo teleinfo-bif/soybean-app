@@ -2,6 +2,7 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init()
+
 const db = cloud.database({ env: "xinertong-uat" })
 const _ = db.command
 
@@ -13,25 +14,16 @@ exports.main = async (event, context) => {
     "bodyStatusFlag": "1"
   }, {
     "bodyStatusFlag": "2"
-  },{
+  }, {
     'isQueZhenFlag': '0'
-  }]).and({
+  }]).and([{
     "date": event.date
-  })).get()
+  }, {
+      "company_department": db.RegExp({
+        regexp: event.company_department,
+      })
+  }])).get()
+ 
 
-  let list2 = await db.collection('user_info').get()
-
-  var healthyDatas = list.data
-  var infoDatas = list2.data
-
-  for (var i = 0; i < healthyDatas.length; i++) {
-    for (var j = 0; j < infoDatas.length; j++) {
-      if (healthyDatas[i]._openid == infoDatas[j]._openid) {
-        healthyDatas[i]['company_department'] = infoDatas[j].company_department
-      }
-    }
-  }
-
-  return healthyDatas
-  
+  return list.data;
 }

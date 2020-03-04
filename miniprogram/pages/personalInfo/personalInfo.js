@@ -2,7 +2,7 @@
 const app = getApp()
 
 const db = wx.cloud.database({
-  env: "soybean-uat"
+  env: "xinertong-uat"
 })
 
 // const cloud = require('wx-server-sdk')

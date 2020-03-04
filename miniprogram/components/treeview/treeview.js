@@ -76,7 +76,7 @@ Component({
       console.log(currentDate);
       
       const db = wx.cloud.database({
-        env: "soybean-uat"
+        env: "xinertong-uat"
       })
 
       const _ = db.command
@@ -205,7 +205,7 @@ Component({
       console.log(currentDate);
 
       const db = wx.cloud.database({
-        env: "soybean-uat"
+        env: "xinertong-uat"
       })
 
       const _ = db.command

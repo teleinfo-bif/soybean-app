@@ -3,7 +3,7 @@ const xlsx = require('node-xlsx');
 
 cloud.init()
 
-const db = cloud.database({ env: "soybean-uat" })
+const db = cloud.database({ env: "xinertong-uat" })
 const _ = db.command
 const $ = db.command.aggregate
 

@@ -1,7 +1,7 @@
 // pages/detail/detail.js
 
 const db = wx.cloud.database({
-  env: "soybean-uat"
+  env: "xinertong-uat"
 })
 
 function getCurrentDay() {

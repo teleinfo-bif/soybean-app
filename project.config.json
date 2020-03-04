@@ -27,7 +27,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.8.1",
 	"appid": "wx9f50de1f1b6b94c6",
-	"projectname": "xinertong",
+	"projectname": "xinertong-uat",
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

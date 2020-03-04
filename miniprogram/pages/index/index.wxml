@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="headerblock">
   <image class="headerimage" src="../../images/zongzichengcheng3x.png" mode="scaleToFill"></image>
-  <view class="head_title">泰尔通</view>
+  <view class="head_title">信鄂通</view>
 
   <view wx:if="{{!userInfoFlagYes}}" class="putuserinfobutton" hover-class="userinfo-put_active">
     <view class="userinfo-img-container">

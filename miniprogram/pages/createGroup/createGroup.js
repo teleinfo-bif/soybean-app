@@ -1,7 +1,7 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
 const db = wx.cloud.database({
-  env: "soybean-uat"
+  env: "xinertong-uat"
 })
 Page({
 
@@ -253,7 +253,7 @@ Page({
     console.log('下载模板')
     wx.cloud.getTempFileURL({
       fileList: [{
-        fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位机构架构模板.xls',
+        fileID: 'cloud://xinertong-uat.736f-xinertong-uat-1301333180/单位机构架构模板.xls',
         maxAge: 60 * 60, // one hour
       }]
     }).then(res => {

@@ -9,7 +9,7 @@ var ringChart2 = null;
 var ringChart3 = null;
 var ringChart4 = null;
 const db = wx.cloud.database({
-  env: "soybean-uat"
+  env: "xinertong-uat"
 })
 const _ = db.command
 

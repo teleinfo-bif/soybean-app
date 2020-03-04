@@ -2,7 +2,7 @@ const cloud = require('wx-server-sdk')
 //环境变量 ID
 cloud.init()
 
-const db = cloud.database({ env: "soybean-uat" })
+const db = cloud.database({ env: "xinertong-uat" })
 // 云函数入口函数
 //传递的参数可通过event.xxx得到
 exports.main = async (event, context) => {

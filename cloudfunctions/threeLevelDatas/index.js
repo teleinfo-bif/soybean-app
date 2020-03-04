@@ -3,7 +3,7 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 
-const db = cloud.database({ env: "soybean-uat" })
+const db = cloud.database({ env: "xinertong-uat" })
 const _ = db.command
 
 async function getInfoCount(company) {
