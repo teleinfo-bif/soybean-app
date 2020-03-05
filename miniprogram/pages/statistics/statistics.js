@@ -24,12 +24,12 @@ Page({
     titleText: "统计信息",
 
 
-    shouldText: "应填写人数",
-    filledInText: "已填写人数",
-    confirmedText: "确诊人数",
-    returnJingText: "已返工作地人数",
-    leaveJingText: "未返工作地人数",
-    stateBadText: "非健康人数",
+    shouldText: "应填写",
+    filledInText: "已填写",
+    confirmedText: "确诊",
+    returnJingText: "已返工作地",
+    leaveJingText: "未返工作地",
+    stateBadText: "非健康",
     doneText: "在岗办公",
     remoteWorkText: "居家办公",
     separateHomeText: "居家隔离",
