@@ -1,4 +1,5 @@
 const app = getApp()
+var utils = require('../../utils/utils.js')
 var QQMapWX = require('qqmap-wx-jssdk.js');
 var qqmapsdk;
 
@@ -274,12 +275,15 @@ Page({
     db.collection('user_info').where({
       _openid: app.globalData.openid
     }).get({
+      
       success: res => {
+
         console.log(res)
+        var hide = utils.toHide(res.data[0].phone)
         that.userinfo = res.data;
         that.setData({
           name: res.data[0].name,
-          phone: res.data[0].phone,
+          phone: hide,
           userinfo: res.data
         })
       },
@@ -323,6 +327,12 @@ Page({
     console.log("跳转到打卡记录页面appid内容为：" + app.globalData.openid)
     wx.navigateTo({
       url: '../clockInRecord/clockInRecord'
+    })
+  },
+
+  gotoUserSecret: function(e) {
+    wx.navigateTo({
+      url: '../about/about'
     })
   },
 
