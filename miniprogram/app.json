@@ -26,7 +26,8 @@
     "pages/modifySuccess/modifySuccess",
     "pages/createGroup/createGroup",
     "pages/healthQR/healthQR",
-    "pages/threeDepartments/threeDepartments"
+    "pages/threeDepartments/threeDepartments",
+    "pages/about/about"
   ],
   "permission": {
     "scope.userLocation": {

@@ -192,6 +192,28 @@
         </view>
         
       </view>
+
+<view class="personal-divide"></view>
+
+  <checkbox-group class="{{secretcheckbox}}" bindchange="boxcheck">
+    <checkbox name="box_check" value="{{if_checked}}" class="red round"></checkbox>
+      <navigator url="/pages/about/about" class="secret-view">
+        已阅读信鄂通<text class="text-blue">《用户服务条款及隐私协议》</text>,本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询  
+    </navigator>
+  </checkbox-group>
+
+
+      <!-- <view class="secret-checkbox">
+        <checkbox class="secret-box" >
+       
+          <view class="secret-view">
+          已阅读信鄂通 <text bindtap="goToUserSecret" class="secret-text">《用户服务条款及隐私协议》</text>，本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询
+          </view>
+
+         </checkbox>
+      </view> -->
+
+
       <view class="personal-buttons" style="{{buttons_display}}">
         <button class="button-reset" form-type="reset" disabled="{{disabled}}" bindtap="resetBtn">重置</button>
         <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
