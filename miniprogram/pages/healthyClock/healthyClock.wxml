@@ -305,7 +305,7 @@
 
 
 
-      <view class="clock_form__title">14天内是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
+      <view class="clock_form__title">近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途径湖北</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">
