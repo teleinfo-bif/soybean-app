@@ -40,7 +40,9 @@ Page({
 
     userLatestInfo: [],
     disableAtHospital:false,
-    disableDiagnosis:false,
+    disableDiagnosis: false, 
+    if_checked: false,
+
     trafficToolItems: [
       { name: '飞机', value: '0' },
       { name: '火车', value: '1' },
@@ -117,6 +119,19 @@ Page({
       return true
     }
     return false
+  },
+
+  boxcheck: function (e) {
+    console.log("box change: ", e.detail.value)
+    var flag = false
+    if (e.detail.value.length != 0) {
+      flag = true
+    }
+    this.setData({
+      if_checked: flag
+    })
+
+    console.log("if check: ", this.data.if_checked)
   },
 
   initDatas: function (e) {
@@ -827,6 +842,16 @@ Page({
       });
       return;
     }
+
+    if (!this.data.if_checked) {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择同意用户服务条款与隐私协议',
+        duration: 3000,
+      });
+      return;
+    }
+
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)
     //敏感字符检测
