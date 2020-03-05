@@ -85,7 +85,7 @@ Page({
       console.log("group user has nomore data");
     }
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
@@ -111,7 +111,15 @@ Page({
       this.getData
     );
   },
-
+  onChange(e) {
+    // console.log(e);
+    const { value } = e.detail;
+    this.setData(
+      {
+        clockInTime: value,
+      },
+    );
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -166,5 +174,14 @@ Page({
         console.log("转发失败", res);
       }
     };
+  },
+  navigateToGroupIndex(e) {
+    console.log(e.currentTarget.dataset.groupname);
+    const { data } = e.currentTarget.dataset;
+    if (data.permission) {
+      wx.navigateTo({
+        url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
+      });
+    }
   }
 });
