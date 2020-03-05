@@ -138,25 +138,27 @@ Page({
       this.analysisLevel(this.data.authorityLevel)
     }
   },
-  getLimitDone:function(datas) {
+  getWork:function(datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "0") {
+      if (datas[i].workStatusFlag == "0" || datas[i].workStatusFlag == "1") {
         sum += 1
       }
     }
     return sum
   },
-  getLimitUn: function (datas) {
+  getNoWork: function (datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "2") {
+      if (datas[i].workStatusFlag == "2" || datas[i].workStatusFlag == "3") {
         sum += 1
       }
     }
     return sum
   },
-  getLimitHome: function (datas) {
+
+
+  getRemoteWork: function (datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
       if (datas[i].workStatusFlag == "1") {
@@ -165,7 +167,25 @@ Page({
     }
     return sum
   },
+  getSeparateHome: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "2") {
+        sum += 1
+      }
+    }
+    return sum
+  },
 
+  getSeparateSupervise: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "3") {
+        sum += 1
+      }
+    }
+    return sum
+  },
   initChats: function(e) {
     // var windowWidth = 200;
 
@@ -702,9 +722,9 @@ parseDatas: function(datas) {
   var outIsoNum = filled - confirmed - isoNum
   // var othercases = filled - confirmed - isoNum - outIsoNum
   
-    var doneNumber = this.getLimitDone(healthyDatas);
-    var unDoneNumber = this.getLimitUn(healthyDatas);
-    var homeNumber = this.getLimitHome(healthyDatas);
+    var doneNumber = this.getWork(healthyDatas);
+    var unDoneNumber = this.getNoWork(healthyDatas);
+    var homeNumber = this.getRemoteWork(healthyDatas);
 
   this.setData({
     // shouldFilledNumber: should,
