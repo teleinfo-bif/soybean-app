@@ -1,4 +1,5 @@
 // pages/Detail/index.js
+const app = getApp();
 function getyyyyMMdd(date) {
   var d = date || new Date();
   var curr_date = d.getDate();
@@ -198,5 +199,26 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage: function() {}
+  onShareAppMessage: function() {
+    // 考虑用对称加密签个时间
+    const timeStamp = new Date().getTime();
+    const { name } = app.globalData.userFilledInfo;
+    // const decodeTimeStamp = decode(timeStamp);
+    // const decodeGroupId = decode(this.data.groupId);
+    const tilte = `${name}邀请您加入${this.data.groupName}健康打卡群`;
+    return {
+      title: tilte,
+
+      desc: "分享页面的内容",
+
+      path: `/pages/group/shareJoin/index?groupId=${this.data.groupId}&timeStamp=${timeStamp}&groupName=${this.data.groupName}`,
+      imageUrl: "../../static/images/share.jpg",
+      success: res => {
+        console.log("转发成功", res);
+      },
+      fail: res => {
+        console.log("转发失败", res);
+      }
+    };
+  }
 });
