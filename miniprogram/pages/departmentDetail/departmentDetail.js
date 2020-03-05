@@ -451,19 +451,24 @@ Page({
       title: '加载中...',
     })
     wx.cloud.callFunction({
-      name: "getDepartmentsAndUsers",
-      data: {
-        company_department: data,
-        level: "1"
-      },
+      name: "twoDepartmentsNumber",
+    
       success: res => {
-        console.log(res)
+        console.log("@@@@@@@@ result: ", res.result)
 
-        for (var i = 0; i < res.result.result.length; i++) {
-          var item = res.result.result[i]
-          that.getInfoDatas(item)
-          
+        var names = res.result[0]
+        var nums = res.result[1]
+
+        var temp = []
+        for (var i = 0; i < nums.length; i++) {
+          var con = {}
+          con['name'] = names[i]
+          con['num'] = nums[i]
+          temp.push(con)
         }
+        this.setData({
+          clickdetail: temp,
+        })
         wx.hideLoading()
       },
 
@@ -591,15 +596,15 @@ Page({
     //   userType: userType,
     //   isSuperUserFlag: isSuperUserFlag
     // })   
-    if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag=='1'){
-      this.initDatas2()
-    }else if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag!='1') {
-      this.initDatas()
-    } else if(this.data.isXintongyuan=="false" && this.data.userType!='1') {
-      this.initDatas()
-    } else if(this.data.isXintongyuan=="false" && this.data.userType=='1') {
-      this.initDatas3()
-    }
+    // if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag=='1'){
+    //   this.initDatas2()
+    // }else if(this.data.isXintongyuan=="true" && this.data.isSuperUserFlag!='1') {
+    //   this.initDatas()
+    // } else if(this.data.isXintongyuan=="false" && this.data.userType!='1') {
+    //   this.initDatas()
+    // } else if(this.data.isXintongyuan=="false" && this.data.userType=='1') {
+    //   this.initDatas3()
+    // }
 
 
     },
