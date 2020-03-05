@@ -40,7 +40,7 @@
         <view class="personal-info-picker">
           <picker bindchange="bindCertificatePickerChange" value="{{index}}" range="{{certificate_type}}" disabled="{{forever_disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">证件类型</text>
+              <text class="info-label">证件号类型</text>
               <text class="info-choice" style="{{forever_choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">

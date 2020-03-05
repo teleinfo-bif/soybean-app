@@ -1,5 +1,7 @@
 const app = getApp()
 
+var utils = require('../../utils/utils.js')
+
 function getCurrentDay() {
   let date = new Date();
   let seperator1 = "-";
@@ -139,6 +141,9 @@ Page({
         if(res.data.length > 0){
           console.log("@@@@@@@@@@@@@@ clickdata.isGoBackFlag: ", res.data[0])
           var place = res.data[0].place
+          var phone = res.data[0].phone 
+          var hide = utils.toHide(phone)
+          res.data[0].phone = hide
           var infoes = place.split('市')
 
           var title = ""
@@ -155,6 +160,8 @@ Page({
             title = "您已确诊，请积极配合治疗，祝您早日康复"
             image = "../../images/yidaka-red-3x.png"
           }
+
+
 
           this.setData({
             clickdata:res.data[0],
