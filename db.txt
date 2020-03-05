@@ -11,7 +11,7 @@ String phone;  电话号码
 String addtime;  数据入库时间
 String suregobackdate;  实际返京时间
 String _openid;  用户微信唯一标识号
-String temperature; 温度
+String temperature; 温度 
 String name; 用户名
 String _id;   数据在数据库中的id
 String place; 打卡地点
@@ -27,7 +27,7 @@ string roommateCompanyDiagStatusFlag：共同居住人员亲属（含合租人�
 string roMaCoDistatusotherremark:共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他时的值
 string residentAreaStatusFlag:居住小区是否有疑似病例、确诊病例,0有确诊病例 1有疑似病例 2都无 3其他
 string reArstatusotherremark:居住小区是否有疑似病例、确诊病例为其他时的取值
-string workStatusFlag:个人状态，0在岗办公 1居家隔离 2居家隔离 3监督隔离
+string workStatusFlag:个人状态，0在岗办公 1居家办公 2居家隔离 3监督隔离
 string temperStatusFlag:体温，0正常 1表示37.3以上
 string temperotherremark:temperStatusFlag=0:正常；temperStatusFlag=1：具体温度值
 
