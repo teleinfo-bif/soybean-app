@@ -36,5 +36,6 @@ page {
   z-index: 100;
   position: absolute;
   padding-bottom: 20rpx;
+  color: #1759ef;
 }
 
