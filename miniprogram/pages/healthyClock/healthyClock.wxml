@@ -343,7 +343,7 @@
       <view class='devide-middle'/>
 
       <!--复工状态-->
-      <view class="clock_form__title">目前在岗状态</view>
+      <view class="clock_form__title">个人状态</view>
         <view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="workStatusChange">
