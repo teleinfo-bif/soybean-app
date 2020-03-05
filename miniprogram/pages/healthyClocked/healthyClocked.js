@@ -92,6 +92,7 @@ Page({
       { name: '其他', value: '3' }
     ],
     residentAreaStatusFlag: '',
+    img: "",
   },
 
   onLoad: function (options) {
@@ -143,18 +144,23 @@ Page({
           var title = ""
           var bodyState = res.data[0].bodyStatusFlag
           var quezhen = res.data[0].isQueZhenFlag
+          var image = ""
           if (bodyState == '0') {
+            image = "../../images/yidaka3x.png"
             title = "今日健康良好，请您继续注意健康防护"
           }else if (bodyState != '0' && quezhen == '1') {
+            image = "../../images/yidaka-yellow-3x.png"
             title = "今日健康异常，请您注意隔离，多加防护"
           }else if (quezhen == '0'){
             title = "您已确诊，请积极配合治疗，祝您早日康复"
+            image = "../../images/yidaka-red-3x.png"
           }
 
           this.setData({
             clickdata:res.data[0],
             localPlace: infoes[0] + '市',
-            titleInfo: title
+            titleInfo: title,
+            img: image
           });
 
           var radioHealthyStatusItems = this.data.radioHealthyStatusItems;
