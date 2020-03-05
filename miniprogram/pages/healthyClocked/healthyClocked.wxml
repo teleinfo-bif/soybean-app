@@ -6,7 +6,7 @@
         打卡记录
       </view>
       <view style="margin-top:0rpx;height:175rpx;">
-        <image class="userinfo-avatar" src="../../images/yidaka3x.png" mode="scaleToFill" style="width:160rpx;height:160rpx;"></image>
+        <image class="userinfo-avatar" src="{{img}}" mode="scaleToFill" style="width:160rpx;height:160rpx;"></image>
       </view>
     </view>
     <view style="color:#000;margin:auto;text-align: center;">{{titleInfo}}</view>
