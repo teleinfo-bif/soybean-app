@@ -691,7 +691,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     //联系电话
     row.push(userInfo.phone)
 
-    //在京居住地址
+    //在工作地居住地址
     if (userInfo.home_district.substring(0, 2) == "北京") {
         row.push(`${userInfo.home_district} ${userInfo.home_detail}`)
     } else {
@@ -746,7 +746,7 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     // }
 
     //返程的交通工具中是否出现确诊的新型肺炎患者
-    row.push("")
+    // row.push("")
 
     //返程统计.返程出发地
     if (isRetured) {
@@ -798,6 +798,48 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
         row.push("")
     }
 
+    //近14天是否离过打卡城市
+    row.push("")
+
+    // if (isRetured) {
+    //     row.push("是") //离开过打卡地
+    // } else if (data.place.substring(0, 2) == "北京") {
+    //     row.push("") //一直在打卡地
+    // } else {
+    //     row.push("否")  //未返回打卡地
+    // }
+
+    //到达打卡地点时间
+    row.push("")
+    // if (isRetured && data.suregobackdate != undefined) {
+    //     row.push(data.suregobackdate)
+    // } else {
+    //     row.push("")
+    // }
+
+    //到达打卡地点所乘交通工具
+    row.push("")
+    // if (isRetured && data.trafficToolStatusFlag != undefined) {
+    //     if (data.trafficToolStatusFlag == "0") {
+    //         row.push("飞机")
+    //     } else if (data.trafficToolStatusFlag == "1") {
+    //         row.push("火车")
+    //     } else if (data.trafficToolStatusFlag == "2") {
+    //         row.push("汽车")
+    //     } else if (data.trafficToolStatusFlag == "3") {
+    //         row.push("轮船")
+    //     } else if (data.trafficToolStatusFlag == "4") {
+    //         row.push("其它")
+    //     } else {
+    //         row.push("")
+    //     }
+    // } else {
+    //     row.push("")
+    // }
+
+    //到达打卡地点所乘车次
+    row.push("")
+
     //当前时间,当前地点/城市
     row.push(`${data.addtime} ${data.place}`)
 
@@ -808,9 +850,11 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     if (data.bodyStatusFlag == undefined) {
         row.push("")
     } else if (data.bodyStatusFlag == "0") {
-        row.push("否")
+        row.push("健康")
+    } else if (data.bodyStatusFlag == "1") {
+        row.push("有发烧咳嗽等症状")
     } else {
-        row.push("是")
+        row.push("")
     }
 
     //目前健康状况
@@ -856,6 +900,19 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     //居住小区是否有疑似病例、确诊病例
     row.push("")
 
+    //在岗状态
+    if (data.workStatusFlag == undefined) {
+        row.push("")
+    } else if (data.workStatusFlag == "0") {
+        row.push("在岗")
+    } else if (data.workStatusFlag == "1") {
+        row.push("在家办公")
+    } else if (data.workStatusFlag == "2") {
+        row.push("为复工")
+    } else {
+        row.push("")
+    }
+
     //可在这里补充希望获得的帮助
     if (data.remark != undefined) {
         row.push(data.remark)
@@ -888,7 +945,7 @@ function buildUnClockedUsers(data) {
     //联系电话
     row.push(data.phone)
 
-    //在京居住地址
+    //在工作地居住地址
     if (data.home_district.substring(0, 2) == "北京") {
         row.push(`${data.home_district} ${data.home_detail}`)
     } else {
@@ -905,7 +962,7 @@ function buildUnClockedUsers(data) {
     row.push("")
 
     //返程的交通工具中是否出现确诊的新型肺炎患者
-    row.push("")
+    // row.push("")
 
     //返程统计.返程出发地
     row.push("")
@@ -920,6 +977,18 @@ function buildUnClockedUsers(data) {
     row.push("")
 
     //开始观察日期
+    row.push("")
+
+    //近14天是否离过打卡城市
+    row.push("")
+
+    //到达打卡地点时间
+    row.push("")
+
+    //到达打卡地点所乘交通工具
+    row.push("")
+
+    //到达打卡地点所乘车次
     row.push("")
 
     //当前时间,当前地点/城市
@@ -950,6 +1019,9 @@ function buildUnClockedUsers(data) {
     row.push("")
 
     //其他不适症状
+    row.push("")
+
+    //在岗状态
     row.push("")
 
     //可在这里补充希望获得的帮助
@@ -1112,7 +1184,7 @@ exports.main = async (event, context) => {
         let row2 = ['', '', '', '人数合计(B)', '其中未返工作地人数(C)', '其中已返工作地人数(D)', '已返工作地人员中自行隔离(14天)人数', '过隔离期人数', '人数合计(E)', '其中未返工作地人数(F)', '其中已返工作地人数(G)', '已返工作地人员中自行隔离(14天)人数', '过隔离期人数']
         let row3 = await getRow3(userInfo, dateTimeStr, department.group, department.reg)
         let row4 = [] //['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-        let row5 = ['提交人', '提交时间', '部门', '是否填写', '离工作地时间/计划离工作地时间', '联系电话', '在工作地居住地址', '未返工作地原因（身体不适/当地未放行等）', '计划返工作地时间', '是否从其他城市返回', '返程的交通工具中是否出现确诊的新型肺炎患者', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '共同居住人员亲属（含合租人员）健康状况', '共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例', '居住小区是否有疑似病例、确诊病例', '其他不适症状', '可在这里补充希望获得的帮助']
+        let row5 = ['提交人', '提交时间', '部门', '是否填写', '离工作地时间/计划离工作地时间', '联系电话', '在工作地居住地址', '未返工作地原因（身体不适/当地未放行等）', '计划返工作地时间', '是否从其他城市返回', '返程统计.返程出发地', '返程统计.返程日期', '返程统计.交通方式', '返程统计.航班/车次/车牌号', '开始观察日期', '近14天是否离过打卡城市', '到达打卡地点时间', '到达打卡地点所乘交通工具', '到达打卡地点所乘车次', '当前时间,当前地点/城市', '体温（°C）', '是否有发烧、咳嗽等症状', '目前健康状况', '是否有就诊住院', '是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉', '共同居住人员亲属（含合租人员）健康状况', '共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例', '居住小区是否有疑似病例、确诊病例', '其他不适症状', '在岗状态', '可在这里补充希望获得的帮助']
 
         alldata.push(row1);
         alldata.push(row2);
