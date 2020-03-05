@@ -44,14 +44,14 @@ exports.main = async (event, context) => {
         var departments = datas[i].departments
         for (var j = 0; j < departments.length; j++) {
           var departmentName = departments[j]
-          reg = ".*" + departmentName
+          reg = ".*" + departmentName + "$"
           var count = await getInfoCount(reg)
           names.push(departmentName)
           temp.push(count)
         }
         
       }else {
-        reg = name + ".*"
+        reg = "^" +  name + ".*"
         var count = await getInfoCount(reg)
         names.push(name)
         temp.push(count)
