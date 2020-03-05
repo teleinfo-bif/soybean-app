@@ -310,7 +310,7 @@
       </view>
       <view class='devide-middle'/>
 
-      <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
+<!--       <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="reArStatusChange">
           <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
@@ -326,7 +326,7 @@
           </view>
         </view>
       </view>
-      <view class='devide-middle'/>
+      <view class='devide-middle'/> -->
 
 
 

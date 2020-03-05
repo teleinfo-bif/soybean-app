@@ -266,7 +266,7 @@
       </view>
       <view class='devide-middle'/>
 
-          <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
+ <!--          <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
           <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
@@ -284,7 +284,7 @@
           </view>
         </view>
       </view>
-      <view class='devide-middle'/>
+      <view class='devide-middle'/> -->
 
  
       <view class="clock_form__title">近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途径湖北</view>

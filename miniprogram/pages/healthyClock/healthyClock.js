@@ -776,7 +776,7 @@ Page({
         return;
       }
     }
-    if (residentAreaStatusFlag == null || residentAreaStatusFlag == '') {
+/*     if (residentAreaStatusFlag == null || residentAreaStatusFlag == '') {
       wx.showToast({
         icon: 'none',
         title: '居住小区是否有疑似病例、确诊病例不能为空'
@@ -792,7 +792,7 @@ Page({
         });
         return;
       }
-    }
+    } */
     if (temperStatusFlag == null || temperStatusFlag == '') {
       wx.showToast({
         icon: 'none',
