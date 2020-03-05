@@ -319,6 +319,12 @@
   width: 72rpx;
   height: 72rpx;
 }
+.group-item-icon-1 {
+  display: block;
+  width: 72rpx;
+  height: 72rpx;
+  margin-right:20rpx;
+}
 
 .copyright {
   margin: auto;

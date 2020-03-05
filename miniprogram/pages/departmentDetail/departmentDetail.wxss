@@ -78,15 +78,15 @@
   }
   .group-item-icon {
     display: block;
-  width: 72rpx;
-  height: 72rpx;
+    width: 72rpx;
+    height: 72rpx;
   }
   .userclicklist-name {
     margin-left: 20rpx;
     width: 300rpx;
-overflow: hidden;    
-text-overflow: ellipsis; 
-white-space: nowrap;
+    overflow: hidden;    
+    text-overflow: ellipsis; 
+    white-space: nowrap;
   }
   .group-item-icons {
     margin-right: 10rpx;
