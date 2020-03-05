@@ -5,7 +5,7 @@ const app = getApp();
 
 // import Notify from "vant-weapp/dist/notify/notify";
 import { saveOrUpdateUserInfo } from "../../api/api.js";
-const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
 const idRegs = [idNumberReg, huzhao, junguan];
@@ -101,9 +101,9 @@ Page({
         prop: "companyName",
         require: false,
         props: {
-          placeholder: "请输入单位名称",
+          placeholder: "请输入单位名称"
         }
-      },      
+      },
       {
         title: "单位所在城市及区",
         type: "area",
@@ -122,7 +122,7 @@ Page({
           placeholder: "请输入公司详细地址",
           addressKey: ""
         }
-      },
+      }
     ],
     data: {},
     userFilledInfo: {},
@@ -178,7 +178,7 @@ Page({
         : "";
       formData.companyAddress = Array.isArray(formData)
         ? formData.companyAddress.join("-")
-        : "";        
+        : "";
       formData = {
         ...formData,
         ...app.globalData.userInfo
@@ -251,7 +251,12 @@ Page({
     let { userRegisted } = app.globalData.userFilledInfo;
 
     fields.forEach(item => {
-      if (item.prop == "homeAddress" || item.prop == "detailAddress" || item.prop == "companyAddress" || item.prop == "companyDetailAddress") {
+      if (
+        item.prop == "homeAddress" ||
+        item.prop == "detailAddress" ||
+        item.prop == "companyAddress" ||
+        item.prop == "companyDetailAddress"
+      ) {
         return (item["props"]["disable"] = !this.data.edit);
       }
     });
@@ -315,9 +320,9 @@ Page({
    */
   onUnload: function() {},
 
-  createGroup: function (e) {
-      wx.navigateTo({
-        url: '/pages/group/createGroup/createGroup'
-      })
-  },
+  createGroup: function(e) {
+    wx.navigateTo({
+      url: "/pages/group/createGroup/createGroup"
+    });
+  }
 });
