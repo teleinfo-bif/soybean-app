@@ -86,6 +86,7 @@ Page({
     // console.log(e);
     const { value } = e.detail;
     this.data.clockData.current = 0;
+    this.data.clockData.records=[]
     this.setData(
       {
         clockInTime: value,

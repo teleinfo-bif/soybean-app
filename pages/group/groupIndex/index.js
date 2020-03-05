@@ -85,7 +85,7 @@ Page({
       console.log("group user has nomore data");
     }
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
@@ -111,7 +111,15 @@ Page({
       this.getData
     );
   },
-
+  onChange(e) {
+    // console.log(e);
+    const { value } = e.detail;
+    this.setData(
+      {
+        clockInTime: value,
+      },
+    );
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
