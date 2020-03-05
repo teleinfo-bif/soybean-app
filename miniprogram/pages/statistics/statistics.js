@@ -30,9 +30,9 @@ Page({
     returnJingText: "已返工作地人数",
     leaveJingText: "未返工作地人数",
     stateBadText: "非健康人数",
-    doneText: "在岗人数",
-    remoteWorkText: "远程办公人数",
-    separateHomeText: "未复工人数",
+    doneText: "在岗办公",
+    remoteWorkText: "居家办公",
+    separateHomeText: "居家隔离",
     separateSupText:"监督隔离",
 
     shouldFilledNumber: 0,
