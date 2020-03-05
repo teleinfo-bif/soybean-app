@@ -844,7 +844,16 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     row.push(`${data.addtime} ${data.place}`)
 
     //体温（°C）
-    row.push(data.temperature)
+    if (data.temperature != undefined) {
+        row.push(data.temperature)
+    } else if (data.temperStatusFlag != undefined && data.temperStatusFlag == 0) { //temperStatusFlag:体温，0正常 1表示37.3以上
+        row.push("正常")
+    } else if (data.temperStatusFlag != undefined && data.temperStatusFlag == 1 && data.temperotherremark != undefined) { //temperotherremark:temperStatusFlag=0:正常；temperStatusFlag=1：具体温度值
+        row.push(data.temperotherremark)
+    } else {
+        row.push("")
+    }
+    
 
     //是否有发烧、咳嗽等症状
     if (data.bodyStatusFlag == undefined) {
@@ -900,15 +909,17 @@ async function buildClockedUsers(data, userInfo, dateTimeStr, recentNotInBjIds) 
     //居住小区是否有疑似病例、确诊病例
     // row.push("")
 
-    //在岗状态
+    //在岗状态 0在岗 1远程 2居家隔离 3监督隔离
     if (data.workStatusFlag == undefined) {
         row.push("")
     } else if (data.workStatusFlag == "0") {
         row.push("在岗")
     } else if (data.workStatusFlag == "1") {
-        row.push("在家办公")
+        row.push("远程")
     } else if (data.workStatusFlag == "2") {
-        row.push("为复工")
+        row.push("居家隔离")
+    } else if (data.workStatusFlag == "3") {
+        row.push("监督隔离")
     } else {
         row.push("")
     }

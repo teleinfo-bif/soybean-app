@@ -72,28 +72,44 @@
   </view>
     <!-- 看板 -->
   <view class="dashboard" style='height:150rpx;'>
-    <view class="dashboard-show move-right">
+    <view class="dashboard-show-work move-right">
       <view class="dashboard-show-data">{{doneNumber}}</view>
       <view>
         <view class="dashboard-show-text split-before">{{doneText}}</view>
         <view class="split"></view>
       </view>
     </view>
-    <view class="dashboard-show">
-      <view class="dashboard-show-data">{{homeNumber}}</view>
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{remoteWorkNumber}}</view>
       <view>
-        <view class="dashboard-show-text split-before">{{homeText}}</view>
+        <view class="dashboard-show-text split-before">{{remoteWorkText}}</view>
         <view class="split"></view>
       </view>
     </view>
-    <view class="dashboard-show">
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{separateHomeNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{separateHomeText}}</view>
+        <view class="split"></view>
+      </view>
+    </view>
+<!-- 
+    <view class="dashboard-show-work">
       <view class="dashboard-show-data">
-        <text class="confirmed-text">{{unDoneNumber}}</text>
+        <text class="confirmed-text">{{separateHomeNumber}}</text>
       </view>
       <view>
+      
         <view class="dashboard-show-text split-before" >
-          <text class="confirmed-text">{{unDoneText}}</text>
+          <text class="confirmed-text">{{separateHomeText}}</text>
         </view>
+      </view>
+    </view> -->
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{separateSupNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{ separateSupText}}</view>
+       <!--  <view class="split"></view> -->
       </view>
     </view>
     
@@ -102,8 +118,8 @@
   <!-- 健康状况 -->
   <view class="template">
      <view class="template-title"  style='margin-top:-60rpx;'>
-      <view class="template-title-text">健康情况</view>
-      <view class="template-title-total">总人数 {{totalStateNumber}}人</view>
+      <view class="template-title-text">健康状况</view>
+      <!-- <view class="template-title-total">总人数 {{totalStateNumber}}人</view> -->
       <view class="clearfix"></view>
     </view>
     <view class="template-show">
@@ -113,7 +129,7 @@
       </view>
       <view class="template-show-table">
         <view class="table-col-2">
-          <view class="table-col-title">分布情况:</view>
+          <view class="table-col-title"></view>
           <view class="table-row row-move">
             <view class="table-row-content">
               <view class="ring-icon3"></view>
@@ -131,7 +147,7 @@
           </view>
         </view>
         <view class="table-col-2">
-          <view class="table-col-title2">占比率:</view>
+          <!-- <view class="table-col-title2">占比率</view> -->
           <view class="table-row row-move">
             <view class="table-row-content">
               <view class="icon-none"></view>
@@ -155,8 +171,8 @@
   <!-- 地区统计 -->
   <view class="template">
     <view class="template-title">
-      <view class="template-title-text">所在地区分布情况</view>
-      <view class="template-title-total">总人数 {{totalAreaNumber}}人</view>
+      <view class="template-title-text">地区分布</view>
+      <!-- <view class="template-title-total">总人数 {{totalAreaNumber}}人</view> -->
       <view class="clearfix"></view>
     </view>
     <view class="template-show">
@@ -166,7 +182,7 @@
       </view>
       <view class="template-show-table">
         <view class="table-col-2">
-          <view class="table-col-title">分布情况:</view>
+          <view class="table-col-title"></view>
           <view class="table-row">
 
             <view class="table-row-content">
@@ -189,9 +205,8 @@
           </view>
         </view>
         <view class="table-col-2">
-          <view class="table-col-title2">占比率:</view>
+          <!-- <view class="table-col-title2">占比率</view> -->
           <view class="table-row">
-
             <view class=" table-row-content">
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{wuhanPercent}} %</view>
@@ -220,8 +235,8 @@
 
   <view class="template">
     <view class="template-title">
-      <view class="template-title-text">就诊住院情况</view>
-      <view class="template-title-total">总人数 {{totalCasesNumber}}人</view>
+      <view class="template-title-text">就诊住院</view>
+      <!-- <view class="template-title-total">总人数 {{totalCasesNumber}}人</view> -->
       <view class="clearfix"></view>
     </view>
     <view class="template-show">
@@ -231,7 +246,7 @@
       </view>
       <view class="template-show-table">
         <view class="table-col-2">
-          <view class="table-col-title">分布情况:</view>
+          <view class="table-col-title"></view>
           <view class="table-row">
 
             <view class="table-row-content">
@@ -254,9 +269,8 @@
           </view>
         </view>
         <view class="table-col-2">
-          <view class="table-col-title2">占比率:</view>
+          <!-- <view class="table-col-title2">占比率</view> -->
           <view class="table-row">
-
             <view class=" table-row-content">
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{confirmedPercent}} %</view>
@@ -284,7 +298,7 @@
   <view class="template">
     <view class="template-title">
       <view class="template-title-text">复工情况</view>
-      <view class="template-title-total">总人数 {{totalworksNumber}}人</view>
+      <!-- <view class="template-title-total">总人数 {{totalworksNumber}}人</view> -->
       <view class="clearfix"></view>
     </view>
     <view class="template-show">
@@ -294,39 +308,62 @@
       </view>
       <view class="template-show-table">
         <view class="table-col-2">
-          <view class="table-col-title">分布情况:</view>
+          <view class="table-col-title"></view>
           <view class="table-row">
-
             <view class="table-row-content">
               <view class="ring-icon5"></view>
-              <view class="table-row-content-text">在岗 {{doneNumber}} 人</view>
+
+<!--               <view class="table-row-content-text">在岗办公 {{doneNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon6"></view>
-              <view class="table-row-content-text">远程办公 {{homeNumber}} 人</view>
+              <view class="table-row-content-text">居家办公 {{homeNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon7"></view>
-              <view class="table-row-content-text">未复工{{unDoneNumber}} 人</view>
+              <view class="table-row-content-text">居家隔离 {{unDoneNumber}} 人</view>
             </view>
+            <view class="table-row-content">
+              <view class="ring-icon7"></view>
+              <view class="table-row-content-text">监督隔离 {{unDoneNumber}} 人</view> -->
+
+              <view class="table-row-content-text">在岗办公{{doneNumber}}人</view>
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon6"></view>
+              <view class="table-row-content-text">居家办公{{remoteWorkNumber}}人</view>
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon7"></view>
+              <view class="table-row-content-text">居家隔离{{separateHomeNumber}}人</view>
+
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon6"></view>
+              <view class="table-row-content-text">监督隔离{{separateSupNumber}}人</view>
+            </view>
+            
 
           </view>
         </view>
         <view class="table-col-2">
-          <view class="table-col-title2">占比率:</view>
+          <!-- <view class="table-col-title2">占比率</view> -->
           <view class="table-row">
-
             <view class=" table-row-content">
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{doneP}} %</view>
             </view>
             <view class="table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{homeP}} %</view>
+              <view class="table-row-content-text">{{remoteWorkP}} %</view>
             </view>
             <view class=" table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{unP}} %</view>
+              <view class="table-row-content-text">{{separateHomeP}} %</view>
+            </view>
+             <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{separateSupP}} %</view>
             </view>
 
           </view>

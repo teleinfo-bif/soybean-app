@@ -23,24 +23,27 @@ Page({
 
     titleText: "统计信息",
 
-    shouldText: "应填写人数",
-    filledInText: "已填写人数",
-    confirmedText: "确诊人数",
-    returnJingText: "已返工作地人数",
-    leaveJingText: "未返工作地人数",
-    stateBadText: "非健康人数",
-    doneText: "在岗人数",
-    unDoneText: "未复工人数",
-    homeText: "远程办公人数",
+
+    shouldText: "应填写",
+    filledInText: "已填写",
+    confirmedText: "确诊",
+    returnJingText: "已返工作地",
+    leaveJingText: "未返工作地",
+    stateBadText: "非健康",
+    doneText: "在岗办公",
+    remoteWorkText: "居家办公",
+    separateHomeText: "居家隔离",
+    separateSupText:"监督隔离",
+
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
     returnBeijingNumber: 0,
     outBeijingNumber: 0,
     healthyBadNumber: 0,
     doneNumber:0,
-    unDoneNumber:0,
-    homeNumber:0,
-    
+    remoteWorkNumber:0,
+    separateHomeNumber:0,
+    separateSupNumber: 0,
     // healthy datas
     totalStateNumber: 0,
     stateGoodNumber: 0,
@@ -138,25 +141,17 @@ Page({
       this.analysisLevel(this.data.authorityLevel)
     }
   },
-  getLimitDone:function(datas) {
+  getWork:function(datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "0") {
+      if (datas[i].workStatusFlag == "0" ) {
         sum += 1
       }
     }
     return sum
   },
-  getLimitUn: function (datas) {
-    var sum = 0
-    for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "2") {
-        sum += 1
-      }
-    }
-    return sum
-  },
-  getLimitHome: function (datas) {
+
+  getRemoteWork: function (datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
       if (datas[i].workStatusFlag == "1") {
@@ -165,7 +160,25 @@ Page({
     }
     return sum
   },
+  getSeparateHome: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "2") {
+        sum += 1
+      }
+    }
+    return sum
+  },
 
+  getSeparateSupervise: function (datas) {
+    var sum = 0
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].workStatusFlag == "3") {
+        sum += 1
+      }
+    }
+    return sum
+  },
   initChats: function(e) {
     // var windowWidth = 200;
 
@@ -179,18 +192,18 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalStateNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
       //   fontSize: 15
       // },
       series: [{
-        name: '健康人数',
+        name: '健康',
         data: this.data.stateGoodNumber,
         stroke: false,
         color: "#4169E1"
@@ -234,36 +247,36 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalAreaNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
       //   fontSize: 15
       // },
       series: [{
-        name: '武汉人数',
+        name: '武汉',
         data: this.data.wuhanNumber,
         stroke: false,
         color: "#aa4438",
       },
         {
-          name: '湖北其他人数',
+          name: '湖北其他',
           data: this.data.hubeiNumber,
           stroke: false,
           color: "#ffaa00",
         },
         {
-          name: '全国其他人数',
+          name: '全国其他',
           data: this.data.othersNumber,
           stroke: false,
           color: "#f2d45e",
         },
         {
-          name: '北京人数',
+          name: '北京',
           data: this.data.beijingNumber,
           stroke: false,
           color: "#4169E1"
@@ -296,36 +309,36 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalCasesNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
       //   fontSize: 15
       // },
       series: [{
-        name: '确诊人数',
+        name: '确诊',
         data: this.data.confirmedNumber,
         stroke: false,
         color: "#aa4438",
       },
       {
-        name: '隔离人数',
+        name: '隔离',
         data: this.data.isolateNumber,
         stroke: false,
         color: "#ffaa00",
       },
       // {
-      //   name: '出隔离人数',
+      //   name: '出隔离',
       //   data: this.data.outIsolateNumber,
       //   stroke: false,
       //   color: "#f2d45e",
       // },
       {
-        name: '非隔离期人数',
+        name: '非隔离期',
         data: this.data.outIsolateNumber,
         stroke: false,
         color: "#4169E1"
@@ -359,33 +372,39 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalworksNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
       //   fontSize: 15
       // },
       series: [{
-        name: '在岗',
+        name: '在岗办公',
         data: this.data.doneNumber,
         stroke: false,
         color: "#aa4438",
       },
       {
-        name: '远程办公',
-        data: this.data.homeNumber,
+        name: '居家办公',
+        data: this.data.remoteWorkNumber,
         stroke: false,
         color: "#ffaa00",
       },
       {
-        name: '未复工',
-        data: this.data.unDoneNumber,
+        name: '居家隔离',
+        data: this.data.separateHomeNumber,
         stroke: false,
         color: "#f2d45e",
+      },
+      {
+        name: '监督隔离',
+        data: this.data.separateSupNumber,
+        stroke: false,
+        color: "#ffaa00",
       },
       ],
       disablePieStroke: false,
@@ -522,21 +541,24 @@ setCasesPercents: function(e) {
 },
 //复工情况百分比
   setWorkPercents: function (e) {
-    var total = this.data.doneNumber + this.data.unDoneNumber + this.data.homeNumber
+    var total = this.data.doneNumber + this.data.remoteWorkNumber + this.data.separateHomeNumber + this.data.separateSupNumber
     if(total == 0){
       var doneP = 0.00
-      var unP = 0.00
-      var homeP = 0.00
+      var remoteWorkP = 0.00
+      var separateHomeP = 0.00
+      var separateSupP = 0.00
     }else{
       var doneP = (this.data.doneNumber / total * 100).toFixed(2)
-      var unP = (this.data.unDoneNumber / total * 100).toFixed(2)
-      var homeP = (this.data.homeNumber / total * 100).toFixed(2)
+      var remoteWorkP = (this.data.remoteWorkNumber / total * 100).toFixed(2)
+      var separateHomeP = (this.data.separateHomeNumber / total * 100).toFixed(2)
+      var separateSupP = (this.data.separateSupNumber / total * 100).toFixed(2)
     }
   
     this.setData({
       doneP,
-      unP,
-      homeP,
+      remoteWorkP,
+      separateHomeP,
+      separateSupP,
       totalworksNumber:total
     })
   },
@@ -669,6 +691,8 @@ getIsoNumber: function(datas) {
 },
 
 parseDatas: function(datas) {
+  console.log(datas);
+  
 
   var should = datas[0].length
   this.setData({
@@ -676,6 +700,10 @@ parseDatas: function(datas) {
   })
 
   var healthyDatas = datas[1]
+  this.setData({
+    healthyDatas: healthyDatas
+  })
+   
 
   if (healthyDatas.length > 0) {
     
@@ -702,9 +730,10 @@ parseDatas: function(datas) {
   var outIsoNum = filled - confirmed - isoNum
   // var othercases = filled - confirmed - isoNum - outIsoNum
   
-    var doneNumber = this.getLimitDone(healthyDatas);
-    var unDoneNumber = this.getLimitUn(healthyDatas);
-    var homeNumber = this.getLimitHome(healthyDatas);
+    var doneNumber = this.getWork(healthyDatas);
+    var remoteWorkNumber = this.getRemoteWork(healthyDatas);
+    var separateHomeNumber = this.getSeparateHome(healthyDatas);
+    var separateSupNumber = this.getSeparateSupervise(healthyDatas);
 
   this.setData({
     // shouldFilledNumber: should,
@@ -731,8 +760,9 @@ parseDatas: function(datas) {
     // otherCasesNumber: othercases,
 
     doneNumber,
-    unDoneNumber,
-    homeNumber,
+    remoteWorkNumber,
+    separateHomeNumber,
+    separateSupNumber,
   })
 
   }
@@ -1170,8 +1200,8 @@ parseDatas: function(datas) {
 
     var work = app.globalData.workPlace
 
-    var returnText = "返" + work + "人数"
-    var leaveText = "离" + work + "未返" + work + "人数"
+    var returnText = "返" + work + ""
+    var leaveText = "离" + work + "未返" + work + ""
 
     this.setData({
       departmentLevel: level,
@@ -1187,10 +1217,15 @@ parseDatas: function(datas) {
     console.log('level: ', level)
 
     if(level != undefined && level == 2) {
+      let regeText =  "^" + name + '.*';
+      if (name == "北京泰尔英福网络科技有限责任公司") {
+        regeText = `.*(${name})`
+      }
+
       this.setData(
         {
           showDate: date,
-          regCompanyInfo: "^" + name + '.*',
+          regCompanyInfo: regeText,
           authorityLevel: 2,
           titleText: name
         }

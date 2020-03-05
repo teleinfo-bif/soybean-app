@@ -98,6 +98,16 @@
   /* border-width: 2rpx;
   border-style: dotted; */
 }
+.dashboard-show-work {
+  width: 22%;
+  height: 220rpx;
+  margin: 6rpx;
+  float: left;
+  padding-left: 4rpx;
+
+  /* border-width: 2rpx;
+  border-style: dotted; */
+}
 
 .dashboard-show-data {
   width: 96%;
@@ -239,7 +249,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   float: right;
-  margin-top: -260rpx;
+  margin-top: -295rpx;
   margin-left: -40rpx;
 
   /* border-style: dotted;
