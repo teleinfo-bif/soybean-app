@@ -52,12 +52,19 @@ Page({
       var nums = res.result[1]
 
       var temp = []
-      for (var i = 0; i < nums.length; i++) {
+       var con = {}
+       con['name'] = departmentNames[nums.length - 1]
+       con['num'] = nums[nums.length - 1]
+
+      temp.push(con)
+      for (var i = 0; i < nums.length - 1; i++) {
         var con = {}
         con['name'] = departmentNames[i]
         con['num'] = nums[i]
         temp.push(con)
       }
+
+      
 
       this.setData({
         titleInfo: name,
