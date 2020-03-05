@@ -173,10 +173,10 @@ Page({
         typeof formData.idType == "object"
           ? formData.idType.id
           : formData.idType;
-      formData.homeAddress = Array.isArray(formData)
+      formData.homeAddress = Array.isArray(formData.homeAddress)
         ? formData.homeAddress.join("-")
         : "";
-      formData.companyAddress = Array.isArray(formData)
+      formData.companyAddress = Array.isArray(formData.companyAddress)
         ? formData.companyAddress.join("-")
         : "";
       formData = {
