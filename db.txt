@@ -20,6 +20,16 @@ String gobackdate; 计划返回北京时间
 String leavedate; 离开北京时间
 String trainnumber;  行程号，可以是汽车牌号。火车/飞机号
 String bodystatusotherremark; 健康打卡时的其它备注，如其它身体状况
+String trafficToolStatusFlag：交通工具, 0飞机  1火车  2轮船 3其他
+string roommateHealthyStatusFlag :共同居住人员亲属（含合租人员）健康状况, 0健康 1有发热、咳嗽等症状 2其他症状
+string roHealthystatusotherremark:共同居住人员亲属（含合租人员）健康状况为其他的值
+string roommateCompanyDiagStatusFlag：共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例, 0有确诊病例 1有疑似病例 2都无 3其他
+string roMaCoDistatusotherremark:共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他时的值
+string residentAreaStatusFlag:居住小区是否有疑似病例、确诊病例,0有确诊病例 1有疑似病例 2都无 3其他
+string reArstatusotherremark:居住小区是否有疑似病例、确诊病例为其他时的取值
+string workStatusFlag:个人状态，0在岗办公 1居家隔离 2居家隔离 3监督隔离
+string temperStatusFlag:体温，0正常 1表示37.3以上
+string temperotherremark:temperStatusFlag=0:正常；temperStatusFlag=1：具体温度值
 
 
 
