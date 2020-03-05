@@ -23,15 +23,15 @@ Page({
 
     titleText: "统计信息",
 
-    shouldText: "应填写人数",
-    filledInText: "已填写人数",
-    confirmedText: "确诊人数",
-    returnJingText: "已返工作地人数",
-    leaveJingText: "未返工作地人数",
-    stateBadText: "非健康人数",
-    doneText: "在岗人数",
-    unDoneText: "未复工人数",
-    homeText: "远程办公人数",
+    shouldText: "应打卡",
+    filledInText: "已打卡",
+    confirmedText: "确诊",
+    returnJingText: "已返工作地",
+    leaveJingText: "未返工作地",
+    stateBadText: "非健康",
+    doneText: "在岗",
+    unDoneText: "未复工",
+    homeText: "远程办公",
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
     returnBeijingNumber: 0,
@@ -199,18 +199,18 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: '70人',
+        color: '#7cb5ec',
+        fontSize: 25
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
       //   fontSize: 15
       // },
       series: [{
-        name: '健康人数',
+        name: '健康',
         data: this.data.stateGoodNumber,
         stroke: false,
         color: "#4169E1"
@@ -265,25 +265,25 @@ Page({
       //   fontSize: 15
       // },
       series: [{
-        name: '武汉人数',
+        name: '武汉',
         data: this.data.wuhanNumber,
         stroke: false,
         color: "#aa4438",
       },
         {
-          name: '湖北其他人数',
+          name: '湖北其他',
           data: this.data.hubeiNumber,
           stroke: false,
           color: "#ffaa00",
         },
         {
-          name: '全国其他人数',
+          name: '全国其他',
           data: this.data.othersNumber,
           stroke: false,
           color: "#f2d45e",
         },
         {
-          name: '北京人数',
+          name: '北京',
           data: this.data.beijingNumber,
           stroke: false,
           color: "#4169E1"
@@ -327,25 +327,25 @@ Page({
       //   fontSize: 15
       // },
       series: [{
-        name: '确诊人数',
+        name: '确诊',
         data: this.data.confirmedNumber,
         stroke: false,
         color: "#aa4438",
       },
       {
-        name: '隔离人数',
+        name: '隔离',
         data: this.data.isolateNumber,
         stroke: false,
         color: "#ffaa00",
       },
       // {
-      //   name: '出隔离人数',
+      //   name: '出隔离',
       //   data: this.data.outIsolateNumber,
       //   stroke: false,
       //   color: "#f2d45e",
       // },
       {
-        name: '非隔离期人数',
+        name: '非隔离期',
         data: this.data.outIsolateNumber,
         stroke: false,
         color: "#4169E1"
@@ -390,13 +390,13 @@ Page({
       //   fontSize: 15
       // },
       series: [{
-        name: '在岗',
+        name: '在岗办公',
         data: this.data.doneNumber,
         stroke: false,
         color: "#aa4438",
       },
       {
-        name: '远程办公',
+        name: '居家办公',
         data: this.data.homeNumber,
         stroke: false,
         color: "#ffaa00",
@@ -1057,10 +1057,10 @@ parseDatas: function(datas) {
         }else if(userType == '1'){
           level = 2
           if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
+            regInfo = '.*' + infoes[1] + "$"
             title = infoes[1]
           } else {
-            regInfo = infoes[0] + ".*"
+            regInfo = "^" + infoes[0] + ".*"
             title = infoes[0]
           }
 
@@ -1190,8 +1190,8 @@ parseDatas: function(datas) {
 
     var work = app.globalData.workPlace
 
-    var returnText = "返" + work + "人数"
-    var leaveText = "离" + work + "未返" + work + "人数"
+    var returnText = "返" + work + ""
+    var leaveText = "离" + work + "未返" + work + ""
 
     this.setData({
       departmentLevel: level,
@@ -1210,7 +1210,7 @@ parseDatas: function(datas) {
       this.setData(
         {
           showDate: date,
-          regCompanyInfo: name + '.*',
+          regCompanyInfo: "^" + name + '.*',
           authorityLevel: 2,
           titleText: name
         }

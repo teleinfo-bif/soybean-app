@@ -88,6 +88,10 @@ Page({
   },
   onLoad: function () {
 
+    var data1 = "院属党总支部 科技发展部党支部"
+    var flag = /^科技发展部.*/.test(data1)
+    console.log("@@@@@@  flag: ", flag)
+
     // var address = '河北省张家口市桥西区温馨家园'
     // var infoes = address.split('市')
     // console.log("@@@@@@@@@@@ infoes: ", infoes)
