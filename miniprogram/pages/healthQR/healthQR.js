@@ -23,7 +23,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrcodeUrl: "/images/QRGreen.png",
+    qrcodeUrl: "",
     realName: "",
     jobNumber: '',
     updateTime: '',
