@@ -24,7 +24,7 @@ Page({
    */
   data: {
     qrcodeUrl: "",
-    realName: "",
+    name: "",
     jobNumber: '',
     updateTime: '',
     description: '',
@@ -35,7 +35,7 @@ Page({
     wx.request({
       url: "https://www.guokezhixing.com/secHealth/version1/healthRecord/miniSubmitRecord",
       data: {
-        realName: that.data.realName,
+        realName: that.data.name,
         idCard: that.data.idCard,
         phone: that.data.phone,
         unit: that.data.unit,
@@ -57,7 +57,7 @@ Page({
         console.log('=====请求sucessTESTQR=====', res);
         that.setData({
           qrcodeUrl: res.data.data.qrcodeUrl,
-          updateTime: res.data.data.updateTime,
+          updateTime: "更新于："+res.data.data.updateTime,
           realName:res.data.data.title,
           description: res.data.data.description
         })
@@ -198,7 +198,7 @@ Page({
         console.log(res)
         that.userinfo = res.data;
         that.setData({
-          realName: res.data[0].name,
+          name: res.data[0].name,
           phone: res.data[0].phone,
           idCard: res.data[0].certificate_number,
           unit: res.data[0].company_department,
