@@ -41,7 +41,7 @@ Page({
     outBeijingNumber: 0,
     healthyBadNumber: 0,
     doneNumber:0,
-    remoteWorNumber:0,
+    remoteWorkNumber:0,
     separateHomeNumber:0,
     separateSupNumber: 0,
     // healthy datas
@@ -390,7 +390,7 @@ Page({
       },
       {
         name: '居家办公',
-        data: this.data.remoteWorNumber,
+        data: this.data.remoteWorkNumber,
         stroke: false,
         color: "#ffaa00",
       },
@@ -691,6 +691,8 @@ getIsoNumber: function(datas) {
 },
 
 parseDatas: function(datas) {
+  console.log(datas);
+  
 
   var should = datas[0].length
   this.setData({
