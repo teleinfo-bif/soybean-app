@@ -146,7 +146,7 @@ Page({
           var quezhen = res.data[0].isQueZhenFlag
           var image = ""
           if (bodyState == '0') {
-            image = "../../images/yidaka3x.png"
+            image = "../../images/yidaka-green-3x.png"
             title = "今日健康良好，请您继续注意健康防护"
           }else if (bodyState != '0' && quezhen == '1') {
             image = "../../images/yidaka-yellow-3x.png"
@@ -174,7 +174,7 @@ Page({
 
           var roommateHealthyItems = this.data.roommateHealthyItems;
           console.log("radioHealthyStatusItems的内容为：" + radioHealthyStatusItems);
-          for (var i = 0; i < roommateHealthyItems.lemngth; ++i) {
+          for (var i = 0; i < roommateHealthyItems.length; ++i) {
             roommateHealthyItems[i].checked = roommateHealthyItems[i].value == res.data[0].roommateHealthyStatusFlag;
           }
           this.setData({
