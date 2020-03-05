@@ -55,9 +55,7 @@ Page({
       { name: '未复工', value: '2' }
     ],
     workStatusFlag:'',
-<<<<<<< Updated upstream
-    workPlace: ''
-=======
+    workPlace: '',
     //共同居住人员亲属（含合租人员）健康状况
     roommateHealthyItems:[
       { name: '健康', value: '0' },
@@ -81,8 +79,6 @@ Page({
       { name: '其他', value: '3' }
     ],
     residentAreaStatusFlag: '',
-    
->>>>>>> Stashed changes
   },
 
   currentDate: function (e) {
