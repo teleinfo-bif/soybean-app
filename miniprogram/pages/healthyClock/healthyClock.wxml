@@ -191,14 +191,39 @@
       </view>
       <!--未返京结束-->
 
-      <view class="clock_form__title">当日体温</view>
+<!--       <view class="clock_form__title">当日体温</view>
       <view class="">
         <view class="clock_form_input">
           <input class="weui-input" name="temperature" placeholder="请输入数字和小数点" bindblur="judgeTemperature" placeholder-class="placeholder-style"/>
-          <!--     <label weui-input>{{phone}}</label>-->
+         
         </view>
       </view>
+      <view class='devide-middle'/> -->
+
+      <view class="clock_form__title">当日体温</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="temperStatusRadioChange">
+          <label wx:for="{{temperItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{temperStatusFlag == '1'}}" class="clock_form__title">具体温度</view>
+      <view wx:if="{{temperStatusFlag == '1'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="temperotherremark" placeholder="请输入数字和小数点" placeholder-class="placeholder-style"/>
+           </view>
+          </view>
+      </view>
       <view class='devide-middle'/>
+
 
       
       <view class="clock_form__title">目前健康状况</view>

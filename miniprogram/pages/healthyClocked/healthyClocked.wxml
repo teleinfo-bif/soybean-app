@@ -151,13 +151,24 @@
       <!--未返京结束-->
 
 
-      <view class="clock_form__title">当日体温</view>
-      <view class="">
-        <view class="clock_form_input">
 
-          <input class="weui-input" disabled="true" name="temperature" placeholder="{{clickdata.temperature}}" placeholder-class="placeholder-style"/>
-          <!--     <label weui-input>{{phone}}</label>-->
-        </view>
+
+      <view class="clock_form__title">当日体温</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="temperStatusRadioChange">
+          <label wx:for="{{temperItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}"  disabled="true" checked="{{item.checked}}" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{clickdata.temperStatusFlag == '1' }}" class="clock_form__title">具体温度</view>
+      <view wx:if="{{clickdata.temperStatusFlag == '1' }}" class="">
+        <view class="">
+          <view class="clock_form_input">
+          <input class="weui-input" name="temperotherremark" placeholder="{{clickdata.temperotherremark}}" disabled="true" placeholder-class="placeholder-style"/>
+           </view>
+          </view>
       </view>
       <view class='devide-middle'/>
 
