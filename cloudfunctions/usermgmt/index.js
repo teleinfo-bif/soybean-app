@@ -1,23 +1,22 @@
-// 查询当前用户是否为管理员
+
+// 云函数入口文件
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database()
-
-async function getMuserByOpenid(openid) {
-  console.log("调用云函数getMuserByOpenid:" + openid);
-  let count = await db.collection('user_manager').where({
-    _openid: openid,
-
-  }).count();
-  console.log("调用云函数getMuserByOpenid结果count为：" + count);
-  return count;
-}
-
 // 云函数入口函数
+//查询"附近拼单"
 exports.main = async (event, context) => {
-  console.log("调用云函数");
+  console.log("调用云函数usermgmt");
   const wxContext = cloud.getWXContext()
   console.log(wxContext);
-  console.log(event);
-  return getMuserByOpenid(wxContext.OPENID)
+  try {
+    //order
+    return await db.collection('user_info').where({
+      //下面这3行，为筛选条件
+      _openid: openid,
+      usertype: '1'
+    }).count();
+  } catch (e) {
+    console.error(e);
+  }
 }
