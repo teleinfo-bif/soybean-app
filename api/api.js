@@ -123,6 +123,12 @@ export const joinGroup = async params => {
   return Request._post(`/wx/usergroup/save`, params);
 };
 
+//根据id查看群组信息
+export const getGroup = async params => {
+console.log("/wx/group/detail`----params", params);
+return Request._get(`/wx/group/detail`, params);
+};
+
 // 获取用户树形群组
 export const getUserTreeGroup = async params => {
   return Request._get("/wx/group/tree", params);
@@ -133,4 +139,5 @@ export const createGroup = async params => {
   console.log("/wx/group/excelImport----params", params);
   return Request._post(`/wx/group/excelImport`, params);
 };
+
 
