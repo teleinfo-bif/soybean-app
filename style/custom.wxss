@@ -3,11 +3,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 20rpx 30rpx 20rpx;
+  margin-top: 10rpx;
+  padding: 30rpx 30rpx 50rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f2f2f2; }
   .my-form_item .van-cell {
-    padding-right: 30rpx; }
+    padding-right: 30rpx !important; }
     .my-form_item .van-cell::after {
       left: 0 !important; }
     .my-form_item .van-cell.field-index--van-field {
@@ -20,10 +21,10 @@
     .my-form_item .van-cell__title {
       font-size: 32rpx !important; }
   .my-form_item .van-radio {
-    margin-top: 13rpx; }
+    margin-top: 20rpx; }
     .my-form_item .van-radio__label {
       flex: 1;
-      font-size: 32rpx; }
+      font-size: 32rpx !important; }
   .my-form_item .must-filled-star {
     position: absolute;
     color: #f00;
@@ -35,14 +36,14 @@
     align-items: flex-start;
     padding: 10rpx 0rpx 10rpx;
     padding-left: 5rpx;
-    font-size: 28rpx;
-    line-height: 28rpx; }
+    margin-bottom: 20rpx;
+    font-size: 32rpx;
+    line-height: 40rpx; }
   .my-form_item_content {
     position: relative; }
 
 .color {
-  color: #4f7ef2;  
-  }
+  color: #4f7ef2; }
 
 picker.select-picker {
   background-color: transparent;
@@ -68,13 +69,13 @@ picker.select-picker {
 .select-picker-btn {
   position: absolute;
   right: 30rpx;
-  top: -45rpx;
+  top: -65rpx;
   color: #1759ef;
-  font-size: 28rpx !important; }
+  font-size: 32rpx !important; }
 
 .select-picker-btn {
   color: #1759ef;
-  font-size: 30rpx; }
+  font-size: 32rpx; }
 
 .my-radio .vant-radio {
   display: block;

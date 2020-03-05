@@ -4,13 +4,14 @@
   display: flex;
   flex-direction: column;
   // height: 120rpx ;
-  padding: 20rpx 30rpx 20rpx;
+  margin-top: 10rpx;
+  padding: 30rpx 30rpx 50rpx;
   background-color: #fff;
   // overflow: hidden;
   border-bottom: 1rpx solid #f2f2f2;
 
   .van-cell {
-    padding-right: 30rpx;
+    padding-right: 30rpx !important;
 
     &::after {
       left: 0 !important;
@@ -33,10 +34,10 @@
   }
 
   .van-radio {
-    margin-top: 13rpx;
+    margin-top: 20rpx;
     &__label {
       flex: 1;
-      font-size: 32rpx;
+      font-size: 32rpx !important;
     }
   }
 
@@ -53,9 +54,9 @@
     // height: 44rpx;
     padding: 10rpx 0rpx 10rpx;
     padding-left: 5rpx;
-    // margin-bottom: 10rpx;
-    font-size: 28rpx;
-    line-height: 28rpx;
+    margin-bottom: 20rpx;
+    font-size: 32rpx;
+    line-height: 40rpx;
   }
 
   &_content {
@@ -102,15 +103,15 @@ picker.select-picker {
 .select-picker-btn {
   position: absolute;
   right: 30rpx;
-  top: -45rpx;
+  top: -65rpx;
   color: #1759ef;
-  font-size: 28rpx !important;
+  font-size: 32rpx !important;
 }
 
 .select-picker {
   &-btn {
     color: #1759ef;
-    font-size: 30rpx;
+    font-size: 32rpx;
   }
 }
 
