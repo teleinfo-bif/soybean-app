@@ -508,7 +508,7 @@ Page({
     }
 
 
-    if (bodyStatusFlag == '3') {
+    if (bodyStatusFlag == '2') {
       var bodystatusotherremark = e.detail.value.bodystatusotherremark
       if (bodystatusotherremark == null || bodystatusotherremark == '') {
         wx.showToast({
