@@ -1217,10 +1217,15 @@ parseDatas: function(datas) {
     console.log('level: ', level)
 
     if(level != undefined && level == 2) {
+      let regeText =  "^" + name + '.*';
+      if (name == "北京泰尔英福网络科技有限责任公司") {
+        regeText = `.*(${name})`
+      }
+
       this.setData(
         {
           showDate: date,
-          regCompanyInfo: "^" + name + '.*',
+          regCompanyInfo: regeText,
           authorityLevel: 2,
           titleText: name
         }
