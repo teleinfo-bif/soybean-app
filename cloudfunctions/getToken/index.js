@@ -3,7 +3,7 @@ const cloud = require('wx-server-sdk')
 const requestpromise = require('request-promise');
 var WXBizDataCrypt = require('./RdWXBizDataCrypt') // 用于手机号解密
 cloud.init()
- 
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   // 获取 WX Context (微信调用上下文)，包括 OPENID、APPID、及 UNIONID（需满足 UNIONID 获取条件）

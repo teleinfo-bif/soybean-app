@@ -50,7 +50,7 @@ exports.main = async (event, context) => {
   // });
 
   return await cloud.uploadFile({
-    cloudPath: `download/sheet-----${wxContext.OPENID}.xlsx`,  // excel文件名称及路径，即云存储中的路径
+    cloudPath: `download/sheet${wxContext.OPENID}.xlsx`,  // excel文件名称及路径，即云存储中的路径
     fileContent: Buffer.from(excelResult, 'binary'),
   })
 

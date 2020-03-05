@@ -62,7 +62,9 @@ exports.main = async (event, context) => {
   let beijing = await db.collection('user_healthy').where(_.and([{
     "date": event.date,
   }, {
-      "isGoBackFlag": "0"
+    "place": db.RegExp({
+      regexp: '.*' + '北京'
+    })
   }, {
       "company_department": db.RegExp({
         regexp: event.company_department,
@@ -118,7 +120,9 @@ exports.main = async (event, context) => {
   let beijingUnComfirmed = await db.collection('user_healthy').where(_.and([{
     "date": event.date
   }, {
-      "isGoBackFlag": "0"
+    "place": db.RegExp({
+      regexp: '.*' + '北京'
+    })
   },
   {
     "isQueZhenFlag": "1"
@@ -134,7 +138,9 @@ exports.main = async (event, context) => {
   let isLeaveBeijing = await db.collection('user_healthy').where(_.and([{
     "date": event.date
   }, {
-    "isGoBackFlag": "0"
+    "place": db.RegExp({
+      regexp: '.*' + '北京'
+    })
   }, {
     "isLeaveBjFlag": "0"
   }, {
@@ -146,7 +152,9 @@ exports.main = async (event, context) => {
   let beijingConfirmed = await db.collection('user_healthy').where(_.and([{
     "date": event.date
   }, {
-      "isGoBackFlag": "0"
+    "place": db.RegExp({
+      regexp: '.*' + '北京'
+    })
   }, {
     "isQueZhenFlag": "0"
   }, {
