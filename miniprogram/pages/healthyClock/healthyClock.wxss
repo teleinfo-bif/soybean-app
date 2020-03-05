@@ -247,3 +247,30 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .weui-cell:first-child:before {
   display: none;
 }
+
+.secret-checkbox-show {
+  display: flex;
+  margin-top: 60rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  
+}
+
+/* .secret-checkbox-hide {
+  display: none;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+} */
+
+.secret-view {
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+  font-size: 25rpx;
+}
+
+.text-blue {
+  font-size: 25rpx;
+  font-weight: 400;
+  color: #4169E1;
+}

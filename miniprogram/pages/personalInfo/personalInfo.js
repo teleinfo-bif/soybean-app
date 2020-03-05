@@ -24,6 +24,7 @@ Page({
     certificate_number:"",
     bid_address: "",
     private_key: "",
+    secretcheckbox: "",
     
     multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
     multiIndex: [0, 0],
@@ -40,8 +41,10 @@ Page({
     record_id: "",
     placeholder_name: "请输入姓名",
     placeholder_phone: "请输入手机号码",
+    placeholder_phone_show: "",
     placeholder_card_type: "选择证件类型",
-    placeholder_card_number: "证件号码",
+    placeholder_card_number: "员工号",
+    placeholder_card_number_show: "",
     placeholder_company_name: "请选择单位及部门",
     placeholder_company_district: "请选择单位所在城市及区",
     placeholder_company_detail: "请输入单位详细地址",
@@ -65,7 +68,8 @@ Page({
 
     healthyDatas: [],
     company_name_items:['中国信息通信研究院'],
-    isFisrtNoFlag:true
+    isFisrtNoFlag:true,
+    if_checked: false
 
   },
 
@@ -79,6 +83,19 @@ Page({
       placeholder_home_district:'',
       placeholder_home_detail:''
     })
+  },
+
+  boxcheck: function(e) {
+    console.log("box change: ", e.detail.value)
+    var flag = false
+    if (e.detail.value.length != 0) {
+      flag = true
+    }
+    this.setData({
+      if_checked: flag
+    })
+
+    console.log("if check: ", this.data.if_checked)
   },
   /** 
    * 身份验证相关
@@ -237,6 +254,7 @@ Page({
   },
 
 
+
   /**
    *  身份类型选择
    */
@@ -244,7 +262,8 @@ Page({
   bindCertificatePickerChange: function(e) {
     this.setData({
       certificate_type_index: parseInt(e.detail.value),
-      value_card_type: this.data.certificate_type[e.detail.value]
+      value_card_type: this.data.certificate_type[e.detail.value],
+      placeholder_card_number: this.data.certificate_type[e.detail.value]
     })
 
     console.log(this.data.value_card_type)
@@ -464,13 +483,18 @@ Page({
     }).get({
         success: res => {
           if (res.data.length == 0) {
+            this.setData({
+              secretcheckbox: "secret-checkbox-show",
+            })
             this.getBidAddress()
           }
 
           var hide = utils.toHide(res.data[0].phone)
           var idHide = ""
+
+          console.log("card type: ", )
           
-          if (res.data[0].certificate_type == "身份证号"){
+          if (res.data[0].certificate_type == "身份证号" || res.data[0].certificate_type == "大陆身份证"){
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
@@ -482,6 +506,8 @@ Page({
             record_id: res.data[0]._id,
             placeholder_name: res.data[0].name,
             placeholder_phone: hide,
+            placeholder_phone_show: res.data[0].phone,
+            placeholder_card_number_show: res.data[0].certificate_number,
             placeholder_card_type: res.data[0].certificate_type,
             placeholder_card_number: idHide,
             bid_address: res.data[0].bid_address,
@@ -498,6 +524,7 @@ Page({
             choice_color_1: "color: #999999",
             forever_choice_color: "color: #999999",
             personal_info_change: "personal-change-show",
+            secretcheckbox: "secret-checkbox-hide",
             buttons_display: "display: none",
             phone_display: "display: none"
           })
@@ -535,6 +562,8 @@ Page({
       // value_phone: this.data.placeholder_phone,
       // value_card_type: this.data.placeholder_card_type,
       // value_card_number: this.data.placeholder_card_number,
+      placeholder_phone: this.data.placeholder_phone_show,
+      placeholder_card_number: this.data.placeholder_card_number_show,
       value_company_name: this.data.placeholder_company_name,
       value_company_district: this.data.placeholder_company_district,
       value_company_detail: this.data.placeholder_company_detail,
@@ -606,7 +635,11 @@ Page({
       warn = "请选择您的家庭所在地区!"
     }  else if (e.detail.value.home_detail == "") {
       warn = "请输入您的家庭详细地址"
-    }  */else {
+    }  */
+    else if (!this.data.if_checked) {
+      warn = "请选择同意用户服务条款及隐私协议"
+    }
+    else {
       flag = true 
 
 
