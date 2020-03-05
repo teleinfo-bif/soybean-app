@@ -339,6 +339,7 @@ Page({
         //       break
         //   }
         // }
+        data.multiIndex[1] = 0
         break
 
     }
