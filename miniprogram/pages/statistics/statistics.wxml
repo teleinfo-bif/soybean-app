@@ -72,28 +72,44 @@
   </view>
     <!-- 看板 -->
   <view class="dashboard" style='height:150rpx;'>
-    <view class="dashboard-show move-right">
+    <view class="dashboard-show-work move-right">
       <view class="dashboard-show-data">{{doneNumber}}</view>
       <view>
         <view class="dashboard-show-text split-before">{{doneText}}</view>
         <view class="split"></view>
       </view>
     </view>
-    <view class="dashboard-show">
-      <view class="dashboard-show-data">{{homeNumber}}</view>
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{remoteWorkNumber}}</view>
       <view>
-        <view class="dashboard-show-text split-before">{{homeText}}</view>
+        <view class="dashboard-show-text split-before">{{remoteWorkText}}</view>
         <view class="split"></view>
       </view>
     </view>
-    <view class="dashboard-show">
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{separateHomeNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{separateHomeText}}</view>
+        <view class="split"></view>
+      </view>
+    </view>
+<!-- 
+    <view class="dashboard-show-work">
       <view class="dashboard-show-data">
-        <text class="confirmed-text">{{unDoneNumber}}</text>
+        <text class="confirmed-text">{{separateHomeNumber}}</text>
       </view>
       <view>
+      
         <view class="dashboard-show-text split-before" >
-          <text class="confirmed-text">{{unDoneText}}</text>
+          <text class="confirmed-text">{{separateHomeText}}</text>
         </view>
+      </view>
+    </view> -->
+    <view class="dashboard-show-work">
+      <view class="dashboard-show-data">{{separateSupNumber}}</view>
+      <view>
+        <view class="dashboard-show-text split-before">{{ separateSupText}}</view>
+       <!--  <view class="split"></view> -->
       </view>
     </view>
     
@@ -296,7 +312,8 @@
           <view class="table-row">
             <view class="table-row-content">
               <view class="ring-icon5"></view>
-              <view class="table-row-content-text">在岗办公 {{doneNumber}} 人</view>
+
+<!--               <view class="table-row-content-text">在岗办公 {{doneNumber}} 人</view>
             </view>
             <view class="table-row-content">
               <view class="ring-icon6"></view>
@@ -308,8 +325,24 @@
             </view>
             <view class="table-row-content">
               <view class="ring-icon7"></view>
-              <view class="table-row-content-text">监督隔离 {{unDoneNumber}} 人</view>
+              <view class="table-row-content-text">监督隔离 {{unDoneNumber}} 人</view> -->
+
+              <view class="table-row-content-text">在岗办公{{doneNumber}}人</view>
             </view>
+            <view class="table-row-content">
+              <view class="ring-icon6"></view>
+              <view class="table-row-content-text">居家办公{{remoteWorkNumber}}人</view>
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon7"></view>
+              <view class="table-row-content-text">居家隔离{{separateHomeNumber}}人</view>
+
+            </view>
+            <view class="table-row-content">
+              <view class="ring-icon6"></view>
+              <view class="table-row-content-text">监督隔离{{separateSupNumber}} 人</view>
+            </view>
+            
 
           </view>
         </view>
@@ -322,11 +355,15 @@
             </view>
             <view class="table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{homeP}} %</view>
+              <view class="table-row-content-text">{{remoteWorkP}} %</view>
             </view>
             <view class=" table-row-content">
               <view class="icon-none"></view>
-              <view class="table-row-content-text">{{unP}} %</view>
+              <view class="table-row-content-text">{{separateHomeP}} %</view>
+            </view>
+             <view class=" table-row-content">
+              <view class="icon-none"></view>
+              <view class="table-row-content-text">{{separateSupP}} %</view>
             </view>
 
           </view>

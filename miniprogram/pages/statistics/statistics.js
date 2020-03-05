@@ -23,24 +23,27 @@ Page({
 
     titleText: "统计信息",
 
-    shouldText: "应打卡",
-    filledInText: "已打卡",
-    confirmedText: "确诊",
-    returnJingText: "已返工作地",
-    leaveJingText: "未返工作地",
-    stateBadText: "非健康",
-    doneText: "在岗",
-    unDoneText: "未复工",
-    homeText: "远程办公",
+
+    shouldText: "应填写人数",
+    filledInText: "已填写人数",
+    confirmedText: "确诊人数",
+    returnJingText: "已返工作地人数",
+    leaveJingText: "未返工作地人数",
+    stateBadText: "非健康人数",
+    doneText: "在岗人数",
+    remoteWorkText: "远程办公人数",
+    separateHomeText: "未复工人数",
+    separateSupText:"监督隔离",
+
     shouldFilledNumber: 0,
     hasFilledNumber: 0,
     returnBeijingNumber: 0,
     outBeijingNumber: 0,
     healthyBadNumber: 0,
     doneNumber:0,
-    unDoneNumber:0,
-    homeNumber:0,
-    
+    remoteWorNumber:0,
+    separateHomeNumber:0,
+    separateSupNumber: 0,
     // healthy datas
     totalStateNumber: 0,
     stateGoodNumber: 0,
@@ -141,22 +144,12 @@ Page({
   getWork:function(datas) {
     var sum = 0
     for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "0" || datas[i].workStatusFlag == "1") {
+      if (datas[i].workStatusFlag == "0" ) {
         sum += 1
       }
     }
     return sum
   },
-  getNoWork: function (datas) {
-    var sum = 0
-    for (var i = 0; i < datas.length; i++) {
-      if (datas[i].workStatusFlag == "2" || datas[i].workStatusFlag == "3") {
-        sum += 1
-      }
-    }
-    return sum
-  },
-
 
   getRemoteWork: function (datas) {
     var sum = 0
@@ -397,15 +390,21 @@ Page({
       },
       {
         name: '居家办公',
-        data: this.data.homeNumber,
+        data: this.data.remoteWorNumber,
         stroke: false,
         color: "#ffaa00",
       },
       {
-        name: '未复工',
-        data: this.data.unDoneNumber,
+        name: '居家隔离',
+        data: this.data.separateHomeNumber,
         stroke: false,
         color: "#f2d45e",
+      },
+      {
+        name: '监督隔离',
+        data: this.data.separateSupNumber,
+        stroke: false,
+        color: "#ffaa00",
       },
       ],
       disablePieStroke: false,
@@ -542,21 +541,24 @@ setCasesPercents: function(e) {
 },
 //复工情况百分比
   setWorkPercents: function (e) {
-    var total = this.data.doneNumber + this.data.unDoneNumber + this.data.homeNumber
+    var total = this.data.doneNumber + this.data.remoteWorkNumber + this.data.separateHomeNumber + this.data.separateSupNumber
     if(total == 0){
       var doneP = 0.00
-      var unP = 0.00
-      var homeP = 0.00
+      var remoteWorkP = 0.00
+      var separateHomeP = 0.00
+      var separateSupP = 0.00
     }else{
       var doneP = (this.data.doneNumber / total * 100).toFixed(2)
-      var unP = (this.data.unDoneNumber / total * 100).toFixed(2)
-      var homeP = (this.data.homeNumber / total * 100).toFixed(2)
+      var remoteWorkP = (this.data.remoteWorkNumber / total * 100).toFixed(2)
+      var separateHomeP = (this.data.separateHomeNumber / total * 100).toFixed(2)
+      var separateSupP = (this.data.separateSupNumber / total * 100).toFixed(2)
     }
   
     this.setData({
       doneP,
-      unP,
-      homeP,
+      remoteWorkP,
+      separateHomeP,
+      separateSupP,
       totalworksNumber:total
     })
   },
@@ -696,6 +698,10 @@ parseDatas: function(datas) {
   })
 
   var healthyDatas = datas[1]
+  this.setData({
+    healthyDatas: healthyDatas
+  })
+   
 
   if (healthyDatas.length > 0) {
     
@@ -723,8 +729,9 @@ parseDatas: function(datas) {
   // var othercases = filled - confirmed - isoNum - outIsoNum
   
     var doneNumber = this.getWork(healthyDatas);
-    var unDoneNumber = this.getNoWork(healthyDatas);
-    var homeNumber = this.getRemoteWork(healthyDatas);
+    var remoteWorkNumber = this.getRemoteWork(healthyDatas);
+    var separateHomeNumber = this.getSeparateHome(healthyDatas);
+    var separateSupNumber = this.getSeparateSupervise(healthyDatas);
 
   this.setData({
     // shouldFilledNumber: should,
@@ -751,8 +758,9 @@ parseDatas: function(datas) {
     // otherCasesNumber: othercases,
 
     doneNumber,
-    unDoneNumber,
-    homeNumber,
+    remoteWorkNumber,
+    separateHomeNumber,
+    separateSupNumber,
   })
 
   }
