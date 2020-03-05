@@ -421,7 +421,7 @@ Page({
   formCancel() {
     let { data } = this.data;
     for (let prop in data) {
-      if (prop != "userName" && prop != "phone") {
+      if (prop != "name" && prop != "userName" && prop != "phone") {
         data[prop] = null;
       }
     }
