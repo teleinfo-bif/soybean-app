@@ -19,7 +19,8 @@ Component({
       text: "健康码",
       img: "../../../static/images/jjiankangmaactive3x.png",
       path: "/pages/healthQR/healthQR",
-      disable: true
+      disable: true,
+      permission: true
     }
   },
 

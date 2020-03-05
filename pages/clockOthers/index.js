@@ -482,9 +482,10 @@ Page({
   },
 
   // 获取用户今日打卡信息
-  getUserTodyClockData(userId) {
+  getUserTodyClockData(userId, time) {
     getTodayClock({
-      userId: userId
+      userId: userId,
+      time: time
     }).then(data => {
       const resData = data;
       // 打卡数据合并到data中，今日未打卡返回的数据在是{}
@@ -513,17 +514,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const { userId, name = "", phone = "" } = options;
-    console.log(name, phone);
+    const { userId, clockInTime, name = "", phone = "" } = options;
+    console.log(name, phone, clockInTime);
     this.setData(
-      {
+      { 
+        clockInTime: clockInTime,
         otherUserId: userId,
         userFilledInfo: {
           name,
           phone
         }
       },
-      this.getUserTodyClockData(userId)
+      this.getUserTodyClockData(userId, clockInTime)
     );
 
     this.initFormData();

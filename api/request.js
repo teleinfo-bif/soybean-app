@@ -8,6 +8,11 @@ const baseURL = "https://admin.bidspace.cn/bid-soybean";
 
 let fedToken = null;
 let userFilledInfo = null;
+function getAuth(token = { token_type: "", access_token: "" }) {
+  return {
+    "Blade-Auth": token.tokenType + " " + token.accessToken
+  };
+}
 /**
  *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
  *
@@ -114,17 +119,11 @@ function getUserStorage() {
 }
 
 // 封装网络请求开始
-const Request = async ({ url, params, method, ...other } = {}) => {
-  // await start();
-  // console.log(token);
-  // debugger;
+const Request = async ({ url, params, method, header, ...other } = {}) => {
   // 先取localstorage里面openid,userid,
   // let token = getTokenStorage();
   // let userInfo = getUserStorage();
-  console.log(url);
   const sessionValidate = await checkSessionKey();
-  // console.log("await checkSessionKey()", sessionValidate);
-
   if (
     !fedToken ||
     fedToken == "" ||
@@ -148,7 +147,7 @@ const Request = async ({ url, params, method, ...other } = {}) => {
     userFilledInfo = await getUserInfo({ openid: fedToken.openid });
     console.log("返回数据：获取的用户", userFilledInfo);
   }
-  console.log("params.userId", params, params.userId);
+  // console.log("params.userId", params, params.userId);
 
   // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
   let data = Object.assign({}, params, {
@@ -171,6 +170,10 @@ const Request = async ({ url, params, method, ...other } = {}) => {
       // header: getHeader(),
       // header: Object.assign(getHeader(), header),
       method: method,
+      header: {
+        ...getAuth(fedToken),
+        ...header
+      },
       ...other,
       // 成功或失败处理
       complete: res => {
@@ -179,6 +182,11 @@ const Request = async ({ url, params, method, ...other } = {}) => {
         // 进行状态码判断并处理
         if (res.statusCode === 204) {
           resolve(res);
+        } else if (res.statusCode === 401) {
+          // 检测到状态码401，进行token刷新并重新请求等操作
+          refreshToken()
+            .then(() => _refetch(url, data, method))
+            .then(resolve);
         } else if (res.data.code !== 200) {
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
@@ -202,12 +210,6 @@ const Request = async ({ url, params, method, ...other } = {}) => {
         } else {
           reject(res);
         }
-        // else if (res.statusCode === 401) {
-        //   // 检测到状态码401，进行token刷新并重新请求等操作
-        //   refreshToken()
-        //     .then(() => _refetch(url, data, method))
-        //     .then(resolve);
-        // }
       }
     });
   });
@@ -253,37 +255,14 @@ const _fetch = content => {
 const refreshToken = () => {
   return new Promise((resolve, reject) => {
     // 获取token
-    var token = wx.getStorageSync("userToken");
-    // 设置请求data
-    let params = {
-      refresh_token: token.refresh_token
-    };
-    // 进行token刷新请求
-    wx.request({
-      url: getUrl("/app/connect/refresh"),
-      data: params,
-      // 设置请求header 鉴权
-      header: {
-        Authorization: token.token_type + " " + token.access_token
-      },
-      method: "post",
-      // 请求响应处理
-      complete: res => {
-        if (res.data.code === 200) {
-          // 全局存储token
-          app.globalData.usertToken = res.data.data;
-          // Storage存储token
-          wx.setStorage({
-            key: "userToken",
-            data: res.data.data,
-            // 存储成功处理
-            success: function() {
-              resolve();
-            }
-          });
-        }
-      }
-    });
+    getOpenId()
+      .then(() => {
+        resolve();
+      })
+      .catch(e => {
+        console.error("错误：服务端401,token过期，重新获取token失败");
+        reject();
+      });
   });
 };
 const _refetch = (url, params, method) => {

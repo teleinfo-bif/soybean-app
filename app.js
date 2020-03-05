@@ -76,9 +76,8 @@ App({
     appInit: false,
     statusBarHeight: 20, // 标题栏高度-适配首页
     userInfo: null, // 从微信获取的用户信息
-
     userFilledInfo: {}, // 用户填写的个人信息
-    userId: null,
-    fedToken: null
+    userId: null, // 用户id
+    fedToken: null // token、session、openID信息
   }
 });
