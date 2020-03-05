@@ -173,10 +173,10 @@ Page({
         typeof formData.idType == "object"
           ? formData.idType.id
           : formData.idType;
-      formData.homeAddress = Array.isArray(formData)
+      formData.homeAddress = Array.isArray(formData.homeAddress)
         ? formData.homeAddress.join("-")
         : "";
-      formData.companyAddress = Array.isArray(formData)
+      formData.companyAddress = Array.isArray(formData.companyAddress)
         ? formData.companyAddress.join("-")
         : "";
       formData = {
@@ -226,8 +226,10 @@ Page({
       return (item["props"]["disable"] = userRegisted);
     });
 
+    // 需要把服务端存的province-city-district字符串拆分成picker显示的数组
     if (resData && typeof resData.homeAddress === "string") {
       resData.homeAddress = resData.homeAddress.split("-");
+      resData.companyAddress = resData.companyAddress.split("-");
     }
     if (userRegisted) {
       this.setData({

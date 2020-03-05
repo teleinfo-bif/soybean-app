@@ -9,11 +9,9 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-// 如果当前位置在北京，询问是否从外地返京，如果是，从哪里返回
-// 如果当前不在北京，询问未返京原因，返京日期
+
 import { getTodayClock, getUserClockList, saveClock } from "../../api/api.js";
 import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
-const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
 let fields = [
   {
@@ -43,10 +41,10 @@ let fields = [
     }
   },
   {
-    title: "是否离开过北京（2020年1月10日以后）",
+    title: "14天内是否离开过工作地",
     type: "radio",
     prop: "leave",
-    hide: false,
+    hide: true,
     props: {
       itemKey: "id",
       itemLabelKey: "name",
@@ -57,21 +55,27 @@ let fields = [
     }
   },
   {
-    title: "离京日期",
+    title: "近14天是否离过打卡城市",
+    type: "radio",
+    prop: "leaveCity",
+    hide: false,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
+      ]
+    }
+  },
+
+  {
+    title: "到达日期",
     type: "date",
     prop: "leavetime",
     hide: true,
     props: {
-      placeholder: "请输入离京日期"
-    }
-  },
-  {
-    title: "返京日期",
-    type: "date",
-    prop: "gobacktime",
-    hide: true,
-    props: {
-      placeholder: "请输入返京日期",
+      placeholder: "请输入到达日期",
       end: ""
     }
   },
@@ -98,7 +102,7 @@ let fields = [
     }
   },
   {
-    title: "返京所乘车次/航班/车牌",
+    title: "返回所乘车次/航班/车牌",
     type: "input",
     prop: "flight",
     hide: true,
@@ -107,11 +111,11 @@ let fields = [
     }
   },
   {
-    title: "未返京原因 ",
+    title: "未返回工作地原因 ",
     type: "radio",
     prop: "nobackreason",
     hide: true,
-    require: false,
+    // require: false,
     props: {
       itemKey: "id",
       itemLabelKey: "name",
@@ -121,13 +125,22 @@ let fields = [
       ]
     }
   },
-
+  {
+    title: "计划返回工作地日期",
+    type: "date",
+    prop: "gobacktime",
+    hide: true,
+    props: {
+      placeholder: "请输入返京日期",
+      end: ""
+    }
+  },
   {
     title: "体温（℃）",
     type: "input",
     prop: "temperature",
     props: {
-      placeholder: "温度超过37.2度不能视为健康，请重新选择健康状况!",
+      placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value);
       },
@@ -153,6 +166,7 @@ let fields = [
     type: "input",
     prop: "otherhealthy",
     hide: true,
+    require: false,
     props: {
       placeholder: "请输入其他症状"
     }
@@ -171,6 +185,78 @@ let fields = [
     }
   },
   {
+    title: "共同居住人员亲属（含合租人员）健康状况",
+    type: "radio",
+    prop: "roomPerson",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "健康" },
+        { id: 2, name: "有发热、咳嗽等症状" },
+        { id: 0, name: "其他症状" }
+      ]
+    }
+  },
+  {
+    title: "其他",
+    type: "input",
+    prop: "roomPersonOther",
+    hide: true,
+    props: {
+      placeholder: "请输入其他"
+    }
+  },
+  {
+    title:
+      "共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例",
+    type: "radio",
+    prop: "roomCompany",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "有确诊病例" },
+        { id: 2, name: "有疑似病例" },
+        { id: 3, name: "都无" },
+        { id: 0, name: "其他" }
+      ]
+    }
+  },
+  {
+    title: "其他",
+    type: "input",
+    prop: "roomCompanyOther",
+    hide: true,
+    props: {
+      placeholder: "请输入其他"
+    }
+  },
+  {
+    title: "居住小区是否有疑似病例、确诊病例",
+    type: "radio",
+    prop: "neighbor",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "有确诊病例" },
+        { id: 2, name: "有疑似病例" },
+        { id: 3, name: "都无" },
+        { id: 0, name: "其他" }
+      ]
+    }
+  },
+  {
+    title: "其他",
+    type: "input",
+    prop: "neighborOther",
+    hide: true,
+    props: {
+      placeholder: "请输入其他"
+    }
+  },
+  {
     title: "是否就诊住院",
     type: "radio",
     prop: "admitting",
@@ -184,7 +270,7 @@ let fields = [
     }
   },
   {
-    title: "是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北",
+    title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途径湖北",
     type: "radio",
     prop: "wuhan",
     props: {
@@ -205,9 +291,10 @@ let fields = [
       itemKey: "id",
       itemLabelKey: "name",
       options: [
-        { id: 1, name: "在岗" },
-        { id: 2, name: "在家办公" },
-        { id: 3, name: "未复工" }
+        { id: 1, name: "在岗办公" },
+        { id: 2, name: "居家办公" },
+        { id: 3, name: "居家隔离" },
+        { id: 4, name: "监督隔离" }
       ]
     }
   },
@@ -228,23 +315,26 @@ Page({
    */
   data: {
     clocked: false,
-    userRegisted: app.globalData.userRegisted,
+    otherId: null,
     userFilledInfo: app.globalData.userFilledInfo,
     location: "",
     address: {},
-    atBeijing: false,
-    leaved: false,
-    goBack: false,
     fields: fields,
     data: {
       address: ""
     },
-    baseAddress: ""
+    baseAddress: "",
+    otherFieldsList: {
+      healthy: "otherhealthy",
+      roomPerson: "roomPersonOther",
+      roomCompany: "roomCompanyOther",
+      neighbor: "neighborOther"
+    }
   },
   onFormChange(e) {
     console.log("onFormChange", e);
     const { prop, value } = e.detail;
-    let { data } = this.data;
+    let { data, otherFieldsList } = this.data;
 
     let itemData = {};
     itemData[e.detail.prop] = e.detail.value;
@@ -252,14 +342,15 @@ Page({
 
     // 根据填选是否离开，显示返回日期
     if (prop === "leave") {
-      // this.setFieldsHide(["leave"], this.data.atBeijing, value == 2);
-
-      this.setFields(data);
+      this.setFieldsFromLeave(data);
+    } else if (prop === "leaveCity") {
+      this.setFieldsFromLeave(data);
     } else if (
       prop === "comfirmed" ||
       prop === "admitting" ||
       prop === "temperature"
     ) {
+      // 确诊、入院、温度修改健康项
       this.setData(
         {
           data
@@ -267,12 +358,12 @@ Page({
         this.setHealthyDisabled
       );
       // ();
-    } else if (prop === "healthy") {
+    } else if (otherFieldsList[prop]) {
       // 判断 健康状况选其它
       if (value === "0") {
-        this.setOtherHealthyHide(false);
+        this.setOtherFieldsHide(otherFieldsList[prop], false);
       } else {
-        this.setOtherHealthyHide(true);
+        this.setOtherFieldsHide(otherFieldsList[prop], true);
       }
     }
 
@@ -282,15 +373,15 @@ Page({
       data
     });
   },
-  // 温度大于37.2设置健康是禁选中
+  // 温度大于37.3设置健康是禁选中
   setHealthyDisabled() {
     let disable = false;
     let { fields, data } = this.data;
-    // 体温高于37.2 或者 选择确诊 或者 选择就诊 这三种情况都不允许选择健康
+    // 体温高于37.3 或者 选择确诊 或者 选择就诊 这三种情况都不允许选择健康
     const { temperature, comfirmed, admitting } = this.data.data;
     // data["healthy"] = disable ? null : data["otherhealthy"];
     if (
-      (temperature && Number(temperature) > 37.2) ||
+      (temperature && Number(temperature) > 37.3) ||
       (comfirmed != null && comfirmed == "2") ||
       (admitting != null && admitting == "2")
     ) {
@@ -313,15 +404,15 @@ Page({
     });
     this.setData({ fields, data });
   },
-  setOtherHealthyHide(hide) {
+  setOtherFieldsHide(prop, status = true) {
     let { fields, data } = this.data;
-    data["otherhealthy"] = null;
+    data[prop] = null;
     this.setData({
       data
     });
     fields.forEach((item, index) => {
-      if (item.prop === "otherhealthy") {
-        item.hide = hide;
+      if (item.prop === prop) {
+        item.hide = status;
       }
     });
     this.setData({ fields, data });
@@ -369,86 +460,183 @@ Page({
     });
   },
   // 设置部分选项隐藏
-  setFieldsHide(hideList = [], showOtherCity = true, otherCith = 0) {
+  setFieldsHide(hideList = [], showList = []) {
+    // debugger;
     // let fields = fields;
     fields.forEach(item => {
-      if (showOtherCity && item.prop == "leave") {
-        item.hide = false;
-        item.value = otherCith;
-      }
-      if (item.prop == "leave") {
-        // debugger;
-      }
-      if (hideList.indexOf(item.prop) > -1) {
+      // if (showOtherCity && item.prop == "leave") {
+      //   item.hide = false;
+      //   item.value = otherCith;
+      // }
+      if (hideList.includes(item.prop)) {
         item.hide = true;
-      } else {
-        // 如果otherhealthy health等于0其他，设置健康其他显示
-        if (item.prop == "otherhealthy") {
-          item.hide = this.data.data.healthy == "0" ? false : true;
-        } else {
-          item.hide = false;
-        }
+      } else if (showList.includes(item.prop)) {
+        item.hide = false;
       }
     });
     this.setData({
       fields
     });
   },
+  setFieldsFromAddress(formData) {
+    // 先判断用户位置信息和填写的信息是否一致
+
+    let { fields } = this.data;
+
+    // 是否在工作地
+    let { atWorkPlace, companyCity, locationCity } = this.getAtWorkPlaceState(
+      formData
+    );
+
+    fields.forEach(item => {
+      // 是否离开公司所在地
+      if (item.prop === "leave") {
+        // item.hide = !atWorkPlace;
+        item.title = "14天内是否离开过" + companyCity;
+      }
+      // 是否离开定位所在地
+      if (item.prop === "leaveCity") {
+        // item.hide = atWorkPlace;
+        item.title = "14天内是否离开过" + locationCity;
+      }
+
+      if (item.prop === "leavetime") {
+        item.title = `到达${locationCity}日期`;
+        item.props.placeholder = `请输入到达${locationCity}日期`;
+      }
+
+      if (item.prop === "nobackreason") {
+        item.title = `未返回${companyCity}原因`;
+        item.props.placeholder = `请输入未返回${companyCity}原因`;
+      }
+
+      // 如果在工作地，返回时间最大是今天
+      if (item.prop === "gobacktime") {
+        item.props.end = atWorkPlace ? getyyyyMMdd() : "";
+        if (atWorkPlace) {
+          // item.title = `返回${companyCity}日期`;
+          // item.props.placeholder = `请输入返回${companyCity}日期`;
+          item.hide = true;
+        } else {
+          item.title = `计划返回${companyCity}日期`;
+          item.props.placeholder = `请输入计划返回${companyCity}日期`;
+        }
+      }
+    });
+
+    this.setData({
+      fields
+    });
+    // debugger;
+    // 在工作地隐藏是否离开打卡地，返回时间，显示是否离开工作地
+    if (atWorkPlace) {
+      this.setFieldsHide(["leavetime", "leaveCity", "gobacktime"], ["leave"]);
+    } else {
+      // 不在工作地隐藏是否离开工作地，未返回原因，显示是否离开打卡地
+      this.setFieldsHide(
+        ["leave", "leavetime"],
+        ["leaveCity", "gobacktime", "nobackreason"]
+      );
+    }
+  },
+  // 根据是否离开控制表单显示隐藏字段
+  setFieldsFromLeave(formData) {
+    // leavetime nobackreason gobacktime  flight transport(只要离开过，不区分工作地打卡地，就显示transport，flight)
+    /* 
+      在工作地
+        离开： 显示(leavetime flight transport) 隐藏(nobackreason gobacktime )
+        未离开：显示() 隐藏(leavetime nobackreason gobacktime flight transport)
+      不在工作地
+        离开： 显示(nobackreason gobacktime leavetime flight transport ) 隐藏()
+        未离开：显示(nobackreason gobacktime) 隐藏(leavetime flight transport)
+      */
+    const { atWorkPlace } = this.getAtWorkPlaceState(formData);
+    let hideList = [];
+    let showList = [];
+    if (atWorkPlace) {
+      if (formData["leave"] == "2") {
+        showList = ["leavetime", "flight", "transport"];
+        hideList = ["nobackreason", "gobacktime"];
+      } else {
+        showList = [];
+        hideList = [
+          "leavetime",
+          "nobackreason",
+          "gobacktime",
+          "flight",
+          "transport"
+        ];
+      }
+    } else {
+      if (formData["leaveCity"] == "2") {
+        showList = [
+          "leavetime",
+          "nobackreason",
+          "gobacktime",
+          "flight",
+          "transport"
+        ];
+        hideList = [];
+      } else {
+        showList = ["nobackreason", "gobacktime"];
+        hideList = ["leavetime", "flight", "transport"];
+      }
+    }
+    this.setFieldsHide(hideList, showList);
+  },
   /**
    *设置表单隐藏
    *
    * @param {*} data userfilledData
    */
-  setFields(formData) {
-    let { fields, baseAddress, clocked } = this.data;
-    // 判断是否在北京，未打卡用baseaddress，打完卡用address
-    const atBeijing = clocked
-      ? formData.address.startsWith("北京市")
-      : (typeof baseAddress == "string" && baseAddress.startsWith("北京市")) ||
-        false;
-    let leave = formData["leave"] == "2";
-
-    // 根据在京状态修改返回日期的最大时间限制和返京label提示
-    fields.forEach(item => {
-      // 如果再北京，返回时间最大是今天
-      if (item.prop === "gobacktime") {
-        item.props.end = atBeijing ? getyyyyMMdd(new Date()) : "";
-      }
-      // 在北京显示返京日期，否则显示计划返京日期
-      if (item.prop === "gobacktime") {
-        item.title = atBeijing ? "返京日期" : "计划返京日期";
-        item.props.placeholder = atBeijing
-          ? "请输入返京日期"
-          : "请输入计划返京日期";
-      }
+  // setFields(formData) {
+  //   // this.setFieldsFromAddress(formData);
+  //   // this.setFieldsFromLeave(formData);
+  // },
+  // 修改打卡地点
+  onChangeBaseAddress(e) {
+    this.setData({
+      baseAddress: e.detail
     });
-    this.setData(
-      {
-        fields
-      },
-      () => {
-        // 在北京 & 非从其它地方返回 隐藏离京leavetime, 返程日期gobacktime，未返程原因reason
-        // 在北京 & 从其它地方返回  显示离京时间leavetime 返程日期gobacktime，隐藏未返程原因，reason
-        // 不在北京 隐藏从其它城市返回otherCity
+  },
+  /**
+   * 获取单位省市信息
+   *
+   * @param {*} [formData=this.data.data]
+   * @returns {atWorkPlace, companyProvince, companyCity}
+   */
+  getAtWorkPlaceState(formData = this.data.data) {
+    let { clocked, address, userFilledInfo } = this.data;
+    const { companyAddress } = userFilledInfo;
 
-        this.setFieldsHide(["leave"], !atBeijing);
-        if (leave) {
-          this.setFieldsHide(["nobackreason"]);
-        } else {
-          // 在北京且未离开
-          this.setFieldsHide([
-            "nobackreason",
-            "leavetime",
-            "gobacktime",
-            "flight",
-            "transport"
-          ]);
-        }
-      }
-    );
+    // 已打卡从返回数据中分离省市信息，未打卡从定位信息中分离数据
+    let [companyProvince, companyCity] = companyAddress.split("-");
+    let locationProvince, locationCity;
+    // 是否在工作地
+    let atWorkPlace;
+    // 判断省份和城市相同，则位置在工作地
+    if (clocked) {
+      [locationProvince, locationCity] = formData.companyAddress.split("-");
+      atWorkPlace =
+        companyProvince == locationProvince && companyCity == locationCity;
+    } else {
+      let locationed = Object.keys(address).length > 0;
+      locationProvince = locationed ? address.address_component.province : "";
+      locationCity = locationed ? address.address_component.city : "";
+      atWorkPlace =
+        companyProvince == locationProvince && companyCity == locationCity;
+    }
+    return {
+      atWorkPlace,
+      companyProvince,
+      companyCity,
+      locationProvince,
+      locationCity
+    };
   },
   // 初始化位置信息
   initAddress() {
+    const _this = this;
     wx.getSetting({
       success: res => {
         // 判断用户是否授权了位置信息
@@ -462,65 +650,66 @@ Page({
               reverseAddressFromLocation(location).then(res => {
                 this.onAddressChange(res);
               });
-              // wx.navigateTo({ url: getLocationPluginMapUrl(res2) });
             }
           });
         } else {
           console.log("未授权位置信息");
+          wx.authorize({
+            scope: "scope.userLocation",
+            success() {
+              _this.initAddress();
+            },
+            fail(e) {
+              console.log("用户拒绝授权位置信息");
+            }
+          });
         }
       }
     });
   },
-  // 修改打卡地点
-  onChangeBaseAddress(e) {
-    this.setData({
-      baseAddress: e.detail
-    });
-  },
   // 地址选项变化
-  onAddressChange(location, chooseLocation) {
-    var currentCity = chooseLocation
-      ? location.city
-      : location.result.ad_info.city;
-    // console.log(res.result.ad_info.city);
-    let atBeijing = currentCity == "北京市";
+  onAddressChange(location) {
     const { fields } = this.data;
-    let baseAddress = null;
+
+    const {
+      province,
+      district,
+      street_number
+    } = location.result.address_component;
+    const baseAddress = province + district;
     fields.forEach(item => {
       if (item.prop == "address") {
-        // debugger;
         item.props["location"] = location;
-        baseAddress =
-          location.result.address_component.province +
-          location.result.address_component.district;
         item.props["baseAddress"] = baseAddress;
       }
     });
 
-    console.log(location);
     const formData = {
       ...this.data.data,
-      address: location.result.address_component.street_number
+      address: street_number
     };
-    this.setData({
-      atBeijing,
-      leaved: !atBeijing,
-      goBack: !atBeijing,
-      address: chooseLocation ? location : location.result,
-      baseAddress,
-      fields,
-      data: formData
-    });
-    this.setFields(formData);
+    this.setData(
+      {
+        address: location.result,
+        baseAddress,
+        fields,
+        data: formData
+      },
+      () => {
+        this.setFieldsFromAddress(formData);
+      }
+    );
   },
-  // 设置用户填入信息
-  setUserFilledInfo(userFilledInfo) {
+  // 根据位置信息修改显示的表单field
+
+  // 设置用户填入信息，用户没有打卡记录的时候还是需要个人填写上
+  setUserFilledInfo() {
+    const { userFilledInfo } = app.globalData;
     let { data } = this.data;
     data["name"] = userFilledInfo.name || "";
     data["phone"] = userFilledInfo.phone || "";
     this.setData({
       userFilledInfo,
-      userRegisted: Object.keys(userFilledInfo).length > 0,
       data
     });
   },
@@ -549,7 +738,7 @@ Page({
         });
       }
       // 设置表单显示的字段
-      this.setFields(formData);
+      this.setFieldsFromLeave(formData);
     });
   },
   // 获取用户打卡记录
@@ -560,6 +749,7 @@ Page({
         const autoFilledProps = [
           "leave",
           "leavetime",
+          "leaveCity",
           "gobacktime",
           "transport",
           "flight",
@@ -573,7 +763,7 @@ Page({
         this.setData({
           data
         });
-        this.setFields(previousLockData);
+        this.setFieldsFromLeave(previousLockData);
       } else {
         console.log("提醒：没有打卡数据，无需自动填写");
       }
@@ -583,7 +773,7 @@ Page({
   // 页面初始化
   initPage() {
     this.initFormData();
-    this.setUserFilledInfo(app.globalData.userFilledInfo);
+    this.setUserFilledInfo();
     this.getUserTodyClockData();
   },
 
@@ -591,6 +781,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    console.log(options);
+    const { id } = options;
+    if (id) {
+      this.setData({
+        otherId: id
+      });
+    }
     if (!app.globalData.appInit) {
       app.init(() => {
         console.log("进入回调");
@@ -611,11 +808,6 @@ Page({
    */
   onShow() {
     // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
-    const location = chooseLocation.getLocation();
-    // console.log(location);
-    if (location) {
-      this.onAddressChange(location, true);
-    }
   },
 
   /**
