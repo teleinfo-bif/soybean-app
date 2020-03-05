@@ -250,9 +250,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 
 .secret-checkbox-show {
   display: flex;
-  margin-top: 60rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+  margin: 30rpx;
   
 }
 

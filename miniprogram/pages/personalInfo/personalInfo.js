@@ -572,7 +572,9 @@ Page({
 
       certificate_type_index: this.getCardType(),
       buttons_display: "display: flex",
-      isFisrtNoFlag:false
+      isFisrtNoFlag:false,
+      secretcheckbox: "secret-checkbox-show",
+      if_checked: true
 
     })
     if (this.data.placeholder_company_name_0 == '无') {
