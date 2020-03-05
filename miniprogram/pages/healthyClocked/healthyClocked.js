@@ -68,6 +68,7 @@ Page({
       { name: '未复工', value: '2' }
     ],
     localPlace: "",
+    titleInfo: "",
     //共同居住人员亲属（含合租人员）健康状况
     roommateHealthyItems: [
       { name: '健康', value: '0' },
@@ -132,15 +133,28 @@ Page({
     }).get({
       success: res => {
         console.log(res)
+
         //今日已打卡
         if(res.data.length > 0){
           console.log("@@@@@@@@@@@@@@ clickdata.isGoBackFlag: ", res.data[0])
           var place = res.data[0].place
           var infoes = place.split('市')
 
+          var title = ""
+          var bodyState = res.data[0].bodyStatusFlag
+          var quezhen = res.data[0].isQueZhenFlag
+          if (bodyState == '0') {
+            title = "今日健康良好，请您继续注意健康防护"
+          }else if (bodyState != '0' && quezhen == '1') {
+            title = "今日健康异常，请您注意隔离，多加防护"
+          }else if (quezhen == '0'){
+            title = "您已确诊，请积极配合治疗，祝您早日康复"
+          }
+
           this.setData({
             clickdata:res.data[0],
             localPlace: infoes[0] + '市',
+            titleInfo: title
           });
 
           var radioHealthyStatusItems = this.data.radioHealthyStatusItems;

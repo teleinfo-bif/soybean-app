@@ -365,6 +365,7 @@
 }
  
 .copyright-view{
+  margin-top: -20rpx;
   position: fixed;
   text-align: center;
   width: 100%;
