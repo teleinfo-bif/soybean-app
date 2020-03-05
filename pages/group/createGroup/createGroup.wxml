@@ -1,6 +1,7 @@
 <!-- pages/createGroup/createGroup.wxml -->
 <view class="page">
   <view class="personal">
+    <view class="tip-tip">提示：先准备好您的机构架构文件，再完善以下信息</view>
     <!-- 报表 -->
     <form class="personal-form" bindsubmit="submitUserInfo">
       <view class="personal-view">
@@ -40,7 +41,7 @@
 
         <!-- 导入架构 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤5 发送机构架构</text>         
+          <text class="info-label">步骤5 导入机构架构</text>         
           <view style="display:inline-block" bindtap="downloadStructure">
             (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
             <text class="download-info">下载模板)</text>
@@ -69,7 +70,7 @@
         <view class="personal-divide"></view>
       </view>
       <view class="personal-buttons">
-        <button class="button-submit" form-type="submit" disabled="{{disabled}}">提交</button>
+        <button class="button-submit" form-type="submit" >提交</button>
       </view>
     </form>
   </view>
