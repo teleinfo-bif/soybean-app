@@ -251,12 +251,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="roHealthyStatusChange">
           <label wx:for="{{roommateHealthyItems}}" wx:key="{{index}}">
-           <view wx:if="{{index == 0}}">
-            <radio value="{{item.value}}"  />{{item.name}}
-           </view>
-           <view wx:else>
-            <radio value="{{item.value}}" />{{item.name}}
-           </view>
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -276,12 +271,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="roMaCoDiStatusChange">
           <label wx:for="{{roommateCompanyDiagItems}}" wx:key="{{index}}">
-           <view wx:if="{{index == 0}}">
-            <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
-           </view>
-           <view wx:else>
-            <radio value="{{item.value}}" />{{item.name}}
-           </view>
+           <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
           </label>
         </radio-group>
       </view>
@@ -299,12 +289,7 @@
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="reArStatusChange">
           <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
-           <view wx:if="{{index == 0}}">
-            <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
-           </view>
-           <view wx:else>
-            <radio value="{{item.value}}" />{{item.name}}
-           </view>
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
           </label>
         </radio-group>
       </view>
