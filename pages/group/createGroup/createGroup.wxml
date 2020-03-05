@@ -29,9 +29,18 @@
           <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
         </view>
         <view class="personal-divide"></view>
+        <!-- 组织地址 -->
+        <view class="personal-info-hd">
+          <text class="info-label">步骤4 请输入机构地址</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" maxlength="30"></input>
+        </view>
+        <view class="personal-divide"></view>
+
         <!-- 导入架构 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤4 发送机构架构</text>         
+          <text class="info-label">步骤5 发送机构架构</text>         
           <view style="display:inline-block" bindtap="downloadStructure">
             (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
             <text class="download-info">下载模板)</text>
@@ -44,7 +53,7 @@
         <view class="personal-divide"></view>
         <!-- 姓名 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤5 请输入您的姓名</text>
+          <text class="info-label">步骤6 请输入您的姓名</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="group_applicant" maxlength="5" placeholder-class="placeholder-style" placeholder="{{placeholder_group_apply_name}}" value="{{applicant}}"></input>
@@ -52,7 +61,7 @@
         <view class="personal-divide"></view>
         <!-- 联系方式 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤6 请输入您的联系方式</text>
+          <text class="info-label">步骤7 请输入您的联系方式</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" type="number" name="group_phone" placeholder-class="placeholder-style" maxlength="11" placeholder="{{placeholder_group_apply_phone}}" value="{{phone}}"></input>

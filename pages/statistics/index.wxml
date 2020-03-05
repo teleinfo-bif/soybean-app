@@ -38,11 +38,11 @@
     <view class="statistic-box_row">
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.goBackBeijing}}</view>
-        <view class="statistic-box_item_label">返京人数</view>
+        <view class="statistic-box_item_label">返{{addressName}}人数</view>
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.notInbeijing}}</view>
-        <view class="statistic-box_item_label">离京未返京人数</view>
+        <view class="statistic-box_item_label">离{{addressName}}未返{{addressName}}人数</view>
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.abnormalbody}}</view>

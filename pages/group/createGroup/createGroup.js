@@ -1,5 +1,7 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
+import { createGroup } from "../../../api/api";
+
 Page({
 
   /**
@@ -10,12 +12,14 @@ Page({
     groupAvatarShow: '',
     groupNotAvatarShow: '../../../static/images/group_name.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
-    groupAvatar: '',
+    groupLogo: '', //logo地址
+    excelFile: '',//execel地址
     applicant: '',
     phone: '',
     uploadFileName: '',//上传的文件名
     uploadFilePath: '',//上传的文件路径，备用
     placeholder_group_name: '请输入机构名称',
+    placeholder_group_address: '请输入机构地址',
     placeholder_group_introduce: '请输入机构介绍信息，10-200字',
     placeholder_group_strucure: '请在此处粘贴您的架构文件链接',
     placeholder_group_apply_name: '请输入您的名字',
@@ -101,9 +105,9 @@ Page({
           },
           success (res){
             const data = res.data
-            console.log("uploadImage", res)
+            console.log("uploadImage", JSON.parse(data).photo)
             that.setData({
-              groupAvatar: res.fileID,
+              groupLogo: JSON.parse(data).photo,
               groupAvatarShow: tempFilePath
             })
           },
@@ -128,14 +132,18 @@ Page({
           uploadFilePath: path
         })
         wx.uploadFile({
-          url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+          url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
-            'user': 'test'
+            'bid': ''
           },
           success (res){
             const data = res.data
+            console.log("uploadImage", JSON.parse(data).photo)
+            that.setData({
+              excelFile: JSON.parse(data).photo,
+            })
             //do something
           }
         })
@@ -182,6 +190,8 @@ Page({
       warn = "请填写您的机构介绍!"
     } else if (e.detail.value.group_introduce.length < 10) {
       warn = "机构介绍的字数应为10-200!"
+    } else if (e.detail.value.group_address == "") {
+      warn = "请填写您的机构地址!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
     } else if (e.detail.value.group_phone == "") {
@@ -190,85 +200,62 @@ Page({
       flag = true
 
     console.log("add group info to database")
+    createGroup()
+    createGroup({
+      addressName: e.detail.value.group_address,
+      contact: e.detail.value.group_applicant,
+      excelFile: "",
+      logo: this.data.groupLogo,
+      name: e.detail.value.group_name,
+      phone: e.detail.value.group_phone,
+      remarks: e.detail.value.group_introduce,
+      userId: this.data.globalData.userId,
+    }).then(data => {
+      // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+      if (memberData.total != undefined && current == data.current) {
+        let memerList = memberData.records.concat(data.records);
+        this.setData({
+          memberData: {
+            ...data,
+            records: memerList
+          }
+        });
+      } else {
+        this.setData({
+          memberData: data
+        });
+      }
+    });
+    return
+
     db.collection("applications_info").add({
         data: {
-          created_at: that.getCurrentDateTime(),
+          userId: this.data.globalData.userId,
           name: e.detail.value.group_name,
-          introduce: e.detail.value.group_introduce,
-          strucure: "",
-          applicant: e.detail.value.group_applicant,
+          remarks: e.detail.value.group_introduce,
+          excelFile: "",
+          contact: e.detail.value.group_applicant,
           phone: e.detail.value.group_phone,
-          avatar: this.data.groupAvatar,
-          status: "waiting",//wating等待审核finish创建完成reject拒绝
+          logo: this.data.groupLogo,
+          // address: e.detail.value.group_address,
+          // status: "waiting",//wating等待审核finish创建完成reject拒绝
         },
         success: res => {
           console.log('1',res)
-          db.collection("company_info").add({
-            data: {
-              company_name: e.detail.value.group_name,
-              departments: [],
-              name: ""
-            },
-            success: res => {
-              console.log('2',res)
-              var count = 0
-              var company_department = ""
-              var usertype = ""
-              if(this.data.company_count==undefined){
-                  count = 2
-                  company_department = "company_department" + "1"
-                  usertype = "usertype" + "1"
-              }else {
-                company_department = `company_department${this.data.company_count}`
-                usertype = `usertype${this.data.company_count}`
-                count = this.data.company_count + 1               
+            wx.showModal({
+              showCancel: false,
+              title: '提示',
+              content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
+              success(res){
+                if (res.confirm) {
+                  wx.reLaunch({
+                    url: '../index/index',
+                  })
+                }
               }
-              db.collection("user_info").doc(this.data.record_id).update({
-                  data: {
-                    company_count: count,
-                    [company_department] : e.detail.value.group_name,
-                    [usertype]: "1"
-                  },
-                  success: res => {
-                    console.log('3',res)
-
-                    wx.showModal({
-                      showCancel: false,
-                      title: '提示',
-                      content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
-                      success(res){
-                        if (res.confirm) {
-                          wx.reLaunch({
-                            url: '../index/index',
-                          })
-                        }
-                      }
-                    })
-                    wx.hideLoading()
-
-                  },
-                  fail: err => {
-                    console.log(err)
-                    wx.showModal({
-                      title: '提示',
-                      content: "创建失败"
-                    })
-                    wx.hideLoading()
-                  }
-              }) 
-
-            },
-            fail: err => {
-              console.log(err)
-              wx.showModal({
-                title: '提示',
-                content: "创建失败"
-              })
-              wx.hideLoading()
-            }
-          })
+            })
+            wx.hideLoading()
         },
-
         fail: err => {
           console.log(err)
           wx.showModal({
@@ -335,6 +322,16 @@ Page({
 
   downloadStructure: function() {
     console.log('下载模板')
+    let tempFileURL = "https://admin.bidspace.cn/bid-soybean/download/group.xlsx"
+      wx.setClipboardData({
+        data: tempFileURL,
+        success: function (res) {
+          wx.showToast({
+            icon: 'none',
+            title: "导出文件下载链接已保存到您的剪贴板"
+          });
+        }
+      })
     //等待后端接口
     // wx.cloud.getTempFileURL({
     //   fileList: [{
