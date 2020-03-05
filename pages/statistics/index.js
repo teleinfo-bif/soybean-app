@@ -9,7 +9,7 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getGroupStatistic } from "../../api/api";
+import { getGroupStatistic,getGroup } from "../../api/api";
 
 Page({
   onShareAppMessage: function(res) {
@@ -52,6 +52,16 @@ Page({
       });
     });
   },
+ //根据ID获取群组信息
+  getGroupDetail(groupId){
+   getGroup({
+     id: groupId,
+   }).then((data)=>{
+     this.setData({
+       addressName: data.addressName
+     })
+   })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -62,8 +72,12 @@ Page({
       {
         groupId,
         groupName
-      },
-      this.getData
+      },()=>{
+        this.getData()
+        this.getGroupDetail(groupId)
+      }
+      
+
     );
 
     this.setData({

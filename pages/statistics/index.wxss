@@ -172,7 +172,11 @@ page {
   margin-top: 15rpx;
   color: #333;
   font-size: 24rpx;
-  line-height: 1; }
+  line-height: 1; 
+  text-align: center;
+   width: 200rpx;
+
+  }
 
 /* ec-canvas {
   width: 100%;

@@ -122,3 +122,8 @@ export const joinGroup = async params => {
   console.log("/wx/usergroup/save----params", params);
   return Request._post(`/wx/usergroup/save`, params);
 };
+//根据id查看群组信息
+export const getGroup = async params => {
+console.log("/wx/group/detail`----params", params);
+return Request._get(`/wx/group/detail`, params);
+};
