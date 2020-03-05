@@ -127,3 +127,10 @@ export const joinGroup = async params => {
 export const getUserTreeGroup = async params => {
   return Request._get("/wx/group/tree", params);
 };
+
+// 用户创建群组
+export const createGroup = async params => {
+  console.log("/wx/group/excelImport----params", params);
+  return Request._post(`/wx/group/excelImport`, params);
+};
+

@@ -225,38 +225,36 @@ Page({
       });
       return
     }
-    this.tree2array(groupId)
+    
     if (userFilledInfo.userRegisted) {
-      if(this.data.lowestClass) {
-
-      }
-      return
-      wx.showModal({
-        title: "",
-        content: `确定要加入 ${groupName} 组织吗？`,
-        showCancel: true,
-        cancelText: "取消",
-        cancelColor: "#000000",
-        confirmText: "确定",
-        confirmColor: "#3CC51F",
-        success(res) {
-          if (res.confirm) {
-            console.log("用户已经注册，准备执行this.joinGroup");
-            // lowestClass
-            _this.shareJoniGroup({
-              groupId,
-              userId: userFilledInfo.id
-            });
-          } else if (res.cancel) {
-            wx.navigateTo({
-              url: "/pages/index/index",
-              success: result => {},
-              fail: () => {},
-              complete: () => {}
-            });
-          }
-        }
-      })
+      this.tree2array(groupId)
+      
+      // wx.showModal({
+      //   title: "",
+      //   content: `确定要加入 ${groupName} 组织吗？`,
+      //   showCancel: true,
+      //   cancelText: "取消",
+      //   cancelColor: "#000000",
+      //   confirmText: "确定",
+      //   confirmColor: "#3CC51F",
+      //   success(res) {
+      //     if (res.confirm) {
+      //       console.log("用户已经注册，准备执行this.joinGroup");
+      //       // lowestClass
+      //       _this.shareJoniGroup({
+      //         groupId,
+      //         userId: userFilledInfo.id
+      //       });
+      //     } else if (res.cancel) {
+      //       wx.navigateTo({
+      //         url: "/pages/index/index",
+      //         success: result => {},
+      //         fail: () => {},
+      //         complete: () => {}
+      //       });
+      //     }
+      //   }
+      // })
     } else {
       wx.showModal({
         title: "",

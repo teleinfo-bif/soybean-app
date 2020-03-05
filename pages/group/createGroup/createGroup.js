@@ -1,5 +1,7 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
+import { createGroup } from "../../../api/api";
+
 Page({
 
   /**
@@ -10,7 +12,8 @@ Page({
     groupAvatarShow: '',
     groupNotAvatarShow: '../../../static/images/group_name.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
-    groupAvatar: '',
+    groupLogo: '', //logo地址
+    excelFile: '',//execel地址
     applicant: '',
     phone: '',
     uploadFileName: '',//上传的文件名
@@ -102,9 +105,9 @@ Page({
           },
           success (res){
             const data = res.data
-            console.log("uploadImage", res)
+            console.log("uploadImage", JSON.parse(data).photo)
             that.setData({
-              groupAvatar: res.fileID,
+              groupLogo: JSON.parse(data).photo,
               groupAvatarShow: tempFilePath
             })
           },
@@ -129,14 +132,18 @@ Page({
           uploadFilePath: path
         })
         wx.uploadFile({
-          url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+          url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {
-            'user': 'test'
+            'bid': ''
           },
           success (res){
             const data = res.data
+            console.log("uploadImage", JSON.parse(data).photo)
+            that.setData({
+              excelFile: JSON.parse(data).photo,
+            })
             //do something
           }
         })
@@ -183,7 +190,7 @@ Page({
       warn = "请填写您的机构介绍!"
     } else if (e.detail.value.group_introduce.length < 10) {
       warn = "机构介绍的字数应为10-200!"
-    } else if (e.detail.value.group_applicant == "") {
+    } else if (e.detail.value.group_address == "") {
       warn = "请填写您的机构地址!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
@@ -193,6 +200,34 @@ Page({
       flag = true
 
     console.log("add group info to database")
+    createGroup()
+    createGroup({
+      addressName: e.detail.value.group_address,
+      contact: e.detail.value.group_applicant,
+      excelFile: "",
+      logo: this.data.groupLogo,
+      name: e.detail.value.group_name,
+      phone: e.detail.value.group_phone,
+      remarks: e.detail.value.group_introduce,
+      userId: this.data.globalData.userId,
+    }).then(data => {
+      // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+      if (memberData.total != undefined && current == data.current) {
+        let memerList = memberData.records.concat(data.records);
+        this.setData({
+          memberData: {
+            ...data,
+            records: memerList
+          }
+        });
+      } else {
+        this.setData({
+          memberData: data
+        });
+      }
+    });
+    return
+
     db.collection("applications_info").add({
         data: {
           userId: this.data.globalData.userId,
@@ -201,7 +236,7 @@ Page({
           excelFile: "",
           contact: e.detail.value.group_applicant,
           phone: e.detail.value.group_phone,
-          logo: this.data.groupAvatar,
+          logo: this.data.groupLogo,
           // address: e.detail.value.group_address,
           // status: "waiting",//wating等待审核finish创建完成reject拒绝
         },
