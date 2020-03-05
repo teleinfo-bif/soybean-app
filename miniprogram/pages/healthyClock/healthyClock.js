@@ -940,6 +940,7 @@ Page({
     var reArstatusotherremark = e.detail.value.reArstatusotherremark
     var temperStatusFlag   = this.data.temperStatusFlag
     var temperotherremark = e.detail.value.temperotherremark
+    console.log("******temper*****", e.detail.value.temperotherremark)
 
     var date = new Date();
     var Y = date.getFullYear() + '-';
@@ -997,7 +998,9 @@ Page({
         }
       })
     }
-
+    if (temperStatusFlag == 0){
+      var temperotherremark ='正常'
+    }
     db.collection('user_healthy').add({
       data: {
         name: name,
