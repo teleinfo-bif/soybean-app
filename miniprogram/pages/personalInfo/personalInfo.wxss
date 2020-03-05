@@ -271,7 +271,7 @@
 }
 
 .secret-view {
-  margin-top: 30rpx;
+
   margin-left: 20rpx;
   font-size: 25rpx;
 }
