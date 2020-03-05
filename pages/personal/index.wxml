@@ -14,7 +14,7 @@
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
-      !userFilledInfo.userRegisted  ? '注 册' : '更 新'}}</van-button>
+      !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}</van-button>
   </view>
   <view wx:if="{{userFilledInfo.userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>
 </view>
