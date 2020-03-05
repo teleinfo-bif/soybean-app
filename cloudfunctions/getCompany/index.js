@@ -33,7 +33,7 @@ exports.main = async (event, context) => {
 
   // return count;
 
-  let list = await db.collection('company_info').get({
+  let list = await db.collection('company_info').orderBy('weight', 'asc').get({
   });
   return list.data;
 }
