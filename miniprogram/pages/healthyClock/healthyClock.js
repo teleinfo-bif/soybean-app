@@ -853,14 +853,14 @@ Page({
       return;
     }
 
-    if (!this.data.if_checked) {
-      wx.showToast({
-        icon: 'none',
-        title: '请选择同意用户服务条款与隐私协议',
-        duration: 3000,
-      });
-      return;
-    }
+    // if (!this.data.if_checked) {
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title: '请选择同意用户服务条款与隐私协议',
+    //     duration: 3000,
+    //   });
+    //   return;
+    // }
 
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)

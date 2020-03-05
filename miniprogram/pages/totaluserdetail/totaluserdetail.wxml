@@ -23,15 +23,15 @@
 
     <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
       <label>{{item.name}}</label>
-      <label wx:if="{{item.temperature > 0}}">已打卡</label>
-      <label wx:else="{{item.temperature > 0}}">未打卡</label>
+      <label wx:if="{{item.bodyStatusFlag != undefined}}">已打卡</label>
+      <label wx:else="{{item.bodyStatusFlag == undefined}}">未打卡</label>
       <label>
-        <navigator wx:if="{{item.temperature > 0}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{currentDate}}">
+        <navigator wx:if="{{item.bodyStatusFlag != undefined}}" url="../healthyClocked/healthyClocked?user_id={{item._openid}}&date={{currentDate}}">
           <view bindtap="clickRecord" style="color:#4f7ef2;">
             打卡详情
           </view>
         </navigator>
-        <view wx:else="{{item.temperature > 0}}" style="color:gray;">
+        <view wx:else="{{item.bodyStatusFlag == undefined}}" style="color:gray;">
           打卡详情
         </view>
       </label>
@@ -53,14 +53,14 @@
           <view class="tree-children-status-text">异常</view>
         </view>
       </label>
-      <label wx:elif="{{item.temperature < 37.3 && item.bodyStatusFlag == '0'}}">
+      <label wx:elif="{{item.bodyStatusFlag == '0'}}">
         <view>
           <view class="tree-children-status-green"></view>
           <view class="tree-children-status-text">正常</view>
         </view>
       </label>
 
-      <label wx:else="{{item.temperature > 0}}">
+      <label wx:else="{{item.bodyStatusFlag == undefined}}">
         <view>
           <view class="tree-children-status-gray"></view>
           <view class="tree-children-status-text">---</view>

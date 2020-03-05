@@ -1037,10 +1037,10 @@ parseDatas: function(datas) {
         }else if(userType == '1'){
           level = 2
           if (infoes[0] == '院属公司及协会') {
-            regInfo = '.*' + infoes[1]
+            regInfo = '.*' + infoes[1] + "$"
             title = infoes[1]
           } else {
-            regInfo = infoes[0] + ".*"
+            regInfo = "^" + infoes[0] + ".*"
             title = infoes[0]
           }
 
@@ -1190,7 +1190,7 @@ parseDatas: function(datas) {
       this.setData(
         {
           showDate: date,
-          regCompanyInfo: name + '.*',
+          regCompanyInfo: "^" + name + '.*',
           authorityLevel: 2,
           titleText: name
         }

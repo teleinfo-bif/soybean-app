@@ -277,35 +277,36 @@ Page({
   },
 
   //一级单位名称
-  companyName0PickerChange: function (e) {
-    this.setData({
-      company_name_0_index: parseInt(e.detail.value),
-      value_company_name_0: this.data.company_name_items[e.detail.value]
-    })
-    if (e.detail.value == 1){
-      this.setData({
-        isFisrtNoFlag: true,
-        choice_color_1: "color: #999999"
-      })
-    } else if (e.detail.value == 0) {
-      this.setData({
-        isFisrtNoFlag: false,
-        choice_color_1: "color: #1759EF"
-      })
-    }
-    console.log(this.data.value_company_name_0)
-  },
+  // companyName0PickerChange: function (e) {
+  //   this.setData({
+  //     company_name_0_index: parseInt(e.detail.value),
+  //     value_company_name_0: this.data.company_name_items[e.detail.value]
+  //   })
+  //   if (e.detail.value == 1){
+  //     this.setData({
+  //       isFisrtNoFlag: true,
+  //       choice_color_1: "color: #999999"
+  //     })
+  //   } else if (e.detail.value == 0) {
+  //     this.setData({
+  //       isFisrtNoFlag: false,
+  //       choice_color_1: "color: #1759EF"
+  //     })
+  //   }
+  //   console.log(this.data.value_company_name_0)
+  // },
   /**
    * 单位部门的选择
    */
 
   bindMultiPickerChange: function(e) {
-    multiIndex: e.detail.value
+    
     console.log(this.data.multiIndex)
     if (this.data.multiArray[1][this.data.multiIndex[1]] == undefined){
       this.data.multiArray[1][this.data.multiIndex[1]] = ""
     }
     this.setData({
+      multiIndex: e.detail.value,
       value_company_name: this.data.multiArray[0][this.data.multiIndex[0]] + " " + this.data.multiArray[1][this.data.multiIndex[1]]
     })
   },
@@ -338,6 +339,7 @@ Page({
         //       break
         //   }
         // }
+        data.multiIndex[1] = 0
         break
 
     }
