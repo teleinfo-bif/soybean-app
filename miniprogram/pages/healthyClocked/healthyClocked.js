@@ -65,9 +65,10 @@ Page({
     user_id: app.globalData.openid,
     date: getCurrentDay(),
     workStatusItems: [
-      { name: '在岗', value: '0' },
-      { name: '远程办公', value: '1' },
-      { name: '未复工', value: '2' }
+      { name: '在岗办公', value: '0' },
+      { name: '居家办公', value: '1' },
+      { name: '居家隔离', value: '2' },
+      { name: '监督隔离', value: '3' }
     ],
     localPlace: "",
     titleInfo: "",
@@ -95,6 +96,12 @@ Page({
     ],
     residentAreaStatusFlag: '',
     img: "",
+    //体温
+    temperItems: [
+      { name: '正常（37.3以下）', value: '0' },
+      { name: '37.3及以上', value: '1' }
+    ],
+    temperStatusFlag: '',
   },
 
   onLoad: function (options) {
@@ -204,6 +211,14 @@ Page({
           }
           this.setData({
             residentAreaItems: residentAreaItems
+          });
+
+          var temperItems = this.data.temperItems;
+          for (var i = 0; i < temperItems.length; ++i) {
+            temperItems[i].checked = temperItems[i].value == res.data[0].temperStatusFlag;
+          }
+          this.setData({
+            temperItems: temperItems
           });
           //交通工具
           var trafficToolItems = this.data.trafficToolItems;
