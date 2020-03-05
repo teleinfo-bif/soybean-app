@@ -93,23 +93,28 @@ Page({
     var ret = []
     for (var i = 0; i < temp.length; i++) {
       if (temp[i]['isQueZhenFlag'] == '0') {
+        console.log("quezhen")
         ret.push(temp[i])
       }
     }
     for (var i = 0; i < temp.length; i++) {
+      
       if (temp[i]['bodyStatusFlag'] != '0' && temp[i]['isQueZhenFlag'] == '1'){
+        console.log("yichang")
         ret.push(temp[i])
       }
     }
 
     for (var i = 0; i < temp.length; i++) {
       if (temp[i]['bodyStatusFlag'] == '0') {
+        console.log("zhengchang")
         ret.push(temp[i])
       }
     }
 
     for (var i = 0; i < temp.length; i++) {
-      if (temp[i]['temperature'] == null || temp[i]['temperature'] == undefined) {
+      if (temp[i]['bodyStatusFlag'] == undefined) {
+        console.log("weidaka")
         ret.push(temp[i])
       }
     }
