@@ -9,7 +9,7 @@
         <image class="userinfo-avatar" src="../../images/yidaka3x.png" mode="scaleToFill" style="width:160rpx;height:160rpx;"></image>
       </view>
     </view>
-    <view style="color:#000;margin:auto;text-align: center;">今日已打卡</view>
+    <view style="color:#000;margin:auto;text-align: center;">{{titleInfo}}</view>
   </view>
 
 
@@ -72,7 +72,7 @@
             </view>
           <view class='devide-middle'/> -->
 
-          <view class="clock_form__title">返回{{localPlace}}日期</view>
+          <view class="clock_form__title">到达{{localPlace}}日期</view>
           
             <view class="">
               <view class="clock_form_input">
@@ -84,7 +84,7 @@
           
           <view class='devide-middle'/>
 
-        <view class="clock_form__title">返回{{localPlace}}所乘交通工具</view>
+        <view class="clock_form__title">到达{{localPlace}}所乘交通工具</view>
           <view class='clock-radio'>
             <radio-group class="radio-group" bindchange="trafficToolItemsChange">
               <label wx:for="{{trafficToolItems}}" wx:key="{{index}}">
@@ -95,7 +95,7 @@
           </view>
         <view class='devide-middle'/>
 
-          <view class="clock_form__title">返{{localPlace}}所乘车次/航班/车牌</view>
+          <view class="clock_form__title">到达{{localPlace}}所乘车次/航班/车牌</view>
           <view class="">
             <view class="">
               <view class="clock_form_input">
@@ -211,7 +211,7 @@
       </view>
       <view class='devide-middle'/>
  
-      <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
+      <view class="clock_form__title">14天内是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{goHBradioItems}}" wx:key="{{index}}">
