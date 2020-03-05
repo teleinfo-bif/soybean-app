@@ -122,8 +122,16 @@ export const joinGroup = async params => {
   console.log("/wx/usergroup/save----params", params);
   return Request._post(`/wx/usergroup/save`, params);
 };
+<<<<<<< HEAD
 //根据id查看群组信息
 export const getGroup = async params => {
 console.log("/wx/group/detail`----params", params);
 return Request._get(`/wx/group/detail`, params);
 };
+=======
+
+// 获取用户树形群组
+export const getUserTreeGroup = async params => {
+  return Request._get("/wx/group/tree", params);
+};
+>>>>>>> 958d46d53259144b6882c02f84fdcc9ab7212adf

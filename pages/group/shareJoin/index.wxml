@@ -19,8 +19,43 @@
   </view>
 </view>
   <!-- 健康打卡 -->
-  <clock></clock>
-  <!-- 统计信息 -->
-  <!-- <Statistics></Statistics> -->
+  <!-- <clock></clock> -->
+  <!-- 一级 -->
+  <view class="section" wx:if="{{!lowestClass && lastClass}}">
+  <view class="section-title">请选择需要选择加入的群组</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
+    <text class="company-picker-1-choice">选择</text>
+  </picker>
+  <view class="picker">
+      {{array[index].name}}
+    </view>
+     <view class="quit-join-group">
+      <view class="quit-group" bindtap="quit">取消</view><view class="join-group" bindtap="join">确定</view>
+    </view>
+
+</view>
+  <!-- 二级 -->
+  <view class="section" wx:if="{{!lastClass}}">
+    <view class="section-title">请选择需要选择加入的群组</view>
+    <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" range-key="{{'name'}}" data-id='{{multiArray[1][multiIndex[1]].id?multiArray[1][multiIndex[1]].id:multiArray[0][multiIndex[0]].id}}'>
+       <text class="company-picker-1-choice">选择</text>
+    </picker>
+    <view class="picker">
+      {{multiArray[0][multiIndex[0]].name}}，{{multiArray[1]?multiArray[1][multiIndex[1]].name:""}}
+    </view>
+    <view class="quit-join-group">
+      <view class="quit-group" bindtap="quit">取消</view><view class="join-group" bindtap="join">确定</view>
+    </view>
+  </view>
+
+  <!-- 三级 -->
+  <view class="section" wx:if="{{lowestClass}}">
+    <view class="section-title">确定要加入 <text style="color:blue">{{groupName}}</text> 组织吗？</view>
+    <view class="quit-join-group">
+      <view class="quit-group" bindtap="quit">取消</view><view class="join-group" bindtap="join_0">确定</view>
+    </view>
+    
+  </view>
+
   <view class="footer-copy-right">中国信息通信研究院</view>
 </view>

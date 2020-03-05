@@ -1,3 +1,54 @@
 /* pages/group/shareJoin/index.wxss */
 @import '../../index/index.wxss';
 @import '../../index/personalLogin/index.wxss';
+
+.section {
+    padding: 50rpx;
+    
+}
+.section-title {
+    text-align: center;
+    font-size: 36rpx;
+    /* font-weight: bold; */
+}
+.quit-join-group {
+    margin-top: 50rpx;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+}
+.join-group {
+    text-align: center;
+    font-size: 28rpx;
+    line-height: 70rpx;
+   background-color: #fff;
+   width: 150rpx;
+   height: 70rpx;
+   border-radius: 10rpx;
+}
+.quit-group {
+    text-align: center;
+    font-size: 28rpx;
+    line-height: 70rpx;
+    background-color: #fff;
+    width: 150rpx;
+    height: 70rpx;
+    border-radius: 10rpx;
+ }
+ .picker {
+     text-align: center;
+     margin-top: 20rpx;
+     width:650rpx;
+     height: 60rpx;
+     line-height: 60rpx;
+     background-color: #fff;
+     border-radius: 10rpx;
+     
+ }
+
+ .company-picker-1-choice{
+    float: right;
+    margin-top:-36rpx;
+    margin-right:50rpx;
+    color: #1759EF;
+  }
