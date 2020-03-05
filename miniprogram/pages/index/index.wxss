@@ -365,10 +365,11 @@
 }
  
 .copyright-view{
+  margin-top: -20rpx;
   position: fixed;
   text-align: center;
   width: 100%;
-  height: 50rpx;
+  height: 60rpx;
   line-height: 50rpx;
   font-size: 25rpx;
   bottom:0px;

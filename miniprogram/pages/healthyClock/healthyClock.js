@@ -55,7 +55,30 @@ Page({
       { name: '未复工', value: '2' }
     ],
     workStatusFlag:'',
-    workPlace: ''
+    workPlace: '',
+    //共同居住人员亲属（含合租人员）健康状况
+    roommateHealthyItems:[
+      { name: '健康', value: '0' },
+      { name: '有发热、咳嗽等症状', value: '1' },
+      { name: '其他', value: '2' }
+    ],
+    roommateHealthyStatusFlag: '',
+    //共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例
+    roommateCompanyDiagItems: [
+      { name: '有确诊病例', value: '0' },
+      { name: '有疑似病例', value: '1' },
+      { name: '都无', value: '2' },
+      { name: '其他', value: '3' }
+    ],
+    roommateCompanyDiagStatusFlag: '',
+    //居住小区是否有疑似病例、确诊病例
+    residentAreaItems: [
+      { name: '有确诊病例', value: '0' },
+      { name: '有疑似病例', value: '1' },
+      { name: '都无', value: '2' },
+      { name: '其他', value: '3' }
+    ],
+    residentAreaStatusFlag: '',
   },
 
   currentDate: function (e) {
@@ -430,6 +453,9 @@ Page({
     var place = e.detail.value.place_before + e.detail.value.place 
     var trafficToolStatusFlag = this.trafficToolStatusFlag
     var workStatusFlag = this.data.workStatusFlag
+    var roommateHealthyStatusFlag = this.data.roommateHealthyStatusFlag
+    var roommateCompanyDiagStatusFlag = this.data.roommateCompanyDiagStatusFlag
+    var residentAreaStatusFlag = this.data.residentAreaStatusFlag
     console.log('=====地址====',place)
     if (name == null || name == '') {
       wx.showToast({
@@ -482,7 +508,7 @@ Page({
     }
 
 
-    if (bodyStatusFlag == '3') {
+    if (bodyStatusFlag == '2') {
       var bodystatusotherremark = e.detail.value.bodystatusotherremark
       if (bodystatusotherremark == null || bodystatusotherremark == '') {
         wx.showToast({
@@ -697,6 +723,57 @@ Page({
       }
     }
 
+    if (roommateHealthyStatusFlag == null || roommateHealthyStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '共同居住人员亲属（含合租人员）健康状况不能为空'
+      });
+      return;
+    }
+    if (roommateHealthyStatusFlag == '2') {
+      var roHealthystatusotherremark = e.detail.value.roHealthystatusotherremark
+      if (roHealthystatusotherremark == null || roHealthystatusotherremark == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '共同居住人员亲属（含合租人员）健康状况其他原因不能为空'
+        });
+        return;
+      }
+    }
+    if (roommateCompanyDiagStatusFlag == null || roommateCompanyDiagStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例不能为空'
+      });
+      return;
+    }
+    if (roommateCompanyDiagStatusFlag == '3') {
+      var roMaCoDistatusotherremark = e.detail.value.roMaCoDistatusotherremark
+      if (roMaCoDistatusotherremark == null || roMaCoDistatusotherremark == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例其他原因不能为空'
+        });
+        return;
+      }
+    }
+    if (residentAreaStatusFlag == null || residentAreaStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '居住小区是否有疑似病例、确诊病例不能为空'
+      });
+      return;
+    }
+    if (residentAreaStatusFlag == '3') {
+      var reArstatusotherremark = e.detail.value.reArstatusotherremark
+      if (reArstatusotherremark == null || reArstatusotherremark == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '居住小区是否有疑似病例、确诊病例其他原因不能为空'
+        });
+        return;
+      }
+    }
     if (goHospitalFlag == null || goHospitalFlag == '') {
       if (this.data.bodyStatusFlag != 0) {
         wx.showToast({
@@ -792,7 +869,12 @@ Page({
     var goHospitalFlag = this.goHospitalFlag
     var trafficToolStatusFlag = this.trafficToolStatusFlag
     var workStatusFlag =  this.data.workStatusFlag
-
+    var roommateHealthyStatusFlag  = this.data.roommateHealthyStatusFlag
+    var roommateCompanyDiagStatusFlag  = this.data.roommateCompanyDiagStatusFlag
+    var residentAreaStatusFlag  = this.data.residentAreaStatusFlag
+    var roHealthystatusotherremark = e.detail.value.roHealthystatusotherremark
+    var roMaCoDistatusotherremark = e.detail.value.roMaCoDistatusotherremark
+    var reArstatusotherremark = e.detail.value.reArstatusotherremark
     var date = new Date();
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
@@ -819,7 +901,10 @@ Page({
           return_date: this.data.returnBeijingDate,
           traffic: this.data.traffic,
           trafficToolStatusFlag: this.trafficToolStatusFlag,
-          workStatusFlag: this.data.workStatusFlag
+          workStatusFlag: this.data.workStatusFlag,
+          roommateHealthyStatusFlag :this.data.roommateHealthyStatusFlag,
+          roommateCompanyDiagStatusFlag: this.data.roommateCompanyDiagStatusFlag,
+          residentAreaStatusFlag :this.data.residentAreaStatusFlag
         }
       })
 
@@ -838,7 +923,10 @@ Page({
           return_date: this.data.returnBeijingDate,
           traffic: this.data.traffic,
           trafficToolStatusFlag: this.data.trafficToolStatusFlag,
-          workStatusFlag: this.data.workStatusFlag
+          workStatusFlag: this.data.workStatusFlag,
+          roommateHealthyStatusFlag: this.data.roommateHealthyStatusFlag,
+          roommateCompanyDiagStatusFlag: this.data.roommateCompanyDiagStatusFlag,
+          residentAreaStatusFlag: this.data.residentAreaStatusFlag
         }
       })
     }
@@ -866,7 +954,13 @@ Page({
         date: Y + M + DD,
         addtime: Y + M + D + h + m + s,
         trafficToolStatusFlag: this.data.trafficToolStatusFlag,
-        workStatusFlag: this.data.workStatusFlag
+        workStatusFlag: this.data.workStatusFlag,
+        roommateHealthyStatusFlag: this.data.roommateHealthyStatusFlag,
+        roommateCompanyDiagStatusFlag :this.data.roommateCompanyDiagStatusFlag,
+        residentAreaStatusFlag : this.data.residentAreaStatusFlag,
+        roHealthystatusotherremark:roHealthystatusotherremark,
+        roMaCoDistatusotherremark:roMaCoDistatusotherremark,
+        reArstatusotherremark:reArstatusotherremark
         // userinfo: that.userinfo
       },
       success: res => {
@@ -923,7 +1017,31 @@ Page({
       workStatusFlag: e.detail.value
     });
   },
+  //共同居住人员亲属（含合租人员）健康状况
+  roHealthyStatusChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.roommateHealthyStatusFlag = e.detail.value
+    this.setData({
+      roommateHealthyStatusFlag: e.detail.value
+    })
+  },
 
+  //共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例
+  roMaCoDiStatusChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.roommateCompanyDiagStatusFlag = e.detail.value
+    this.setData({
+      roommateCompanyDiagStatusFlag: e.detail.value
+    });
+  },
+  //居住小区是否有疑似病例、确诊病例
+  reArStatusChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.residentAreaStatusFlag = e.detail.value
+    this.setData({
+      residentAreaStatusFlag: e.detail.value
+    });
+  },
   // 2020-02-10 后是否离开北京
   LeaveBjChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);

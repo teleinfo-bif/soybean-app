@@ -1,7 +1,7 @@
 // 查询当前用户是否为管理员
 const cloud = require('wx-server-sdk')
 cloud.init()
-const db = cloud.database({ env: "xinertong-uat" })
+const db = cloud.database({ env: "soybean-uat" })
 
 async function getMuserByOpenid(openid) {
   console.log("调用云函数getMuserByOpenid:" + openid);

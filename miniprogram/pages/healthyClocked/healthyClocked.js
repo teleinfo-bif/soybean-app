@@ -67,7 +67,32 @@ Page({
       { name: '远程办公', value: '1' },
       { name: '未复工', value: '2' }
     ],
-    localPlace: ""
+    localPlace: "",
+    titleInfo: "",
+    //共同居住人员亲属（含合租人员）健康状况
+    roommateHealthyItems: [
+      { name: '健康', value: '0' },
+      { name: '有发热、咳嗽等症状', value: '1' },
+      { name: '其他', value: '2' }
+    ],
+    roommateHealthyStatusFlag: '',
+    //共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例
+    roommateCompanyDiagItems: [
+      { name: '有确诊病例', value: '0' },
+      { name: '有疑似病例', value: '1' },
+      { name: '都无', value: '2' },
+      { name: '其他', value: '3' }
+    ],
+    roommateCompanyDiagStatusFlag: '',
+    //居住小区是否有疑似病例、确诊病例
+    residentAreaItems: [
+      { name: '有确诊病例', value: '0' },
+      { name: '有疑似病例', value: '1' },
+      { name: '都无', value: '2' },
+      { name: '其他', value: '3' }
+    ],
+    residentAreaStatusFlag: '',
+    img: "",
   },
 
   onLoad: function (options) {
@@ -109,15 +134,33 @@ Page({
     }).get({
       success: res => {
         console.log(res)
+
         //今日已打卡
         if(res.data.length > 0){
           console.log("@@@@@@@@@@@@@@ clickdata.isGoBackFlag: ", res.data[0])
           var place = res.data[0].place
           var infoes = place.split('市')
 
+          var title = ""
+          var bodyState = res.data[0].bodyStatusFlag
+          var quezhen = res.data[0].isQueZhenFlag
+          var image = ""
+          if (bodyState == '0') {
+            image = "../../images/yidaka-green-3x.png"
+            title = "今日健康良好，请您继续注意健康防护"
+          }else if (bodyState != '0' && quezhen == '1') {
+            image = "../../images/yidaka-yellow-3x.png"
+            title = "今日健康异常，请您注意隔离，多加防护"
+          }else if (quezhen == '0'){
+            title = "您已确诊，请积极配合治疗，祝您早日康复"
+            image = "../../images/yidaka-red-3x.png"
+          }
+
           this.setData({
             clickdata:res.data[0],
             localPlace: infoes[0] + '市',
+            titleInfo: title,
+            img: image
           });
 
           var radioHealthyStatusItems = this.data.radioHealthyStatusItems;
@@ -129,6 +172,32 @@ Page({
             radioHealthyStatusItems: radioHealthyStatusItems
           });
 
+          var roommateHealthyItems = this.data.roommateHealthyItems;
+          console.log("radioHealthyStatusItems的内容为：" + radioHealthyStatusItems);
+          for (var i = 0; i < roommateHealthyItems.length; ++i) {
+            roommateHealthyItems[i].checked = roommateHealthyItems[i].value == res.data[0].roommateHealthyStatusFlag;
+          }
+          this.setData({
+            roommateHealthyItems: roommateHealthyItems
+          });
+
+          var roommateCompanyDiagItems = this.data.roommateCompanyDiagItems;
+          console.log("radioHealthyStatusItems的内容为：" + radioHealthyStatusItems);
+          for (var i = 0 ; i < roommateCompanyDiagItems.length; ++i) {
+            roommateCompanyDiagItems[i].checked = roommateCompanyDiagItems[i].value == res.data[0].roommateCompanyDiagStatusFlag;
+          }
+          this.setData({
+            roommateCompanyDiagItems: roommateCompanyDiagItems
+          });
+
+          var residentAreaItems = this.data.residentAreaItems;
+          console.log("radioHealthyStatusItems的内容为：" + residentAreaItems);
+          for (var i = 0; i < residentAreaItems.length; ++i) {
+            residentAreaItems[i].checked = residentAreaItems[i].value == res.data[0].residentAreaStatusFlag;
+          }
+          this.setData({
+            residentAreaItems: residentAreaItems
+          });
           //交通工具
           var trafficToolItems = this.data.trafficToolItems;
           console.log("trafficToolItems的内容为：" + trafficToolItems);
