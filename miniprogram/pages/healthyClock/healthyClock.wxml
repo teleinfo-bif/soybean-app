@@ -207,16 +207,13 @@
           <label wx:for="{{radioHealthyStatusItems}}" wx:key="{{index}}">
            <view wx:if="{{index == 0}}">
             <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
-            <view  wx:if='{{index != radioHealthyStatusItems.length-1}}'class='devide-radio'/>
            </view>
            <view wx:else>
             <radio value="{{item.value}}" />{{item.name}}
-             <view  wx:if='{{index != radioHealthyStatusItems.length-1}}'class='devide-radio'/>
            </view>
           </label>
         </radio-group>
       </view>
-
 
       <view wx:if="{{bodyStatusFlag == '2'}}" class="clock_form__title">健康状况为其他的原因</view>
       <view wx:if="{{bodyStatusFlag == '2'}}" class="">
@@ -249,6 +246,78 @@
         </radio-group>
       </view>
       <view class='devide-middle'/>
+
+      <view class="clock_form__title">共同居住人员亲属（含合租人员）健康状况</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="roHealthyStatusChange">
+          <label wx:for="{{roommateHealthyItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}"  />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{roommateHealthyStatusFlag == '2'}}" class="clock_form__title">共同居住人员亲属（含合租人员）健康状况为其他的原因</view>
+      <view wx:if="{{roommateHealthyStatusFlag == '2'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="roHealthystatusotherremark" placeholder="请输入信息" placeholder-class="placeholder-style"/>
+          </view>
+        </view>
+      </view>
+      <view class='devide-middle'/>
+
+
+      <view class="clock_form__title">共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="roMaCoDiStatusChange">
+          <label wx:for="{{roommateCompanyDiagItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+      <view wx:if="{{roommateCompanyDiagStatusFlag == '3'}}" class="clock_form__title">共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他的原因</view>
+      <view wx:if="{{roommateCompanyDiagStatusFlag == '3'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="roMaCoDistatusotherremark" placeholder="请输入信息" placeholder-class="placeholder-style"/>
+          </view>
+        </view>
+      </view>
+      <view class='devide-middle'/>
+
+      <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="reArStatusChange">
+          <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}" disabled="{{healthyFlag}}" />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+      <view wx:if="{{residentAreaStatusFlag == '3'}}" class="clock_form__title">居住小区是否有疑似病例、确诊病例为其他的原因</view>
+      <view wx:if="{{residentAreaStatusFlag == '3'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="reArstatusotherremark" placeholder="请输入信息" placeholder-class="placeholder-style"/>
+          </view>
+        </view>
+      </view>
+      <view class='devide-middle'/>
+
 
 
       <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
