@@ -256,6 +256,31 @@
   border-radius: 0rpx;
 }
 
+.secret-checkbox-show {
+  display: flex;
+  margin-top: 60rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.secret-checkbox-hide {
+  display: none;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.secret-view {
+
+  margin-left: 20rpx;
+  font-size: 25rpx;
+}
+
+.text-blue {
+  font-size: 25rpx;
+  font-weight: 400;
+  color: #4169E1;
+}
 
 
 .group-title-icon {
@@ -268,3 +293,4 @@
 .group-title-icon-item {
   font-size: 20rpx;
 }
+

@@ -1,4 +1,5 @@
 const app = getApp()
+var utils = require('../../utils/utils.js')
 var QQMapWX = require('qqmap-wx-jssdk.js');
 var qqmapsdk;
 
@@ -40,7 +41,9 @@ Page({
 
     userLatestInfo: [],
     disableAtHospital:false,
-    disableDiagnosis:false,
+    disableDiagnosis: false, 
+    if_checked: false,
+
     trafficToolItems: [
       { name: '飞机', value: '0' },
       { name: '火车', value: '1' },
@@ -50,9 +53,10 @@ Page({
     ],
     trafficToolStatusFlag:'',
     workStatusItems: [
-      { name: '在岗', value: '0' },
-      { name: '远程办公', value: '1' },
-      { name: '未复工', value: '2' }
+      { name: '在岗办公', value: '0' },
+      { name: '居家办公', value: '1' },
+      { name: '居家隔离', value: '2' },
+      { name: '监督隔离', value: '3' }
     ],
     workStatusFlag:'',
     workPlace: '',
@@ -79,6 +83,12 @@ Page({
       { name: '其他', value: '3' }
     ],
     residentAreaStatusFlag: '',
+    //体温
+    temperItems:[
+      { name: '正常（37.3以下）', value: '0'},
+      { name: '37.3及以上', value: '1'}
+    ],
+    temperStatusFlag: '',
   },
 
   currentDate: function (e) {
@@ -110,6 +120,19 @@ Page({
       return true
     }
     return false
+  },
+
+  boxcheck: function (e) {
+    console.log("box change: ", e.detail.value)
+    var flag = false
+    if (e.detail.value.length != 0) {
+      flag = true
+    }
+    this.setData({
+      if_checked: flag
+    })
+
+    console.log("if check: ", this.data.if_checked)
   },
 
   initDatas: function (e) {
@@ -252,12 +275,15 @@ Page({
     db.collection('user_info').where({
       _openid: app.globalData.openid
     }).get({
+      
       success: res => {
+
         console.log(res)
+        var hide = utils.toHide(res.data[0].phone)
         that.userinfo = res.data;
         that.setData({
           name: res.data[0].name,
-          phone: res.data[0].phone,
+          phone: hide,
           userinfo: res.data
         })
       },
@@ -301,6 +327,12 @@ Page({
     console.log("跳转到打卡记录页面appid内容为：" + app.globalData.openid)
     wx.navigateTo({
       url: '../clockInRecord/clockInRecord'
+    })
+  },
+
+  gotoUserSecret: function(e) {
+    wx.navigateTo({
+      url: '../about/about'
     })
   },
 
@@ -435,7 +467,7 @@ Page({
     console.log("离京日期:" + e.detail.value.leavedate);
     console.log("返京日期:" + e.detail.value.suregobackdate);
     console.log("返京车次/航班/车牌 :" + e.detail.value.trainnumber);
-    console.log("体温 :" + e.detail.value.temperature);
+    //console.log("体温 :" + e.detail.value.temperature);
     console.log("目前健康状况:" + this.bodyStatusFlag);
     console.log("健康状况为其他的原因:" + e.detail.value.bodystatusotherremark);
     console.log("是否确诊:" + this.isQueZhenFlag);
@@ -445,7 +477,7 @@ Page({
     console.log("=====乘坐交通工具====:" + this.trafficToolStatusFlag);
     console.log("====在岗状态====:" + this.data.workStatusFlag);
     var name = e.detail.value.name
-    var temperature = e.detail.value.temperature
+    //var temperature = e.detail.value.temperature
     var bodyStatusFlag = this.bodyStatusFlag
     var isQueZhenFlag = this.isQueZhenFlag
     var goHospitalFlag = this.goHospitalFlag
@@ -456,6 +488,8 @@ Page({
     var roommateHealthyStatusFlag = this.data.roommateHealthyStatusFlag
     var roommateCompanyDiagStatusFlag = this.data.roommateCompanyDiagStatusFlag
     var residentAreaStatusFlag = this.data.residentAreaStatusFlag
+    var temperStatusFlag = this.data.temperStatusFlag
+
     console.log('=====地址====',place)
     if (name == null || name == '') {
       wx.showToast({
@@ -473,27 +507,12 @@ Page({
       return;
     }
 
-    if (temperature == null || temperature == '') {
-      wx.showToast({
-        icon: 'none',
-        title: '体温不能为空'
-      });
-      return;
-    }
 
-    if (!(/^\d+(\.\d+)?$/.test(temperature))) {
-      wx.showToast({
-        icon: 'none',
-        title: '体温格式错误!',
 
-      });
-      return;
-    }
-
-     if (temperature > 37.2 && bodyStatusFlag == '0'){
+     if (this.data.temperStatusFlag == 1 && bodyStatusFlag == '0'){
        wx.showToast({
          icon: 'none',
-        title: '温度超过37.2度不能视为健康，请重新选择健康状况!',
+        title: '温度超过37.3度不能视为健康，请重新选择健康状况!',
         duration: 3000,
       });
        return;
@@ -520,7 +539,7 @@ Page({
     }
 
     if (bodyStatusFlag == 0) {
-      if (this.data.tempera > 37.3) {
+      if (this.data.temperStatusFlag == 1) {
         wx.showToast({
           icon: 'none',
           title: '体温与健康状况发生冲突，请重新填写',
@@ -551,7 +570,7 @@ Page({
       }
     }
 
-    if (this.data.tempera > 37.3 || this.data.confirmed == 0 || this.data.hospital == 0) {
+    if (this.data.temperStatusFlag == 1 || this.data.confirmed == 0 || this.data.hospital == 0) {
       if (bodyStatusFlag == 0) {
         wx.showToast({
           icon: 'none',
@@ -757,7 +776,7 @@ Page({
         return;
       }
     }
-    if (residentAreaStatusFlag == null || residentAreaStatusFlag == '') {
+/*     if (residentAreaStatusFlag == null || residentAreaStatusFlag == '') {
       wx.showToast({
         icon: 'none',
         title: '居住小区是否有疑似病例、确诊病例不能为空'
@@ -770,6 +789,40 @@ Page({
         wx.showToast({
           icon: 'none',
           title: '居住小区是否有疑似病例、确诊病例其他原因不能为空'
+        });
+        return;
+      }
+    } */
+    if (temperStatusFlag == null || temperStatusFlag == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '当日体温不能为空'
+      });
+      return;
+    }
+    if (temperStatusFlag == '1') {
+      var temperotherremark = e.detail.value.temperotherremark
+      if (temperotherremark == null || temperotherremark == '') {
+        wx.showToast({
+          icon: 'none',
+          title: '当日体温在37.3及以上，具体温度不能为空'
+        });
+        return;
+      }
+      var temperotherremark = e.detail.value.temperotherremark
+      if (!(/^\d+(\.\d+)?$/.test(temperotherremark))) {
+        wx.showToast({
+          icon: 'none',
+          title: '体温格式错误!',
+
+        });
+        return;
+      }
+      if (temperotherremark <= 37.3) {
+        wx.showToast({
+          icon: 'none',
+          title: '所填温度在37.3°以下，与所选不符，重新填写!',
+
         });
         return;
       }
@@ -799,6 +852,16 @@ Page({
       });
       return;
     }
+
+    if (!this.data.if_checked) {
+      wx.showToast({
+        icon: 'none',
+        title: '请选择同意用户服务条款与隐私协议',
+        duration: 3000,
+      });
+      return;
+    }
+
     var text = e.detail.value.name + e.detail.value.place + e.detail.value.trainnumber + e.detail.value.remark + e.detail.value.phone
     console.log("敏感字符检测内容：" + text)
     //敏感字符检测
@@ -837,7 +900,7 @@ Page({
     console.log("离京日期:" + e.detail.value.leavedate);
     console.log("返京日期:" + e.detail.value.suregobackdate);
     console.log("返京车次/航班/车牌 :" + e.detail.value.trainnumber);
-    console.log("体温 :" + e.detail.value.temperature);
+    //console.log("体温 :" + e.detail.value.temperature);
     console.log("目前健康状况:" + this.bodyStatusFlag);
     console.log("健康状况为其他的原因:" + e.detail.value.bodystatusotherremark);
     console.log("是否确诊:" + this.isQueZhenFlag);
@@ -857,7 +920,7 @@ Page({
     if (suregobackdate == null) {
       suregobackdate = ""
     }
-    var temperature = e.detail.value.temperature
+    //var temperature = e.detail.value.temperature
     var bodystatusotherremark = e.detail.value.bodystatusotherremark
     var remark = e.detail.value.remark
     var goHBFlag = this.goHBFlag
@@ -875,6 +938,10 @@ Page({
     var roHealthystatusotherremark = e.detail.value.roHealthystatusotherremark
     var roMaCoDistatusotherremark = e.detail.value.roMaCoDistatusotherremark
     var reArstatusotherremark = e.detail.value.reArstatusotherremark
+    var temperStatusFlag   = this.data.temperStatusFlag
+    var temperotherremark = e.detail.value.temperotherremark
+    console.log("******temper*****", e.detail.value.temperotherremark)
+
     var date = new Date();
     var Y = date.getFullYear() + '-';
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
@@ -926,11 +993,14 @@ Page({
           workStatusFlag: this.data.workStatusFlag,
           roommateHealthyStatusFlag: this.data.roommateHealthyStatusFlag,
           roommateCompanyDiagStatusFlag: this.data.roommateCompanyDiagStatusFlag,
-          residentAreaStatusFlag: this.data.residentAreaStatusFlag
+          residentAreaStatusFlag: this.data.residentAreaStatusFlag,
+          temperStatusFlag: this.data.temperStatusFlag
         }
       })
     }
-
+    if (temperStatusFlag == 0){
+      var temperotherremark ='正常'
+    }
     db.collection('user_healthy').add({
       data: {
         name: name,
@@ -940,7 +1010,6 @@ Page({
         trainnumber: trainnumber,
         leavedate: leavedate,
         suregobackdate: suregobackdate,
-        temperature: temperature,
         bodystatusotherremark: bodystatusotherremark,
         noGoBackFlag: noGoBackFlag,
         goHBFlag: goHBFlag,
@@ -960,7 +1029,9 @@ Page({
         residentAreaStatusFlag : this.data.residentAreaStatusFlag,
         roHealthystatusotherremark:roHealthystatusotherremark,
         roMaCoDistatusotherremark:roMaCoDistatusotherremark,
-        reArstatusotherremark:reArstatusotherremark
+        reArstatusotherremark:reArstatusotherremark,
+        temperStatusFlag: this.data.temperStatusFlag,
+        temperotherremark: temperotherremark
         // userinfo: that.userinfo
       },
       success: res => {
@@ -1094,7 +1165,24 @@ Page({
       })
     }
   },
-
+  //当前体温
+  temperStatusRadioChange: function (e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    this.temperStatusFlag = e.detail.value
+    this.setData({
+      temperStatusFlag: e.detail.value
+    })
+    //  this.radioChange(e)
+    if (e.detail.value == 1) {
+      this.setData({
+        healthyFlag: true
+      })
+    } else {
+      this.setData({
+        healthyFlag: false
+      })
+    }
+  },
   //是否确诊
   isQueZhenRadioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);

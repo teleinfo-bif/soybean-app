@@ -191,14 +191,39 @@
       </view>
       <!--未返京结束-->
 
-      <view class="clock_form__title">当日体温</view>
+<!--       <view class="clock_form__title">当日体温</view>
       <view class="">
         <view class="clock_form_input">
           <input class="weui-input" name="temperature" placeholder="请输入数字和小数点" bindblur="judgeTemperature" placeholder-class="placeholder-style"/>
-          <!--     <label weui-input>{{phone}}</label>-->
+         
         </view>
       </view>
+      <view class='devide-middle'/> -->
+
+      <view class="clock_form__title">当日体温</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="temperStatusRadioChange">
+          <label wx:for="{{temperItems}}" wx:key="{{index}}">
+           <view wx:if="{{index == 0}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.name}}
+           </view>
+           <view wx:else>
+            <radio value="{{item.value}}" />{{item.name}}
+           </view>
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{temperStatusFlag == '1'}}" class="clock_form__title">具体温度</view>
+      <view wx:if="{{temperStatusFlag == '1'}}" class="">
+        <view class="">
+          <view class="clock_form_input">
+            <input class="weui-input" name="temperotherremark" placeholder="请输入数字和小数点" placeholder-class="placeholder-style"/>
+           </view>
+          </view>
+      </view>
       <view class='devide-middle'/>
+
 
       
       <view class="clock_form__title">目前健康状况</view>
@@ -285,7 +310,7 @@
       </view>
       <view class='devide-middle'/>
 
-      <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
+<!--       <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="reArStatusChange">
           <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
@@ -301,7 +326,7 @@
           </view>
         </view>
       </view>
-      <view class='devide-middle'/>
+      <view class='devide-middle'/> -->
 
 
 
@@ -318,7 +343,7 @@
       <view class='devide-middle'/>
 
       <!--复工状态-->
-      <view class="clock_form__title">目前在岗状态</view>
+      <view class="clock_form__title">个人状态</view>
         <view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="workStatusChange">
@@ -338,6 +363,17 @@
           </view>
       </view>
       <view class='devide-middle'/>
+
+  
+
+  <checkbox-group class="secret-checkbox-show" bindchange="boxcheck">
+    <checkbox name="box_check" value="{{if_checked}}" class="red round"></checkbox>
+      <navigator url="" class="secret-view">
+        已阅读信鄂通<text class="text-blue" bindtap="gotoUserSecret">《用户服务条款及隐私协议》</text>,本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询  
+    </navigator>
+  </checkbox-group>
+
+   <view class='devide-middle'/>
 
       <view class="weui-btn-area" style="margin: 28px 16px 8px;padding-bottom: 20px;">
         <button class="weui-btn" hover-class="weui-btn-hover" wx:if="{{todayClickFlag == '0'}}" form-type="submit" style="color:#fff">提交</button>

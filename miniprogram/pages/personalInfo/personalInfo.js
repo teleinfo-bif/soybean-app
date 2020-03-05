@@ -8,7 +8,7 @@ const db = wx.cloud.database({
 // const cloud = require('wx-server-sdk')
 // cloud.init()
 
-
+var utils = require('../../utils/utils.js')
 
 Page({
 
@@ -19,13 +19,15 @@ Page({
     company_region: ["", "", ""],
     home_region: ["", "", ""],
 
-    certificate_type: ["大陆身份证", "港澳身份证","台湾身份证", "军官证", "护照"],
+    certificate_type: ["员工号", "身份证号"],
     certificate_type_index: 0,
     certificate_number:"",
     bid_address: "",
     private_key: "",
+    secretcheckbox: "",
     
-    multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
+    // multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "运行维护部", "标识业务管理中心", "业务发展部", "国际拓展部", "品牌市场部", "互联网治理研究中心","综合管理部"]],
+    multiArray: [["请选择", "院领导", "老领导", "办公室（保密办公室）"], [""]],
     multiIndex: [0, 0],
     companies: [],
     departments: [],
@@ -40,8 +42,10 @@ Page({
     record_id: "",
     placeholder_name: "请输入姓名",
     placeholder_phone: "请输入手机号码",
+    placeholder_phone_show: "",
     placeholder_card_type: "选择证件类型",
-    placeholder_card_number: "证件号码",
+    placeholder_card_number: "员工号",
+    placeholder_card_number_show: "",
     placeholder_company_name: "请选择单位及部门",
     placeholder_company_district: "请选择单位所在城市及区",
     placeholder_company_detail: "请输入单位详细地址",
@@ -51,7 +55,7 @@ Page({
 
     value_name: "",
     value_phone: "",
-    value_card_type: "",
+    value_card_type: "员工号",
     value_card_number: "",
     value_company_name: "",
     value_company_district: "",
@@ -65,7 +69,8 @@ Page({
 
     healthyDatas: [],
     company_name_items:['中国信息通信研究院'],
-    isFisrtNoFlag:true
+    isFisrtNoFlag:true,
+    if_checked: false
 
   },
 
@@ -79,6 +84,25 @@ Page({
       placeholder_home_district:'',
       placeholder_home_detail:''
     })
+  },
+
+  gotoUserSecret: function (e) {
+    wx.navigateTo({
+      url: '../about/about'
+    })
+  },
+
+  boxcheck: function(e) {
+    console.log("box change: ", e.detail.value)
+    var flag = false
+    if (e.detail.value.length != 0) {
+      flag = true
+    }
+    this.setData({
+      if_checked: flag
+    })
+
+    console.log("if check: ", this.data.if_checked)
   },
   /** 
    * 身份验证相关
@@ -120,58 +144,63 @@ Page({
     return true;
   },
 
-  // 香港省份证验证
-  isHKCard: function(e) {
-    // 港澳居民来往内地通行证
-    // 规则： H/M + 10位或6位数字
-    // 样本： H1234567890
-    var card = this.data.certificate_number
-    var reg = /^([A-Z]\d{6,10}(\(\w{1}\))?)$/;
-    if (!reg.test(card)) {
-      return false;
-    } 
-    return true 
+  workIdVerify: function(e) {
+    // todo 验证员工号具体内容
+    return true
   },
 
+  // 香港省份证验证
+  // isHKCard: function(e) {
+  //   // 港澳居民来往内地通行证
+  //   // 规则： H/M + 10位或6位数字
+  //   // 样本： H1234567890
+  //   var card = this.data.certificate_number
+  //   var reg = /^([A-Z]\d{6,10}(\(\w{1}\))?)$/;
+  //   if (!reg.test(card)) {
+  //     return false;
+  //   } 
+  //   return true 
+  // },
+
   // 台湾身份证验证
-  isTWCard: function(e) {
-    // 台湾居民来往大陆通行证
-    // 规则： 新版8位或18位数字， 旧版10位数字 + 英文字母
-    // 样本： 12345678 或 1234567890B
-    var card = this.data.certificate_number
-    var reg = /^\d{8}|^[a-zA-Z0-9]{10}|^\d{18}$/;
-    if (!reg.test(card)){
-      return false;
-    } 
-    return true 
-  },
+  // isTWCard: function(e) {
+  //   // 台湾居民来往大陆通行证
+  //   // 规则： 新版8位或18位数字， 旧版10位数字 + 英文字母
+  //   // 样本： 12345678 或 1234567890B
+  //   var card = this.data.certificate_number
+  //   var reg = /^\d{8}|^[a-zA-Z0-9]{10}|^\d{18}$/;
+  //   if (!reg.test(card)){
+  //     return false;
+  //   } 
+  //   return true 
+  // },
 
   
   // 军官证正则表达式
-  isOfficerCard: function(e) {
-    // 军官证
-    // 规则： 军/兵/士/文/职/广/（其他中文） + "字第" + 4到8位字母或数字 + "号"
-    // 样本： 军字第2001988号, 士字第P011816X号
-    var card = this.data.certificate_number
-    var reg = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
-    if (!reg.test(card)) {
-      return false;
-    } 
-    return true
-  },
+  // isOfficerCard: function(e) {
+  //   // 军官证
+  //   // 规则： 军/兵/士/文/职/广/（其他中文） + "字第" + 4到8位字母或数字 + "号"
+  //   // 样本： 军字第2001988号, 士字第P011816X号
+  //   var card = this.data.certificate_number
+  //   var reg = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
+  //   if (!reg.test(card)) {
+  //     return false;
+  //   } 
+  //   return true
+  // },
 
   // 护照验证
-  isPassPortCard: function (e) {
-    // 护照
-    // 规则： 14/15开头 + 7位数字, G + 8位数字, P + 7位数字, S/D + 7或8位数字,等
-    // 样本： 141234567, G12345678, P1234567
-    var card = this.data.certificate_number
-    var reg = /^([a-zA-z]|[0-9]){5,17}$/;
-    if (!reg.test(card)) {
-      return false;
-    } 
-    return true
-  },
+  // isPassPortCard: function (e) {
+  //   // 护照
+  //   // 规则： 14/15开头 + 7位数字, G + 8位数字, P + 7位数字, S/D + 7或8位数字,等
+  //   // 样本： 141234567, G12345678, P1234567
+  //   var card = this.data.certificate_number
+  //   var reg = /^([a-zA-z]|[0-9]){5,17}$/;
+  //   if (!reg.test(card)) {
+  //     return false;
+  //   } 
+  //   return true
+  // },
 
 
   isCardValid: function(e) {
@@ -182,35 +211,36 @@ Page({
 
     switch(index){
       case 0:
-      if (!that.idCardValid()){
-        console.log("hello 大陆")
-        warn = "大陆身份证格式错误!"
+      if (!that.workIdVerify()) {
+        warn = "员工号格式错误!"
       }
       break;
       
       case 1:
-      if (!that.isHKCard()) {
-        warn = "香港身份证格式错误!"
+
+      if (!that.idCardValid()) {
+        console.log("hello 大陆")
+        warn = "大陆身份证格式错误!"
       }
       break;
 
-      case 2:
-      if (!that.isTWCard()) {
-        warn = "台湾身份证格式错误!"
-      }
-      break;
+      // case 2:
+      // if (!that.isTWCard()) {
+      //   warn = "台湾身份证格式错误!"
+      // }
+      // break;
 
-      case 3:
-      if (!that.isOfficerCard()){
-        warn = "军官证格式错误!"
-      }
-      break;
+      // case 3:
+      // if (!that.isOfficerCard()){
+      //   warn = "军官证格式错误!"
+      // }
+      // break;
 
-      case 4:
-      if (!that.isPassPortCard()) {
-        warn = "护照格式错误!"
-      }
-      break;
+      // case 4:
+      // if (!that.isPassPortCard()) {
+      //   warn = "护照格式错误!"
+      // }
+      // break;
     }
 
     return warn;
@@ -231,6 +261,7 @@ Page({
   },
 
 
+
   /**
    *  身份类型选择
    */
@@ -238,7 +269,8 @@ Page({
   bindCertificatePickerChange: function(e) {
     this.setData({
       certificate_type_index: parseInt(e.detail.value),
-      value_card_type: this.data.certificate_type[e.detail.value]
+      value_card_type: this.data.certificate_type[e.detail.value],
+      placeholder_card_number: this.data.certificate_type[e.detail.value]
     })
 
     console.log(this.data.value_card_type)
@@ -458,16 +490,33 @@ Page({
     }).get({
         success: res => {
           if (res.data.length == 0) {
+            this.setData({
+              secretcheckbox: "secret-checkbox-show",
+            })
             this.getBidAddress()
           }
 
+          var hide = utils.toHide(res.data[0].phone)
+          var idHide = ""
+
+          console.log("card type: ", )
+          
+          if (res.data[0].certificate_type == "身份证号" || res.data[0].certificate_type == "大陆身份证"){
+            idHide = this.toHide(res.data[0].certificate_number)
+          }else {
+            idHide = res.data[0].certificate_number
+          }
+
           this.setData({
+            value_card_type: "",
             user_info_data: res.data[0],
             record_id: res.data[0]._id,
             placeholder_name: res.data[0].name,
-            placeholder_phone: res.data[0].phone,
+            placeholder_phone: hide,
+            placeholder_phone_show: res.data[0].phone,
+            placeholder_card_number_show: res.data[0].certificate_number,
             placeholder_card_type: res.data[0].certificate_type,
-            placeholder_card_number: res.data[0].certificate_number,
+            placeholder_card_number: idHide,
             bid_address: res.data[0].bid_address,
             private_key: res.data[0].private_key,
             placeholder_company_name: res.data[0].company_department,
@@ -482,6 +531,7 @@ Page({
             choice_color_1: "color: #999999",
             forever_choice_color: "color: #999999",
             personal_info_change: "personal-change-show",
+            secretcheckbox: "secret-checkbox-hide",
             buttons_display: "display: none",
             phone_display: "display: none"
           })
@@ -519,6 +569,8 @@ Page({
       // value_phone: this.data.placeholder_phone,
       // value_card_type: this.data.placeholder_card_type,
       // value_card_number: this.data.placeholder_card_number,
+      placeholder_phone: this.data.placeholder_phone_show,
+      placeholder_card_number: this.data.placeholder_card_number_show,
       value_company_name: this.data.placeholder_company_name,
       value_company_district: this.data.placeholder_company_district,
       value_company_detail: this.data.placeholder_company_detail,
@@ -527,7 +579,9 @@ Page({
 
       certificate_type_index: this.getCardType(),
       buttons_display: "display: flex",
-      isFisrtNoFlag:false
+      isFisrtNoFlag:false,
+      secretcheckbox: "secret-checkbox-show",
+      if_checked: false
 
     })
     if (this.data.placeholder_company_name_0 == '无') {
@@ -590,7 +644,11 @@ Page({
       warn = "请选择您的家庭所在地区!"
     }  else if (e.detail.value.home_detail == "") {
       warn = "请输入您的家庭详细地址"
-    }  */else {
+    }  */
+    else if (!this.data.if_checked) {
+      warn = "请选择同意用户服务条款及隐私协议"
+    }
+    else {
       flag = true 
 
 
@@ -749,6 +807,10 @@ Page({
 
   },
   
+  toHide:function (array) {
+    var mphone = array.substring(0, 4) + '************' + array.substring(16);
+    return mphone;
+  },
   
 
   /**

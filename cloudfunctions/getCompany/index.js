@@ -33,7 +33,26 @@ exports.main = async (event, context) => {
 
   // return count;
 
-  let list = await db.collection('company_info').get({
-  });
+
+  let list = await db.collection('company_info').orderBy('weight', 'asc').get();
+
+  for (let index = 0; index < list.data.length; index ++) {
+    let wantedDepartments = []
+    let departments = list.data[index].departments
+
+    if (departments.length > 0) {
+      wantedDepartments.push("领导")
+    }
+  
+    for (let indexj = 0; indexj < departments.length; indexj ++) {
+      if (departments[indexj] != "领导") {
+        wantedDepartments.push(departments[indexj])
+      }
+    }
+
+    list.data[index].departments = wantedDepartments
+
+  }
+
   return list.data;
 }

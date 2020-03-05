@@ -151,13 +151,24 @@
       <!--未返京结束-->
 
 
-      <view class="clock_form__title">当日体温</view>
-      <view class="">
-        <view class="clock_form_input">
 
-          <input class="weui-input" disabled="true" name="temperature" placeholder="{{clickdata.temperature}}" placeholder-class="placeholder-style"/>
-          <!--     <label weui-input>{{phone}}</label>-->
-        </view>
+
+      <view class="clock_form__title">当日体温</view>
+      <view class='clock-radio'>
+        <radio-group class="radio-group" bindchange="temperStatusRadioChange">
+          <label wx:for="{{temperItems}}" wx:key="{{index}}">
+            <radio value="{{item.value}}"  disabled="true" checked="{{item.checked}}" />{{item.name}}
+          </label>
+        </radio-group>
+      </view>
+
+      <view wx:if="{{clickdata.temperStatusFlag == '1' }}" class="clock_form__title">具体温度</view>
+      <view wx:if="{{clickdata.temperStatusFlag == '1' }}" class="">
+        <view class="">
+          <view class="clock_form_input">
+          <input class="weui-input" name="temperotherremark" placeholder="{{clickdata.temperotherremark}}" disabled="true" placeholder-class="placeholder-style"/>
+           </view>
+          </view>
       </view>
       <view class='devide-middle'/>
 
@@ -255,7 +266,7 @@
       </view>
       <view class='devide-middle'/>
 
-          <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
+ <!--          <view class="clock_form__title">居住小区是否有疑似病例、确诊病例</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="bodyStatusRadioChange">
           <label wx:for="{{residentAreaItems}}" wx:key="{{index}}">
@@ -273,7 +284,7 @@
           </view>
         </view>
       </view>
-      <view class='devide-middle'/>
+      <view class='devide-middle'/> -->
 
  
       <view class="clock_form__title">近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途径湖北</view>
@@ -289,7 +300,7 @@
 
 
         <!--在岗状态-->
-        <view class="clock_form__title">目前在岗状态</view>
+        <view class="clock_form__title">个人状态</view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="">
             <label wx:for="{{workStatusItems}}" wx:key="index">
