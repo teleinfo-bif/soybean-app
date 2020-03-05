@@ -11,7 +11,7 @@ String phone;  电话号码
 String addtime;  数据入库时间
 String suregobackdate;  实际返京时间
 String _openid;  用户微信唯一标识号
-String temperature; 温度
+String temperature; 温度 
 String name; 用户名
 String _id;   数据在数据库中的id
 String place; 打卡地点

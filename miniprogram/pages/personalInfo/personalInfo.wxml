@@ -170,7 +170,7 @@
         <view class="personal-info-picker">
           <picker mode="region" bindchange="bindHomeRegionChange" value="{{home_region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">家庭所在城市及区(选填)</text>
+              <text class="info-label">家庭所在城市及区(可选)</text>
               <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">
@@ -185,7 +185,7 @@
 
         <!-- 家庭详细地址 -->
         <view class="personal-info-hd">
-          <text class="info-label">家庭详细地址(选填)</text>
+          <text class="info-label">家庭详细地址(可选)</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="home_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_home_detail}}" disabled="{{disabled}}" value="{{value_home_detail}}"></input>

@@ -200,9 +200,9 @@ Page({
         }
       },
       title: {
-        name: '70人',
-        color: '#7cb5ec',
-        fontSize: 25
+        name: this.data.totalStateNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
       },
       // subtitle: {
       //   name: '收益率',
@@ -254,11 +254,11 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalAreaNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
@@ -316,11 +316,11 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalCasesNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
@@ -379,11 +379,11 @@ Page({
           offsetAngle: -45
         }
       },
-      // title: {
-      //   name: '70%',
-      //   color: '#7cb5ec',
-      //   fontSize: 25
-      // },
+      title: {
+        name: this.data.totalworksNumber + '人',
+        // color: '#7cb5ec',
+        fontSize: 16
+      },
       // subtitle: {
       //   name: '收益率',
       //   color: '#666666',
