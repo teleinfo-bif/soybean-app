@@ -90,7 +90,7 @@
           <!--14天内离京开始-->
 
           <view class="clock_form__title">
-            返回{{str_before}}日期
+            到达{{str_before}}日期
           </view>
           <view class="">
             <view class="weui-cell ">
@@ -106,7 +106,7 @@
           </view>
           <view class='devide-middle'/>
 
-      <view class="clock_form__title">返回{{str_before}}所乘交通工具</view>
+      <view class="clock_form__title">到达{{str_before}}所乘交通工具</view>
         <view>
         <view class='clock-radio'>
           <radio-group class="radio-group" bindchange="trafficToolChange">
@@ -119,7 +119,7 @@
         </view>
        <view class='devide-middle'/>
 
-      <view class="clock_form__title">返回{{str_before}}所乘车次/航班/车牌</view>
+      <view class="clock_form__title">到达{{str_before}}所乘车次/航班/车牌</view>
           <view class="">
             <view class="">
               <view class="clock_form_input">
@@ -305,7 +305,7 @@
 
 
 
-      <view class="clock_form__title">是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
+      <view class="clock_form__title">14天内是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过湖北</view>
       <view class='clock-radio'>
         <radio-group class="radio-group" bindchange="goHBRadioChange">
           <label wx:for="{{radioItems}}" wx:key="{{index}}">

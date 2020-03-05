@@ -51,7 +51,10 @@ exports.main = async (event, context) => {
   // }
 
     ret.push(datas[0].departments, temp)
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
     
   }
 

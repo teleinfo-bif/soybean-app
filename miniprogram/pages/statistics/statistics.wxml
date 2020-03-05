@@ -269,10 +269,10 @@
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{outIsolatePercent}} %</view>
             </view>
-            <view class="table-row-content">
+            <!-- <view class="table-row-content">
               <view class="icon-none"></view>
               <view class="table-row-content-text">{{otherCasesPercent}} %</view>
-            </view>
+            </view> -->
 
           </view>
         </view>
