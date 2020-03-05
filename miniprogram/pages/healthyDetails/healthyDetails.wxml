@@ -59,14 +59,16 @@
         </view> -->
       
       <label wx:if="{{item.quezhen =='0'}}">
-          <view class="tree-children-status-text">确诊</view> 
           <view class="tree-children-status-red"></view>
+          <view class="tree-children-status-text">确诊</view> 
+          
           
       </label>
 
       <label wx:else>
-          <view class="tree-children-status-text">异常</view> 
           <view class="tree-children-status-yellow"></view>
+          <view class="tree-children-status-text">异常</view> 
+          
           
           <!-- <view class="tree-children-status-text"></view> -->
       </label>
@@ -98,8 +100,9 @@
       
 
       <label>
+      <view class="tree-children-status-green"></view>
           <view class="tree-children-status-text">正常</view>
-          <view class="tree-children-status-green"></view>
+          
           
       </label>
 
