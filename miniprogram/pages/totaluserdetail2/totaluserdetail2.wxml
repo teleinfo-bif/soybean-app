@@ -24,8 +24,8 @@
 
     <view class="userclicklist" wx:for="{{clickdetail}}" wx:key="_id">
       <label>{{item.name}}</label>
-      <label style="float:right" wx:if="{{item.temperature > 0}}">已打卡</label>
-      <label style="float:right" wx:else="{{item.temperature > 0}}">未打卡</label>
+      <label style="float:right" wx:if="{{item.bodyStatusFlag != undefined}}">已打卡</label>
+      <label style="float:right" wx:else="{{item.bodyStatusFlag == undefined}}">未打卡</label>
       
 
       

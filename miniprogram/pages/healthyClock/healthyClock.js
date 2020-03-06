@@ -89,6 +89,7 @@ Page({
       { name: '37.3及以上', value: '1'}
     ],
     temperStatusFlag: '',
+    phoneShow: "",
   },
 
   currentDate: function (e) {
@@ -284,6 +285,7 @@ Page({
         that.setData({
           name: res.data[0].name,
           phone: hide,
+          phoneShow: res.data[0].phone,
           userinfo: res.data
         })
       },
@@ -912,6 +914,10 @@ Page({
 
     var name = e.detail.value.name
     var phone = e.detail.value.phone
+    var phoneShow = ""
+    if (phone != undefined || phone != "" ){
+      phoneShow = this.data.phoneShow
+    }
     var place = e.detail.value.place_before + e.detail.value.place
     var gobackdate = e.detail.value.gobackdate
     var trainnumber = e.detail.value.trainnumber
@@ -958,7 +964,7 @@ Page({
       db.collection('user_latest').add({
         data: {
           name: name,
-          phone: phone,
+          phone: phoneShow,
           place: place,
           is_in_beijing: this.data.isInBeijing,
           out_reason: this.data.outBejingReason,
@@ -980,7 +986,7 @@ Page({
       db.collection('user_latest').doc(this.data.userLatestInfo[0]._id).update({
         data: {
           name: name,
-          phone: phone,
+          phone: phoneShow,
           place: place,
           is_in_beijing: this.data.isInBeijing,
           out_reason: this.data.outBejingReason,
@@ -1005,7 +1011,7 @@ Page({
       data: {
         name: name,
         place: place,
-        phone: phone,
+        phone: phoneShow,
         gobackdate: gobackdate,
         trainnumber: trainnumber,
         leavedate: leavedate,
