@@ -9,8 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrcodeUrl: "/images/QRGreen.png",
-    realName: "",
+    qrcodeUrl: "",
+    name: "",
     jobNumber: '',
     updateTime: '',
     description: '',
@@ -21,7 +21,7 @@ Page({
     wx.request({
       url: "https://www.guokezhixing.com/secHealth/version1/healthRecord/miniSubmitRecord",
       data: {
-        realName: that.data.realName,
+        realName: that.data.name,
         idCard: that.data.idCard,
         phone: that.data.phone,
         unit: that.data.unit,
@@ -43,8 +43,8 @@ Page({
         console.log('=====请求sucessTESTQR=====', res);
         that.setData({
           qrcodeUrl: res.data.data.qrcodeUrl,
-          updateTime: res.data.data.updateTime,
-          realName:res.data.data.title,
+          updateTime: "更新于：" +res.data.data.updateTime,
+          title:res.data.data.title,
           description: res.data.data.description
         })
 
@@ -71,7 +71,7 @@ Page({
         if(res.data.code == '200'){
           console.log("========res=====", res.data.data.id)
           that.setData({
-            realName: res.data.data.name,
+            name: res.data.data.name,
             idCard: res.data.data.idNumber,
             phone: res.data.data.phone,
             unit: res.data.data.companyName,
