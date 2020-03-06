@@ -339,7 +339,7 @@
 
             </view>
             <view class="table-row-content">
-              <view class="ring-icon6"></view>
+              <view class="ring-icon4"></view>
               <view class="table-row-content-text">监督隔离{{separateSupNumber}}人</view>
             </view>
             
