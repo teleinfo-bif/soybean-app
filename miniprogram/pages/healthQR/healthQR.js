@@ -61,6 +61,15 @@ Page({
           realName:res.data.data.title,
           description: res.data.data.description
         })
+        if(res.data.data.color == 'RED'){
+          that.setData({
+            description: "返回" + that.data.unitAddress+"连续14天为绿码可通行"
+          })
+        }else{
+          that.setData({
+            description: res.data.data.description
+          })
+        }
 
       },
       fail() {
@@ -108,6 +117,7 @@ Page({
   },
   onLoad: function (options) {
 
+    //加载数据
     wx.showLoading({
       title: '加载中',
     })
