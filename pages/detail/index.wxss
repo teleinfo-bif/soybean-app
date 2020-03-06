@@ -48,7 +48,7 @@ margin-top: 10rpx;
 
 .people-item > view {
   flex: 1;
-  text-align: center; }
+  }
 
 .people-item_name {
   height: 100%;
