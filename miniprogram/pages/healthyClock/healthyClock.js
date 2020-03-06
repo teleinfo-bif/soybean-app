@@ -89,6 +89,7 @@ Page({
       { name: '37.3及以上', value: '1'}
     ],
     temperStatusFlag: '',
+    disableDakaInput:false,
   },
 
   currentDate: function (e) {
@@ -420,6 +421,12 @@ Page({
           title: '警告',
           content: '您点击了拒绝授权,将无法正常获取地理位置,点击确定重新获取授权。',
           success: function (res) {
+            if (res.cancel) {
+              //点击取消按钮
+              that.setData({
+                disableDakaInput: true
+              })
+            }
             if (res.confirm) {
               //重点:从这里开始就是重新授权调取
               wx.openSetting({
@@ -432,9 +439,15 @@ Page({
                       icon: "success",
                       duration: 1000
                     });
+                  }else{
+                    that.setData({
+                      disableDakaInput:true
+                    })
                   }
                 }, fail: function (res) {
-
+                  that.setData({
+                    disableDakaInput: true
+                  })
                 }
               })
               //重点:调取结束
