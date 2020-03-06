@@ -100,7 +100,7 @@
       
 
       <label>
-      <view class="tree-children-status-green"></view>
+          <view class="tree-children-status-green"></view>
           <view class="tree-children-status-text">正常</view>
           
           

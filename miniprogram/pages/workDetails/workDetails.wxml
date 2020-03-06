@@ -1,8 +1,8 @@
 
 
 
-<view class="text-title">在岗人数: {{zaigangs.length}}人</view>
-<view wx:if="{{zaigangs.length == 0}}">
+<view class="text-title">在岗公办: {{workArray.length}}人</view>
+<view wx:if="{{workArray.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
       <label>无</label>
@@ -11,7 +11,7 @@
 </view>
 <view wx:else>
   <view class="pages-body">
-    <view class="userclicklist" wx:for="{{zaigangs}}" wx:key="id">
+    <view class="userclicklist" wx:for="{{workArray}}" wx:key="id">
       <label>{{item.name}}</label>
       
       <label>
@@ -28,8 +28,8 @@
   </view>
 </view>
 
-<view class="text-title">远程办公: {{homes.length}}人</view>
-  <view wx:if="{{homes.length == 0}}">
+<view class="text-title">居家办公: {{remoteWorkArray.length}}人</view>
+  <view wx:if="{{remoteWorkArray.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
         <label>无</label>
@@ -38,7 +38,7 @@
   </view>
   <view wx:else>
     <view class="pages-body">
-      <view class="userclicklist" wx:for="{{homes}}" wx:key="id">
+      <view class="userclicklist" wx:for="{{remoteWorkArray}}" wx:key="id">
       <label>{{item.name}}</label>
       
       <label>
@@ -55,9 +55,35 @@
     </view>
   </view>
 
+<view class="text-title">居家隔离: {{separateHomeArray.length}}人</view>
+  <view wx:if="{{separateHomeArray.length == 0}}">
+    <view class="pages-body">
+      <view class="userclicklist">
+        <label>无</label>
+      </view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class="pages-body">
+      <view class="userclicklist" wx:for="{{separateHomeArray}}" wx:key="id">
+      <label>{{item.name}}</label>
+      
+      <label>
+        <navigator url="../healthyClocked/healthyClocked?user_id={{item.openid}}&date={{currentDate}}">
+          <view bindtap="clickRecord" style="color:#4f7ef2;">打卡详情</view>
+        </navigator>
+      </label>
 
-<view class="text-title">未复工: {{undones.length}}人</view>
-  <view wx:if="{{undones.length == 0}}">
+      <!-- <label>
+          <view class="tree-children-status-orange"></view>
+          <!-- <view class="tree-children-status-text"></view> -->
+      <!-- </label> -->
+      </view>
+    </view>
+  </view>
+
+<view class="text-title">监督隔离: {{separateSupArray.length}}人</view>
+  <view wx:if="{{separateSupArray.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
       <label>无</label>
@@ -66,7 +92,7 @@
   </view>
   <view wx:else>
     <view class="pages-body">
-      <view class="userclicklist" wx:for="{{undones}}" wx:key="id">
+      <view class="userclicklist" wx:for="{{separateSupArray}}" wx:key="id">
         <label>{{item.name}}</label>
       
         <label>
