@@ -53,6 +53,8 @@ page {
     &-statistic {
       display: flex;
       align-items: center;
+      width:300rpx;
+      justify-content: flex-end;
     }
     .btn-statistic {
       display: inline-block;
