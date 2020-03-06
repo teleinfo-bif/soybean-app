@@ -382,9 +382,8 @@ Page({
       );
       // ();
     } else if (prop === "temperatureRadio") {
-      data["temperaturn"] = data["temperatureRadio" == 1]
-        ? 36.5
-        : data["temperaturn"];
+      data["temperature"] =
+        data["temperatureRadio"] == 1 ? 36.5 : data["temperature"];
       this.setFieldsFromTemperature(data);
     } else if (otherFieldsList[prop]) {
       // 判断 健康状况选其它
@@ -462,6 +461,7 @@ Page({
   formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
+      debugger;
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
