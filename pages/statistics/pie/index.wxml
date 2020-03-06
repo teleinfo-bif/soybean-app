@@ -2,29 +2,29 @@
 <view class="echarts-box {{first ? 'first ' : 'echarts-box'}}">
   <view class="box-head">
     <view class="box-head_text">{{title}}</view>
-    <view class="box-head_count">
+    <!-- <view class="box-head_count">
       总人数
       <text class="box-head_count-num">{{clockIn}}人</text>
-    </view>
+    </view> -->
   </view>
   <view class="box-content">
     <view class="pie-box">
       <!-- <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas> -->
       <canvas canvas-id="{{eleid}}" type="" class="canvas" bindtouchstart="touchHandler"></canvas>
     </view>
-    <view style='margin-left:-20rpx;'>
+    <view style='margin-left:0rpx;'>
       <!-- <view class="legend-item legend-item-head"> -->
-      <view class="legend-item legend-item-head">
+      <!-- <view class="legend-item legend-item-head">
         <view class="legend-item_label">分布情况</view>
         <view class="legend-item_value">占比率</view>
-      </view>
+      </view> -->
       <view wx:for="{{data}}" wx:key="index" class="legend-item">
-        <view class="legend-item_label">
+        <view class="legend-item_label" style='color:#999999'>
           <view wx:if="{{data.length == 3 && index == 2}}" class="square square{{index+2}}"></view>
-          <view wx:else class="square square{{index+1}}"></view>
-          <view>{{item.name}} {{item.value}}人</view>
+          <view wx:else class="square square{{index+1}}" style='color:#999999'></view>
+          <view style='color:#999999'>{{item.name}} {{item.value}}人</view>
         </view>
-        <view class="legend-item_value">{{item.percent}}%</view>
+        <view class="legend-item_value" style='color:#999999'>{{item.percent}}%</view>
       </view>
     </view>
   </view>

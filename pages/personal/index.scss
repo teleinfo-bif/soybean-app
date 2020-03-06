@@ -1,7 +1,10 @@
 page {
   background: #f7f7f7;
+  min-height: 100%;
 }
-
+.page-wrap {
+  position: relative;
+}
 .form-header {
   display: flex;
   align-items: center;

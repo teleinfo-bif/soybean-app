@@ -5,5 +5,5 @@
 page {
   font-size: 30rpx;
   color: #333;
-  
+  font-family: PingFangSC-Regular;
 }
