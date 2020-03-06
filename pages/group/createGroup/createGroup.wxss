@@ -1,17 +1,60 @@
 /* pages/createGroup/createGroup.wxss */
 page {
-   
+   background:rgba(249,249,249,1);
 }
+.tip-tip {
+    padding-left: 30rpx;
+    width:100%;
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 26rpx;
+    color:#1759ef;
+    font-weight: 500;   
+}
+.personal-info-hd {
+    font-size:32rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    padding-left:30rpx;
+    padding-right:30rpx;
+    margin-top:20rpx;
+    line-height:45rpx;
+    /* margin-bottom: 20rpx; */
+} 
+.divide-1 {
+    width: 100%;
+    height: 5rpx;
+    background-color: rgba(249, 249, 249, 1);
+} 
 .add-img {
     display: flex;
     justify-content: center;
-    margin-bottom: 20rpx;
+    margin-bottom: 40rpx;
+    margin-top:20rpx;
 }
 .add-img image {
-        width: 150rpx;
-        height: 150rpx;
-        border-radius: 50%; 
-        overflow:hidden
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 50%; 
+    overflow:hidden
+}
+.personal-info-td {
+    margin-top:20rpx;
+    margin-bottom:30rpx;
+    margin-left:30rpx;
+    font-size:32rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+    line-height:45rpx;
+}
+.placeholder-style{
+    font-size:32rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+    line-height:45rpx;
 }
 .introduce-input {
     width: 90%;
@@ -21,6 +64,7 @@ page {
     color:rgba(153,153,153,1);
     line-height:45rpx;
     margin-right: 30rpx;
+    margin-top:20rpx;
 } 
 .personal{
     background-color: #ffffff;
@@ -68,20 +112,8 @@ page {
     height: 10rpx;
     background-color: rgba(249, 249, 249, 1);
 } 
-.personal-info-hd {
-    font-size:32rpx;
-    font-family:PingFangSC-Medium,PingFang SC;
-    font-weight:500;
-    color:rgba(51,51,51,1);
-    padding-left:30rpx;
-    padding-right:30rpx;
-    margin-top:20rpx;
-} 
-.personal-info-td {
-    margin-top:20rpx;
-    margin-bottom:30rpx;
-    margin-left:30rpx;
-}
+
+
 .personal-info-td-company{
     margin-top:20rpx;
     margin-bottom:30rpx;
@@ -101,6 +133,7 @@ page {
     line-height:45rpx;
     margin-right: 30rpx;
 } 
+
 .info-choice{
     margin-top:50rpx;
     font-size: 30rpx;
@@ -117,21 +150,15 @@ page {
     font-size: 30rpx;
     color: #4169E1;
 } 
-.placeholder-style {
-    color: #999999;
-    font-size: 28rpx;
-}
 .personal-buttons{
     width: 100%;
     height: 155rpx;
-    background: #F5F5F5;
-    padding-top: 30rpx;
+    background: rgba(249,249,249,1);
+    padding-top: 50rpx;
 }   
 .button-submit {
     display: block;
     background:  #1759EF;
-    width: 300rpx;
-    height: 90rpx;
     margin: auto;
     text-align: center;
     font-size:32rpx;
@@ -139,7 +166,10 @@ page {
     font-weight:500;
     color:rgba(255,255,255,1);
     line-height:90rpx;
-    border-radius: 0rpx;
+    width:580rpx;
+    height:90rpx;
+    background:rgba(23,89,239,1);
+    border-radius:10rpx;
 }
 .download-info {
     text-decoration:underline,  
@@ -165,7 +195,7 @@ page {
 }
 
 .download-info-mail-item {
-    margin-top: 40rpx;
+    margin-top: 20rpx;
     margin-bottom: 30rpx;
     padding-left: 30rpx;
     padding-right: 30rpx;
@@ -186,17 +216,15 @@ page {
     width:100rpx;
     padding: 0;
     margin: 0;
-    font-size: 28rpx;
+    font-size: 32rpx;
     height: 60rpx;
     line-height: 60rpx;
+ /*    border: 1rpx solid rgba#1759ef; */
+    background: #1759ef;
+    color: white;
+    font-weight:400;
 }
-.tip-tip {
-    padding-left: 20rpx;
-    padding-right: 20rpx;
-    margin-top: 20rpx;
-    margin-bottom: 20rpx;
-    font-size: 26rpx;
-}
+
 .choice {
     z-index: 999;
     position: absolute;
@@ -206,4 +234,7 @@ page {
     font-family:PingFang SC;
     font-weight:400;
     color:rgba(38,122,236,1);
+}
+.info-input-address{
+
 }
