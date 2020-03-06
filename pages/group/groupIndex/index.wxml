@@ -19,6 +19,10 @@
         <view class="head-title">
           <Text>{{groupName}}</Text>
         </view>
+        <button open-type='share'>
+          <image style="width:40rpx;height:40rpx;" src="../../../static/images/fenxiang.png" />
+        </button>
+        
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
           <view>
             <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
