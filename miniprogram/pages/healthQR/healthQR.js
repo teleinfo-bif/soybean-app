@@ -62,8 +62,13 @@ Page({
           description: res.data.data.description
         })
         if(res.data.data.color == 'RED'){
+          let city = "工作地"
+          if (that.data.unitAddress != undefined && that.data.unitAddress.split(" ").length > 1) {
+            city = that.data.unitAddress.split(" ")[1]
+          }
+
           that.setData({
-            description: "返回" + that.data.unitAddress+"连续14天为绿码可通行"
+            description: "返回" + city +"连续14天为绿码可通行"
           })
         }else{
           that.setData({
