@@ -38,7 +38,7 @@ page {
   border-radius: 10rpx; }
   .row-item_left {
     white-space: nowrap;
-    width: 390rpx;
+    width: 300rpx;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis; }
@@ -48,7 +48,10 @@ page {
     justify-content: center; }
     .row-item_right-statistic {
       display: flex;
-      align-items: center; }
+      align-items: center; 
+      width:300rpx;
+      justify-content: flex-end;
+    }
     .row-item_right .btn-statistic {
       display: inline-block;
       margin-left: 15rpx;
@@ -95,3 +98,11 @@ page {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis; }
+
+button {
+  background-color: #fff;
+  padding: 0;
+  line-height: 100%;
+  border-radius: 0; }
+  button::after {
+    border: none; }

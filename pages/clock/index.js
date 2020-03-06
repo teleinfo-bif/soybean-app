@@ -382,10 +382,9 @@ Page({
       );
       // ();
     } else if (prop === "temperatureRadio") {
-      data["temperaturn"] = data["temperatureRadio" == 1]
-        ? 36.5
-        : data["temperaturn"];
-      this.setFieldsFromTemperaturn(data);
+      data["temperature"] =
+        data["temperatureRadio"] == 1 ? 36.5 : data["temperature"];
+      this.setFieldsFromTemperature(data);
     } else if (otherFieldsList[prop]) {
       // 判断 健康状况选其它
       if (value === "0") {
@@ -462,6 +461,7 @@ Page({
   formSubmit() {
     const validate = this.selectComponent("#form").validate();
     if (validate) {
+      debugger;
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
@@ -623,7 +623,7 @@ Page({
     }
     this.setFieldsHide(hideList, showList);
   },
-  async setFieldsFromTemperaturn(formData) {
+  async setFieldsFromTemperature(formData) {
     let disable;
     if (formData.temperatureRadio == 1) {
       disable = false;
@@ -652,10 +652,11 @@ Page({
    *
    * @param {*} data userfilledData
    */
-  // setFields(formData) {
-  //   // this.setFieldsFromAddress(formData);
-  //   // this.setFieldsFromLeave(formData);
-  // },
+  setFields(formData) {
+    this.setFieldsFromAddress(formData);
+    this.setFieldsFromLeave(formData);
+    this.setFieldsFromTemperature(formData);
+  },
   // 修改打卡地点
   onChangeBaseAddress(e) {
     this.setData({
@@ -787,13 +788,13 @@ Page({
       };
       // 判断打过卡
       if (resData.total > 0) {
+        formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
         this.setData({
           clocked: true,
           data: formData
         });
         // 设置表单显示的字段 -todo
-        this.setFieldsFromAddress(formData);
-        this.setFieldsFromLeave(formData);
+        this.setFields(formData);
       } else {
         // 未打卡开始获取位置信息，获取之前的打卡记录
         this.initAddress();
@@ -826,8 +827,9 @@ Page({
         this.setData({
           data
         });
-        this.setFieldsFromAddress(previousLockData);
-        this.setFieldsFromLeave(previousLockData);
+        previousLockData["temperatureRadio"] =
+          previousLockData.temperature > 37.3 ? 2 : 1;
+        this.setFields(previousLockData);
       } else {
         console.log("提醒：没有打卡数据，无需自动填写");
       }

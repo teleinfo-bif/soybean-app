@@ -60,51 +60,39 @@ Page({
     var that = this
 
     wx.request({
-      url: 'https://admin.bidspace.cn/bid-soybean/wx/interaction/show/user',
+      url: 'https://admin.bidspace.cn/bid-soybean/healthQrcode/createHealthQrcode',
       data: { 
         userId: that.data.userId 
       },
       method: 'GET', 
       header: { 'content-type': 'application/json' }, 
       success: function (res) {
-        // success
         if(res.data.code == '200'){
-          console.log("========res=====", res.data.data.id)
+          var array = wx.base64ToArrayBuffer(res.data.data.base64)
+          var base64 = wx.arrayBufferToBase64(array)
+          that.setData({ qrcodeUrl: 'data:image/jpeg;base64,' + base64, });
+          console.log('=====请求sucessTESTQR=====', res);
           that.setData({
-            name: res.data.data.name,
-            idCard: res.data.data.idNumber,
-            phone: res.data.data.phone,
-            unit: res.data.data.companyName,
-            unitAddress: res.data.data.companyDetailAddress,
-            returnDate: res.data.data.gobacktime,
-            currentAddress: res.data.data.address,
-            currentHealth: res.data.data.healthyString,
-            openId: res.data.data.wechatId
+            updateTime: "更新于：" + res.data.data.updateTime,
+            title: res.data.data.title,
+            description: res.data.data.description
+          }) 
+        }else{
+          wx.showToast({
+            title: '健康码加载失败',
+            icon: 'none',
+            duration: 2000
           })
-          if (res.data.data.hubeiString == '是') {
-            that.setData({
-              isTouchCase: true
-            })
-          } else if (res.data.data.hubeiString == '否') {
-            that.setData({
-              isTouchCase: false
-            })
-          }
-          if (res.data.data.leaveString == '是') {
-            that.setData({
-              isLeave: true
-            })
-          } else if (res.data.data.leaveString == '否') {
-            that.setData({
-              isLeave: false
-            })
-          }
-          that.testQR()
-        }
+        } 
 
       },
       fail: function () {
         // fail
+        wx.showToast({
+          title: '健康码加载失败',
+          icon: 'none',
+          duration: 2000
+        })
       },
       complete: function () {
         // complete
@@ -163,7 +151,39 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (options) {
+    var that = this;
+    // 设置菜单中的转发按钮触发转发事件时的转发内容
+    var shareObj = {
+      title: "愿亲人平安 春暖艳阳天 一起健康打卡！", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
+      path: '/pages/index/index',    // 默认是当前页面，必须是以‘/'开头的完整路径
+      imageUrl: '',
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+        }
+      },
+      fail: function () {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function () {
+        // 转发结束之后的回调（转发成不成功都会执行）
+      }
+    }
+    // // 来自页面内的按钮的转发
+    // if (options.from == 'button') {
+    //   var eData = options.target.dataset;
+    //   console.log(eData.name);   // shareBtn
+    //   // 此处可以修改 shareObj 中的内容
+    //   shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
+    // }
 
+    console.log("shareObj, ", shareObj)
+    return shareObj;
   }
 })

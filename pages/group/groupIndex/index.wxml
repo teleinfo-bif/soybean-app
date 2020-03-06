@@ -19,6 +19,10 @@
         <view class="head-title">
           <Text>{{groupName}}</Text>
         </view>
+        <button open-type='share'>
+          <image style="width:40rpx;height:40rpx;" src="../../../static/images/fenxiang.png" />
+        </button>
+        
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
           <view>
             <picker mode="date" value="{{value}}" bindchange="onChange" end="{{now}}" fields="{{'day'}}">
@@ -44,7 +48,7 @@
     <view class="row-item_right">
       <!-- <view class="row-item_right-number">100</view> -->
       <view class="row-item_right-statistic">
-      <view style='margin-left:-15rpx;'>
+      <view style='margin-right:50rpx;'>
        {{item.userAccount}}人
       </view>
         <navigator class="" target="" url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">

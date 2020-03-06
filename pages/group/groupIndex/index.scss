@@ -53,6 +53,8 @@ page {
     &-statistic {
       display: flex;
       align-items: center;
+      width:300rpx;
+      justify-content: flex-end;
     }
     .btn-statistic {
       display: inline-block;
@@ -106,4 +108,13 @@ page {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+button {
+  background-color: #fff;
+  padding: 0;
+  line-height:100%;
+  border-radius:0;
+  &::after {
+    border: none;
+  }
 }
