@@ -14,7 +14,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userRegisted: app.globalData.userFilledInfo.userRegisted,
     edit: false,
     fields: [
       {
@@ -80,7 +79,6 @@ Page({
         title: "单位名称",
         type: "input",
         prop: "companyName",
-        require: false,
         props: {
           placeholder: "请输入单位名称"
         }
@@ -89,7 +87,6 @@ Page({
         title: "单位所在城市及区",
         type: "area",
         prop: "companyAddress",
-        require: false,
         props: {
           placeholder: "请选择单位所在城市及区"
         }
@@ -98,7 +95,6 @@ Page({
         title: "单位详细地址",
         type: "input",
         prop: "companyDetailAddress",
-        require: false,
         props: {
           placeholder: "请输入单位详细地址",
           addressKey: ""
@@ -181,7 +177,9 @@ Page({
   // 提交/更新
   async formSubmit() {
     const validate = this.selectComponent("#form").validate();
-    if (validate) {
+    const { edit } = this.data;
+    const { userRegisted } = this.data.userFilledInfo;
+    if ((!userRegisted || (userRegisted && edit)) && validate) {
       let formData = this.data.data;
       formData.idType =
         typeof formData.idType == "object"
