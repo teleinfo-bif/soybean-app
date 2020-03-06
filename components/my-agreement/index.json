@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-radio-group": "vant-weapp/radio-group",
+    "van-radio": "vant-weapp/radio",
+    "van-checkbox": "vant-weapp/checkbox",
+    "van-checkbox-group": "vant-weapp/checkbox-group"
+  }
+}

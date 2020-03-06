@@ -3,7 +3,7 @@
   <block wx:for="{{fields}}" wx:key="index">
     <view wx:if="{{item.hide != true}}" class="my-form_item" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
       <!-- form-label文字 -->
-      <view class="my-form_item_head">
+      <view wx:if="{{item.title}}" class="my-form_item_head">
         <view class="my-form_item_head-left">
           <view wx:if="{{item.require != false}}" class="must-filled-star">*</view>
           {{item.title}}
@@ -53,19 +53,11 @@
         <block wx:elif="{{item.type === 'phone' && !disable}}">
           <my-phone props="{{item.props}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onInputChange"></my-phone>
         </block>
+        <!-- 协议 -->
+        <block wx:elif="{{item.type === 'agreement'}}">
+          <my-agreement itemKey="{{item.props.itemKey}}" itemLabelKey="{{item.props.itemLabelKey}}" props="{{item.props}}" options="{{item.props.options || []}}" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" bind:change="onRadioChange"></my-agreement>
+        </block>
       </view>
-      <!-- 底部弹出选择框 -->
-      <!-- <block wx:if="{{item.type === 'select'}}">
-        <picker class="select-picker" bindchange="onPickerChange" value="{{_formData[item.prop]}}" data-prop="{{item.prop}}" range-key="{{item.props.itemLabelKey}}" range="{{item.props.options || []}}">
-          <view class="select-picker-box">
-            <view class="select-picker-btn">
-              选择
-            </view>
-          </view>
-        </picker>
-      </block> -->
-      <!-- form label 选择按钮 -->
-      <!-- <view slot="label"> -->
     </view>
   </block>
 </van-cell-group>

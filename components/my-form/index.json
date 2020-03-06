@@ -11,6 +11,7 @@
     "my-time": "../my-time",
     "my-phone": "../my-phone",
     "my-map": "../my-map",
-    "my-geoAddress": "../my-geoAddress"
+    "my-geoAddress": "../my-geoAddress",
+    "my-agreement": "../my-agreement"
   }
 }
