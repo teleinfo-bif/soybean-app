@@ -174,6 +174,20 @@ Page({
     // this.data.data = data;
     // this.data.fields = fields;
   },
+  bindGetUserInfo(e) {
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      // wx.navigateTo({
+      //   url: "/pages/personal/index"
+      // });
+      this.formSubmit();
+    } else {
+      wx.showToast({
+        title: "授权失败，无法注册用户",
+        icon: "none"
+      });
+    }
+  },
   // 提交/更新
   async formSubmit() {
     const validate = this.selectComponent("#form").validate();

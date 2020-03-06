@@ -40,3 +40,18 @@ page {
   position: absolute;
   padding-bottom: 20rpx;
   color: #1759ef; }
+
+.btn-submit {
+  position: relative; }
+
+.btn-getUserInfo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: transparent; }
+
+.btn-getUserInfo::after {
+  border: none; }
