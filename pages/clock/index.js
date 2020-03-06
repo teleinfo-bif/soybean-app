@@ -828,7 +828,7 @@ Page({
           data
         });
         previousLockData["temperatureRadio"] =
-          formData.temperature > 37.3 ? 2 : 1;
+          previousLockData.temperature > 37.3 ? 2 : 1;
         this.setFields(previousLockData);
       } else {
         console.log("提醒：没有打卡数据，无需自动填写");

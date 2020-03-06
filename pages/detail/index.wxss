@@ -119,12 +119,10 @@ page {
   overflow: hidden;
   text-overflow: ellipsis; }
 
-  button {
-    background-color: #fff;
-    padding: 0;
-    line-height:100%;
-    border-radius:0;
-  }
+button {
+  background-color: #fff;
+  padding: 0;
+  line-height: 100%;
+  border-radius: 0; }
   button::after {
-    border: none;
-  }
+    border: none; }
