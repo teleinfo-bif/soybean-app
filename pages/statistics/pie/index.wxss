@@ -53,20 +53,10 @@
   display: flex; }
 
 .pie-box {
-<<<<<<< HEAD
- width: 350rpx;
-margin-top: -40rpx;
-height: 350rpx;
-margin-left: -60rpx;
-
-  
-  }
-=======
   width: 350rpx;
   height: 350rpx;
   margin-top: -10rpx;
   /* border: 2px solid red; */ }
->>>>>>> cf0371e7bcede3e7e8608686bfaae9daaea2f049
 
 ec-canvas {
   width: 100%;
