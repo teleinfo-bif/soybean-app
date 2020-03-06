@@ -34,7 +34,7 @@ page {
   display: flex;
   align-items: center;
   margin-left: 30rpx;
-  padding-left: 30rpx;
+  padding-left: 24rpx;
   margin-right: 30rpx;
   /* padding-top: 30px;
   padding-bottom: 30px; */
@@ -55,7 +55,6 @@ margin-top: 10rpx;
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 20rpx;
   text-align: left;
   /* border-right: 1rpx solid #dcdce0; */
   /* border: 1rpx solid #DCDCE0; */ }
