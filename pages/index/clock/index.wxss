@@ -1,6 +1,7 @@
 /* pages/index/Sign/Sign.wxss */
 
 .module {
+  margin-top: -30rpx;
   margin-bottom: 30rpx;
   padding: 0 30rpx;
 }

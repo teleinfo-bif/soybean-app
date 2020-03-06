@@ -2,5 +2,6 @@
   "usingComponents": {
     "van-tabs": "vant-weapp/tabs",
     "van-tab": "vant-weapp/tab"
-  }
+  },
+  "navigationBarTitleText": "机构详情"
 }

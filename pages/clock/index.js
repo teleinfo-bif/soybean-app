@@ -412,7 +412,9 @@ Page({
       (comfirmed != null && comfirmed == "2") ||
       (admitting != null && admitting == "2")
     ) {
-      data["healthy"] = null;
+      if (data["healthy"] == "1") {
+        data["healthy"] = null;
+      }
       disable = true;
     }
 
@@ -468,7 +470,6 @@ Page({
       if (!atBeijing && data["leave"] == null) {
         formData["leave"] = 2;
       }
-      // console.log("formData", formData);
       saveClock(formData).then(res => {
         wx.navigateTo({
           url: "/pages/status/index?msg=打卡成功"
@@ -488,7 +489,6 @@ Page({
   },
   // 设置部分选项隐藏
   setFieldsHide(hideList = [], showList = []) {
-    // debugger;
     // let fields = fields;
     fields.forEach(item => {
       // if (showOtherCity && item.prop == "leave") {
@@ -505,7 +505,7 @@ Page({
       fields
     });
   },
-  setFieldsFromAddress(formData) {
+  async setFieldsFromAddress(formData) {
     // 先判断用户位置信息和填写的信息是否一致
 
     let { fields } = this.data;
@@ -530,6 +530,7 @@ Page({
       if (item.prop === "leavetime") {
         item.title = `到达${locationCity}日期`;
         item.props.placeholder = `请输入到达${locationCity}日期`;
+        item.props.end = !atWorkPlace ? getyyyyMMdd() : "";
       }
 
       if (item.prop === "nobackreason") {
@@ -540,6 +541,7 @@ Page({
       // 如果在工作地，返回时间最大是今天
       if (item.prop === "gobacktime") {
         item.props.end = atWorkPlace ? getyyyyMMdd() : "";
+        item.props.start = !atWorkPlace ? getyyyyMMdd() : "";
         if (atWorkPlace) {
           // item.title = `返回${companyCity}日期`;
           // item.props.placeholder = `请输入返回${companyCity}日期`;
@@ -554,20 +556,30 @@ Page({
     this.setData({
       fields
     });
-    // debugger;
     // 在工作地隐藏是否离开打卡地，返回时间，显示是否离开工作地
     if (atWorkPlace) {
-      this.setFieldsHide(["leavetime", "leaveCity", "gobacktime"], ["leave"]);
+      if (formData["leave"] == "2") {
+        this.setFieldsHide(["leaveCity", "gobacktime"], ["leave", "leavetime"]);
+      } else {
+        this.setFieldsHide(["leavetime", "leaveCity", "gobacktime"], ["leave"]);
+      }
     } else {
       // 不在工作地隐藏是否离开工作地，未返回原因，显示是否离开打卡地
-      this.setFieldsHide(
-        ["leave", "leavetime"],
-        ["leaveCity", "gobacktime", "nobackreason"]
-      );
+      if (formData["leaveCity"] == "2") {
+        this.setFieldsHide(
+          ["leave"],
+          ["leavetime", "leaveCity", "gobacktime", "nobackreason"]
+        );
+      } else {
+        this.setFieldsHide(
+          ["leave", "leavetime"],
+          ["leaveCity", "gobacktime", "nobackreason"]
+        );
+      }
     }
   },
   // 根据是否离开控制表单显示隐藏字段
-  setFieldsFromLeave(formData) {
+  async setFieldsFromLeave(formData) {
     // leavetime nobackreason gobacktime  flight transport(只要离开过，不区分工作地打卡地，就显示transport，flight)
     /* 
       在工作地
@@ -611,13 +623,30 @@ Page({
     }
     this.setFieldsHide(hideList, showList);
   },
-  setFieldsFromTemperaturn(formData) {
+  async setFieldsFromTemperaturn(formData) {
+    let disable;
     if (formData.temperatureRadio == 1) {
+      disable = false;
       this.setFieldsHide(["temperature"], []);
     } else {
       this.setFieldsHide([], ["temperature"]);
+
+      disable = true;
     }
+    const { fields } = this.data;
+    fields.forEach((item, index) => {
+      if (item.prop === "healthy") {
+        for (let i = 0; i < item.props.options.length; i++) {
+          if (item.props.options[i].id === 1) {
+            fields[index].props.options[i]["disabled"] = disable;
+            break;
+          }
+        }
+      }
+    });
+    this.setData({ fields });
   },
+  async setFieldsFromPreviousLockData(formData) {},
   /**
    *设置表单隐藏
    *
@@ -653,6 +682,7 @@ Page({
       [locationProvince, locationCity] = formData.companyAddress.split("-");
       atWorkPlace =
         companyProvince == locationProvince && companyCity == locationCity;
+      // atWorkPlace = formData["leave"] == 1;
     } else {
       let locationed = Object.keys(address).length > 0;
       locationProvince = locationed ? address.address_component.province : "";
@@ -675,11 +705,9 @@ Page({
       success: res => {
         // 判断用户是否授权了位置信息
         if (res.authSetting["scope.userLocation"]) {
-          console.log("已授权位置信息");
           wx.getLocation({
             altitude: true,
             success: location => {
-              console.log(location);
               this.setData({ location });
               reverseAddressFromLocation(location).then(res => {
                 this.onAddressChange(res);
@@ -763,6 +791,9 @@ Page({
           clocked: true,
           data: formData
         });
+        // 设置表单显示的字段 -todo
+        this.setFieldsFromAddress(formData);
+        this.setFieldsFromLeave(formData);
       } else {
         // 未打卡开始获取位置信息，获取之前的打卡记录
         this.initAddress();
@@ -771,8 +802,6 @@ Page({
           clocked: false
         });
       }
-      // 设置表单显示的字段
-      this.setFieldsFromLeave(formData);
     });
   },
   // 获取用户打卡记录
@@ -797,6 +826,7 @@ Page({
         this.setData({
           data
         });
+        this.setFieldsFromAddress(previousLockData);
         this.setFieldsFromLeave(previousLockData);
       } else {
         console.log("提醒：没有打卡数据，无需自动填写");
@@ -815,13 +845,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    console.log(options);
-    const { id } = options;
-    if (id) {
-      this.setData({
-        otherId: id
-      });
-    }
     if (!app.globalData.appInit) {
       app.init(() => {
         console.log("进入回调");
