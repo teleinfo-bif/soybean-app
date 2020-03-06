@@ -71,7 +71,7 @@ Page({
         separateSup['openid'] = healthyDatas[i]._openid
         separateSup['name'] = healthyDatas[i].name
 
-        separateHomeArray.push(separateSup)
+        separateSupArray.push(separateSup)
       }
     }
 
