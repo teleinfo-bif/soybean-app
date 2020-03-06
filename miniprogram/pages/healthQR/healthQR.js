@@ -303,7 +303,39 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (options) {
+    var that = this;
+    // 设置菜单中的转发按钮触发转发事件时的转发内容
+    var shareObj = {
+      title: "愿亲人平安 春暖艳阳天 一起健康打卡！", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
+      path: '/pages/index/index',    // 默认是当前页面，必须是以‘/'开头的完整路径
+      imageUrl: '../../images/zongzhichengchengshare.jpg',
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+        }
+      },
+      fail: function () {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function () {
+        // 转发结束之后的回调（转发成不成功都会执行）
+      }
+    }
+    // // 来自页面内的按钮的转发
+    // if (options.from == 'button') {
+    //   var eData = options.target.dataset;
+    //   console.log(eData.name);   // shareBtn
+    //   // 此处可以修改 shareObj 中的内容
+    //   shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
+    // }
 
-  }
+    console.log("shareObj, ", shareObj)
+    return shareObj;
+  },
 })
