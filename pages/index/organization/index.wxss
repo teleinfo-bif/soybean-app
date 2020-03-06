@@ -5,11 +5,9 @@
   font-size: 30rpx;
   background: #ffffff;
   /* box-shadow: 0rpx 5rpx 27rpx 0rpx rgba(194, 199, 225, 0.47); */
-  border-radius: 35rpx; 
-
+  border-radius: 35rpx;
   border-right: 1rpx solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
-}
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1); }
 
 .organization_head {
   position: relative;
@@ -61,7 +59,7 @@
 
 .organization_item-name {
   flex: 1;
-  padding-left: 30rpx;
+  padding-left: 15rpx;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
