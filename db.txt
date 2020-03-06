@@ -2,22 +2,22 @@ user_healthy
 String date; 打卡时间
 String goHBFlag; 是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或者经过武汉 0是， 1否
 String bodyStatusFlag; 身体是否健康 0健康 1有发烧咳嗽等症状   2健康状况为其他的原因，此时用户写入数据到bodystatusotherremark
-String isGoBackFlag;  是否返回北京 0是 1否
+String isGoBackFlag;  是否返回北京 0是 1否 后由于解除限制只能返回北京的限制 意思变为 0 打卡地==工作地 0 打卡地!=工作地
 String isQueZhenFlag; 是否确诊 0是 1否
 String remark;  其它
 String goHospitalFlag;  是否去医院就诊 0是  1否
 String noGoBackFlag; 未回京原因 0身体不适 1当地未放行
 String phone;  电话号码
 String addtime;  数据入库时间
-String suregobackdate;  实际返京时间
+String suregobackdate;  实际返京时间  后由于解除限制只能返回北京的限制 意思变为 到达打卡地时间
 String _openid;  用户微信唯一标识号
 String temperature; 温度 
 String name; 用户名
 String _id;   数据在数据库中的id
 String place; 打卡地点
-String isLeaveBjFlag;  是否离开过北京 0代表离开过，并且已返回， 1代表未离开 ，该字段搭配isGoBackFlag使用
-String gobackdate; 计划返回北京时间
-String leavedate; 离开北京时间
+String isLeaveBjFlag;  是否离开过北京 0代表离开过，并且已返回， 1代表未离开 ，该字段搭配isGoBackFlag使用 后由于解除限制只能返回北京的限制 意思变为 0 14天内离开过当前打卡地 1 14天内未离开过当前打卡地
+String gobackdate; 计划返回北京时间  后由于解除限制只能返回北京的限制 意思变为 计划返回工作地时间
+String leavedate; 离开北京时间 后由于解除限制只能返回北京的限制 意思变为 离开打卡地时间
 String trainnumber;  行程号，可以是汽车牌号。火车/飞机号
 String bodystatusotherremark; 健康打卡时的其它备注，如其它身体状况
 String trafficToolStatusFlag：交通工具, 0飞机  1火车  2轮船 3其他
