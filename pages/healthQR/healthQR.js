@@ -60,51 +60,39 @@ Page({
     var that = this
 
     wx.request({
-      url: 'https://admin.bidspace.cn/bid-soybean/wx/interaction/show/user',
+      url: 'https://admin.bidspace.cn/bid-soybean/healthQrcode/createHealthQrcode',
       data: { 
         userId: that.data.userId 
       },
       method: 'GET', 
       header: { 'content-type': 'application/json' }, 
       success: function (res) {
-        // success
         if(res.data.code == '200'){
-          console.log("========res=====", res.data.data.id)
+          var array = wx.base64ToArrayBuffer(res.data.data.base64)
+          var base64 = wx.arrayBufferToBase64(array)
+          that.setData({ qrcodeUrl: 'data:image/jpeg;base64,' + base64, });
+          console.log('=====请求sucessTESTQR=====', res);
           that.setData({
-            name: res.data.data.name,
-            idCard: res.data.data.idNumber,
-            phone: res.data.data.phone,
-            unit: res.data.data.companyName,
-            unitAddress: res.data.data.companyDetailAddress,
-            returnDate: res.data.data.gobacktime,
-            currentAddress: res.data.data.address,
-            currentHealth: res.data.data.healthyString,
-            openId: res.data.data.wechatId
+            updateTime: "更新于：" + res.data.data.updateTime,
+            title: res.data.data.title,
+            description: res.data.data.description
+          }) 
+        }else{
+          wx.showToast({
+            title: '健康码加载失败',
+            icon: 'none',
+            duration: 2000
           })
-          if (res.data.data.hubeiString == '是') {
-            that.setData({
-              isTouchCase: true
-            })
-          } else if (res.data.data.hubeiString == '否') {
-            that.setData({
-              isTouchCase: false
-            })
-          }
-          if (res.data.data.leaveString == '是') {
-            that.setData({
-              isLeave: true
-            })
-          } else if (res.data.data.leaveString == '否') {
-            that.setData({
-              isLeave: false
-            })
-          }
-          that.testQR()
-        }
+        } 
 
       },
       fail: function () {
         // fail
+        wx.showToast({
+          title: '健康码加载失败',
+          icon: 'none',
+          duration: 2000
+        })
       },
       complete: function () {
         // complete
