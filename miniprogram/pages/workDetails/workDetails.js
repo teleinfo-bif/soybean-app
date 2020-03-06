@@ -14,9 +14,11 @@ Page({
     geliDatas: [],
     outGeliDatas: [],
     otherDatas: [],
-    zaigangs:[],
-    homes:[],
-    undones:[]
+    workArray:[],
+    remoteWorkArray:[],
+    separateHomeArray:[],
+    separateSupArray:[],
+
   },
 
   isInSeperation: function(date) {
@@ -35,40 +37,49 @@ Page({
 
   analysisDatas: function (datas) {
 
-    var zaigangs = []
-    var homes = []
-    var undones = []
+    var workArray = []
+    var remoteWorkArray = []
+    var separateHomeArray = []
+    var separateSupArray = []
 
     var healthyDatas = datas
     for (var i = 0; i < healthyDatas.length; i++) {
       if (healthyDatas[i].workStatusFlag == '0') {
-        var zaigang = {}
-        zaigang['id'] = healthyDatas[i]._id
-        zaigang['openid'] = healthyDatas[i]._openid
-        zaigang['name'] = healthyDatas[i].name
+        var work = {}
+        work['id'] = healthyDatas[i]._id
+        work['openid'] = healthyDatas[i]._openid
+        work['name'] = healthyDatas[i].name
 
-        zaigangs.push(zaigang)
+        workArray.push(work)
       } else if (healthyDatas[i].workStatusFlag == '1') {
-        var home = {}
-        home['id'] = healthyDatas[i]._id
-        home['openid'] = healthyDatas[i]._openid
-        home['name'] = healthyDatas[i].name
+        var remoteWork = {}
+        remoteWork['id'] = healthyDatas[i]._id
+        remoteWork['openid'] = healthyDatas[i]._openid
+        remoteWork['name'] = healthyDatas[i].name
 
-        homes.push(home)
+        remoteWorkArray.push(remoteWork)
       } else if (healthyDatas[i].workStatusFlag == '2'){
-        var undone = {}
-        undone['id'] = healthyDatas[i]._id
-        undone['openid'] = healthyDatas[i]._openid
-        undone['name'] = healthyDatas[i].name
+        var separateHome = {}
+        separateHome['id'] = healthyDatas[i]._id
+        separateHome['openid'] = healthyDatas[i]._openid
+        separateHome['name'] = healthyDatas[i].name
 
-        undones.push(undone)
+        separateHomeArray.push(separateHome)
+      } else if (healthyDatas[i].workStatusFlag == '3') {
+        var separateSup = {}
+        separateSup['id'] = healthyDatas[i]._id
+        separateSup['openid'] = healthyDatas[i]._openid
+        separateSup['name'] = healthyDatas[i].name
+
+        separateHomeArray.push(separateSup)
       }
     }
 
     this.setData({
-      homes,
-      undones,
-      zaigangs
+      remoteWorkArray,
+      separateHomeArray,
+      workArray,
+      separateSupArray
     })
 
   },
