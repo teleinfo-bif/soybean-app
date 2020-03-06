@@ -91,7 +91,7 @@ Page({
         prop: "companyAddress",
         require: false,
         props: {
-          placeholder: "请选择单位所在区及街道、社区"
+          placeholder: "请选择单位所在城市及区"
         }
       },
       {
@@ -100,7 +100,7 @@ Page({
         prop: "companyDetailAddress",
         require: false,
         props: {
-          placeholder: "请输入公司详细地址",
+          placeholder: "请输入单位详细地址",
           addressKey: ""
         }
       },
@@ -110,7 +110,7 @@ Page({
         prop: "homeAddress",
         require: false,
         props: {
-          placeholder: "请选择家庭所在区及街道、社区"
+          placeholder: "请选择家庭所在城市及区"
         }
       },
       {
