@@ -25,23 +25,25 @@
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>
-          <view class="people-item_sign" style='margin-left:24rpx;'>{{item.clockInId != 0 ? '已打卡': '未打卡'}}</view>
+          <view class="people-item_sign" style='margin-left:24rpx;'>
+            {{item.clockInId != 0 ? '已打卡': '未打卡'}}
+          </view>
           <view style='margin-left:24rpx;' wx:if="{{permission == 'true'}}" class="people-item_detail ">
             <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}">
               打卡详情
             </navigator>
-            <block wx:else >打卡详情</block>
+            <block wx:else>打卡详情</block>
           </view>
           <view wx:if="{{permission == 'true'}}" style='margin-left:24rpx;' class="people-item_status">
             <block wx:if="{{item.clockInId != 0}}">
-              <block wx:if="{{ item.comfirmed == 2 || item.admitting == 2}}">
+              <block wx:if="{{ item.comfirmed == 2 }}">
                 <view class="status-circle status-circle-red"></view>
-                <view wx:if="{{ item.comfirmed == 2}}">确诊</view>
-                <view wx:else>就诊</view>
+                <view>确诊</view>
               </block>
-              <block wx:elif="{{item.healthy != 1}}">
+              <block wx:elif="{{item.healthy != 1 || item.admitting == 2}}">
                 <view class="status-circle status-circle-yellow"></view>
                 <view>异常</view>
+                <!-- <view wx:else>就诊</view> -->
               </block>
               <block wx:else>
                 <view class="status-circle status-circle-green"></view>
