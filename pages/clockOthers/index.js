@@ -493,13 +493,24 @@ Page({
     // debugger;
     // 在工作地隐藏是否离开打卡地，返回时间，显示是否离开工作地
     if (atWorkPlace) {
-      this.setFieldsHide(["leavetime", "leaveCity", "gobacktime"], ["leave"]);
+      if (formData["leave"] == "2") {
+        this.setFieldsHide(["leaveCity", "gobacktime"], ["leave", "leavetime"]);
+      } else {
+        this.setFieldsHide(["leavetime", "leaveCity", "gobacktime"], ["leave"]);
+      }
     } else {
       // 不在工作地隐藏是否离开工作地，未返回原因，显示是否离开打卡地
-      this.setFieldsHide(
-        ["leave", "leavetime"],
-        ["leaveCity", "gobacktime", "nobackreason"]
-      );
+      if (formData["leaveCity"] == "2") {
+        this.setFieldsHide(
+          ["leave"],
+          ["leavetime", "leaveCity", "gobacktime", "nobackreason"]
+        );
+      } else {
+        this.setFieldsHide(
+          ["leave", "leavetime"],
+          ["leaveCity", "gobacktime", "nobackreason"]
+        );
+      }
     }
   },
 
