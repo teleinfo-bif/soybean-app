@@ -23,7 +23,10 @@
             <view class="record-item_content_item-icon">
               <i class="iconfont iconwenduji"></i>
             </view>
-            <view class="record-item_content_item-value">{{item.temperature}}</view>
+            <view wx:if="{{item.temperature < 37.3}}" class="record-item_content_item-value">
+              正常
+            </view>
+            <view wx:else class="record-item_content_item-value">{{item.temperature}}</view>
             <view class="record-item_content_item-label">体温（℃）</view>
           </view>
           <view class="record-item_content_item">
