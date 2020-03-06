@@ -62,6 +62,7 @@ Page({
   
   //判断是否是最低级的部门
   isLowestDepartment: function(groupId) {
+    console.log('是否注册页过来的，1就是', this.data.zc)
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
@@ -71,12 +72,25 @@ Page({
         this.setData({
           lowestClass: true
         })
-        this.joinGroupModal()
+        if(this.data.zc=='1') {
+          this.shareJoniGroup({
+            groupId,
+            userId: this.data.userFilledInfo.id
+          });
+        }else {
+          this.joinGroupModal()
+        }       
       } else {
         this.setData({
           lowestClass: false
         })
-        this.joinGroupChoiceModal()       
+        if(this.data.zc=='1') {
+          wx.navigateTo({
+            url: `/pages/group/shareJoinChoice/index?groupName=${this.data.groupName}&groupId=${groupId}`,
+          });
+        }else {
+          this.joinGroupChoiceModal()       
+        }      
       }
     })
   },
@@ -155,7 +169,7 @@ Page({
      * 调用接口加群 返回首页
      */
     // console.log()
-    const { groupId, timeStamp, groupName } = options;
+    const { groupId, timeStamp, groupName, zc } = options;
     console.log("======options=====", options);
     // 这里需要先判断再调用
     // 这里需要先判断再调用
@@ -170,6 +184,7 @@ Page({
           groupId: groupId,
           timeStamp: timeStamp,
           groupName: groupName,
+          zc: zc
         });
         this.userPrompt()
       });
@@ -180,6 +195,7 @@ Page({
         groupId: groupId,
         timeStamp: timeStamp,
         groupName: groupName,
+        zc: zc
       });
       this.userPrompt()
     }
@@ -222,35 +238,39 @@ Page({
   },
 
   userPrompt: function () {
-    const { groupId, timeStamp, groupName, userFilledInfo } = this.data
+    console.log('prompt' )
+    const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data
     const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
     const _this = this;
-    if(!userful){
-      wx.navigateTo({
-        url: "/pages/index/index",
-        success: result => {},
-        fail: () => {},
-        complete: () => {}
-      });
-      return
-    }
-    
+    // if(!zc && !userful){
+    //   wx.navigateTo({
+    //     url: "/pages/index/index",
+    //     success: result => {},
+    //     fail: () => {},
+    //     complete: () => {}
+    //   });
+    //   return
+    // }
+    console.log('123')
     if (userFilledInfo.userRegisted) {
+      console.log('groupId', groupId)
       // this.tree2array(groupId)
       this.isLowestDepartment(groupId)
     } else {
+      console.log('234')
       wx.showModal({
         title: "",
-        content: `您还没有注册，去注册。`,
-        showCancel: false,
+        content: `您还没有注册，确认加入该机构吗？`,
+        showCancel: true,
         cancelColor: "#000000",
-        confirmText: "去注册",
+        confirmText: "确认注册",
         confirmColor: "#3CC51F",
         success(res) { 
           if (res.confirm) {
             wx.navigateTo({
-              url: "/pages/index/index",
-              success: result => {},
+              url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
+              success: result => {               
+              },
               fail: () => {},
               complete: () => {}
             });

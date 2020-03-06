@@ -135,12 +135,13 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  // onShareAppMessage: function() {},
 
 
   exportExcel: function () {
-    const { groupId } = this.data
-    let url = `https://admin.bidspace.cn/bid-soybean/download/annex.xlsx?groupid=${groupId}`
+    const { groupId, clockInTime } = this.data
+    console.log('导出数据', clockInTime,groupId)
+    let url = `https://admin.bidspace.cn/bid-soybean/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
     wx.setClipboardData({
       data: url,
       success: function (res) {

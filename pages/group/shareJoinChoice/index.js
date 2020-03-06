@@ -23,6 +23,8 @@ Page({
    */
   onLoad: function (options) {
     const { groupId, groupName } = options;
+    app.globalData.groupName = ''
+    app.globalData.groupId = ''
     if (!app.globalData.appInit) {
       app.init(globalData => {
         this.setData({
@@ -46,8 +48,10 @@ Page({
   userPrompt: function () {
     const { groupId, userFilledInfo } = this.data   
     if (userFilledInfo.userRegisted) {
+      console.log('2222')
       this.tree2array(groupId)
     } else {
+      console.log('22223333')
       wx.navigateTo({
         url: "/pages/index/index",
         success: result => {},
