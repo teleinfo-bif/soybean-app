@@ -2,7 +2,7 @@
 <van-tabs custom-class="tab" bind:scroll="onscroll" bind:click="onClick" swipeable color="#4F7EF2" sticky>
   <van-tab wx:for="{{currentTab}}" wx:key="index" title="{{item.name}}"></van-tab>
 </van-tabs>
-<view class="scrollview" scroll-x="false" scroll-y="true" upper-threshold="50" lscroll-top="{{topNum}}" enable-back-to-top="true" bindscrolltoupper="" bindscrolltolower="lower" bindscroll="">
+<scroll-view style="height:100%" class="scrollview" scroll-x="false" scroll-y="true" upper-threshold="50" lscroll-top="{{topNum}}" enable-back-to-top="true" bindscrolltoupper="" bindscrolltolower="lower" bindscroll="">
   <!-- <block wx:if="{{currentTabData[activeType].total>= 0}}"> -->
   <block>
     <view class="count-box">总计：{{allData[activeIndex].total}}人</view>
@@ -63,4 +63,4 @@
   <view wx:if="{{allData[activeIndex].pages > 1 && allData[activeIndex].pages == allData[activeIndex].current}}" class="no-more-msg">
     没有更多数据
   </view>
-</view>
+</scroll-view>

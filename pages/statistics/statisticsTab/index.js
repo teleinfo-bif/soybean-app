@@ -60,16 +60,20 @@ Page({
       ],
       job: [
         {
-          name: "已在岗",
+          name: "在岗办公",
           type: 1
         },
         {
-          name: "远程办公",
+          name: "居家办公",
           type: 2
         },
         {
-          name: "未复工",
+          name: "居家隔离",
           type: 3
+        },
+        {
+          name: "监督隔离",
+          type: 4
         },
       ],
       region: [
