@@ -6,12 +6,16 @@
   align-items: center;
   top: -54rpx;
   left: 30rpx;
-  width: 400rpx;
+  width: 420rpx;
   height: 100rpx;
   background: #fff;
   /* box-shadow: 0 5rpx 27rpx 0 rgba(194, 199, 225, 0.47); */
-  border-radius: 44rpx;
+  border-radius: 50rpx;
   font-size: 36rpx;
+
+  box-sizing: border-box;
+  border-right: 1rpx solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
 }
 
 .entering-box_icon {
@@ -32,7 +36,7 @@
 
 .entering-box_text {
   padding-left: 30rpx;
-  width: 240rpx;
+  width: 260rpx;
 
   /* border-width: 2rpx;
   border-style: dotted; */
@@ -44,9 +48,9 @@
 }
 
 .dayuhao {
-  margin-top: 22rpx;
+  margin-top: 28rpx;
   width: 30rpx;
-  height: 55rpx;
+  height: 45rpx;
 }
 
 .test {
