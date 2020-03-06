@@ -3,8 +3,8 @@
   <image class='codeBanner' src='/static/images/bannerQR.png'></image>
   <view class='QRbg'>
     <view class='QRPart-1'>
-      <view class='QRPart-1-1'>{{realName}}</view>
-      <view class='QRPart-1-2'>更新于：{{updateTime}}</view>
+      <view class='QRPart-1-1'>{{title}}</view>
+      <view class='QRPart-1-2'>{{updateTime}}</view>
     </view>
     <image class='QRImg' src='{{qrcodeUrl}}'></image>
     <view class='QRPart-hint'>{{description}}</view>
