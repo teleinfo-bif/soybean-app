@@ -55,7 +55,7 @@
 .pie-box {
   width: 350rpx;
   height: 350rpx;
-  margin-top: -40rpx;
+  margin-top: -30rpx;
   /* border: 2px solid red; */ }
 
 ec-canvas {
@@ -76,7 +76,7 @@ ec-canvas {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 320rpx;
+  width: 250rpx;
   height: 27rpx;
   padding-left: 30rpx;
   margin-bottom: 23rpx;
