@@ -59,83 +59,92 @@ Page({
         })
       }, 2000)
   },
-
-  //只适合三级
-  tree2array: function (groupId) {
+  
+  //判断是否是最低级的部门
+  isLowestDepartment: function(groupId) {
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
-      console.log('dd', data)
+      console.log('data', data)
       if (data.length == 0) {
         //最底层群组
         this.setData({
           lowestClass: true
         })
+        this.joinGroupModal()
       } else {
-        let a = []
-        let b = []
-        data.map((val, index) => {
-          a.push({ name: val.name, id: val.id })
-          b.push(val.children.length == 0 ? [] : val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
-        })
-        // console.log(a, b)
-        let lastClass = b.every((val, index) => val.length == 0) //是否倒数第二级
         this.setData({
-          lastClass: lastClass
+          lowestClass: false
         })
-        if (lastClass) {
-          let array = a
-          console.log(array)
-          this.setData({
-            array: array,
-            joinGroupId: array[0].id
-          })
-        } else {
-          let multiArray = [a, b[0]]
-          console.log(multiArray)
-          this.setData({
-          first: a,
-          second: b,
-          multiArray: multiArray,
-          joinGroupId: b[0].length==0?a[0].id:b[0][0].id
-        })
-        }
-        
+        this.joinGroupChoiceModal()       
       }
     })
   },
-  bindPickerChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value, e.target.dataset.id)
-    let id = e.target.dataset.id
-    this.setData({
-      index: e.detail.value,
-      joinGroupId: id
-    })
+
+  //弹窗加群
+  joinGroupModal: function() {
+    const _this = this;
+    const { groupId, groupName, userFilledInfo } = this.data
+    wx.showModal({
+        title: "提示",
+        content: `确定要加入 ${groupName} 组织吗？`,
+        showCancel: true,
+        cancelText: "取消",
+        cancelColor: "#000000",
+        confirmText: "确定",
+        confirmColor: "#3CC51F",
+        success(res) {
+          if (res.confirm) {
+            console.log("用户已经注册，准备执行this.joinGroup");
+            // lowestClass
+            _this.shareJoniGroup({
+              groupId,
+              userId: userFilledInfo.id
+            });
+          } else if (res.cancel) {
+            wx.navigateTo({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          }
+        }
+      })
   },
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为',e.detail.value, e.target.dataset.id)
-    let id = e.target.dataset.id
-    this.setData({
-      multiIndex: e.detail.value,
-      joinGroupId: id
-    })
+  //弹窗跳转
+  joinGroupChoiceModal: function() {
+    const _this = this;
+    const { groupId, groupName, userFilledInfo } = this.data
+    wx.showModal({
+        title: "提示",
+        content: `点击确定选择需要加入的机构`,
+        showCancel: true,
+        cancelText: "取消",
+        cancelColor: "#000000",
+        confirmText: "确定",
+        confirmColor: "#3CC51F",
+        success(res) {
+          if (res.confirm) {
+            console.log("跳转");
+            wx.navigateTo({
+              url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}`,
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          } else if (res.cancel) {
+            wx.navigateTo({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          }
+        }
+      })
+  },
  
-  },
-  bindMultiPickerColumnChange: function (e) {
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    var data = {
-      multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
-    };
-    data.multiArray[0] = this.data.first
-    data.multiIndex[e.detail.column] = e.detail.value;
-    switch(e.detail.column) {
-      case 0:        
-        data.multiArray[1] = this.data.second[data.multiIndex[0]]
-        break
-    }
-    this.setData(data)
-  },  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -227,34 +236,8 @@ Page({
     }
     
     if (userFilledInfo.userRegisted) {
-      this.tree2array(groupId)
-      
-      // wx.showModal({
-      //   title: "",
-      //   content: `确定要加入 ${groupName} 组织吗？`,
-      //   showCancel: true,
-      //   cancelText: "取消",
-      //   cancelColor: "#000000",
-      //   confirmText: "确定",
-      //   confirmColor: "#3CC51F",
-      //   success(res) {
-      //     if (res.confirm) {
-      //       console.log("用户已经注册，准备执行this.joinGroup");
-      //       // lowestClass
-      //       _this.shareJoniGroup({
-      //         groupId,
-      //         userId: userFilledInfo.id
-      //       });
-      //     } else if (res.cancel) {
-      //       wx.navigateTo({
-      //         url: "/pages/index/index",
-      //         success: result => {},
-      //         fail: () => {},
-      //         complete: () => {}
-      //       });
-      //     }
-      //   }
-      // })
+      // this.tree2array(groupId)
+      this.isLowestDepartment(groupId)
     } else {
       wx.showModal({
         title: "",
@@ -284,14 +267,14 @@ Page({
     }
   },
 
-  join: function() {
-    const { joinGroupId, userFilledInfo } = this.data
-    let groupId = joinGroupId
-    this.shareJoniGroup({
-      groupId,
-      userId: userFilledInfo.id
-    });
-  },
+  // join: function() {
+  //   const { joinGroupId, userFilledInfo } = this.data
+  //   let groupId = joinGroupId
+  //   this.shareJoniGroup({
+  //     groupId,
+  //     userId: userFilledInfo.id
+  //   });
+  // },
   join_0: function() {
     const { groupId, userFilledInfo } = this.data
     this.shareJoniGroup({

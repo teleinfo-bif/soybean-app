@@ -5,7 +5,7 @@
     <scroll-view style="height: 100%;" scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
       <view class="head">
         <view class="head-title">
-          <image class="btn" src="../../static/images/detail.png" />
+          <!-- <image class="btn" src="../../static/images/detail.png" /> -->
           <Text class="head-title1">{{groupName}}</Text>
         </view>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
@@ -22,14 +22,14 @@
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>
-          <view class="people-item_sign">{{item.clockInId != 0 ? '已打卡': '未打卡'}}</view>
-          <view wx:if="{{permission == 'true'}}" class="people-item_detail ">
+          <view class="people-item_sign" style='margin-left:24rpx;'>{{item.clockInId != 0 ? '已打卡': '未打卡'}}</view>
+          <view style='margin-left:24rpx;' wx:if="{{permission == 'true'}}" class="people-item_detail ">
             <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}">
               打卡详情
             </navigator>
-            <block wx:else>打卡详情</block>
+            <block wx:else >打卡详情</block>
           </view>
-          <view wx:if="{{permission == 'true'}}" class="people-item_status">
+          <view wx:if="{{permission == 'true'}}" style='margin-left:24rpx;' class="people-item_status">
             <block wx:if="{{item.clockInId != 0}}">
               <block wx:if="{{ item.comfirmed == 2 || item.admitting == 2}}">
                 <view class="status-circle status-circle-red"></view>

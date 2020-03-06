@@ -17,7 +17,7 @@ Page({
     applicant: '',
     phone: '',
     uploadFileName: '',//上传的文件名
-    uploadFilePath: '',//上传的文件路径，备用
+    // uploadFilePath: '',//上传的文件路径，备用
     placeholder_group_name: '请输入机构名称',
     placeholder_group_address: '请输入机构地址',
     placeholder_group_introduce: '请输入机构介绍信息，10-200字',
@@ -38,7 +38,7 @@ Page({
     if (!globalData.appInit) {
       // await app.init();
       app.init(globalData => {
-        console.log('globalData',globalData);
+        console.log('globalData', globalData);
         this.setData({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo
@@ -46,7 +46,7 @@ Page({
         this.queryUserInfo()
       });
     } else {
-      console.log('globalData',globalData);
+      console.log('globalData', globalData);
       this.setData({
         globalData: globalData,
         userFilledInfo: globalData.userFilledInfo
@@ -54,7 +54,7 @@ Page({
       this.queryUserInfo()
     }
 
-    
+
   },
 
   /**
@@ -84,15 +84,15 @@ Page({
   onUnload: function () {
 
   },
-  
-  chooseImage: function() {
+
+  chooseImage: function () {
     const that = this;
     const bid = this.data.userFilledInfo.bidAddress
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
-      success (res) {
+      success(res) {
         const tempFilePath = res.tempFilePaths[0]
         var key = tempFilePath.substr(tempFilePath.lastIndexOf('/') + 1)
         // console.log('tempFilePaths:', tempFilePath)
@@ -103,11 +103,11 @@ Page({
           formData: {
             'bid': bid
           },
-          success (res){
+          success(res) {
             const data = res.data
-            console.log("uploadImage", JSON.parse(data).photo)
+            console.log("uploadImage", JSON.parse(data).data.photo)
             that.setData({
-              groupLogo: JSON.parse(data).photo,
+              groupLogo: JSON.parse(data).data.photo,
               groupAvatarShow: tempFilePath
             })
           },
@@ -117,32 +117,35 @@ Page({
     })
   },
 
-  chooseFile: function() {
+  chooseFile: function () {
     const that = this;
+    const bid = this.data.userFilledInfo.bidAddress
     wx.chooseMessageFile({
       count: 1,
       type: 'file',
-      success (res) {
+      success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
+        console.log(res)
         const tempFile = res.tempFiles[0]
         let name = tempFile.name
         let path = tempFile.path
-        that.setData({
-          uploadFileName: name,
-          uploadFilePath: path
-        })
+        // that.setData({
+        //   uploadFileName: name,
+        //   uploadFilePath: path
+        // })
         wx.uploadFile({
           url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
+          filePath: path,
           name: 'file',
           formData: {
-            'bid': ''
+            'bid': bid
           },
-          success (res){
+          success(res) {
             const data = res.data
-            console.log("uploadImage", JSON.parse(data).photo)
+            console.log("uploadImage", res, JSON.parse(data), JSON.parse(data).data.photo)
             that.setData({
-              excelFile: JSON.parse(data).photo,
+              uploadFileName: name,
+              excelFile: JSON.parse(data).data.photo,
             })
             //do something
           }
@@ -192,6 +195,8 @@ Page({
       warn = "机构介绍的字数应为10-200!"
     } else if (e.detail.value.group_address == "") {
       warn = "请填写您的机构地址!"
+    } else if (e.detail.value.group_file == "") {
+      warn = "请导入机构架构!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
     } else if (e.detail.value.group_phone == "") {
@@ -199,71 +204,43 @@ Page({
     } else {
       flag = true
 
-    console.log("add group info to database")
-    createGroup()
-    createGroup({
-      addressName: e.detail.value.group_address,
-      contact: e.detail.value.group_applicant,
-      excelFile: "",
-      logo: this.data.groupLogo,
-      name: e.detail.value.group_name,
-      phone: e.detail.value.group_phone,
-      remarks: e.detail.value.group_introduce,
-      userId: this.data.globalData.userId,
-    }).then(data => {
-      // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
-      if (memberData.total != undefined && current == data.current) {
-        let memerList = memberData.records.concat(data.records);
-        this.setData({
-          memberData: {
-            ...data,
-            records: memerList
-          }
-        });
-      } else {
-        this.setData({
-          memberData: data
-        });
-      }
-    });
-    return
-
-    db.collection("applications_info").add({
-        data: {
-          userId: this.data.globalData.userId,
-          name: e.detail.value.group_name,
-          remarks: e.detail.value.group_introduce,
-          excelFile: "",
-          contact: e.detail.value.group_applicant,
-          phone: e.detail.value.group_phone,
-          logo: this.data.groupLogo,
-          // address: e.detail.value.group_address,
-          // status: "waiting",//wating等待审核finish创建完成reject拒绝
-        },
-        success: res => {
-          console.log('1',res)
-            wx.showModal({
-              showCancel: false,
-              title: '提示',
-              content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
-              success(res){
-                if (res.confirm) {
-                  wx.reLaunch({
-                    url: '../index/index',
-                  })
-                }
-              }
-            })
-            wx.hideLoading()
-        },
-        fail: err => {
-          console.log(err)
+      console.log("add group info to database")
+      console.log(e.detail.value.group_address,
+        e.detail.value.group_applicant,
+        this.data.excelFile, this.data.groupLogo, e.detail.value.group_name,
+        e.detail.value.group_phone, e.detail.value.group_introduce, this.data.globalData.userId)
+      createGroup({
+        addressName: e.detail.value.group_address,
+        contact: e.detail.value.group_applicant,
+        excelFile: this.data.excelFile,
+        logo: this.data.groupLogo,
+        name: e.detail.value.group_name,
+        phone: e.detail.value.group_phone,
+        remarks: e.detail.value.group_introduce,
+        userId: this.data.globalData.userId,
+      }).then(data => {
+           console.log('1', data)
           wx.showModal({
+            showCancel: false,
             title: '提示',
-            content: "创建失败"
+            content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
+            success(res) {
+              if (res.confirm) {
+                wx.reLaunch({
+                  url: '../../index/index',
+                })
+              }
+            }
           })
           wx.hideLoading()
-        }
+        
+      }).catch(e => {
+        console.log(e)
+        wx.showModal({
+          title: '提示',
+          content: "创建失败"
+        })
+        wx.hideLoading()
       })
     }
 
@@ -278,13 +255,13 @@ Page({
     }
   },
   //需要修改成现有的
-  queryUserInfo: function(e) {
+  queryUserInfo: function (e) {
     this.setData({
       applicant: this.data.userFilledInfo.name,
       phone: this.data.userFilledInfo.phone
     })
 
-    
+
     // db.collection('user_info').where({
     //   _openid: app.globalData.openid
     //   // _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
@@ -308,7 +285,7 @@ Page({
    * 获取当前时间
    */
 
-  getCurrentDateTime: function(e) {
+  getCurrentDateTime: function (e) {
     var date = new Date();
     var Y = date.getFullYear();
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
@@ -320,18 +297,18 @@ Page({
     return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s
   },
 
-  downloadStructure: function() {
+  downloadStructure: function () {
     console.log('下载模板')
     let tempFileURL = "https://admin.bidspace.cn/bid-soybean/download/group.xlsx"
-      wx.setClipboardData({
-        data: tempFileURL,
-        success: function (res) {
-          wx.showToast({
-            icon: 'none',
-            title: "导出文件下载链接已保存到您的剪贴板"
-          });
-        }
-      })
+    wx.setClipboardData({
+      data: tempFileURL,
+      success: function (res) {
+        wx.showToast({
+          icon: 'none',
+          title: "导出文件下载链接已保存到您的剪贴板"
+        });
+      }
+    })
     //等待后端接口
     // wx.cloud.getTempFileURL({
     //   fileList: [{

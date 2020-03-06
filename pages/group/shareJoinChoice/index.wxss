@@ -1,0 +1,86 @@
+/* pages/group/shareJoinChoice/index.wxss */
+page {
+    background:rgba(247,247,247,1);
+}
+.head {
+    background: #fff;
+    height: 88rpx;
+    margin-top: 17rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.full {
+    width:12rpx;
+    height:40rpx;
+    background:rgba(38,122,236,1); 
+    margin-right: 21rpx;
+}
+.group-name {
+    font-size:36rpx;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker {
+    margin-top: 10rpx;
+    padding: 0 30rpx;
+    height: 120rpx;
+    line-height: 60rpx;
+    background-color: #fff;
+}
+
+.input-placeholder {
+font-size:30rpx;
+font-family:PingFang SC;
+font-weight:400;
+color:rgba(153,153,153,1);
+}
+.picker-choice {
+    z-index: 999;
+    position: absolute;
+    margin-top:42rpx;
+    right:30rpx;
+    font-size:30rpx;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(38,122,236,1);
+}
+
+.quit-join-group {
+    position: fixed;
+    bottom: 120rpx;
+    width: 750rpx;
+    box-sizing: border-box;    
+    padding-right: 106rpx;
+    padding-left: 106rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.join-group {
+    text-align: center;
+    font-size: 36rpx;
+    line-height: 88rpx;
+    width:246rpx;
+    height:88rpx;
+    background:rgba(67,117,254,1);
+    color:rgba(255,255,255,1);
+    border-radius:6rpx;
+}
+.quit-group {
+    text-align: center;
+    font-size: 36rpx;
+    line-height: 88rpx;
+    width:246rpx;
+    height:88rpx;
+    background:rgba(232,232,232,1);
+    color:rgba(51,51,51,1);
+    border-radius:6rpx;
+ }

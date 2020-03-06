@@ -46,7 +46,7 @@
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.abnormalbody}}</view>
-        <view class="statistic-box_item_label">身体异常人数</view>
+        <view class="statistic-box_item_label">非健康人数</view>
       </view>
     </view>
    
