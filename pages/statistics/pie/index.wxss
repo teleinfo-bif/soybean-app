@@ -37,13 +37,14 @@
 
 .box-head_count-num {
   display: inline-block;
-  margin-left: 30rpx; }
+  margin-left: 10rpx; }
 
 .box-content {
   display: flex; }
 
 .pie-box {
   width: 350rpx;
+  margin-top:-10rpx;
   height: 350rpx;
   /* border: 2px solid red; */ }
 

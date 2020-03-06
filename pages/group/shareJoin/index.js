@@ -283,7 +283,7 @@ Page({
     });
   },
   quit: function() {
-    wx.reLaunch({
+    wx.navigateTo({
       url: "/pages/index/index",
       success: result => {},
       fail: () => {},

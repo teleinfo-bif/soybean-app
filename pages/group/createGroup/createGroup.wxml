@@ -32,11 +32,19 @@
         <view class="personal-divide"></view>
         <!-- 组织地址 -->
         <view class="personal-info-hd">
-          <text class="info-label">步骤4 请输入机构地址</text>
+          <text class="info-label">步骤4 请选择机构地址</text>
         </view>
-        <view class="personal-info-td">
+        <!-- <view class="personal-info-td">
           <input class="info-input" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" maxlength="30"></input>
-        </view>
+        </view> -->
+        <view class="personal-info-td">
+            <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}" class="choice">
+               <button class="file-input-button">选择</button>
+            </picker>
+            <view class="picker">
+              <input class="info-input" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" value="{{group_address_picker}}" disabled="{{true}}"></input>
+            </view>
+        </view>       
         <view class="personal-divide"></view>
 
         <!-- 导入架构 -->

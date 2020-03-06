@@ -12,21 +12,22 @@ Page({
     groupAvatarShow: '',
     groupNotAvatarShow: '../../../static/images/group_name.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
-    groupLogo: '', //logo地址
+    groupLogo: '001', //logo地址
     excelFile: '',//execel地址
     applicant: '',
     phone: '',
     uploadFileName: '',//上传的文件名
     // uploadFilePath: '',//上传的文件路径，备用
     placeholder_group_name: '请输入机构名称',
-    placeholder_group_address: '请输入机构地址',
+    placeholder_group_address: '请选择您的机构地址',
     placeholder_group_introduce: '请输入机构介绍信息，10-200字',
     placeholder_group_strucure: '请在此处粘贴您的架构文件链接',
     placeholder_group_apply_name: '请输入您的名字',
     placeholder_group_apply_phone: '请输入您的联系方式',
     placeholder_group_file: '请选择您要上传的文件',
-    company_count: "",//已加入几个组织
-    record_id: ""
+    region: [],
+    group_address_picker: '',
+    // customItem: '全部',
   },
 
   /**
@@ -152,29 +153,6 @@ Page({
         })
       }
     })
-    // wx.chooseImage({
-    //   count: 1,
-    //   sizeType: ['original', 'compressed'],
-    //   sourceType: ['album', 'camera'],
-    //   success (res) {
-    //     const tempFilePath = res.tempFilePaths[0]
-    //     var key = tempFilePath.substr(tempFilePath.lastIndexOf('/') + 1)
-    //     // console.log('tempFilePaths:', tempFilePath)
-    //     wx.cloud.uploadFile({
-    //       cloudPath: 'groupAvatar/'+ key, // 上传至云端的路径
-    //       filePath: tempFilePath, // 小程序临时文件路径
-    //       success: res => {
-    //         // 返回文件 ID
-    //         // console.log(res.fileID)
-    //         that.setData({
-    //           groupAvatar: res.fileID,
-    //           groupAvatarShow: tempFilePath
-    //         })
-    //       },
-    //       fail: console.error
-    //     })
-    //   }
-    // })
   },
 
   submitUserInfo: function (e) {
@@ -194,7 +172,7 @@ Page({
     } else if (e.detail.value.group_introduce.length < 10) {
       warn = "机构介绍的字数应为10-200!"
     } else if (e.detail.value.group_address == "") {
-      warn = "请填写您的机构地址!"
+      warn = "请选择您的机构地址!"
     } else if (e.detail.value.group_file == "") {
       warn = "请导入机构架构!"
     } else if (e.detail.value.group_applicant == "") {
@@ -260,25 +238,6 @@ Page({
       applicant: this.data.userFilledInfo.name,
       phone: this.data.userFilledInfo.phone
     })
-
-
-    // db.collection('user_info').where({
-    //   _openid: app.globalData.openid
-    //   // _openid: "oqME_5ae8IUfGQKBrp-O6Ou6nHdg"
-    // }).get({
-    //     success: res => {
-    //       console.log(res.data)
-    //       this.setData({
-    //         applicant: res.data[0].name,
-    //         phone: res.data[0].phone,
-    //         company_count: res.data[0].company_count,
-    //         record_id: res.data[0]._id
-    //       })
-    //     },
-    //     fail: err => {
-    //       console.log(err)
-    //     }
-    //   })
   },
 
   /**
@@ -309,28 +268,15 @@ Page({
         });
       }
     })
-    //等待后端接口
-    // wx.cloud.getTempFileURL({
-    //   fileList: [{
-    //     fileID: 'cloud://soybean-uat.736f-soybean-uat-1301333180/单位机构架构模板.xls',
-    //     maxAge: 60 * 60, // one hour
-    //   }]
-    // }).then(res => {
-    //   // get temp file URL
-    //   console.log(res.fileList)
-    //   let tempFileURL = res.fileList[0].tempFileURL
-    //   wx.setClipboardData({
-    //     data: tempFileURL,
-    //     success: function (res) {
-    //       wx.showToast({
-    //         icon: 'none',
-    //         title: "导出文件下载链接已保存到您的剪贴板"
-    //       });
-    //     }
-    //   })
-    // }).catch(error => {
-    //   // handle error
-    // })
   },
+
+  bindRegionChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let region = e.detail.value;
+    this.setData({
+      region: e.detail.value,
+      group_address_picker: `${region[0]}，${region[1]}，${region[2]}`
+    })
+  }
 
 })
