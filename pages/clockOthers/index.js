@@ -602,7 +602,29 @@ Page({
       locationCity
     };
   },
+  async setFieldsFromTemperature(formData) {
+    let disable;
+    if (formData.temperatureRadio == 1) {
+      disable = false;
+      this.setFieldsHide(["temperature"], []);
+    } else {
+      this.setFieldsHide([], ["temperature"]);
 
+      disable = true;
+    }
+    const { fields } = this.data;
+    fields.forEach((item, index) => {
+      if (item.prop === "healthy") {
+        for (let i = 0; i < item.props.options.length; i++) {
+          if (item.props.options[i].id === 1) {
+            fields[index].props.options[i]["disabled"] = disable;
+            break;
+          }
+        }
+      }
+    });
+    this.setData({ fields });
+  },
   // 获取用户今日打卡信息
   getUserTodyClockData(userId, time) {
     getTodayClock({
@@ -612,11 +634,13 @@ Page({
       const resData = data;
       const clockData = data.records[0];
       // 打卡数据合并到data中，今日未打卡返回的数据在是{}
+
       let formData = {
         ...this.data.data,
         ...clockData,
         name: clockData.userName
       };
+      formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
       // 判断打过卡
       if (resData.total > 0) {
         this.setData({
@@ -631,6 +655,7 @@ Page({
       }
       // 设置表单显示的字段
       this.setFieldsFromLeave(formData);
+      this.setFieldsFromTemperature(formData);
     });
   },
 
