@@ -42,12 +42,15 @@ page {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  margin-left: 30rpx;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
   padding-left: 30rpx;
-  margin-right: 30rpx;
+  margin-right: 20rpx;
+  box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
+  border-radius: 10rpx;
   /* padding-top: 30px;
   padding-bottom: 30px; */
-  height: 120rpx;
+  height: 108rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f2f2f2;
   font-size: 26rpx;
@@ -55,7 +58,7 @@ page {
 
 .people-item > view {
   flex: 1;
-  text-align: center;
+  // text-align: center;
 }
 
 .people-item_name {
@@ -102,7 +105,7 @@ page {
   top: -50%;
   display: block;
   margin-top: 10rpx;
-  width: 1rpx;
+  // width: 1rpx;
   height: 60rpx;
   background: #dcdce0;
 }
