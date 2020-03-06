@@ -4,7 +4,7 @@
     <view class="box-head_text">{{title}}</view>
     <view class="box-head_count">
       总人数
-      <text class="box-head_count-num">{{clockIn}}</text>
+      <text class="box-head_count-num">{{clockIn}}人</text>
     </view>
   </view>
   <view class="box-content">

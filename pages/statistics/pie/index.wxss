@@ -35,7 +35,7 @@
 
 .box-head_count-num {
   display: inline-block;
-  margin-left: 30rpx; }
+  margin-left: 5rpx; }
 
 .box-content {
   display: flex; }
@@ -43,6 +43,7 @@
 .pie-box {
   width: 350rpx;
   height: 350rpx;
+  margin-top:-20rpx;
   /* border: 2px solid red; */ }
 
 ec-canvas {
@@ -65,7 +66,7 @@ ec-canvas {
   align-items: center;
   width: 350rpx;
   height: 27rpx;
-  padding-left: 30rpx;
+  padding-left: 15rpx;
   margin-bottom: 38rpx;
   color:#666666;
   font-size: 24rpx; }
