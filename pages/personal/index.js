@@ -91,7 +91,7 @@ Page({
         prop: "companyAddress",
         require: false,
         props: {
-          placeholder: "请选择单位所在区及街道、社区"
+          placeholder: "请选择单位所在城市及区"
         }
       },
       {
@@ -100,7 +100,7 @@ Page({
         prop: "companyDetailAddress",
         require: false,
         props: {
-          placeholder: "请输入公司详细地址",
+          placeholder: "请输入单位详细地址",
           addressKey: ""
         }
       },
@@ -110,7 +110,7 @@ Page({
         prop: "homeAddress",
         require: false,
         props: {
-          placeholder: "请选择家庭所在区及街道、社区"
+          placeholder: "请选择家庭所在城市及区"
         }
       },
       {
@@ -122,9 +122,23 @@ Page({
           placeholder: "请输入家庭详细地址",
           addressKey: ""
         }
+      },
+      {
+        type: "agreement",
+        prop: "agreement",
+        require: true,
+        props: {
+          itemKey: "id",
+          itemLabelKey: "name",
+          needCheck: true,
+          validate(value) {
+            return value;
+          },
+          errorMsg: "请选择同意用户服务条款及隐私协议"
+        }
       }
     ],
-    data: {},
+    data: { agreement: true },
     userFilledInfo: {},
     globalData: app.globalData
   },
@@ -231,6 +245,7 @@ Page({
       resData.homeAddress = resData.homeAddress.split("-");
       resData.companyAddress = resData.companyAddress.split("-");
     }
+    resData["agreement"] = true;
     if (userRegisted) {
       this.setData({
         fields: fields,
@@ -303,7 +318,6 @@ Page({
   onShow() {
     const location = chooseLocation.getLocation(); // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
     if (location) {
-      debugger;
       this.setData({
         data: {
           ...this.data.data,

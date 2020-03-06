@@ -1,0 +1,14 @@
+/* pages/agreement/index.wxss */
+page {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+.content {
+  margin: 30rpx;
+  font-size: 30rpx;
+}
+
+.title {
+  font-size: 35rpx;
+  font-weight: 500;
+}

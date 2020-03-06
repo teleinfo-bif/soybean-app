@@ -27,8 +27,8 @@ Component({
   methods: {
     out() {
       console.log("this.data", this.data);
-      console.log("this.formData", this.data.formData);
-      console.log("this._formData", this.data._formData);
+      // console.log("this.formData", this.data.formData);
+      // console.log("this._formData", this.data._formData);
     },
     findFieldItemWithProp(prop) {
       const fields = this.data.fields || [];

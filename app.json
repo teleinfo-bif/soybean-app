@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/status/index",
     "pages/clock/index",
-
     "pages/clockOthers/index",
     "pages/statistics/statisticsTab/index",
     "pages/personal/index",
@@ -15,7 +14,8 @@
     "pages/group/shareJoin/index",
     "pages/healthQR/healthQR",
     "pages/group/createGroup/createGroup",
-    "pages/group/shareJoinChoice/index"
+    "pages/group/shareJoinChoice/index",
+    "pages/agreement/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

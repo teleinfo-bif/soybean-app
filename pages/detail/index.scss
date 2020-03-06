@@ -150,3 +150,10 @@ page {
   font-size: 28rpx;
   text-align: center;
 }
+.head-title1 {
+  white-space: nowrap;
+  width: 355rpx;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

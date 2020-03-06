@@ -18,8 +18,6 @@ page {
   background: rgba(255, 255, 255, 1);
   box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
   border-radius: 10rpx;
-  &_count {
-  }
 }
 .share-box {
   position: relative;
@@ -43,6 +41,11 @@ page {
   border-radius: 10rpx;
 
   &_left {
+    white-space: nowrap;
+    width: 390rpx;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &_right {
     display: flex;
@@ -55,8 +58,8 @@ page {
     .btn-statistic {
       display: inline-block;
       margin-left: 15rpx;
-      width: 60rpx;
-      height: 60rpx;
+      width: 72rpx;
+      height: 72rpx;
     }
     &_btn {
       margin-left: 15rpx;
@@ -68,4 +71,40 @@ page {
       }
     }
   }
+}
+
+.head {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  padding: 0 30rpx 0;
+  width: 750rpx;
+  height: 88rpx;
+  font-size: 30rpx;
+  background: white;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.head image {
+  margin-right: 20rpx;
+  width: 54rpx;
+  height: 54rpx;
+}
+.head-title,
+.head-date,
+.head .head-date-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.head .head-date-text {
+  color: #3891ff;
+}
+.head-title {
+  white-space: nowrap;
+  width: 400rpx;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -136,11 +136,26 @@ let fields = [
     }
   },
   {
-    title: "体温（℃）",
+    title: "当天体温",
+    type: "radio",
+    prop: "temperatureRadio",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "正常(37.3以下)" },
+        { id: 2, name: "37.3及以上" }
+      ]
+    }
+  },
+  {
+    title: "具体温度",
     type: "input",
     prop: "temperature",
+    hide: true,
     props: {
-      placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
+      // placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
+      placeholder: "请输入数字和小数点",
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value);
       },
@@ -306,6 +321,14 @@ let fields = [
     props: {
       placeholder: "请输入备注信息"
     }
+  },
+  {
+    type: "agreement",
+    prop: "agreement",
+    require: false,
+    props: {
+      needCheck: false
+    }
   }
 ];
 
@@ -358,6 +381,11 @@ Page({
         this.setHealthyDisabled
       );
       // ();
+    } else if (prop === "temperatureRadio") {
+      data["temperaturn"] = data["temperatureRadio" == 1]
+        ? 36.5
+        : data["temperaturn"];
+      this.setFieldsFromTemperaturn(data);
     } else if (otherFieldsList[prop]) {
       // 判断 健康状况选其它
       if (value === "0") {
@@ -368,7 +396,6 @@ Page({
     }
 
     // this.data.data = data;
-
     this.setData({
       data
     });
@@ -421,7 +448,7 @@ Page({
   formCancel() {
     let { data } = this.data;
     for (let prop in data) {
-      if (prop != "userName" && prop != "phone") {
+      if (prop != "name" && prop != "userName" && prop != "phone") {
         data[prop] = null;
       }
     }
@@ -583,6 +610,13 @@ Page({
       }
     }
     this.setFieldsHide(hideList, showList);
+  },
+  setFieldsFromTemperaturn(formData) {
+    if (formData.temperatureRadio == 1) {
+      this.setFieldsHide(["temperature"], []);
+    } else {
+      this.setFieldsHide([], ["temperature"]);
+    }
   },
   /**
    *设置表单隐藏
