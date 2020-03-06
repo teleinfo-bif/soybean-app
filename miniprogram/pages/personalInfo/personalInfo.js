@@ -636,7 +636,7 @@ Page({
     } else if (cardValid != "" && this.data.personal_info_change == "personal-change-hide"){
       warn = cardValid
       
-    } else if (e.detail.value.company_name == ""){
+    } else if (e.detail.value.company_name == "" || e.detail.value.company_name.indexOf("请选择") != -1){
       warn = "请选择您的单位及部门!"
     } else if (e.detail.value.company_location == "") {
       warn = "请选择您的单位所在地区!"
