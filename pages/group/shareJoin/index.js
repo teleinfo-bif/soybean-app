@@ -267,12 +267,9 @@ Page({
         confirmColor: "#3CC51F",
         success(res) { 
           if (res.confirm) {
-            // app.globalData.groupId = groupId;
-            // app.globalData.groupName = groupName;
             wx.navigateTo({
               url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
-              success: result => {
-                
+              success: result => {               
               },
               fail: () => {},
               complete: () => {}
