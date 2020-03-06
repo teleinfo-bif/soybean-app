@@ -26,6 +26,25 @@ Page({
     return Y + M + D
   },
 
+  sortDatas: function(datas) {
+
+    var temp = []
+
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].bodyStatusFlag != undefined) {
+        temp.push(datas[i])
+      }
+    }
+
+    for (var i = 0; i < datas.length; i++) {
+      if (datas[i].bodyStatusFlag == undefined) {
+        temp.push(datas[i])
+      }
+    }
+
+    return temp
+
+  },
   
   parseDatas: function(infoDatas, healthyDatas) {
     
@@ -42,6 +61,8 @@ Page({
         }
       }
       temp.push(tempTopic)
+      temp = this.sortDatas(temp)
+
     }   
     // console.log("temp datas: ", temp)
     this.setData({
