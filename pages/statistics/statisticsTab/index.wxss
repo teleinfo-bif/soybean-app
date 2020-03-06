@@ -20,17 +20,21 @@ page {
   font-size: 30rpx;
   background: white;
   border-bottom: 1rpx solid #f2f2f2; }
-  .head image {
-    margin-right: 20rpx;
-    width: 54rpx;
-    height: 54rpx; }
-  .head-title, .head-date,
-  .head .head-date-text {
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  .head .head-date-text {
-    color: #3891ff; }
+
+.head image {
+  margin-right: 20rpx;
+  width: 54rpx;
+  height: 54rpx; }
+
+.head-title,
+.head-date,
+.head .head-date-text {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.head .head-date-text {
+  color: #3891ff; }
 
 .people-item {
   box-sizing: border-box;
@@ -121,9 +125,7 @@ page {
   background-color: #fff;
   font-size: 30rpx;
   height: 100rpx;
-  line-height: 100rpx;
-
-   }
+  line-height: 100rpx; }
 
 .no-data {
   margin: 0 30rpx;

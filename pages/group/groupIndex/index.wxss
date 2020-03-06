@@ -1,11 +1,12 @@
 page {
-  /* height: 100%; */
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: #f7f7f7; }
 
 .scrollview {
   height: 100%; }
+
 .top-box {
   box-sizing: border-box;
   display: flex;
@@ -25,13 +26,7 @@ page {
   .share-box image {
     width: inherit;
     height: inherit; }
-.row-item_left{
-  white-space: nowrap; 
-  width: 390rpx; 
-  display:inline-block;
-  overflow: hidden;
-  text-overflow:ellipsis;
-}
+
 .row-item {
   display: flex;
   margin: 10rpx 30rpx 0;
@@ -42,6 +37,12 @@ page {
   background: white;
   box-shadow: 0px 5rpx 27rpx 0px rgba(194, 199, 225, 0.47);
   border-radius: 10rpx; }
+  .row-item_left {
+    white-space: nowrap;
+    width: 390rpx;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis; }
   .row-item_right {
     display: flex;
     align-items: center;
@@ -60,6 +61,7 @@ page {
         color: #1759ef; }
       .row-item_right_btn-delete {
         color: red; }
+
 .head {
   box-sizing: border-box;
   display: flex;
@@ -72,21 +74,25 @@ page {
   font-size: 30rpx;
   background: white;
   border-bottom: 1rpx solid #f2f2f2; }
-  .head image {
-    margin-right: 20rpx;
-    width: 54rpx;
-    height: 54rpx; }
-  .head-title, .head-date,
-  .head .head-date-text {
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  .head .head-date-text {
-    color: #3891ff; }
-  .head-title{
-  white-space: nowrap; 
-  width: 400rpx; 
-  display:inline-block;
+
+.head image {
+  margin-right: 20rpx;
+  width: 54rpx;
+  height: 54rpx; }
+
+.head-title,
+.head-date,
+.head .head-date-text {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.head .head-date-text {
+  color: #3891ff; }
+
+.head-title {
+  white-space: nowrap;
+  width: 400rpx;
+  display: inline-block;
   overflow: hidden;
-  text-overflow:ellipsis;
-  }
+  text-overflow: ellipsis; }

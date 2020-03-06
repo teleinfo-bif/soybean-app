@@ -35,3 +35,13 @@ page {
   display: flex;
   justify-content: center;
 }
+
+.group-create-location {
+  text-align: center;
+  font-size: 28rpx;
+  width: 750rpx;
+  z-index: 100;
+  position: absolute;
+  padding-bottom: 20rpx;
+  color: #1759ef;
+}

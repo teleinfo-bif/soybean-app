@@ -20,6 +20,6 @@
 </view>
 
 <!-- 注册新机构链接 -->
-<view wx:if="{{userFilledInfo.userRegisted}}" class="group-create-location"  bindtap="createGroup">
+<view wx:if="{{userFilledInfo.userRegisted}}" class="group-create-location color"  bindtap="createGroup">
     注册新机构>
 </view>
