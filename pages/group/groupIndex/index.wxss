@@ -95,3 +95,13 @@ page {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis; }
+
+  button {
+    background-color: #fff;
+    padding: 0;
+    line-height:100%;
+    border-radius:0;
+  }
+  button::after {
+    border: none;
+  }
