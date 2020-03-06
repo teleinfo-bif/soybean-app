@@ -1,7 +1,7 @@
 
 
 
-<view class="text-title">确诊人数: {{quezhenDatas.length}}人</view>
+<view class="text-title">确诊隔离: {{quezhenDatas.length}}人</view>
 <view wx:if="{{quezhenDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -28,7 +28,7 @@
   </view>
 </view>
 
-<view class="text-title">隔离期: {{geliDatas.length}}人</view>
+<view class="text-title">一般隔离: {{geliDatas.length}}人</view>
   <view wx:if="{{geliDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -56,7 +56,7 @@
   </view>
 
 
-<view class="text-title">出隔离期: {{outGeliDatas.length}}人</view>
+<view class="text-title">非隔离: {{outGeliDatas.length}}人</view>
   <view wx:if="{{outGeliDatas.length == 0}}">
     <view class="pages-body">
       <view class="userclicklist">
@@ -83,7 +83,7 @@
   </view>
 </view>
 
-<view class="text-title">其他诊况: {{otherDatas.length}}人</view>
+<!-- <view class="text-title">其他诊况: {{otherDatas.length}}人</view>
   <view wx:if="{{otherDatas.length == 0}}">
       <view class="pages-body">
         <view class="userclicklist">
@@ -106,6 +106,6 @@
           <view class="tree-children-status-green"></view>
           <!-- <view class="tree-children-status-text"></view> -->
         <!-- </label>  -->
-       </view>
-    </view>
-  </view>
+       <!-- </view> -->
+    <!-- </view> -->
+  <!-- </view>  -->

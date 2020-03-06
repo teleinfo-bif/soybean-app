@@ -172,7 +172,7 @@ Page({
 
           this.setData({
             clickdata:res.data[0],
-            localPlace: infoes[0] + '市',
+            localPlace: infoes[0],
             titleInfo: title,
             img: image
           });

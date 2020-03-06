@@ -89,6 +89,10 @@ Page({
       { name: '37.3及以上', value: '1'}
     ],
     temperStatusFlag: '',
+    phoneShow: "",
+
+    disableDakaInput:false,
+
   },
 
   currentDate: function (e) {
@@ -284,6 +288,7 @@ Page({
         that.setData({
           name: res.data[0].name,
           phone: hide,
+          phoneShow: res.data[0].phone,
           userinfo: res.data
         })
       },
@@ -420,6 +425,12 @@ Page({
           title: '警告',
           content: '您点击了拒绝授权,将无法正常获取地理位置,点击确定重新获取授权。',
           success: function (res) {
+            if (res.cancel) {
+              //点击取消按钮
+              that.setData({
+                disableDakaInput: true
+              })
+            }
             if (res.confirm) {
               //重点:从这里开始就是重新授权调取
               wx.openSetting({
@@ -432,9 +443,18 @@ Page({
                       icon: "success",
                       duration: 1000
                     });
+                    that.setData({
+                      disableDakaInput: false
+                    })
+                  }else{
+                    that.setData({
+                      disableDakaInput:true
+                    })
                   }
                 }, fail: function (res) {
-
+                  that.setData({
+                    disableDakaInput: true
+                  })
                 }
               })
               //重点:调取结束
@@ -912,6 +932,10 @@ Page({
 
     var name = e.detail.value.name
     var phone = e.detail.value.phone
+    var phoneShow = ""
+    if (phone != undefined || phone != "" ){
+      phoneShow = this.data.phoneShow
+    }
     var place = e.detail.value.place_before + e.detail.value.place
     var gobackdate = e.detail.value.gobackdate
     var trainnumber = e.detail.value.trainnumber
@@ -958,7 +982,7 @@ Page({
       db.collection('user_latest').add({
         data: {
           name: name,
-          phone: phone,
+          phone: phoneShow,
           place: place,
           is_in_beijing: this.data.isInBeijing,
           out_reason: this.data.outBejingReason,
@@ -980,7 +1004,7 @@ Page({
       db.collection('user_latest').doc(this.data.userLatestInfo[0]._id).update({
         data: {
           name: name,
-          phone: phone,
+          phone: phoneShow,
           place: place,
           is_in_beijing: this.data.isInBeijing,
           out_reason: this.data.outBejingReason,
@@ -1005,7 +1029,7 @@ Page({
       data: {
         name: name,
         place: place,
-        phone: phone,
+        phone: phoneShow,
         gobackdate: gobackdate,
         trainnumber: trainnumber,
         leavedate: leavedate,

@@ -47,33 +47,35 @@ Page({
         quezhen['name'] = healthyDatas[i].name
 
         quezhens.push(quezhen)
-      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' &&healthyDatas[i].isQueZhenFlag == '1' && this.isInSeperation(healthyDatas[i].suregobackdate)) {
+      } else if (healthyDatas[i].isLeaveBjFlag == '0' &&healthyDatas[i].isQueZhenFlag == '1' ) {
         var geli = {}
         geli['id'] = healthyDatas[i]._id
         geli['openid'] = healthyDatas[i]._openid
         geli['name'] = healthyDatas[i].name
         gelies.push(geli)
-      } else if (healthyDatas[i].isGoBackFlag == '0' && healthyDatas[i].isLeaveBjFlag == '0' &&  healthyDatas[i].isQueZhenFlag == '1' &&!this.isInSeperation(healthyDatas[i].suregobackdate)) {
+      } else if (healthyDatas[i].isLeaveBjFlag == '1' &&  healthyDatas[i].isQueZhenFlag == '1' ) {
         var ugeli = {}
         ugeli['id'] = healthyDatas[i]._id
         ugeli['openid'] = healthyDatas[i]._openid
         ugeli['name'] = healthyDatas[i].name
 
         ugelies.push(ugeli)
-      } else {
-        var other = {}
-        other['id'] = healthyDatas[i]._id
-        other['openid'] = healthyDatas[i]._openid
-        other['name'] = healthyDatas[i].name
-        others.push(other)
-      }
+      } 
+      
+      // else {
+      //   var other = {}
+      //   other['id'] = healthyDatas[i]._id
+      //   other['openid'] = healthyDatas[i]._openid
+      //   other['name'] = healthyDatas[i].name
+      //   others.push(other)
+      // }
     }
 
     this.setData({
       quezhenDatas: quezhens,
       geliDatas: gelies,
       outGeliDatas: ugelies,
-      otherDatas: others
+      // otherDatas: others
     })
 
   },
@@ -241,7 +243,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })
