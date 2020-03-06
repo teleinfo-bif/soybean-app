@@ -199,9 +199,15 @@ Page({
       if (!this.data.userFilledInfo.userRegisted) {
         saveOrUpdateUserInfo(formData).then(async data => {
           await app.refreshUserInfo();
-          wx.navigateTo({
-            url: "/pages/status/index?msg=注册成功"
-          });
+          if(this.data.groupId && this.data.groupName) {
+            wx.navigateTo({
+              url: `/pages/group/shareJoin/index?zc=1&groupName=${this.data.groupName}&groupId=${this.data.groupId}`,
+            });
+          }else {
+            wx.navigateTo({
+              url: "/pages/status/index?msg=注册成功"
+            });
+          }          
         });
       } else {
         formData["id"] = formData.id;
@@ -210,6 +216,7 @@ Page({
           wx.navigateTo({
             url: "/pages/status/index?msg=更新成功"
           });
+       
         });
       }
     }
@@ -286,20 +293,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    const { groupId, groupName } = options
     console.log(this.data.fields[3].props.validate);
     const { globalData } = app;
     if (!globalData.appInit) {
       app.init(globalData => {
         this.setData({
           globalData: globalData,
-          userFilledInfo: globalData.userFilledInfo
+          userFilledInfo: globalData.userFilledInfo,
+          groupId: groupId,
+          groupName: groupName
         });
         this.setFieldsDisable(globalData.userFilledInfo);
       });
     } else {
       this.setData({
         globalData: globalData,
-        userFilledInfo: globalData.userFilledInfo
+        userFilledInfo: globalData.userFilledInfo,
+        groupId: groupId,
+        groupName: groupName
       });
       this.setFieldsDisable(globalData.userFilledInfo);
     }
