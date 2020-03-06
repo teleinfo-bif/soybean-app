@@ -44,8 +44,8 @@
 
 .pie-box {
   width: 350rpx;
-  margin-top:-10rpx;
   height: 350rpx;
+  margin-top: -10rpx;
   /* border: 2px solid red; */ }
 
 ec-canvas {
