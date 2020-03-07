@@ -37,8 +37,7 @@ let fields = [
     type: "geo",
     prop: "address",
     props: {
-      placeholder: "请输入打卡地点",
-      type: "textarea"
+      placeholder: "请输入打卡地点"
     }
   },
   {
