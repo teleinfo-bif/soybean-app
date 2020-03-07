@@ -93,7 +93,7 @@ page {
 
 .head-title {
   white-space: nowrap;
-  width: 400rpx;
+  width: 370rpx;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis; }
