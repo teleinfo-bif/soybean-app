@@ -5,7 +5,7 @@
     "clock": "./clock/index",
     "organization": "./organization/index"
   },
-  "navigationBarTitleText": "信本聪",
+  "navigationBarTitleText": "信鄂通",
   "navigationStyle": "custom",
   "backgroundColor": "#F5F5F5"
 }
