@@ -37,7 +37,11 @@ let fields = [
     type: "geo",
     prop: "address",
     props: {
-      placeholder: "请输入打卡地点"
+      placeholder: "请输入打卡地点",
+      validate(value) {
+        return value.length >= 5 && value.length <= 15;
+      },
+      errorMsg: "请输入5-15个字的地址"
     }
   },
   {
