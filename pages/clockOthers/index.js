@@ -639,6 +639,10 @@ Page({
         name: clockData.userName
       };
       formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
+      formData["phone"] = formData.phone.replace(
+        /^(\d{3})\d{4}(\d{4})$/,
+        "$1****$2"
+      );
       // 判断打过卡
       if (resData.total > 0) {
         this.setData({

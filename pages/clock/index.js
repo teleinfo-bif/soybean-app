@@ -517,8 +517,8 @@ Page({
       if (item.prop === "leavetime") {
         item.title = `到达${locationCity}日期`;
         item.props.placeholder = `请输入到达${locationCity}日期`;
-
-        item.props.end = !atWorkPlace ? getyyyyMMdd() : "";
+        debugger;
+        item.props.end = getyyyyMMdd();
       }
 
       if (item.prop === "nobackreason") {
