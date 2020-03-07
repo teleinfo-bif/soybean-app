@@ -6,28 +6,21 @@
 
 .echarts-box .legend-box {
   padding-top: 50rpx; }
-
 .echarts-box.first {
   height: 360rpx;
   padding-top: 0rpx;
   margin-top: -25rpx;
-  margin-bottom: -5rpx; 
+  margin-bottom: -5rpx;
   box-shadow: 0 6rpx 28rpx 0rpx rgba(194, 199, 225, 0.47);
--webkit-box-shadow: -10px -10px 14px 0px rgba(194, 199, 225, 0.47);
-
-  
-  }
+  -webkit-box-shadow: -10px -10px 14px 0px rgba(194, 199, 225, 0.47); }
 
 .echarts-box {
   width: 750rpx;
   height: 360rpx;
   margin-bottom: 15rpx;
   background: white;
-  
   box-shadow: 0 6rpx 28rpx 0rpx rgba(194, 199, 225, 0.47);
--webkit-box-shadow: -10px -10px 14px 0px rgba(194, 199, 225, 0.47);
-
-   }
+  -webkit-box-shadow: -10px -10px 14px 0px rgba(194, 199, 225, 0.47); }
 
 .hospital-box {
   margin-top: 20rpx; }
@@ -81,9 +74,8 @@ ec-canvas {
   padding-left: 30rpx;
   margin-bottom: 23rpx;
   color: #666666;
-  font-size: 24rpx; 
-  margin-top:30rpx;
-  }
+  font-size: 24rpx;
+  margin-top: 30rpx; }
 
 .legend-item-head {
   height: 40rpx;
@@ -96,11 +88,12 @@ ec-canvas {
 .legend-item_label {
   width: 200rpx;
   display: flex;
-  font-size:20rpx;
+  font-size: 20rpx;
   align-items: center; }
-.legend-item_value{
-  font-size:20rpx;
-}
+
+.legend-item_value {
+  font-size: 20rpx; }
+
 .square {
   margin-right: 10rpx;
   width: 20rpx;
@@ -119,3 +112,9 @@ ec-canvas {
 .canvas {
   width: 100%;
   height: 100%; }
+.pieright{
+  margin-top:20rpx;
+}
+.pierightl{
+  margin-top:-5rpx;
+}

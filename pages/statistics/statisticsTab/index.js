@@ -32,7 +32,7 @@ Page({
           type: 2
         },
         {
-          name: "其他",
+          name: "其他症状",
           type: 0
         },
         {
@@ -42,15 +42,15 @@ Page({
       ],
       hospitalization: [
         {
-          name: "确诊",
+          name: "确诊隔离",
           type: 1
         },
         {
-          name: "隔离期",
+          name: "一般隔离",
           type: 2
         },
         {
-          name: "出隔离期",
+          name: "非隔离期",
           type: 3
         }
         // {
@@ -82,16 +82,16 @@ Page({
           type: 1
         },
         {
-          name: "湖北其他",
+          name: "湖北",
           type: 2
         },
         {
           name: "北京",
-          type: 3
+          type: 4
         },
         {
           name: "其他",
-          type: 4
+          type: 3
         }
       ]
     }
@@ -167,7 +167,20 @@ Page({
    */
   onLoad: function(options) {
     console.log("提醒：页面接受的参数：", options);
-    const { groupId, type, clockInTime } = options;
+    console.log(JSON.parse(options.series))
+  
+    const { groupId, type, clockInTime,title } = options;
+    let regions = JSON.parse(options.series)
+    wx.setNavigationBarTitle({
+      title: title+"详情"//页面标题为路由参数
+    })
+    if (type == "region") {
+      this.data.tabsOption["region"][3].name = regions[3].name
+      this.data.tabsOption["region"][2].name = regions[2].name
+      this.setData({
+        tabsOptions: this.data.tabsOption
+      })
+    }
     const currentTab = this.data.tabsOption[type];
     const allData = [];
     currentTab.forEach((item, index) => {

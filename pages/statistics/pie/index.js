@@ -99,6 +99,10 @@ Component({
       type: Boolean,
       default: false
     },
+    pieS: {
+      type: Boolean,
+      default: false
+    },
     clockIn: {
       type: Number,
       default: 0
@@ -143,9 +147,9 @@ Component({
 
     // pie图点击跳转
     touchHandler() {
-      const { groupId, type, clockInTime } = this.data;
+      const { groupId, type, clockInTime,series } = this.data;
       wx.navigateTo({
-        url: `/pages/statistics/statisticsTab/index?groupId=${groupId}&type=${type}&clockInTime=${clockInTime}`
+        url: `/pages/statistics/statisticsTab/index?title=${this.properties.title}&groupId=${groupId}&type=${type}&clockInTime=${clockInTime}&series=${JSON.stringify(this.properties.data)}`
       });
     },
     initChats(e) {
