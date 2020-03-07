@@ -20,7 +20,7 @@
           <Text>{{groupName}}</Text>
         </view>
         <button open-type='share'>
-          <image  src="../../../static/images/fenxiang.png" />
+          <image  src="../../../static/images/fenxiang.png" style='margin-top:3rpx;' />
         </button>
         
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
