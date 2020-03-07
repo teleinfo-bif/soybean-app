@@ -66,7 +66,7 @@
          <!-- <block wx:if="{{item.clockInId != 0}}" class="color" >
           已打卡
         </block> -->
-        <block wx:else>未打卡</block>
+        <block wx:else style='color:#999999'>打卡详情</block>
       </view>
     </view>
   </block>

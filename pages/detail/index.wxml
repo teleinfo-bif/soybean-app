@@ -9,7 +9,7 @@
           <Text class="head-title1">{{groupName}}</Text>
         </view>
         <button open-type='share'>
-          <image style="width:54rpx;height:54rpx;margin-left:10rpx;"
+          <image style="width:54rpx;height:54rpx;margin-left:10rpx;margin-top:3rpx;"
       src="../../static/images/fenxiang.png" />
         </button>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
