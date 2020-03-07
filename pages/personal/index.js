@@ -258,6 +258,10 @@ Page({
   setFieldsDisable(resData = {}) {
     let fields = this.data.fields;
     // let edit = this.data.edit;
+    //初始化数据后，根据idType修改正则的函数
+    fields[3].props.validate = function(val) {
+      return idRegs[resData.idType - 1].test(val);
+    }
     let userRegisted = resData.userRegisted;
     fields.forEach(item => {
       // 控制bid显示隐藏
