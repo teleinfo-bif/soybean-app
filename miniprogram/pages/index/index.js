@@ -543,7 +543,7 @@ Page({
   getAppContent: function () {
     let that = this
     const db = wx.cloud.database()
-    db.collection('content').get({
+    db.collection('content').limit(1).get({
       success: res => {
         let useOnly = "仅面向中国信通院用户使用"
         if (res.data.length == 1) {
