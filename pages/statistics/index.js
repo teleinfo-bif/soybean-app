@@ -57,13 +57,7 @@ Page({
    getGroup({
      id: groupId,
    }).then((data)=>{
-     let inde = data.addressName.indexOf("省")
-     let newName=''
-     if(inde>-1){
-       newName = data.addressName.substring(inde + 1, data.addressName.length-1)
-     }else{
-       newName = data.addressName
-     }
+     let newName = data.addressName.split("，")[1]
      this.setData({
        addressName: newName
      })

@@ -101,8 +101,8 @@ Component({
       const _this = this;
       wx.showModal({
         //弹窗提示
-        title: "是否授权当前位置",
-        content: "需要获取您的地理位置，请确认授权，否则地定位功能将无法使用",
+        title: "位置授权",
+        content: "请授权获取您的地理位置，否则健康打卡无法提交哦",
         success: function(tip) {
           if (tip.confirm) {
             wx.openSetting({

@@ -20,7 +20,7 @@
         </view>
         <!-- 右侧操作按钮 -->
         <view >
-          <view wx:if="{{item.permission && item.children.length > 0}}" class="organization_item-btn">
+          <view wx:if="{{(item.permission || item.dataPermission==true) && item.children.length > 0}}" class="organization_item-btn">
           <view>
             <navigator url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}">
               <image class="btn" src="../../../static/images/stastic@3x.png" />
@@ -30,7 +30,7 @@
            <image class="btn" src="../../../static/images/detail.png" />
         </view> 
             </view>
-            <view class="organization_item-btn" wx:if="{{item.permission && item.children.length === 0}}">
+            <view class="organization_item-btn" wx:if="{{(item.permission || item.dataPermission==true) && item.children.length === 0}}">
               <view >
 
             <navigator url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}">
@@ -49,6 +49,7 @@
               <image class="btn" src="../../../static/images/detail.png" />
             </navigator>
           </view>
+          
         </view>
       </view>
     </view>

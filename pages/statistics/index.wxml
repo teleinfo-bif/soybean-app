@@ -22,11 +22,11 @@
     <view class="statistic-box_row">
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.total}}</view>
-        <view class="statistic-box_item_label">应填写</view>
+        <view class="statistic-box_item_label">应打卡</view>
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.clockIn}}</view>
-        <view class="statistic-box_item_label">已填写</view>
+        <view class="statistic-box_item_label">已打卡</view>
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value" style="color: #aa4438;">
@@ -77,9 +77,9 @@
   <!-- <navigator class="" target="" url="/pages/statisticsTab" hover-class="navigator-hover" open-type="navigate">
     
   </navigator> -->
-  <pie first="{{true}}" eleid="test1" type="healthy" groupId="{{groupId}}" title="健康情况" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
-  <pie type="region" eleid="test2" groupId="{{groupId}}" title="所在地区分布情况" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
-  <pie type="hospitalization" eleid="test3" groupId="{{groupId}}" title="就诊住院情况" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie first="{{true}}" eleid="test1" type="healthy" groupId="{{groupId}}" title="健康状况" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie type="region" eleid="test2" groupId="{{groupId}}" title="地区分布" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie type="hospitalization" eleid="test3" groupId="{{groupId}}" title="就诊住院" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
    <pie type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>
 
