@@ -38,5 +38,5 @@ page {
 image {
   margin-top: 245rpx;
   margin-bottom: 40rpx;
-  width: 150rpx;
-  height: 150rpx; }
+  width: 200rpx;
+  height: 200rpx; }
