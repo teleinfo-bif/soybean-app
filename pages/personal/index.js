@@ -48,7 +48,7 @@ Page({
           itemLabelKey: "name",
           options: [
             { id: 1, name: "身份证" },
-            { id: 2, name: "单位工卡" },
+            { id: 4, name: "单位工卡" },
           ]
         }
       },
@@ -150,6 +150,7 @@ Page({
   onFormChange(e) {
     let itemData = {};
     const { prop, value } = e.detail;
+    console.log('ww',prop, value)
     itemData[prop] = value;
     // let data = Object.assign(this.data.data, itemData);
     let data = {
@@ -165,7 +166,7 @@ Page({
             return idRegs[value.id - 1].test(val);
           };
           this.setData({
-            'fields[3].props.placeholder': `请输入${value.name}号`
+            'fields[3].props.placeholder': value.id==1?`请输入${value.name}号`:`请输入员工号`
           })         
         }
       });
