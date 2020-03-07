@@ -50,6 +50,7 @@ Page({
   },
   getData() {
     let { requestStutus, clockData, clockInTime, groupId } = this.data;
+
     let { pages = 0, current = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
       this.setData(
@@ -151,6 +152,7 @@ Page({
   onLoad: function(options) {
     console.log(options);
     let { groupId, groupName, permission } = options;
+ 
     this.setData(
       {
         groupId,

@@ -27,7 +27,7 @@ page {
     justify-content: center;
     align-items: center; }
   .head .head-date-text {
-    color: #3891ff; }
+    color:#4169E1; }
 
 .people-item {
   box-sizing: border-box;

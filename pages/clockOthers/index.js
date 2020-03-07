@@ -632,7 +632,7 @@ Page({
       const resData = data;
       const clockData = data.records[0];
       // 打卡数据合并到data中，今日未打卡返回的数据在是{}
-
+      clockData.phone = clockData.phone.substr(0, 3) + "****" + clockData.phone.substr(7, 4);
       let formData = {
         ...this.data.data,
         ...clockData,
