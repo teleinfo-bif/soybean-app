@@ -42,3 +42,11 @@ page {
   background-color: #f5f5f5;
   z-index: -1;
 }
+
+.homelogo {
+  display: block;
+  margin-top: -50rpx;
+  position: fixed;
+  width: 250rpx;
+  height: 30rpx;
+}

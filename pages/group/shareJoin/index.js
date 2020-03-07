@@ -132,11 +132,11 @@ Page({
     const { groupId, groupName, userFilledInfo } = this.data
     wx.showModal({
         title: "提示",
-        content: `点击确定选择需要加入的机构`,
+        content: `确认加入${groupName}？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
-        confirmText: "确定",
+        confirmText: "确认",
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {

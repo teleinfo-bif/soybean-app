@@ -290,20 +290,12 @@ let fields = [
     }
   },
   {
-    title: "其他备注信息",
+    title: "其他",
     type: "input",
     prop: "remarks",
     require: false,
     props: {
-      placeholder: "请输入备注信息"
-    }
-  },
-  {
-    type: "agreement",
-    prop: "agreement",
-    require: false,
-    props: {
-      needCheck: false
+      placeholder: "请输入其他"
     }
   }
 ];
@@ -647,6 +639,10 @@ Page({
         name: clockData.userName
       };
       formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
+      formData["phone"] = formData.phone.replace(
+        /^(\d{3})\d{4}(\d{4})$/,
+        "$1****$2"
+      );
       // 判断打过卡
       if (resData.total > 0) {
         this.setData({

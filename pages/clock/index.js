@@ -441,14 +441,15 @@ Page({
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
       formData.city = this.data.city;
-      const atBeijing = formData.address.startsWith("北京市");
+      formData.phoe = this.data.phoneComplete;
+      // const atBeijing = formData.address.startsWith("北京市");
       // 如果未打卡，不在北京，默认离开2,没离开不能默认离开，因为涉及自动填选的选中状态
-      if (!atBeijing && this.data.data["leave"] == null) {
-        formData["leave"] = 2;
-      }
+      // if (!atBeijing && this.data.data["leave"] == null) {
+      //   formData["leave"] = 2;
+      // }
       saveClock(formData).then(res => {
         wx.navigateTo({
-          url: "/pages/status/index?msg=打卡成功"
+          url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
         });
       });
     }
@@ -500,7 +501,7 @@ Page({
       "locationCity:",
       locationCity
     );
-
+    debugger;
     fields.forEach(item => {
       // 是否离开公司所在地
       if (item.prop === "leave") {
@@ -516,8 +517,8 @@ Page({
       if (item.prop === "leavetime") {
         item.title = `到达${locationCity}日期`;
         item.props.placeholder = `请输入到达${locationCity}日期`;
-
-        item.props.end = !atWorkPlace ? getyyyyMMdd() : "";
+        debugger;
+        item.props.end = getyyyyMMdd();
       }
 
       if (item.prop === "nobackreason") {
@@ -663,7 +664,11 @@ Page({
     console.log("getAtWorkPlaceState 开始执行");
     let { clocked, address, userFilledInfo } = this.data;
     const { companyAddress = "" } = userFilledInfo;
-
+    if (!companyAddress || companyAddress.length == 0) {
+      console.error("提醒：用户没有录入单位位置");
+      return;
+    }
+    debugger;
     // 已打卡从返回数据中分离省市信息，未打卡从定位信息中分离数据
     let [companyProvince, companyCity] = companyAddress.split("-");
     let locationProvince, locationCity;
@@ -786,7 +791,12 @@ Page({
     const { userFilledInfo } = app.globalData;
     let { data } = this.data;
     data["name"] = userFilledInfo.name || "";
-    data["phone"] = userFilledInfo.phone || "";
+    data["phoneComplete"] = userFilledInfo.phone || "";
+    data["phone"] = userFilledInfo.phone.replace(
+      /^(\d{3})\d{4}(\d{4})$/,
+      "$1****$2"
+    );
+
     this.setData({
       userFilledInfo,
       data
@@ -804,7 +814,12 @@ Page({
       };
       // 判断打过卡
       if (resData.total > 0) {
+        formData["phoneComplete"] = formData.phoe;
         formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
+        formData.phone = formData.phone.replace(
+          /^(\d{3})\d{4}(\d{4})$/,
+          "$1****$2"
+        );
         this.setData({
           clocked: true,
           data: formData
@@ -840,6 +855,8 @@ Page({
         autoFilledProps.forEach(prop => {
           data[prop] = previousLockData[prop];
         });
+        data["phoneComplete"] = data.phoe;
+        data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
         this.setData({
           data
         });

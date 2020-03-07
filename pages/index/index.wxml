@@ -12,6 +12,7 @@
   <!-- <Statistics></Statistics> -->
   <!-- <view class="footer-copy-right">中国信息通信研究院</view> -->
   <view class="logo">
-    <view class="copyright-view">中国信息通信研究院</view>
+    <!-- <view class="copyright-view">中国信息通信研究院</view> -->
+    <image class="homelogo" src="../../static/images/homelogo.png" />
   </view>
 </view>
