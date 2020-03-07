@@ -182,9 +182,14 @@ Component({
           }
         },
         title: {
-          name: this.data.clockIn + '人',
+          name: this.data.clockIn + '人' ,
           // color: '#7cb5ec',
           fontSize: 16
+        },
+        subtitle: {
+          name: "已打卡",
+          color: '#333333',
+          fontSize: 14
         },
         series: series,
         disablePieStroke: false,
