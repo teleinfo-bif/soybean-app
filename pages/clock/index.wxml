@@ -4,7 +4,7 @@
     <view class="shade"></view>
     <view class="block-success" hover-class="none" hover-stop-propagation="false">
       <view class="block-record" hover-class="none" hover-stop-propagation="false">
-        <navigator class="block-success color" target="" url="/pages/clockRecords/index?userId={{}}" hover-class="navigator-hover" open-type="navigate">
+        <navigator class="block-success color" target="" url="/pages/clockRecords/index?userId={{otherId || userFilledInfo.id}}" hover-class="navigator-hover" open-type="navigate">
           打卡记录
         </navigator>
       </view>

@@ -5,7 +5,7 @@
     <view class="shade"></view>
     <view class="block-success" hover-class="none" hover-stop-propagation="false">
       <view class="block-record" hover-class="none" hover-stop-propagation="false">
-        <navigator class="block-success" target="" url="/pages/clockRecords/index?otherUserId={{otherUserId}}" hover-class="navigator-hover" open-type="navigate">
+        <navigator class="block-success color" target="" url="/pages/clockRecords/index?otherUserId={{otherUserId}}" hover-class="navigator-hover" open-type="navigate">
           打卡记录
         </navigator>
       </view>
@@ -30,10 +30,10 @@
         </view>
         <view class="block-success_text">今日健康良好，请您继续注意健康防护</view>
       </block>
-      <view class="block-success_text">今日已打卡</view>
+      <!-- <view class="block-success_text">今日已打卡</view> -->
     </view>
   </block>
-  <view class="form-header">健康打卡</view>
+  <!-- <view class="form-header">健康打卡</view> -->
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
 </view>
