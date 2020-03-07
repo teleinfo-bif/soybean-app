@@ -59,7 +59,8 @@
 
 .organization_item-name {
   flex: 1;
-  padding-left: 15rpx;
+  /* padding-left: 15rpx; */
+  margin-left: 35rpx;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
