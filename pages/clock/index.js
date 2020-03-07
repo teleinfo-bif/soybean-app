@@ -274,7 +274,7 @@ let fields = [
     }
   },
   {
-    title: "您的在岗状态 ",
+    title: "个人状态 ",
     type: "radio",
     prop: "jobstatus",
     hide: false,
@@ -290,12 +290,12 @@ let fields = [
     }
   },
   {
-    title: "其他备注信息",
+    title: "其他",
     type: "input",
     prop: "remarks",
     require: false,
     props: {
-      placeholder: "请输入备注信息"
+      placeholder: "请输入其他"
     }
   },
   {
@@ -322,6 +322,7 @@ Page({
     data: {
       address: ""
     },
+    city: "",
     baseAddress: "",
     otherFieldsList: {
       healthy: "otherhealthy",
@@ -439,6 +440,7 @@ Page({
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
+      formData.city = this.data.city;
       const atBeijing = formData.address.startsWith("北京市");
       // 如果未打卡，不在北京，默认离开2,没离开不能默认离开，因为涉及自动填选的选中状态
       if (!atBeijing && data["leave"] == null) {
@@ -482,11 +484,21 @@ Page({
   async setFieldsFromAddress(formData) {
     // 先判断用户位置信息和填写的信息是否一致
 
-    let { fields } = this.data;
+    console.log("==========修改城市名称==============");
+    console.log("companyAddress", this.data.userFilledInfo.companyAddress);
 
+    let { fields } = this.data;
     // 是否在工作地
     let { atWorkPlace, companyCity, locationCity } = this.getAtWorkPlaceState(
       formData
+    );
+    console.log(
+      "atWorkPlace:",
+      atWorkPlace,
+      "companyCity:",
+      companyCity,
+      "locationCity:",
+      locationCity
     );
 
     fields.forEach(item => {
@@ -564,6 +576,7 @@ Page({
         离开： 显示(nobackreason gobacktime leavetime flight transport ) 隐藏()
         未离开：显示(nobackreason gobacktime) 隐藏(leavetime flight transport)
       */
+    debugger;
     const { atWorkPlace } = this.getAtWorkPlaceState(formData);
     let hideList = [];
     let showList = [];
@@ -634,8 +647,10 @@ Page({
   },
   // 修改打卡地点
   onChangeBaseAddress(e) {
+    debugger;
     this.setData({
-      baseAddress: e.detail
+      baseAddress: e.detail.baseAddress,
+      city: e.detail.city
     });
   },
   /**
@@ -645,8 +660,9 @@ Page({
    * @returns {atWorkPlace, companyProvince, companyCity}
    */
   getAtWorkPlaceState(formData = this.data.data) {
+    console.log("getAtWorkPlaceState 开始执行");
     let { clocked, address, userFilledInfo } = this.data;
-    const { companyAddress } = userFilledInfo;
+    const { companyAddress = "" } = userFilledInfo;
 
     // 已打卡从返回数据中分离省市信息，未打卡从定位信息中分离数据
     let [companyProvince, companyCity] = companyAddress.split("-");
@@ -654,17 +670,32 @@ Page({
     // 是否在工作地
     let atWorkPlace;
     // 判断省份和城市相同，则位置在工作地
+    console.log("getAtWorkPlaceState clocked", clocked);
     if (clocked) {
-      [locationProvince, locationCity] = formData.companyAddress.split("-");
+      const result = formData.address.match(/.+?(省|市|自治区|自治州|县|区)/g);
+      // 直辖市如果只有两个字段，比如北京就是北京市、海淀区，需要补充第一个省份
+      if (result.length == 2) {
+        result.unshift(result[0]);
+      }
+      [locationProvince, locationCity] = result;
+
       atWorkPlace =
         companyProvince == locationProvince && companyCity == locationCity;
       // atWorkPlace = formData["leave"] == 1;
     } else {
       let locationed = Object.keys(address).length > 0;
+      console.log("判断是否已经定位成功：locationed", locationed);
       locationProvince = locationed ? address.address_component.province : "";
       locationCity = locationed ? address.address_component.city : "";
       atWorkPlace =
         companyProvince == locationProvince && companyCity == locationCity;
+      console.log(
+        "定位省市县：locationed",
+        "locationProvince",
+        locationProvince,
+        "locationCity",
+        locationCity
+      );
     }
     return {
       atWorkPlace,
@@ -712,9 +743,17 @@ Page({
     const {
       province,
       district,
+      city,
       street_number
     } = location.result.address_component;
-    const baseAddress = province + district;
+    let baseAddress;
+    // 打卡省市拼接给server
+    const locationCity = province + "，" + city;
+    if (province == city) {
+      baseAddress = province;
+    } else {
+      baseAddress = province + city;
+    }
     fields.forEach(item => {
       if (item.prop == "address") {
         item.props["location"] = location;
@@ -724,14 +763,16 @@ Page({
 
     const formData = {
       ...this.data.data,
-      address: street_number
+      address: district + street_number,
+      city: locationCity
     };
     this.setData(
       {
         address: location.result,
         baseAddress,
         fields,
-        data: formData
+        data: formData,
+        city: locationCity
       },
       () => {
         this.setFieldsFromAddress(formData);
