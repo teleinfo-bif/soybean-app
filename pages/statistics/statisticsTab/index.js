@@ -177,6 +177,8 @@ Page({
     if (type == "region") {
       this.data.tabsOption["region"][3].name = regions[3].name
       this.data.tabsOption["region"][2].name = regions[2].name
+      this.data.tabsOption["region"][0].name = regions[0].name
+      this.data.tabsOption["region"][1].name = regions[1].name
       this.setData({
         tabsOptions: this.data.tabsOption
       })

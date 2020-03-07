@@ -51,7 +51,7 @@
         </block>
       </view>
        <view class="people-item_detail color" wx:if="{{type=='healthy'}}" >
-        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}" >
+        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}&&clockInTime={{clockInTime}}" >
           打卡详情
         </navigator>
          <!-- <block wx:if="{{item.clockInId != 0}}" class="color" >
@@ -59,8 +59,8 @@
         </block> -->
         <block wx:else>未打卡</block>
       </view>
-           <view class="people-item_detail color" style='margin-left:-500rpx;' wx:if="{{type!='healthy'}}" >
-        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}" >
+           <view class="people-item_detail color" style='text-align:left' wx:if="{{type!='healthy'}}" >
+        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}" >
           打卡详情
         </navigator>
          <!-- <block wx:if="{{item.clockInId != 0}}" class="color" >

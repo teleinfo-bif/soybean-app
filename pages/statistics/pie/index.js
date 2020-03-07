@@ -193,7 +193,7 @@ Component({
         subtitle: {
           name: "已打卡",
           color: '#333333',
-          fontSize: 14
+          fontSize: 11
         },
         series: series,
         disablePieStroke: false,

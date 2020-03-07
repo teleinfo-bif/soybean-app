@@ -275,12 +275,14 @@ const _refetch = (url, params, method) => {
 
 //除开上面的调用方式之外，你也可以使用下面的这些方法，只需要关注是否传入method
 const _get = (url, params = {}) => {
+  params.size = 20
   return Request({
     url,
     params
   });
 };
 const _post = (url, params = {}) => {
+  params.size = 20
   return Request({
     url,
     params,
@@ -288,6 +290,7 @@ const _post = (url, params = {}) => {
   });
 };
 const _put = (url, params = {}) => {
+  params.size = 20
   return Request({
     url,
     params,
@@ -295,6 +298,7 @@ const _put = (url, params = {}) => {
   });
 };
 const _delete = (url, params = {}) => {
+  params.size = 20
   return Request({
     url,
     params,
