@@ -443,7 +443,7 @@ Page({
       formData.city = this.data.city;
       const atBeijing = formData.address.startsWith("北京市");
       // 如果未打卡，不在北京，默认离开2,没离开不能默认离开，因为涉及自动填选的选中状态
-      if (!atBeijing && data["leave"] == null) {
+      if (!atBeijing && this.data.data["leave"] == null) {
         formData["leave"] = 2;
       }
       saveClock(formData).then(res => {
