@@ -8,7 +8,7 @@ import { saveOrUpdateUserInfo } from "../../api/api.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
-const yuangongka = /^[A-Za-z0-9]{3,15}$/;
+const yuangongka = /^[A-Za-z0-9]{4,18}$/;
 const idRegs = [idNumberReg, huzhao, junguan, yuangongka];
 Page({
   /**
@@ -48,8 +48,8 @@ Page({
           itemKey: "id",
           itemLabelKey: "name",
           options: [
-            { id: 1, name: "身份证" },
             { id: 4, name: "单位工卡" },
+            { id: 1, name: "身份证" },
           ]
         }
       },
