@@ -19,9 +19,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const { data = {} } = options;
+    const { data = "" } = options;
     this.setData({
-      data
+      data: JSON.parse(data)
     });
   },
 

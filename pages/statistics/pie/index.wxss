@@ -6,6 +6,7 @@
 
 .echarts-box .legend-box {
   padding-top: 50rpx; }
+
 .echarts-box.first {
   height: 360rpx;
   padding-top: 0rpx;
@@ -112,9 +113,9 @@ ec-canvas {
 .canvas {
   width: 100%;
   height: 100%; }
-.pieright{
-  margin-top:20rpx;
-}
-.pierightl{
-  margin-top:-5rpx;
-}
+
+.pieright {
+  margin-top: 20rpx; }
+
+.pierightl {
+  margin-top: -5rpx; }

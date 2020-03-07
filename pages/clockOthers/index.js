@@ -290,20 +290,12 @@ let fields = [
     }
   },
   {
-    title: "其他备注信息",
+    title: "其他",
     type: "input",
     prop: "remarks",
     require: false,
     props: {
-      placeholder: "请输入备注信息"
-    }
-  },
-  {
-    type: "agreement",
-    prop: "agreement",
-    require: false,
-    props: {
-      needCheck: false
+      placeholder: "请输入其他"
     }
   }
 ];

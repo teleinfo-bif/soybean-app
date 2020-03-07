@@ -25,7 +25,7 @@
   </view>
   <view class="btn-item">
     <navigator url="/pages/index/index">
-      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
+      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>进入首页</van-button>
     </navigator>
   </view>
   <!-- <view class="btn-item">
