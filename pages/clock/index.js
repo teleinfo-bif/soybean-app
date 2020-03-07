@@ -274,7 +274,7 @@ let fields = [
     }
   },
   {
-    title: "您的在岗状态 ",
+    title: "个人状态 ",
     type: "radio",
     prop: "jobstatus",
     hide: false,
