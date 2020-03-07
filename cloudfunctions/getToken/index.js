@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
     qs: {
       appid:wxContext.APPID,
       //secret:'515a54fb09b7b2f55166089ebab28b7c',  // 微信开发后台可生成，唯有微信认证过的国内主体才可有
-      secret: '1015043c12c22963b8b8e41d0e43f083',
+      // secret: '1015043c12c22963b8b8e41d0e43f083',
+      secret: 'b00d3a0dac225c6fe40e5060572180f6',
       grant_type: 'authorization_code',
       js_code: event.sessionCode // 小程序中获取过来的
     },
