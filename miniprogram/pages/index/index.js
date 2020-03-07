@@ -32,6 +32,7 @@ Page({
     interval: 3000,
     duration: 500,
     imgQR:'',
+    useOnly: '',
 
     userInfoFlagYes: true,
     userInfoFlagNo: false,
@@ -137,7 +138,9 @@ Page({
         }
       }
     })
+
     this.onGetOpenid()
+    this.getAppContent()
 
   },
 
@@ -532,6 +535,32 @@ Page({
           icon: 'none',
           title: '登录失败',
         })
+      }
+    })
+  },
+
+  /**获取程序声明内容 */
+  getAppContent: function () {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('content').get({
+      success: res => {
+        let useOnly = "仅面向中国信通院用户使用"
+        if (res.data.length == 1) {
+          useOnly = res.data[0].useOnly
+        }
+
+        that.setData({
+          useOnly: useOnly
+        })
+
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.log(err)
       }
     })
   },
