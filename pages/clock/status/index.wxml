@@ -1,0 +1,36 @@
+<!-- pages/status/index.wxml -->
+<view class="page">
+  <view class="status">
+    <!-- 打卡状态-确诊 -->
+    <block wx:if="{{ data.comfirmed == 2}}">
+      <view class="block-success_icon">
+        <image mode="aspectFit" src="../../../static/images/success_red@3x.png" alt="已打卡" />
+      </view>
+      <view class="block-success_text">您已确诊，请积极配合治疗，祝您早日康复</view>
+    </block>
+    <!-- 打卡状态-异常 -->
+    <block wx:elif="{{data.healthy != 1 || data.admitting == 2}}">
+      <view class="block-success_icon">
+        <image mode="aspectFit" src="../../../static/images/success_yellow@3x.png" alt="已打卡" />
+      </view>
+      <view class="block-success_text">今日健康异常，请您注意隔离，多加防护</view>
+    </block>
+    <!-- 打卡状态-正常 -->
+    <block wx:else>
+      <view class="block-success_icon">
+        <image mode="aspectFit" src="../../../static/images/success_green@3x.png" alt="已打卡" />
+      </view>
+      <view class="block-success_text">今日健康良好，请您继续注意健康防护</view>
+    </block>
+  </view>
+  <view class="btn-item">
+    <navigator url="/pages/index/index">
+      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
+    </navigator>
+  </view>
+  <!-- <view class="btn-item">
+    <van-button bind:click="navigateTo" data-path='/pages/index/index' custom-style="" round="{{true}}" type="primary" color="#dddddd" block>
+      <text class="btn_go-home">返回首页</text>
+    </van-button>
+  </view> -->
+</view>

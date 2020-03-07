@@ -1,0 +1,42 @@
+page {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 30rpx 0; }
+
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.status_icon {
+  margin-top: 250rpx; }
+  .status_icon image {
+    width: 150rpx;
+    height: 150rpx; }
+
+.status_msg {
+  align-items: center;
+  font-size: 30rpx;
+  color: #000; }
+
+.status_text {
+  margin-top: 10rpx;
+  margin-bottom: 80rpx;
+  font-size: 30rpx; }
+
+.btn-item {
+  width: 260rpx;
+  margin: 300rpx auto 0;
+  text-align: center;
+  display: flex;
+  justify-content: center; }
+
+.btn_go-home {
+  color: #000 !important; }
+
+image {
+  margin-top: 47rpx;
+  margin-bottom: 40rpx;
+  width: 150rpx;
+  height: 150rpx; }
