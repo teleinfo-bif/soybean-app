@@ -1,7 +1,7 @@
 // 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
-const appid = "wxd69df881f0c947dc";
+const appid = "wx9f50de1f1b6b94c6";
 
 // 定义网络请求API地址
 const baseURL = "https://admin.bidspace.cn/bid-soybean";
