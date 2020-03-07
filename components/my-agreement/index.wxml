@@ -1,4 +1,4 @@
-<van-checkbox wx:if="{{props.needCheck}}" my-radio shape="square" value="{{ value && checked }}" bind:change="onChange">
+<van-checkbox wx:if="{{props.needCheck}}" label-disabled="{{true}}" my-radio shape="square" value="{{ value && checked }}" bind:change="onChange">
   <navigator url="/pages/agreement/index" class="secret-view">
     已阅读信鄂通
     <text class="color">《用户服务条款及隐私协议》</text>
