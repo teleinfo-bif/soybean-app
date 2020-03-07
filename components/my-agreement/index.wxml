@@ -7,6 +7,7 @@
 </van-checkbox>
 <view wx:else class="" hover-class="none" hover-stop-propagation="false">
   <navigator url="/pages/agreement/index" class="secret-view">
+    提交打卡即同意信鄂通
     <text class="color">《用户服务条款及隐私协议》</text>
     ,本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询
   </navigator>

@@ -41,7 +41,7 @@ let fields = [
     }
   },
   {
-    title: "14天内是否离开过工作地",
+    title: "是否14天内到达工作地",
     type: "radio",
     prop: "leave",
     hide: true,
@@ -55,7 +55,7 @@ let fields = [
     }
   },
   {
-    title: "近14天是否离过打卡城市",
+    title: "是否14天内到达打卡城市",
     type: "radio",
     prop: "leaveCity",
     hide: false,
@@ -136,11 +136,26 @@ let fields = [
     }
   },
   {
-    title: "体温（℃）",
+    title: "当天体温",
+    type: "radio",
+    prop: "temperatureRadio",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "正常(37.3以下)" },
+        { id: 2, name: "37.3及以上" }
+      ]
+    }
+  },
+  {
+    title: "具体温度",
     type: "input",
     prop: "temperature",
+    hide: true,
     props: {
-      placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
+      // placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
+      placeholder: "请输入数字和小数点",
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value);
       },
@@ -166,9 +181,21 @@ let fields = [
     type: "input",
     prop: "otherhealthy",
     hide: true,
-    require: false,
     props: {
       placeholder: "请输入其他症状"
+    }
+  },
+  {
+    title: "是否就诊住院",
+    type: "radio",
+    prop: "admitting",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
+      ]
     }
   },
   {
@@ -193,13 +220,13 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "健康" },
-        { id: 2, name: "有发热、咳嗽等症状" },
+        { id: 2, name: "有发热、咳嗽等" },
         { id: 0, name: "其他症状" }
       ]
     }
   },
   {
-    title: "其他",
+    title: "共同居住人员亲属（含合租人员）健康状况为其他的原因",
     type: "input",
     prop: "roomPersonOther",
     hide: true,
@@ -224,49 +251,13 @@ let fields = [
     }
   },
   {
-    title: "其他",
+    title:
+      "共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他的原因",
     type: "input",
     prop: "roomCompanyOther",
     hide: true,
     props: {
       placeholder: "请输入其他"
-    }
-  },
-  {
-    title: "居住小区是否有疑似病例、确诊病例",
-    type: "radio",
-    prop: "neighbor",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "有确诊病例" },
-        { id: 2, name: "有疑似病例" },
-        { id: 3, name: "都无" },
-        { id: 0, name: "其他" }
-      ]
-    }
-  },
-  {
-    title: "其他",
-    type: "input",
-    prop: "neighborOther",
-    hide: true,
-    props: {
-      placeholder: "请输入其他"
-    }
-  },
-  {
-    title: "是否就诊住院",
-    type: "radio",
-    prop: "admitting",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
     }
   },
   {
@@ -283,7 +274,7 @@ let fields = [
     }
   },
   {
-    title: "您的在岗状态 ",
+    title: "个人状态 ",
     type: "radio",
     prop: "jobstatus",
     hide: false,
@@ -305,6 +296,14 @@ let fields = [
     require: false,
     props: {
       placeholder: "请输入备注信息"
+    }
+  },
+  {
+    type: "agreement",
+    prop: "agreement",
+    require: false,
+    props: {
+      needCheck: false
     }
   }
 ];
@@ -584,9 +583,16 @@ Page({
     let atWorkPlace;
     // 判断省份和城市相同，则位置在工作地
     if (clocked) {
-      [locationProvince, locationCity] = formData.companyAddress.split("-");
+      const result = formData.address.match(/.+?(省|市|自治区|自治州|县|区)/g);
+      // 直辖市如果只有两个字段，比如北京就是北京市、海淀区，需要补充第一个省份
+      if (result.length == 2) {
+        result.unshift(result[0]);
+      }
+      [locationProvince, locationCity] = result;
+
       atWorkPlace =
         companyProvince == locationProvince && companyCity == locationCity;
+      debugger;
     } else {
       let locationed = Object.keys(address).length > 0;
       locationProvince = locationed ? address.address_component.province : "";

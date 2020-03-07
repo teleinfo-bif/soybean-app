@@ -26,12 +26,21 @@ Component({
         const { location } = this.data.props;
 
         if (location) {
+          let baseAddress;
+          const {
+            province,
+            city,
+            district
+          } = location.result.address_component;
+          if (province == city) {
+            baseAddress = province;
+          } else {
+            baseAddress = province + city;
+          }
           this.setData({
             noPermission: false,
             location,
-            baseAddress:
-              location.result.address_component.province +
-              location.result.address_component.district
+            baseAddress
           });
         } else {
           this.setData({
@@ -136,16 +145,25 @@ Component({
             // _this.triggerEvent("change", JSON.stringify(location));
             // const { location } = this.data.props;
             wx.hideLoading();
-            let baseAddress =
-              location.result.address_component.province +
-              location.result.address_component.district;
+            let baseAddress;
+            const {
+              province,
+              city,
+              district,
+              street_number
+            } = location.result.address_component;
+            if (province == city) {
+              baseAddress = province;
+            } else {
+              baseAddress = province + city;
+            }
             _this.triggerEvent("baseAddress", baseAddress);
             if (location) {
               _this.setData({
                 noPermission: false,
                 location,
                 baseAddress,
-                streetNumber: location.result.address_component.street_number
+                streetNumber: district + street_number
               });
             } else {
               this.setData({
