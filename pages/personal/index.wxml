@@ -2,7 +2,7 @@
 <view class="page-wrap">
   <view class="form-header">
     <view>身份信息</view>
-    <view wx:if="{{userFilledInfo.userRegisted && false}}" bindtap="setEditState" class="btn-edit">
+    <view wx:if="{{userFilledInfo.userRegisted}}" bindtap="setEditState" class="btn-edit">
       {{!edit? '修 改':'取 消'}}
     </view>
   </view>

@@ -241,6 +241,9 @@ Page({
     // data.phone = null;
     data.homeAddress = null;
     data.detailAddress = null;
+    data.companyName = null;
+    data.companyAddress = null;
+    data.companyDetailAddress = null;
     this.setData({
       data
     });
