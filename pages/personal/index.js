@@ -39,7 +39,7 @@ Page({
         }
       },
       {
-        title: "证件号类型",
+        title: "证件类型",
         type: "select",
         prop: "idType",
         props: {
@@ -47,7 +47,7 @@ Page({
           itemKey: "id",
           itemLabelKey: "name",
           options: [
-            { id: 1, name: "大陆身份证" },
+            { id: 1, name: "身份证" },
             { id: 2, name: "单位工卡" },
           ]
         }
@@ -242,13 +242,15 @@ Page({
   formCancel() {
     let { data } = this.data;
     // data.phone = null;
-    data.homeAddress = null;
-    data.detailAddress = null;
-    data.companyName = null;
-    data.companyAddress = null;
-    data.companyDetailAddress = null;
+    let tempData =  Object.assign({},data,{homeAddress:null,detailAddress:null,companyName:null,companyAddress:null,companyDetailAddress:null})
+    // data.homeAddress = null;
+    // data.detailAddress = null;
+    // data.companyName = null;
+    // data.companyAddress = null;
+    // data.companyDetailAddress = null;
     this.setData({
-      data
+      data: tempData,
+
     });
   },
   // 已填写设置禁用字段
@@ -271,7 +273,9 @@ Page({
     resData["agreement"] = true;
     if (userRegisted) {
       //拼接***** 表单填入新的数据
-      let tempData = {phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11),idNumber: resData.idNumber.substr(0,4)+'************'+resData.idNumber.substr(16,18)}
+      let tempData = resData.idType==1?
+      {phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11),idNumber: resData.idNumber.substr(0,4)+'************'+resData.idNumber.substr(16,18)}
+      :{phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11)}
       let asteriskData =  Object.assign({},resData,tempData)
       this.setData({
         fields: fields,
