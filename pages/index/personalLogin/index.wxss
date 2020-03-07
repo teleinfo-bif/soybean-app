@@ -71,3 +71,7 @@
   height: 35rpx;
   right: 20rpx;
 }
+.opendata-avatar {
+  width: 100%;
+  height: 100%;
+}

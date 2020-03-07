@@ -4,7 +4,7 @@
       <!-- <at-icon compid="{{$compid__0}}"></at-icon> -->
       <!-- <image wx:if="{{userFilledInfo.userRegisted}}" class="" src="{{userFilledInfo.avatarUrl}}" mode="aspectFit" lazy-load="false" binderror="" bindload=""></image> -->
       <!-- <view wx:if="{{!userFilledInfo.userRegisted}}" class='avatar'> -->
-      <open-data wx:if="{{userFilledInfo.userRegisted}}" type="userAvatarUrl"></open-data>
+      <open-data class="opendata-avatar" wx:if="{{userFilledInfo.userRegisted}}" type="userAvatarUrl"></open-data>
       <!-- </view> -->
       <van-icon wx:else name="edit" />
     </view>
