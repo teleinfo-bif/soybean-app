@@ -41,7 +41,7 @@ let fields = [
     }
   },
   {
-    title: "14天内是否离开过工作地",
+    title: "是否14天内到达工作地",
     type: "radio",
     prop: "leave",
     hide: true,
@@ -55,7 +55,7 @@ let fields = [
     }
   },
   {
-    title: "近14天是否离过打卡城市",
+    title: "是否14天内到达打卡城市",
     type: "radio",
     prop: "leaveCity",
     hide: false,
@@ -181,9 +181,21 @@ let fields = [
     type: "input",
     prop: "otherhealthy",
     hide: true,
-    require: false,
     props: {
       placeholder: "请输入其他症状"
+    }
+  },
+  {
+    title: "是否就诊住院",
+    type: "radio",
+    prop: "admitting",
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 1, name: "否" },
+        { id: 2, name: "是" }
+      ]
     }
   },
   {
@@ -208,13 +220,13 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "健康" },
-        { id: 2, name: "有发热、咳嗽等症状" },
+        { id: 2, name: "有发热、咳嗽等" },
         { id: 0, name: "其他症状" }
       ]
     }
   },
   {
-    title: "其他",
+    title: "共同居住人员亲属（含合租人员）健康状况为其他的原因",
     type: "input",
     prop: "roomPersonOther",
     hide: true,
@@ -239,49 +251,13 @@ let fields = [
     }
   },
   {
-    title: "其他",
+    title:
+      "共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他的原因",
     type: "input",
     prop: "roomCompanyOther",
     hide: true,
     props: {
       placeholder: "请输入其他"
-    }
-  },
-  {
-    title: "居住小区是否有疑似病例、确诊病例",
-    type: "radio",
-    prop: "neighbor",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "有确诊病例" },
-        { id: 2, name: "有疑似病例" },
-        { id: 3, name: "都无" },
-        { id: 0, name: "其他" }
-      ]
-    }
-  },
-  {
-    title: "其他",
-    type: "input",
-    prop: "neighborOther",
-    hide: true,
-    props: {
-      placeholder: "请输入其他"
-    }
-  },
-  {
-    title: "是否就诊住院",
-    type: "radio",
-    prop: "admitting",
-    props: {
-      itemKey: "id",
-      itemLabelKey: "name",
-      options: [
-        { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
     }
   },
   {
@@ -350,8 +326,7 @@ Page({
     otherFieldsList: {
       healthy: "otherhealthy",
       roomPerson: "roomPersonOther",
-      roomCompany: "roomCompanyOther",
-      neighbor: "neighborOther"
+      roomCompany: "roomCompanyOther"
     }
   },
   onFormChange(e) {
@@ -382,8 +357,7 @@ Page({
       );
       // ();
     } else if (prop === "temperatureRadio") {
-      data["temperature"] =
-        data["temperatureRadio"] == 1 ? 36.5 : data["temperature"];
+      data["temperature"] = data["temperatureRadio"] == 1 ? 36.5 : "";
       this.setFieldsFromTemperature(data);
     } else if (otherFieldsList[prop]) {
       // 判断 健康状况选其它
@@ -489,7 +463,7 @@ Page({
   },
   // 设置部分选项隐藏
   setFieldsHide(hideList = [], showList = []) {
-    // let fields = fields;
+    let { fields } = this.data;
     fields.forEach(item => {
       // if (showOtherCity && item.prop == "leave") {
       //   item.hide = false;
@@ -519,17 +493,18 @@ Page({
       // 是否离开公司所在地
       if (item.prop === "leave") {
         // item.hide = !atWorkPlace;
-        item.title = "14天内是否离开过" + companyCity;
+        item.title = "是否14天内到达" + companyCity;
       }
       // 是否离开定位所在地
       if (item.prop === "leaveCity") {
         // item.hide = atWorkPlace;
-        item.title = "14天内是否离开过" + locationCity;
+        item.title = "是否14天内到达" + locationCity;
       }
 
       if (item.prop === "leavetime") {
         item.title = `到达${locationCity}日期`;
         item.props.placeholder = `请输入到达${locationCity}日期`;
+
         item.props.end = !atWorkPlace ? getyyyyMMdd() : "";
       }
 
@@ -543,16 +518,16 @@ Page({
         item.props.end = atWorkPlace ? getyyyyMMdd() : "";
         item.props.start = !atWorkPlace ? getyyyyMMdd() : "";
         if (atWorkPlace) {
-          // item.title = `返回${companyCity}日期`;
-          // item.props.placeholder = `请输入返回${companyCity}日期`;
           item.hide = true;
         } else {
+          item.hide = false;
           item.title = `计划返回${companyCity}日期`;
           item.props.placeholder = `请输入计划返回${companyCity}日期`;
         }
       }
     });
 
+    // debugger;
     this.setData({
       fields
     });

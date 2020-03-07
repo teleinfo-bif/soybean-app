@@ -29,14 +29,14 @@
         </navigator>
       </view>
       <!-- 打卡状态-确诊 -->
-      <block wx:if="{{ data.comfirmed == 2 || ata.admitting == 2}}">
+      <block wx:if="{{ data.comfirmed == 2}}">
         <view class="block-success_icon">
           <image mode="aspectFit" src="../../static/images/success_red@3x.png" alt="已打卡" />
         </view>
         <view class="block-success_text">您已确诊，请积极配合治疗，祝您早日康复</view>
       </block>
       <!-- 打卡状态-异常 -->
-      <block wx:elif="{{data.ealthy != 1}}">
+      <block wx:elif="{{data.healthy != 1 || data.admitting == 2}}">
         <view class="block-success_icon">
           <image mode="aspectFit" src="../../static/images/success_yellow@3x.png" alt="已打卡" />
         </view>

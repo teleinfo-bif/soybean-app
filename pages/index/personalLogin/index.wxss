@@ -53,7 +53,7 @@
   height: 45rpx;
 }
 
-.test {
+.btn-getUserInfo {
   position: absolute;
   left: 0;
   top: 0;
@@ -62,7 +62,7 @@
   background-color: transparent;
 }
 
-.test::after {
+.btn-getUserInfo::after {
   border: none;
 }
 .icon-right {

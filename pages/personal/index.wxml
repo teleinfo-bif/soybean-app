@@ -2,7 +2,7 @@
 <view class="page-wrap">
   <view class="form-header">
     <view>身份信息</view>
-    <view wx:if="{{userFilledInfo.userRegisted}}" bindtap="setEditState" class="btn-edit">
+    <view wx:if="{{userFilledInfo.userRegisted && false}}" bindtap="setEditState" class="btn-edit">
       {{!edit? '修 改':'取 消'}}
     </view>
   </view>
@@ -13,8 +13,14 @@
     <view style="width: 35rpx;"></view> -->
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
-    <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
-      !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}</van-button>
+    <van-button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-submit" disabled="{{userFilledInfo.userRegisted && !edit}}" size="normal" color="#1759EF" custom-class="form-btn">{{
+      !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}
+       <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>
+      </van-button>
+      <van-button wx:else class="btn-submit" disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
+      !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}
+      </van-button>
+      
   </view>
   <view wx:if="{{userFilledInfo.userRegisted && !edit}}" style="height:100%;position: absolute;left: 0;top:0;bottom:0;background: transparent;width:100%;z-index: 10;;"></view>
 </view>

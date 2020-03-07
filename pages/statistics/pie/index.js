@@ -128,7 +128,11 @@ Component({
     ec: {
       lazyLoad: true
     },
-    ringChart: null
+    ringChart: null,
+    ringWidth: 200,
+    ringHeight: 150,
+    ringHou: 10,
+    ringBackGround: "#f5f5f5",
   },
 
   /**
@@ -172,18 +176,23 @@ Component({
         canvasId: eleid,
         type: "ring",
         extra: {
-          ringWidth: 10,
+          ringWidth: this.data.ringHou,
           pie: {
             offsetAngle: -45
           }
         },
+        title: {
+          name: this.data.clockIn + '人',
+          // color: '#7cb5ec',
+          fontSize: 16
+        },
         series: series,
         disablePieStroke: false,
-        width: 170,
-        height: 170,
+        width: 200,
+        height: 150,
         dataLabel: false,
         legend: false,
-        background: "#fff",
+        background: "#f5f5f5",
         padding: 0
       });
       // debugger;
