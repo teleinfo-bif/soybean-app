@@ -1,7 +1,4 @@
-import {
-  getLocationPluginMapUrl,
-  reverseAddressFromLocation
-} from "../../utils/qqmap-wx-jssdk/map";
+import { getLocationPluginMapUrl, reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 
 Component({
   options: {
@@ -157,7 +154,10 @@ Component({
             } else {
               baseAddress = province + city;
             }
-            _this.triggerEvent("baseAddress", baseAddress);
+            _this.triggerEvent("baseAddress", {
+              baseAddress,
+              city: province + '，' + city
+            });
             if (location) {
               _this.setData({
                 noPermission: false,

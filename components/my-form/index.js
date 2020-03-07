@@ -75,6 +75,7 @@ Component({
       this.triggerChange(prop, value);
     },
     onChangeBaseAddress(e) {
+      debugger
       const value = e.detail;
       this.triggerEvent("baseAddress", value);
     },

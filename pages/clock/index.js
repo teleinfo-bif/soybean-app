@@ -322,6 +322,7 @@ Page({
     data: {
       address: ""
     },
+    city: "",
     baseAddress: "",
     otherFieldsList: {
       healthy: "otherhealthy",
@@ -439,6 +440,7 @@ Page({
       const formData = this.data.data;
       formData.userId = this.data.userFilledInfo.id;
       formData.address = this.data.baseAddress + formData.address;
+      formData.city = this.data.city;
       const atBeijing = formData.address.startsWith("北京市");
       // 如果未打卡，不在北京，默认离开2,没离开不能默认离开，因为涉及自动填选的选中状态
       if (!atBeijing && data["leave"] == null) {
@@ -645,8 +647,10 @@ Page({
   },
   // 修改打卡地点
   onChangeBaseAddress(e) {
+    debugger;
     this.setData({
-      baseAddress: e.detail
+      baseAddress: e.detail.baseAddress,
+      city: e.detail.city
     });
   },
   /**
@@ -743,6 +747,8 @@ Page({
       street_number
     } = location.result.address_component;
     let baseAddress;
+    // 打卡省市拼接给server
+    const locationCity = province + "，" + city;
     if (province == city) {
       baseAddress = province;
     } else {
@@ -757,14 +763,16 @@ Page({
 
     const formData = {
       ...this.data.data,
-      address: district + street_number
+      address: district + street_number,
+      city: locationCity
     };
     this.setData(
       {
         address: location.result,
         baseAddress,
         fields,
-        data: formData
+        data: formData,
+        city: locationCity
       },
       () => {
         this.setFieldsFromAddress(formData);
