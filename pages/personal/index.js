@@ -8,7 +8,8 @@ import { saveOrUpdateUserInfo } from "../../api/api.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
-const idRegs = [idNumberReg, huzhao, junguan];
+const yuangongka = /^[A-Za-z0-9]{3,15}$/;
+const idRegs = [idNumberReg, huzhao, junguan, yuangongka];
 Page({
   /**
    * 页面的初始数据
@@ -150,7 +151,6 @@ Page({
   onFormChange(e) {
     let itemData = {};
     const { prop, value } = e.detail;
-    console.log('ww',prop, value)
     itemData[prop] = value;
     // let data = Object.assign(this.data.data, itemData);
     let data = {

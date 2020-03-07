@@ -12,16 +12,8 @@
     <view class="people-item" wx:for="{{ allData[activeIndex].records }}" wx:key="index">
       <view class="people-item_name">{{item.userName || "-"}}</view>
       <!-- <view class="people-item_sign">{{itme.healthy != -1 ? '已打卡': '未打卡'}}</view> -->
-      <view class="people-item_detail color">
-        <!-- <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}">
-          已打卡
-        </navigator> -->
-         <block wx:if="{{item.clockInId != 0}}" class="color" >
-          已打卡
-        </block>
-        <block wx:else>未打卡</block>
-      </view>
-      <view class="people-item_status">
+     
+      <view class="people-item_status" wx:if="{{type=='healthy'}}">
         <!-- <block wx:if="{{ item.healthy == 1}}">
           <view class="status-circle status-circle-green"></view>
           <view>正常</view>
@@ -57,6 +49,24 @@
           <view class="status-circle status-circle-gray"></view>
           <view>--</view>
         </block>
+      </view>
+       <view class="people-item_detail color" wx:if="{{type=='healthy'}}" >
+        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}" >
+          打卡详情
+        </navigator>
+         <!-- <block wx:if="{{item.clockInId != 0}}" class="color" >
+          已打卡
+        </block> -->
+        <block wx:else>未打卡</block>
+      </view>
+           <view class="people-item_detail color" style='margin-left:-500rpx;' wx:if="{{type!='healthy'}}" >
+        <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.userId}}&name={{item.name}}&phone={{item.phone}}" >
+          打卡详情
+        </navigator>
+         <!-- <block wx:if="{{item.clockInId != 0}}" class="color" >
+          已打卡
+        </block> -->
+        <block wx:else>未打卡</block>
       </view>
     </view>
   </block>
