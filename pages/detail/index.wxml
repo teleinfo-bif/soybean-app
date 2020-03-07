@@ -9,8 +9,7 @@
           <Text class="head-title1">{{groupName}}</Text>
         </view>
         <button open-type='share'>
-          <image style="width:54rpx;height:54rpx;margin-left:10rpx;margin-top:3rpx;"
-      src="../../static/images/fenxiang.png" />
+          <image style="width:54rpx;height:54rpx;margin-left:10rpx;margin-top:3rpx;" src="../../static/images/fenxiang.png" />
         </button>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
           <view>
@@ -30,7 +29,7 @@
             {{item.clockInId != 0 ? '已打卡': '未打卡'}}
           </view>
           <view style='margin-left:24rpx;' wx:if="{{item.permission == true}}" class="people-item_detail ">
-            <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clockOthers/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}">
+            <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clock/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}">
               打卡详情
             </navigator>
             <block wx:else>打卡详情</block>
