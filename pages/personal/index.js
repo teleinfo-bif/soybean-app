@@ -39,7 +39,7 @@ Page({
         }
       },
       {
-        title: "证件类型",
+        title: "证件号类型",
         type: "select",
         prop: "idType",
         props: {
@@ -142,7 +142,8 @@ Page({
   setEditState() {
     this.setData(
       {
-        edit: !this.data.edit
+        edit: !this.data.edit,
+        data: this.data.edit?this.data.asteriskData:this.data.realData
       },
       this.setFieldsEditable
     );
@@ -253,7 +254,6 @@ Page({
     let fields = this.data.fields;
     // let edit = this.data.edit;
     let userRegisted = resData.userRegisted;
-
     fields.forEach(item => {
       // 控制bid显示隐藏
       if (item.prop == "bidAddress") {
@@ -261,7 +261,6 @@ Page({
       }
       return (item["props"]["disable"] = userRegisted);
     });
-
     // 需要把服务端存的province-city-district字符串拆分成picker显示的数组
     if (resData && typeof resData.homeAddress === "string") {
       resData.homeAddress = resData.homeAddress.split("-");
@@ -269,9 +268,14 @@ Page({
     }
     resData["agreement"] = true;
     if (userRegisted) {
+      //拼接***** 表单填入新的数据
+      let tempData = {phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11),idNumber: resData.idNumber.substr(0,4)+'************'+resData.idNumber.substr(16,18)}
+      let asteriskData =  Object.assign({},resData,tempData)
       this.setData({
         fields: fields,
-        data: resData
+        data: asteriskData,
+        realData: resData,//保存下来供修改时更新数据
+        asteriskData: asteriskData //保存下来供取消时更新数据
       });
     } else {
       let data = {};
