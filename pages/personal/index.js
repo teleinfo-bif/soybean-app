@@ -48,8 +48,7 @@ Page({
           itemLabelKey: "name",
           options: [
             { id: 1, name: "大陆身份证" },
-            { id: 2, name: "护照" },
-            { id: 3, name: "军官证" }
+            { id: 2, name: "单位工卡" },
           ]
         }
       },
@@ -165,6 +164,9 @@ Page({
           item.props.validate = function(val) {
             return idRegs[value.id - 1].test(val);
           };
+          this.setData({
+            'fields[3].props.placeholder': `请输入${value.name}号`
+          })         
         }
       });
     }
