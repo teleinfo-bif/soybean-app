@@ -16,7 +16,7 @@
     <text wx:else class="entering-box_text">用户注册</text>
     <!-- <image class="icon-right" src="../../../static/images/dayuhao.png"></image> -->
     <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>
-    <view class="dayuhao-container">
+    <view class="dayuhao-container" bindtap="{{userFilledInfo.name?'toPersonal':''}}">
       <image class="dayuhao" src="../../../static/images/dayuhao.png" />
     </view>
   </view>

@@ -57,6 +57,11 @@ Component({
         });
       } else {
       }
+    },
+    toPersonal() {
+      wx.navigateTo({
+        url: "/pages/personal/index"
+      });
     }
   }
 });
