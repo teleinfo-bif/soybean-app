@@ -15,7 +15,7 @@
         <!-- <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
           {{item.name}}
         </view> -->
-        <view class="organization_item-name" style="margin-left:0rpx;" data-data="{{item}}">
+        <view class="organization_item-name" style="padding-left:0rpx;" data-data="{{item}}">
           <view wx:if="{{item.permission || item.dataPermission}}" class="" target="" data-data="{{item}}" bind:tap="navigateToGroupIndex">
             {{item.name}}
           </view>

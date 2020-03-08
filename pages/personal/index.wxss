@@ -8,14 +8,16 @@ page {
 .form-header {
   display: flex;
   align-items: center;
+  margin-top: 35rpx;
   width: 750rpx;
-  height: 88rpx;
+  height: 140rpx;
   background: white;
-  font-size: 36rpx; }
+  font-size: 36rpx;
+  font-weight: 600; }
   .form-header .btn-edit {
     position: absolute;
     right: 30rpx;
-    font-size: 32rpx;
+    font-size: 36rpx;
     color: #1759ef;
     z-index: 100; }
   .form-header::before {

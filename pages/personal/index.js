@@ -101,7 +101,7 @@ Page({
         }
       },
       {
-        title: "家庭所在城市及区",
+        title: "家庭所在城市及区（可选）",
         type: "area",
         prop: "homeAddress",
         require: false,
@@ -110,7 +110,7 @@ Page({
         }
       },
       {
-        title: "家庭详细地址",
+        title: "家庭详细地址（可选）",
         type: "map",
         prop: "detailAddress",
         require: false,
@@ -273,6 +273,9 @@ Page({
       if (item.prop == "bidAddress") {
         item.hide = !userRegisted;
       }
+      if(item.prop=='agreement'){
+        item.hide=!this.data.edit;
+      }
       return (item["props"]["disable"] = userRegisted);
     });
     // 需要把服务端存的province-city-district字符串拆分成picker显示的数组
@@ -280,7 +283,7 @@ Page({
       resData.homeAddress = resData.homeAddress.split("-");
       resData.companyAddress = resData.companyAddress.split("-");
     }
-    resData["agreement"] = true;
+    
     if (userRegisted) {
       //拼接***** 表单填入新的数据
       let tempData =
@@ -325,6 +328,9 @@ Page({
     let { userRegisted } = app.globalData.userFilledInfo;
 
     fields.forEach(item => {
+      if (item.prop == 'agreement') {
+        item.hide = !this.data.edit;
+      }
       if (
         item.prop == "homeAddress" ||
         item.prop == "detailAddress" ||
@@ -334,8 +340,9 @@ Page({
       ) {
         return (item["props"]["disable"] = !this.data.edit);
       }
+    
     });
-
+ 
     this.setData({
       fields: fields
     });

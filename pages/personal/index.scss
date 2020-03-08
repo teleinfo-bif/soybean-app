@@ -9,16 +9,16 @@ page {
   display: flex;
   align-items: center;
   // justify-content: space-between;
-
+  margin-top:35rpx;
   width: 750rpx;
-  height: 88rpx;
+  height: 140rpx;
   background: rgba(255, 255, 255, 1);
   font-size: 36rpx;
-
+  font-weight:600;
   .btn-edit {
     position: absolute;
     right: 30rpx;
-    font-size: 32rpx;
+    font-size: 36rpx;
     color: rgba(23, 89, 239, 1);
     z-index: 100;
   }

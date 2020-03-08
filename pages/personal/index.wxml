@@ -3,7 +3,7 @@
   <view class="form-header">
     <view>身份信息</view>
     <view wx:if="{{userFilledInfo.userRegisted}}" bindtap="setEditState" class="btn-edit">
-      {{!edit? '修 改':'取 消'}}
+      {{!edit? '修改':'取消'}}
     </view>
   </view>
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
