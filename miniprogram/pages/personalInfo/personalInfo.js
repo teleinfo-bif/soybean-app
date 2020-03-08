@@ -19,7 +19,7 @@ Page({
     company_region: ["", "", ""],
     home_region: ["", "", ""],
 
-    certificate_type: ["单位工卡", "二代身份证"],
+    certificate_type: ["单位工卡", "身份证"],
     certificate_type_index: 0,
     certificate_number:"",
     bid_address: "",
@@ -213,7 +213,7 @@ Page({
     switch(index){
       case 0:
       if (!that.workIdVerify()) {
-        warn = "员工号格式错误!"
+        warn = "单位员工号格式错误!"
       }
       break;
       
@@ -221,7 +221,7 @@ Page({
 
       if (!that.idCardValid()) {
         console.log("hello 大陆")
-        warn = "大陆身份证格式错误!"
+        warn = "身份证格式错误!"
       }
       break;
 
@@ -276,7 +276,7 @@ Page({
       card_value = this.data.originEmployeeNumber
       console.log("1111")
     }else {
-      card_number = "请输入二代身份证号码"
+      card_number = "请输入身份证号码"
       card_value = ""
       console.log("222")
     }
@@ -520,7 +520,7 @@ Page({
 
           console.log("card type: ", )
           
-          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证"){
+          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证" || res.data[0].certificate_type == "身份证"){
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
@@ -531,9 +531,11 @@ Page({
 
           var card_type = res.data[0].certificate_type
           console.log("##### data: ", res.data[0].certificate_type)
-          if (card_type == '员工号') {
+          if (card_type == '员工号' || card_type == '单位工卡') {
             console.log("###### 2222")
             card_type = '单位工卡'
+          }else {
+            card_type = "身份证"
           }
 
 
@@ -657,11 +659,11 @@ Page({
       warn = "请填写您的手机号!"
     } else if (!(/^1(3|4|5|7|8)\d{9}$/.test(e.detail.value.phone)) && this.data.personal_info_change == "personal-change-hide"){
       warn = "您的手机号码格式不正确!"
-    } else if (e.detail.value.certificate_type == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_type == ""){
       warn = "请选择您的证件类型!"
-    } else if (e.detail.value.certificate_number == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_number == ""){
       warn = "请输入您的证件号码!"
-    } else if (cardValid != "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (cardValid != ""){
       warn = cardValid
       
     } else if (e.detail.value.company_name == "" || e.detail.value.company_name.indexOf("请选择") != -1){
