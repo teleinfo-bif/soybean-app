@@ -1,4 +1,7 @@
 /* pages/group/groupCodeShow/index.wxss */
+page {
+    background:rgba(249,249,249,1);
+ }
 
 .con {
     margin-top: 40rpx;
@@ -17,22 +20,31 @@
     text-align: center;
     font-size: 50rpx;
     font-weight: bold;
-    background-color: #fff;
+    /* background-color: #fff; */
 }
 
 button {
-    width: 54rpx;
-    height: 54rpx;
+    /* width: 54rpx;
+    height: 54rpx; */
     padding: 0rpx;
     margin: 0rpx;
-    line-height: 54rpx;
+    line-height: 100%;
+    border-radius: 0;
 }
-button:after{ border: none; }
+button::after {
+    border: none;
+  }
 
 .pro{
     margin-top: 50rpx;
     padding: 0 30rpx;
     line-height: 180%;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .btn-item {
