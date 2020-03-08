@@ -940,7 +940,6 @@ Page({
           this.getUserTodyClockData(params);
           this.setFieldsFromOtherClockData();
         } else {
-          debugger;
           this.initFormData();
           this.setUserFilledInfo();
           this.getUserTodyClockData();
@@ -962,7 +961,7 @@ Page({
       app.init(() => {
         if (userId) {
           this.initPage({
-            clockInTime: clockInTime,
+            time: clockInTime,
             userId
           });
         } else {
@@ -972,7 +971,7 @@ Page({
     } else {
       if (userId) {
         this.initPage({
-          clockInTime: clockInTime,
+          time: clockInTime,
           userId
         });
       } else {
