@@ -882,7 +882,7 @@ Page({
         // 未打卡开始获取位置信息，获取之前的打卡记录
         if (!params.userId) {
           this.initAddress();
-          // this.getUserClockListData();
+          this.getUserClockListData();
           this.setData({
             clocked: false
           });
