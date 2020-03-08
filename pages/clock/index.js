@@ -162,9 +162,9 @@ let fields = [
       // placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
       placeholder: "请输入数字和小数点",
       validate(value) {
-        return /^\d+(\.\d+)?$/.test(value) && value > 37.3;
+        return /^\d+(\.\d+)?$/.test(value) && value >= 37.3;
       },
-      errorMsg: "请输入大于37.3的数字和小数点"
+      errorMsg: "异常温度应大于37.2度"
     }
   },
   {
@@ -397,7 +397,7 @@ Page({
     const { temperature, comfirmed, admitting } = this.data.data;
     // data["healthy"] = disable ? null : data["otherhealthy"];
     if (
-      (temperature && Number(temperature) > 37.3) ||
+      (temperature && Number(temperature) >= 37.3) ||
       (comfirmed != null && comfirmed == "2") ||
       (admitting != null && admitting == "2")
     ) {
@@ -518,7 +518,7 @@ Page({
       formData.phoe = this.data.phoneComplete;
       const { temperature, comfirmed, admitting, healthy } = formData;
       if (healthy == "1") {
-        if (temperature && Number(temperature) > 37.3) {
+        if (temperature && Number(temperature) >= 37.3) {
           wx.showToast({
             title: "体温高于37.3不能选择健康",
             icon: "none"
@@ -954,7 +954,7 @@ Page({
         if (resData.total > 0) {
           formData["name"] = formData.userName;
           formData["phoneComplete"] = formData.phoe;
-          formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
+          formData["temperatureRadio"] = formData.temperature >= 37.3 ? 2 : 1;
           formData.phone = formData.phone.replace(
             /^(\d{3})\d{4}(\d{4})$/,
             "$1****$2"
@@ -1010,7 +1010,7 @@ Page({
             data
           });
           previousLockData["temperatureRadio"] =
-            previousLockData.temperature > 37.3 ? 2 : 1;
+            previousLockData.temperature >= 37.3 ? 2 : 1;
           this.setFieldsFromPreviousClockData(previousLockData);
           // this.setFieldsFromAddress()
         } else {

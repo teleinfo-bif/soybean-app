@@ -47,15 +47,15 @@ export const getUserPhone = async params => {
   return Request._get("/wx/user/phone", params);
 };
 
-// 获取用户获取的个人信息
-export const getUserFilledInfo = async params => {
-  return Request._get("/user/exist", params).then(data => {
-    const userFilledInfo = data;
-    userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-    // wx.setStorageSync(Request.userFilledInfofoKey, userFilledInfo);
-    return data;
-  });
-};
+// // 获取用户获取的个人信息
+// export const getUserFilledInfo = async params => {
+//   return Request._get("/user/exist", params).then(data => {
+//     const userFilledInfo = data;
+//     userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
+//     // wx.setStorageSync(Request.userFilledInfofoKey, userFilledInfo);
+//     return data;
+//   });
+// };
 
 // 获取用户上传的个人信息
 export const saveUserInfo = async params => {
