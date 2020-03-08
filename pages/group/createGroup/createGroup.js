@@ -201,20 +201,23 @@ Page({
            wx.hideLoading()   
            console.log('1', data)
            let code = data;
-           wx.showModal({
-            showCancel: true,
-            title: '创建成功',
-            content: "是否加入该机构？",
-            success(res) {
-              if (res.confirm) {
-                _this.joinCodeGroup(code)
-              } else if (res.cancel) {
-                wx.navigateTo({
-                  url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
-                });
-              }
-            }
-          })              
+           wx.navigateTo({
+              url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
+           });
+          //  wx.showModal({
+          //   showCancel: true,
+          //   title: '创建成功',
+          //   content: "是否加入该机构？",
+          //   success(res) {
+          //     if (res.confirm) {
+          //       _this.joinCodeGroup(code)
+          //     } else if (res.cancel) {
+          //       wx.navigateTo({
+          //         url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
+          //       });
+          //     }
+          //   }
+          // })              
       }).catch(e => {
         console.log(e)
         wx.showModal({

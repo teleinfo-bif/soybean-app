@@ -5,15 +5,21 @@
     <image style="width:54rpx;height:54rpx;" src="../../../static/images/fenxiang.png" />
 </button>
 </view>
-<view class="code">{{groupCode}}</view>
+<view class="code" bind:tap="pasteCode">{{groupCode}}</view>
 
 
 
-<view class="pro">您可以通过机构唯一码邀请成员加入, 也可以点击上方分享链接快速邀请。</view>
+<view class="pro">点击可复制机构唯一码到剪切板。您可以通过机构唯一码邀请成员加入, 也可以点击上方分享链接快速邀请。</view>
 
-
+<view class="item">
 <view class="btn-item">
     <navigator url="/pages/index/index">
       <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
     </navigator>
+  </view>
+  <view class="btn-item">
+    <view bind:tap="joinCodeGroup">
+      <van-button type="primary" color="#1759EF" block>加入机构</van-button>
+    </view>
+  </view>
   </view>
