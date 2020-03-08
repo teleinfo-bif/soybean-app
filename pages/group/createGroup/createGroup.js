@@ -158,10 +158,6 @@ Page({
   submitUserInfo: function (e) {
     const _this = this
     console.log("机构提交: ", e.detail.value)
-
-    wx.showLoading({
-      title: '信息提交中',
-    })
     
     var warn = ""
     var that = this
@@ -183,7 +179,10 @@ Page({
       warn = "请填写您的手机号!"
     } else {
       flag = true
-
+      
+      wx.showLoading({
+        title: '信息提交中',
+      })
       console.log("add group info to database")
       console.log(e.detail.value.group_address,
         e.detail.value.group_applicant,
@@ -199,6 +198,7 @@ Page({
         remarks: e.detail.value.group_introduce,
         userId: this.data.globalData.userId,
       }).then(data => {
+           wx.hideLoading()   
            console.log('1', data)
            let code = data;
            wx.showModal({
@@ -214,8 +214,7 @@ Page({
                 });
               }
             }
-          })
-          wx.hideLoading()        
+          })              
       }).catch(e => {
         console.log(e)
         wx.showModal({
@@ -235,7 +234,7 @@ Page({
         title: warn,
         icon: 'none',
       })
-      wx.hideLoading()
+      // wx.hideLoading()
       return
 
     }
