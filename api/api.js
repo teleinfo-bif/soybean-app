@@ -151,3 +151,9 @@ export const quitGroup = async params => {
   console.log("/wx/usergroup/quit----params", params);
   return Request._post(`/wx/usergroup/quit`, params);
 };
+
+// 根据唯一码查看群信息
+export const fromGroupCodetoId = async params => {
+  console.log("/wx/group/groupCode----params", params);
+  return Request._get(`/wx/group/groupCode`, params);
+};

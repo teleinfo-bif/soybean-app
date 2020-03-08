@@ -1,5 +1,5 @@
 // pages/organizationCode/index.js
-import { getUserCurrentGroup } from "../../../api/api";
+import { fromGroupCodetoId } from "../../../api/api";
 Page({
 
   /**
@@ -14,22 +14,16 @@ Page({
       code: e.detail.value
     })
   },
-  //
-  joinCodeGroup: function() {
+  //根据唯一码判断，查看群信息，跳转
+  joinCodeGroup: function () {
     const { code } = this.data
-    if(code) {
-      console.log('code',code);
-      let groupName = "大数据与区块链部"
-      let groupId = "67"
-      getUserCurrentGroup({
-        groupId: groupId
+    if (code) {
+      console.log('code', code);
+      fromGroupCodetoId({
+        groupCode: code
       }).then(data => {
-        console.log('查找群', data)
-        if(code=="123456"){
-          wx.navigateTo({
-            url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
-          }); 
-        } else {
+        console.log('根据唯一码查看群信息', data)
+        if (JSON.stringify(data) == "{}") {
           wx.showModal({
             title: "提示",
             content: `您输入的机构唯一码有误，请和邀请人确认！`,
@@ -40,36 +34,20 @@ Page({
             success(res) {
               if (res.confirm) {
                 console.log("ok");
-              } 
+              }
             }
           })
-        }        
-      }) 
+        } else {
+          let groupName = data.name
+          let groupId = data.id
+          wx.navigateTo({
+            url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
+          });
+        }
+      })
     }
   },
   
-  //查询是否已经加过群
-  isCanJoinGroup: function() {   
-    const { groupId, userId } = this.data 
-    getUserCurrentGroup({
-      groupId: userId
-    }).then(data => {
-      console.log('查询用户已加入的群接口', data)
-      if(JSON.stringify(data) == "{}"){
-        this.joinDifferentGroup(groupId)
-      }else {
-        let quitId = data.id
-        let quitName = data.name
-        this.setData({
-          alreadJoinName: quitName,
-          alreadJoinId: quitId,
-          alreadJoin: true,
-        })
-        this.joinDifferentGroup(groupId)
-        // this.quitGroupTest(quitId) 
-      }   
-    })   
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -122,7 +100,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })
