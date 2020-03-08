@@ -914,7 +914,7 @@ Page({
     fields.forEach(item => {
       item.props.disable = true;
     });
-    fields.pop();
+    // fields.pop();
     this.setData({ fields });
   },
   async setFieldsFromClockData(formData) {
