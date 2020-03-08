@@ -35,7 +35,7 @@ page {
     align-items: center;
   }
   .head-date-text {
-    color: #4169E1;
+    color: #4169e1;
   }
 }
 
@@ -149,7 +149,7 @@ page {
   text-align: center;
 }
 .no-more-msg {
-  margin-top: 20rpx 0 10rpx;
+  margin: 20rpx auto 10rpx;
   color: 999;
   font-size: 28rpx;
   text-align: center;
@@ -165,8 +165,8 @@ page {
 button {
   background-color: #fff;
   padding: 0;
-  line-height:100%;
-  border-radius:0;
+  line-height: 100%;
+  border-radius: 0;
   &::after {
     border: none;
   }

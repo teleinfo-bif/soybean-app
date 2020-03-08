@@ -27,7 +27,7 @@ page {
     justify-content: center;
     align-items: center; }
   .head .head-date-text {
-    color: #4169E1; }
+    color: #4169e1; }
 
 .people-item {
   box-sizing: border-box;
@@ -108,7 +108,7 @@ page {
   text-align: center; }
 
 .no-more-msg {
-  margin-top: 20rpx 0 10rpx;
+  margin: 20rpx auto 10rpx;
   color: 999;
   font-size: 28rpx;
   text-align: center; }

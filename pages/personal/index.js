@@ -10,130 +10,131 @@ const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
 const yuangongka = /^[A-Za-z0-9]{2,18}$/;
 const idRegs = [idNumberReg, huzhao, junguan, yuangongka];
+let fields = [
+  {
+    title: "姓名",
+    type: "input",
+    prop: "name",
+    props: {
+      placeholder: "请输入姓名"
+    }
+  },
+  {
+    title: "手机号码",
+    type: "phone",
+    prop: "phone",
+    props: {
+      placeholder: "请输入手机号码",
+      // validate(value) {
+      //   return /^1[3456789]\d{9}$/.test(value);
+      // }
+      validate(value) {
+        return /^1[3456789]\d{9}$/.test(value);
+      }
+    }
+  },
+  {
+    title: "证件类型",
+    type: "select",
+    prop: "idType",
+    props: {
+      placeholder: "证件类型",
+      itemKey: "id",
+      itemLabelKey: "name",
+      options: [
+        { id: 4, name: "单位工卡" },
+        { id: 1, name: "身份证" }
+      ]
+    }
+  },
+  {
+    title: "证件号码",
+    type: "input",
+    prop: "idNumber",
+    props: {
+      placeholder: "请输入证件号码",
+      idType: 1,
+      validate(value) {
+        return idNumberReg.test(value);
+      }
+    }
+  },
+  {
+    title: "永久数字ID",
+    type: "input",
+    prop: "bidAddress",
+    hide: true,
+    props: {
+      placeholder: "永久数字ID",
+      require: false
+    }
+  },
+  {
+    title: "单位名称",
+    type: "input",
+    prop: "companyName",
+    props: {
+      placeholder: "请输入单位名称"
+    }
+  },
+  {
+    title: "单位所在城市及区",
+    type: "area",
+    prop: "companyAddress",
+    props: {
+      placeholder: "请选择单位所在城市及区"
+    }
+  },
+  {
+    title: "单位详细地址",
+    type: "input",
+    prop: "companyDetailAddress",
+    props: {
+      placeholder: "请输入单位详细地址",
+      addressKey: ""
+    }
+  },
+  {
+    title: "家庭所在城市及区",
+    type: "area",
+    prop: "homeAddress",
+    require: false,
+    props: {
+      placeholder: "请选择家庭所在城市及区"
+    }
+  },
+  {
+    title: "家庭详细地址",
+    type: "map",
+    prop: "detailAddress",
+    require: false,
+    props: {
+      placeholder: "请输入家庭详细地址",
+      addressKey: ""
+    }
+  },
+  {
+    type: "agreement",
+    prop: "agreement",
+    require: true,
+    props: {
+      itemKey: "id",
+      itemLabelKey: "name",
+      needCheck: true,
+      validate(value) {
+        return value;
+      },
+      errorMsg: "请选择同意用户服务条款及隐私协议"
+    }
+  }
+];
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     edit: false,
-    fields: [
-      {
-        title: "姓名",
-        type: "input",
-        prop: "name",
-        props: {
-          placeholder: "请输入姓名"
-        }
-      },
-      {
-        title: "手机号码",
-        type: "phone",
-        prop: "phone",
-        props: {
-          placeholder: "请输入手机号码",
-          // validate(value) {
-          //   return /^1[3456789]\d{9}$/.test(value);
-          // }
-          validate(value) {
-            return /^1[3456789]\d{9}$/.test(value);
-          }
-        }
-      },
-      {
-        title: "证件类型",
-        type: "select",
-        prop: "idType",
-        props: {
-          placeholder: "证件类型",
-          itemKey: "id",
-          itemLabelKey: "name",
-          options: [
-            { id: 4, name: "单位工卡" },
-            { id: 1, name: "身份证" }
-          ]
-        }
-      },
-      {
-        title: "证件号码",
-        type: "input",
-        prop: "idNumber",
-        props: {
-          placeholder: "请输入证件号码",
-          idType: 1,
-          validate(value) {
-            return idNumberReg.test(value);
-          }
-        }
-      },
-      {
-        title: "永久数字ID",
-        type: "input",
-        prop: "bidAddress",
-        hide: true,
-        props: {
-          placeholder: "永久数字ID",
-          require: false
-        }
-      },
-      {
-        title: "单位名称",
-        type: "input",
-        prop: "companyName",
-        props: {
-          placeholder: "请输入单位名称"
-        }
-      },
-      {
-        title: "单位所在城市及区",
-        type: "area",
-        prop: "companyAddress",
-        props: {
-          placeholder: "请选择单位所在城市及区"
-        }
-      },
-      {
-        title: "单位详细地址",
-        type: "input",
-        prop: "companyDetailAddress",
-        props: {
-          placeholder: "请输入单位详细地址",
-          addressKey: ""
-        }
-      },
-      {
-        title: "家庭所在城市及区（可选）",
-        type: "area",
-        prop: "homeAddress",
-        require: false,
-        props: {
-          placeholder: "请选择家庭所在城市及区"
-        }
-      },
-      {
-        title: "家庭详细地址（可选）",
-        type: "map",
-        prop: "detailAddress",
-        require: false,
-        props: {
-          placeholder: "请输入家庭详细地址",
-          addressKey: ""
-        }
-      },
-      {
-        type: "agreement",
-        prop: "agreement",
-        require: true,
-        props: {
-          itemKey: "id",
-          itemLabelKey: "name",
-          needCheck: true,
-          validate(value) {
-            return value;
-          },
-          errorMsg: "请选择同意用户服务条款及隐私协议"
-        }
-      }
-    ],
+    fields: fields,
     data: { agreement: true },
     userFilledInfo: {},
     globalData: app.globalData
@@ -273,8 +274,8 @@ Page({
       if (item.prop == "bidAddress") {
         item.hide = !userRegisted;
       }
-      if(item.prop=='agreement'){
-        item.hide=!this.data.edit;
+      if (item.prop === "agreement") {
+        item.hide = userRegisted && !this.data.edit;
       }
       return (item["props"]["disable"] = userRegisted);
     });
@@ -283,7 +284,7 @@ Page({
       resData.homeAddress = resData.homeAddress.split("-");
       resData.companyAddress = resData.companyAddress.split("-");
     }
-    
+
     if (userRegisted) {
       //拼接***** 表单填入新的数据
       let tempData =
@@ -327,22 +328,22 @@ Page({
     let fields = this.data.fields;
     let { userRegisted } = app.globalData.userFilledInfo;
 
+    const editFieldList = [
+      "homeAddress",
+      "detailAddress",
+      "companyAddress",
+      "companyDetailAddress",
+      "companyName"
+    ];
     fields.forEach(item => {
-      if (item.prop == 'agreement') {
+      if (editFieldList.includes(item.prop)) {
+        item["props"]["disable"] = !this.data.edit;
+      }
+      if (item.prop === "agreement") {
         item.hide = !this.data.edit;
       }
-      if (
-        item.prop == "homeAddress" ||
-        item.prop == "detailAddress" ||
-        item.prop == "companyAddress" ||
-        item.prop == "companyDetailAddress" ||
-        item.prop == "companyName"
-      ) {
-        return (item["props"]["disable"] = !this.data.edit);
-      }
-    
     });
- 
+
     this.setData({
       fields: fields
     });

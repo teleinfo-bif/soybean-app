@@ -30,11 +30,11 @@ page {
 
 .btn-wrap {
   margin-top: 25rpx;
-  margin-bottom: 50rpx;
   display: flex;
   justify-content: center; }
 
 .group-create-location {
+  margin-top: 50rpx;
   text-align: center;
   font-size: 28rpx;
   width: 750rpx;
