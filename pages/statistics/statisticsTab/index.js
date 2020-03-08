@@ -88,11 +88,11 @@ Page({
         },
         {
           name: "北京",
-          type: 4
+          type: 3
         },
         {
           name: "其他",
-          type: 3
+          type: 4
         }
       ]
     }

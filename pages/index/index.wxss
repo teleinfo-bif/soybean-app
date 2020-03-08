@@ -23,10 +23,8 @@ page {
 
 .logo{
   width: 100%;
-  position: fixed;
-  bottom:0px;
-  display: flex;
-  justify-content: center;
+  text-align:center;
+  margin-top:30rpx;
 }
  
 .copyright-view{
@@ -44,9 +42,14 @@ page {
 }
 
 .homelogo {
-  display: block;
-  margin-top: -50rpx;
-  position: fixed;
+  display: inline-block;
+  margin-top: 15rpx;
   width: 250rpx;
   height: 30rpx;
+}
+
+.page__title{
+ font-size: 28rpx;
+ line-height: 30rpx;
+ color: #acabab;
 }
