@@ -8,7 +8,7 @@
   .phone-picker button {
     position: absolute;
     right: 30rpx;
-    top: -45rpx;
+    top: -60rpx;
     color: #1759ef;
     font-size: 32rpx !important;
     border: none !important;
