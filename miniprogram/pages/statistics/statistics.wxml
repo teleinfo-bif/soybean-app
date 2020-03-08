@@ -378,6 +378,10 @@
   </view> -->
 
   <view class="foot">
-    <button class="btn" bindtap="exportExcel">导出报告</button>
+    <button class="btn export" bindtap="exportExcel">导出报告</button>
+    <button class="btn show" bindtap="showExcel">查看报告</button>
   </view>
+  <!-- <view class="foot">
+    <button class="btn" bindtap="showExcel">查看报告</button>
+  </view> -->
 </view>

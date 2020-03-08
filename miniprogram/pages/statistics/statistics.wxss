@@ -400,18 +400,36 @@
 }
 
 .foot {
-  width: 300rpx;
+  width: 720rpx;
   height: 90rpx;
-  margin: 16rpx auto;
-  border-radius: 10rpx;
+  margin: auto;
+  margin-top: 20rpx;
   /*display: none;*/
   
-  background-color: #4169E1;
+  display: flex;
+  flex-direction: row;
 }
 
 .btn {
   font-size: 35rpx;
+  width: 200rpx;
   height: 90rpx;
   line-height: 90rpx;
   color: #ffffff;
+  border-radius: 10rpx;
+  background-color: #4169E1;
+}
+
+.export {
+  /* font-size: 35rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #ffffff; */
+}
+
+.show {
+  /* font-size: 35rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #ffffff; */
 }
