@@ -17,3 +17,8 @@
     </van-button>
   </view> -->
 </view>
+<!-- 注册新机构链接 -->
+<view wx:if="{{jigou=='1'}}" class="group-create-location">
+  <navigator url="/pages/group/groupCode/index" style="display:inline-block">机构唯一码></navigator>
+  <navigator url="/pages/group/createGroup/createGroup" style="display:inline-block;">注册新机构></navigator>
+</view>

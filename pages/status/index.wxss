@@ -34,3 +34,13 @@ page {
 
 .btn_go-home {
   color: #000 !important; }
+
+.group-create-location {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 100rpx;  
+    font-size: 28rpx;
+    z-index: 100;
+    margin-top: 150rpx;
+    color: #1759ef; }

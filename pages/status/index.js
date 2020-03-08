@@ -6,7 +6,8 @@ Page({
    */
   data: {
     app,
-    msg: "提交成功"
+    msg: "提交成功",
+    jigou: ''
   },
 
   redirectTo(e) {
@@ -19,9 +20,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const { msg = "提交成功" } = options;
+    const { msg = "提交成功", jigou } = options;
     this.setData({
-      msg
+      msg,
+      jigou
     });
   },
 
