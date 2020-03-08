@@ -19,7 +19,7 @@ Page({
     company_region: ["", "", ""],
     home_region: ["", "", ""],
 
-    certificate_type: ["员工号", "身份证号"],
+    certificate_type: ["单位工卡", "二代身份证"],
     certificate_type_index: 0,
     certificate_number:"",
     bid_address: "",
@@ -70,7 +70,8 @@ Page({
     healthyDatas: [],
     company_name_items:['中国信息通信研究院'],
     isFisrtNoFlag:true,
-    if_checked: false
+    if_checked: false,
+    originEmployeeNumber: "",
 
   },
 
@@ -267,13 +268,29 @@ Page({
    */
 
   bindCertificatePickerChange: function(e) {
+    var card_number = ""
+    var card_value = ""
+    console.log("#### value: ", e.detail.value)
+    if (e.detail.value == 0) {
+      card_number = "请输入单位工卡号"
+      card_value = this.data.originEmployeeNumber
+      console.log("1111")
+    }else {
+      card_number = "请输入二代身份证号码"
+      card_value = ""
+      console.log("222")
+    }
+
+  
     this.setData({
+      placeholder_card_number: card_number,
       certificate_type_index: parseInt(e.detail.value),
       value_card_type: this.data.certificate_type[e.detail.value],
-      placeholder_card_number: this.data.certificate_type[e.detail.value]
+      value_card_number: card_value
     })
 
     console.log(this.data.value_card_type)
+    console.log("placeholder car number: ", this.data.placeholder_card_number)
   },
 
   //一级单位名称
@@ -503,11 +520,22 @@ Page({
 
           console.log("card type: ", )
           
-          if (res.data[0].certificate_type == "身份证号" || res.data[0].certificate_type == "大陆身份证"){
+          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证"){
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
+            this.setData({
+              originEmployeeNumber: idHide
+            })
           }
+
+          var card_type = res.data[0].certificate_type
+          console.log("##### data: ", res.data[0].certificate_type)
+          if (card_type == '员工号') {
+            console.log("###### 2222")
+            card_type = '单位工卡'
+          }
+
 
           this.setData({
             value_card_type: "",
@@ -517,7 +545,7 @@ Page({
             placeholder_phone: hide,
             placeholder_phone_show: res.data[0].phone,
             placeholder_card_number_show: res.data[0].certificate_number,
-            placeholder_card_type: res.data[0].certificate_type,
+            placeholder_card_type: card_type,
             placeholder_card_number: idHide,
             bid_address: res.data[0].bid_address,
             private_key: res.data[0].private_key,
@@ -569,8 +597,8 @@ Page({
       isFisrtNoFlag:false,
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,
-      // value_card_type: this.data.placeholder_card_type,
-      // value_card_number: this.data.placeholder_card_number,
+      value_card_type: this.data.placeholder_card_type,
+      value_card_number: this.data.placeholder_card_number,
       placeholder_phone: this.data.placeholder_phone_show,
       placeholder_card_number: this.data.placeholder_card_number_show,
       value_company_name: this.data.placeholder_company_name,
