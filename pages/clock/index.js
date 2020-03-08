@@ -931,8 +931,8 @@ Page({
   },
   async setFieldsFromPreviousClockData(formData) {
     await this.setFieldsFromAddress(formData);
-    this.setFieldsFromTemperature(formData);
-    this.setFieldsFromLeave(formData);
+    await this.setFieldsFromTemperature(formData);
+    await this.setFieldsFromLeave(formData);
     // const { otherFieldsList } = this.data;
     // for (let prop in otherFieldsList) {
     //   let value = formData[prop];
