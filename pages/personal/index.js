@@ -95,7 +95,7 @@ let fields = [
     }
   },
   {
-    title: "家庭所在城市及区",
+    title: "家庭所在城市及区（可选）",
     type: "area",
     prop: "homeAddress",
     require: false,
@@ -104,7 +104,7 @@ let fields = [
     }
   },
   {
-    title: "家庭详细地址",
+    title: "家庭详细地址（可选）",
     type: "map",
     prop: "detailAddress",
     require: false,
