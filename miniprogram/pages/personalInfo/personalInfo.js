@@ -44,7 +44,7 @@ Page({
     placeholder_phone: "请输入手机号码",
     placeholder_phone_show: "",
     placeholder_card_type: "选择证件类型",
-    placeholder_card_number: "请输入单位工卡号",
+    placeholder_card_number: "请输入证件号码",
     placeholder_card_number_show: "",
     placeholder_company_name: "请选择单位及部门",
     placeholder_company_district: "请选择单位所在城市及区",
@@ -84,7 +84,9 @@ Page({
       placeholder_company_detail:'请输入单位详细地址',
       placeholder_home_district:'请选择家庭所在城市及区',
       placeholder_home_detail:'请输入家庭详细地址',
-      placeholder_card_number: '请输入单位工卡号'
+      placeholder_card_number: '请输入证件号码',
+      value_card_type: "单位工卡",
+      certificate_type_index: 0,
     })
   },
 
@@ -269,25 +271,22 @@ Page({
    */
 
   bindCertificatePickerChange: function(e) {
-    var card_number = ""
+   
     var card_value = ""
-    console.log("#### value: ", e.detail.value)
     if (e.detail.value == 0) {
-      card_number = "请输入单位工卡号"
       card_value = this.data.originEmployeeNumber
-      console.log("1111")
+     
     }else {
-      card_number = "请输入身份证号码"
-      card_value = ""
-      console.log("222")
+      card_value = "" 
     }
 
   
     this.setData({
-      placeholder_card_number: card_number,
+      
       certificate_type_index: parseInt(e.detail.value),
       value_card_type: this.data.certificate_type[e.detail.value],
-      value_card_number: card_value
+      value_card_number: card_value,
+      placeholder_card_number: "请输入证件号码"
     })
 
     console.log(this.data.value_card_type)
@@ -602,7 +601,7 @@ Page({
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,
       value_card_type: this.data.placeholder_card_type,
-      value_card_number: this.data.placeholder_card_number,
+      value_card_number: this.data.placeholder_card_number_show,
       placeholder_phone: this.data.placeholder_phone_show,
       placeholder_card_number: this.data.placeholder_card_number_show,
       value_company_name: this.data.placeholder_company_name,
