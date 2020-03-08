@@ -29,7 +29,7 @@ page {
 .row-item {
   display: flex;
   margin: 10rpx 15rpx 0;
-  padding: 0 30rpx;
+  padding: 0 10rpx 0 20rpx;
   height: 100rpx;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,7 @@ page {
       justify-content: flex-end; }
     .row-item_right .btn-statistic {
       display: inline-block;
-      margin-left: 15rpx;
+      margin-left: 10rpx;
       width: 72rpx;
       height: 72rpx; }
     .row-item_right_btn {
@@ -69,7 +69,7 @@ page {
   justify-content: space-between;
   align-items: center;
   margin-top: 15rpx;
-  padding: 0 30rpx 0;
+  padding: 0 20rpx 0;
   width: 750rpx;
   height: 88rpx;
   font-size: 30rpx;
@@ -77,9 +77,9 @@ page {
   border-bottom: 1rpx solid #f2f2f2; }
 
 .head image {
-  margin-right: 20rpx;
-  width: 54rpx;
-  height: 54rpx; }
+  margin-right: 10rpx;
+  width: 40rpx;
+  height: 40rpx; }
 
 .head-title,
 .head-date,
@@ -102,6 +102,9 @@ button {
   background-color: #fff;
   padding: 0;
   line-height: 100%;
-  border-radius: 0; }
+  border-radius: 0;
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx; }
   button::after {
     border: none; }

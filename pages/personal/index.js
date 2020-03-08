@@ -225,7 +225,7 @@ Page({
             });
           } else {
             wx.navigateTo({
-              url: "/pages/status/index?msg=注册成功"
+              url: "/pages/status/index?msg=注册成功&jigou=1"
             });
           }
         });
@@ -234,7 +234,7 @@ Page({
         saveOrUpdateUserInfo(formData).then(async data => {
           await app.refreshUserInfo();
           wx.navigateTo({
-            url: "/pages/status/index?msg=更新成功"
+            url: "/pages/status/index?msg=更新成功&jigou=1"
           });
         });
       }
@@ -284,7 +284,7 @@ Page({
       resData.homeAddress = resData.homeAddress.split("-");
       resData.companyAddress = resData.companyAddress.split("-");
     }
-    resData["agreement"] = true;
+
     if (userRegisted) {
       //拼接***** 表单填入新的数据
       let tempData =

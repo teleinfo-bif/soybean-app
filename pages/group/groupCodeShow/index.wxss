@@ -1,0 +1,43 @@
+/* pages/group/groupCodeShow/index.wxss */
+
+.con {
+    margin-top: 40rpx;
+    padding: 0 50rpx 0 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.text {
+    font-size: 30rpx;
+}
+
+.code {
+    margin-top: 50rpx;
+    text-align: center;
+    font-size: 50rpx;
+    font-weight: bold;
+    background-color: #fff;
+}
+
+button {
+    width: 54rpx;
+    height: 54rpx;
+    padding: 0rpx;
+    margin: 0rpx;
+    line-height: 54rpx;
+}
+button:after{ border: none; }
+
+.pro{
+    margin-top: 50rpx;
+    padding: 0 30rpx;
+    line-height: 180%;
+}
+
+.btn-item {
+    width: 260rpx;
+    margin: 300rpx auto 0;
+    text-align: center;
+    display: flex;
+    justify-content: center; }

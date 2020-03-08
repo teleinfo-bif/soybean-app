@@ -24,18 +24,9 @@ Page({
       }).then(data => {
         console.log('根据唯一码查看群信息', data)
         if (JSON.stringify(data) == "{}") {
-          wx.showModal({
-            title: "提示",
-            content: `您输入的机构唯一码有误，请和邀请人确认！`,
-            showCancel: false,
-            cancelColor: "#000000",
-            confirmText: "确认",
-            confirmColor: "#3CC51F",
-            success(res) {
-              if (res.confirm) {
-                console.log("ok");
-              }
-            }
+          wx.showToast({
+            title: `输入的机构唯一码有误，请和邀请人确认！`,
+            icon: 'none',
           })
         } else {
           let groupName = data.name
@@ -46,18 +37,9 @@ Page({
         }
       })
     } else {
-      wx.showModal({
-        title: "提示",
-        content: `请输入您的机构唯一码！`,
-        showCancel: false,
-        cancelColor: "#000000",
-        confirmText: "确认",
-        confirmColor: "#3CC51F",
-        success(res) {
-          if (res.confirm) {
-            console.log("ok");
-          }
-        }
+      wx.showToast({
+        title: `请输入您的机构唯一码！`,
+        icon: 'none',
       })
     }
   },

@@ -17,7 +17,8 @@
     "pages/group/createGroup/createGroup",
     "pages/group/shareJoinChoice/index",
     "pages/agreement/index",
-    "pages/group/groupCode/index"
+    "pages/group/groupCode/index",
+    "pages/group/groupCodeShow/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

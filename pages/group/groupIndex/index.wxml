@@ -20,7 +20,7 @@
           <Text>{{groupName}}</Text>
         </view>
         <button open-type='share'>
-          <image  src="../../../static/images/fenxiang.png" style='margin-top:3rpx;' />
+          <image  src="../../../static/images/fenxiang.png"  />
         </button>
         
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
@@ -37,7 +37,7 @@
    <view wx:if="{{children.length== 0}}" class="no-data-msg" hover-class="none" hover-stop-propagation="false">
         暂无详细信息
       </view>
-<view wx:if="{{children.length!=0 && isGroup === true &&activeTab == 0}}" class="" hover-class="none" hover-stop-propagation="false">
+<view style='margin-bottom:50rpx;' wx:if="{{children.length!=0 && isGroup === true &&activeTab == 0}}" class="" hover-class="none" hover-stop-propagation="false">
   <!-- 每一行 -->
   <view wx:for="{{children}}" wx:key="index" class="row-item">
     <!-- 左侧名字 -->

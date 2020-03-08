@@ -1,0 +1,19 @@
+<!--pages/group/groupCodeShow/index.wxml-->
+<view class="con">
+<view class="text">您的机构唯一码是</view>
+<button open-type='share'>
+    <image style="width:54rpx;height:54rpx;" src="../../../static/images/fenxiang.png" />
+</button>
+</view>
+<view class="code">{{groupCode}}</view>
+
+
+
+<view class="pro">您可以通过机构唯一码邀请成员加入, 也可以点击上方分享链接快速邀请。</view>
+
+
+<view class="btn-item">
+    <navigator url="/pages/index/index">
+      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
+    </navigator>
+  </view>
