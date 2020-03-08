@@ -400,7 +400,7 @@
 }
 
 .foot {
-  width: 720rpx;
+  width: 620rpx;
   height: 90rpx;
   margin: auto;
   margin-top: 20rpx;
@@ -411,10 +411,10 @@
 }
 
 .btn {
-  font-size: 35rpx;
+  font-size: 30rpx;
   width: 200rpx;
-  height: 90rpx;
-  line-height: 90rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   color: #ffffff;
   border-radius: 10rpx;
   background-color: #4169E1;
