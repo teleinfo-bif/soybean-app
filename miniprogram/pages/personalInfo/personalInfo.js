@@ -44,7 +44,7 @@ Page({
     placeholder_phone: "请输入手机号码",
     placeholder_phone_show: "",
     placeholder_card_type: "选择证件类型",
-    placeholder_card_number: "员工号",
+    placeholder_card_number: "请输入单位工卡号",
     placeholder_card_number_show: "",
     placeholder_company_name: "请选择单位及部门",
     placeholder_company_district: "请选择单位所在城市及区",
@@ -55,7 +55,7 @@ Page({
 
     value_name: "",
     value_phone: "",
-    value_card_type: "员工号",
+    value_card_type: "单位工卡",
     value_card_number: "",
     value_company_name: "",
     value_company_district: "",
@@ -78,12 +78,13 @@ Page({
   resetBtn(){
     console.log('&&&reset***')
     this.setData({
-      placeholder_company_name:'',
+      placeholder_company_name:'请选择单位及部门',
       placeholder_company_name_0: '',
-      placeholder_company_district:'',
-      placeholder_company_detail:'',
-      placeholder_home_district:'',
-      placeholder_home_detail:''
+      placeholder_company_district:'请选择单位所在城市及区',
+      placeholder_company_detail:'请输入单位详细地址',
+      placeholder_home_district:'请选择家庭所在城市及区',
+      placeholder_home_detail:'请输入家庭详细地址',
+      placeholder_card_number: '请输入单位工卡号'
     })
   },
 
@@ -524,6 +525,7 @@ Page({
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
+            console.log("idHide: ", idHide)
             this.setData({
               originEmployeeNumber: idHide
             })
@@ -730,8 +732,8 @@ Page({
             updated_at: that.getCurrentDateTime(),
             // name: e.detail.value.name,
             // phone: e.detail.value.phone,
-            // certificate_type: e.detail.value.certificate_type,
-            // certificate_number: e.detail.value.certificate_number,
+            certificate_type: e.detail.value.certificate_type,
+            certificate_number: e.detail.value.certificate_number,
             bid_address: e.detail.value.bid_address,
             private_key: that.data.private_key,
             company_department: e.detail.value.company_name,
