@@ -77,7 +77,11 @@ async function getOpenId() {
 }
 
 // 获取用户openId
-async function getUserInfo(params) {
+async function getUserInfo(
+  params = {
+    openid: fedToken.openid
+  }
+) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: baseURL + "/user/exist",
@@ -145,10 +149,12 @@ const Request = async ({ url, params, method, header, ...other } = {}) => {
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
   }
-  console.log("userFilledInfo", userFilledInfo);
+  // console.log("userFilledInfo", userFilledInfo);
   if (
     url != "/user/exist" &&
-    (userFilledInfo == null || typeof userFilledInfo != "object")
+    (userFilledInfo == null ||
+      typeof userFilledInfo != "object" ||
+      !userFilledInfo.id)
   ) {
     console.log(
       "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
@@ -342,5 +348,6 @@ module.exports = {
   checkSessionKey,
   getTokenStorage,
   appInit,
-  getOpenId
+  getOpenId,
+  getUserInfo
 };
