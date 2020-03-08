@@ -62,7 +62,7 @@ Page({
   
   //判断是否是最低级的部门
   isLowestDepartment: function(groupId) {
-    console.log('是否注册页过来的，1就是', this.data.zc)
+    console.log('是否注册页过来的，1就是注册页过来的：zc=', this.data.zc)
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
@@ -240,24 +240,37 @@ Page({
   userPrompt: function () {
     console.log('prompt' )
     const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data
-    const userful = timeStamp - Date.now() < 24 * 60 * 60 * 1000;
+    const userful =  Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
+    // console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
     const _this = this;
-    // if(!zc && !userful){
-    //   wx.navigateTo({
-    //     url: "/pages/index/index",
-    //     success: result => {},
-    //     fail: () => {},
-    //     complete: () => {}
-    //   });
-    //   return
-    // }
-    console.log('123')
+    if(!zc && !userful){
+      wx.showModal({
+        title: "提示",
+        content: `您的加群链接已失效，请联系邀请人重新邀请！`,
+        showCancel: false,
+        cancelColor: "#000000",
+        confirmText: "确定",
+        confirmColor: "#3CC51F",
+        success(res) { 
+          if (res.confirm) {
+            wx.reLaunch({
+              url: "/pages/index/index",
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
+            });
+          } 
+        }
+      })
+      return
+    }
+    //链接有效，注册用户可以加群，开始加群
     if (userFilledInfo.userRegisted) {
       console.log('groupId', groupId)
       // this.tree2array(groupId)
       this.isLowestDepartment(groupId)
     } else {
-      console.log('234')
+      console.log('没有注册')
       wx.showModal({
         title: "",
         content: `您还没有注册，确认加入该机构吗？`,
