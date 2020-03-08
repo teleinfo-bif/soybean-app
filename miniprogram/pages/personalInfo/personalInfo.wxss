@@ -41,6 +41,10 @@
   color: #333333
 }
 
+.bid {
+  color: rgba(153,153,153,1);
+}
+
 .personal-change-show{
   float: right;
   color: #1759EF;

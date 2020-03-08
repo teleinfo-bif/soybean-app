@@ -419,17 +419,3 @@
   border-radius: 10rpx;
   background-color: #4169E1;
 }
-
-.export {
-  /* font-size: 35rpx;
-  height: 90rpx;
-  line-height: 90rpx;
-  color: #ffffff; */
-}
-
-.show {
-  /* font-size: 35rpx;
-  height: 90rpx;
-  line-height: 90rpx;
-  color: #ffffff; */
-}
