@@ -28,13 +28,13 @@
           <view class="people-item_sign" style='margin-left:24rpx;'>
             {{item.clockInId != 0 ? '已打卡': '未打卡'}}
           </view>
-          <view style='margin-left:24rpx;' wx:if="{{item.permission == true}}" class="people-item_detail ">
+          <view style='margin-left:24rpx;' wx:if="{{permission=='true'}}" class="people-item_detail ">
             <navigator wx:if="{{item.clockInId != 0}}" class="color" url="/pages/clock/index?userId={{item.id}}&name={{item.name}}&phone={{item.phone}}&clockInTime={{clockInTime}}">
               打卡详情
             </navigator>
             <block wx:else>打卡详情</block>
           </view>
-          <view wx:if="{{item.permission== true}}" style='margin-left:24rpx;' class="people-item_status">
+          <view wx:if="{{permission=='true'}}" style='margin-left:24rpx;' class="people-item_status">
             <block wx:if="{{item.clockInId != 0}}">
               <block wx:if="{{ item.comfirmed == 2 }}">
                 <view class="status-circle status-circle-red"></view>

@@ -16,7 +16,8 @@
     "pages/healthQR/healthQR",
     "pages/group/createGroup/createGroup",
     "pages/group/shareJoinChoice/index",
-    "pages/agreement/index"
+    "pages/agreement/index",
+    "pages/group/groupCode/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

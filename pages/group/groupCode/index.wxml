@@ -1,0 +1,5 @@
+<!--pages/organizationCode/index.wxml-->
+<view class="organization">
+    <input class="input-code" name="group_applicant" maxlength="20" placeholder="请输入您的机构唯一码" value="{{code}}" bindchange="onChange"></input>
+    <view class="button-code"><button class="button-code-input" bindtap="joinCodeGroup">加入机构</button></view>
+</view>

@@ -1,0 +1,32 @@
+/* pages/organizationCode/index.wxss */
+page {
+    background:rgba(247,247,247,1);
+}
+.organization {
+    margin-top: 17rpx;
+}
+
+.input-code {
+    background: #fff;
+    margin-top: 10rpx;
+    padding: 0 30rpx;
+    height: 120rpx;
+    line-height: 60rpx;
+    background-color: #fff;
+}
+.button-code {
+    margin-top: 50rpx;
+}
+.button-code-input {
+    text-align: center;
+    font-size: 32rpx;
+    line-height: 88rpx;
+    width:246rpx;
+    height:88rpx;
+    background:rgba(67,117,254,1);
+    color:rgba(255,255,255,1);
+    border-radius:6rpx;
+}
+button::after {
+    border: none;
+}

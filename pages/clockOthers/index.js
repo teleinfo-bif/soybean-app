@@ -668,7 +668,7 @@ Page({
     const { userId, clockInTime = getTodayClock() } = options;
     this.setData(
       {
-        clockInTime: clockInTime,
+        time: clockInTime,
         otherUserId: userId
       },
       this.getUserTodyClockData(userId, clockInTime)

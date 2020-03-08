@@ -1,5 +1,5 @@
 // pages/group/shareJoinChoice/index.js
-import { joinGroup, getUserTreeGroup } from "../../../api/api";
+import { joinGroup, getUserTreeGroup, quitGroup } from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -15,14 +15,16 @@ Page({
     multiIndex: [0, 0],
     array: ["技术研究部"],
     index: 0,
-    lastClass: true
+    lastClass: true,
+    alreadJoin: false, //是否已加过群
+    alreadJoinId: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const { groupId, groupName } = options;
+    const { groupId, groupName, alreadJoin, alreadJoinId } = options;
     app.globalData.groupName = ''
     app.globalData.groupId = ''
     if (!app.globalData.appInit) {
@@ -32,6 +34,8 @@ Page({
           userFilledInfo: globalData.userFilledInfo,
           groupId: groupId,
           groupName: groupName,
+          alreadJoin: alreadJoin,
+          alreadJoinId: alreadJoinId,
         });
         this.userPrompt()
       });
@@ -41,6 +45,8 @@ Page({
         userFilledInfo: app.globalData.userFilledInfo,
         groupId: groupId,
         groupName: groupName,
+        alreadJoin: alreadJoin,
+        alreadJoinId: alreadJoinId
       });
       this.userPrompt()
     }
@@ -48,10 +54,8 @@ Page({
   userPrompt: function () {
     const { groupId, userFilledInfo } = this.data   
     if (userFilledInfo.userRegisted) {
-      console.log('2222')
       this.tree2array(groupId)
     } else {
-      console.log('22223333')
       wx.navigateTo({
         url: "/pages/index/index",
         success: result => {},
@@ -60,12 +64,12 @@ Page({
       });
     }
   },
-  //只适合三级
+  //只适合三级架构模型
   tree2array: function (groupId) {
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
-      console.log('dd', data)
+      // console.log('dd', data)
       if (data.length == 0) {
         //最底层群组
         this.setData({
@@ -162,7 +166,34 @@ Page({
     }
   ) {
     console.log("发起请求", params);
-    joinGroup(params)
+    const { userId, alreadJoin, alreadJoinId } = this.data;
+    if (alreadJoin) {
+      quitGroup({
+        userId: userId,
+        groupId: alreadJoinId,
+      }).then(data => {
+        console.log('退群', data)
+        joinGroup(params)
+          .then(data => {
+            console.log("=====joinGroup-data====", data);
+            wx.showToast({
+              title: "加入群组成功",
+              duration: 1500,
+              mask: false,
+              success: result => {
+              },
+              fail: () => { },
+              complete: () => {
+                wx.reLaunch({
+                  url: "/pages/index/index",
+                })
+               }
+            });
+          })
+          .catch(e => { });
+      }) 
+    }else {
+      joinGroup(params)
       .then(data => {
         console.log("=====joinGroup-data====", data);
         wx.showToast({
@@ -170,17 +201,20 @@ Page({
           duration: 1500,
           mask: false,
           success: result => {
+            wx.reLaunch({
+              url: "/pages/index/index",
+            })
           },
-          fail: () => {},
-          complete: () => {}
         });
       })
       .catch(e => { });
-      setTimeout(function () {
-        wx.reLaunch({
-          url: "/pages/index/index",
-        })
-      }, 2000)
+      // setTimeout(function () {
+      //   wx.reLaunch({
+      //     url: "/pages/index/index",
+      //   })
+      // }, 2000)
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

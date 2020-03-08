@@ -30,10 +30,13 @@ page {
 
 .picker {
     margin-top: 10rpx;
-    padding: 0 30rpx;
+    padding: 0 100rpx 0 30rpx;
     height: 120rpx;
     line-height: 60rpx;
     background-color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .input-placeholder {

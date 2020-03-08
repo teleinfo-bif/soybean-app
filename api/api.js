@@ -139,3 +139,15 @@ export const createGroup = async params => {
   console.log("/wx/group/excelImport----params", params);
   return Request._post(`/wx/group/excelImport`, params);
 };
+
+// 加群前用户当前群
+export const getUserCurrentGroup = async params => {
+  console.log("/wx/usergroup/user/currentGroup----params", params);
+  return Request._get(`/wx/usergroup/user/currentGroup`, params);
+};
+
+// 退群
+export const quitGroup = async params => {
+  console.log("/wx/usergroup/quit----params", params);
+  return Request._post(`/wx/usergroup/quit`, params);
+};
