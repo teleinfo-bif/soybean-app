@@ -38,10 +38,11 @@ let fields = [
     prop: "address",
     props: {
       placeholder: "请输入打卡地点",
-      validate(value) {
-        return value.length >= 5 && value.length <= 15;
-      },
-      errorMsg: "请输入5-15个字的地址"
+      maxlength: "15",
+      // validate(value) {
+      //   return value.length >= 5 && value.length <= 15;
+      // },
+      // errorMsg: "请输入5-15个字的地址"
     }
   },
   {
@@ -882,7 +883,7 @@ Page({
         // 未打卡开始获取位置信息，获取之前的打卡记录
         if (!params.userId) {
           this.initAddress();
-          // this.getUserClockListData();
+          this.getUserClockListData();
           this.setData({
             clocked: false
           });
