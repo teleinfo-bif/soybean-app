@@ -78,9 +78,9 @@ Component({
         } else {
           wx.showModal({
             title: "温馨提示",
-            content: "每日健康打卡后方可查看健康码，请先打卡哦",
+            content: "健康打卡后方可使用健康码",
             showCancel: false,
-            confirmText: "健康打卡",
+            confirmText: "去健康打卡",
             success(res) {
               if (res.confirm) {
                 wx.navigateTo({
