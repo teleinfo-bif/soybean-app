@@ -45,6 +45,20 @@ Page({
           });
         }
       })
+    } else {
+      wx.showModal({
+        title: "提示",
+        content: `请输入您的机构唯一码！`,
+        showCancel: false,
+        cancelColor: "#000000",
+        confirmText: "确认",
+        confirmColor: "#3CC51F",
+        success(res) {
+          if (res.confirm) {
+            console.log("ok");
+          }
+        }
+      })
     }
   },
   
