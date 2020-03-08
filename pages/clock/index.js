@@ -38,7 +38,7 @@ let fields = [
     prop: "address",
     props: {
       placeholder: "请输入打卡地点",
-      maxlength: "15",
+      maxlength: "15"
       // validate(value) {
       //   return value.length >= 5 && value.length <= 15;
       // },
@@ -226,7 +226,8 @@ let fields = [
       options: [
         { id: 1, name: "健康" },
         { id: 2, name: "有发热、咳嗽等" },
-        { id: 0, name: "其他症状" }
+        { id: 0, name: "其他症状" },
+        { id: 3, name: "独自居住" }
       ]
     }
   },
@@ -369,6 +370,9 @@ Page({
       data["temperature"] = data["temperatureRadio"] == 1 ? 36.5 : "";
       this.setFieldsFromTemperature(data);
     } else if (otherFieldsList[prop]) {
+      if (prop == "roomPerson") {
+        this.setFieldsFromRoomPerson(data);
+      }
       // 判断 健康状况选其它
       if (value === "0") {
         this.setOtherFieldsHide(otherFieldsList[prop], false);
@@ -519,6 +523,20 @@ Page({
         resolve
       );
     });
+  },
+  async setFieldsFromRoomPerson(formData) {
+    let { fields, data } = this.data;
+    const liveSelf = formData["roomPerson"] == "3";
+    fields.forEach(item => {
+      if (item.prop == "roomCompany") {
+        item.hide = liveSelf;
+        data[item.prop] = liveSelf ? null : data[item.prop];
+      } else if (item.prop == "roomCompanyOther") {
+        item.hide = liveSelf && data["roomCompany"] == 0;
+        data[item.prop] = liveSelf ? null : data[item.prop];
+      }
+    });
+    this.setData({ fields, data });
   },
   async setFieldsFromAddress(formData) {
     // 先判断用户位置信息和填写的信息是否一致
@@ -832,7 +850,7 @@ Page({
   setUserFilledInfo() {
     const { userFilledInfo } = app.globalData;
     let { data } = this.data;
-    debugger;
+    // debugger;
     data["name"] = userFilledInfo.name || "";
     data["phoneComplete"] = userFilledInfo.phone || "";
     data["phone"] = userFilledInfo.phone.replace(
@@ -852,8 +870,20 @@ Page({
     const { otherFieldsList } = this.data;
     for (let prop in otherFieldsList) {
       let value = formData[prop];
-      this.setOtherFieldsHide(otherFieldsList[prop], +value != 0);
+      // debugger;
+      this.setOtherFieldsHide(otherFieldsList[prop], value && +value != 0);
     }
+  },
+  async setFieldsFromPreviousClockData(formData) {
+    await this.setFieldsFromAddress(formData);
+    this.setFieldsFromTemperature(formData);
+    this.setFieldsFromLeave(formData);
+    // const { otherFieldsList } = this.data;
+    // for (let prop in otherFieldsList) {
+    //   let value = formData[prop];
+    //   debugger;
+    //   this.setOtherFieldsHide(otherFieldsList[prop], value && +value != 0);
+    // }
   },
   // 获取用户今日打卡信息
   getUserTodyClockData(params = {}) {
@@ -912,12 +942,13 @@ Page({
         });
         data["phoneComplete"] = data.phoe;
         data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
+        // debugger;
         this.setData({
           data
         });
         previousLockData["temperatureRadio"] =
           previousLockData.temperature > 37.3 ? 2 : 1;
-        this.setFieldsFromClockData(previousLockData);
+        this.setFieldsFromPreviousClockData(previousLockData);
         // this.setFieldsFromAddress()
       } else {
         console.log("提醒：没有打卡数据，无需自动填写");
@@ -953,7 +984,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    debugger;
+    // debugger;
+    console.log("clock onload options:", options);
     const { userId, clockInTime = getTodayClock() } = options;
     this.setData({
       otherId: userId
