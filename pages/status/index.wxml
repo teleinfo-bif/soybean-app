@@ -10,7 +10,7 @@
   </view>
    <view wx:if="{{jigou=='1'}}" class="btn-item">
     <view bind:tap="toCode">
-      <van-button type="primary" color="#1759EF" block>机构唯一码</van-button>
+      <van-button type="primary" color="#1759EF" block>绑定机构唯一码</van-button>
     </view>
   </view>
 
