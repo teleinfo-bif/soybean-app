@@ -22,7 +22,7 @@ Page({
     certificate_type: ["单位工卡", "身份证"],
     certificate_type_index: 0,
     certificate_number:"",
-    bid_address: "",
+    //bid_address: "",
     private_key: "",
     secretcheckbox: "",
     
