@@ -32,13 +32,14 @@ Page({
           type: 2
         },
         {
-          name: "其他症状",
-          type: 0
-        },
-        {
           name: "健康",
           type: 1
+        },
+        {
+          name: "其他症状",
+          type: 0
         }
+       
       ],
       hospitalization: [
         {
