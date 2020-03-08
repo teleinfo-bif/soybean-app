@@ -15,7 +15,7 @@ import { reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
 const app = getApp();
 let fields = [
   {
-    title: "姓名测试版本",
+    title: "姓名",
     type: "input",
     prop: "name",
     props: {
@@ -319,7 +319,7 @@ Page({
   data: {
     clocked: false,
     otherId: null,
-    userFilledInfo: app.globalData.userFilledInfo,
+    userFilledInfo: "",
     location: "",
     address: {},
     fields: fields,
@@ -831,6 +831,7 @@ Page({
   setUserFilledInfo() {
     const { userFilledInfo } = app.globalData;
     let { data } = this.data;
+    debugger;
     data["name"] = userFilledInfo.name || "";
     data["phoneComplete"] = userFilledInfo.phone || "";
     data["phone"] = userFilledInfo.phone.replace(
@@ -930,36 +931,53 @@ Page({
   },
   // 页面初始化
   initPage(params = {}) {
-    if (Object.keys(params).length > 0) {
-      this.getUserTodyClockData(params);
-      this.setFieldsFromOtherClockData();
-    } else {
-      this.initFormData();
-      this.setUserFilledInfo();
-      this.getUserTodyClockData();
-    }
+    this.setData(
+      {
+        userFilledInfo: app.globalData.userFilledInfo
+      },
+      () => {
+        if (Object.keys(params).length > 0) {
+          this.getUserTodyClockData(params);
+          this.setFieldsFromOtherClockData();
+        } else {
+          debugger;
+          this.initFormData();
+          this.setUserFilledInfo();
+          this.getUserTodyClockData();
+        }
+      }
+    );
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    debugger;
     const { userId, clockInTime = getTodayClock() } = options;
     this.setData({
       otherId: userId
     });
     if (!app.globalData.appInit) {
       app.init(() => {
+        if (userId) {
+          this.initPage({
+            clockInTime: clockInTime,
+            userId
+          });
+        } else {
+          this.initPage();
+        }
+      });
+    } else {
+      if (userId) {
         this.initPage({
           clockInTime: clockInTime,
           userId
         });
-      });
-    } else {
-      this.initPage({
-        clockInTime: clockInTime,
-        userId
-      });
+      } else {
+        this.initPage();
+      }
     }
   },
 
