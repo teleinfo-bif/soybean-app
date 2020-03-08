@@ -659,11 +659,11 @@ Page({
       warn = "请填写您的手机号!"
     } else if (!(/^1(3|4|5|7|8)\d{9}$/.test(e.detail.value.phone)) && this.data.personal_info_change == "personal-change-hide"){
       warn = "您的手机号码格式不正确!"
-    } else if (e.detail.value.certificate_type == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_type == ""){
       warn = "请选择您的证件类型!"
-    } else if (e.detail.value.certificate_number == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_number == ""){
       warn = "请输入您的证件号码!"
-    } else if (cardValid != "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (cardValid != ""){
       warn = cardValid
       
     } else if (e.detail.value.company_name == "" || e.detail.value.company_name.indexOf("请选择") != -1){
