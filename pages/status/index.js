@@ -9,11 +9,11 @@ Page({
     msg: "提交成功"
   },
 
-  // navigateTo(e) {
-  //   wx.navigateTo({
-  //     url: e.currentTarget.dataset.path
-  //   });
-  // },
+  redirectTo(e) {
+    wx.reLaunch()({
+      url: "/pages/index/index"
+    });
+  },
 
   /**
    * 生命周期函数--监听页面加载

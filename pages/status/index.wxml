@@ -9,9 +9,7 @@
     </view>
   </view>
   <view class="btn-item">
-    <navigator url="/pages/index/index">
-      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
-    </navigator>
+    <van-button bind:click="redirectTo" type="primary" color="#1759EF" block>返回首页</van-button>
   </view>
   <!-- <view class="btn-item">
     <van-button bind:click="navigateTo" data-path='/pages/index/index' custom-style="" round="{{true}}" type="primary" color="#dddddd" block>
