@@ -5,12 +5,12 @@
       <image src="../../static/images/success@3x.png" />
     </view>
     <view class="status_msg">
-      <text>{{msg}}</text>
+      <text style='font-size:40rpx;'>{{msg}}</text>
     </view>
   </view>
   <view class="btn-item">
     <navigator url="/pages/index/index">
-      <van-button bind:click="navigateTo" type="primary" color="#1759EF" block>返回首页</van-button>
+      <button bind:click="navigateTo" style="font-size:35rpx;width:300rpx;background-color:#1759ef;color:#fff;"   block>返回首页</button>
     </navigator>
   </view>
   <!-- <view class="btn-item">

@@ -49,8 +49,8 @@
 
 }
 .QRImg{
-  width:400rpx;
-  height:400rpx;
+  width:388rpx;
+  height:388rpx;
   margin-top:70rpx;
 }
 .QRPart-hint{
