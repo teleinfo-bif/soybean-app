@@ -25,6 +25,8 @@ page {
   width: 100%;
   text-align:center;
   margin-top:30rpx;
+  position:fixed;
+  bottom:50rpx;
 }
  
 .copyright-view{
