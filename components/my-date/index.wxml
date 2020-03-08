@@ -1,7 +1,7 @@
 <block wx:if="{{true}}">
   <my-input props="{{props}}" value="{{label}}"></my-input>
   <picker class="select-picker" mode="date" value="{{value}}" bindchange="onChange" start="{{props.start}}" end="{{props.end || now}}" fields="{{props.fields || 'day'}}">
-    <view class="select-picker-box">
+    <view wx:if="{{props.disable != true}}" class="select-picker-box">
       <view class="select-picker-btn">选择</view>
     </view>
   </picker>
