@@ -319,7 +319,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    clocked: false,
+    clocked: null,
     otherId: null,
     userFilledInfo: "",
     location: "",
@@ -341,7 +341,7 @@ Page({
     locationProvince: "",
     locationCity: ""
   },
-  onFormChange(e) {
+  async onFormChange(e) {
     console.log("onFormChange", e);
     const { prop, value } = e.detail;
     let { data, otherFieldsList } = this.data;
@@ -370,15 +370,18 @@ Page({
       data["temperature"] = data["temperatureRadio"] == 1 ? 36.5 : "";
       this.setFieldsFromTemperature(data);
     } else if (otherFieldsList[prop]) {
-      if (prop == "roomPerson") {
-        this.setFieldsFromRoomPerson(data);
-      }
       // 判断 健康状况选其它
-      if (value === "0") {
-        this.setOtherFieldsHide(otherFieldsList[prop], false);
-      } else {
-        this.setOtherFieldsHide(otherFieldsList[prop], true);
-      }
+      // if (value === "0") {
+      //   await this.setOtherFieldsHide(otherFieldsList[prop], false);
+      // } else {
+      //   await this.setOtherFieldsHide(otherFieldsList[prop], true);
+      // }
+
+      // if (prop == "roomPerson") {
+      //   this.setFieldsFromRoomPerson(data);
+      // }
+
+      this.setOtherFieldsHide(data, prop);
     }
 
     // this.data.data = data;
@@ -419,20 +422,77 @@ Page({
     // });
     this.setData({ fields, data });
   },
-  setOtherFieldsHide(prop, status = true) {
-    let { fields, data } = this.data;
-    // data[prop] = null;
-    if (status) {
-      data[prop] = null;
-    }
-    this.setData({
-      data
-    });
+  async setOtherFieldsHide(data, prop) {
+    let { fields, otherFieldsList, clocked } = this.data;
+    // debugger;
+    let status = data[prop] == "0";
+    const liveSelf = data["roomPerson"] == "3";
+    console.log(liveSelf);
     fields.forEach((item, index) => {
-      if (item.prop === prop) {
-        item.hide = status;
+      if (item.prop === otherFieldsList[prop]) {
+        item.hide = !status;
       }
+      if (prop == "roomPerson") {
+        if (
+          liveSelf &&
+          (item.prop == "roomCompany" || item.prop == "roomCompanyOther")
+        ) {
+          item.hide = true;
+          data[item.prop] = null;
+        } else if (!clocked && item.prop == "roomCompany") {
+          item.hide = false;
+          data[item.prop] = null;
+        } else if (!clocked && item.prop == "roomCompanyOther") {
+          if (data["roomCompany"] == "0") {
+            item.hide = false;
+          } else {
+            item.hide = true;
+          }
+        }
+      }
+      // else if (item.prop == "roomCompany") {
+      //   item.hide = false;
+      //   data[item.prop] = null;
+      // } else if (item.prop == "roomCompanyOther") {
+      //   if (data["roomCompany"] == "0") {
+      //     item.hide = true;
+      //   } else {
+      //     item.hide = false;
+      //   }
+      // }
     });
+    // fields.forEach(item => {
+    //   const prop = item.prop;
+    //   // 独自居住的时候，隐藏其他两个，
+    //   // 非独自居住，显示合租人情况，其他需要验证
+    //   if ((liveSelf && prop == "roomCompany") || prop == "roomCompanyOther") {
+    //     item.hide = true;
+    //     data[prop] = null;
+    //   } else if (prop == "roomCompany") {
+    //     item.hide = false;
+    //     data[prop] = null;
+    //   } else if (prop == "roomCompanyOther") {
+    //     if (data["roomCompany"] == "0") {
+    //       item.hide = true;
+    //     } else {
+    //       item.hide = false;
+    //     }
+    //   }
+    //   console.log(data);
+    // });
+
+    // if (status) {
+    //   data[prop] = null;
+    // }
+    // this.setData({
+    //   data
+    // });
+    // fields.forEach((item, index) => {
+    //   if (item.prop === prop) {
+    //     item.hide = status;
+    //   }
+    // });
+    // debugger;
     this.setData({ fields, data });
   },
   // 重置按钮
@@ -524,23 +584,9 @@ Page({
       );
     });
   },
-  async setFieldsFromRoomPerson(formData) {
-    let { fields, data } = this.data;
-    const liveSelf = formData["roomPerson"] == "3";
-    fields.forEach(item => {
-      if (item.prop == "roomCompany") {
-        item.hide = liveSelf;
-        data[item.prop] = liveSelf ? null : data[item.prop];
-      } else if (item.prop == "roomCompanyOther") {
-        item.hide = liveSelf && data["roomCompany"] == 0;
-        data[item.prop] = liveSelf ? null : data[item.prop];
-      }
-    });
-    this.setData({ fields, data });
-  },
+  async setFieldsFromRoomPerson(formData) {},
   async setFieldsFromAddress(formData) {
     // 先判断用户位置信息和填写的信息是否一致
-    // debugger;
     console.log("==========修改城市名称==============");
     console.log("companyAddress", this.data.userFilledInfo.companyAddress);
 
@@ -863,15 +909,24 @@ Page({
       data
     });
   },
+  async setFieldsDisableFromClockData() {
+    let { fields } = this.data;
+    fields.forEach(item => {
+      item.props.disable = true;
+    });
+    fields.pop();
+    this.setData({ fields });
+  },
   async setFieldsFromClockData(formData) {
+    await this.setFieldsDisableFromClockData();
     await this.setFieldsFromAddress(formData);
     this.setFieldsFromTemperature(formData);
     this.setFieldsFromLeave(formData);
     const { otherFieldsList } = this.data;
     for (let prop in otherFieldsList) {
-      let value = formData[prop];
+      // let value = formData[prop];
       // debugger;
-      this.setOtherFieldsHide(otherFieldsList[prop], value && +value != 0);
+      this.setOtherFieldsHide(formData, prop);
     }
   },
   async setFieldsFromPreviousClockData(formData) {
@@ -887,73 +942,84 @@ Page({
   },
   // 获取用户今日打卡信息
   getUserTodyClockData(params = {}) {
-    getTodayClock(params).then(data => {
-      const resData = data;
-      // 打卡数据合并到data中，今日未打卡返回的数据在是{}
-      let formData = {
-        ...this.data.data,
-        ...resData.records[0]
-      };
-      // 判断打过卡
-      if (resData.total > 0) {
-        formData["name"] = formData.userName;
-        formData["phoneComplete"] = formData.phoe;
-        formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
-        formData.phone = formData.phone.replace(
-          /^(\d{3})\d{4}(\d{4})$/,
-          "$1****$2"
-        );
-        this.setData({
-          clocked: true,
-          data: formData
-        });
-        // 设置表单显示的字段 -todo
-        this.setFieldsFromClockData(formData);
-      } else {
-        // 未打卡开始获取位置信息，获取之前的打卡记录
-        if (!params.userId) {
-          this.initAddress();
-          this.getUserClockListData();
+    getTodayClock(params)
+      .then(data => {
+        const resData = data;
+        // 打卡数据合并到data中，今日未打卡返回的数据在是{}
+        let formData = {
+          ...this.data.data,
+          ...resData.records[0]
+        };
+        // 判断打过卡
+        if (resData.total > 0) {
+          formData["name"] = formData.userName;
+          formData["phoneComplete"] = formData.phoe;
+          formData["temperatureRadio"] = formData.temperature > 37.3 ? 2 : 1;
+          formData.phone = formData.phone.replace(
+            /^(\d{3})\d{4}(\d{4})$/,
+            "$1****$2"
+          );
           this.setData({
-            clocked: false
+            clocked: true,
+            data: formData
           });
+          // 设置表单显示的字段 -todo
+          this.setFieldsFromClockData(formData);
+        } else {
+          // 未打卡开始获取位置信息，获取之前的打卡记录
+          if (!params.userId) {
+            this.initAddress();
+            this.getUserClockListData();
+            this.setData({
+              clocked: false
+            });
+          }
         }
-      }
-    });
+      })
+      .catch(error => {
+        console.error("错误提醒：获取今日打卡数据失败", error);
+        this.setData({
+          clocked: false
+        });
+      });
   },
   // 获取用户打卡记录
   async getUserClockListData() {
-    getUserClockList({}).then(resData => {
-      // 需要自动填写的字段
-      if (resData.total > 0) {
-        const autoFilledProps = [
-          "leave",
-          "leavetime",
-          "leaveCity",
-          "gobacktime",
-          "transport",
-          "flight",
-          "nobackreason"
-        ];
-        const previousLockData = resData.records[0];
-        let { data } = this.data;
-        autoFilledProps.forEach(prop => {
-          data[prop] = previousLockData[prop];
-        });
-        data["phoneComplete"] = data.phoe;
-        data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
-        // debugger;
-        this.setData({
-          data
-        });
-        previousLockData["temperatureRadio"] =
-          previousLockData.temperature > 37.3 ? 2 : 1;
-        this.setFieldsFromPreviousClockData(previousLockData);
-        // this.setFieldsFromAddress()
-      } else {
-        console.log("提醒：没有打卡数据，无需自动填写");
-      }
-    });
+    getUserClockList({})
+      .then(resData => {
+        // 需要自动填写的字段
+        if (resData.total > 0) {
+          const autoFilledProps = [
+            "leave",
+            "leavetime",
+            "leaveCity",
+            "gobacktime",
+            "transport",
+            "flight",
+            "nobackreason"
+          ];
+          const previousLockData = resData.records[0];
+          let { data } = this.data;
+          autoFilledProps.forEach(prop => {
+            data[prop] = previousLockData[prop];
+          });
+          data["phoneComplete"] = data.phoe;
+          data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
+          // debugger;
+          this.setData({
+            data
+          });
+          previousLockData["temperatureRadio"] =
+            previousLockData.temperature > 37.3 ? 2 : 1;
+          this.setFieldsFromPreviousClockData(previousLockData);
+          // this.setFieldsFromAddress()
+        } else {
+          console.log("提醒：没有打卡数据，无需自动填写");
+        }
+      })
+      .catch(error => {
+        console.error("错误提醒：获取历史打卡数据失败", error);
+      });
   },
 
   setFieldsFromOtherClockData() {
