@@ -19,7 +19,7 @@ Page({
     company_region: ["", "", ""],
     home_region: ["", "", ""],
 
-    certificate_type: ["单位工卡", "二代身份证"],
+    certificate_type: ["单位工卡", "身份证"],
     certificate_type_index: 0,
     certificate_number:"",
     bid_address: "",
@@ -221,7 +221,7 @@ Page({
 
       if (!that.idCardValid()) {
         console.log("hello 大陆")
-        warn = "二代身份证格式错误!"
+        warn = "身份证格式错误!"
       }
       break;
 
@@ -276,7 +276,7 @@ Page({
       card_value = this.data.originEmployeeNumber
       console.log("1111")
     }else {
-      card_number = "请输入二代身份证号码"
+      card_number = "请输入身份证号码"
       card_value = ""
       console.log("222")
     }
@@ -520,7 +520,7 @@ Page({
 
           console.log("card type: ", )
           
-          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证"){
+          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证" || res.data[0].certificate_type == "身份证"){
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
@@ -535,7 +535,7 @@ Page({
             console.log("###### 2222")
             card_type = '单位工卡'
           }else {
-            card_type = "二代身份证"
+            card_type = "身份证"
           }
 
 
