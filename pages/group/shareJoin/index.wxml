@@ -7,13 +7,17 @@
   <view class="container">
   <view class="entering-box">
     <view class="entering-box_icon">
-      <image wx:if="{{userFilledInfo.userRegisted}}" class="" src="{{userFilledInfo.avatarUrl}}" mode="aspectFit" lazy-load="false" binderror="" bindload=""></image>
+      <open-data class="opendata-avatar" wx:if="{{userFilledInfo.userRegisted}}" type="userAvatarUrl"></open-data>
       <van-icon wx:else name="edit" />
     </view>
-    <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">{{userFilledInfo.name}}</view>
+    <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
+      <navigator class="" target="" url="/pages/personal/index" hover-class="navigator-hover" open-type="navigate">
+        {{userFilledInfo.name}}
+      </navigator>
+    </view>
     <text wx:else class="entering-box_text">用户注册</text>
-    <button class="test" open-type='getUserInfo' bindgetuserinfo=""></button>
-     <view class="dayuhao-container">
+    <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo=""></button>
+    <view class="dayuhao-container">
       <image class="dayuhao" src="../../../static/images/dayuhao.png" />
     </view>
   </view>

@@ -1,6 +1,6 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
-import { createGroup } from "../../../api/api";
+import { createGroup, fromGroupCodetoId } from "../../../api/api";
 
 Page({
 
@@ -156,11 +156,13 @@ Page({
   },
 
   submitUserInfo: function (e) {
+    const _this = this
     console.log("机构提交: ", e.detail.value)
+
     wx.showLoading({
       title: '信息提交中',
     })
-
+    
     var warn = ""
     var that = this
     var flag = false
@@ -198,40 +200,80 @@ Page({
         userId: this.data.globalData.userId,
       }).then(data => {
            console.log('1', data)
-          wx.showModal({
-            showCancel: false,
-            title: '提示',
-            content: "提交成功，请保持手机畅通，如有问题，我们会与您联系 创建成功后您可以点击机构名称，在机构详情页分享邀请好友加入!",
+           let code = data;
+           wx.showModal({
+            showCancel: true,
+            title: '创建成功',
+            content: "是否加入该机构？",
             success(res) {
               if (res.confirm) {
-                wx.reLaunch({
-                  url: '../../index/index',
-                })
+                _this.joinCodeGroup(code)
+              } else if (res.cancel) {
+                wx.navigateTo({
+                  url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
+                });
               }
             }
           })
-          wx.hideLoading()
-        
+          wx.hideLoading()        
       }).catch(e => {
         console.log(e)
         wx.showModal({
-          title: '提示',
-          content: "创建失败"
+          title: '创建失败',
+          content: "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
         })
         wx.hideLoading()
       })
     }
 
     if (!flag) {
-      wx.showModal({
-        title: '提示',
-        content: warn
+      // wx.showModal({
+      //   title: '提示',
+      //   content: warn
+      // })
+      wx.showToast({
+        title: warn,
+        icon: 'none',
       })
       wx.hideLoading()
       return
 
     }
   },
+
+  joinCodeGroup: function (code) {
+    wx.showLoading({
+      title: "加载中..."
+    });
+    if (code) {
+      console.log('code', code);
+      fromGroupCodetoId({
+        groupCode: code
+      }).then(data => {
+        wx.hideLoading();
+        console.log('根据唯一码查看群信息', data)
+        if (JSON.stringify(data) == "{}") {
+          wx.showToast({
+            title: `机构唯一码有误，请联系管理员确认！`,
+            icon: 'none',
+          })
+        } else {
+          let groupName = data.name
+          let groupId = data.id
+          wx.navigateTo({
+            url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
+          });
+        }
+      })
+    } else {
+      wx.hideLoading();
+      wx.showToast({
+        title: `机构唯一码有误，请联系管理员确认！`,
+        icon: 'none',
+      })
+    }
+  },
+
   //需要修改成现有的
   queryUserInfo: function (e) {
     this.setData({
