@@ -1,5 +1,5 @@
 <!-- pages/status/index.wxml -->
-<view class="page" style='background:#f5f5f5'>
+<view class="page">
   <view class="status">
     <!-- 打卡状态-确诊 -->
     <block wx:if="{{ data.comfirmed == 2}}">
@@ -25,7 +25,7 @@
   </view>
   <view class="btn-item">
     <button style="font-size:35rpx;width:300rpx;background-color:#1759ef;color:#fff;" bind:tap="redirectTo" type="primary" color="#1759EF" block>
-      进入首页
+      返回首页
     </button>
   </view>
   <!-- <view class="btn-item">
