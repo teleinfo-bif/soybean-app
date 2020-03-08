@@ -73,6 +73,7 @@ Page({
     const { requestStutus, clockData } = this.data;
     let { current = 0, pages = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
+      debugger;
       this.setData({ requestStutus: true }, () => {
         getUserClockList({
           current: ++current,
@@ -109,10 +110,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const { otherUserId } = options;
+    const { userId } = options;
+    debugger;
     this.setData(
       {
-        otherUserId
+        otherUserId: userId
       },
       this.getData
     );
