@@ -8,7 +8,7 @@
       <text style='font-size:40rpx;'>{{msg}}</text>
     </view>
   </view>
-   <view wx:if="{{jigou=='1'}}" class="btn-item">
+   <view wx:if="{{jigou=='1'}}" class="btn-item" style="width:350rpx">
     <view bind:tap="toCode">
       <van-button type="primary" color="#1759EF" block>绑定机构唯一码</van-button>
     </view>
