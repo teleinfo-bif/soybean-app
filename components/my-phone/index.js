@@ -53,6 +53,13 @@ Component({
         });
     },
     async getPhoneNumber(e) {
+      if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
+        wx.showModal({
+          content: "不能获取手机号码",
+          showCancel: false
+        });
+        return;
+      }
       let { fedToken } = app.globalData;
       const sessionState = await checkSessionKey();
       console.log("点击获取手机号按钮，session状态是", sessionState);

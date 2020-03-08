@@ -80,7 +80,7 @@ Component({
             title: "温馨提示",
             content: "当天打完卡后才可查看健康码",
             showCancel: false,
-            confirmText: "去健康打卡",
+            confirmText: "去打卡",
             success(res) {
               if (res.confirm) {
                 wx.navigateTo({
