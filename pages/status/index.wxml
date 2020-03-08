@@ -9,9 +9,13 @@
     </view>
   </view>
   <view class="btn-item">
+<<<<<<< HEAD
     <navigator url="/pages/index/index">
       <button bind:click="navigateTo" style="font-size:35rpx;width:300rpx;background-color:#1759ef;color:#fff;"   block>返回首页</button>
     </navigator>
+=======
+    <van-button bind:click="redirectTo" type="primary" color="#1759EF" block>返回首页</van-button>
+>>>>>>> e6a05e51cd81f086278924c0fd486cb1290be08d
   </view>
   <!-- <view class="btn-item">
     <van-button bind:click="navigateTo" data-path='/pages/index/index' custom-style="" round="{{true}}" type="primary" color="#dddddd" block>

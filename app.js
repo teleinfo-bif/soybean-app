@@ -1,6 +1,6 @@
 //app.js
-import { getUserFilledInfo } from "./api/api";
-import { appInit } from "./api/request";
+// import { getUserInfo } from "./api/api";
+import { appInit, getUserInfo } from "./api/request";
 
 App({
   initRequest: false,
@@ -11,7 +11,7 @@ App({
     return;
   },
   async refreshUserInfo(refreshUserInfo = false) {
-    let userFilledInfo = await getUserFilledInfo();
+    let userFilledInfo = await getUserInfo();
     console.log("===================================");
     console.log("app.js refreshUserInfo()更新用户信息成功", userFilledInfo);
     console.log("===================================");

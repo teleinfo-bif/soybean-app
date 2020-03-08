@@ -4,3 +4,6 @@
 .my-radio .vant-radio {
   display: block;
   margin-top: 100rpx !important; }
+
+.secret-view {
+  font-size: 26rpx; }

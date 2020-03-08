@@ -8,7 +8,7 @@ import { saveOrUpdateUserInfo } from "../../api/api.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
-const yuangongka = /^[A-Za-z0-9]{4,18}$/;
+const yuangongka = /^[A-Za-z0-9]{2,18}$/;
 const idRegs = [idNumberReg, huzhao, junguan, yuangongka];
 Page({
   /**
@@ -49,7 +49,7 @@ Page({
           itemLabelKey: "name",
           options: [
             { id: 4, name: "单位工卡" },
-            { id: 1, name: "身份证" },
+            { id: 1, name: "身份证" }
           ]
         }
       },
@@ -143,7 +143,7 @@ Page({
     this.setData(
       {
         edit: !this.data.edit,
-        data: this.data.edit?this.data.asteriskData:this.data.realData
+        data: this.data.edit ? this.data.asteriskData : this.data.realData
       },
       this.setFieldsEditable
     );
@@ -166,8 +166,9 @@ Page({
             return idRegs[value.id - 1].test(val);
           };
           this.setData({
-            'fields[3].props.placeholder': value.id==1?`请输入${value.name}号`:`请输入员工号`
-          })         
+            "fields[3].props.placeholder":
+              value.id == 1 ? `请输入${value.name}号` : `请输入员工号`
+          });
         }
       });
     }
@@ -217,15 +218,15 @@ Page({
       if (!this.data.userFilledInfo.userRegisted) {
         saveOrUpdateUserInfo(formData).then(async data => {
           await app.refreshUserInfo();
-          if(this.data.groupId && this.data.groupName) {
+          if (this.data.groupId && this.data.groupName) {
             wx.navigateTo({
-              url: `/pages/group/shareJoin/index?zc=1&groupName=${this.data.groupName}&groupId=${this.data.groupId}`,
+              url: `/pages/group/shareJoin/index?zc=1&groupName=${this.data.groupName}&groupId=${this.data.groupId}`
             });
-          }else {
+          } else {
             wx.navigateTo({
               url: "/pages/status/index?msg=注册成功"
             });
-          }          
+          }
         });
       } else {
         formData["id"] = formData.id;
@@ -234,7 +235,6 @@ Page({
           wx.navigateTo({
             url: "/pages/status/index?msg=更新成功"
           });
-       
         });
       }
     }
@@ -243,15 +243,20 @@ Page({
   formCancel() {
     let { data } = this.data;
     // data.phone = null;
-    let tempData =  Object.assign({},data,{homeAddress:null,detailAddress:null,companyName:null,companyAddress:null,companyDetailAddress:null})
+    let tempData = Object.assign({}, data, {
+      homeAddress: null,
+      detailAddress: null,
+      companyName: null,
+      companyAddress: null,
+      companyDetailAddress: null
+    });
     // data.homeAddress = null;
     // data.detailAddress = null;
     // data.companyName = null;
     // data.companyAddress = null;
     // data.companyDetailAddress = null;
     this.setData({
-      data: tempData,
-
+      data: tempData
     });
   },
   // 已填写设置禁用字段
@@ -261,7 +266,7 @@ Page({
     //初始化数据后，根据idType修改正则的函数
     fields[3].props.validate = function(val) {
       return idRegs[resData.idType - 1].test(val);
-    }
+    };
     let userRegisted = resData.userRegisted;
     fields.forEach(item => {
       // 控制bid显示隐藏
@@ -281,14 +286,29 @@ Page({
     
     if (userRegisted) {
       //拼接***** 表单填入新的数据
-      let tempData = resData.idType==1?
-      {phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11),idNumber: resData.idNumber.substr(0,4)+'************'+resData.idNumber.substr(16,18)}
-      :{phone: resData.phone.substr(0,3)+'****'+resData.phone.substr(7,11)}
-      let asteriskData =  Object.assign({},resData,tempData)
+      let tempData =
+        resData.idType == 1
+          ? {
+              phone:
+                resData.phone.substr(0, 3) +
+                "****" +
+                resData.phone.substr(7, 11),
+              idNumber:
+                resData.idNumber.substr(0, 4) +
+                "************" +
+                resData.idNumber.substr(16, 18)
+            }
+          : {
+              phone:
+                resData.phone.substr(0, 3) +
+                "****" +
+                resData.phone.substr(7, 11)
+            };
+      let asteriskData = Object.assign({}, resData, tempData);
       this.setData({
         fields: fields,
         data: asteriskData,
-        realData: resData,//保存下来供修改时更新数据
+        realData: resData, //保存下来供修改时更新数据
         asteriskData: asteriskData //保存下来供取消时更新数据
       });
     } else {
@@ -332,7 +352,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const { groupId, groupName } = options
+    const { groupId, groupName } = options;
     console.log(this.data.fields[3].props.validate);
     const { globalData } = app;
     if (!globalData.appInit) {

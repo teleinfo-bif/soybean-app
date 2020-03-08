@@ -53,7 +53,16 @@ async function getOpenId() {
             Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
           },
           success: data => {
-            console.log("tokenKey", data.data);
+            console.log("提醒：login获取的tokenKey", data.data);
+            if (data.data.data == null) {
+              console.error(
+                "错误提醒：login 失败。",
+                "params",
+                params,
+                "response",
+                data
+              );
+            }
             fedToken = data.data.data;
             // wx.setStorageSync(tokenKey, data.data.data);
             resolve(data.data.data);
@@ -68,7 +77,11 @@ async function getOpenId() {
 }
 
 // 获取用户openId
-async function getUserInfo(params) {
+async function getUserInfo(
+  params = {
+    openid: fedToken.openid
+  }
+) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: baseURL + "/user/exist",
@@ -136,10 +149,12 @@ const Request = async ({ url, params, method, header, ...other } = {}) => {
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
   }
-  console.log("userFilledInfo", userFilledInfo);
+  // console.log("userFilledInfo", userFilledInfo);
   if (
-    (url != "/user/exist" && typeof userFilledInfo != "object") ||
-    !userFilledInfo.userRegisted
+    url != "/user/exist" &&
+    (userFilledInfo == null ||
+      typeof userFilledInfo != "object" ||
+      !userFilledInfo.id)
   ) {
     console.log(
       "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
@@ -275,14 +290,14 @@ const _refetch = (url, params, method) => {
 
 //除开上面的调用方式之外，你也可以使用下面的这些方法，只需要关注是否传入method
 const _get = (url, params = {}) => {
-  params.size = 20
+  params.size = 20;
   return Request({
     url,
     params
   });
 };
 const _post = (url, params = {}) => {
-  params.size = 20
+  params.size = 20;
   return Request({
     url,
     params,
@@ -290,7 +305,7 @@ const _post = (url, params = {}) => {
   });
 };
 const _put = (url, params = {}) => {
-  params.size = 20
+  params.size = 20;
   return Request({
     url,
     params,
@@ -298,7 +313,7 @@ const _put = (url, params = {}) => {
   });
 };
 const _delete = (url, params = {}) => {
-  params.size = 20
+  params.size = 20;
   return Request({
     url,
     params,
@@ -333,5 +348,6 @@ module.exports = {
   checkSessionKey,
   getTokenStorage,
   appInit,
-  getOpenId
+  getOpenId,
+  getUserInfo
 };
