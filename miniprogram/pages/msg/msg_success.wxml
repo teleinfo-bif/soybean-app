@@ -29,7 +29,7 @@
 
 
   <view class="foot">
-    <button class="btn" bindtap="goHome">返回主页</button>
+    <button class="btn" bindtap="goHome">返回首页</button>
   </view>
   <!-- <table>
       <tr>

@@ -197,11 +197,11 @@ Page({
         // color: '#7cb5ec',
         fontSize: 16
       },
-      // subtitle: {
-      //   name: '收益率',
-      //   color: '#666666',
-      //   fontSize: 15
-      // },
+       subtitle: {
+        name: '已打卡',
+        color: '#666666',
+         fontSize: 15
+      },
       series: [{
         name: '健康',
         data: this.data.stateGoodNumber,
@@ -252,11 +252,11 @@ Page({
         // color: '#7cb5ec',
         fontSize: 16
       },
-      // subtitle: {
-      //   name: '收益率',
-      //   color: '#666666',
-      //   fontSize: 15
-      // },
+      subtitle: {
+        name: '已打卡',
+        color: '#666666',
+        fontSize: 15
+       },
       series: [{
         name: '武汉',
         data: this.data.wuhanNumber,
@@ -314,11 +314,12 @@ Page({
         // color: '#7cb5ec',
         fontSize: 16
       },
-      // subtitle: {
-      //   name: '收益率',
-      //   color: '#666666',
-      //   fontSize: 15
-      // },
+      
+      subtitle: {
+       name: '已打卡',
+       color: '#666666',
+        fontSize: 15
+       },
       series: [{
         name: '确诊',
         data: this.data.confirmedNumber,
@@ -377,11 +378,11 @@ Page({
         // color: '#7cb5ec',
         fontSize: 16
       },
-      // subtitle: {
-      //   name: '收益率',
-      //   color: '#666666',
-      //   fontSize: 15
-      // },
+       subtitle: {
+        name: '已打卡',
+        color: '#666666',
+        fontSize: 15
+      },
       series: [{
         name: '在岗办公',
         data: this.data.doneNumber,
