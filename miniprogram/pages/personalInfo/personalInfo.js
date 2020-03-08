@@ -213,7 +213,7 @@ Page({
     switch(index){
       case 0:
       if (!that.workIdVerify()) {
-        warn = "员工号格式错误!"
+        warn = "单位员工号格式错误!"
       }
       break;
       
@@ -221,7 +221,7 @@ Page({
 
       if (!that.idCardValid()) {
         console.log("hello 大陆")
-        warn = "大陆身份证格式错误!"
+        warn = "二代身份证格式错误!"
       }
       break;
 
@@ -531,9 +531,11 @@ Page({
 
           var card_type = res.data[0].certificate_type
           console.log("##### data: ", res.data[0].certificate_type)
-          if (card_type == '员工号') {
+          if (card_type == '员工号' || card_type == '单位工卡') {
             console.log("###### 2222")
             card_type = '单位工卡'
+          }else {
+            card_type = "二代身份证"
           }
 
 
