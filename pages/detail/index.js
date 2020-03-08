@@ -152,7 +152,6 @@ Page({
   onLoad: function(options) {
     console.log(options);
     let { groupId, groupName, permission } = options;
- 
     this.setData(
       {
         groupId,

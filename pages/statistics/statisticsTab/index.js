@@ -149,7 +149,7 @@ Page({
         clockInTime,
         ...params
       }).then(data => {
-
+          console.log("data====",data);
           allData[activeIndex] = {
             ...data,
             records: allData[activeIndex].records.concat(data.records)
