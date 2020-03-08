@@ -206,7 +206,7 @@ Page({
     const { name } = app.globalData.userFilledInfo;
     // const decodeTimeStamp = decode(timeStamp);
     // const decodeGroupId = decode(this.data.groupId);
-    const tilte = `${name}邀请您加入${this.data.groupName}健康打卡群`;
+    const tilte = `${name}邀请您加入${this.data.groupName}`;
     return {
       title: tilte,
 
