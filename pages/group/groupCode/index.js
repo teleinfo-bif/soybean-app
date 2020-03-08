@@ -16,18 +16,23 @@ Page({
   },
   //根据唯一码判断，查看群信息，跳转
   joinCodeGroup: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
     const { code } = this.data
     if (code) {
       console.log('code', code);
       fromGroupCodetoId({
         groupCode: code
       }).then(data => {
+        wx.hideLoading()   
         console.log('根据唯一码查看群信息', data)
         if (JSON.stringify(data) == "{}") {
           wx.showToast({
             title: `输入的机构唯一码有误，请和邀请人确认！`,
             icon: 'none',
           })
+          return
         } else {
           let groupName = data.name
           let groupId = data.id

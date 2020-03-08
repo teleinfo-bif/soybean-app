@@ -54,6 +54,25 @@ Page({
     }   
   },
 
+  pasteCode: function () {
+    const { groupCode } = this.data
+    wx.setClipboardData({
+      data: groupCode,
+      success: function (res) {
+        wx.showToast({
+          icon: 'none',
+          title: "机构唯一码已保存到您的剪贴板"
+        });
+      }
+    })
+  },
+
+  joinCodeGroup: function (code) {
+    const {groupName, groupId } = this.data
+    wx.navigateTo({
+      url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
+    });
+  },
 
   onShareAppMessage: function() {
     // 考虑用对称加密签个时间
