@@ -146,7 +146,6 @@ const Request = async ({ url, params, method, header, ...other } = {}) => {
     console.log("返回数据：获取的用户", fedToken);
   }
   console.log("userFilledInfo", userFilledInfo);
-  debugger;
   if (
     url != "/user/exist" &&
     (userFilledInfo == null || typeof userFilledInfo != "object")
