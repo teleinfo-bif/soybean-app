@@ -62,12 +62,13 @@ page {
     height: 150rpx;
   }
   &_icon {
-    margin-top: 47rpx;
-    margin-bottom: 40rpx;
+    margin-top: 40rpx;
+    margin-bottom: 10rpx;
   }
   &_text {
-    margin-bottom: 30rpx;
+    margin-bottom: 35rpx;
     font-size: 30rpx;
+    line-height: 30rpx;
   }
 }
 

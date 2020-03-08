@@ -57,11 +57,12 @@ page {
     width: 150rpx;
     height: 150rpx; }
   .block-success_icon {
-    margin-top: 47rpx;
-    margin-bottom: 40rpx; }
+    margin-top: 40rpx;
+    margin-bottom: 10rpx; }
   .block-success_text {
-    margin-bottom: 30rpx;
-    font-size: 30rpx; }
+    margin-bottom: 35rpx;
+    font-size: 30rpx;
+    line-height: 30rpx; }
 
 .btn-wrap {
   display: block;
