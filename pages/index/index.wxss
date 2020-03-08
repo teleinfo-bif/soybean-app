@@ -23,7 +23,6 @@ page {
 
 .logo{
   width: 100%;
-  position: fixed;
   bottom:0px;
   display: flex;
   justify-content: center;
@@ -45,8 +44,16 @@ page {
 
 .homelogo {
   display: block;
-  margin-top: -50rpx;
-  position: fixed;
+  margin-top: 30rpx;
   width: 250rpx;
   height: 30rpx;
+}
+
+.page__title{
+ margin-left: 32rpx;
+ font-size: 28rpx;
+ line-height: 30rpx;
+ color: #acabab;
+ margin-top: -40rpx;
+ margin-bottom:50rpx;
 }

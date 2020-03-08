@@ -4,11 +4,13 @@
   <banner statusBarHeight="{{statusBarHeight}}"></banner>
   <!-- 录入个人信息 -->
   <personalLogin userFilledInfo="{{userFilledInfo}}"></personalLogin>
-  <view class="page__title">{{useOnly}}</view>
+  <view class="page__title">{{notification}}</view>
   <!-- 健康打卡 -->
   <clock></clock>
   <!-- 组织信息 -->
+  <view style='min-height:345rpx;'>
   <organization></organization>
+  </view>
   <!-- 统计信息 -->
   <!-- <Statistics></Statistics> -->
   <!-- <view class="footer-copy-right">中国信息通信研究院</view> -->

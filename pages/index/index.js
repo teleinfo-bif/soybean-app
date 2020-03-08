@@ -1,3 +1,4 @@
+import { getNotice } from "../../api/request";
 //index.js
 //获取应用实例
 const app = getApp();
@@ -10,6 +11,7 @@ Page({
     userInfo: app.globalData.userInfo,
     userFilledInfo: app.globalData.userFilledInfo,
     hasUserInfo: false,
+    notification:'',
     canIUse: wx.canIUse("button.open-type.getUserInfo")
   },
   setBarHeight() {
@@ -22,6 +24,14 @@ Page({
     });
   },
   onLoad: async function() {
+    getNotice(data => {
+      console.log("data===",data)
+      if(data.data.success){
+        this.setData({
+          notification: data.data.data.content
+        })
+      }
+     })
     this.setBarHeight();
     // let { userFilledInfo } = app.globalData;
     if (!app.globalData.appInit) {
