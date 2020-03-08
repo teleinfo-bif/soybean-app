@@ -38,10 +38,10 @@
 
         <!-- 证件类型 -->
         <view class="personal-info-picker">
-          <picker bindchange="bindCertificatePickerChange" value="{{index}}" range="{{certificate_type}}" disabled="{{forever_disabled}}">
+          <picker bindchange="bindCertificatePickerChange" value="{{index}}" range="{{certificate_type}}" disabled="{{disabled}}">
             <view class="personal-info-hd">
-              <text class="info-label">证件号类型</text>
-              <text class="info-choice" style="{{forever_choice_color}}"> 选择</text>
+              <text class="info-label">证件类型</text>
+              <text class="info-choice" style="{{choice_color}}"> 选择</text>
             </view>
             <view class="personal-info-td">
               <input class="info-input" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_type}}" name="certificate_type" value="{{value_card_type}}" disabled="disabled"></input>
@@ -55,7 +55,7 @@
           <text class="info-label">证件号码</text>
         </view>
         <view class="personal-info-td">
-          <input class="info-input" name="certificate_number" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_number}}" disabled="{{forever_disabled}}" value="{{value_card_number}}"></input>
+          <input class="info-input" name="certificate_number" type="text" placeholder-class="placeholder-style" placeholder="{{placeholder_card_number}}" disabled="{{disabled}}" value="{{value_card_number}}"></input>
         </view>
         <view class="personal-divide"></view>
 
@@ -64,7 +64,7 @@
           <text class="info-label">永久数字ID</text>
         </view>
         <view class="personal-info-td">
-          <input class="info-input" name="bid_address" type="text"  disabled="true" value="{{bid_address}}"></input>
+          <text class="info-label bid" name="bid_address">{{bid_address}}</text>
         </view>
         <view class="personal-divide"></view>
 

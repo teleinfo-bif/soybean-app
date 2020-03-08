@@ -19,7 +19,7 @@ Page({
     company_region: ["", "", ""],
     home_region: ["", "", ""],
 
-    certificate_type: ["员工号", "身份证号"],
+    certificate_type: ["单位工卡", "身份证"],
     certificate_type_index: 0,
     certificate_number:"",
     bid_address: "",
@@ -44,7 +44,7 @@ Page({
     placeholder_phone: "请输入手机号码",
     placeholder_phone_show: "",
     placeholder_card_type: "选择证件类型",
-    placeholder_card_number: "员工号",
+    placeholder_card_number: "请输入证件号码",
     placeholder_card_number_show: "",
     placeholder_company_name: "请选择单位及部门",
     placeholder_company_district: "请选择单位所在城市及区",
@@ -55,7 +55,7 @@ Page({
 
     value_name: "",
     value_phone: "",
-    value_card_type: "员工号",
+    value_card_type: "单位工卡",
     value_card_number: "",
     value_company_name: "",
     value_company_district: "",
@@ -70,19 +70,23 @@ Page({
     healthyDatas: [],
     company_name_items:['中国信息通信研究院'],
     isFisrtNoFlag:true,
-    if_checked: false
+    if_checked: false,
+    originEmployeeNumber: "",
 
   },
 
   resetBtn(){
     console.log('&&&reset***')
     this.setData({
-      placeholder_company_name:'',
+      placeholder_company_name:'请选择单位及部门',
       placeholder_company_name_0: '',
-      placeholder_company_district:'',
-      placeholder_company_detail:'',
-      placeholder_home_district:'',
-      placeholder_home_detail:''
+      placeholder_company_district:'请选择单位所在城市及区',
+      placeholder_company_detail:'请输入单位详细地址',
+      placeholder_home_district:'请选择家庭所在城市及区',
+      placeholder_home_detail:'请输入家庭详细地址',
+      placeholder_card_number: '请输入证件号码',
+      value_card_type: "单位工卡",
+      certificate_type_index: 0,
     })
   },
 
@@ -212,7 +216,7 @@ Page({
     switch(index){
       case 0:
       if (!that.workIdVerify()) {
-        warn = "员工号格式错误!"
+        warn = "单位员工号格式错误!"
       }
       break;
       
@@ -220,7 +224,7 @@ Page({
 
       if (!that.idCardValid()) {
         console.log("hello 大陆")
-        warn = "大陆身份证格式错误!"
+        warn = "身份证格式错误!"
       }
       break;
 
@@ -267,13 +271,26 @@ Page({
    */
 
   bindCertificatePickerChange: function(e) {
+   
+    var card_value = ""
+    if (e.detail.value == 0) {
+      card_value = this.data.originEmployeeNumber
+     
+    }else {
+      card_value = "" 
+    }
+
+  
     this.setData({
+      
       certificate_type_index: parseInt(e.detail.value),
       value_card_type: this.data.certificate_type[e.detail.value],
-      placeholder_card_number: this.data.certificate_type[e.detail.value]
+      value_card_number: card_value,
+      placeholder_card_number: "请输入证件号码"
     })
 
     console.log(this.data.value_card_type)
+    console.log("placeholder car number: ", this.data.placeholder_card_number)
   },
 
   //一级单位名称
@@ -503,11 +520,25 @@ Page({
 
           console.log("card type: ", )
           
-          if (res.data[0].certificate_type == "身份证号" || res.data[0].certificate_type == "大陆身份证"){
+          if (res.data[0].certificate_type == "二代身份证" || res.data[0].certificate_type == "大陆身份证" || res.data[0].certificate_type == "身份证"){
             idHide = this.toHide(res.data[0].certificate_number)
           }else {
             idHide = res.data[0].certificate_number
+            console.log("idHide: ", idHide)
+            this.setData({
+              originEmployeeNumber: idHide
+            })
           }
+
+          var card_type = res.data[0].certificate_type
+          console.log("##### data: ", res.data[0].certificate_type)
+          if (card_type == '员工号' || card_type == '单位工卡') {
+            console.log("###### 2222")
+            card_type = '单位工卡'
+          }else {
+            card_type = "身份证"
+          }
+
 
           this.setData({
             value_card_type: "",
@@ -517,7 +548,7 @@ Page({
             placeholder_phone: hide,
             placeholder_phone_show: res.data[0].phone,
             placeholder_card_number_show: res.data[0].certificate_number,
-            placeholder_card_type: res.data[0].certificate_type,
+            placeholder_card_type: card_type,
             placeholder_card_number: idHide,
             bid_address: res.data[0].bid_address,
             private_key: res.data[0].private_key,
@@ -569,8 +600,8 @@ Page({
       isFisrtNoFlag:false,
       // value_name: this.data.placeholder_name,
       // value_phone: this.data.placeholder_phone,
-      // value_card_type: this.data.placeholder_card_type,
-      // value_card_number: this.data.placeholder_card_number,
+      value_card_type: this.data.placeholder_card_type,
+      value_card_number: this.data.placeholder_card_number_show,
       placeholder_phone: this.data.placeholder_phone_show,
       placeholder_card_number: this.data.placeholder_card_number_show,
       value_company_name: this.data.placeholder_company_name,
@@ -629,11 +660,11 @@ Page({
       warn = "请填写您的手机号!"
     } else if (!(/^1(3|4|5|7|8)\d{9}$/.test(e.detail.value.phone)) && this.data.personal_info_change == "personal-change-hide"){
       warn = "您的手机号码格式不正确!"
-    } else if (e.detail.value.certificate_type == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_type == ""){
       warn = "请选择您的证件类型!"
-    } else if (e.detail.value.certificate_number == "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (e.detail.value.certificate_number == ""){
       warn = "请输入您的证件号码!"
-    } else if (cardValid != "" && this.data.personal_info_change == "personal-change-hide"){
+    } else if (cardValid != ""){
       warn = cardValid
       
     } else if (e.detail.value.company_name == "" || e.detail.value.company_name.indexOf("请选择") != -1){
@@ -664,7 +695,7 @@ Page({
             phone: e.detail.value.phone,
             certificate_type: e.detail.value.certificate_type,
             certificate_number: e.detail.value.certificate_number,
-            bid_address: e.detail.value.bid_address,
+            bid_address: that.data.bid_address,
             private_key: that.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,
@@ -700,9 +731,9 @@ Page({
             updated_at: that.getCurrentDateTime(),
             // name: e.detail.value.name,
             // phone: e.detail.value.phone,
-            // certificate_type: e.detail.value.certificate_type,
-            // certificate_number: e.detail.value.certificate_number,
-            bid_address: e.detail.value.bid_address,
+            certificate_type: e.detail.value.certificate_type,
+            certificate_number: e.detail.value.certificate_number,
+            bid_address: that.data.bid_address,
             private_key: that.data.private_key,
             company_department: e.detail.value.company_name,
             company_district: e.detail.value.company_location,

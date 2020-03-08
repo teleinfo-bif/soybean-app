@@ -400,18 +400,22 @@
 }
 
 .foot {
-  width: 300rpx;
+  width: 620rpx;
   height: 90rpx;
-  margin: 16rpx auto;
-  border-radius: 10rpx;
+  margin: auto;
+  margin-top: 20rpx;
   /*display: none;*/
   
-  background-color: #4169E1;
+  display: flex;
+  flex-direction: row;
 }
 
 .btn {
-  font-size: 35rpx;
-  height: 90rpx;
-  line-height: 90rpx;
+  font-size: 30rpx;
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   color: #ffffff;
+  border-radius: 10rpx;
+  background-color: #4169E1;
 }
