@@ -10,7 +10,7 @@ Page({
   },
 
   redirectTo(e) {
-    wx.reLaunch()({
+    wx.reLaunch({
       url: "/pages/index/index"
     });
   },
