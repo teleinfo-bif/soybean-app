@@ -246,7 +246,7 @@ Page({
     // data.phone = null;
     let tempData = Object.assign({}, data, {
       homeAddress: null,
-      detailAddress: null,
+      detailAddress: "",
       companyName: null,
       companyAddress: null,
       companyDetailAddress: null
@@ -305,7 +305,14 @@ Page({
                 "****" +
                 resData.phone.substr(7, 11)
             };
-      let asteriskData = Object.assign({}, resData, tempData);
+      let tempData_2 = 
+        (resData && typeof resData.detailAddress === "string" && resData.detailAddress.length > 3)
+        ? {
+            detailAddress: 
+              resData.detailAddress.substr(0, 3) + Array(resData.detailAddress.length - 2).join('*')
+        }:{}
+
+      let asteriskData = Object.assign({}, resData, tempData, tempData_2);
       this.setData({
         fields: fields,
         data: asteriskData,
