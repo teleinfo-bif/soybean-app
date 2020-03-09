@@ -23,7 +23,7 @@ Page({
     groupName: "",
     isGroup: true,
     memberData: {},
-    clockInTime:''
+    clockInTime: ''
   },
 
   // tab点击事件
@@ -56,7 +56,7 @@ Page({
       });
     }
   },
-  // 获取当前群组的用户信息
+  // 获取当前部门的用户信息
   getData() {
     const { groupId, memberData } = this.data;
     let { current = 0, pages = 0 } = memberData;
@@ -85,11 +85,11 @@ Page({
       console.log("group user has nomore data");
     }
   },
- 
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log(options);
 
     const data = JSON.parse(options.data);
@@ -123,37 +123,37 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
     // 考虑用对称加密签个时间
     const timeStamp = new Date().getTime();
     const { name } = app.globalData.userFilledInfo;

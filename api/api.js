@@ -92,49 +92,49 @@ export const getTodayClock = async params => {
   return Request._get("/wx/interaction/show/today", params);
 };
 
-// 获取用户群组信息
+// 获取用户部门信息
 export const getUserGroupTree = async params => {
   return Request._get("/wx/group/tree/user", params);
 };
 
-// 获取群组统计信息
+// 获取部门统计信息
 export const getGroupStatistic = async params => {
   return Request._get("/wx/clockln/census/census", params);
 };
 
-// 获取群组详细信息
+// 获取部门详细信息
 export const getGroupBlockList = async params => {
   return Request._get("/wx/clockln/census/list", params);
 };
 
-// 获取群组打卡分类信息
+// 获取部门打卡分类信息
 export const getGroupCensusList = async params => {
   return Request._get(`/wx/clockln/census/${params.url}`, params);
 };
 
-// 获取群组打卡分类信息
+// 获取部门打卡分类信息
 export const getGroupCurrentUserList = async params => {
   return Request._get(`/wx/group/user/current`, params);
 };
 
-// 用户加入群组
+// 用户加入部门
 export const joinGroup = async params => {
   console.log("/wx/usergroup/save----params", params);
   return Request._post(`/wx/usergroup/save`, params);
 };
 
-//根据id查看群组信息
+//根据id查看部门信息
 export const getGroup = async params => {
   console.log("/wx/group/detail`----params", params);
   return Request._get(`/wx/group/detail`, params);
 };
 
-// 获取用户树形群组
+// 获取用户树形部门
 export const getUserTreeGroup = async params => {
   return Request._get("/wx/group/tree", params);
 };
 
-// 用户创建群组
+// 用户创建部门
 export const createGroup = async params => {
   console.log("/wx/group/excelImport----params", params);
   return Request._post(`/wx/group/excelImport`, params);
