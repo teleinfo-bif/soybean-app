@@ -142,7 +142,7 @@ Page({
       success: function (res) {
         wx.showToast({
           icon: 'none',
-          title: "导出文件下载链接已保存到您的剪贴板"
+          title: "导出文件下载链接已复制到您的剪贴板，请到浏览器中粘贴下载"
         });
       }
     })
