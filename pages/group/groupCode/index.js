@@ -14,6 +14,12 @@ Page({
       code: e.detail.value
     })
   },
+  joinCodeReturn(){
+    wx.navigateBack({
+      delta: 1
+    })
+
+  },
   //根据唯一码判断，查看群信息，跳转
   joinCodeGroup: function () {
     wx.showLoading({

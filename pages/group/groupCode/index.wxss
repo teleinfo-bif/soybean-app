@@ -5,28 +5,57 @@ page {
 .organization {
     margin-top: 17rpx;
 }
+.tip-group{
+  width:100%;
+  font-size:36rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:70rpx;
+  padding: 32rpx 30rpx;
+  background: #fff;
+}
 
 .input-code {
     background: #fff;
     margin-top: 10rpx;
     padding: 0 30rpx;
-    height: 120rpx;
-    line-height: 60rpx;
+    height: 160rpx;
     background-color: #fff;
+    font-size:48rpx;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:70rpx;
 }
 .button-code {
-    margin-top: 50rpx;
+    margin-top: 647rpx;
+    display: flex;
 }
 .button-code-input {
-    text-align: center;
-    font-size: 32rpx;
-    line-height: 88rpx;
-    width:246rpx;
+    width:260rpx;
     height:88rpx;
-    background:rgba(67,117,254,1);
-    color:rgba(255,255,255,1);
+    background:rgba(23,89,239,1);
     border-radius:6rpx;
+    text-align: center;
+    font-size:30rpx;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:88rpx;
 }
 button::after {
     border: none;
+}
+.button-code-return{
+    width:260rpx;
+    height:88rpx;
+    background:rgba(234,234,234,1);
+    border-radius:6rpx;
+    text-align: center;
+    font-size:30rpx;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(19,19,19,1);
+    line-height:88rpx;
 }
