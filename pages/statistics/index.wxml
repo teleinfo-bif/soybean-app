@@ -42,7 +42,7 @@
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.notInbeijing}}</view>
-        <view class="statistic-box_item_label">离{{addressName}}未返{{addressName}}</view>
+        <view class="statistic-box_item_label">未返{{addressName}}</view>
       </view>
       <view class="statistic-box_item">
         <view class="statistic-box_item_value">{{data.totality.abnormalbody}}</view>
@@ -79,7 +79,7 @@
   </navigator> -->
   <pie pieS="{{true}}" first="{{true}}" eleid="test1" type="healthy" groupId="{{groupId}}" title="健康状况" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
   <pie pieS="{{false}}" type="region" eleid="test2" groupId="{{groupId}}" title="地区分布" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
-  <pie pieS="{{true}}" type="hospitalization" eleid="test3" groupId="{{groupId}}" title="就诊住院" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+  <pie pieS="{{true}}" type="hospitalization" eleid="test3" groupId="{{groupId}}" title="确诊住院" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
    <pie pieS="{{false}}" type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>
 

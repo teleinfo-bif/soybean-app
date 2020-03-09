@@ -86,10 +86,10 @@ Page({
     var that = this;
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
-      title: "愿亲人平安 春暖艳阳天 一起健康打卡！", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
-      path: "/pages/index/index", // 默认是当前页面，必须是以‘/'开头的完整路径
-      imageUrl: "",
-      success: function(res) {
+      title: "复工复产通行证", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
+      path: '/pages/index/index',    // 默认是当前页面，必须是以‘/'开头的完整路径
+      imageUrl: '',
+      success: function (res) {
         // 转发成功之后的回调
         if (res.errMsg == "shareAppMessage:ok") {
         }

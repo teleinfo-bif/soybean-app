@@ -13,7 +13,7 @@
       <view class="block-success_icon">
         <image mode="aspectFit" src="../../../static/images/success_yellow@3x.png" alt="已打卡" />
       </view>
-      <view class="block-success_text" style='font-size:40rpx;'>今日健康异常，请您注意隔离，多加防护</view>
+      <view class="block-success_text" style='font-size:40rpx;'>今日健康异常，请您注意隔离，如有必要请就医</view>
     </block>
     <!-- 打卡状态-正常 -->
     <block wx:else>

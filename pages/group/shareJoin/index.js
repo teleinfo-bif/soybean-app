@@ -134,7 +134,7 @@ Page({
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
-        content: `您已经加入了${alreadJoinName}组织，确定要切换加入 ${groupName} 组织吗？`,
+        content: `您已经加入了${alreadJoinName}机构，确定要切换加入 ${groupName} 机构吗？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",

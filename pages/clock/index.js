@@ -217,7 +217,7 @@ let fields = [
     }
   },
   {
-    title: "共同居住人员亲属（含合租人员）健康状况",
+    title: "共同居住人员/亲属（含合租人员）健康状况",
     type: "radio",
     prop: "roomPerson",
     props: {
@@ -232,7 +232,7 @@ let fields = [
     }
   },
   {
-    title: "共同居住人员亲属（含合租人员）健康状况为其他的原因",
+    title: "共同居住人员/亲属（含合租人员）健康状况为其他的原因",
     type: "input",
     prop: "roomPersonOther",
     hide: true,
@@ -242,7 +242,7 @@ let fields = [
   },
   {
     title:
-      "共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例",
+      "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例",
     type: "radio",
     prop: "roomCompany",
     props: {
@@ -258,16 +258,16 @@ let fields = [
   },
   {
     title:
-      "共同居住人员亲属（含合租人员）所在单位/公司是否有疑似病例、确诊病例为其他的原因",
+      "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他的原因",
     type: "input",
     prop: "roomCompanyOther",
     hide: true,
     props: {
-      placeholder: "请输入其他"
+      placeholder: "请输入其他详情"
     }
   },
   {
-    title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途径湖北",
+    title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途经过湖北",
     type: "radio",
     prop: "wuhan",
     props: {
@@ -296,12 +296,12 @@ let fields = [
     }
   },
   {
-    title: "其他",
+    title: "其他说明",
     type: "input",
     prop: "remarks",
     require: false,
     props: {
-      placeholder: "请输入其他"
+      placeholder: "如有其他情况，请在此说明"
     }
   },
   {
