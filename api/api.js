@@ -157,3 +157,8 @@ export const fromGroupCodetoId = async params => {
   console.log("/wx/group/groupCode----params", params);
   return Request._get(`/wx/group/groupCode`, params);
 };
+// 获取用户当天的健康码
+export const getUserHealthyQR = async params => {
+  console.log("=====/healthQrcode/createHealthQrcode----params", params);
+  return Request._get("/healthQrcode/createHealthQrcode", params);
+};

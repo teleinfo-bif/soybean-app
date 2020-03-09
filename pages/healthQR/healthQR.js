@@ -1,6 +1,7 @@
 // pages/code/code.js
 const app = getApp()
 const healthQrCodeUrl = '';
+import { getUserHealthyQR } from "../../api/api.js";
 
 
 Page({
@@ -16,44 +17,6 @@ Page({
     description: '',
   },
 
-  testQR: function () {
-    var that = this
-    wx.request({
-      url: "https://www.guokezhixing.com/secHealth/version1/healthRecord/miniSubmitRecord",
-      data: {
-        realName: that.data.name,
-        idCard: that.data.idCard,
-        phone: that.data.phone,
-        unit: that.data.unit,
-        unitAddress: that.data.unitAddress,
-        isLeave: that.data.isLeave,
-        returnDate: that.data.returnDate,
-        currentAddress: that.data.currentAddress,
-        isTouchCase: that.data.isTouchCase,
-        currentHealth: that.data.currentHealth,
-        userId: that.data.userId,
-        openId: that.data.openId
-      },
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      success(res) {
-        // console.log(res.data); 
-        console.log('=====请求sucessTESTQR=====', res);
-        that.setData({
-          qrcodeUrl: res.data.data.qrcodeUrl,
-          updateTime: "更新于：" +res.data.data.updateTime,
-          title:res.data.data.title,
-          description: res.data.data.description
-        })
-
-      },
-      fail() {
-        console.log('====请求失败=====');
-      }
-    })
-  },
 
   //后端数据获取
   queryUserData (){
@@ -101,6 +64,32 @@ Page({
 
   },
 
+  queryUserQR:function(){
+    var that = this
+    getUserHealthyQR({
+      userId: that.data.userId
+    }).then(res => {
+      wx.hideLoading()
+      console.log('=====healthyQR===', res)
+      var array = wx.base64ToArrayBuffer(res.base64)
+      var base64 = wx.arrayBufferToBase64(array)
+      that.setData({ qrcodeUrl: 'data:image/jpeg;base64,' + base64, });
+      console.log('=====请求sucessTESTQR=====', res);
+      that.setData({
+        updateTime: "更新于：" + res.updateTime,
+        title: res.title,
+        description: res.description
+      })        
+    }).catch(e => {
+      console.log(e)
+      wx.showToast({
+        title: '健康码加载失败',
+        icon: 'none',
+        duration: 2000
+      })
+      wx.hideLoading()
+    })
+  },
   onLoad: function (options) {
     wx.showLoading({
       title: '加载中',
@@ -112,8 +101,8 @@ Page({
     })
 
     console.log("current userId: ", this.data.userId)
-    this.queryUserData ()
-    wx.hideLoading()
+    this.queryUserQR ()
+    //wx.hideLoading()
   },
 
 
