@@ -73,7 +73,7 @@ Page({
     const { requestStutus, clockData } = this.data;
     let { current = 0, pages = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
-      debugger;
+      // debugger;
       this.setData({ requestStutus: true }, () => {
         getUserClockList({
           current: ++current,
@@ -111,7 +111,7 @@ Page({
    */
   onLoad: function(options) {
     const { userId } = options;
-    debugger;
+    // debugger;
     this.setData(
       {
         otherUserId: userId
