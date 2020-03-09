@@ -3,5 +3,10 @@
     "van-icon": "vant-weapp/icon",
     "pie": "./pie/index"
   },
-  "navigationBarTitleText": "每日健康打卡"
+  "navigationBarTitleText": "每日健康打卡",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#f1faf2"
 }
