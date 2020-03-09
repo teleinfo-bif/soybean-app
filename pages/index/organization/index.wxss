@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 88rpx; }
+  height: 71rpx; }
 
 .organization_head::after {
   position: absolute;

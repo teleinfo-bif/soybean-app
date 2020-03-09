@@ -9,6 +9,10 @@
   <!-- 组织信息 -->
   <view style='min-height:345rpx;'>
   <organization></organization>
+  <view class="help">
+     <image class="help-img" src="../../static/images/help.png" />
+     <text class="help-text">用户帮助</text>
+  </view>
   </view>
   <!-- 统计信息 -->
   <!-- <Statistics></Statistics> -->
