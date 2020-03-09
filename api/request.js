@@ -4,8 +4,9 @@ const userFilledInfofoKey = "userFilledInfo";
 const appid = "wx9f50de1f1b6b94c6";
 
 // 定义网络请求API地址
-const baseURL = "https://admin.bidspace.cn/bid-soybean";
-const baseURLNotice = "https://admin.bidspace.cn//bid-desk/front/notice/detail?id=29";
+const baseURL = "https://test.bidspace.cn/bid-soybean";
+const baseURLNotice =
+  "https://test.bidspace.cn//bid-desk/front/notice/detail?id=29";
 let fedToken = null;
 let userFilledInfo = null;
 function getAuth(token = { token_type: "", access_token: "" }) {
@@ -79,14 +80,14 @@ async function getOpenId() {
 function getNotice(cb) {
   wx.request({
     url: baseURLNotice,
-    method: 'get',
-    success: function (res) {
-      return typeof cb == "function" && cb(res)
+    method: "get",
+    success: function(res) {
+      return typeof cb == "function" && cb(res);
     },
-    fail: function (res) {
-      return typeof cb == "function" && cb(res)
+    fail: function(res) {
+      return typeof cb == "function" && cb(res);
     }
-  })
+  });
 }
 // 获取用户openId
 async function getUserInfo(
