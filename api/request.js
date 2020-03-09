@@ -4,9 +4,10 @@ const userFilledInfofoKey = "userFilledInfo";
 const appid = "wx9f50de1f1b6b94c6";
 
 // 定义网络请求API地址
+// const baseURL = "https://admin.bidspace.cn/bid-soybean";
 const baseURL = "https://test.bidspace.cn/bid-soybean";
 const baseURLNotice =
-  "https://test.bidspace.cn//bid-desk/front/notice/detail?id=29";
+  "https://admin.bidspace.cn/bid-desk/front/notice/detail?id=29";
 let fedToken = null;
 let userFilledInfo = null;
 function getAuth(token = { token_type: "", access_token: "" }) {
