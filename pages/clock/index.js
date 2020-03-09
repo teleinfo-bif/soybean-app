@@ -239,7 +239,7 @@ let fields = [
     prop: "roomPersonOther",
     hide: true,
     props: {
-      placeholder: "请输入其他",
+      placeholder: "请输入其他症状",
       independent: false
     }
   },
@@ -832,7 +832,14 @@ Page({
               this.setData({ location });
               reverseAddressFromLocation(location).then(res => {
                 this.onAddressChange(res);
-              });
+              }).catch(error => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: "获取地址失败",
+                  icon: "none"
+                })
+                console.error("腾讯地址逆解析接口 error", error)
+              });;
             }
           });
         } else {
