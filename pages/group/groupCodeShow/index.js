@@ -74,6 +74,13 @@ Page({
     });
   },
 
+  quitCodeGroup: function (code) {
+    const {groupName, groupId } = this.data
+    wx.navigateTo({
+      url: `/pages/index/index`,
+    });
+  },
+
   onShareAppMessage: function() {
     // 考虑用对称加密签个时间
     const timeStamp = new Date().getTime();
