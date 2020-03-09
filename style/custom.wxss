@@ -3,10 +3,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 10rpx;
-  padding: 20rpx 30rpx 30rpx;
-  background-color: #fff;
-  border-bottom: 1rpx solid #f2f2f2; }
+  margin-top: 0;
+  padding: 0 30rpx 30rpx;
+  background-color: #fff; }
+  .my-form_item-independent {
+    margin-top: 10rpx;
+    border-top: 1rpx solid #f2f2f2;
+    padding: 20rpx 30rpx 30rpx; }
   .my-form_item .van-cell {
     padding-right: 30rpx !important; }
     .my-form_item .van-cell::after {
@@ -24,7 +27,10 @@
     margin-top: 20rpx; }
     .my-form_item .van-radio__label {
       flex: 1;
-      font-size: 32rpx !important; }
+      font-size: 32rpx !important;
+      color: #666; }
+  .my-form_item .van-field__input {
+    color: #666; }
   .my-form_item .must-filled-star {
     position: absolute;
     color: #f00;
@@ -40,7 +46,8 @@
     font-size: 32rpx;
     line-height: 40rpx; }
   .my-form_item_content {
-    position: relative; }
+    position: relative;
+    color: #666; }
 
 .color {
   color: #4f7ef2; }

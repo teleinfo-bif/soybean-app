@@ -6,8 +6,7 @@ const QQMapWX = require("./qqmap-wx-jssdk.min.js");
 const key = "2YLBZ-FJS64-RINUP-XWG5O-JC5U3-ALBXJ";
 
 const wxMapSdk = new QQMapWX({
-  // key: "27VBZ-4QOLP-ZTDD7-V35OS-WY67E-WEBO4"
-  key: "2YLBZ-FJS64-RINUP-XWG5O-JC5U3-ALBXJ"
+  key
 });
 
 // 根据经纬度逆解析位置信息

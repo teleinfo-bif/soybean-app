@@ -1,4 +1,7 @@
-import { getLocationPluginMapUrl, reverseAddressFromLocation } from "../../utils/qqmap-wx-jssdk/map";
+import {
+  getLocationPluginMapUrl,
+  reverseAddressFromLocation
+} from "../../utils/qqmap-wx-jssdk/map";
 
 Component({
   options: {
@@ -33,12 +36,11 @@ Component({
   },
   methods: {
     bindGetLoation() {
-      const _this = this
+      const _this = this;
       wx.showModal({
         //弹窗提示
         title: "位置授权",
-        content:
-          "请授权获取您的地理位置，否则健康打卡无法提交哦",
+        content: "请授权获取您的地理位置，否则健康打卡无法提交哦",
         success: function(tip) {
           if (tip.confirm) {
             wx.openSetting({
@@ -52,7 +54,7 @@ Component({
                     icon: "success",
                     duration: 1000
                   });
-                  _this.getLocation()
+                  _this.getLocation();
                 }
               }
             });
@@ -68,13 +70,21 @@ Component({
     },
     // 直接获取位置信息
     getLocation() {
-      const _this = this
+      const _this = this;
       wx.getLocation({
         success(res) {
-          reverseAddressFromLocation(res).then(location => {
-            _this.triggerEvent("change", location.result.address);
-          });
-         
+          reverseAddressFromLocation(res)
+            .then(location => {
+              _this.triggerEvent("change", location.result.address);
+            })
+            .catch(error => {
+              wx.hideLoading();
+              wx.showToast({
+                title: "获取地址失败",
+                icon: "none"
+              });
+              console.error("腾讯地址逆解析接口 error", error);
+            });
         }
       });
     },
@@ -88,30 +98,31 @@ Component({
     },
     // picker点击事件
     onChange(e) {
-      const _this = this
+      const _this = this;
       wx.getSetting({
-        success:(res)=>{
-          if (!res.authSetting['scope.userLocation']) {
+        success: res => {
+          if (!res.authSetting["scope.userLocation"]) {
             console.warn("-----不满足scope.userLocation权限-----");
             //申请授权
             wx.authorize({
-              scope: 'scope.userLocation',
+              scope: "scope.userLocation",
               success() {
-                console.log('-----wx.authorize授权成功-----')
-                _this.getLocation()
+                console.log("-----wx.authorize授权成功-----");
+                _this.getLocation();
               },
               fail(e) {
-                console.warn('-----wx.authorize授权失败（第一次拒绝定位）-----')
-                _this.bindGetLoation()
+                console.warn(
+                  "-----wx.authorize授权失败（第一次拒绝定位）-----"
+                );
+                _this.bindGetLoation();
               }
-            })
+            });
           } else {
-            _this.chooseLocation()
+            _this.chooseLocation();
           }
         }
-      })
-  
-    
+      });
+
       // const { value } = e.detail
       // this.setLabel(value)
       // this.triggerEvent("change", "test");
