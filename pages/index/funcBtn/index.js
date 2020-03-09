@@ -53,6 +53,13 @@ Component({
         return;
       }
       const { data, path } = e.currentTarget.dataset;
+
+      if (this.data.btnData.noLimit == true) {
+        wx.navigateTo({
+          url: path
+        });
+        return;
+      }
       // 如果用户未注册
       if (!app.globalData.userRegisted) {
         wx.showModal({
@@ -68,7 +75,7 @@ Component({
             }
           }
         });
-      } else if (data.permission && !this.data.clocked) {
+      } else if (data.clockedPermission && !this.data.clocked) {
         // 存在未打卡false和未请求两种情况不单独验证
         const clocked = await this.getTodayClockData();
         if (clocked) {

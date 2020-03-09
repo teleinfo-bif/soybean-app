@@ -20,12 +20,13 @@ Component({
       img: "../../../static/images/jjiankangmaactive.png",
       path: "/pages/healthQR/healthQR",
       disable: true,
-      permission: true
+      clockedPermission: true
     },
     xingChengCard: {
       text: "行程卡",
       img: "../../../static/images/xingchengka.png",
-      path: "https://xc.caict.ac.cn",
+      noLimit: true,
+      path: "/pages/webview/index"
     }
   },
 
