@@ -127,6 +127,7 @@ Page({
     this.setData({
       clockInTime: getyyyyMMdd(new Date())
     });
+    wx.stopPullDownRefresh();
   },
 
   /**
