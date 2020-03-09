@@ -120,7 +120,14 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () { },
+  onPullDownRefresh: function () { 
+    this.getData()
+    this.getGroupDetail(this.data.groupId)
+
+    this.setData({
+      clockInTime: getyyyyMMdd(new Date())
+    });
+  },
 
   /**
    * 页面上拉触底事件的处理函数
