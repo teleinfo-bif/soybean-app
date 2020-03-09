@@ -441,7 +441,7 @@ Page({
           data[item.prop] = null;
         } else if (!clocked && item.prop == "roomCompany") {
           item.hide = false;
-          data[item.prop] = null;
+          // data[item.prop] = null;
         } else if (!clocked && item.prop == "roomCompanyOther") {
           if (data["roomCompany"] == "0") {
             item.hide = false;
@@ -914,7 +914,7 @@ Page({
     fields.forEach(item => {
       item.props.disable = true;
     });
-    // fields.pop();
+    fields.pop();
     this.setData({ fields });
   },
   async setFieldsFromClockData(formData) {
