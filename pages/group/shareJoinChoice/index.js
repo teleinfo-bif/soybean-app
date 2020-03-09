@@ -11,7 +11,7 @@ Page({
     userFilledInfo: '',
     groupId: '',
     groupName: '',
-    multiArray: [["工业互联网与物联网研究所","安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部","综合管理部"]],
+    multiArray: [["工业互联网与物联网研究所", "安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部", "综合管理部"]],
     multiIndex: [0, 0],
     array: ["技术研究部"],
     index: 0,
@@ -52,15 +52,15 @@ Page({
     }
   },
   userPrompt: function () {
-    const { groupId, userFilledInfo } = this.data   
+    const { groupId, userFilledInfo } = this.data
     if (userFilledInfo.userRegisted) {
       this.tree2array(groupId)
     } else {
       wx.navigateTo({
         url: "/pages/index/index",
-        success: result => {},
-        fail: () => {},
-        complete: () => {}
+        success: result => { },
+        fail: () => { },
+        complete: () => { }
       });
     }
   },
@@ -71,7 +71,7 @@ Page({
     }).then(data => {
       // console.log('dd', data)
       if (data.length == 0) {
-        //最底层群组
+        //最底层部门
         this.setData({
           lowestClass: true
         })
@@ -89,7 +89,7 @@ Page({
         })
         if (lastClass) {
           let array = a
-          console.log('lastClass',array)
+          console.log('lastClass', array)
           this.setData({
             array: array,
             joinGroupId: array[0].id
@@ -98,19 +98,19 @@ Page({
           let multiArray = [a, b[0]]
           console.log(multiArray)
           this.setData({
-          first: a,
-          second: b,
-          multiArray: multiArray,
-          joinGroupId: b[0].length==0?a[0].id:b[0][0].id
-        })
+            first: a,
+            second: b,
+            multiArray: multiArray,
+            joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
+          })
         }
-        
+
       }
     })
   },
-  bindPickerChange: function(e) {
+  bindPickerChange: function (e) {
     const { array } = this.data
-    console.log('picker发送选择改变，携带值为',e, e.detail.value, e.target.dataset.id)
+    console.log('picker发送选择改变，携带值为', e, e.detail.value, e.target.dataset.id)
     let index = e.detail.value
     // let id = e.target.dataset.id //这个值有问题
     let id = array[index].id
@@ -120,13 +120,13 @@ Page({
     })
   },
   bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为',e.detail.value, e.target.dataset.id)
+    console.log('picker发送选择改变，携带值为', e.detail.value, e.target.dataset.id)
     let id = e.target.dataset.id
     this.setData({
       multiIndex: e.detail.value,
       joinGroupId: id
     })
- 
+
   },
   bindMultiPickerColumnChange: function (e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
@@ -136,14 +136,14 @@ Page({
     };
     data.multiArray[0] = this.data.first
     data.multiIndex[e.detail.column] = e.detail.value;
-    switch(e.detail.column) {
-      case 0:        
+    switch (e.detail.column) {
+      case 0:
         data.multiArray[1] = this.data.second[data.multiIndex[0]]
         break
     }
     this.setData(data)
-  }, 
-  join: function() {
+  },
+  join: function () {
     const { joinGroupId, userFilledInfo } = this.data
     let groupId = joinGroupId
     this.shareJoniGroup({
@@ -151,12 +151,12 @@ Page({
       userId: userFilledInfo.id
     });
   },
-  quit: function() {
+  quit: function () {
     wx.reLaunch({
       url: "/pages/index/index",
-      success: result => {},
-      fail: () => {},
-      complete: () => {}
+      success: result => { },
+      fail: () => { },
+      complete: () => { }
     });
   },
   shareJoniGroup(
@@ -177,7 +177,7 @@ Page({
           .then(data => {
             console.log("=====joinGroup-data====", data);
             wx.showToast({
-              title: "加入群组成功",
+              title: "加入部门成功",
               duration: 1500,
               mask: false,
               success: result => {
@@ -187,34 +187,34 @@ Page({
                 wx.reLaunch({
                   url: "/pages/index/index",
                 })
-               }
+              }
             });
           })
           .catch(e => { });
-      }) 
-    }else {
-      joinGroup(params)
-      .then(data => {
-        console.log("=====joinGroup-data====", data);
-        wx.showToast({
-          title: "加入群组成功",
-          duration: 1500,
-          mask: false,
-          success: result => {
-            wx.reLaunch({
-              url: "/pages/index/index",
-            })
-          },
-        });
       })
-      .catch(e => { });
+    } else {
+      joinGroup(params)
+        .then(data => {
+          console.log("=====joinGroup-data====", data);
+          wx.showToast({
+            title: "加入部门成功",
+            duration: 1500,
+            mask: false,
+            success: result => {
+              wx.reLaunch({
+                url: "/pages/index/index",
+              })
+            },
+          });
+        })
+        .catch(e => { });
       // setTimeout(function () {
       //   wx.reLaunch({
       //     url: "/pages/index/index",
       //   })
       // }, 2000)
     }
-    
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

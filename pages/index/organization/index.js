@@ -45,12 +45,12 @@ Component({
         // debugger
         getUserGroupTree({}).then(data => {
           console.log(
-            "===============用户管理群组：===============\n",
+            "===============用户管理部门：===============\n",
             data.length,
             data
           );
-          // var dataNew=[] //保存过滤之后的二级群组
-          // var ids = '';//既有一级又有二级群组的id
+          // var dataNew=[] //保存过滤之后的二级部门
+          // var ids = '';//既有一级又有二级部门的id
           //重组data,去除二级部门的权限
           // data.map((val,index)=>{
           //   if(val.children.length > 0){
@@ -70,7 +70,7 @@ Component({
           //     dataNew.push(val)
           //   }
           // })
-          
+
           this.setData({
             groupList: data
           });

@@ -7,10 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    groupId: "", //要加入的群组id
-    userId: "",  
+    groupId: "", //要加入的部门id
+    userId: "",
     timeStamp: "",
-    groupName: "", //要加入的群组名
+    groupName: "", //要加入的部门名
     // multiArray: [["安全研究所", "泰尔系统实验室"], ["技术研究部", "系统开发部"]],
     // multiIndex: [0, 0],
     array: [],
@@ -18,7 +18,7 @@ Page({
     lastClass: true,  //最底层部门
     lowestClass: false,  //倒数第二级部们
     alreadJoinName: "", //以加入群的名字
-    alreadJoin: false, // 是否已加入其他群组
+    alreadJoin: false, // 是否已加入其他部门
     alreadJoinId: "",
   },
 
@@ -40,7 +40,7 @@ Page({
           .then(data => {
             console.log("=====joinGroup-data====", data);
             wx.showToast({
-              title: "加入群组成功",
+              title: "加入部门成功",
               duration: 1500,
               mask: false,
               success: result => {
@@ -59,7 +59,7 @@ Page({
         .then(data => {
           console.log("=====joinGroup-data====", data);
           wx.showToast({
-            title: "加入群组成功",
+            title: "加入部门成功",
             duration: 1500,
             mask: false,
             success: result => {
@@ -88,41 +88,41 @@ Page({
       }, 2000)
     }
   },
-  
+
   //判断是否是最低级的部门,调用不同函数
-  joinDifferentGroup: function(groupId) {
+  joinDifferentGroup: function (groupId) {
     console.log('是否注册页过来的，1就是注册页过来的：zc=', this.data.zc)
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
       console.log('data', data)
-      //根据返回值判断是否是最底层群组，分别做不同处理
+      //根据返回值判断是否是最底层部门，分别做不同处理
       if (data.length == 0) {
-        //最底层群组
+        //最底层部门
         this.setData({
           lowestClass: true
         })
-        if(this.data.zc=='1') {
+        if (this.data.zc == '1') {
           // this.shareJoniGroup({
           //   groupId,
           //   userId: this.data.userFilledInfo.id
           // });
           this.joinGroupLowFromRegister()
-        }else {
+        } else {
           this.joinGroupModal()
-        }       
+        }
       } else {
         this.setData({
           lowestClass: false
         })
-        if(this.data.zc=='1') {
+        if (this.data.zc == '1') {
           // wx.navigateTo({
           //   url: `/pages/group/shareJoinChoice/index?groupName=${this.data.groupName}&groupId=${groupId}`,
           // });
           this.joinGroupHighFromRegister()
-        }else {
-          this.joinGroupChoiceModal()       
-        }      
+        } else {
+          this.joinGroupChoiceModal()
+        }
       }
     })
   },
@@ -208,7 +208,7 @@ Page({
             });
             wx.navigateTo({
               url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              success: result => { wx.hideLoading();},
+              success: result => { wx.hideLoading(); },
               fail: () => { },
               complete: () => { }
             });
@@ -260,7 +260,7 @@ Page({
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
-        content: `您已经加入了${alreadJoinName}组织，确定要切换加入 ${groupName} 组织吗？`,
+        content: `您已经加入了${alreadJoinName}，确定要切换加入${groupName}？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
@@ -312,7 +312,7 @@ Page({
             });
             wx.navigateTo({
               url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              success: result => { wx.hideLoading();},
+              success: result => { wx.hideLoading(); },
               fail: () => { },
               complete: () => { }
             });
@@ -332,11 +332,11 @@ Page({
       });
     }
   },
- 
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     /**
      * 判断传入参数的有效性，时间有效性
      * 判断用户是否注册 未注册 存参数在storage，引导注册后重新加入
@@ -373,13 +373,13 @@ Page({
   },
 
   userPrompt: function () {
-    console.log('prompt' )
+    console.log('prompt')
     const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data
-    const userful =  Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
+    const userful = Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
     // console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
     const _this = this;
     //注册过来的不判断时间有效性
-    if(!zc && !userful){
+    if (!zc && !userful) {
       wx.showModal({
         title: "提示",
         content: `您的加群链接已失效，请联系邀请人重新邀请！`,
@@ -387,15 +387,15 @@ Page({
         cancelColor: "#000000",
         confirmText: "确定",
         confirmColor: "#3CC51F",
-        success(res) { 
+        success(res) {
           if (res.confirm) {
             wx.reLaunch({
               url: "/pages/index/index",
-              success: result => {},
-              fail: () => {},
-              complete: () => {}
+              success: result => { },
+              fail: () => { },
+              complete: () => { }
             });
-          } 
+          }
         }
       })
       return
@@ -410,7 +410,7 @@ Page({
       // } else {
       //   this.isCanJoinGroup()
       // }   
-      this.isCanJoinGroup()   
+      this.isCanJoinGroup()
     } else {
       console.log('没有注册')
       wx.showModal({
@@ -420,21 +420,21 @@ Page({
         cancelColor: "#000000",
         confirmText: "确认注册",
         confirmColor: "#3CC51F",
-        success(res) { 
+        success(res) {
           if (res.confirm) {
             wx.navigateTo({
               url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
-              success: result => {               
+              success: result => {
               },
-              fail: () => {},
-              complete: () => {}
+              fail: () => { },
+              complete: () => { }
             });
           } else if (res.cancel) {
             wx.navigateTo({
               url: "/pages/index/index",
-              success: result => {},
-              fail: () => {},
-              complete: () => {}
+              success: result => { },
+              fail: () => { },
+              complete: () => { }
             });
           }
         }
@@ -442,15 +442,15 @@ Page({
     }
   },
   //查询是否已经加过群
-  isCanJoinGroup: function() {   
-    const { groupId, userId } = this.data 
+  isCanJoinGroup: function () {
+    const { groupId, userId } = this.data
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
       console.log('查询用户已加入的群接口', data)
-      if(JSON.stringify(data) == "{}"){
+      if (JSON.stringify(data) == "{}") {
         this.joinDifferentGroup(groupId)
-      }else {
+      } else {
         let quitId = data.id
         let quitName = data.name
         this.setData({
@@ -460,12 +460,12 @@ Page({
         })
         this.joinDifferentGroup(groupId)
         // this.quitGroupTest(quitId) 
-      }   
-    })   
+      }
+    })
   },
   //退群 测试
-  quitGroupTest: function(quitId) {
-    const { userId } = this.data 
+  quitGroupTest: function (quitId) {
+    const { userId } = this.data
     quitGroup({
       userId: userId,
       groupId: quitId,
@@ -481,40 +481,40 @@ Page({
   //     userId: userFilledInfo.id
   //   });
   // },
-  join_0: function() {
+  join_0: function () {
     const { groupId, userFilledInfo } = this.data
     this.shareJoniGroup({
       groupId,
       userId: userFilledInfo.id
     });
   },
-  quit: function() {
+  quit: function () {
     wx.navigateTo({
       url: "/pages/index/index",
-      success: result => {},
-      fail: () => {},
-      complete: () => {}
+      success: result => { },
+      fail: () => { },
+      complete: () => { }
     });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
