@@ -4,7 +4,6 @@
     "pages/status/index",
     "pages/clock/index",
     "pages/clock/status/index",
-    "pages/clockOthers/index",
     "pages/statistics/statisticsTab/index",
     "pages/personal/index",
     "pages/clockRecords/index",
