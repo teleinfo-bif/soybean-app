@@ -1,7 +1,7 @@
 <van-cell-group class="my-form">
   <!-- <button bindtap="out" style="position: relative;z-index: 10000;">out</button> -->
   <block wx:for="{{fields}}" wx:key="index">
-    <view wx:if="{{item.hide != true}}" class="my-form_item" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
+    <view wx:if="{{item.hide != true}}" class="{{item.props.independent == false ? 'my-form_item ' : 'my-form_item  my-form_item-independent'}}" bind:touch="onClick" data-prop="{{item.prop}}" data-type="{{item.type}}">
       <!-- form-label文字 -->
       <view wx:if="{{item.title}}" class="my-form_item_head">
         <view class="my-form_item_head-left">

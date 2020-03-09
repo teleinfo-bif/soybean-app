@@ -4,11 +4,17 @@
   display: flex;
   flex-direction: column;
   // height: 120rpx ;
-  margin-top: 10rpx;
-  padding: 20rpx 30rpx 30rpx;
+  margin-top: 0;
+  padding: 0 30rpx 30rpx;
+
   background-color: #fff;
   // overflow: hidden;
-  border-bottom: 1rpx solid #f2f2f2;
+  // border-bottom: 1rpx solid #f2f2f2;
+  &-independent {
+    margin-top: 10rpx;
+    border-top: 1rpx solid #f2f2f2;
+    padding: 20rpx 30rpx 30rpx;
+  }
 
   .van-cell {
     padding-right: 30rpx !important;
@@ -38,9 +44,13 @@
     &__label {
       flex: 1;
       font-size: 32rpx !important;
+      color: #666;
     }
   }
 
+  .van-field__input {
+    color: #666;
+  }
   .must-filled-star {
     position: absolute;
     color: #f00;
@@ -61,6 +71,7 @@
 
   &_content {
     position: relative;
+    color: #666;
     // margin: 0 30rpx;
     // background-color: blue;
     // border-bottom: 1rpx solid #f2f2f2;

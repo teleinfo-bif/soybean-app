@@ -154,13 +154,14 @@ let fields = [
     }
   },
   {
-    title: "具体温度",
+    // title: "具体温度",
     type: "input",
     prop: "temperature",
     hide: true,
     props: {
       // placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
-      placeholder: "请输入数字和小数点",
+      placeholder: "请输入大于37.3度的具体温度",
+      independent: false,
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value) && value >= 37.3;
       },
@@ -182,12 +183,13 @@ let fields = [
     }
   },
   {
-    title: "其他症状",
+    // title: "其他症状",
     type: "input",
     prop: "otherhealthy",
     hide: true,
     props: {
-      placeholder: "请输入其他症状"
+      placeholder: "请输入其他症状",
+      independent: false
     }
   },
   {
@@ -232,17 +234,17 @@ let fields = [
     }
   },
   {
-    title: "共同居住人员/亲属（含合租人员）健康状况为其他的原因",
+    // title: "共同居住人员/亲属（含合租人员）健康状况为其他的原因",
     type: "input",
     prop: "roomPersonOther",
     hide: true,
     props: {
-      placeholder: "请输入其他"
+      placeholder: "请输入其他",
+      independent: false
     }
   },
   {
-    title:
-      "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例",
+    title: "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例",
     type: "radio",
     prop: "roomCompany",
     props: {
@@ -257,17 +259,18 @@ let fields = [
     }
   },
   {
-    title:
-      "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他的原因",
+    // title:
+    //   "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他的原因",
     type: "input",
     prop: "roomCompanyOther",
     hide: true,
     props: {
-      placeholder: "请输入其他详情"
+      placeholder: "请输入其他详情",
+      independent: false
     }
   },
   {
-    title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途经过湖北",
+    title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途经湖北",
     type: "radio",
     prop: "wuhan",
     props: {
