@@ -34,7 +34,6 @@ page {
   justify-content: center; }
 
 .group-create-location {
-  /* margin-top: 50rpx; */
   text-align: center;
   font-size: 28rpx;
   width: 750rpx;
