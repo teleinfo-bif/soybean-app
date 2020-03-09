@@ -9,7 +9,7 @@
   <!-- 组织信息 -->
   <view style='min-height:345rpx;'>
   <organization></organization>
-  <view class="help">
+  <view class="help" bind:tap="toHelp">
      <image class="help-img" src="../../static/images/help.png" />
      <text class="help-text">用户帮助</text>
   </view>

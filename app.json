@@ -18,7 +18,8 @@
     "pages/agreement/index",
     "pages/group/groupCode/index",
     "pages/group/groupCodeShow/index",
-    "pages/webview/index"
+    "pages/webview/index",
+    "pages/help/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

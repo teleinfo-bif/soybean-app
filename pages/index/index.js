@@ -93,5 +93,11 @@ Page({
         // 转发结束之后的回调（转发成不成功都会执行）
       }
     };
-  }
+  },
+
+  toHelp: function() {
+    wx.navigateTo({
+      url: "/pages/help/index"
+    });    
+  },
 });

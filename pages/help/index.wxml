@@ -1,0 +1,19 @@
+<!--pages/help/index.wxml-->
+<view class="list line">
+    <view class="head">普通用户</view>
+    <view class="content" wx:for="{{commonList}}" wx:key="title">
+        <view class="{{item.flag?'head-t-t':'head-t'}}" bindtap='onTap' data-index="{{index}}">
+            <view class="head-title">{{item.title}}</view>
+            <image class="{{item.flag?'down':'right'}}" src="{{item.flag?helptap:helptapright}}" />
+        </view>
+        <text class="head-content {{item.flag?'':'isBlock'}}">{{item.content}}</text>
+    </view>
+    <view class="head">管理员</view>
+    <view class="content" wx:for="{{managerList}}" wx:key="title">
+        <view class="{{item.flag?'head-t-t':'head-t'}}" bindtap='onTap2' data-index="{{index}}">
+            <view class="head-title">{{item.title}}</view>
+            <image class="{{item.flag?'down':'right'}}" src="{{item.flag?helptap:helptapright}}" />
+        </view>
+        <text class="head-content {{item.flag?'':'isBlock'}}">{{item.content}}</text>
+    </view>
+</view>
