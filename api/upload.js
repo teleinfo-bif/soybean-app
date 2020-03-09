@@ -1,5 +1,6 @@
 // ipfs server地址
 const url = "https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo";
+export const baseURLDownload = "https://admin.bidspace.cn/bid-soybean";
 
 export const UploadFile = async ({ filePath, name, formData, ...others }) => {
   return new Promise((resolve, reject) => {

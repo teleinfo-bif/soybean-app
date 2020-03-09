@@ -1,6 +1,7 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
 import { createGroup, fromGroupCodetoId } from "../../../api/api";
+import { UploadFile, baseURLDownload } from "../../../api/upload";
 
 Page({
 
@@ -97,23 +98,19 @@ Page({
         const tempFilePath = res.tempFilePaths[0]
         var key = tempFilePath.substr(tempFilePath.lastIndexOf('/') + 1)
         // console.log('tempFilePaths:', tempFilePath)
-        wx.uploadFile({
-          url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
+        UploadFile({
           filePath: tempFilePath,
           name: 'file',
           formData: {
             'bid': bid
-          },
-          success(res) {
-            const data = res.data
+          }
+        }).then(data=>{
             console.log("uploadImage", JSON.parse(data).data.photo)
             that.setData({
               groupLogo: JSON.parse(data).data.photo,
               groupAvatarShow: tempFilePath
             })
-          },
-          fail: console.error
-        })
+        }).catch(e=>console.log(e))
       }
     })
   },
@@ -134,23 +131,19 @@ Page({
         //   uploadFileName: name,
         //   uploadFilePath: path
         // })
-        wx.uploadFile({
-          url: 'https://admin.bidspace.cn/bid-blockchain/front/ipfs/upload-photo', //仅为示例，非真实的接口地址
+        UploadFile({
           filePath: path,
           name: 'file',
           formData: {
             'bid': bid
-          },
-          success(res) {
-            const data = res.data
-            console.log("uploadImage", res, JSON.parse(data), JSON.parse(data).data.photo)
+          }
+        }).then(data => {
+            console.log("uploadFile", JSON.parse(data).data.photo)
             that.setData({
               uploadFileName: name,
               excelFile: JSON.parse(data).data.photo,
             })
-            //do something
-          }
-        })
+        }).catch(e=>{console.log(e)})
       }
     })
   },
@@ -301,8 +294,8 @@ Page({
   },
 
   downloadStructure: function () {
-    console.log('下载模板')
-    let tempFileURL = "https://admin.bidspace.cn/bid-soybean/download/group.xlsx"
+    console.log('下载模板',`${baseURLDownload}/download/group.xlsx`)
+    let tempFileURL = `${baseURLDownload}/download/group.xlsx`
     wx.setClipboardData({
       data: tempFileURL,
       success: function (res) {

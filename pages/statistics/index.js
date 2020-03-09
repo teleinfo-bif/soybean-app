@@ -10,6 +10,7 @@ function getyyyyMMdd(date) {
   return yyyyMMdd;
 }
 import { getGroupStatistic, getGroup } from "../../api/api";
+import { baseURLDownload } from "../../api/upload";
 
 Page({
   // onShareAppMessage: function(res) {
@@ -133,9 +134,9 @@ Page({
 
 
   exportExcel: function () {
-    const { groupId, clockInTime } = this.data
+    const { groupId, clockInTime } = this.data;
     console.log('导出数据', clockInTime, groupId)
-    let url = `https://admin.bidspace.cn/bid-soybean/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
+    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
     wx.setClipboardData({
       data: url,
       success: function (res) {
