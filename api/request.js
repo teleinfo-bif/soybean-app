@@ -4,10 +4,14 @@ const userFilledInfofoKey = "userFilledInfo";
 const appid = "wx9f50de1f1b6b94c6";
 
 // 定义网络请求API地址
+// 线上环境
 // const baseURL = "https://admin.bidspace.cn/bid-soybean";
 const baseURL = "https://test.bidspace.cn/bid-soybean";
+// 测试环境
 const baseURLNotice =
   "https://admin.bidspace.cn/bid-desk/front/notice/detail?id=29";
+
+// login返回的token信息，用户录入的信息
 let fedToken = null;
 let userFilledInfo = null;
 function getAuth(token = { token_type: "", access_token: "" }) {
@@ -39,7 +43,11 @@ async function appInit() {
   };
 }
 
-// 获取用户openId
+/**
+ *获取用户openID & token信息
+ *
+ * @returns
+ */
 async function getOpenId() {
   return new Promise((resolve, reject) => {
     wx.login({
@@ -90,7 +98,14 @@ function getNotice(cb) {
     }
   });
 }
-// 获取用户openId
+/**
+ *获取用户录入的信息
+ *
+ * @param {*} [params={
+ *     openid: fedToken.openid
+ *   }]
+ * @returns userFilledInfo 用户录入信息
+ */
 async function getUserInfo(
   params = {
     openid: fedToken.openid
@@ -114,7 +129,11 @@ async function getUserInfo(
   });
 }
 
-// 检查sessionKey
+/**
+ *检查session有效性
+ *
+ * @returns true/false
+ */
 async function checkSessionKey() {
   return new Promise((resolve, reject) => {
     wx.checkSession({
@@ -253,13 +272,6 @@ const showToast = title => {
   });
 };
 
-// 进行url字符串拼接
-const getUrl = url => {
-  if (url.indexOf("://") == -1) {
-    url = baseURL + url;
-  }
-  return url;
-};
 //获取用户userToken
 // function getHeader() {
 //   // 判断登录token是否存在
