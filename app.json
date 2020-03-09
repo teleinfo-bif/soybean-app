@@ -18,7 +18,8 @@
     "pages/group/shareJoinChoice/index",
     "pages/agreement/index",
     "pages/group/groupCode/index",
-    "pages/group/groupCodeShow/index"
+    "pages/group/groupCodeShow/index",
+    "pages/webview/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
