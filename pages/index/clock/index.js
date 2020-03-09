@@ -17,10 +17,15 @@ Component({
     },
     healthCode: {
       text: "健康码",
-      img: "../../../static/images/jjiankangmaactive3x.png",
+      img: "../../../static/images/jjiankangmaactive.png",
       path: "/pages/healthQR/healthQR",
       disable: true,
       permission: true
+    },
+    xingChengCard: {
+      text: "行程卡",
+      img: "../../../static/images/xingchengka.png",
+      path: "https://xc.caict.ac.cn",
     }
   },
 

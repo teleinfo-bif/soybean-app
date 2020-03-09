@@ -10,8 +10,8 @@
   justify-content: center;
   align-items: center;
   /* margin-top: 20rpx; */
-  width: 330rpx;
-  height: 300rpx;
+  width: 222rpx;
+  height: 222rpx;
   background: rgba(255, 255, 255, 1);
   /* box-shadow: 0rpx 5rpx 27rpx 0rpx rgba(194, 199, 225, 0.47); */
   border-radius: 35rpx;
@@ -22,12 +22,12 @@
 }
 
 .func-btn_icon {
-  width: 180rpx;
-  height: 180rpx;
+  width: 146rpx;
+  height: 146rpx;
 }
 
 .func-btn_text {
-  margin-top: 10rpx;
+  /* margin-top: 10rpx; */
   font-size: 30rpx;
   line-height: 30rpx;
 }

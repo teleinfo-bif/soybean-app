@@ -4,5 +4,6 @@
     <!-- <slot name="funcbtn"></slot> -->
     <funcBtn btn-data="{{healthSign}}"></funcBtn>
     <funcBtn btn-data="{{healthCode}}"></funcBtn>
+    <funcBtn btn-data="{{xingChengCard}}"></funcBtn>
   </view>
 </view>
