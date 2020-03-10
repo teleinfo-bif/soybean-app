@@ -1,0 +1,63 @@
+/* pages/company/companyAuth/companyAuthAdd/index.wxss */
+page{
+  background-color: rgba(249, 249, 249, 1);
+}
+.addCont{
+  margin-top: 20rpx;
+  margin-bottom: 50rpx;
+  background: white;
+  
+}
+.personal-info-hd {
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  height: 75rpx;
+  margin-left:30rpx;
+  margin-top:100rpx;
+  background: white;
+}
+.info-input{
+  width: 90%;
+  height: 45rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:45rpx;
+  margin-right: 30rpx;
+}
+.personal-info-td {
+  margin-bottom:30rpx;
+  margin-left:30rpx;
+}
+.quit-join-group {
+    width: 750rpx;
+    box-sizing: border-box;    
+    padding-right: 106rpx;
+    padding-left: 106rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.join-group {
+    text-align: center;
+    font-size: 32rpx;
+    line-height: 88rpx;
+    width:246rpx;
+    height:88rpx;
+    background:rgba(67,117,254,1);
+    color:rgba(255,255,255,1);
+    border-radius:6rpx;
+}
+.quit-group {
+    text-align: center;
+    font-size: 32rpx;
+    line-height: 88rpx;
+    width:246rpx;
+    height:88rpx;
+    background:rgba(232,232,232,1);
+    color:rgba(51,51,51,1);
+    border-radius:6rpx;
+ }
