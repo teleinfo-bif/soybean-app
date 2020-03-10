@@ -160,7 +160,7 @@ Component({
       // var windowWidth = 200;
       const series = [];
 
-      const colors = ["#aa4438", "#f2d45e", "#ffaa00", "#4169E1"];
+      const colors = ["#aa4438", "#f2d45e", "#ffaa00", "#4169E1", "#32CD32"];
       const emptyData = this.data.data.filter(item => {
         return item.value != 0;
       });
