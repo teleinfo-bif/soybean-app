@@ -73,7 +73,7 @@
         <view class="split"></view>
       </view>
       <view class="statistic-box_item">
-        <view class="statistic-box_item_value" >{{data.totality.superviseJob}}</view>
+        <view class="statistic-box_item_value" >{{data.totality.rest}}</view>
         <view class="statistic-box_item_label1">居家休息</view>
         <view class="split"></view>
       </view>
