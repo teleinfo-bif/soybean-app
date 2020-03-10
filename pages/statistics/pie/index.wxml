@@ -12,7 +12,7 @@
       <!-- <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas> -->
       <canvas canvas-id="{{eleid}}" type="" class="canvas" bindtouchstart="touchHandler"></canvas>
     </view>
-    <view class ="{{pieS ? 'pieright' : 'pierightl'}}" style='margin-left:0rpx;'>
+    <view class ="{{pieS ? 'pieright' : 'pierightl'}} {{pieS2 ? 'pieright_fg' : ''}}" style='margin-left:0rpx;'>
       <!-- <view class="legend-item legend-item-head"> -->
       <!-- <view class="legend-item legend-item-head">
         <view class="legend-item_label">分布情况</view>

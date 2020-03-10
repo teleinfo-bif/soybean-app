@@ -72,6 +72,11 @@
         <view class="statistic-box_item_label1">监督隔离</view>
         <view class="split"></view>
       </view>
+      <view class="statistic-box_item">
+        <view class="statistic-box_item_value" >{{data.totality.superviseJob}}</view>
+        <view class="statistic-box_item_label1">居家休息</view>
+        <view class="split"></view>
+      </view>
     </view>
  </view>
   <!-- <navigator class="" target="" url="/pages/statisticsTab" hover-class="navigator-hover" open-type="navigate">
@@ -80,9 +85,10 @@
   <pie pieS="{{true}}" first="{{true}}" eleid="test1" type="healthy" groupId="{{groupId}}" title="健康状况" class="health-box" clockInTime="{{clockInTime}}" data="{{data.healthy}}" clockIn="{{data.totality.clockIn}}"></pie>
   <pie pieS="{{false}}" type="region" eleid="test2" groupId="{{groupId}}" title="地区分布" data="{{data.region}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
   <pie pieS="{{true}}" type="hospitalization" eleid="test3" groupId="{{groupId}}" title="确诊住院" data="{{data.hospitalization}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
-   <pie pieS="{{false}}" type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
+   <pie pieS="{{false}}" pieS2="{{true}}" type="job" eleid="test4" groupId="{{groupId}}" title="复工情况" data="{{data.fugong}}" clockInTime="{{clockInTime}}" clockIn="{{data.totality.clockIn}}"></pie>
 </view>
 
 <view class="foot">
     <button class="button-export" bindtap="exportExcel">导出报告</button>
+    <!-- <button class="button-export" bindtap="showExcel">查看报告</button> -->
 </view>

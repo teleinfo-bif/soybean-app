@@ -111,6 +111,10 @@ Component({
       type: String,
       default: ""
     },
+    pieS2: {
+      type: Boolean,
+      default: false
+    },
     data: {
       type: Array,
       default: () => {},

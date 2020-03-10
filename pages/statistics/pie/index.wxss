@@ -119,3 +119,7 @@ ec-canvas {
 
 .pierightl {
   margin-top: -5rpx; }
+
+.pieright_fg {
+  margin-top: -55rpx;
+}

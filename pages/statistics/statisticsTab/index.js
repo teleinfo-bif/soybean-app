@@ -76,6 +76,10 @@ Page({
           name: "监督隔离",
           type: 4
         },
+        {
+          name: "居家休息",
+          type: 5
+        },
       ],
       region: [
         {
@@ -244,5 +248,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  // onShareAppMessage: function() {}
 });
