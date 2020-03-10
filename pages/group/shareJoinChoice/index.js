@@ -76,7 +76,7 @@ Page({
           lowestClass: true
         })
       } else {
-        let a = []
+        let a = [{ name: "请选择", id: 0 }]
         let b = []
         data.map((val, index) => {
           a.push({ name: val.name, id: val.id })
@@ -146,6 +146,13 @@ Page({
   join: function () {
     const { joinGroupId, userFilledInfo } = this.data
     let groupId = joinGroupId
+    if(joinGroupId==0){
+      wx.showToast({
+        title: `请选择您要加入的部门！`,
+        icon: 'none',
+      })
+      return
+    }
     this.shareJoniGroup({
       groupId,
       userId: userFilledInfo.id
@@ -241,7 +248,10 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('333')
+    wx.reLaunch({
+      url: '/pages/index/index',
+    });
   },
 
 })
