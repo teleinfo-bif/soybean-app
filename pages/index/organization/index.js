@@ -88,6 +88,7 @@ Component({
           url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
         });
       }
-    }
+    },
+
   }
 });

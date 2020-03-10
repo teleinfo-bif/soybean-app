@@ -7,10 +7,12 @@
     </view>
     <view class="organization_content">
       <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
-        <!-- 左侧部门logo 
+         <!--公司Logo-->
+         <navigator url="/pages/company/companyInfo/index?groupId={{item.id}}">
         <view class="organization_item-logo">
-          <image class="btn" src="{{item.logo?item.logo:'../../../static/images/defaultlogo.png'}}" />
-        </view> -->
+          <image class="btn" src="{{item.logo?item.logo:'../../../static/images/companyDefault.png'}}"  />
+        </view> 
+        </navigator>
         <!-- 中间部门名称 -->
         <!-- <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
           {{item.name}}
