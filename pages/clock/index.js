@@ -160,12 +160,12 @@ let fields = [
     hide: true,
     props: {
       // placeholder: "温度超过37.3度不能视为健康，请重新选择健康状况!",
-      placeholder: "请输入大于37.3度的具体温度",
+      placeholder: "请输入大于等于37.3度的具体温度",
       independent: false,
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value) && value >= 37.3;
       },
-      errorMsg: "异常温度应大于37.3度"
+      errorMsg: "异常温度应不低于37.3度"
     }
   },
   {
@@ -528,7 +528,7 @@ Page({
       if (healthy == "1") {
         if (temperature && Number(temperature) >= 37.3) {
           wx.showToast({
-            title: "体温高于37.3不能选择健康",
+            title: "体温不低于37.3不能选择健康",
             icon: "none"
           });
           return;
