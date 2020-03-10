@@ -177,7 +177,9 @@ Component({
             itemData.length == 0
           ) {
             wx.showToast({
-              title: emptyItem.title + "项不能为空",
+              title:
+                (emptyItem.props.errorMsg || emptyItem.title || "必填项") +
+                "项不能为空",
               icon: "none"
             });
             return false;

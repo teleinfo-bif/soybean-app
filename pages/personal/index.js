@@ -244,22 +244,33 @@ Page({
   },
   // 重置
   formCancel() {
-    let { data } = this.data;
+    let { data, fields } = this.data;
     // data.phone = null;
     let tempData = Object.assign({}, data, {
       homeAddress: null,
       detailAddress: "",
+      idType: 4,
+      idNumber: null,
       companyName: null,
       companyAddress: null,
       companyDetailAddress: null
     });
+    fields[3].props.placeholder = "请输入员工号";
+    fields[3].props.idType = 4;
+    fields[3].props.validate = function(value) {
+      return yuangongka.test(value);
+    };
+    // let tempFields = Object.assign({}, fields, {
+
+    // })
     // data.homeAddress = null;
     // data.detailAddress = null;
     // data.companyName = null;
     // data.companyAddress = null;
     // data.companyDetailAddress = null;
     this.setData({
-      data: tempData
+      data: tempData,
+      fields
     });
   },
   // 已填写设置禁用字段

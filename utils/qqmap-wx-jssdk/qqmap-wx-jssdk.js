@@ -53,6 +53,7 @@ var Utils = {
      */
     getWXLocation(success, fail, complete) {
         wx.getLocation({
+            isHighAccuracy: true,
             type: 'gcj02',
             success: success,
             fail: fail,

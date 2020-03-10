@@ -141,6 +141,7 @@ Component({
         title: "获取中..."
       });
       wx.getLocation({
+        isHighAccuracy: true,
         success(res) {
           reverseAddressFromLocation(res)
             .then(location => {
@@ -190,6 +191,7 @@ Component({
     // 选择位置信息
     chooseLocation() {
       wx.getLocation({
+        isHighAccuracy: true,
         success(res) {
           wx.navigateTo({ url: getLocationPluginMapUrl(res) });
         }
