@@ -72,6 +72,7 @@ Component({
     getLocation() {
       const _this = this;
       wx.getLocation({
+        isHighAccuracy: true,
         success(res) {
           reverseAddressFromLocation(res)
             .then(location => {
@@ -91,6 +92,7 @@ Component({
     // 选择位置信息
     chooseLocation() {
       wx.getLocation({
+        isHighAccuracy: true,
         success(res) {
           wx.navigateTo({ url: getLocationPluginMapUrl(res) });
         }

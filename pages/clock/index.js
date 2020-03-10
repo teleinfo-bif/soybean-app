@@ -165,7 +165,7 @@ let fields = [
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value) && value >= 37.3;
       },
-      errorMsg: "异常温度应大于37.2度"
+      errorMsg: "异常温度应大于37.3度"
     }
   },
   {
@@ -189,7 +189,8 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入其他症状",
-      independent: false
+      independent: false,
+      errorMsg: "健康项其他症状不能为空"
     }
   },
   {
@@ -240,7 +241,8 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入其他症状",
-      independent: false
+      independent: false,
+      errorMsg: "共同居住人员/亲属（含合租人员）健康状况为其他不能为空"
     }
   },
   {
@@ -266,7 +268,9 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入其他详情",
-      independent: false
+      independent: false,
+      errorMsg:
+        "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他不能为空"
     }
   },
   {
@@ -294,7 +298,8 @@ let fields = [
         { id: 1, name: "在岗办公" },
         { id: 2, name: "居家办公" },
         { id: 3, name: "居家隔离" },
-        { id: 4, name: "监督隔离" }
+        { id: 4, name: "监督隔离" },
+        { id: 5, name: "居家休息" }
       ]
     }
   },
@@ -827,19 +832,21 @@ Page({
         // 判断用户是否授权了位置信息
         if (res.authSetting["scope.userLocation"]) {
           wx.getLocation({
-            altitude: true,
+            isHighAccuracy: true,
             success: location => {
               this.setData({ location });
-              reverseAddressFromLocation(location).then(res => {
-                this.onAddressChange(res);
-              }).catch(error => {
-                wx.hideLoading()
-                wx.showToast({
-                  title: "获取地址失败",
-                  icon: "none"
+              reverseAddressFromLocation(location)
+                .then(res => {
+                  this.onAddressChange(res);
                 })
-                console.error("腾讯地址逆解析接口 error", error)
-              });;
+                .catch(error => {
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: "获取地址失败",
+                    icon: "none"
+                  });
+                  console.error("腾讯地址逆解析接口 error", error);
+                });
             }
           });
         } else {

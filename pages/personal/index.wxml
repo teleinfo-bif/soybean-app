@@ -9,14 +9,14 @@
   <my-form id="form" fields="{{fields}}" formData="{{data}}" bind:change="onFormChange"></my-form>
   <!-- 证件类型 -->
   <view  class="btn-wrap" wx:if="{{!userFilledInfo.userRegisted || edit}}">
-    <!-- <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" wx:if="{{userFilledInfo.userRegisted}}" bindtap="del" size="normal" type="danger">删 除</van-button>
-    <view style="width: 35rpx;"></view> -->
     <van-button disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formCancel" size="normal" custom-class="form-btn">重 置</van-button>
     <view style="width: 35rpx;"></view>
-    <van-button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-submit" disabled="{{userFilledInfo.userRegisted && !edit}}" size="normal" color="#1759EF" custom-class="form-btn">{{
+    <van-button wx:if="{{!userFilledInfo.userRegisted}}" custom-class="btn-submit" disabled="{{userFilledInfo.userRegisted && !edit}}" size="normal" color="#1759EF" custom-class="form-btn" block>{{
       !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}
+      <!-- 未授权情况显示 -->
        <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo="bindGetUserInfo"></button>
       </van-button>
+      <!-- 注册 -->
       <van-button wx:else class="btn-submit" disabled="{{userFilledInfo.userRegisted && !edit}}" bindtap="formSubmit" size="normal" color="#1759EF" custom-class="form-btn">{{
       !userFilledInfo.userRegisted  ? '注 册' : '提 交'}}
       </van-button>
