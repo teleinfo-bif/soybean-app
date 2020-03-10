@@ -11,7 +11,7 @@
   <organization></organization>
   <view class="help" bind:tap="toHelp">
      <image class="help-img" src="../../static/images/help.png" />
-     <text class="help-text">用户帮助</text>
+     <text class="help-text">使用帮助</text>
   </view>
   </view>
   <!-- 统计信息 -->
@@ -21,8 +21,9 @@
    <view class="page__title">{{notification}}</view>
     <!-- <view class="copyright-view">中国信息通信研究院</view> -->
     <view>
-    <image class="homelogo" src="../../static/images/homelogo.png" />
     <view style="color:#acabab;margin-bottom:8rpx;">面向中国信息通信研究院及相关支撑单位使用</view>
+    <image class="homelogo" src="../../static/images/homelogo.png" />
+    
     </view>
   </view>
 </view>
