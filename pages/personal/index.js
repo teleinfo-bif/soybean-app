@@ -163,13 +163,15 @@ Page({
     if (prop == "idType") {
       fields.forEach(item => {
         if (item.prop == "idNumber") {
-          item.props.validate = function(val) {
+          item.props.validate = val => {
             return idRegs[value.id - 1].test(val);
           };
-          this.setData({
-            "fields[3].props.placeholder":
-              value.id == 1 ? `请输入${value.name}号` : `请输入员工号`
-          });
+          item.props.placeholder =
+            value.id == 1 ? `请输入${value.name}号` : `请输入员工号`;
+          // this.setData({
+          //   "fields[3].props.placeholder":
+          //     value.id == 1 ? `请输入${value.name}号` : `请输入员工号`
+          // });
         }
       });
     }
@@ -305,12 +307,16 @@ Page({
                 "****" +
                 resData.phone.substr(7, 11)
             };
-      let tempData_2 = 
-        (resData && typeof resData.detailAddress === "string" && resData.detailAddress.length > 3)
-        ? {
-            detailAddress: 
-              resData.detailAddress.substr(0, 3) + Array(resData.detailAddress.length - 2).join('*')
-        }:{}
+      let tempData_2 =
+        resData &&
+        typeof resData.detailAddress === "string" &&
+        resData.detailAddress.length > 3
+          ? {
+              detailAddress:
+                resData.detailAddress.substr(0, 3) +
+                Array(resData.detailAddress.length - 2).join("*")
+            }
+          : {};
 
       let asteriskData = Object.assign({}, resData, tempData, tempData_2);
       this.setData({
@@ -333,14 +339,16 @@ Page({
   //
   setFieldsEditable() {
     let fields = this.data.fields;
-    let { userRegisted } = app.globalData.userFilledInfo;
+    // let { userRegisted } = app.globalData.userFilledInfo;
 
     const editFieldList = [
       "homeAddress",
       "detailAddress",
       "companyAddress",
       "companyDetailAddress",
-      "companyName"
+      "companyName",
+      "idType",
+      "idNumber"
     ];
     fields.forEach(item => {
       if (editFieldList.includes(item.prop)) {

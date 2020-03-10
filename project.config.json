@@ -69,6 +69,13 @@
 					"id": -1,
 					"name": "createGroup",
 					"pathName": "pages/group/createGroup/createGroup",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/personal/index",
+					"pathName": "pages/personal/index",
 					"scene": null
 				}
 			]
