@@ -95,8 +95,9 @@ Page({
             joinGroupId: array[0].id
           })
         } else {
+          b.unshift([])
           let multiArray = [a, b[0]]
-          console.log(multiArray)
+          console.log(multiArray,b)
           this.setData({
             first: a,
             second: b,
@@ -175,6 +176,14 @@ Page({
     console.log("发起请求", params);
     const { userId, alreadJoin, alreadJoinId } = this.data;
     if (alreadJoin) {
+      if(alreadJoinId == params.groupId) {
+        wx.showToast({
+          title: "您已经加入了该部门！",
+          duration: 1500,
+          icon: 'none',
+        });
+        return
+      }
       quitGroup({
         userId: userId,
         groupId: alreadJoinId,
