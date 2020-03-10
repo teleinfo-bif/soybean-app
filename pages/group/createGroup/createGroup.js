@@ -173,9 +173,9 @@ Page({
     } else {
       flag = true
       
-      wx.showLoading({
-        title: '信息提交中',
-      })
+      // wx.showLoading({
+      //   title: '信息提交中',
+      // })
       console.log("add group info to database")
       console.log(e.detail.value.group_address,
         e.detail.value.group_applicant,
@@ -191,7 +191,6 @@ Page({
         remarks: e.detail.value.group_introduce,
         userId: this.data.globalData.userId,
       }).then(data => {
-           wx.hideLoading()   
            console.log('1', data)
            let code = data;
            wx.navigateTo({
@@ -217,7 +216,6 @@ Page({
           title: '创建失败',
           content: "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
         })
-        wx.hideLoading()
       })
     }
 
@@ -237,15 +235,11 @@ Page({
   },
 
   joinCodeGroup: function (code) {
-    wx.showLoading({
-      title: "加载中..."
-    });
     if (code) {
       console.log('code', code);
       fromGroupCodetoId({
         groupCode: code
       }).then(data => {
-        wx.hideLoading();
         console.log('根据唯一码查看群信息', data)
         if (JSON.stringify(data) == "{}") {
           wx.showToast({
@@ -259,9 +253,10 @@ Page({
             url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
           });
         }
+      }).catch(e => {
+        console.log(e);
       })
     } else {
-      wx.hideLoading();
       wx.showToast({
         title: `机构唯一码有误，请联系管理员确认！`,
         icon: 'none',

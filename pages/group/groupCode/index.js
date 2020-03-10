@@ -22,16 +22,16 @@ Page({
   },
   //根据唯一码判断，查看群信息，跳转
   joinCodeGroup: function () {
-    wx.showLoading({
-      title: '加载中',
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
     const { code } = this.data
     if (code) {
       console.log('code', code);
       fromGroupCodetoId({
         groupCode: code
       }).then(data => {
-        wx.hideLoading()   
+        // wx.hideLoading()   
         console.log('根据唯一码查看群信息', data)
         if (JSON.stringify(data) == "{}") {
           wx.showToast({
