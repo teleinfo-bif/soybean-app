@@ -1,7 +1,7 @@
 <!--pages/organizationCode/index.wxml-->
 <view class="organization">
-    <view class='tip-group'>请输入您的机构唯一码</view>
-    <input class="input-code" name="group_applicant" maxlength="20" placeholder="请输入您的机构唯一码" value="{{code}}" bindinput="onChange" placeholder-style="color:#999999;"></input>
+    <view class='tip-group'>机构唯一码</view>
+    <input class="input-code" name="group_applicant" maxlength="20" placeholder="请填写机构唯一码" value="{{code}}" bindinput="onChange" placeholder-class="placeholder"></input>
     <view class="button-code">
       <button class="button-code-return" bindtap="joinCodeReturn">返回</button>
       <button class="button-code-input" bindtap="joinCodeGroup">提交</button>
