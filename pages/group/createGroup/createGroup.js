@@ -301,7 +301,8 @@ Page({
       success: function (res) {
         wx.showToast({
           icon: 'none',
-          title: "导出文件下载链接已保存到您的剪贴板"
+          title: "导出文件下载链接已保存到您的剪贴板",
+          duration: 2000,
         });
       }
     })
