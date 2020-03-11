@@ -153,6 +153,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    options.groupId = 1
+    options.type = 0
     this.setData({
       type: options.type,
       groupId: options.groupId

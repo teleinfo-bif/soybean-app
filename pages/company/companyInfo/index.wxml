@@ -31,7 +31,7 @@
         <image class='logo-head-img-4' src='../../../static/images/comPeo.png'></image>
         <view class='logo-head-name'>创建人</view>
       </view>
-      <view class='title-value'>{{data.createUser}}</view>
+      <view class='title-value'>{{data.createrName}}</view>
    </view>
    <view class='devide-2'/>
            <view class='title'>
