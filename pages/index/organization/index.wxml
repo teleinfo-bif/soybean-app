@@ -11,7 +11,7 @@
          
         <view class="organization_item-logo">
         <navigator url="/pages/company/companyInfo/index?groupId={{item.id}}">
-          <image class="btn" src="{{item.logo?item.logo:'../../../static/images/companyDefault.png'}}"  />
+          <image class="btn" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}"  />
         </navigator>
         </view> 
         
