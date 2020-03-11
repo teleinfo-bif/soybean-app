@@ -90,5 +90,5 @@
 
 <view class="foot">
     <button class="button-export" bindtap="exportExcel">导出报告</button>
-    <!-- <button class="button-export" bindtap="showExcel">查看报告</button> -->
+    <button class="button-export" bindtap="showExcel">查看报告</button>
 </view>

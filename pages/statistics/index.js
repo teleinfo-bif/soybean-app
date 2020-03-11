@@ -153,28 +153,28 @@ Page({
         });
       }
     });
-  }
+  },
 
-  // showExcel: function (data, res) {
-  //   const { groupId, clockInTime } = this.data;
-  //   let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
-  //   wx.showLoading({
-  //     title: "加载中..."
-  //   });
-  //   wx.downloadFile({
-  //     url: url,
-  //     success: function (res) {
-  //       // console.log('res', res)
-  //       wx.hideLoading();
-  //       var filePath = res.tempFilePath
-  //       wx.openDocument({
-  //         filePath: filePath,
-  //         fileType: "xlsx",
-  //         success: function (res) {
-  //           console.log('打开文档成功')
-  //         }
-  //       })
-  //     }
-  //   })
-  // },
+  showExcel: function (data, res) {
+    const { groupId, clockInTime } = this.data;
+    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
+    wx.showLoading({
+      title: "加载中..."
+    });
+    wx.downloadFile({
+      url: url,
+      success: function (res) {
+        // console.log('res', res)
+        wx.hideLoading();
+        var filePath = res.tempFilePath
+        wx.openDocument({
+          filePath: filePath,
+          fileType: "xlsx",
+          success: function (res) {
+            console.log('打开文档成功')
+          }
+        })
+      }
+    })
+  },
 });
