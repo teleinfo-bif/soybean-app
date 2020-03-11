@@ -17,7 +17,7 @@ Page({
     }).then((data) => {
       if(data.log != ''){
         this.setData({
-          logoSrc: data.log
+          logoSrc: data.logo
         })
       }
       this.setData({
