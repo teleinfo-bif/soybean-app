@@ -8,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    groupId: ""
+    groupId: "",
+    managerId:''
   },
   bindKeyInput: function(e) {
     this.setData({
@@ -134,18 +135,20 @@ Page({
       phone: this.data.inputValue
     }).then(data => {
       console.log("====dataMana=====", data);
-      if (data.name != "" && data.id != "") {
-        this.setData({
-          managerId: data.id
-        });
-        this.addManager(data.id, this.data.type);
-      } else {
+      if (Object.keys(data).length === 0) {
+        console.log("======sisisissi====")
         wx.showToast({
           title: "不存在此用户",
           icon: "none",
           duration: 2000
         });
-      }
+        return
+      }else {
+        this.setData({
+          managerId: data.id
+        });
+        this.addManager(this.data.managerId, this.data.type);
+      } 
     });
   },
   quit() {
