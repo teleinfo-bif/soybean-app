@@ -26,7 +26,7 @@
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>
-          <view class="people-item_sign" style='margin-left:24rpx;'>
+          <view class="people-item_sign {{permission!='true'?'people-item_sign_no':''}}" style='margin-left:24rpx;'>
             {{item.clockInId != 0 ? '已打卡': '未打卡'}}
           </view>
           <view style='margin-left:24rpx;' wx:if="{{permission=='true'}}" class="people-item_detail ">
