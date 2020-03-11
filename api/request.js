@@ -338,8 +338,9 @@ const _delete = (url, data = {}) => {
   return Request({
     url,
     data,
-    method: "delete"
+    method: "delete",
   });
+
 };
 
 // post - application/x-www-form-urlencoded
