@@ -161,10 +161,15 @@ Component({
       const series = [];
 
       const colors = ["#aa4438", "#f2d45e", "#ffaa00", "#4169E1", "#32CD32"];
+      const colors_1 = ["#E95327", "#4068E0", "#F7CD57"];
+      const colors_2 = ["#E95327", "#F48F00", "#4068E0", "#F7CD57"];
+      const colors_3 = ["#E95327", "#F7CD57", "#4068E0"];
+      const colors_4 = ["#4068E0", "#F7CD57", "#F48F00", "#E95327", "#7BE960"];
       const emptyData = this.data.data.filter(item => {
         return item.value != 0;
       });
-      console.log(emptyData);
+      // console.log(emptyData);
+      console.log(this.data, this.data.title,this.data.title=="健康状况")
       this.data.data.forEach((item, index) => {
         series.push({
           name: item.name,
@@ -172,9 +177,15 @@ Component({
           // data: 0,
           stroke: false,
           color:
-            this.data.data.length == 3 && index == 2
-              ? colors[++index]
-              : colors[index]
+            // this.data.data.length == 3 && index == 2
+            //   ? colors[++index]
+            //   : colors[index]
+            this.data.title=="健康状况"?
+            colors_1[index]:
+            this.data.title=="地区分布"?
+            colors_2[index]:
+            this.data.title=="确诊住院"?
+            colors_3[index]:colors_4[index]
         });
       });
       const { eleid } = this.data;

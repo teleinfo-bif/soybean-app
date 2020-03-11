@@ -20,8 +20,12 @@
       </view> -->
       <view wx:for="{{data}}" wx:key="index" class="legend-item">
         <view class="legend-item_label" style='color:#999999'>
-          <view wx:if="{{data.length == 3 && index == 2}}" class="square square{{index+2}}"></view>
-          <view wx:else class="square square{{index+1}}" style='color:#999999'></view>
+          <!-- <view wx:if="{{data.length == 3 && index == 2}}" class="square square{{index+2}}"></view>
+          <view wx:else class="square square{{index+1}}" style='color:#999999'></view> -->
+          <view wx:if="{{title == '健康状况'}}" class="square square_jk{{index}}"></view>
+          <view wx:if="{{title == '地区分布'}}" class="square square_dq{{index}}"></view>
+          <view wx:if="{{title == '确诊住院'}}" class="square square_qz{{index}}"></view>
+          <view wx:if="{{title == '复工情况'}}" class="square square_fg{{index}}"></view>
           <view style='color:#999999'>{{item.name}} {{item.value}}人</view>
         </view>
         <view class="legend-item_value" style='color:#999999'>{{item.percent}}%</view>
