@@ -9,8 +9,8 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getGroupStatistic, getGroup } from "../../api/api";
-import { baseURLDownload } from "../../api/upload";
+import { getGroup, getGroupStatistic } from "../../api/api";
+import { baseURLDownload } from "../../config/index";
 
 Page({
   // onShareAppMessage: function(res) {
@@ -56,30 +56,29 @@ Page({
   //根据ID获取部门信息
   getGroupDetail(groupId) {
     getGroup({
-      id: groupId,
-    }).then((data) => {
-      let newName = data.addressName.split("，")[1]
+      id: groupId
+    }).then(data => {
+      let newName = data.addressName.split("，")[1];
       this.setData({
         addressName: newName
-      })
-    })
+      });
+    });
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     // console.log(options);
     let { groupId, groupName } = options;
     this.setData(
       {
         groupId,
         groupName
-      }, () => {
-        this.getData()
-        this.getGroupDetail(groupId)
+      },
+      () => {
+        this.getData();
+        this.getGroupDetail(groupId);
       }
-
-
     );
 
     this.setData({
@@ -100,29 +99,29 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () { },
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () { },
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () { },
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () { 
-    this.getData()
-    this.getGroupDetail(this.data.groupId)
+  onPullDownRefresh: function() {
+    this.getData();
+    this.getGroupDetail(this.data.groupId);
 
     this.setData({
       clockInTime: getyyyyMMdd(new Date())
@@ -133,29 +132,28 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () { },
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
   // onShareAppMessage: function() {},
 
-
-  exportExcel: function () {
+  exportExcel: function() {
     const { groupId, clockInTime } = this.data;
-    console.log('导出数据', clockInTime, groupId)
-    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
+    console.log("导出数据", clockInTime, groupId);
+    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`;
     wx.setClipboardData({
       data: url,
-      success: function (res) {
+      success: function(res) {
         wx.showToast({
-          icon: 'none',
+          icon: "none",
           title: "导出文件下载链接已复制到您的剪贴板，请到浏览器中粘贴下载",
           duration: 3000
         });
       }
-    })
-  },
+    });
+  }
 
   // showExcel: function (data, res) {
   //   const { groupId, clockInTime } = this.data;

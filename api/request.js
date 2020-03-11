@@ -1,15 +1,8 @@
+import { appId, baseURL, baseURLNotice } from "../config/index";
+
 // 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
-const appid = "wx9f50de1f1b6b94c6";
-
-// 定义网络请求API地址
-// 线上环境
-// const baseURL = "https://admin.bidspace.cn/bid-soybean";
-const baseURL = "https://test.bidspace.cn/bid-soybean";
-// 测试环境
-const baseURLNotice =
-  "https://admin.bidspace.cn/bid-desk/front/notice/detail?id=29";
 
 // login返回的token信息，用户录入的信息
 let fedToken = null;
@@ -53,7 +46,7 @@ async function getOpenId() {
     wx.login({
       success: res => {
         let params = {
-          appid,
+          appid: appId,
           code: res.code
         };
         wx.request({
