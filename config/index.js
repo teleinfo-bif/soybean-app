@@ -1,7 +1,7 @@
 // 获取当前帐号信息
 const accountInfo = wx.getAccountInfoSync();
 
-const env = accountInfo.miniProgram.envVersion;
+export const env = accountInfo.miniProgram.envVersion;
 console.log("提示：当前环境-" + env);
 
 const baseApi = {
