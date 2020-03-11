@@ -21,7 +21,7 @@
             </picker>
           </view>
         </view>
-        <view class="reminder-clock-batch" bind:tap="sendGroupUserMsg">一键提醒</view>
+        <view wx:if="{{permission=='true'}}" class="reminder-clock-batch" bind:tap="sendGroupUserMsg">一键提醒</view>
       </view>
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
