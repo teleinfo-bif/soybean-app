@@ -2,7 +2,7 @@ page {
   box-sizing: border-box;
   position: relative;
   min-height: 100%;
-  padding-bottom: 65rpx;
+  padding-bottom: 150rpx;
   background-color: #f5f5f5;
   font-family: PingFangSC-Regular;
 }
@@ -21,14 +21,20 @@ page {
   background-color: #f5f5f5;
 }
 
-.logo{
+/* .logo{
   width: 100%;
   text-align:center;
   margin-top:30rpx;
   position:fixed;
   bottom:50rpx;
+} */
+.logo{
+  width: 100%;
+  text-align:center;
+  margin-top:30rpx;
+  position:absolute;
+  bottom:40rpx;
 }
- 
 .copyright-view{
   margin-top: -20rpx;
   position: fixed;
