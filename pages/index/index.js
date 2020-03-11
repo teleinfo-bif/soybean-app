@@ -28,7 +28,7 @@ Page({
       console.log("data===",data)
       if(data.data.success){
         this.setData({
-          notification: data.data.data.content
+          notification: data.data.data.title
         })
       }
      })

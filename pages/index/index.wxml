@@ -21,7 +21,6 @@
    <view class="page__title">{{notification}}</view>
     <!-- <view class="copyright-view">中国信息通信研究院</view> -->
     <view>
-    <view style="color:#acabab;margin-bottom:8rpx;">面向中国信息通信研究院及相关支撑单位使用</view>
     <image class="homelogo" src="../../static/images/homelogo.png" />
     
     </view>
