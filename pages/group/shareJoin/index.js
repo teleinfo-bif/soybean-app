@@ -91,7 +91,7 @@ Page({
 
   //判断是否是最低级的部门,调用不同函数
   joinDifferentGroup: function (groupId) {
-    console.log('是否注册页过来的，1就是注册页过来的：zc=', this.data.zc)
+    console.log('是否注册页、输机构码、创建群过来的，1就是：zc=', this.data.zc)
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
@@ -149,7 +149,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -161,7 +161,7 @@ Page({
     } else {
       wx.showModal({
         title: "提示",
-        content: `确认要加入 ${groupName} 吗？`,
+        content: `确认加入 ${groupName} 吗？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
@@ -176,7 +176,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -213,7 +213,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -241,7 +241,8 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            console.log("跳出一二级加群");
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -275,7 +276,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -317,7 +318,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -344,8 +345,9 @@ Page({
      */
     // console.log()
     const { groupId, timeStamp, groupName, zc } = options;
-    console.log("======options=====", options);
-    // 这里需要先判断再调用
+    console.log("======share options=====", options);
+    //不要放在app.init里，注意清除掉，onUnload清除，下一个页面shareJoinChoice清除
+    app.globalData.join = 1
     // 这里需要先判断再调用app.init 如果有状态就直接用
     if (!app.globalData.appInit) {
       app.init(globalData => {
@@ -358,6 +360,7 @@ Page({
           zc: zc
         });
         this.userPrompt()
+        return
       });
     } else {
       this.setData({
@@ -376,8 +379,10 @@ Page({
     console.log('prompt')
     const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data
     const userful = Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
-    // console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
+    console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
     const _this = this;
+    //防止回调跳转
+    if(!app.globalData.join){return}
     //注册过来的不判断时间有效性
     if (!zc && !userful) {
       wx.showModal({
@@ -510,13 +515,13 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () { },
-
+ 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () { },
+  onUnload: function () {
+    console.log('onUnload')
+    app.globalData.join = null
+   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
 });

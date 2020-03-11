@@ -25,8 +25,7 @@ Page({
    */
   onLoad: function (options) {
     const { groupId, groupName, alreadJoin, alreadJoinId } = options;
-    app.globalData.groupName = ''
-    app.globalData.groupId = ''
+    app.globalData.join = null
     if (!app.globalData.appInit) {
       app.init(globalData => {
         this.setData({

@@ -69,8 +69,9 @@ Page({
 
   joinCodeGroup: function (code) {
     const {groupName, groupId } = this.data
+    let timeStamp = new Date().getTime();
     wx.navigateTo({
-      url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}`,
+      url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}&timeStamp=${timeStamp}`,
     });
   },
 
