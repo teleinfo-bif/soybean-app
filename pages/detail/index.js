@@ -10,9 +10,8 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getGroupBlockList } from "../../api/api.js";
+import { getGroupBlockList, sendSingleUserMsg, sendGroupUserMsg } from "../../api/api.js";
 // const beahavior_userInfo = require("../../behavior/userInfo");
-
 Page({
   // behaviors: [beahavior_userInfo],
   /**
@@ -50,7 +49,7 @@ Page({
   },
   getData() {
     let { requestStutus, clockData, clockInTime, groupId } = this.data;
-
+    console.log('clockData',clockData)
     let { pages = 0, current = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
       this.setData(
@@ -221,5 +220,53 @@ Page({
         console.log("转发失败", res);
       }
     };
-  }
+  },
+
+  // 发送提醒
+  sendSingleUserMsg: function(e) {
+    const openId = e.currentTarget.dataset.gid
+    sendSingleUserMsg({
+      openId: openId
+    }).then(data => {
+      console.log('ok', data,data.length==0,typeof data)
+      if(JSON.stringify(data) != "{}") {
+        wx.showToast({
+          title: '用户未开启提醒！',
+          icon: 'none',
+        })
+        return
+      }
+      wx.showToast({
+        title: '提醒打卡成功！',
+        icon: 'none',
+      })
+    })
+  },
+
+  sendGroupUserMsg: function() {
+    const { groupId } = this.data;
+    console.log(groupId)
+    sendGroupUserMsg({
+      groupId: groupId
+    }).then(data => {
+      console.log('ok',data )
+      if(JSON.stringify(data) != "{}") {
+        wx.showToast({
+          title: '提醒成功，有用户未开启提醒！',
+          icon: 'none',
+        })
+        return
+      }
+      wx.showToast({
+        title: '一键提醒成功！',
+        icon: 'none',
+      })
+    }).catch(e => {
+      console.log('err',e);
+      wx.showToast({
+        title: '用户未开启提醒！',
+        icon: 'none',
+      })
+    })
+  },
 });

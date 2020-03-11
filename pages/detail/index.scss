@@ -14,7 +14,7 @@ page {
   align-items: center;
   // padding-left: 30rpx;
   margin-top: 15rpx;
-  padding: 0 20rpx 0;
+  padding: 20rpx 40rpx 20rpx 20rpx;
   width: 750rpx;
   height: 88rpx;
   // line-height: 88rpx;
@@ -125,7 +125,7 @@ page {
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
-  margin-left: 15rpx;
+  // margin-left: 15rpx;
   margin-right: 15rpx;
   border-radius: 50%;
 }
@@ -156,7 +156,7 @@ page {
 }
 .head-title1 {
   white-space: nowrap;
-  width: 355rpx;
+  width: 260rpx;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -170,4 +170,30 @@ button {
   &::after {
     border: none;
   }
+}
+
+.reminder-clock {
+  width:120rpx;
+  height:50rpx;
+  background:rgba(23,89,239,1);
+  border-radius:4rpx;
+  text-align: center;
+  font-size:30rpx;
+  line-height: 50rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+
+.reminder-clock-batch {
+  width:148rpx;
+  height:50rpx;
+  background:rgba(23,89,239,1);
+  border-radius:4rpx;
+  text-align: center;
+  font-size:30rpx;
+  line-height: 50rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
 }

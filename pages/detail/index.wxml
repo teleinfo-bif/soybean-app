@@ -8,7 +8,7 @@
           <!-- <image class="btn" src="../../static/images/detail.png" /> -->
           <Text class="head-title1">{{groupName}}</Text>
         </view>
-        <button open-type='share' style='width:40rpx;height:40rpx;margin-right:10rpx;'>
+        <button open-type='share' style='width:40rpx;height:40rpx;margin:0 10rpx 0 0;'>
           <image style="width:40rpx;height:40rpx;" src="../../static/images/fenxiang.png" />
         </button>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">
@@ -21,6 +21,7 @@
             </picker>
           </view>
         </view>
+        <view class="reminder-clock-batch" bind:tap="sendGroupUserMsg">一键提醒</view>
       </view>
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
@@ -51,8 +52,8 @@
               </block>
             </block>
             <block wx:else="{{item.clockInId == 0}}">
-              <view class="status-circle status-circle-gray"></view>
-              <view>--</view>
+              <!-- <view class="status-circle status-circle-gray"></view> -->
+              <view class="reminder-clock" bind:tap="sendSingleUserMsg" data-gid="{{item.wechatId}}">提醒</view>
             </block>
           </view>
         </view>

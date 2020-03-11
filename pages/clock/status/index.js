@@ -6,7 +6,9 @@ Page({
    */
   data: {
     app,
-    data: {}
+    data: {},
+    tmplId: "xX28cEcVGBT_VQYUpsZastZFrfbC3YGBWYcCC9_mKRE",
+    clockReminder: true
   },
 
   redirectTo(e) {
@@ -23,6 +25,32 @@ Page({
     this.setData({
       data: JSON.parse(data)
     });
+  },
+  reminder: function() {
+    const { tmplId } = this.data
+    return new Promise((resolve, reject) => {
+      wx.requestSubscribeMessage({
+        tmplIds: [tmplId],
+        success: (res) => {
+          console.log(res)
+          if (res[tmplId] === 'accept') {
+            wx.showToast({
+              title: '开启打卡提醒成功!',
+              icon: 'none',
+            })
+          }
+        },
+        fail(err) {
+          console.error(err);
+          reject()
+        },
+        complete: ()=> {
+          this.setData({
+            clockReminder: false
+          });
+        }
+      })
+    })
   },
 
   /**
@@ -58,5 +86,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  // onShareAppMessage: function() {}
 });

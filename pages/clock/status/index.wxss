@@ -26,7 +26,7 @@ page {
   font-size: 30rpx; }
 
 .btn-item {
-  width: 260rpx;
+  /* width: 260rpx; */
   margin: 300rpx auto 0;
   text-align: center;
   display: flex;
