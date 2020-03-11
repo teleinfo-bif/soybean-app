@@ -38,7 +38,6 @@ Page({
           if (val.children.length == 0){
             b.push([])
           }else {
-            //b.push({ name: '请选择', id: val.id })
             console.log("======val.children====", val.children)
             val.children.unshift({ name: '请选择', id: val.id })
             console.log("======val.childrenAfter====", val.children)
@@ -46,7 +45,6 @@ Page({
             b.push(val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
             console.log("======bAfter====", b)
           }
-          //b.push(val.children.length == 0 ? [] : val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
         })
         console.log('=====temp====',a, b)
         let lastClass = b.every((val, index) => val.length == 0) //是否倒数第二级
@@ -70,14 +68,59 @@ Page({
             joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
             //joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
           })
-          this.queryGroupManager(this.data.joinGroupId)
+          //this.queryGroupManager(this.data.joinGroupId)
         }
 
       }
       
     })
   },
+  tree2array: function (groupId) {
+    getUserTreeGroup({
+      groupId: groupId
+    }).then(data => {
+      // console.log('dd', data)
+      if (data.length == 0) {
+        //最底层部门
+        this.setData({
+          lowestClass: true
+        })
+      } else {
+        let a = [{ name: "请选择", id: this.data.groupId }]
+        let b = []
+        data.map((val, index) => {
+          a.push({ name: val.name, id: val.id })
+          val.children.unshift({ name: val.name, id: val.id })
+          b.push(val.children.length == 0 ? [] : val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
+        })
+        // console.log(a, b)
+        let lastClass = b.every((val, index) => val.length == 0) //是否倒数第二级
+        this.setData({
+          lastClass: lastClass
+        })
+        if (lastClass) {
+          let array = a
+          console.log('lastClass', array)
+          this.setData({
+            array: array,
+            joinGroupId: array[0].id
+          })
+        } else {
+          b.unshift([])
+          let multiArray = [a, b[0]]
+          console.log(multiArray, b)
+          this.setData({
+            first: a,
+            second: b,
+            multiArray: multiArray,
+            joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
+          })
+        }
 
+      }
+    })
+    
+  },
   bindPickerChange: function (e) {
     const { array } = this.data
     console.log('=======1=======picker发送选择改变，携带值为', e, e.detail.value, e.target.dataset.id)
@@ -88,6 +131,7 @@ Page({
       index: e.detail.value,
       joinGroupId: id
     })
+    this.queryGroupManager(this.data.joinGroupId)
   },
   bindMultiPickerChange: function (e) {
     console.log('=======2--1=======picker发送选择改变，携带值为', e.detail.value, e.target.dataset.id)
@@ -96,7 +140,7 @@ Page({
       multiIndex: e.detail.value,
       joinGroupId: id
     })
-
+    this.queryGroupManager(this.data.joinGroupId)
   },
   bindMultiPickerColumnChange: function (e) {
     console.log('=======2--2=======修改的列为', e.detail.column, '，值为', e.detail.value);
@@ -112,14 +156,14 @@ Page({
         break
     }
     this.setData(data)
-    this.queryGroupManager(this.data.joinGroupId)
+    //this.queryGroupManager(this.data.joinGroupId)
   },
   //获取管理员
   queryGroupManager: function (groupId) {
     getGroupManager({
       groupId: groupId
     }).then(data => {
-      console.log('====dataMana=====', data)
+      console.log('====Manager=====', data)
       this.setData({
         dataManagers: data.dataManagers,
         managers: data.managers
@@ -142,12 +186,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     console.log("options.groupId===")
     this.setData({
       groupId: options.groupId,
       joinGroupId: options.groupId
     })
-    
+    this.tree2array(this.data.joinGroupId)
   },
 
   /**
@@ -161,7 +206,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.tree2array(this.data.joinGroupId)
+    
     this.queryGroupManager(this.data.joinGroupId)
   },
 

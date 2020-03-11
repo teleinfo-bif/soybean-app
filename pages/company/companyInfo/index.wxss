@@ -96,7 +96,7 @@
 .quit{
   height:169rpx;
   width:100%;
-  background:rgba(249,249,249,1);
+  background:white;
 }
 .quit-submit{
   width:580rpx;
