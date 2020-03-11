@@ -12,6 +12,7 @@
   height: 180rpx;
   margin-left:285rpx;
   margin-top:40rpx;
+  border-radius: 50%;
 }
 .logo-head{
   display: flex;
