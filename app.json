@@ -19,7 +19,10 @@
     "pages/group/groupCode/index",
     "pages/group/groupCodeShow/index",
     "pages/webview/index",
-    "pages/help/index"
+    "pages/help/index",
+    "pages/company/companyAuth/index",
+    "pages/company/companyInfo/index",
+    "pages/company/companyAuth/companyAuthAdd/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

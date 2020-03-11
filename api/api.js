@@ -162,3 +162,20 @@ export const getUserHealthyQR = async params => {
   console.log("=====/healthQrcode/createHealthQrcode----params", params);
   return Request._get("/healthQrcode/createHealthQrcode", params);
 };
+//根据机构ID，查看管理员用户信息
+export const getGroupManager = async params => {
+  return Request._get("/wx/group/manager", params);
+};
+//查询此组织下拥有此手机号的用户信息
+export const getGroupAddManager = async params => {
+  return Request._get("/wx/group/user/phone", params);
+};
+// 新增群数据库管理员
+export const addDataManager = async params => {
+  return Request._postParams(`/wx/group/dataManager`, params);
+};
+// 新增群管理员
+export const addManager = async params => {
+  console.log("=====/wx/group/manager----params", params);
+  return Request._postParams(`/wx/group/manager`, params);
+};
