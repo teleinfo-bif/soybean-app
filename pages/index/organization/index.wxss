@@ -55,6 +55,7 @@
 .organization_item image {
   width: 72rpx;
   height: 72rpx;
+  margin-right:15rpx;
   border-radius: 50%; }
 
 .organization_item-name {

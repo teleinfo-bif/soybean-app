@@ -99,6 +99,21 @@ Page({
 
   join(){
     //this.data.inputValue = '13552157026'
+    if (this.data.inputValue  == "" ) {
+      wx.showToast({
+        title: "请填写手机号!",
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    } else if (!(/^1(3|4|5|7|8)\d{9}$/.test(this.data.inputValue))) {
+      wx.showToast({
+        title: "填写的手机号码格式不正确!",
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     console.log("app.globalData.userFilledInfo.id", app.globalData.userFilledInfo.id)
     getGroupAddManager({
       groupId: this.data.groupId,
