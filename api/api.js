@@ -180,13 +180,4 @@ export const addManager = async params => {
   return Request._postParams(`/wx/group/manager`, params);
 };
 
-// 微信小程序推送单个用户订阅消息
-export const sendSingleUserMsg = async params => {
-  return Request._get(`/wx/subscribe/send`, params);
-};
-
-// 微信小程序推送群组订阅消息
-export const sendGroupUserMsg = async params => {
-  return Request._get(`/wx/subscribe/send/group`, params);
-};
 

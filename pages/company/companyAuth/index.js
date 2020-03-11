@@ -70,7 +70,7 @@ Page({
             joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
             //joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
           })
-          this.getGroupManager(this.data.joinGroupId)
+          this.queryGroupManager(this.data.joinGroupId)
         }
 
       }
@@ -112,10 +112,10 @@ Page({
         break
     }
     this.setData(data)
-    this.getGroupManager(this.data.groupId)
+    this.queryGroupManager(this.data.joinGroupId)
   },
   //获取管理员
-  getGroupManager: function (groupId) {
+  queryGroupManager: function (groupId) {
     getGroupManager({
       groupId: groupId
     }).then(data => {
@@ -127,15 +127,15 @@ Page({
     })
   },
   addManager(e){ 
-    this.data.groupId = 1
+    
     wx.navigateTo({
-        url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
+        url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
     })
   },
   addDataManager(e) {
-    this.data.groupId = 1
+    
     wx.navigateTo({
-      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
+      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
     })
   },
   /**
@@ -162,7 +162,7 @@ Page({
    */
   onShow: function () {
     this.tree2array(this.data.joinGroupId)
-    this.getGroupManager(this.data.joinGroupId)
+    this.queryGroupManager(this.data.joinGroupId)
   },
 
   /**

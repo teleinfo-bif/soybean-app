@@ -1,7 +1,8 @@
 // pages/createGroup/createGroup.js
 const app = getApp()
 import { createGroup, fromGroupCodetoId } from "../../../api/api";
-import { UploadFile, baseURLDownload } from "../../../api/upload";
+import { UploadFile } from "../../../api/upload";
+import { baseURLDownload } from "../../../config/index";
 
 Page({
 

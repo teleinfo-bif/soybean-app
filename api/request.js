@@ -1,15 +1,9 @@
+import urlParameterAppend from "url-parameter-append";
+import { appId, baseURL, baseURLNotice } from "../config/index";
+
 // 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
-const appid = "wx9f50de1f1b6b94c6";
-
-// 定义网络请求API地址
-// 线上环境
-// const baseURL = "https://admin.bidspace.cn/bid-soybean";
-const baseURL = "https://test.bidspace.cn/bid-soybean";
-// 测试环境
-const baseURLNotice =
-  "https://admin.bidspace.cn/bid-desk/front/notice/detail?id=29";
 
 // login返回的token信息，用户录入的信息
 let fedToken = null;
@@ -52,13 +46,13 @@ async function getOpenId() {
   return new Promise((resolve, reject) => {
     wx.login({
       success: res => {
-        let params = {
-          appid,
+        let data = {
+          appid: appId,
           code: res.code
         };
         wx.request({
           url: baseURL + "/wx/user/login",
-          data: params,
+          data: data,
           header: {
             Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
           },
@@ -67,8 +61,8 @@ async function getOpenId() {
             if (data.data.data == null) {
               console.error(
                 "错误提醒：login 失败。",
-                "params",
-                params,
+                "data",
+                data,
                 "response",
                 data
               );
@@ -101,20 +95,20 @@ function getNotice(cb) {
 /**
  *获取用户录入的信息
  *
- * @param {*} [params={
+ * @param {*} [data={
  *     openid: fedToken.openid
  *   }]
  * @returns userFilledInfo 用户录入信息
  */
 async function getUserInfo(
-  params = {
+  data = {
     openid: fedToken.openid
   }
 ) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: baseURL + "/user/exist",
-      data: params,
+      data: data,
       success: data => {
         userFilledInfo = data.data.data;
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
@@ -165,7 +159,14 @@ function getUserStorage() {
 }
 
 // 封装网络请求开始
-const Request = async ({ url, params, method, header, ...other } = {}) => {
+const Request = async ({
+  url,
+  params = {},
+  data = {},
+  method,
+  header,
+  ...other
+} = {}) => {
   // 先取localstorage里面openid,userid,
   // let token = getTokenStorage();
   // let userInfo = getUserStorage();
@@ -195,14 +196,20 @@ const Request = async ({ url, params, method, header, ...other } = {}) => {
     userFilledInfo = await getUserInfo({ openid: fedToken.openid });
     console.log("返回数据：获取的用户", userFilledInfo);
   }
-  // console.log("params.userId", params, params.userId);
 
   // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
-  let data = Object.assign({}, params, {
+  let reqData = Object.assign({}, data, {
     openid: fedToken.openid ? fedToken.openid : "",
     wechatId: fedToken.openid ? fedToken.openid : "",
-    userId: params.userId ? params.userId : userFilledInfo.id || ""
+    userId: data.userId ? data.userId : userFilledInfo.id || ""
   });
+  if (Object.keys(params).length > 0) {
+    params = {
+      ...params,
+      userId: params.userId ? params.userId : userFilledInfo.id || ""
+    };
+    url = urlParameterAppend(url, params);
+  }
 
   // 添加请求加载等待
   wx.showLoading({
@@ -213,7 +220,7 @@ const Request = async ({ url, params, method, header, ...other } = {}) => {
     wx.request({
       // 请求地址拼接
       url: baseURL + url,
-      data: data,
+      data: reqData,
       // 获取请求头配置
       // header: getHeader(),
       // header: Object.assign(getHeader(), header),
@@ -272,23 +279,11 @@ const showToast = title => {
   });
 };
 
-//获取用户userToken
-// function getHeader() {
-//   // 判断登录token是否存在
-//   if (wx.getStorageSync("userToken")) {
-//     // 获取token并设置请求头
-//     var token = wx.getStorageSync("userToken");
-//     let auth = {
-//       Authorization: token.token_type + " " + token.access_token
-//     };
-//     return auth;
-//   }
-// }
 // 重构请求方式
 const _fetch = content => {
   return Request({
     url: content.url,
-    params: content.data,
+    data: content.data,
     method: content.method
   });
 };
@@ -306,43 +301,43 @@ const refreshToken = () => {
       });
   });
 };
-const _refetch = (url, params, method) => {
+const _refetch = (url, data, method) => {
   return Request({
     url,
-    params,
+    data,
     method
   });
 };
 
 //除开上面的调用方式之外，你也可以使用下面的这些方法，只需要关注是否传入method
-const _get = (url, params = {}) => {
-  params.size = 20;
+const _get = (url, data = {}) => {
+  data.size = 20;
   return Request({
     url,
-    params
+    data
   });
 };
-const _post = (url, params = {}) => {
-  params.size = 20;
+const _post = (url, data = {}) => {
+  data.size = 20;
   return Request({
     url,
-    params,
+    data,
     method: "post"
   });
 };
-const _put = (url, params = {}) => {
-  params.size = 20;
+const _put = (url, data = {}) => {
+  data.size = 20;
   return Request({
     url,
-    params,
+    data,
     method: "put"
   });
 };
-const _delete = (url, params = {}) => {
-  params.size = 20;
+const _delete = (url, data = {}) => {
+  data.size = 20;
   return Request({
     url,
-    params,
+    data,
     method: "delete"
   });
 };
