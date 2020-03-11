@@ -250,14 +250,21 @@ Page({
   },
 
   sendGroupUserMsg: function() {
-    const { groupId, unClockInCount, total } = this.data;
+    const { groupId, unClockInCount, clockData } = this.data;
+    let total = clockData.total
     console.log(groupId)
     sendGroupUserMsg({
       groupId: groupId
     }).then(data => {
-      // console.log('ok',data, typeof data, data.split(','),JSON.stringify(data) != "{}" )
+      console.log('ok',data, typeof data, data.split(','),JSON.stringify(data) != "{}" )
       let noSubscribeNum = JSON.stringify(data) != "{}"?data.split(',').length:0
-      if(noSubscribeNum < total) {
+      console.log(noSubscribeNum,unClockInCount, total)
+      if(noSubscribeNum==unClockInCount) {
+        wx.showToast({
+          title: '提醒成功，但部分人员未开启接收提醒！',
+          icon: 'none',
+        })
+      } else if(noSubscribeNum > 0) {
         wx.showToast({
           title: '提醒成功，但部分人员未开启接收提醒！',
           icon: 'none',
