@@ -18,6 +18,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    unClockInCount: 0,//未打卡人数
     now: "",
     value: "",
     groupId: "",
@@ -64,19 +65,21 @@ Page({
             clockInTime: clockInTime
           }).then(res => {
             console.log(res)
-            if (clockData.total != undefined && current == res.current) {
-              let clockList = clockData.records.concat(res.records);
+            if (clockData.total != undefined && current == res.data.current) {
+              let clockList = clockData.records.concat(res.data.records);
               this.setData({
                 requestStutus: false,
                 clockData: {
-                  ...res,
-                  records: clockList
+                  ...res.data,
+                  records: clockList,
+                  unClockInCount: res.unClockInCount,
                 }
               });
             } else {
               this.setData({
                 requestStutus: false,
-                clockData: res
+                clockData: res.data,
+                unClockInCount: res.unClockInCount,
               });
             }
           });
@@ -240,36 +243,31 @@ Page({
         return
       }
       wx.showToast({
-        title: '提醒打卡成功！',
+        title: '健康打卡提醒成功！',
         icon: 'none',
       })
     })
   },
 
   sendGroupUserMsg: function() {
-    const { groupId } = this.data;
+    const { groupId, unClockInCount, total } = this.data;
     console.log(groupId)
     sendGroupUserMsg({
       groupId: groupId
     }).then(data => {
-      console.log('ok',data )
-      if(JSON.stringify(data) != "{}") {
+      // console.log('ok',data, typeof data, data.split(','),JSON.stringify(data) != "{}" )
+      let noSubscribeNum = JSON.stringify(data) != "{}"?data.split(',').length:0
+      if(noSubscribeNum < total) {
         wx.showToast({
           title: '提醒成功，但部分人员未开启接收提醒！',
           icon: 'none',
         })
-        return
-      }
-      wx.showToast({
-        title: '一键提醒成功！',
-        icon: 'none',
-      })
-    }).catch(e => {
-      console.log('err',e);
-      wx.showToast({
-        title: '用户未开启提醒！',
-        icon: 'none',
-      })
+      } else {
+        wx.showToast({
+          title: '健康打卡提醒成功！',
+          icon: 'none',
+        })
+      }     
     })
   },
 });
