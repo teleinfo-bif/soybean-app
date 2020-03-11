@@ -63,6 +63,7 @@ Page({
             groupId,
             clockInTime: clockInTime
           }).then(res => {
+            console.log(res)
             if (clockData.total != undefined && current == res.current) {
               let clockList = clockData.records.concat(res.records);
               this.setData({
@@ -254,7 +255,7 @@ Page({
       console.log('ok',data )
       if(JSON.stringify(data) != "{}") {
         wx.showToast({
-          title: '提醒成功，有用户未开启提醒！',
+          title: '提醒成功，但部分人员未开启接收提醒！',
           icon: 'none',
         })
         return
