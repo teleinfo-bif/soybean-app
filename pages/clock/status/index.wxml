@@ -24,10 +24,10 @@
     </block>
   </view>
   <view class="btn-item">
-    <button wx:if="{{!clockReminder}}" style="font-size:35rpx;width:260rpx;background-color:#1759ef;color:#fff;" bind:tap="redirectTo" type="primary" color="#1759EF" block>
+    <button wx:if="{{!clockReminder}}" style="font-size:30rpx;padding:10rpx 30rpx;width:300rpx;background-color:#1759ef;color:#fff;" bind:tap="redirectTo" type="primary" color="#1759EF" block>
       返回首页
     </button>
-    <button wx:else style="font-size:30rpx;padding:0rpx 30rpx;background-color:#1759ef;color:#fff;" bind:tap="reminder"  color="#1759EF" block>
+    <button wx:else style="font-size:30rpx;padding:10rpx 30rpx;width:300rpx;background-color:#1759ef;color:#fff;" bind:tap="reminder"  color="#1759EF" block>
       开启明日打卡提醒
     </button>
   </view>
