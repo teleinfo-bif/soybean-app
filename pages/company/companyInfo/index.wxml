@@ -1,7 +1,7 @@
 <!--pages/company/companyInfo/index.wxml-->
 <view class='head-devide'></view>
 <view calss='logo'>
-   <image class='logoImg' src='{{logoSrc}}'/>
+   <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/group_name.png' :data.logo}}"/>
    <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img' src='../../../static/images/comName.png'></image>
@@ -45,7 +45,8 @@
       <view wx:else class='title-value'>异常</view>
    </view>
    <view class='devide-2'/>
-              <view class='title'>
+   <block wx:if="{{permision == 'true'}}">
+    <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-6' src='../../../static/images/comNewAdd.png'></image>
         <view class='logo-head-name'>新增人员</view>
@@ -53,6 +54,8 @@
       <view class='title-value-index'>></view>
    </view>
    <view class='devide-2'/>
+   </block>
+   <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-6' src='../../../static/images/comManage.png'></image>
@@ -61,6 +64,8 @@
       <view class='title-value-index' bindtap='toSetManage'>></view>
    </view>
    <view class='devide-2'/>
+   </block>
+   <block wx:if="{{permision == 'true'}}">
   <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-6' src='../../../static/images/comReview.png'></image>
@@ -69,6 +74,7 @@
       <image class='title-value-img' src='../../../static/images/comVerifyOn.png'> </image>
    </view>
 <view class='devide-2'/>
+</block>
 </view>
 <view class='quit'>
   <view class='quit-submit' bindtap='quitCompany'>删除并退出</view>

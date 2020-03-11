@@ -15,11 +15,6 @@ Page({
     getGroup({
       id: groupId,
     }).then((data) => {
-      if(data.log != ''){
-        this.setData({
-          logoSrc: data.logo
-        })
-      }
       this.setData({
         data: data
       })
@@ -36,8 +31,10 @@ Page({
    */
   onLoad: function (options) {
     console.log("======groupId==", options.groupId)
+    console.log("======permision==", options.permision)
     this.setData({
-      groupId: options.groupId
+      groupId: options.groupId,
+      permision: options.permision
     })
     this.getGroupDetail(options.groupId)
   },
