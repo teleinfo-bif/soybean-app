@@ -151,12 +151,14 @@ Page({
   onLoad: function(options) {
     console.log(options);
     let { groupId, groupName, permission } = options;
+    let now = getyyyyMMdd(new Date());
     this.setData(
       {
         groupId,
         groupName,
         permission,
-        clockInTime: getyyyyMMdd(new Date())
+        clockInTime: getyyyyMMdd(new Date()),
+        now
       },
       this.getData
     );
