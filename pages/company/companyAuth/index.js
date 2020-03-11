@@ -31,11 +31,22 @@ Page({
           lowestClass: true
         })
       } else {
-        let a = []
-        let b = []
+        let a = [{name:'请选择',id:this.data.groupId}]
+        let b = [[]]
         data.map((val, index) => {
           a.push({ name: val.name, id: val.id })
-          b.push(val.children.length == 0 ? [] : val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
+          if (val.children.length == 0){
+            b.push([])
+          }else {
+            //b.push({ name: '请选择', id: val.id })
+            console.log("======val.children====", val.children)
+            val.children.unshift({ name: '请选择', id: val.id })
+            console.log("======val.childrenAfter====", val.children)
+            console.log("======b====",b)
+            b.push(val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
+            console.log("======bAfter====", b)
+          }
+          //b.push(val.children.length == 0 ? [] : val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
         })
         console.log('=====temp====',a, b)
         let lastClass = b.every((val, index) => val.length == 0) //是否倒数第二级
@@ -57,16 +68,19 @@ Page({
             second: b,
             multiArray: multiArray,
             joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
+            //joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
           })
+          this.getGroupManager(this.data.joinGroupId)
         }
 
       }
+      
     })
   },
 
   bindPickerChange: function (e) {
     const { array } = this.data
-    console.log('picker发送选择改变，携带值为', e, e.detail.value, e.target.dataset.id)
+    console.log('=======1=======picker发送选择改变，携带值为', e, e.detail.value, e.target.dataset.id)
     let index = e.detail.value
     // let id = e.target.dataset.id //这个值有问题
     let id = array[index].id
@@ -76,7 +90,7 @@ Page({
     })
   },
   bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value, e.target.dataset.id)
+    console.log('=======2--1=======picker发送选择改变，携带值为', e.detail.value, e.target.dataset.id)
     let id = e.target.dataset.id
     this.setData({
       multiIndex: e.detail.value,
@@ -85,7 +99,7 @@ Page({
 
   },
   bindMultiPickerColumnChange: function (e) {
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    console.log('=======2--2=======修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
@@ -98,6 +112,7 @@ Page({
         break
     }
     this.setData(data)
+    this.getGroupManager(this.data.groupId)
   },
   //获取管理员
   getGroupManager: function (groupId) {
@@ -130,8 +145,9 @@ Page({
     console.log("options.groupId===")
     this.setData({
       groupId: options.groupId,
+      joinGroupId: options.groupId
     })
-    this.tree2array(this.data.groupId)
+    
   },
 
   /**
@@ -145,8 +161,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
-    this.getGroupManager(this.data.groupId)
+    this.tree2array(this.data.joinGroupId)
+    this.getGroupManager(this.data.joinGroupId)
   },
 
   /**

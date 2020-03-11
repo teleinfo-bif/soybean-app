@@ -26,6 +26,7 @@ Page({
     })
   },
   toSetManage(){
+    console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
       url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}`,
     }); 
@@ -35,6 +36,9 @@ Page({
    */
   onLoad: function (options) {
     console.log("======groupId==", options.groupId)
+    this.setData({
+      groupId: options.groupId
+    })
     this.getGroupDetail(options.groupId)
   },
   quitCompany(){
