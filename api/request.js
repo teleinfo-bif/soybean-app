@@ -338,9 +338,15 @@ const _delete = (url, data = {}) => {
   return Request({
     url,
     data,
-    method: "delete",
+    method: "delete"
   });
-
+};
+const _deleteParams = (url, params = {}) => {
+  return Request({
+    url,
+    params,
+    method: "delete"
+  });
 };
 
 // post - application/x-www-form-urlencoded
@@ -365,6 +371,7 @@ module.exports = {
   _put,
   _delete,
   _postParams,
+  _deleteParams,
   userFilledInfofoKey,
   tokenKey,
   checkSessionKey,
