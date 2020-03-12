@@ -85,7 +85,6 @@ page {
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
-  /* margin-left: 15rpx; */
   margin-right: 15rpx;
   border-radius: 50%; }
 
@@ -129,54 +128,49 @@ button {
     border: none; }
 
 .reminder-clock {
-  width:120rpx;
-  height:50rpx;
-  background:rgba(23,89,239,1);
-  border-radius:4rpx;
+  width: 120rpx;
+  height: 50rpx;
+  background: #1759ef;
+  border-radius: 4rpx;
   text-align: center;
-  font-size:30rpx;
+  font-size: 30rpx;
   line-height: 50rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(255,255,255,1);
-}
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: white; }
 
 .reminder-clock-batch {
-  width:148rpx;
-  height:50rpx;
-  background:rgba(23,89,239,1);
-  border-radius:4rpx;
+  width: 148rpx;
+  height: 50rpx;
+  background: #1759ef;
+  border-radius: 4rpx;
   text-align: center;
-  font-size:30rpx;
+  font-size: 30rpx;
   line-height: 50rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(255,255,255,1);
-  margin-left: 15rpx;
-}
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: white;
+  margin-left: 15rpx; }
+
 .people-item_sign_no {
-  text-align: center;
-}
+  text-align: center; }
 
 .un-clock {
-  background:#A9A9A9;
-}
+  background: #A9A9A9; }
 
-.head-title2{
+.head-title2 {
   white-space: nowrap;
   width: 240rpx;
   display: inline-block;
   overflow: hidden;
-  text-overflow: ellipsis; 
-}
+  text-overflow: ellipsis; }
 
-  .head-share1{
-  width:40rpx;
-  height:40rpx;
-  margin:0 10rpx 0 55rpx;
-}
-  .head-share2{
-    width:40rpx;
-    height:40rpx;
-    margin:0;
-  }
+.head-share1 {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0 10rpx 0 55rpx; }
+
+.head-share2 {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0; }

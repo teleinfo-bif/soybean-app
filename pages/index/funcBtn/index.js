@@ -106,7 +106,7 @@ Component({
     // 获取今日打卡信息
     async getTodayClockData() {
       return getTodayClock({
-        time: getyyyyMMdd()
+        // time: getyyyyMMdd()
       })
         .then(resData => {
           const locked = resData.total > 0;

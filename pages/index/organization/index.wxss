@@ -92,8 +92,7 @@
   margin-right: 20rpx; }
 
 .organization_item-logo {
-    width: 72rpx;
-    height: 72rpx;
-    margin-right:15rpx;
-    border-radius: 50%;
-  }
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 15rpx;
+  border-radius: 50%; }
