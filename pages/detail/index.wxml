@@ -23,6 +23,7 @@
         </view>
         <view wx:if="{{permission=='true' && clockInTime==now}}" class="reminder-clock-batch {{unClockInCount==0?'un-clock':''}}" bindtap="{{unClockInCount!=0?'sendGroupUserMsg':''}}">一键提醒</view>
       </view>
+      <view class="prompt-information">由于微信限制，每日只可向各用户发送一次打卡提醒</view>
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>

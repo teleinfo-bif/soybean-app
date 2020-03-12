@@ -174,3 +174,8 @@ button {
   width: 40rpx;
   height: 40rpx;
   margin: 0; }
+
+.prompt-information {
+  color: #A9A9A9;
+  padding: 20rpx 30rpx;
+}

@@ -31,6 +31,7 @@
       开启明日打卡提醒
     </button>
   </view>
+  <view wx:if="{{clockReminder}}" class="reminder-item" >开启后，管理员可及时提醒您健康打卡</view>
   <!-- <view class="btn-item">
     <van-button bind:click="navigateTo" data-path='/pages/index/index' custom-style="" round="{{true}}" type="primary" color="#dddddd" block>
       <text class="btn_go-home">返回首页</text>
