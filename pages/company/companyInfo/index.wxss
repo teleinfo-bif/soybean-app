@@ -101,8 +101,8 @@
 .quit-submit{
   width:580rpx;
   height:90rpx;
-  background:rgba(23,89,239,1);
-  border-radius:10px;
+  /*background:rgba(23,89,239,1);*/
+  /*border-radius:10px;*/
   font-size:32rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
