@@ -19,6 +19,7 @@ Page({
    */
   data: {
     unClockInCount: 0,//未打卡人数
+    isYiJianTiXing: 0,
     now: "",
     value: "",
     groupId: "",
@@ -49,7 +50,7 @@ Page({
     ]
   },
   getData() {
-    let { requestStutus, clockData, clockInTime, groupId } = this.data;
+    let { requestStutus, clockData, clockInTime, groupId, isYiJianTiXing } = this.data;
     console.log('clockData',clockData)
     let { pages = 0, current = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
@@ -64,15 +65,20 @@ Page({
             groupId,
             clockInTime: clockInTime
           }).then(res => {
-            console.log(res)
+            console.log('8',res)
             if (clockData.total != undefined && current == res.data.current) {
-              let clockList = clockData.records.concat(res.data.records);
+            let newData = isYiJianTiXing==1?
+                        res.data.records.map((obj)=>Object.assign({},obj,{isSendSubscribeMsg:1})):
+                        res.data.records
+            let clockList = clockData.records.concat(newData);
+              // let clockList = clockData.records.concat(res.data.records);
               this.setData({
                 requestStutus: false,
                 clockData: {
                   ...res.data,
                   records: clockList,
                   unClockInCount: res.unClockInCount,
+                  isYiJianTiXing: res.isSendSubscribeMsg
                 }
               });
             } else {
@@ -80,6 +86,7 @@ Page({
                 requestStutus: false,
                 clockData: res.data,
                 unClockInCount: res.unClockInCount,
+                isYiJianTiXing: res.isSendSubscribeMsg
               });
             }
           });
@@ -239,49 +246,77 @@ Page({
   },
 
   // 发送提醒
-  sendSingleUserMsg: function(e) {
-    const openId = e.currentTarget.dataset.gid
+  sendSingleUserMsg: function (e) {
+    const openId = e.currentTarget.dataset.oid
+    const index = e.currentTarget.dataset.gid
+    const { clockData } = this.data
+    console.log(openId, index, clockData)
+    if (clockData.records[index].isSendSubscribeMsg == 1) {
+      wx.showToast({
+        title: '已提醒过该用户！',
+        icon: 'none',
+      })
+      return
+    }
     sendSingleUserMsg({
       openId: openId
     }).then(data => {
-      console.log('ok', data,data.length==0,typeof data)
-      if(JSON.stringify(data) != "{}") {
+      console.log('ok', data, data.length == 0, typeof data)
+      if (JSON.stringify(data) != "{}") {
         wx.showToast({
           title: '用户未开启提醒！',
           icon: 'none',
         })
-        return
+      } else {
+        console.log('ee', clockData.records)
+        var data = 'clockData.records[' + index + '].isSendSubscribeMsg';
+        this.setData({
+          [data]: 1,
+        });
+        wx.showToast({
+          title: '健康打卡提醒成功！',
+          icon: 'none',
+        })
       }
-      wx.showToast({
-        title: '健康打卡提醒成功！',
-        icon: 'none',
-      })
     })
   },
 
   sendGroupUserMsg: function() {
-    const { groupId, unClockInCount, clockData } = this.data;
+    const { groupId, unClockInCount, clockData, isYiJianTiXing } = this.data;
     let total = clockData.total
+    if(isYiJianTiXing==1){
+      return
+    };  
     console.log(groupId)
     sendGroupUserMsg({
       groupId: groupId
     }).then(data => {
-      console.log('ok',data, typeof data, data.split(','),JSON.stringify(data) != "{}" )
-      let noSubscribeNum = JSON.stringify(data) != "{}"?data.split(',').length:0
-      console.log(noSubscribeNum,unClockInCount, total)
-      if(noSubscribeNum==unClockInCount) {
+      console.log('ok',data)
+      let stringData = data.toString()
+      let noSubscribeNum = JSON.stringify(stringData) != "{}"?stringData.split(',').length:0//提醒失败人数
+      console.log(noSubscribeNum,unClockInCount, total)     
+      let noSubPeople = stringData.split(',')     
+      let newData = clockData.records.map((obj)=>              
+           Object.assign({},obj,{isSendSubscribeMsg:noSubPeople.indexOf(obj.wechatId)==-1?1:0}) 
+      )
+      this.setData({
+        'clockData.records': newData,
+        isYiJianTiXing: 1
+      });
+      console.log(clockData)
+      if(noSubscribeNum > 0 && noSubscribeNum==unClockInCount) {
         wx.showToast({
-          title: '提醒成功，但部分人员未开启接收提醒！',
+          title: '群组内未打卡人员没有开启接收提醒！',
           icon: 'none',
         })
-      } else if(noSubscribeNum > 0) {
+      } else if(noSubscribeNum == 0) {
         wx.showToast({
-          title: '提醒成功，但部分人员未开启接收提醒！',
+          title: '健康打卡提醒成功！',
           icon: 'none',
         })
       } else {
         wx.showToast({
-          title: '健康打卡提醒成功！',
+          title: '提醒成功，但部分人员未开启接收提醒！',
           icon: 'none',
         })
       }     
