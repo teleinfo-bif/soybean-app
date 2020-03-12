@@ -71,17 +71,17 @@
 }
 .logo-head-img-3{
   margin-right: 20rpx;
-    width:33rpx;
+    width:40rpx;
     height: 40rpx;
 }
 .logo-head-img-4{
     margin-right: 20rpx;
-    width:32rpx;
+    width:40rpx;
     height: 40rpx;
 }
 .logo-head-img-5{
       margin-right: 20rpx;
-    width:34rpx;
+    width:40rpx;
     height: 40rpx;
 }
 .logo-head-img-6{
