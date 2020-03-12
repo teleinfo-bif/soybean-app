@@ -1,5 +1,5 @@
 // pages/group/groupIndex/index.js
-import { getGroupCurrentUserList } from "../../../api/api";
+import { getGroupCurrentUserList, getServerTime } from "../../../api/api";
 const app = getApp();
 function getyyyyMMdd(date) {
   var d = date || new Date();
@@ -16,6 +16,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    now: "",
     data: {},
     activeTab: 0,
     groupId: "",
@@ -98,18 +99,25 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: data.name
     // });
-    this.setData(
-      {
-        children: children,
-        groupId: id,
-        groupName: name,
-        managers: "" ? "" : managers.split(","),
-        data,
-        isGroup,
-        clockInTime: getyyyyMMdd(new Date())
-      },
-      this.getData
-    );
+    getServerTime()
+      .then(data => {
+        let now = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
+        let clockInTime = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
+        this.setData(
+          {
+            children: children,
+            groupId: id,
+            groupName: name,
+            managers: "" ? "" : managers.split(","),
+            data,
+            isGroup,
+            now,
+            clockInTime
+            // clockInTime: getyyyyMMdd(new Date())
+          },
+          this.getData
+        );
+      })   
   },
   onChange(e) {
     // console.log(e);

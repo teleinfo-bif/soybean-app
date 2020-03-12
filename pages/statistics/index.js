@@ -9,7 +9,7 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getGroup, getGroupStatistic } from "../../api/api";
+import { getGroup, getGroupStatistic, getServerTime } from "../../api/api";
 import { baseURLDownload } from "../../config/index";
 
 Page({
@@ -26,6 +26,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    now:"",
     data: {},
     ecHealth: {
       lazyLoad: true
@@ -69,21 +70,34 @@ Page({
    */
   onLoad: function(options) {
     // console.log(options);
-    let { groupId, groupName } = options;
-    this.setData(
-      {
-        groupId,
-        groupName
-      },
-      () => {
-        this.getData();
-        this.getGroupDetail(groupId);
-      }
-    );
-
-    this.setData({
-      clockInTime: getyyyyMMdd(new Date())
-    });
+    let { groupId, groupName } = options;   
+    // this.setData(
+    //   {
+    //     groupId,
+    //     groupName
+    //   },
+    //   () => {
+    //     this.getData();
+    //     this.getGroupDetail(groupId);
+    //   }
+    // );
+    getServerTime()
+      .then(data => {
+        let now = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
+        let clockInTime = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
+        this.setData(
+          {
+            groupId,
+            groupName,
+            clockInTime,
+            now
+          },
+          () => {
+            this.getData();
+            this.getGroupDetail(groupId);
+          }
+        );
+      })  
   },
   onChange(e) {
     // console.log(e);
