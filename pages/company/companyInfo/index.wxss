@@ -106,9 +106,13 @@
   font-size:32rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
-  color:rgba(255,255,255,1);
+  color:red;
   line-height:90rpx;
   text-align: center;
   margin-left:85rpx;
   margin-top:50rpx;
+}
+.arrowImg{
+  width:30rpx;
+  height: 45rpx;
 }
