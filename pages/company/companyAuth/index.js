@@ -31,6 +31,17 @@ Page({
       managers: reformattedArray2
     })
   },
+  //删除数据库管理员按钮
+  delDataManagerBtn() {
+    var kvArray = this.data.dataManagers
+    var reformattedArray2 = kvArray.map(function (obj, index) {
+      obj.hide = !obj.hide;//添加id属性
+      return obj;//如果不返回则输出： Array [undefined, undefined, undefined]
+    });
+    this.setData({
+      dataManagers: reformattedArray2
+    })
+  },
   //删除管理权限
   deleteManage(e){
     console.log("======del====", e.currentTarget.dataset.id)
@@ -61,6 +72,15 @@ Page({
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
       console.log('====delRes=====', data)
+      //数组删除元素
+      var profiles = this.data.dataManagers
+      console.log('===deleteBefore==', profiles);
+      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === e.currentTarget.dataset.id);
+      console.log('===curIndex==', currentProfileIndex);
+      profiles.splice(currentProfileIndex, 1);
+      this.setData({
+        dataManagers: profiles
+      })
     })
   },
   //只适合三级架构模型

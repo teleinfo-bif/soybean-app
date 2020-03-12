@@ -28,7 +28,7 @@
       <!--管理员-->
   <view class="admin-hd">
     <view class="admin-hd-title">管理权限</view>
-    <image class='del' hidden="true" bindtap="delManagerBtn" src='../../../static/images/help.png' data-type='0' ></image>
+    <image class='del'  bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0' ></image>
     <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0' ></image> 
     
   </view>
@@ -51,14 +51,19 @@
       <!--数据库管理员-->
   <view class="admin-hd">
     <view class="admin-hd-title">统计权限</view>
+    <image class='del'  bindtap="delDataManagerBtn" src='../../../static/images/del.png' data-type='0' ></image>
     <image class='add' bindtap="addDataManager"   src='../../../static/images/add.png' data-type='1'></image> 
   </view>
   <view class='content-devide'/>
   <block wx:for='{{dataManagers}}' wx:key='index'>
-    
-    <view class='adimin-user'>
-      <image src="{{item.avatarUrl == '' ? '../../../static/images/comPeo.png' :item.avatarUrl}}" class='adimin-user-img'/>
-      <view calss='manager-user-name'>{{item.name}}</view>
+        <view class='adimin-user'>
+        <view class='adimin-user-1'>
+      <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" />
+      <view calss='manager-user-1'>{{item.name}}</view>
+      </view>
+      <view  hidden="{{item.hide}}"  bindtap="deleteDataManage" data-id="{{item.id}}">
+        <text class='delete-user'> 删除</text>
+      </view>
     </view>
   </block>
 
