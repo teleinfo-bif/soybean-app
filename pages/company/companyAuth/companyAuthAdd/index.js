@@ -43,13 +43,26 @@ Page({
         wx.showToast({
           title: "添加成功",
           icon: 'success',
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            console.log('haha');
+            setTimeout(function () {            
+              let pages = getCurrentPages();
+              let prevPage = pages[pages.length - 2];
+              prevPage.setData({
+                groupId: that.data.groupId,
+                joinGroupId: that.data.groupId
+              })
+              wx.navigateBack({
+                delta: 1,
+              })
+            
+            } , 1000) //延迟时间
+          }
         });
         this.setData({
           inputValue: ''
         })
-        this.pageBack()
-
       })
     } else if (type == 1) {
       
@@ -62,12 +75,27 @@ Page({
         wx.showToast({
           title: "添加成功",
           icon: "none",
-          duration: 2000
+          duration: 2000,
+          success: function () {
+            console.log('haha');
+            setTimeout(function () {
+              let pages = getCurrentPages();
+              let prevPage = pages[pages.length - 2];
+              prevPage.setData({
+                groupId: that.data.groupId,
+                joinGroupId: that.data.groupId
+              })
+              wx.navigateBack({
+                delta: 1,
+              })
+
+            }, 1000) //延迟时间
+          }
         });
         this.setData({
           inputValue: ''
         })
-        this.pageBack()
+        
       })
     }
   },
@@ -88,10 +116,6 @@ Page({
       });
       return;
     }
-    console.log(
-      "app.globalData.userFilledInfo.id",
-      app.globalData.userFilledInfo.id
-    );
     getGroupAddManager({
       groupId: this.data.groupId,
       phone: this.data.inputValue
