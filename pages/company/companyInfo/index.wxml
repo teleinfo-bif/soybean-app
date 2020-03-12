@@ -39,10 +39,11 @@
         <image class='logo-head-img-5' src='../../../static/images/comVerify.png'></image>
         <view class='logo-head-name'>机构认证</view>
       </view>
-      <view wx:if='{{data.status == 0}}'class='title-value'>未认证</view>
+      <view class='title-value'>未认证</view>
+<!--       <view wx:if='{{data.status == 0}}'class='title-value'>未认证</view>
       <view wx:elif='{{data.status == 1}}'class='title-value'>删除</view>
       <view wx:elif='{{data.status == 2}}'class='title-value'>审核中</view>
-      <view wx:else class='title-value'>异常</view>
+      <view wx:else class='title-value'>异常</view> -->
    </view>
    <view class='devide-2'/>
    <block wx:if="{{permision == 'true'}}">
