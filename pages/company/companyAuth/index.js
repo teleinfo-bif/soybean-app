@@ -22,6 +22,7 @@ Page({
   },
   //删除管理员按钮
   delManagerBtn(){
+    var that = this
     var kvArray = this.data.managers
     var reformattedArray2 = kvArray.map(function (obj, index) {
       obj.hide = !obj.hide;//添加id属性
@@ -210,11 +211,11 @@ Page({
    */
   onLoad: function (options) {
     //ptions.groupId = 1
-    console.log("options.groupName===", options.groupName)
+    //console.log("options.groupName===", options.groupName)
     this.setData({
       groupId: options.groupId,
       joinGroupId: options.groupId,
-      groupName:options.groupName
+      //groupName:options.groupName
     })
     this.tree2array(this.data.joinGroupId)
   },
