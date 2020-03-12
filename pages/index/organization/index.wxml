@@ -51,7 +51,7 @@
               </navigator>
             </view>
           </view>
-          <view wx:if="{{item.permission==false}}" class="organization_item-btn">
+          <view wx:if="{{item.permission==false && item.dataPermission==false}}" class="organization_item-btn">
             <navigator url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}&permission={{item.permission}}">
               <image class="btn" src="../../../static/images/detail.png" />
             </navigator>
