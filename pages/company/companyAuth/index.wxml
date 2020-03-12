@@ -10,7 +10,7 @@
       <!--二级级联-->
        <view class="section"  wx:if="{{!lastClass}}">
       <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" range-key="{{'name'}}" data-id='{{multiArray[1][multiIndex[1]].id?multiArray[1][multiIndex[1]].id:multiArray[0][multiIndex[0]].id}}' disabled="{{disabled}}">  
-        <text class="picker-choice">选择</text>
+        <text class="picker-choice">请选择</text>
       </picker>
       <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder"  value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="true" >
       </input>     
@@ -19,7 +19,7 @@
     <!--一级级联-->
 <view class="section" wx:if="{{lastClass}}">  
     <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
-        <text class="picker-choice">选择</text>
+        <text class="picker-choice">请选择</text>
     </picker>
     <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder" value="{{array[index].name}}" disabled="true"></input>
 </view>
@@ -27,12 +27,16 @@
   <view class='head-devide'/>
       <!--管理员-->
   <view class="admin-hd">
-    <view class="">管理员</view>
+    <view class="">管理权限</view>
     <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0' ></image> 
   </view>
   <view class='content-devide'/>
   <block wx:for='{{managers}}' wx:key='index'>
-    <view class='adimin-user'>{{item.name}}</view>
+        <view class='adimin-user'>
+      <image src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" class='adimin-user-img'/>
+      <view calss=''>{{item.name}}</view>
+      <view calss='' bindtap="deleteManage" data-id="{{item.id}}"> 删除</view>
+    </view>
   </block>
 
 
@@ -40,12 +44,16 @@
   
       <!--数据库管理员-->
   <view class="admin-hd">
-    <view class="">数据库管理员</view>
+    <view class="">统计权限</view>
     <image class='add' bindtap="addDataManager"   src='../../../static/images/add.png' data-type='1'></image> 
   </view>
   <view class='content-devide'/>
   <block wx:for='{{dataManagers}}' wx:key='index'>
-    <view class='adimin-user'>{{item.name}}</view>
+    
+    <view class='adimin-user'>
+      <image src="{{item.avatarUrl == '' ? '../../../static/images/comPeo.png' :item.avatarUrl}}" class='adimin-user-img'/>
+      <view calss=''>{{item.name}}</view>
+    </view>
   </block>
 
 </view>

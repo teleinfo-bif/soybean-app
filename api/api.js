@@ -192,10 +192,10 @@ export const sendGroupUserMsg = async params => {
 
 // 删除群数据库管理员
 export const deleteDataManager = async params => {
-  return Request._delete(`/wx/group/dataManager`, params);
+  return Request._deleteParams(`/wx/group/dataManager`, params);
 };
 // 删除群管理员
 export const deleteManager = async params => {
   console.log("=====/wx/group/manager----params", params);
-  return Request._delete(`/wx/group/manager`, params);
+  return Request._deleteParams(`/wx/group/manager`, params);
 };
