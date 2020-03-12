@@ -17,3 +17,5 @@
         <text class="head-content {{item.flag?'':'isBlock'}}">{{item.content}}</text>
     </view>
 </view>
+<view class='help-bottom-fix'>如有疑问，请与我们联系</view>
+<view class='help-bottom-fix' style="margin-top:8rpx;">  联系邮箱：<text style="color:rgba(75,150,232,1)">kanxuejiao@caict.ac.cn</text></view>
