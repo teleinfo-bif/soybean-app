@@ -62,7 +62,7 @@
     <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-6' src='../../../static/images/comManage.png'></image>
-        <view class='logo-head-name'>设置管理员</view>
+        <view class='logo-head-name'>设置管理</view>
       </view>
       <view class='title-value-index' bindtap='toSetManage'>
       <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>

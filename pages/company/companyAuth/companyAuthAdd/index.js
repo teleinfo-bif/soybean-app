@@ -19,102 +19,21 @@ Page({
       inputValue: e.detail.value
     });
   },
-  addManager(managerId, type) {
-    var that = this;
-    console.log("=====groupId", this.data.groupId);
-    console.log("=====managerId", managerId);
-    console.log("=====userId", app.globalData.userFilledInfo.id);
-    if (type == "0") {
-      wx.request({
-        url:
-          baseURL +
-          "/wx/group/manager?groupId=" +
-          that.data.groupId +
-          "&userId=" +
-          app.globalData.userFilledInfo.id +
-          "&managerId=" +
-          managerId,
-        data: {},
-        method: "POST",
-        header: {
-          "content-type": ""
-        },
-        success: function(res) {
-          /*           console.log('data:' + res.data);
-          console.log('header:' + res.header);
-          console.log('statusCode:' + res.statusCode); */
-          if (res.data.success == false) {
-            wx.showToast({
-              title: res.data.msg,
-              icon: "none",
-              duration: 2000
-            });
-          } else {
-            wx.showToast({
-              title: "添加成功",
-              icon: "none",
-              duration: 2000
-            });
-            wx.navigateTo({
-              url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
-            });
-          }
-        },
-        fail(res) {
-          wx.showModal({
-            title: "添加失败",
-            content:
-              "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
-          });
-        }
-      });
-    } else if (type == 1) {
-      wx.request({
-        url:
-          baseURL +
-          "/wx/group/dataManager?groupId=" +
-          that.data.groupId +
-          "&userId=" +
-          app.globalData.userFilledInfo.id +
-          "&managerId=" +
-          managerId,
-        data: {},
-        method: "POST",
-        header: {
-          "content-type": ""
-        },
-        success: function(res) {
-          if (res.data.success == false) {
-            wx.showToast({
-              title: res.data.msg,
-              icon: "none",
-              duration: 2000
-            });
-          } else {
-            wx.showToast({
-              title: "添加成功",
-              icon: "none",
-              duration: 2000
-            });
-            wx.navigateTo({
-              url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
-            });
-          }
-        },
-        fail(res) {
-          wx.showModal({
-            title: "添加失败",
-            content:
-              "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
-          });
-        }
-      });
-    }
+  pageBack(){
+    let  that  = this
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    prevPage.setData({
+      groupId: that.data.groupId,
+      joinGroupId: that.data.groupId
+    })
+    wx.navigateBack({
+      delta: 1,
+    })
   },
   addManager(managerId, type) {
     var that = this
-    if (type == "0") {
-      
+    if (type == "0") {  
       addManager({
         groupId: this.data.groupId,
         managerId: managerId,
@@ -123,15 +42,14 @@ Page({
         console.log('====delRes=====', data)
         wx.showToast({
           title: "添加成功",
-          icon: "none",
+          icon: 'success',
           duration: 2000
         });
         this.setData({
           inputValue: ''
         })
-/*         wx.navigateTo({
-          url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
-        }); */
+        this.pageBack()
+
       })
     } else if (type == 1) {
       
@@ -149,9 +67,7 @@ Page({
         this.setData({
           inputValue: ''
         })
-/*         wx.navigateTo({
-          url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
-        }); */
+        this.pageBack()
       })
     }
   },
@@ -202,6 +118,7 @@ Page({
     this.setData({
       inputValue:''
     })
+    this.pageBack()
   },
   /**
    * 生命周期函数--监听页面加载
@@ -228,21 +145,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-    var prevPage = pages[pages.length - 2];   //上一页面
 
-    prevPage.setData({
-
-      //直接给上一个页面赋值
-      addresschose: that.data.address[index],
-
-    });
-
-    wx.navigateBack({
-
-      //返回
-      delta: 1
-
-    })
   },
 
   /**
