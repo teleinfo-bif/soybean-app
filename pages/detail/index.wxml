@@ -6,9 +6,9 @@
       <view class="head">
         <view class="head-title">
           <!-- <image class="btn" src="../../static/images/detail.png" /> -->
-          <Text class="head-title1">{{groupName}}</Text>
+          <Text class=" {{(permission=='true'&& clockInTime==now)?'head-title2':'head-title1'}}">{{groupName}}</Text>
         </view>
-        <button open-type='share' style='width:40rpx;height:40rpx;margin:0 10rpx 0 0;'>
+        <button open-type='share' class="{{(permission=='true'&& clockInTime==now)?'head-share2':'head-share1'}}">
           <image style="width:40rpx;height:40rpx;" src="../../static/images/fenxiang.png" />
         </button>
         <view class="head-date" hover-class="none" hover-stop-propagation="false">

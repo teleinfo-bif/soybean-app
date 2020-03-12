@@ -199,3 +199,8 @@ export const deleteManager = async params => {
   console.log("=====/wx/group/manager----params", params);
   return Request._deleteParams(`/wx/group/manager`, params);
 };
+
+// 获取服务器时间
+export const getServerTime = async params => {
+  return Request._get(`/wx/system/time`, params);
+};

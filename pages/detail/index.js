@@ -10,7 +10,7 @@ function getyyyyMMdd(date) {
   var yyyyMMdd = curr_year + "-" + curr_month + "-" + curr_date;
   return yyyyMMdd;
 }
-import { getGroupBlockList, sendSingleUserMsg, sendGroupUserMsg } from "../../api/api.js";
+import { getGroupBlockList, sendSingleUserMsg, sendGroupUserMsg, getServerTime } from "../../api/api.js";
 // const beahavior_userInfo = require("../../behavior/userInfo");
 Page({
   // behaviors: [beahavior_userInfo],
@@ -155,21 +155,31 @@ Page({
   onLoad: function(options) {
     console.log(options);
     let { groupId, groupName, permission } = options;
-    let now = getyyyyMMdd(new Date());
-    this.setData(
-      {
-        groupId,
-        groupName,
-        permission,
-        clockInTime: getyyyyMMdd(new Date()),
-        now
-      },
-      this.getData
-    );
-    // this.setData({
-
-    // });
-    // console.log("option", options);
+    getServerTime()
+    .then(data=>{
+      let now = typeof data=="string"?data.split(' ')[0]: getyyyyMMdd(new Date());
+      let clockInTime = typeof data=="string"?data.split(' ')[0]: getyyyyMMdd(new Date());
+      this.setData(
+        {
+          groupId,
+          groupName,
+          permission,
+          clockInTime,
+          now
+        },
+        this.getData
+      );
+    })
+    // this.setData(
+    //   {
+    //     groupId,
+    //     groupName,
+    //     permission,
+    //     clockInTime: getyyyyMMdd(new Date()),
+    //     now
+    //   },
+    //   this.getData
+    // );
   },
 
   /**

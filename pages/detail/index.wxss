@@ -115,7 +115,7 @@ page {
 
 .head-title1 {
   white-space: nowrap;
-  width: 260rpx;
+  width: 355rpx;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis; }
@@ -152,6 +152,7 @@ button {
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(255,255,255,1);
+  margin-left: 15rpx;
 }
 .people-item_sign_no {
   text-align: center;
@@ -160,3 +161,22 @@ button {
 .un-clock {
   background:#A9A9A9;
 }
+
+.head-title2{
+  white-space: nowrap;
+  width: 240rpx;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+  .head-share1{
+  width:40rpx;
+  height:40rpx;
+  margin:0 10rpx 0 55rpx;
+}
+  .head-share2{
+    width:40rpx;
+    height:40rpx;
+    margin:0;
+  }
