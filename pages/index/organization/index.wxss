@@ -51,11 +51,9 @@
   background-color: #f2f2f2;
   transform: scale(1); }
 
-.organization_item-logo,
 .organization_item image {
   width: 72rpx;
   height: 72rpx;
-  margin-right:15rpx;
   border-radius: 50%; }
 
 .organization_item-name {
@@ -92,3 +90,10 @@
   height: 72rpx;
   border-radius: 50%;
   margin-right: 20rpx; }
+
+.organization_item-logo {
+    width: 72rpx;
+    height: 72rpx;
+    margin-right:15rpx;
+    border-radius: 50%;
+  }
