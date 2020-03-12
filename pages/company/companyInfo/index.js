@@ -45,6 +45,14 @@ Page({
       groupId: tmp,
     }).then(data => {
       console.log('退群', data)
+      wx.showToast({
+        title: '退出成功',
+        icon: 'success',
+        duration: 2000
+      })
+      wx.navigateTo({
+        url: '/pages/index/index',
+      })
     })     
   },
   /**
