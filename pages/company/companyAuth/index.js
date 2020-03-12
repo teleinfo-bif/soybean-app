@@ -20,7 +20,7 @@ Page({
       value_single_type: this.data.singleArray[e.detail.value],
     })
   },
-  //删除管理员
+  //删除管理权限
   deleteManage(e){
     console.log("======del====", e.currentTarget.dataset.id)
     deleteManager({
@@ -29,6 +29,17 @@ Page({
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
       console.log('====delRes=====', data)   
+    })
+  },
+  //删除统计权限
+  deleteDataManage(e) {
+    console.log("======del====", e.currentTarget.dataset.id)
+    deleteDataManager({
+      groupId: this.data.joinGroupId,
+      managerId: e.currentTarget.dataset.id,
+      userId: app.globalData.userFilledInfo.id
+    }).then(data => {
+      console.log('====delRes=====', data)
     })
   },
   //只适合三级架构模型
@@ -98,7 +109,7 @@ Page({
           lowestClass: true
         })
       } else {
-        let a = [{ name: this.data.groupName, id: this.data.groupId }]
+        let a = [{ name: '请选择单位/机构', id: this.data.groupId }]
         let b = []
         data.map((val, index) => {
           a.push({ name: val.name, id: val.id })

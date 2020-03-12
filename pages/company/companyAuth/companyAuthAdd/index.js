@@ -1,7 +1,7 @@
 // pages/company/companyAuth/companyAuthAdd/index.js
 const app = getApp();
 // import { getGroupAddManager, addDataManager, addManager } from "../../../../api/api";
-import { getGroupAddManager } from "../../../../api/api";
+import { getGroupAddManager, addManager, addDataManager, } from "../../../../api/api";
 import { baseURL } from "../../../../config/index";
 Page({
   /**
@@ -108,7 +108,50 @@ Page({
       });
     }
   },
-
+  addManager(managerId, type) {
+    var that = this
+    if (type == "0") {
+      
+      addManager({
+        groupId: this.data.groupId,
+        managerId: managerId,
+        userId: app.globalData.userFilledInfo.id
+      }).then(data => {
+        console.log('====delRes=====', data)
+        wx.showToast({
+          title: "添加成功",
+          icon: "none",
+          duration: 2000
+        });
+        this.setData({
+          inputValue: ''
+        })
+/*         wx.navigateTo({
+          url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
+        }); */
+      })
+    } else if (type == 1) {
+      
+      addDataManager({
+        groupId: this.data.groupId,
+        managerId: managerId,
+        userId: app.globalData.userFilledInfo.id
+      }).then(data => {
+        console.log('====delRes=====', data)
+        wx.showToast({
+          title: "添加成功",
+          icon: "none",
+          duration: 2000
+        });
+        this.setData({
+          inputValue: ''
+        })
+/*         wx.navigateTo({
+          url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
+        }); */
+      })
+    }
+  },
   join() {
     //this.data.inputValue = '13552157026'
     if (this.data.inputValue == "") {
