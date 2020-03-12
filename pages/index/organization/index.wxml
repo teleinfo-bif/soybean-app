@@ -9,11 +9,11 @@
       <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
          <!--公司Logo-->
          
-        <view class="organization_item-logo">
+        <!-- <view class="organization_item-logo">
         <navigator url="/pages/company/companyInfo/index?groupId={{item.id}}&permision={{item.permission}}">
           <image class="btn" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}"  />
         </navigator>
-        </view> 
+        </view>  -->
         
         <!-- 中间部门名称 -->
         <!-- <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">

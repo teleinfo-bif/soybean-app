@@ -1,7 +1,7 @@
 //app.js
 // import { getUserInfo } from "./api/api";
 import { appInit, getUserInfo } from "./api/request";
-
+import { env } from "./config/index";
 App({
   initRequest: false,
   callbackList: [],
@@ -35,6 +35,8 @@ App({
   },
 
   onLaunch: async function() {
+    // 环境判断
+    this.globalData.release = env == "release";
     const initData = await appInit();
     this.globalData = {
       ...this.globalData,
@@ -72,6 +74,7 @@ App({
     // });
   },
   globalData: {
+    release: null, //是否是生产环境
     auth: true, // 是否开启权限验证
     appInit: false,
     statusBarHeight: 20, // 标题栏高度-适配首页
