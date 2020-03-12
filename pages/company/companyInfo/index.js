@@ -23,7 +23,7 @@ Page({
   toSetManage(){
     console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
-      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}`,
+      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
     }); 
   },
   /**
