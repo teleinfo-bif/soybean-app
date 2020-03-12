@@ -27,5 +27,5 @@ export const baseURLNotice =
 export const uploadUrl =
   baseApi.release + "/bid-blockchain/front/ipfs/upload-photo";
 
-// 统计导出导出文件的下载链接 -- 开发、体验、正式没有区别
-export const baseURLDownload = baseApi.release + "/bid-soybean";
+// 统计导出导出文件的下载链接 
+export const baseURLDownload = baseApi[env] + "/bid-soybean";
