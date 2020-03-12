@@ -1,7 +1,7 @@
 <!--pages/company/companyInfo/index.wxml-->
 <view class='head-devide'></view>
 <view calss='logo'>
-   <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/group_name.png' :data.logo}}"/>
+   <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/companyDefault.png' :data.logo}}"/>
    <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img' src='../../../static/images/comName.png'></image>
@@ -25,7 +25,7 @@
       </view>
       <view class='title-value'>{{data.detailAddress}}</view>
    </view>
-   <view class='devide-2'/>
+   <view class='devide-1'/>
         <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-4' src='../../../static/images/comPeo.png'></image>
@@ -37,9 +37,9 @@
            <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-5' src='../../../static/images/comVerify.png'></image>
-        <view class='logo-head-name'>认证登记</view>
+        <view class='logo-head-name'>机构认证</view>
       </view>
-      <view wx:if='{{data.status == 0}}'class='title-value'>正常</view>
+      <view wx:if='{{data.status == 0}}'class='title-value'>未认证</view>
       <view wx:elif='{{data.status == 1}}'class='title-value'>删除</view>
       <view wx:elif='{{data.status == 2}}'class='title-value'>审核中</view>
       <view wx:else class='title-value'>异常</view>
@@ -51,7 +51,9 @@
         <image class='logo-head-img-6' src='../../../static/images/comNewAdd.png'></image>
         <view class='logo-head-name'>新增人员</view>
       </view>
-      <view class='title-value-index'>></view>
+      <view class='title-value-index'>
+      <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+      </view>
    </view>
    <view class='devide-2'/>
    </block>
@@ -61,7 +63,9 @@
         <image class='logo-head-img-6' src='../../../static/images/comManage.png'></image>
         <view class='logo-head-name'>设置管理员</view>
       </view>
-      <view class='title-value-index' bindtap='toSetManage'>></view>
+      <view class='title-value-index' bindtap='toSetManage'>
+      <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+      </view>
    </view>
    <view class='devide-2'/>
    </block>
@@ -71,11 +75,11 @@
         <image class='logo-head-img-6' src='../../../static/images/comReview.png'></image>
         <view class='logo-head-name'>审核加入</view>
       </view>
-      <image class='title-value-img' src='../../../static/images/comVerifyOn.png'> </image>
+      <image class='title-value-img' src='../../../static/images/comVerifyOff.png'> </image>
    </view>
 <view class='devide-2'/>
 </block>
 </view>
 <view class='quit'>
-  <view class='quit-submit' bindtap='quitCompany'>删除并退出</view>
+  <view class='quit-submit' bindtap='quitCompany'>退出</view>
 </view>
