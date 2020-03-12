@@ -20,6 +20,17 @@ Page({
       value_single_type: this.data.singleArray[e.detail.value],
     })
   },
+  //删除管理员按钮
+  delManagerBtn(){
+    var kvArray = this.data.managers
+    var reformattedArray2 = kvArray.map(function (obj, index) {
+      obj.hide = !obj.hide;//添加id属性
+      return obj;//如果不返回则输出： Array [undefined, undefined, undefined]
+    });
+    this.setData({
+      managers: reformattedArray2
+    })
+  },
   //删除管理权限
   deleteManage(e){
     console.log("======del====", e.currentTarget.dataset.id)
@@ -29,6 +40,16 @@ Page({
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
       console.log('====delRes=====', data)   
+      //数组删除元素
+      var profiles = this.data.managers
+      console.log('===deleteBefore==', profiles);
+      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === e.currentTarget.dataset.id);
+      console.log('===curIndex==',currentProfileIndex);
+      profiles.splice(currentProfileIndex, 1);
+      this.setData({
+        managers: profiles
+      })
+      console.log('===deleteAfter==', profiles);
     })
   },
   //删除统计权限
@@ -47,66 +68,13 @@ Page({
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
-      console.log('====dataAll=====', data)
-      if (data.length == 0) {
-        //最底层部门
-        this.setData({
-          lowestClass: true
-        })
-      } else {
-        let a = [{name:'请选择',id:this.data.groupId}]
-        let b = [[]]
-        data.map((val, index) => {
-          a.push({ name: val.name, id: val.id })
-          if (val.children.length == 0){
-            b.push([])
-          }else {
-            console.log("======val.children====", val.children)
-            val.children.unshift({ name: '请选择', id: val.id })
-            console.log("======val.childrenAfter====", val.children)
-            console.log("======b====",b)
-            b.push(val.children.map((val) => Object.assign({}, { name: val.name, id: val.id })))
-            console.log("======bAfter====", b)
-          }
-        })
-        console.log('=====temp====',a, b)
-        let lastClass = b.every((val, index) => val.length == 0) //是否倒数第二级
-        this.setData({
-          lastClass: lastClass
-        })
-        if (lastClass) {
-          let array = a
-          console.log('====lastClass=====', array)
-          this.setData({
-            array: array,
-            joinGroupId: array.id
-          })
-        } else {
-          let multiArray = [a, b]
-          console.log('=====muliti====',multiArray)
-          this.setData({
-            first: a,
-            second: b,
-            multiArray: multiArray,
-            joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
-            //joinGroupId: b[0].length == 0 ? a[0].id : b[0][0].id
-          })
-          //this.queryGroupManager(this.data.joinGroupId)
-        }
-
-      }
-      
-    })
-  },
-  tree2array: function (groupId) {
-    getUserTreeGroup({
-      groupId: groupId
-    }).then(data => {
       // console.log('dd', data)
       if (data.length == 0) {
         //最底层部门
         this.setData({
-          lowestClass: true
+          lowestClass: true,
+          array: [{ 'name': this.data.groupName, 'id': this.data.groupId }],
+          joinGroupId: this.data.groupId
         })
       } else {
         let a = [{ name: '请选择单位/机构', id: this.data.groupId }]
@@ -187,9 +155,21 @@ Page({
       groupId: groupId
     }).then(data => {
       console.log('====Manager=====', data)
+      var kvArray = data.managers
+      var reformattedArray2 = kvArray.map(function (obj, index) {
+        obj.hide = !obj.hide;//添加id属性
+        return obj;//如果不返回则输出： Array [undefined, undefined, undefined]
+      });
       this.setData({
-        dataManagers: data.dataManagers,
-        managers: data.managers
+        managers: reformattedArray2
+      })
+      var kvArray = data.dataManagers
+      var reformattedArray2 = kvArray.map(function (obj, index) {
+        obj.hide = !obj.hide;//添加id属性
+        return obj;//如果不返回则输出： Array [undefined, undefined, undefined]
+      });
+      this.setData({
+        dataManagers: reformattedArray2
       })
     })
   },
@@ -209,7 +189,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    //ptions.groupId = 1
     console.log("options.groupName===", options.groupName)
     this.setData({
       groupId: options.groupId,
@@ -230,6 +210,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let pages = getCurrentPages();
+
+    let currPage = pages[pages.length - 1];
+
+    if (currPage.data.addresschose) {
+
+      this.setData({
+
+        //将携带的参数赋值
+
+        address: currPage.data.addresschose,
+
+        addressBack: true
+
+      });
+      console.log("======firsttPage=====")
+      console.log(this.data.address, '地址')
+    }
+
     
     this.queryGroupManager(this.data.joinGroupId)
   },

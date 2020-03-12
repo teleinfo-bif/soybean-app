@@ -17,7 +17,7 @@
     </view> 
     
     <!--一级级联-->
-<view class="section" wx:if="{{lastClass}}">  
+<view class="section" wx:if="{{lowestClass || lastClass}}">  
     <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
         <text class="picker-choice">请选择</text>
     </picker>
@@ -27,15 +27,21 @@
   <view class='head-devide'/>
       <!--管理员-->
   <view class="admin-hd">
-    <view class="">管理权限</view>
+    <view class="admin-hd-title">管理权限</view>
+    <image class='del' hidden="true" bindtap="delManagerBtn" src='../../../static/images/help.png' data-type='0' ></image>
     <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0' ></image> 
+    
   </view>
   <view class='content-devide'/>
   <block wx:for='{{managers}}' wx:key='index'>
         <view class='adimin-user'>
-      <image src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" class='adimin-user-img'/>
-      <view calss=''>{{item.name}}</view>
-      <view calss='' bindtap="deleteManage" data-id="{{item.id}}"> 删除</view>
+        <view class='adimin-user-1'>
+      <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" />
+      <view calss='manager-user-1'>{{item.name}}</view>
+      </view>
+      <view  hidden="{{item.hide}}"  bindtap="deleteManage" data-id="{{item.id}}">
+        <text class='delete-user'> 删除</text>
+      </view>
     </view>
   </block>
 
@@ -44,7 +50,7 @@
   
       <!--数据库管理员-->
   <view class="admin-hd">
-    <view class="">统计权限</view>
+    <view class="admin-hd-title">统计权限</view>
     <image class='add' bindtap="addDataManager"   src='../../../static/images/add.png' data-type='1'></image> 
   </view>
   <view class='content-devide'/>
@@ -52,7 +58,7 @@
     
     <view class='adimin-user'>
       <image src="{{item.avatarUrl == '' ? '../../../static/images/comPeo.png' :item.avatarUrl}}" class='adimin-user-img'/>
-      <view calss=''>{{item.name}}</view>
+      <view calss='manager-user-name'>{{item.name}}</view>
     </view>
   </block>
 

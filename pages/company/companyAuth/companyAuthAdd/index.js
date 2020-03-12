@@ -3,6 +3,9 @@ const app = getApp();
 // import { getGroupAddManager, addDataManager, addManager } from "../../../../api/api";
 import { getGroupAddManager, addManager, addDataManager, } from "../../../../api/api";
 import { baseURL } from "../../../../config/index";
+var pages = getCurrentPages();   //当前页面
+
+console.log("======currentPage=====")
 Page({
   /**
    * 页面的初始数据
@@ -199,9 +202,6 @@ Page({
     this.setData({
       inputValue:''
     })
-    wx.navigateTo({
-      url: `/pages/company/companyAuth/index?groupId=${that.data.groupId}`
-    });
   },
   /**
    * 生命周期函数--监听页面加载
@@ -227,7 +227,23 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function() {
+    var prevPage = pages[pages.length - 2];   //上一页面
+
+    prevPage.setData({
+
+      //直接给上一个页面赋值
+      addresschose: that.data.address[index],
+
+    });
+
+    wx.navigateBack({
+
+      //返回
+      delta: 1
+
+    })
+  },
 
   /**
    * 生命周期函数--监听页面卸载
