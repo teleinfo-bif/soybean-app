@@ -8,7 +8,8 @@ Page({
    */
   data: {
     logoSrc:'../../../static/images/group_name.png',
-    groupId:''
+    groupId:'',
+    quitbtn:true
   },
   copyTBL: function (e) {
     var self = this;
