@@ -103,7 +103,7 @@ page {
 }
 .devide-content{
   width: 33.8rpx;
-  height: 10rpx;
+  height: 1rpx;
   background-color: white;
 }
 .devide-content-2{
