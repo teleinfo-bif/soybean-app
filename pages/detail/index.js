@@ -254,10 +254,10 @@ Page({
     const { clockData } = this.data
     console.log(openId, index, clockData)
     if (clockData.records[index].isSendSubscribeMsg == 1) {
-      wx.showToast({
-        title: '已提醒过该用户！',
-        icon: 'none',
-      })
+      // wx.showToast({
+      //   title: '已提醒过该用户！',
+      //   icon: 'none',
+      // })
       return
     }
     sendSingleUserMsg({

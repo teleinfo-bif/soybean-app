@@ -96,6 +96,11 @@ font-size:32rpx;
 font-family:PingFangSC-Regular,PingFang SC;
 font-weight:500;
 color:rgba(51,51,51,1);
+text-overflow:ellipsis;
+ overflow:hidden;
+ display:-webkit-box;
+ -webkit-line-clamp:2; 
+ -webkit-box-orient:vertical;
 }
 .organization_item_name_new {
   flex: 1;
