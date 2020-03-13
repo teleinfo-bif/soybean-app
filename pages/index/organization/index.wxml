@@ -10,10 +10,10 @@
         <!-- 公司Logo -->
         <view class="organization_item-logo">
           <navigator url="/pages/company/companyInfo/index?groupId={{item.id}}&permision={{item.permission}}">
-            <image style="width: 120rpx;height:120rpx" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}" />
+            <image style="width: 80rpx;height:80rpx" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}" />
           </navigator>
         </view>
-        <view class="organization_item_right">
+        <!-- <view class="organization_item_right"> -->
           <!-- 中间部门名称 -->
           <view class="organization_item_name_new" style="padding-left:0rpx;" data-data="{{item}}">
             <view wx:if="{{item.permission || item.dataPermission}}" class="organization_item-name-1" target="" data-data="{{item}}" bind:tap="navigateToGroupIndex">
@@ -53,7 +53,7 @@
               </navigator>
             </view>
           </view>
-        </view>
+        <!-- </view> -->
       </view>
     </view>
   </view>

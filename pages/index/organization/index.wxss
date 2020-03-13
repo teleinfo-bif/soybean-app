@@ -77,9 +77,9 @@
 
 
 .organization_item-logo {
-  width: 120rpx;
-  height: 120rpx;
-  margin-right: 15rpx;
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
   border-radius: 50%; }
 
   .logo {
@@ -110,7 +110,7 @@ text-overflow:ellipsis;
   line-height: 150%;
 }
 .organization_item_right_button {
-  position: absolute;
+  /* position: absolute;
   right: 0;
-  bottom: -8rpx;
+  bottom: -8rpx; */
 }
