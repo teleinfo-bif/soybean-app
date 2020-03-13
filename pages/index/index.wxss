@@ -51,7 +51,7 @@ page {
 
 .homelogo {
   display: inline-block;
-  margin-top: 15rpx;
+  margin-bottom: 15rpx;
   width: 250rpx;
   height: 30rpx;
 }
@@ -83,4 +83,18 @@ page {
   font-weight:400;
   color:rgba(153,153,153,1);
   line-height:24rpx;
+}
+
+.help-view {
+  background-color: #C9C9C9;
+  color: #fff;
+  line-height: 30rpx;
+  font-size: 24rpx;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  right: 70rpx;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
 }

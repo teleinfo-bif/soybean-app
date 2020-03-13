@@ -8,21 +8,21 @@
   <clock></clock>
   <!-- 组织信息 -->
   <view style='min-height:345rpx;'>
-  <organization></organization>
-  <view class="help" bind:tap="toHelp">
-     <image class="help-img" src="../../static/images/help.png" />
-     <text class="help-text">使用帮助</text>
-  </view>
+    <organization></organization>
+    <!-- <view class="help" bind:tap="toHelp">
+      <image class="help-img" src="../../static/images/help.png" />
+      <text class="help-text">使用帮助</text>
+    </view> -->
   </view>
   <!-- 统计信息 -->
   <!-- <Statistics></Statistics> -->
   <!-- <view class="footer-copy-right">中国信息通信研究院</view> -->
-  <view class="logo">
-   <view class="page__title">{{notification}}</view>
+  <view class="logo">   
     <!-- <view class="copyright-view">中国信息通信研究院</view> -->
     <view>
-    <image class="homelogo" src="../../static/images/homelogo.png" />
-    
+      <image class="homelogo" src="../../static/images/homelogo.png" />
+      <view class="help-view" bind:tap="toHelp">?</view>
     </view>
+    <view class="page__title">{{notification}}</view>
   </view>
 </view>
