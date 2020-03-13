@@ -84,9 +84,9 @@ Component({
       });
     },
     ontest(e) {
-      console.log("test", e);
+      // console.log("test", e);
       const value = e.detail;
-      console.log(value.length);
+      // console.log(value.length);
       const prop = e.currentTarget.dataset.prop;
       // console.log(this);
       // debugger;
@@ -98,7 +98,7 @@ Component({
     // },
     test() {
       // console.log(JSON.parse(this.data.value));
-      console.log(this.data);
+      // console.log(this.data);
       this.triggerEvent("test", "value");
     },
     bindGetLoation() {
@@ -185,7 +185,16 @@ Component({
               });
               console.error("腾讯地址逆解析接口 error", error);
             });
-        }
+        },
+        fail(error) {
+          wx.hideLoading();
+          wx.showToast({
+            title: "获取地址失败",
+            icon: "none"
+          });
+          console.error("错误提醒：getlocation获取位置信息失败", error);
+        },
+        complete() {}
       });
     },
     // 选择位置信息
