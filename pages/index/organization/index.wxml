@@ -31,14 +31,14 @@
                   <image class="btn" src="../../../static/images/stastic@3x.png" />
                 </navigator>
               </view>
-              <!-- <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
+              <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
                 <image class="btn" src="../../../static/images/detail.png" />
-              </view> -->
-              <view class="organization_item-name">
+              </view>
+              <!-- <view class="organization_item-name">
                 <navigator class="" target="" url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}&permission=true" hover-class="navigator-hover" open-type="navigate">
                   <image class="btn-statistic" src="../../../static/images/detail.png" />
                 </navigator>
-              </view>
+              </view> -->
             </view>
             <view class="organization_item-btn" wx:if="{{(item.permission || item.dataPermission==true) && item.children.length === 0}}">
               <view>

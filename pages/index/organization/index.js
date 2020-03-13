@@ -88,6 +88,11 @@ Component({
           url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
         });
       }
+      if (data.dataPermission) {
+        wx.navigateTo({
+          url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
+        });
+      }
     },
 
   }
