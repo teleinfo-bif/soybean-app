@@ -19,7 +19,9 @@ Page({
    */
   data: {
     unClockInCount: 0,//未打卡人数
-    isYiJianTiXing: 0,
+    isYiJianTiXing: 0, //是否一键提醒 是1 否0
+    isClickYijian: false, //为了控制一件提醒后分页的显示
+    noSubPeople:[],//没有订阅消息的人列表
     now: "",
     value: "",
     groupId: "",
@@ -50,7 +52,7 @@ Page({
     ]
   },
   getData() {
-    let { requestStutus, clockData, clockInTime, groupId, isYiJianTiXing } = this.data;
+    let { requestStutus, clockData, clockInTime, groupId, isClickYijian, noSubPeople } = this.data;
     console.log('clockData',clockData)
     let { pages = 0, current = 0 } = clockData;
     if (!requestStutus && (current == 0 || pages > current)) {
@@ -65,10 +67,10 @@ Page({
             groupId,
             clockInTime: clockInTime
           }).then(res => {
-            console.log('8',res)
+            // console.log('res',res)
             if (clockData.total != undefined && current == res.data.current) {
-            let newData = isYiJianTiXing==1?
-                        res.data.records.map((obj)=>Object.assign({},obj,{isSendSubscribeMsg:1})):
+            let newData = isClickYijian?
+                        res.data.records.map((obj)=>Object.assign({},obj,{isSendSubscribeMsg:noSubPeople.indexOf(obj.wechatId) == -1 ? 1 : 0})):
                         res.data.records
             let clockList = clockData.records.concat(newData);
               // let clockList = clockData.records.concat(res.data.records);
@@ -261,14 +263,14 @@ Page({
     sendSingleUserMsg({
       openId: openId
     }).then(data => {
-      console.log('ok', data, data.length == 0, typeof data)
+      // console.log('ok', data, data.length == 0, typeof data)
       if (JSON.stringify(data) != "{}") {
         wx.showToast({
           title: '用户未开启提醒！',
           icon: 'none',
         })
       } else {
-        console.log('ee', clockData.records)
+        // console.log('ee', clockData.records)
         var data = 'clockData.records[' + index + '].isSendSubscribeMsg';
         this.setData({
           [data]: 1,
@@ -281,45 +283,58 @@ Page({
     })
   },
 
-  sendGroupUserMsg: function() {
+  sendGroupUserMsg: function () {
     const { groupId, unClockInCount, clockData, isYiJianTiXing } = this.data;
     let total = clockData.total
-    if(isYiJianTiXing==1){
+    if (isYiJianTiXing == 1) {
       return
-    };  
+    };
     console.log(groupId)
     sendGroupUserMsg({
       groupId: groupId
     }).then(data => {
-      console.log('ok',data)
-      let stringData = data.toString()
-      let noSubscribeNum = JSON.stringify(stringData) != "{}"?stringData.split(',').length:0//提醒失败人数
-      console.log(noSubscribeNum,unClockInCount, total)     
-      let noSubPeople = stringData.split(',')     
-      let newData = clockData.records.map((obj)=>              
-           Object.assign({},obj,{isSendSubscribeMsg:noSubPeople.indexOf(obj.wechatId)==-1?1:0}) 
-      )
-      this.setData({
-        'clockData.records': newData,
-        isYiJianTiXing: 1
-      });
-      console.log(clockData)
-      if(noSubscribeNum > 0 && noSubscribeNum==unClockInCount) {
-        wx.showToast({
-          title: '群组内未打卡人员没有开启接收提醒！',
-          icon: 'none',
-        })
-      } else if(noSubscribeNum == 0) {
+      console.log('ok', data, typeof data)
+      if (JSON.stringify(data) == "{}") {
         wx.showToast({
           title: '健康打卡提醒成功！',
           icon: 'none',
         })
+        let newData = clockData.records.map((obj) =>
+          Object.assign({}, obj, { isSendSubscribeMsg: 1 })
+        )
+        this.setData({
+          'clockData.records': newData,
+          isYiJianTiXing: 1,
+          isClickYijian: true
+        });
+
       } else {
-        wx.showToast({
-          title: '提醒成功，但部分人员未开启接收提醒！',
-          icon: 'none',
-        })
-      }     
+        let stringData = data.toString()
+        let noSubPeople = stringData.split(',')
+        let noSubscribeNum = noSubPeople.length//提醒失败人数
+        console.log(noSubscribeNum, unClockInCount, total)        
+        let newData = clockData.records.map((obj) =>
+          Object.assign({}, obj, { isSendSubscribeMsg: noSubPeople.indexOf(obj.wechatId) == -1 ? 1 : 0 })
+        )
+        this.setData({
+          'clockData.records': newData,
+          isYiJianTiXing: 1,
+          isClickYijian:true,
+          noSubPeople: noSubPeople
+        });
+        // console.log(clockData)
+        if (noSubscribeNum == unClockInCount) {
+          wx.showToast({
+            title: '群组内未打卡人员没有开启接收提醒！',
+            icon: 'none',
+          })
+        } else {
+          wx.showToast({
+            title: '提醒成功，但部分人员未开启接收提醒！',
+            icon: 'none',
+          })
+        }
+      }
     })
   },
 });
