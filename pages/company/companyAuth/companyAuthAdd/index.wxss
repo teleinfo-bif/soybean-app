@@ -15,7 +15,7 @@ page{
   color:rgba(51,51,51,1);
   height: 75rpx;
   margin-left:30rpx;
-  margin-top:100rpx;
+  padding-top:20rpx;
   background: white;
 }
 .info-input{
@@ -29,7 +29,7 @@ page{
   margin-right: 30rpx;
 }
 .personal-info-td {
-  margin-bottom:30rpx;
+  padding-bottom:20rpx;
   margin-left:30rpx;
 }
 .quit-join-group {
