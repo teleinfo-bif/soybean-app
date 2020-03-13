@@ -8,7 +8,7 @@
     <view class="organization_content">
       <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
         <!-- 公司Logo -->
-        <view wx:if="{{!globalData.release}}" class="organization_item-logo">
+        <view class="organization_item-logo">
           <navigator url="/pages/company/companyInfo/index?groupId={{item.id}}&permision={{item.permission}}">
             <image style="width: 120rpx;height:120rpx" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}" />
           </navigator>
