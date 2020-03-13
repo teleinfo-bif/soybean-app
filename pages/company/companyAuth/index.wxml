@@ -27,7 +27,7 @@
     <view class="admin-hd">
       <view class="admin-hd-title">管理权限</view>
       <image class='del' bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0'></image>
-      <image class='add' bindtap="addManager" src='../../../static/images/addSet.png' data-type='0'></image>
+      <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0'></image>
     </view>
     <view class='content-devide' />
     <block wx:for='{{managers}}' wx:key='index'>
