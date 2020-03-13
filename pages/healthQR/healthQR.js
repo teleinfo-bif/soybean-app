@@ -35,7 +35,7 @@ Page({
         });
       })
       .catch(e => {
-        console.log(e);
+        console.error("健康码加载失败:", e);
         wx.showToast({
           title: "健康码加载失败",
           icon: "none",
@@ -54,7 +54,7 @@ Page({
       userId: userId
     });
 
-    console.log("current userId: ", this.data.userId);
+    // console.log("current userId: ", this.data.userId);
     this.queryUserQR();
     //wx.hideLoading()
   },
@@ -87,9 +87,9 @@ Page({
     // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
       title: "复工复产通行证", // "泰尔通邀请你来打卡啦！",    // 默认是小程序的名称(可以写slogan等)
-      path: '/pages/index/index',    // 默认是当前页面，必须是以‘/'开头的完整路径
-      imageUrl: '',
-      success: function (res) {
+      path: "/pages/index/index", // 默认是当前页面，必须是以‘/'开头的完整路径
+      imageUrl: "",
+      success: function(res) {
         // 转发成功之后的回调
         if (res.errMsg == "shareAppMessage:ok") {
         }
@@ -114,7 +114,7 @@ Page({
     //   shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
     // }
 
-    console.log("shareObj, ", shareObj);
+    // console.log("shareObj, ", shareObj);
     return shareObj;
   }
 });

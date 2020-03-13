@@ -75,42 +75,35 @@
   width: 72rpx;
   height: 72rpx; }
 
-
 .organization_item-logo {
   width: 80rpx;
   height: 80rpx;
   margin-right: 20rpx;
   border-radius: 50%; }
 
-  .logo {
-    width: 120rpx;
-    height: 120rpx; }
+.logo {
+  width: 120rpx;
+  height: 120rpx; }
+
 .organization_item_right {
   position: relative;
-    width: 490rpx;
-    height: 120rpx;
-}
+  width: 490rpx;
+  height: 120rpx; }
 
 .organization_item-name-1 {
-font-size:32rpx;
-font-family:PingFangSC-Regular,PingFang SC;
-font-weight:500;
-color:rgba(51,51,51,1);
-text-overflow:ellipsis;
- overflow:hidden;
- display:-webkit-box;
- -webkit-line-clamp:2; 
- -webkit-box-orient:vertical;
-}
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; }
+
 .organization_item_name_new {
   flex: 1;
   padding-left: 15rpx;
   text-align: left;
   font-size: 30rpx;
-  line-height: 150%;
-}
-.organization_item_right_button {
-  /* position: absolute;
-  right: 0;
-  bottom: -8rpx; */
-}
+  line-height: 150%; }

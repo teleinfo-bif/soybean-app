@@ -26,7 +26,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    now:"",
+    now: "",
     data: {},
     ecHealth: {
       lazyLoad: true
@@ -48,7 +48,7 @@ Page({
       groupId: groupId,
       clockInTime: clockInTime
     }).then(data => {
-      console.log(data);
+      // console.log(data);
       this.setData({
         data
       });
@@ -70,7 +70,7 @@ Page({
    */
   onLoad: function(options) {
     // console.log(options);
-    let { groupId, groupName } = options;   
+    let { groupId, groupName } = options;
     // this.setData(
     //   {
     //     groupId,
@@ -81,23 +81,24 @@ Page({
     //     this.getGroupDetail(groupId);
     //   }
     // );
-    getServerTime()
-      .then(data => {
-        let now = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
-        let clockInTime = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
-        this.setData(
-          {
-            groupId,
-            groupName,
-            clockInTime,
-            now
-          },
-          () => {
-            this.getData();
-            this.getGroupDetail(groupId);
-          }
-        );
-      })  
+    getServerTime().then(data => {
+      let now =
+        typeof data == "string" ? data.split(" ")[0] : getyyyyMMdd(new Date());
+      let clockInTime =
+        typeof data == "string" ? data.split(" ")[0] : getyyyyMMdd(new Date());
+      this.setData(
+        {
+          groupId,
+          groupName,
+          clockInTime,
+          now
+        },
+        () => {
+          this.getData();
+          this.getGroupDetail(groupId);
+        }
+      );
+    });
   },
   onChange(e) {
     // console.log(e);
@@ -169,26 +170,26 @@ Page({
     });
   },
 
-  showExcel: function (data, res) {
+  showExcel: function(data, res) {
     const { groupId, clockInTime } = this.data;
-    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`
+    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`;
     wx.showLoading({
       title: "加载中..."
     });
     wx.downloadFile({
       url: url,
-      success: function (res) {
+      success: function(res) {
         // console.log('res', res)
         wx.hideLoading();
-        var filePath = res.tempFilePath
+        var filePath = res.tempFilePath;
         wx.openDocument({
           filePath: filePath,
           fileType: "xlsx",
-          success: function (res) {
-            console.log('打开文档成功')
+          success: function(res) {
+            console.log("打开文档成功");
           }
-        })
+        });
       }
-    })
-  },
+    });
+  }
 });

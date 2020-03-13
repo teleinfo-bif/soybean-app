@@ -41,5 +41,4 @@ image {
 
 .reminder-item {
   margin-top: 20rpx;
-  text-align: center;
-}
+  text-align: center; }
