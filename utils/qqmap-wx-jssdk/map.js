@@ -16,7 +16,6 @@ export function reverseAddressFromLocation(location) {
       location,
       success: function(res) {
         resolve(res);
-        // console.log(res.result)
       },
       fail: function(error) {
         reject(error);

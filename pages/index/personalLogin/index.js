@@ -3,7 +3,7 @@ const app = getApp();
 Component({
   lifetimes: {
     async attached() {
-      console.log("录入身份信息 init");
+      // console.log("录入身份信息 init");
       if (!app.globalData.userFilledInfo) {
         // ;
         app.init(globalData => {
@@ -46,8 +46,8 @@ Component({
     //   });
     // },
     test() {
-      console.log(this.data);
-      console.log(this.data.userFilledInfo);
+      // console.log(this.data);
+      // console.log(this.data.userFilledInfo);
     },
     bindGetUserInfo(e) {
       if (e.detail.userInfo) {

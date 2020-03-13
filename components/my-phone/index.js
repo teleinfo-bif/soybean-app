@@ -65,7 +65,7 @@ Component({
       console.log("点击获取手机号按钮，session状态是", sessionState);
       if (!sessionState) {
         console.log("sessionKey无效重新获取sessionKey");
-        fedToken = awaitgetOpenId();
+        fedToken = await getOpenId();
         app.globalData.fedToken = fedToken;
       }
       // 此处没有判断token的有效状态

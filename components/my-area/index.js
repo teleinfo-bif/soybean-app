@@ -27,7 +27,7 @@ Component({
   },
   methods: {
     test() {
-      console.log(this.data);
+      // console.log(this.data);
     },
     onChange(e) {
       const { value } = e.detail;
