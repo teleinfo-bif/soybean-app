@@ -235,7 +235,7 @@ const Request = async ({
       complete: res => {
         // 关闭等待
         // wx.hideLoading();
-        wxuni.hideNavigationBarLoading();
+        wx.hideNavigationBarLoading();
         // 进行状态码判断并处理
         if (res.statusCode === 204) {
           resolve(res);
