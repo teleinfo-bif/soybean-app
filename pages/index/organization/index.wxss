@@ -34,7 +34,7 @@
 .organization_item {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 25rpx 0;
   font-size: 30rpx; }
@@ -75,24 +75,37 @@
   width: 72rpx;
   height: 72rpx; }
 
-.org-avatar {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 50%;
-  background-color: #f2f2f2;
-  margin-right: 20rpx;
-  text-align: center;
-  line-height: 72rpx; }
-
-.org-avatar-img {
-  display: block;
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 50%;
-  margin-right: 20rpx; }
 
 .organization_item-logo {
-  width: 72rpx;
-  height: 72rpx;
+  width: 120rpx;
+  height: 120rpx;
   margin-right: 15rpx;
   border-radius: 50%; }
+
+  .logo {
+    width: 120rpx;
+    height: 120rpx; }
+.organization_item_right {
+  position: relative;
+    width: 490rpx;
+    height: 120rpx;
+}
+
+.organization_item-name-1 {
+font-size:32rpx;
+font-family:PingFangSC-Regular,PingFang SC;
+font-weight:500;
+color:rgba(51,51,51,1);
+}
+.organization_item_name_new {
+  flex: 1;
+  padding-left: 15rpx;
+  text-align: left;
+  font-size: 30rpx;
+  line-height: 150%;
+}
+.organization_item_right_button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
