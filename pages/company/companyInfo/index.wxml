@@ -11,12 +11,12 @@
       <image class='logo-head-img' src='../../../static/images/comUniq.png'></image>
       <view class='logo-head-name'>机构唯一码</view>
     </view>
-    <view class='title-value' bindtap="copyTBL">
-   <text selectable="true">{{data.groupCode}}</text> 
+    <view class='title-value' bindtap="pasteCode">
+        <text selectable="true">{{data.groupCode}}</text> 
     </view>
   </view>
   <view class='devide-content' />
-  <view class='title'>
+  <view class='title-2'>
     <view class='logo-head'>
       <image class='logo-head-img' src='../../../static/images/comAddr.png'></image>
       <view class='logo-head-name'>机构地址</view>
@@ -81,6 +81,6 @@
 </view>
 
 
-<view class='quit' bindtap='quitCompany'>
+<view class='quit' bindtap='quitCompany' hidden="{{quitbtn}}"> 
   退出机构
 </view>

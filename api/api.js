@@ -185,3 +185,7 @@ export const deleteManager = async params => {
 export const getServerTime = async params => {
   return Request._get(`/wx/system/time`, params);
 };
+//退出机构
+export const existCompany = async params => {
+  return Request._get(`/wx/usergroup/exist`, params);
+};

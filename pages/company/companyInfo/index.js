@@ -1,5 +1,5 @@
 // pages/company/companyInfo/index.js
-import { getGroup, quitGroup} from "../../../api/api";
+import { getGroup, quitGroup, existCompany} from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -8,7 +8,8 @@ Page({
    */
   data: {
     logoSrc:'../../../static/images/group_name.png',
-    groupId:''
+    groupId:'',
+    quitbtn:true
   },
   copyTBL: function (e) {
     var self = this;
@@ -29,6 +30,18 @@ Page({
         })
       }
     });
+  },
+  pasteCode: function () {
+    const { groupCode } = this.data.data.groupCode
+    wx.setClipboardData({
+      data: groupCode,
+      success: function (res) {
+        wx.showToast({
+          icon: 'none',
+          title: "机构唯一码已保存到您的剪贴板"
+        });
+      }
+    })
   },
   //根据ID获取部门信息
   getGroupDetail(groupId) {
@@ -57,6 +70,23 @@ Page({
       url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
     }); 
   },
+  existCompanyAct(groupId){
+    existCompany({
+      groupId: groupId,
+      userId: app.globalData.userFilledInfo.id
+    }).then((data) => {
+     if(data == false){
+       this.setData({
+         quitbtn: true
+       })
+      
+     }else{
+       this.setData({
+         quitbtn: false
+       })
+     }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -69,6 +99,7 @@ Page({
       permision: options.permision
     })
     this.getGroupDetail(options.groupId)
+    this.existCompanyAct(options.groupId)
   },
 /*   pageBack() {
     let that = this

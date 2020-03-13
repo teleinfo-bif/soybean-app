@@ -35,6 +35,17 @@ page {
   height:104rpx;
   background-color: white;
 }
+.title-2{
+  display: flex;
+  padding-left:33.8rpx;
+  padding-right: 30rpx;
+  justify-content:space-between;
+  align-content: center;
+  align-items: center;
+  padding-top:28rpx;
+  padding-bottom: 28rpx;
+  background-color: white;
+}
 .logo-head{
   display: flex;
 }
@@ -52,7 +63,7 @@ page {
   margin-top: 32.3rpx;
 }
 .logo-head-name{
-  margin-right: 45rpx;
+ 
   font-family: PingFangSC-Regular;
   font-size: 34rpx;
   color: #333333;
@@ -60,6 +71,7 @@ page {
   text-align: left;
   line-height: 104rpx;
   flex-shrink:0;
+  width:260rpx;
 }
 .title-value{
   font-family: PingFangSC-Regular;
@@ -79,8 +91,8 @@ page {
   font-family: PingFangSC-Regular;
   font-size: 32rpx;
   color: #999999;
-  letter-spacing: 0.58px;
-  text-align: left; 
+  letter-spacing: 0.58rpx;
+  text-align: right; 
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -134,7 +146,7 @@ page {
   width:100%;
   background:white;
   font-size: 34rpx;
-  color: #333333;
+  color: red;
   letter-spacing: 0.58rpx;
   text-align: center;
   line-height: 94rpx;
