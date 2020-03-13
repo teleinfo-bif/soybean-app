@@ -42,7 +42,13 @@ page {
   width:42.4rpx;
   height: 42.4rpx;
   margin-right: 13.8rpx;
-  margin-top:5rpx;
+  margin-top: 32rpx;
+}
+.logo-head-img-3{
+  width:42.4rpx;
+  height: 42.4rpx;
+  margin-right: 13.8rpx;
+  margin-top: 32.3rpx;
 }
 .logo-head-name{
   margin-right: 20rpx;
@@ -51,6 +57,7 @@ page {
   color: #333333;
   letter-spacing: 0.58rpx;
   text-align: left;
+  line-height: 104rpx;
 }
 .title-value{
   font-family: PingFangSC-Regular;

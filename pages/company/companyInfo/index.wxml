@@ -24,7 +24,7 @@
   <view class='devide-content' />
   <view class='title'>
     <view class='logo-head'>
-      <image class='logo-head-img' src='../../../static/images/comPeo.png'></image>
+      <image class='logo-head-img-3' src='../../../static/images/comPeo.png'></image>
       <view class='logo-head-name'>创建者</view>
     </view>
     <view class='title-value'>{{data.createrName}}</view>
@@ -45,7 +45,7 @@
   <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
-        <image class='logo-head-img' src='../../../static/images/comNewAdd.png'></image>
+        <image class='logo-head-img-3' src='../../../static/images/comNewAdd.png'></image>
         <view class='logo-head-name'>新增人员</view>
       </view>
       <view class='title-value-index'>

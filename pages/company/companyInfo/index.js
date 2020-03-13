@@ -41,7 +41,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    options.groupId = 1
     console.log("======groupId==", options.groupId)
     console.log("======permision==", options.permision)
     this.setData({
