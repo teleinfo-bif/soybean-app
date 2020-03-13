@@ -47,16 +47,6 @@ export const getUserPhone = async params => {
   return Request._get("/wx/user/phone", params);
 };
 
-// // 获取用户获取的个人信息
-// export const getUserFilledInfo = async params => {
-//   return Request._get("/user/exist", params).then(data => {
-//     const userFilledInfo = data;
-//     userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-//     // wx.setStorageSync(Request.userFilledInfofoKey, userFilledInfo);
-//     return data;
-//   });
-// };
-
 // 获取用户上传的个人信息
 export const saveUserInfo = async params => {
   return Request._post("/user/save", params);
@@ -119,13 +109,11 @@ export const getGroupCurrentUserList = async params => {
 
 // 用户加入部门
 export const joinGroup = async params => {
-  console.log("/wx/usergroup/save----params", params);
   return Request._post(`/wx/usergroup/save`, params);
 };
 
 //根据id查看部门信息
 export const getGroup = async params => {
-  console.log("/wx/group/detail`----params", params);
   return Request._get(`/wx/group/detail`, params);
 };
 
@@ -136,30 +124,25 @@ export const getUserTreeGroup = async params => {
 
 // 用户创建部门
 export const createGroup = async params => {
-  console.log("/wx/group/excelImport----params", params);
   return Request._post(`/wx/group/excelImport`, params);
 };
 
 // 加群前用户当前群
 export const getUserCurrentGroup = async params => {
-  console.log("/wx/usergroup/user/currentGroup----params", params);
   return Request._get(`/wx/usergroup/user/currentGroup`, params);
 };
 
 // 退群
 export const quitGroup = async params => {
-  console.log("/wx/usergroup/quit----params", params);
   return Request._post(`/wx/usergroup/quit`, params);
 };
 
 // 根据唯一码查看群信息
 export const fromGroupCodetoId = async params => {
-  console.log("/wx/group/groupCode----params", params);
   return Request._get(`/wx/group/groupCode`, params);
 };
 // 获取用户当天的健康码
 export const getUserHealthyQR = async params => {
-  console.log("=====/healthQrcode/createHealthQrcode----params", params);
   return Request._get("/healthQrcode/createHealthQrcode", params);
 };
 //根据机构ID，查看管理员用户信息
@@ -176,7 +159,6 @@ export const addDataManager = async params => {
 };
 // 新增群管理员
 export const addManager = async params => {
-  console.log("=====/wx/group/manager----params", params);
   return Request._postParams(`/wx/group/manager`, params);
 };
 
@@ -196,7 +178,6 @@ export const deleteDataManager = async params => {
 };
 // 删除群管理员
 export const deleteManager = async params => {
-  console.log("=====/wx/group/manager----params", params);
   return Request._deleteParams(`/wx/group/manager`, params);
 };
 
