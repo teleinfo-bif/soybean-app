@@ -11,7 +11,7 @@ Page({
     userInfo: app.globalData.userInfo,
     userFilledInfo: app.globalData.userFilledInfo,
     hasUserInfo: false,
-    notification:'',
+    notification: "",
     canIUse: wx.canIUse("button.open-type.getUserInfo")
   },
   setBarHeight() {
@@ -25,13 +25,13 @@ Page({
   },
   onLoad: async function() {
     getNotice(data => {
-      console.log("data===",data)
-      if(data.data.success){
+      console.log("data===", data);
+      if (data.data.success) {
         this.setData({
           notification: data.data.data.title
-        })
+        });
       }
-     })
+    });
     this.setBarHeight();
     // let { userFilledInfo } = app.globalData;
     if (!app.globalData.appInit) {
@@ -60,11 +60,9 @@ Page({
   },
   onShow() {
     // 回退后刷新用户信息
-    console.log("show update");
-    app.refreshUserInfo();
-    // const location = chooseLocation.getLocation(); // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
-    // console.log("====");
-    // console.log(location);
+    if (app.globalData.appInit) {
+      app.refreshUserInfo();
+    }
   },
   /**
    * 用户点击右上角分享
@@ -98,6 +96,6 @@ Page({
   toHelp: function() {
     wx.navigateTo({
       url: "/pages/help/index"
-    });    
-  },
+    });
+  }
 });

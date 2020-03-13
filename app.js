@@ -1,7 +1,7 @@
 //app.js
-// import { getUserInfo } from "./api/api";
 import { appInit, getUserInfo } from "./api/request";
 import { env } from "./config/index";
+// import { getUnionId } from "./utils/unionId/demo";
 App({
   initRequest: false,
   callbackList: [],
@@ -10,15 +10,25 @@ App({
     this.callbackList.push(callback);
     return;
   },
-  async refreshUserInfo(refreshUserInfo = false) {
-    let userFilledInfo = await getUserInfo();
-    console.log("===================================");
-    console.log("app.js refreshUserInfo()更新用户信息成功", userFilledInfo);
-    console.log("===================================");
-    this.setGloableUserInfo(userFilledInfo);
-    return userFilledInfo;
+
+  // 更新用户信息
+  async refreshUserInfo(init = false) {
+    if (init) {
+      await this.onLaunch();
+      return this.globalData.userFilledInfo;
+    } else {
+      let userFilledInfo = await getUserInfo();
+      // console.log("===================================");
+      console.log("app.js refreshUserInfo()更新用户信息成功", userFilledInfo);
+      // console.log("===================================");
+      this.setGloableUserInfo(userFilledInfo);
+      console.log("app init 完成初始化");
+
+      return userFilledInfo;
+    }
   },
 
+  // 设置app global 用户录入信息
   async setGloableUserInfo(userFilledInfo) {
     this.globalData.userFilledInfo = userFilledInfo;
     this.globalData.userRegisted = userFilledInfo.userRegisted;
@@ -30,7 +40,7 @@ App({
       // console.log(callback);
       callback(this.globalData);
     });
-    console.log("app init 完成初始化");
+    this.callback = [];
     console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
   },
 
@@ -38,13 +48,15 @@ App({
     // 环境判断
     this.globalData.release = env == "release";
     const initData = await appInit();
+    // debugger;
+    // getUnionId();
     this.globalData = {
       ...this.globalData,
       ...initData
     };
-    console.log("=============initData===================");
-    console.log(this.globalData);
-    console.log("=============initData===================");
+    // console.log("=============initData===================");
+    // console.log(this.globalData);
+    // console.log("=============initData===================");
     await this.setGloableUserInfo(initData.userFilledInfo);
 
     // 获取用户信息
