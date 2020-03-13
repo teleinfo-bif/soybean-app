@@ -46,24 +46,22 @@ Page({
           duration: 2000,
           success: function () {
             console.log('haha');
-            setTimeout(function () {            
-              let pages = getCurrentPages();
-              let prevPage = pages[pages.length - 2];
-              prevPage.setData({
-                groupId: that.data.groupId,
-                joinGroupId: that.data.groupId
-              })
-              wx.navigateBack({
-                delta: 1,
-              })
-            
+            setTimeout(function () {
+              that.pageBack()
             } , 1000) //延迟时间
           }
         });
         this.setData({
           inputValue: ''
         })
-      })
+        }).catch(e => {
+          console.log(e)
+          wx.showToast({
+            title: '添加失败',
+            icon: 'none',
+            duration: 2000
+          })
+        })
     } else if (type == 1) {
       
       addDataManager({
@@ -79,16 +77,7 @@ Page({
           success: function () {
             console.log('haha');
             setTimeout(function () {
-              let pages = getCurrentPages();
-              let prevPage = pages[pages.length - 2];
-              prevPage.setData({
-                groupId: that.data.groupId,
-                joinGroupId: that.data.groupId
-              })
-              wx.navigateBack({
-                delta: 1,
-              })
-
+              that.pageBack()
             }, 1000) //延迟时间
           }
         });
@@ -96,7 +85,14 @@ Page({
           inputValue: ''
         })
         
-      })
+        }).catch(e => {
+          console.log(e)
+          wx.showToast({
+            title: '添加失败',
+            icon: 'none',
+            duration: 2000
+          })
+        })
     }
   },
   join() {
@@ -142,7 +138,17 @@ Page({
     this.setData({
       inputValue:''
     })
-    this.pageBack()
+    wx.showToast({
+      title: "取消成功",
+      icon: "none",
+      duration: 2000,
+      success: function () {
+        console.log('haha');
+        setTimeout(function () {
+          that.pageBack()
+        }, 1000) //延迟时间
+      }
+    });
   },
   /**
    * 生命周期函数--监听页面加载

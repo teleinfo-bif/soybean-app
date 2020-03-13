@@ -61,7 +61,19 @@ Page({
         managers: profiles
       })
       console.log('===deleteAfter==', profiles);
-    })
+      wx.showToast({
+        title: '删除成功',
+        icon:'none',
+        duration:2000
+      })
+      }).catch(e => {
+        console.log(e)
+        wx.showToast({
+          title: '删除失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
   //删除统计权限
   deleteDataManage(e) {
@@ -81,7 +93,19 @@ Page({
       this.setData({
         dataManagers: profiles
       })
-    })
+      wx.showToast({
+        title: '删除成功',
+        icon: 'none',
+        duration: 2000
+      })
+      }).catch(e => {
+        console.log(e)
+        wx.showToast({
+          title: '删除失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
   //只适合三级架构模型
   tree2array: function (groupId) {
@@ -209,7 +233,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //ptions.groupId = 1
+    
     //console.log("options.groupName===", options.groupName)
     this.setData({
       groupId: options.groupId,

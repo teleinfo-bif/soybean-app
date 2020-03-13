@@ -15,8 +15,19 @@ Page({
     getGroup({
       id: groupId,
     }).then((data) => {
+      var items = data.addressName.split("，")
+      var address = ''
+      console.log('===items===',items)
+      if (items.length == 3){
+          if (items[0] == items[1]) {
+            address = items[1] + items[2] + data.detailAddress
+          } else {
+            address = items[0] + items[1] + items[2] + data.detailAddress
+          }
+      }
       this.setData({
-        data: data
+        data: data,
+        address: address
       })
     })
   },
@@ -30,6 +41,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     console.log("======groupId==", options.groupId)
     console.log("======permision==", options.permision)
     this.setData({

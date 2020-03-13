@@ -1,71 +1,67 @@
 <!--pages/company/companyAuth/index.wxml-->
-<view class='page'>
-  <view class='title-devide'/>
-   <!-- 基本信息 -->
-    <view class="personal-title">
-      <view class="personal-icon"></view>
-      <text class="personal-info"> 权限管理</text>
-    </view> 
-<view class='content'>
-      <!--二级级联-->
-       <view class="section"  wx:if="{{!lastClass}}">
-      <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" range-key="{{'name'}}" data-id='{{multiArray[1][multiIndex[1]].id?multiArray[1][multiIndex[1]].id:multiArray[0][multiIndex[0]].id}}' disabled="{{disabled}}">  
+
+  <view class='title-devide' />
+  <!-- 基本信息 -->
+  <view class="manage-title">权限管理</view>
+  <view class='content'>
+    <!--二级级联-->
+    <view class="section" wx:if="{{!lastClass}}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" range-key="{{'name'}}" data-id='{{multiArray[1][multiIndex[1]].id?multiArray[1][multiIndex[1]].id:multiArray[0][multiIndex[0]].id}}'
+        disabled="{{disabled}}">
+        <text class="picker-choice" >请选择</text>
+      </picker>
+      <input class="picker" placeholder="请选择单位/机构" placeholder-style="color: #333333"  value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="true" >
+      </input>
+    </view>
+
+    <!--一级级联-->
+    <view class="section" wx:if="{{lowestClass || lastClass}}">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
         <text class="picker-choice">请选择</text>
       </picker>
-      <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder"  value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="true" >
-      </input>     
-    </view> 
-    
-    <!--一级级联-->
-<view class="section" wx:if="{{lowestClass || lastClass}}">  
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
-        <text class="picker-choice">请选择</text>
-    </picker>
-    <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder" value="{{array[index].name}}" disabled="true"></input>
-</view>
-
-  <view class='head-devide'/>
-      <!--管理员-->
-  <view class="admin-hd">
-    <view class="admin-hd-title">管理权限</view>
-    <image class='del'  bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0' ></image>
-    <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0' ></image> 
-    
-  </view>
-  <view class='content-devide'/>
-  <block wx:for='{{managers}}' wx:key='index'>
-        <view class='adimin-user'>
-        <view class='adimin-user-1'>
-      <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" />
-      <view calss='manager-user-1'>{{item.name}}</view>
-      </view>
-      <view  hidden="{{item.hide}}"  bindtap="deleteManage" data-id="{{item.id}}">
-        <text class='delete-user'> 删除</text>
-      </view>
+      <input class="picker" placeholder="请选择单位/机构" placeholder-style="color: #333333"  value="{{array[index].name}}" disabled="true"></input>
     </view>
-  </block>
 
-
-  <view class='head-devide'/>
-  
-      <!--数据库管理员-->
-  <view class="admin-hd">
-    <view class="admin-hd-title">统计权限</view>
-    <image class='del'  bindtap="delDataManagerBtn" src='../../../static/images/del.png' data-type='0' ></image>
-    <image class='add' bindtap="addDataManager"   src='../../../static/images/add.png' data-type='1'></image> 
-  </view>
-  <view class='content-devide'/>
-  <block wx:for='{{dataManagers}}' wx:key='index'>
-        <view class='adimin-user'>
-        <view class='adimin-user-1'>
-      <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/comPeo.png' :item.avatarUrl}}" />
-      <view calss='manager-user-1'>{{item.name}}</view>
-      </view>
-      <view  hidden="{{item.hide}}"  bindtap="deleteDataManage" data-id="{{item.id}}">
-        <text class='delete-user'> 删除</text>
-      </view>
+    <view class='head-devide' />
+    <!--管理员-->
+    <view class="admin-hd">
+      <view class="admin-hd-title">管理权限</view>
+      <image class='del' bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0'></image>
+      <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0'></image>
     </view>
-  </block>
+    <view class='content-devide' />
+    <block wx:for='{{managers}}' wx:key='index'>
+      <view class='adimin-user'>
+        <view class='adimin-user-1'>
+          <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
+          <view calss='manager-user-1'>{{item.name}}</view>
+        </view>
+        <view hidden="{{item.hide}}" bindtap="deleteManage" data-id="{{item.id}}">
+          <text class='delete-user'> 删除</text>
+        </view>
+      </view>
+      <view class='content-devide' wx:if="{{index != managers.length-1}}"/>
+    </block>
+    <view class='devide-item' />
 
-</view>
-</view>
+    <!--数据库管理员-->
+    <view class="admin-hd">
+      <view class="admin-hd-title">统计权限</view>
+      <image class='del' bindtap="delDataManagerBtn" src='../../../static/images/del.png' data-type='0'></image>
+      <image class='add' bindtap="addDataManager" src='../../../static/images/add.png' data-type='1'></image>
+    </view>
+    <view class='content-devide' />
+    <block wx:for='{{dataManagers}}' wx:key='index'>
+      <view class='adimin-user'>
+        <view class='adimin-user-1'>
+          <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
+          <view calss='manager-user-1'>{{item.name}}</view>
+        </view>
+        <view  class='delete-user'hidden="{{item.hide}}" bindtap="deleteDataManage" data-id="{{item.id}}">
+           删除
+        </view>
+      </view>
+      <view class='content-devide' wx:if="{{index != dataManagers.length-1}}"/>
+    </block>
+
+  </view>

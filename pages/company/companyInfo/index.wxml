@@ -1,86 +1,82 @@
 <!--pages/company/companyInfo/index.wxml-->
-<view class='head-devide'></view>
-<view calss='logo'>
-   <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/companyDefault.png' :data.logo}}"/>
-   <view class='title'>
-      <view class='logo-head'>
-        <image class='logo-head-img' src='../../../static/images/comName.png'></image>
-        <view class='logo-head-name'>机构名称</view>
-      </view>
-      <view class='title-value'>{{data.name}}</view>
-   </view>
-   <view class='devide-1'/>
+
+<view calss='content'>
+  <view class='logo' style="background: #FFFFFF;">
+    <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/companyDefault.png' :data.logo}}" />
+    <view class='title-value-name'>{{data.name}}</view>
+  </view>
+  <view class='devide-logo' />
   <view class='title'>
-      <view class='logo-head'>
-        <image class='logo-head-img-2' src='../../../static/images/comUniq.png'></image>
-        <view class='logo-head-name'>机构唯一码</view>
-      </view>
-      <view class='title-value'>{{data.groupCode}}</view>
-   </view>
-   <view class='devide-1'/>
-     <view class='title'>
-      <view class='logo-head'>
-        <image class='logo-head-img-3' src='../../../static/images/comAddr.png'></image>
-        <view class='logo-head-name'>机构地址</view>
-      </view>
-      <view class='title-value'>{{data.detailAddress}}</view>
-   </view>
-   <view class='devide-1'/>
-        <view class='title'>
-      <view class='logo-head'>
-        <image class='logo-head-img-4' src='../../../static/images/comPeo.png'></image>
-        <view class='logo-head-name'>创建人</view>
-      </view>
-      <view class='title-value'>{{data.createrName}}</view>
-   </view>
-   <view class='devide-2'/>
-           <view class='title'>
-      <view class='logo-head'>
-        <image class='logo-head-img-5' src='../../../static/images/comVerify.png'></image>
-        <view class='logo-head-name'>机构认证</view>
-      </view>
-      <view class='title-value'>未认证</view>
-<!--       <view wx:if='{{data.status == 0}}'class='title-value'>未认证</view>
+    <view class='logo-head'>
+      <image class='logo-head-img' src='../../../static/images/comUniq.png'></image>
+      <view class='logo-head-name'>机构唯一码</view>
+    </view>
+    <view class='title-value'>{{data.groupCode}}</view>
+  </view>
+  <view class='devide-content' />
+  <view class='title'>
+    <view class='logo-head'>
+      <image class='logo-head-img' src='../../../static/images/comAddr.png'></image>
+      <view class='logo-head-name'>机构地址</view>
+    </view>
+    <view class='title-value'>{{address}}{{address}}</view>
+  </view>
+  <view class='devide-content' />
+  <view class='title'>
+    <view class='logo-head'>
+      <image class='logo-head-img' src='../../../static/images/comPeo.png'></image>
+      <view class='logo-head-name'>创建者</view>
+    </view>
+    <view class='title-value'>{{data.createrName}}</view>
+  </view>
+  <view class='devide-content-2' />
+<!--   <view class='title'>
+    <view class='logo-head'>
+      <image class='logo-head-img-5' src='../../../static/images/comVerify.png'></image>
+      <view class='logo-head-name'>机构认证</view>
+    </view>
+    <view class='title-value'>未认证</view>
+          <view wx:if='{{data.status == 0}}'class='title-value'>未认证</view>
       <view wx:elif='{{data.status == 1}}'class='title-value'>删除</view>
       <view wx:elif='{{data.status == 2}}'class='title-value'>审核中</view>
-      <view wx:else class='title-value'>异常</view> -->
-   </view>
-   <view class='devide-2'/>
-   <block wx:if="{{permision == 'true'}}">
+      <view wx:else class='title-value'>异常</view>
+  </view>
+  <view class='devide-2' /> -->
+  <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
-        <image class='logo-head-img-6' src='../../../static/images/comNewAdd.png'></image>
+        <image class='logo-head-img' src='../../../static/images/comNewAdd.png'></image>
         <view class='logo-head-name'>新增人员</view>
       </view>
       <view class='title-value-index'>
-      <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+        <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
       </view>
-   </view>
-   <view class='devide-2'/>
-   </block>
-   <block wx:if="{{permision == 'true'}}">
+    </view>
+    <view class='devide-content-3' />
+  </block>
+  <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
-        <image class='logo-head-img-6' src='../../../static/images/comManage.png'></image>
+        <image class='logo-head-img' src='../../../static/images/comManage.png'></image>
         <view class='logo-head-name'>权限管理</view>
       </view>
       <view class='title-value-index' bindtap='toSetManage'>
-      <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+        <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
       </view>
-   </view>
-   <view class='devide-2'/>
-   </block>
-   <block wx:if="{{permision == 'true'}}">
-  <view class='title'>
+    </view>
+    <view class='devide-content-4' />
+  </block>
+  <!-- <block wx:if="{{permision == 'true'}}">
+    <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-6' src='../../../static/images/comReview.png'></image>
         <view class='logo-head-name'>审核加入</view>
       </view>
       <image class='title-value-img' src='../../../static/images/comVerifyOff.png'> </image>
-   </view>
-<view class='devide-2'/>
-</block>
+    </view>
+    <view class='devide-2' />
+  </block> -->
 </view>
-<view class='quit'>
-  <view class='quit-submit' bindtap='quitCompany'>退出</view>
+<view class='quit' bindtap='quitCompany'>
+  退出
 </view>
