@@ -144,7 +144,7 @@ Page({
       inputValue:''
     })
     wx.showToast({
-      title: "取消成功",
+      title: "退出添加管理员",
       icon: "none",
       duration: 2000,
       success: function () {
