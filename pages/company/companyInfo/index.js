@@ -74,10 +74,10 @@ Page({
         title: '已退出'+that.data.data.name,
         icon: 'success',
         duration: 2000,
-        successfunction() {  
+        success:function() {  
           setTimeout(function () {
-            wx.switchTab({
-              url: '/page/index/index'
+            wx.navigateTo({
+              url: '/pages/index/index'
             })
           }, 1500) //延迟时间
         }
