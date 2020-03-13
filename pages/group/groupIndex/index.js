@@ -188,9 +188,14 @@ Page({
     };
   },
   navigateToGroupIndex(e) {
-    console.log(e.currentTarget.dataset.groupname);
+    console.log('3',e.currentTarget.dataset.groupname);
     const { data } = e.currentTarget.dataset;
     if (data.permission) {
+      wx.navigateTo({
+        url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
+      });
+    }
+    if (data.dataPermission) {
       wx.navigateTo({
         url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
       });
