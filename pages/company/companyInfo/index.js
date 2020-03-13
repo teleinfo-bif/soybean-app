@@ -65,25 +65,36 @@ Page({
   quitCompany(){
     var tmp = this.data.groupId
     var that = this
-    quitGroup({
-      userId: app.globalData.userFilledInfo.id,
-      groupId: tmp,
-    }).then(data => {
-      console.log('退群', data)
-      wx.showToast({
-        title: '已退出'+that.data.data.name,
-        icon: 'success',
-        duration: 2000,
-        success:function() {  
-          setTimeout(function () {
-            wx.navigateTo({
-              url: '/pages/index/index'
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出本群吗？',
+      success(res) {
+        if (res.confirm) {
+          quitGroup({
+            userId: app.globalData.userFilledInfo.id,
+            groupId: tmp,
+          }).then(data => {
+            console.log('退群', data)
+            wx.showToast({
+              title: '已退出' + that.data.data.name,
+              icon: 'none',
+              duration: 2000,
+              success: function () {
+                setTimeout(function () {
+                  wx.navigateTo({
+                    url: '/pages/index/index'
+                  })
+                }, 1500) //延迟时间
+              }
             })
-          }, 1500) //延迟时间
+
+          }) 
+        } else if (res.cancel) {
+          console.log('用户点击取消')
         }
-      })
-      
-    })     
+      }
+    })
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

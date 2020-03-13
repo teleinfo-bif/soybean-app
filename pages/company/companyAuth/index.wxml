@@ -26,7 +26,7 @@
     <!--管理员-->
     <view class="admin-hd">
       <view class="admin-hd-title">管理权限</view>
-      <image class='del' bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0'></image>
+      <!-- <image class='del' hidden="true" bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0'></image> -->
       <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0'></image>
     </view>
     <view class='content-devide' />
@@ -36,8 +36,8 @@
           <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
           <view calss='manager-user-1'>{{item.name}}</view>
         </view>
-        <view hidden="{{item.hide}}" bindtap="deleteManage" data-id="{{item.id}}">
-          <text class='delete-user'> 删除</text>
+        <view  class='delete-user' bindtap="delManagerConfirm" data-id="{{item.id}}">
+           删除
         </view>
       </view>
       <view class='content-devide' wx:if="{{index != managers.length-1}}"/>
@@ -47,7 +47,7 @@
     <!--数据库管理员-->
     <view class="admin-hd">
       <view class="admin-hd-title">统计权限</view>
-      <image class='del' bindtap="delDataManagerBtn" src='../../../static/images/del.png' data-type='1'></image>
+      <!-- <image hidden="true" bindtap="delDataManagerBtn" src='../../../static/images/del.png' data-type='1'></image> -->
       <image class='add' bindtap="addDataManager" src='../../../static/images/add.png' data-type='1'></image>
     </view>
     <view class='content-devide' />
@@ -57,7 +57,7 @@
           <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
           <view calss='manager-user-1'>{{item.name}}</view>
         </view>
-        <view  class='delete-user'hidden="{{item.hide}}" bindtap="deleteDataManage" data-id="{{item.id}}">
+        <view  class='delete-user' bindtap="delDataManagerConfirm" data-id="{{item.id}}">
            删除
         </view>
       </view>

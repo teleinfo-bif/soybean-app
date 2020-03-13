@@ -78,6 +78,7 @@ page {
   font-size: 34rpx;
   color: #333333;
   letter-spacing: 0.58rpx;
+  justify-content: space-between;
 }
 .devide-item{
   width:100%;

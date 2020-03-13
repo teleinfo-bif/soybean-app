@@ -66,9 +66,12 @@ page {
   letter-spacing: 0.58px;
   text-align: right;
   width:300rpx;
+  text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .devide-content{
   width: 33.8rpx;

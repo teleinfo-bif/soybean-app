@@ -42,19 +42,51 @@ Page({
       dataManagers: reformattedArray2
     })
   },
-  //删除管理权限
-  deleteManage(e){
+  delManagerConfirm(e){
     console.log("======del====", e.currentTarget.dataset.id)
+    var delId = e.currentTarget.dataset.id
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此用户吗？',
+      success(res) {
+        if (res.confirm) {
+          that.deleteManage(delId)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  delDataManagerConfirm(e) {
+    console.log("======del====", e.currentTarget.dataset.id)
+    var delId = e.currentTarget.dataset.id
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此用户吗？',
+      success(res) {
+        if (res.confirm) {
+          that.deleteDataManage(delId)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  //删除管理权限
+  deleteManage(delId){
+    console.log("======del====", delId)
     deleteManager({
       groupId: this.data.joinGroupId,
-      managerId: e.currentTarget.dataset.id,
+      managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
       console.log('====delRes=====', data)   
       //数组删除元素
       var profiles = this.data.managers
       console.log('===deleteBefore==', profiles);
-      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === e.currentTarget.dataset.id);
+      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === delId);
       console.log('===curIndex==',currentProfileIndex);
       profiles.splice(currentProfileIndex, 1);
       this.setData({
@@ -76,18 +108,18 @@ Page({
       }) */
   },
   //删除统计权限
-  deleteDataManage(e) {
-    console.log("======del====", e.currentTarget.dataset.id)
+  deleteDataManage(delId) {
+    console.log("======del====", delId)
     deleteDataManager({
       groupId: this.data.joinGroupId,
-      managerId: e.currentTarget.dataset.id,
+      managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
       console.log('====delRes=====', data)
       //数组删除元素
       var profiles = this.data.dataManagers
       console.log('===deleteBefore==', profiles);
-      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === e.currentTarget.dataset.id);
+      var currentProfileIndex = (profiles || []).findIndex((profile) => profile.id === delId);
       console.log('===curIndex==', currentProfileIndex);
       profiles.splice(currentProfileIndex, 1);
       this.setData({
@@ -121,7 +153,7 @@ Page({
           joinGroupId: this.data.groupId
         })
       } else {
-        let a = [{ name: '请选择单位/机构', id: this.data.groupId }]
+        let a = [{ name: this.data.groupName, id: this.data.groupId }]
         let b = []
         data.map((val, index) => {
           a.push({ name: val.name, id: val.id })
