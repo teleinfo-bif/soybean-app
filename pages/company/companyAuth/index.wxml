@@ -36,7 +36,7 @@
           <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
           <view calss='manager-user-1'>{{item.name}}</view>
         </view>
-        <view  class='delete-user' bindtap="delManagerConfirm" data-id="{{item.id}}">
+        <view  wx:if="{{selfId != item.id }}"class='delete-user' bindtap="delManagerConfirm" data-id="{{item.id}}">
            删除
         </view>
       </view>
@@ -57,7 +57,7 @@
           <image class='adimin-user-img' src="{{item.avatarUrl == '' ?'../../../static/images/manager.png' :item.avatarUrl}}" />
           <view calss='manager-user-1'>{{item.name}}</view>
         </view>
-        <view  class='delete-user' bindtap="delDataManagerConfirm" data-id="{{item.id}}">
+        <view  wx:if="{{selfId != item.id }}" class='delete-user' bindtap="delDataManagerConfirm" data-id="{{item.id}}">
            删除
         </view>
       </view>

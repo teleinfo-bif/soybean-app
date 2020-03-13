@@ -305,7 +305,9 @@ Page({
       console.log(this.data.address, '地址')
     }
 
-    
+    this.setData({
+      selfId: app.globalData.userFilledInfo.id
+    })
     this.queryGroupManager(this.data.joinGroupId)
   },
 
