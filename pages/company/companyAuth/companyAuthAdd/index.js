@@ -54,14 +54,14 @@ Page({
         this.setData({
           inputValue: ''
         })
-        }).catch(e => {
+        })/* .catch(e => {
           console.log(e)
           wx.showToast({
-            title: '添加失败',
+            title: '您没有权限，请联系创建者或上级管理员',
             icon: 'none',
             duration: 2000
           })
-        })
+        }) */
     } else if (type == 1) {
       
       addDataManager({
@@ -85,13 +85,6 @@ Page({
           inputValue: ''
         })
         
-        }).catch(e => {
-          console.log(e)
-          wx.showToast({
-            title: '添加失败',
-            icon: 'none',
-            duration: 2000
-          })
         })
     }
   },
@@ -120,7 +113,7 @@ Page({
       if (Object.keys(data).length === 0) {
         console.log("======sisisissi====")
         wx.showToast({
-          title: "不存在此用户",
+          title: "此用户不存在，请先邀请该用户加入您的机构",
           icon: "none",
           duration: 2000
         });

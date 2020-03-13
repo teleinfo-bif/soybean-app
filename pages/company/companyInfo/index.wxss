@@ -42,6 +42,7 @@ page {
   width:42.4rpx;
   height: 42.4rpx;
   margin-right: 13.8rpx;
+  margin-top:5rpx;
 }
 .logo-head-name{
   margin-right: 20rpx;

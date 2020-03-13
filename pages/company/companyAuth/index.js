@@ -62,18 +62,18 @@ Page({
       })
       console.log('===deleteAfter==', profiles);
       wx.showToast({
-        title: '删除成功',
+        title: '已删除',
         icon:'none',
         duration:2000
       })
-      }).catch(e => {
+      })/* .catch(e => {
         console.log(e)
         wx.showToast({
-          title: '删除失败',
+          title: '您没有权限，请联系创建者或上级管理员',
           icon: 'none',
           duration: 2000
         })
-      })
+      }) */
   },
   //删除统计权限
   deleteDataManage(e) {
@@ -94,18 +94,18 @@ Page({
         dataManagers: profiles
       })
       wx.showToast({
-        title: '删除成功',
+        title: '已删除',
         icon: 'none',
         duration: 2000
       })
-      }).catch(e => {
+      })/* .catch(e => {
         console.log(e)
         wx.showToast({
-          title: '删除失败',
+          title: '您没有权限，请联系创建者或上级管理员',
           icon: 'none',
           duration: 2000
         })
-      })
+      }) */
   },
   //只适合三级架构模型
   tree2array: function (groupId) {

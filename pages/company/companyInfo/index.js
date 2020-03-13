@@ -50,21 +50,39 @@ Page({
     })
     this.getGroupDetail(options.groupId)
   },
+/*   pageBack() {
+    let that = this
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    prevPage.setData({
+      groupId: that.data.groupId,
+      joinGroupId: that.data.groupId
+    })
+    wx.navigateBack({
+      delta: 1,
+    })
+  }, */
   quitCompany(){
     var tmp = this.data.groupId
+    var that = this
     quitGroup({
       userId: app.globalData.userFilledInfo.id,
       groupId: tmp,
     }).then(data => {
       console.log('退群', data)
       wx.showToast({
-        title: '退出成功',
+        title: '已退出'+that.data.data.name,
         icon: 'success',
-        duration: 2000
+        duration: 2000,
+        successfunction() {  
+          setTimeout(function () {
+            wx.switchTab({
+              url: '/page/index/index'
+            })
+          }, 1500) //延迟时间
+        }
       })
-      wx.navigateTo({
-        url: '/pages/index/index',
-      })
+      
     })     
   },
   /**

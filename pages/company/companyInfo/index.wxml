@@ -19,7 +19,7 @@
       <image class='logo-head-img' src='../../../static/images/comAddr.png'></image>
       <view class='logo-head-name'>机构地址</view>
     </view>
-    <view class='title-value'>{{address}}{{address}}</view>
+    <view class='title-value'>{{address}}</view>
   </view>
   <view class='devide-content' />
   <view class='title'>
