@@ -82,5 +82,5 @@
 
 
 <view class='quit' bindtap='quitCompany'>
-  退出
+  退出机构
 </view>
