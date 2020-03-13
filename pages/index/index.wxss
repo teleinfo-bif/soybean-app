@@ -51,7 +51,7 @@ page {
 
 .homelogo {
   display: inline-block;
-  margin-bottom: 15rpx;
+  margin-top: 15rpx;
   width: 250rpx;
   height: 30rpx;
 }
@@ -94,6 +94,7 @@ page {
   display: inline-block;
   position: absolute;
   right: 70rpx;
+  bottom: 10rpx;
   width: 30rpx;
   height: 30rpx;
   border-radius: 50%;

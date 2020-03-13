@@ -19,10 +19,10 @@
   <!-- <view class="footer-copy-right">中国信息通信研究院</view> -->
   <view class="logo">   
     <!-- <view class="copyright-view">中国信息通信研究院</view> -->
+    <view class="page__title">{{notification}}</view>
     <view>
       <image class="homelogo" src="../../static/images/homelogo.png" />
       <view class="help-view" bind:tap="toHelp">?</view>
     </view>
-    <view class="page__title">{{notification}}</view>
   </view>
 </view>
