@@ -2,7 +2,7 @@
 
   <view class='title-devide' />
   <!-- 基本信息 -->
-  <view class="manage-title">权限管理</view>
+  <view class="manage-title">部门选择</view>
   <view class='content'>
     <!--二级级联-->
     <view class="section" wx:if="{{!lastClass}}">
