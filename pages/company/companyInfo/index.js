@@ -87,7 +87,7 @@ Page({
     var that = this
     wx.showModal({
       title: '提示',
-      content: '确定要退出本群吗？',
+      content: '确定要退出该机构吗？',
       success(res) {
         if (res.confirm) {
           quitGroup({
