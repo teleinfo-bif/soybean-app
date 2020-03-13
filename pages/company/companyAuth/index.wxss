@@ -39,7 +39,7 @@ page {
 .picker-choice {
   z-index: 999;
   position: absolute;
-  margin-top: 28rpx;
+  margin-top: 30rpx;
   right: 30rpx;
   font-size: 32rpx;
   color: #999999;

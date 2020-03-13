@@ -90,6 +90,7 @@ Page({
   },
   join() {
     //this.data.inputValue = '13552157026'
+    var that = this
     if (this.data.inputValue == "") {
       wx.showToast({
         title: "请填写手机号!",
@@ -122,7 +123,18 @@ Page({
         this.setData({
           managerId: data.id
         });
-        this.addManager(this.data.managerId, this.data.type);
+        wx.showModal({
+          title: '提示',
+          content: "确定要添加" + data.name+"为管理员吗？",
+          success(res) {
+            if (res.confirm) {
+              that.addManager(that.data.managerId, that.data.type);
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+        
       } 
     });
   },

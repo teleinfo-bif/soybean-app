@@ -11,7 +11,9 @@
       <image class='logo-head-img' src='../../../static/images/comUniq.png'></image>
       <view class='logo-head-name'>机构唯一码</view>
     </view>
-    <view class='title-value'>{{data.groupCode}}</view>
+    <view class='title-value' bindtap="copyTBL">
+   <text selectable="true">{{data.groupCode}}</text> 
+    </view>
   </view>
   <view class='devide-content' />
   <view class='title'>
@@ -19,7 +21,7 @@
       <image class='logo-head-img' src='../../../static/images/comAddr.png'></image>
       <view class='logo-head-name'>机构地址</view>
     </view>
-    <view class='title-value'>{{address}}</view>
+    <view class='title-value-addr'>{{address}}</view>
   </view>
   <view class='devide-content' />
   <view class='title'>
@@ -42,7 +44,7 @@
       <view wx:else class='title-value'>异常</view>
   </view>
   <view class='devide-2' /> -->
-  <block wx:if="{{permision == 'true'}}">
+<!--   <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-3' src='../../../static/images/comNewAdd.png'></image>
@@ -53,14 +55,14 @@
       </view>
     </view>
     <view class='devide-content-3' />
-  </block>
+  </block> -->
   <block wx:if="{{permision == 'true'}}">
-    <view class='title'>
+    <view class='title' bindtap='toSetManage'>
       <view class='logo-head'>
         <image class='logo-head-img' src='../../../static/images/comManage.png'></image>
         <view class='logo-head-name'>权限管理</view>
       </view>
-      <view class='title-value-index' bindtap='toSetManage'>
+      <view class='title-value-index' >
         <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
       </view>
     </view>
@@ -77,6 +79,8 @@
     <view class='devide-2' />
   </block> -->
 </view>
+
+
 <view class='quit' bindtap='quitCompany'>
   退出
 </view>

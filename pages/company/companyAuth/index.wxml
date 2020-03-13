@@ -10,7 +10,7 @@
         disabled="{{disabled}}">
         <text class="picker-choice" >请选择</text>
       </picker>
-      <input class="picker" placeholder="请选择单位/机构" placeholder-style="color: #333333"  value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="true" >
+      <input class="picker" placeholder="{{groupName}}" placeholder-style="color: #333333"  value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="true" >
       </input>
     </view>
 
@@ -19,7 +19,7 @@
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
         <text class="picker-choice">请选择</text>
       </picker>
-      <input class="picker" placeholder="请选择单位/机构" placeholder-style="color: #333333"  value="{{array[index].name}}" disabled="true"></input>
+      <input class="picker" placeholder="{{groupName}}" placeholder-style="color: #333333"  value="{{array[index].name}}" disabled="true"></input>
     </view>
 
     <view class='head-devide' />

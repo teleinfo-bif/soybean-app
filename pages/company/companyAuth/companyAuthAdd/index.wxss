@@ -1,6 +1,7 @@
 /* pages/company/companyAuth/companyAuthAdd/index.wxss */
 page{
   background-color: rgba(249, 249, 249, 1);
+ 
 }
 .addCont{
   margin-top: 20rpx;
