@@ -212,9 +212,10 @@ const Request = async ({
   }
 
   // 添加请求加载等待
-  wx.showLoading({
-    title: "加载中..."
-  });
+  // wx.showLoading({
+  //   title: "加载中..."
+  // });
+  wx.showNavigationBarLoading();
   // Promise封装处理
   return new Promise((resolve, reject) => {
     wx.request({
@@ -233,7 +234,8 @@ const Request = async ({
       // 成功或失败处理
       complete: res => {
         // 关闭等待
-        wx.hideLoading();
+        // wx.hideLoading();
+        wxuni.hideNavigationBarLoading();
         // 进行状态码判断并处理
         if (res.statusCode === 204) {
           resolve(res);
