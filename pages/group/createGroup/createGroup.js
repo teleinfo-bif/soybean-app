@@ -14,7 +14,7 @@ Page({
     groupAvatarShow: '',
     groupNotAvatarShow: '../../../static/images/group_name.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
-    groupLogo: '001', //logo地址
+    groupLogo: '', //logo地址
     excelFile: '',//execel地址
     applicant: '',
     phone: '',
