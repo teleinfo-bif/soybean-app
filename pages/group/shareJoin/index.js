@@ -149,7 +149,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -176,7 +176,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -213,7 +213,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -242,7 +242,7 @@ Page({
             });
           } else if (res.cancel) {
             console.log("跳出一二级加群");
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -276,7 +276,7 @@ Page({
               userId: userFilledInfo.id
             });
           } else if (res.cancel) {
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -318,7 +318,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.reLaunch({
+            wx.redirectTo({
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -394,7 +394,7 @@ Page({
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {
-            wx.reLaunch({
+            wx.reLaunch({//这个用reLaunch还算合理
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
@@ -435,7 +435,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.navigateTo({
+            wx.redirectTo({//防止用户后退返回分享页
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },

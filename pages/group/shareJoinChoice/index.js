@@ -174,7 +174,7 @@ Page({
     });
   },
   quit: function() {
-    wx.reLaunch({
+    wx.navigateTo({//不用reLanch
       url: "/pages/index/index",
       success: result => {},
       fail: () => {},
@@ -212,8 +212,8 @@ Page({
               mask: false,
               success: result => {},
               fail: () => {},
-              complete: () => {
-                wx.reLaunch({
+              complete: () => {//此处不要用reLanch，防止页面闪动
+                wx.navigateTo({
                   url: "/pages/index/index"
                 });
               }
@@ -229,8 +229,8 @@ Page({
             title: "加入部门成功",
             duration: 1500,
             mask: false,
-            success: result => {
-              wx.reLaunch({
+            success: result => {//此处不要用reLanch，防止页面闪动
+              wx.navigateTo({
                 url: "/pages/index/index"
               });
             }

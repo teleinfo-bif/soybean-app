@@ -59,10 +59,7 @@ Page({
     });
   },
   onShow() {
-    // 回退后刷新用户信息
-    if (app.globalData.appInit) {
-      app.refreshUserInfo();
-    }
+    
   },
   /**
    * 用户点击右上角分享

@@ -1,28 +1,29 @@
-<!--pages/group/shareJoin/index.wxml-->
+<!-- pages/group/shareJoin/index.wxml -->
 <!-- index.wxml -->
 <view>
   <!-- 首页banner show -->
   <banner statusBarHeight="{{statusBarHeight}}"></banner>
   <!-- 录入个人信息show -->
   <view class="container">
-  <view class="entering-box">
-    <view class="entering-box_icon">
-      <open-data class="opendata-avatar" wx:if="{{userFilledInfo.userRegisted}}" type="userAvatarUrl"></open-data>
-      <van-icon wx:else name="edit" />
+    <view class="entering-box">
+      <view class="entering-box_icon">
+        <open-data class="opendata-avatar" wx:if="{{userFilledInfo.userRegisted}}" type="userAvatarUrl"></open-data>
+        <van-icon wx:else name="edit" />
+      </view>
+      <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
+        <navigator class="" target="" url="/pages/personal/index" hover-class="navigator-hover" open-type="navigate">
+          {{userFilledInfo.name}}
+        </navigator>
+      </view>
+      <text wx:else class="entering-box_text">用户注册</text>
+      <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo=""></button>
+      <view class="dayuhao-container">
+        <image class="dayuhao" src="../../../static/images/dayuhao.png" />
+      </view>
     </view>
-    <view wx:if="{{userFilledInfo.name}}" class="entering-box_text">
-      <navigator class="" target="" url="/pages/personal/index" hover-class="navigator-hover" open-type="navigate">
-        {{userFilledInfo.name}}
-      </navigator>
-    </view>
-    <text wx:else class="entering-box_text">用户注册</text>
-    <button wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserInfo" open-type='getUserInfo' bindgetuserinfo=""></button>
-    <view class="dayuhao-container">
-      <image class="dayuhao" src="../../../static/images/dayuhao.png" />
-    </view>
+    <!-- 健康打卡 -->
+     <clock></clock>
   </view>
-</view>
-
   <!-- 三级 -->
   <!-- <view class="section" wx:if="{{lowestClass}}">
     <view class="section-title">确定要加入 <text style="color:blue">{{groupName}}</text> 组织吗？</view>
@@ -30,6 +31,5 @@
       <view class="quit-group" bindtap="quit">取消</view><view class="join-group" bindtap="join_0">确定</view>
     </view>   
   </view> -->
-
   <view class="footer-copy-right">中国信息通信研究院</view>
 </view>
