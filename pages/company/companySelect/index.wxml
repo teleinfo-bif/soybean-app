@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view class='head-devide'></view>
+<view class="container">
+  <path-view value="{{companyArray}}"
+             btnTxt='确定'
+             catchtapBtn="selThis"></path-view>
+</view>

@@ -1,5 +1,5 @@
 // pages/company/companyAuth/index.js
-import { getUserTreeGroup, getGroupManager, addManager,deleteDataManager, deleteManager } from "../../../api/api";
+import { getGroupManager, addDataManager,addManager,deleteDataManager, deleteManager } from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -142,7 +142,7 @@ Page({
   //只适合三级架构模型
   tree2array: function (groupId) {
     getUserTreeGroup({
-      groupId: groupId
+      userId: app.globalData.userFilledInfo.id
     }).then(data => {
       // console.log('dd', data)
       if (data.length == 0) {
@@ -261,18 +261,22 @@ Page({
       url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
     })
   },
+  chooseCompany(){
+    wx.navigateTo({
+      url: '/pages/company/companySelect/index?groupId=' + this.data.groupId + '&pageType=managerPage'+'&groupName=' +this.data.groupName,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
     //console.log("options.groupName===", options.groupName)
     this.setData({
       groupId: options.groupId,
-      joinGroupId: options.groupId,
+      //joinGroupId: options.groupId,
       groupName:options.groupName
     })
-    this.tree2array(this.data.joinGroupId)
+    //this.tree2array(this.data.joinGroupId)
   },
 
   /**
@@ -286,29 +290,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let pages = getCurrentPages();
-
-    let currPage = pages[pages.length - 1];
-
-    if (currPage.data.addresschose) {
-
-      this.setData({
-
-        //将携带的参数赋值
-
-        address: currPage.data.addresschose,
-
-        addressBack: true
-
-      });
-      console.log("======firsttPage=====")
-      console.log(this.data.address, '地址')
-    }
-
     this.setData({
       selfId: app.globalData.userFilledInfo.id
     })
-    this.queryGroupManager(this.data.joinGroupId)
+    this.queryGroupManager(this.data.groupId)
   },
 
   /**
