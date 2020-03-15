@@ -10,7 +10,7 @@
       <scroll-view scroll-x class='srcoll-item'>
         <view class='title-scroll'>
         <block wx:key="index" wx:for="{{currentPath}}" >
-            <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}{{item.text}}
+            <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}
             </view>
             <view wx:if="{{index < currentPath.length -1 }}" class='right-arrow' />
         </block>
