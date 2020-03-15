@@ -189,3 +189,14 @@ export const getServerTime = async params => {
 export const existCompany = async params => {
   return Request._get(`/wx/usergroup/exist`, params);
 };
+
+
+//订阅消息
+export const userSubscribe = async params => {
+  return Request._postParams(`/user/subscribe`, params);
+};
+
+//取消订阅消息
+export const userUnSubscribe = async params => {
+  return Request._postParams(`/user/unsubscribe`, params);
+};
