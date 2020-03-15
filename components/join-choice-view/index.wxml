@@ -22,7 +22,7 @@
     <block wx:for="{{outValue}}" wx:key="index">
       <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}" data-item="{{item}}">
         <view class="list-view-item-title">{{item[contentKey]}}</view>
-        <view class='right-arrow-item' />
+        <view wx:if="{{item.children ==''}}" class='right-arrow-item' />
       </view>
       <view wx:if='{{index == 0}}' class='divide-item' />
       <!-- <view class='divide-item' /> -->
