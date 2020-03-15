@@ -1,24 +1,11 @@
 <!-- pages/group/shareJoinChoice/index.wxml -->
-<view class="head">
-    <view class="full"></view>
-    <view class="group-name">{{groupName}}</view>
-</view>
-<!-- 一级 -->
-<view class="section" wx:if="{{lastClass}}">  
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key="name" data-id='{{array[index].id}}'>
-        <text class="picker-choice">选择</text>
-    </picker>
-    <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder" value="{{array[index].name}}" disabled="{{true}}"></input>
-</view>
-<!-- 二级 -->
-<view class="section" wx:if="{{!lastClass}}">
-    <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" range-key="{{'name'}}" data-id='{{multiArray[1][multiIndex[1]].id?multiArray[1][multiIndex[1]].id:multiArray[0][multiIndex[0]].id}}'>
-        <text class="picker-choice">选择</text>
-    </picker>
-    <input class="picker" placeholder="请选择单位/机构" placeholder-class="input-placeholder" value="{{multiArray[0][multiIndex[0]].name}}  {{multiArray[1]?multiArray[1][multiIndex[1]].name:''}}" disabled="{{true}}"></input>
-</view>
-
-<view class="quit-join-group">
-    <view class="quit-group" bindtap="quit">取消</view>
-    <view class="join-group" bindtap="join">确定</view>
+<view class="choice">
+    <view class='head-devide'></view>
+    <scroll-view scroll-y class="container" style='height:{{scroll_height}}rpx'>
+        <path-view value="{{companyArray}}" btnTxt='' pageType="{{pageType}}" catchtapBtn="selThis"></path-view>
+    </scroll-view>
+    <view class="quit-join-group">
+        <view class="quit-group" bindtap="quit">取消</view>
+        <view class="join-group" bindtap="join">确定</view>
+    </view>
 </view>

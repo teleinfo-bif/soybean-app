@@ -1,0 +1,31 @@
+<!-- components/path-view/path-view.wxml -->
+<view>
+  <block wx:if="{{pathMode === 'mode1'}}">
+    <view class="path-title">
+      <view wx:if="{{currentPath.length==0}}" class="path-title-1" style="color:#4276FF;">请选择</view>
+      <view wx:else="{{currentPath.length==0}}" class="path-title-1" bindtap="toPath" style="color:#4276FF;">返回上级</view>
+      <scroll-view scroll-x class='srcoll-item' scroll-left="{{toEnd}}">
+        <view class='title-scroll'>
+          <block wx:key="index" wx:for="{{currentPath}}">
+            <view class='title-scroll-1' bindtap="toPath" data-index="{{index+1}}">
+              {{item.text}}
+            </view>
+            <view wx:if="{{index < currentPath.length -1 }}" class='right-arrow' />
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 内容 -->
+  </block>
+  <!-- <view class='divide-head' /> -->
+  <view class="list-view">
+    <block wx:for="{{outValue}}" wx:key="index">
+      <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}" data-item="{{item}}">
+        <view class="list-view-item-title">{{item[contentKey]}}</view>
+        <view class='right-arrow-item' />
+      </view>
+      <view wx:if='{{index == 0}}' class='divide-item' />
+      <!-- <view class='divide-item' /> -->
+    </block>
+  </view>
+</view>

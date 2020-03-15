@@ -78,7 +78,7 @@ Page({
   deleteManage(delId){
     console.log("======del====", delId)
     deleteManager({
-      groupId: this.data.joinGroupId,
+      groupId: this.data.groupId,
       managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
@@ -111,7 +111,7 @@ Page({
   deleteDataManage(delId) {
     console.log("======del====", delId)
     deleteDataManager({
-      groupId: this.data.joinGroupId,
+      groupId: this.data.groupId,
       managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
@@ -252,18 +252,18 @@ Page({
   addManager(e){ 
     
     wx.navigateTo({
-        url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
+      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
     })
   },
   addDataManager(e) {
     
     wx.navigateTo({
-      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
+      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
     })
   },
   chooseCompany(){
     wx.navigateTo({
-      url: '/pages/company/companySelect/index?groupId=' + this.data.groupId + '&pageType=managerPage'+'&groupName=' +this.data.groupName,
+      url: '/pages/company/companySelect/index?groupId=' + this.data.orginGroupId + '&pageType=managerPage' + '&groupName=' + this.data.orginGroupName,
     })
   },
   /**
@@ -272,6 +272,8 @@ Page({
   onLoad: function (options) {
     //console.log("options.groupName===", options.groupName)
     this.setData({
+      orginGroupId: options.groupId,
+      orginGroupName: options.groupName,
       groupId: options.groupId,
       //joinGroupId: options.groupId,
       groupName:options.groupName
