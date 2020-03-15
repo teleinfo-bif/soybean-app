@@ -2,7 +2,8 @@
 <view>
   <block wx:if="{{pathMode === 'mode1'}}">
     <view class="path-title">
-      <view class="path-title-1" bindtap="toPath" style="color:#4276FF;">返回上级</view>
+      <view wx:if="{{currentPath.length==0}}" class="path-title-1" style="color:#4276FF;">请选择</view>
+      <view wx:else="{{currentPath.length==0}}" class="path-title-1" bindtap="toPath" style="color:#4276FF;">返回上级</view>
       <scroll-view scroll-x class='srcoll-item' scroll-left="{{toEnd}}">
         <view class='title-scroll'>
           <block wx:key="index" wx:for="{{currentPath}}">
