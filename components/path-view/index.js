@@ -116,8 +116,8 @@ Component({
       const currentIndex = e.currentTarget.dataset.index;
       const currentText = e.currentTarget.dataset.text;
       // 如果当前点击的标签还有下一级，就将路径改变
-      //if (this.data.outValue[currentIndex].children.length != 0) {
-      if (this.data.outValue[currentIndex].children) {
+      if (this.data.outValue[currentIndex].children.length != 0) {
+      //if (this.data.outValue[currentIndex].children) {
         // 添加索引如路径
         this.setData({
           currentPath: [
