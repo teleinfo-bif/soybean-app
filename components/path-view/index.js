@@ -41,6 +41,10 @@ Component({
       type: String,
       value: '选择'
     },
+    pageType: {
+      type: String,
+      value: ''
+    },
     contentKey: {
       type: String,
       value: 'name'
@@ -153,6 +157,7 @@ Component({
         outValue: tmpValue,
         currentPath: this.data.currentPath.slice(0, endIndex)
       });
+      console.log("====selectOutValue====",this.data.outValue)
     },
     toPath(e) {
       // 如果正在执行修改路径的方法

@@ -63,7 +63,7 @@ Page({
   },
   onLoad(options) {
 /*     options.groupId = 1
-    options.type = 'managerPage'
+    options.type = 'otherPage'
     options.groupName = '信通院' */
     this.setData({
       groupId: options.groupId,

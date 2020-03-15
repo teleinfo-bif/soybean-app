@@ -1,17 +1,27 @@
 <!--components/path-view/path-view.wxml-->
 <view>
   <block wx:if="{{pathMode === 'mode1'}}">
-    <view class="path">
-      <view class="btn" bindtap="toPath" style="color:#4276FF;">返回上级</view>
+    <view class="path-title">
+      <view class="path-title-1" bindtap="toPath" style="color:#4276FF;">返回上级</view>
       <!--   <view class='right-arrow'/> -->
       <!--       <view class="btn"
             data-index="{{0}}"
             bindtap="toPath">{{firstFloorTxt}}</view> -->
-      <block wx:key="index" wx:for="{{currentPath}}">
+      <scroll-view scroll-x class='srcoll-item'>
+        <view class='title-scroll'>
+        <block wx:key="index" wx:for="{{currentPath}}" >
+            <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}{{item.text}}
+            </view>
+            <view wx:if="{{index < currentPath.length -1 }}" class='right-arrow' />
+        </block>
+        </view>
+      </scroll-view>
+<!-- 
+      <block wx:key="index" wx:for="{{currentPath}}" >
         <view class="btn" bindtap="toPath" data-index="{{index+1}}">{{item.text}}
         </view>
         <view wx:if="{{index < currentPath.length -1 }}" class='right-arrow' />
-      </block>
+      </block> -->
 </view>
 <!--内容-->
 </block>
@@ -22,14 +32,14 @@
     </view>
   </block> -->
   <view class='divide-head' />
-  <view class="list-view">
-    <block wx:for="{{outValue}}" wx:key="index">
+  <view class="list-view"  >
+    <block wx:for="{{outValue}}" wx:key="index" >
       <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}">
         <view class="list-view-item-title">{{item[contentKey]}}</view>
         <!--       <text wx:if="{{item.children}}"
             class="tip">（进入下一级）</text> -->
           
-      <view class="list-view-item-btn"
+      <view class="list-view-item-btn" hidden="{{pageType == 'otherPage' && item.children !='' }}"
             catchtap="tapBtn"
             data-item="{{item}}">{{btnTxt}}</view>
        <!--  <view class='right-arrow-item' /> -->

@@ -3,5 +3,6 @@
 <view class="container">
   <path-view value="{{companyArray}}"
              btnTxt='确定'
+             pageType="{{pageType}}"
              catchtapBtn="selThis"></path-view>
 </view>
