@@ -32,7 +32,7 @@ Page({
     });
   },
   pasteCode: function () {
-    const { groupCode } = this.data.data.groupCode
+    const { groupCode } = this.data.data
     wx.setClipboardData({
       data: groupCode,
       success: function (res) {
