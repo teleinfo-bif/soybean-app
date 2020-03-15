@@ -4,7 +4,7 @@
 </van-tabs>
 <scroll-view style="height:100%" class="scrollview" scroll-x="false" scroll-y="true" upper-threshold="50" lscroll-top="{{topNum}}" enable-back-to-top="true" bindscrolltoupper="" bindscrolltolower="lower" bindscroll="">
   <!-- <block wx:if="{{currentTabData[activeType].total>= 0}}"> -->
-  <block>
+  <block wx:if="{{type!='list'}}">
     <view class="count-box">总计：{{allData[activeIndex].total}}人</view>
     <view wx:if="{{allData[activeIndex].total == 0}}" class="no-data" hover-class="none" hover-stop-propagation="false">
       暂无记录
@@ -67,6 +67,42 @@
         </block> -->
         <block wx:else style='color:#999999'>打卡详情</block>
       </view>
+    </view>
+  </block>
+   <!-- 打卡 未打卡列表 -->
+  <block wx:else="{{type!='list'}}">
+    <view class="count-box">总计：{{allData[activeIndex].total}}人
+      <view class="one-copy" wx:if="{{allData[activeIndex].total!=0 && currentTab[activeIndex].type==1}}" bind:tap="pasteCode">一键复制</view>
+    </view>
+    <view wx:if="{{allData[activeIndex].total == 0}}" class="no-data" hover-class="none" hover-stop-propagation="false">
+      暂无记录
+    </view>
+    <view class="people-item" wx:for="{{ allData[activeIndex].records }}" wx:key="index">
+      <view class="people-item_name" style="{{currentTab[activeIndex].type==1?'padding-left:150rpx':'text-align:left'}}">{{item.userName || item.name}}</view>
+      <view style="text-align:left" wx:if="{{currentTab[activeIndex].type==1}}">未打卡</view>
+      <view wx:if="{{currentTab[activeIndex].type==2}}" style="text-align:left">已打卡</view>
+      <view wx:if="{{currentTab[activeIndex].type==2}}" style="text-align:left">
+        <navigator class="color" url="/pages/clock/index?userId={{item.userId}}&name={{item.userName}}&phone={{item.phone}}&&clockInTime={{clockInTime}}">
+          打卡详情
+        </navigator>
+      </view>     
+      <view class="people-item_status" wx:if="{{currentTab[activeIndex].type==2}}">
+       <block>
+         <block wx:if="{{ item.comfirmed == 2 || item.admitting == 2}}">
+           <view class="status-circle status-circle-red"></view>
+           <view wx:if="{{ item.comfirmed == 2}}">确诊</view>
+           <view wx:else>就诊</view>
+         </block>
+         <block wx:elif="{{item.healthy != 1}}">
+           <view class="status-circle status-circle-yellow"></view>
+           <view>异常</view>
+         </block>
+         <block wx:else>
+           <view class="status-circle status-circle-green"></view>
+           <view>正常</view>
+         </block>
+       </block>
+     </view>
     </view>
   </block>
   <view wx:if="{{allData[activeIndex].pages > 1 && allData[activeIndex].pages == allData[activeIndex].current}}" class="no-more-msg">
