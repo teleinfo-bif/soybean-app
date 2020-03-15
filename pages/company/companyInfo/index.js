@@ -67,7 +67,7 @@ Page({
   toSetManage(){
     console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
-      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
+      url: `/pages/company/companyAuth/index?groupId=${this.data.orgiGroupId}&groupName=${this.data.orgiGroupName}`,
     }); 
   },
   existCompanyAct(groupId){
@@ -95,6 +95,8 @@ Page({
     console.log("======groupId==", options.groupId)
     console.log("======permision==", options.permision)
     this.setData({
+      orgiGroupId: options.groupId,
+      orgiGroupName: options.orgiGroupName,
       groupId: options.groupId,
       permision: options.permision
     })
