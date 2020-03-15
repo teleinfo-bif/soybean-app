@@ -263,7 +263,7 @@ Page({
   },
   chooseCompany(){
     wx.navigateTo({
-      url: '/pages/company/companySelect/index?groupId=' + this.data.groupId + '&pageType=managerPage'+'&groupName=' +this.data.groupName,
+      url: '/pages/company/companySelect/index?groupId=' + this.data.orginGroupId + '&pageType=managerPage' + '&groupName=' + this.data.orginGroupName,
     })
   },
   /**
@@ -272,6 +272,8 @@ Page({
   onLoad: function (options) {
     //console.log("options.groupName===", options.groupName)
     this.setData({
+      orginGroupId: options.groupId,
+      orginGroupName: options.groupName,
       groupId: options.groupId,
       //joinGroupId: options.groupId,
       groupName:options.groupName
