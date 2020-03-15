@@ -45,7 +45,7 @@
        <!--  <view class='right-arrow-item' /> -->
       </view>
        <view wx:if='{{index == 0}}'class='divide-item' />
-      <view class='divide-item' />
+      <!-- <view class='divide-item' /> -->
     </block>
   </view>
 <!--   <view class='group-button'>
