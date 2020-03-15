@@ -16,13 +16,7 @@ Page({
     this.setData({
       chooseItem: e.detail
     })
-    if (this.data.pageType != 'managerPage' && e.detail.children.length != 0 ){
-        wx.showToast({
-          title: '创建机构需选择到末级，请重新选择',
-          icon: 'none',
-          duration: 2000
-        })
-    }else{
+   
       wx.showToast({
         title: "选择成功",
         icon: 'success',
@@ -43,7 +37,7 @@ Page({
         }
       });
 
-    }
+    
   },
   //权限管理页面
   treeUserArray: function (groupId,groupName) {
