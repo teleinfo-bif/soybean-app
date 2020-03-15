@@ -12,7 +12,7 @@
         <block wx:key="index" wx:for="{{currentPath}}" >
             <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}
             </view>
-            <view wx:if="{{index < currentPath.length -1 }}" class='right-arrow' />
+            <view  wx:if="{{index < currentPath.length}}" class='right-arrow' />
         </block>
         </view>
       </scroll-view>

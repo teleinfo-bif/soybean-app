@@ -78,7 +78,7 @@ Page({
   deleteManage(delId){
     console.log("======del====", delId)
     deleteManager({
-      groupId: this.data.joinGroupId,
+      groupId: this.data.groupId,
       managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
@@ -111,7 +111,7 @@ Page({
   deleteDataManage(delId) {
     console.log("======del====", delId)
     deleteDataManager({
-      groupId: this.data.joinGroupId,
+      groupId: this.data.groupId,
       managerId: delId,
       userId: app.globalData.userFilledInfo.id
     }).then(data => {
@@ -252,13 +252,13 @@ Page({
   addManager(e){ 
     
     wx.navigateTo({
-        url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
+      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
     })
   },
   addDataManager(e) {
     
     wx.navigateTo({
-      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.joinGroupId + '&type=' + e.target.dataset.type,
+      url: '/pages/company/companyAuth/companyAuthAdd/index?groupId=' + this.data.groupId + '&type=' + e.target.dataset.type,
     })
   },
   chooseCompany(){
