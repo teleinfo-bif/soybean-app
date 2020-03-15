@@ -132,10 +132,10 @@ Page({
               duration: 2000,
               success: function () {
                 setTimeout(function () {
-                  wx.navigateTo({
+                  wx.reLaunch({
                     url: '/pages/index/index'
                   })
-                }, 1500) //延迟时间
+                }, 1000) //延迟时间
               }
             })
 
