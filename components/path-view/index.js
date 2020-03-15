@@ -116,13 +116,15 @@ Component({
       const currentIndex = e.currentTarget.dataset.index;
       const currentText = e.currentTarget.dataset.text;
       // 如果当前点击的标签还有下一级，就将路径改变
+      //if (this.data.outValue[currentIndex].children.length != 0) {
       if (this.data.outValue[currentIndex].children) {
         // 添加索引如路径
         this.setData({
           currentPath: [
             ...this.data.currentPath,
             { text: currentText, index: currentIndex }
-          ]
+          ],
+          toEnd:9999
         });
         this.selPath();
       }
@@ -155,10 +157,12 @@ Component({
       let endIndex = pathsIndex + 1;
       this.setData({
         outValue: tmpValue,
-        currentPath: this.data.currentPath.slice(0, endIndex)
+        currentPath: this.data.currentPath.slice(0, endIndex),
+        toEnd:9999
       });
       console.log("====selectOutValue====",this.data.outValue)
     },
+    //标题栏返回上一级，title-scroll-1绑定的方法
     toPath(e) {
       // 如果正在执行修改路径的方法
       if (this.data.isChange) {
@@ -176,6 +180,7 @@ Component({
       this.setData({
         isChange: false
       });
+
     },
     tapBtn(e) {
       this.triggerEvent('tapBtn', e.currentTarget.dataset.item);
@@ -240,6 +245,7 @@ Component({
       // 更新 outValue , currentPath
       this.setData({
         outValue: tmpValue,
+        toEnd:99999,
         currentPath
       });
     }

@@ -7,7 +7,7 @@
       <!--       <view class="btn"
             data-index="{{0}}"
             bindtap="toPath">{{firstFloorTxt}}</view> -->
-      <scroll-view scroll-x class='srcoll-item'>
+      <scroll-view scroll-x class='srcoll-item' scroll-left="{{toEnd}}">
         <view class='title-scroll'>
         <block wx:key="index" wx:for="{{currentPath}}" >
             <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}
@@ -34,7 +34,7 @@
   <view class='divide-head' />
   <view class="list-view"  >
     <block wx:for="{{outValue}}" wx:key="index" >
-      <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}">
+      <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}" >
         <view class="list-view-item-title">{{item[contentKey]}}</view>
         <!--       <text wx:if="{{item.children}}"
             class="tip">（进入下一级）</text> -->
@@ -44,6 +44,7 @@
             data-item="{{item}}">{{btnTxt}}</view>
        <!--  <view class='right-arrow-item' /> -->
       </view>
+       <view wx:if='{{index == 0}}'class='divide-item' />
       <view class='divide-item' />
     </block>
   </view>

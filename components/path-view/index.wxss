@@ -26,7 +26,7 @@
   line-height:48rpx;
 } */
 .divide-head{
-  height:1rpx;
+  height:5rpx;
   width:100%;
   background-color: rgba(249,249,249,1);
 }
@@ -167,6 +167,8 @@ line-height: 104rpx;
   flex-shrink:0;
  height:104rpx;
   width:500rpx;
+  
+
   
 }
 .title-scroll-1{
