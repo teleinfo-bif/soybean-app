@@ -1,6 +1,8 @@
 /* pages/group/shareJoinChoice/index.wxss */
 page {
     background:rgba(247,247,247,1);
+    min-height: 100%;
+    position: relative;
 }
 .head {
     background: #fff;
@@ -57,12 +59,14 @@ color:rgba(153,153,153,1);
 }
 
 .quit-join-group {
-    position: fixed;
-    bottom: 120rpx;
+    position: absolute;
+    bottom: 0rpx;
     width: 750rpx;
     box-sizing: border-box;    
     padding-right: 106rpx;
     padding-left: 106rpx;
+    padding-top: 50rpx;
+    padding-bottom: 50rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -87,3 +91,11 @@ color:rgba(153,153,153,1);
     color:rgba(51,51,51,1);
     border-radius:6rpx;
  }
+
+ .head-devide{
+    width:100%;
+    height:18rpx;
+  }
+ .container{
+    background-color: white;
+  }

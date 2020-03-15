@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "path-view": "/components/join-choice-view/index"
+  },
   "navigationBarTitleText": "选择机构详情"
 }
