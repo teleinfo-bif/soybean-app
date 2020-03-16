@@ -10,6 +10,7 @@ Page({
     userFilledInfo: "",
     groupId: "",
     groupName: "",
+    joinGroupId: 0,  //要加入的部门ID，后台数据id没有0
     alreadJoin: false, //是否已加过群
     alreadJoinId: "",
     canJoin:false,
@@ -67,6 +68,7 @@ Page({
  
   join: function() {
     const { joinGroupId, userFilledInfo } = this.data;
+    console.log("要加入的部门id：", joinGroupId)
     let groupId = joinGroupId;
     if (joinGroupId == 0) {
       wx.showToast({
