@@ -128,7 +128,8 @@ page {
   letter-spacing: 0.41rpx;
   border: 1rpx solid #3E85E9;
   border-radius: 25rpx;
-  padding-left:20rpx;
-  padding-right:20rpx;
+  width:88rpx;
+  height:50rpx;
+  text-align: center;
   line-height: 50rpx;
 }
