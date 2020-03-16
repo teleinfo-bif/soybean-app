@@ -14,6 +14,7 @@ Page({
     alreadJoin: false, //是否已加过群
     alreadJoinId: "",
     canJoin:false,
+    joinSuccess: false,//加入成功
   },
 
   /**
@@ -123,6 +124,9 @@ Page({
         joinGroup(params)
           .then(data => {
             console.log("=====joinGroup-data====", data);
+            this.setData({
+              joinSuccess: true
+            })
             wx.showToast({
               title: "加入部门成功",
               duration: 1500,
@@ -144,6 +148,9 @@ Page({
       joinGroup(params)
         .then(data => {
           console.log("=====joinGroup-data====", data);
+          this.setData({
+            joinSuccess: true
+          })
           wx.showToast({
             title: "加入部门成功",
             duration: 1500,
@@ -204,9 +211,12 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    // console.log('333')
-    wx.reLaunch({
-      url: "/pages/index/index"
-    });
+    // console.log('join choice onUnload')
+    if(!this.data.joinSuccess){
+      wx.reLaunch({
+        url: "/pages/index/index"
+     });
+    }
+    
   }
 });
