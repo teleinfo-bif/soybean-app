@@ -6,157 +6,8 @@ const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";
 
 // login返回的token信息，用户录入的信息
-let fedToken = null;
-let userFilledInfo = null;
-function getAuth(token = { token_type: "", access_token: "" }) {
-  return {
-    "Blade-Auth": token.tokenType + " " + token.accessToken
-  };
-}
-/**
- *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
- *
- * @returns {fedToken, userFilledInfo}
- */
-async function appInit() {
-  // 本来到这里初始化结束，但是必须要有请求的userId
-  console.log("提醒：请求token,userFilledInfo");
-  fedToken = await getOpenId();
-  console.log("init返回：token值是:", fedToken);
-  try {
-    userFilledInfo = await getUserInfo({
-      openid: fedToken.openid
-    });
-  } catch (e) {
-    console.error("userInfo失败", e);
-  }
-  console.log("init返回：userInfo值是:", userFilledInfo);
-  return {
-    fedToken: fedToken,
-    userFilledInfo: userFilledInfo
-  };
-}
-
-/**
- *获取用户openID & token信息
- *
- * @returns
- */
-async function getOpenId() {
-  return new Promise((resolve, reject) => {
-    wx.login({
-      success: res => {
-        let data = {
-          appid: appId,
-          code: res.code
-        };
-        wx.request({
-          url: baseURL + "/wx/user/login",
-          data: data,
-          header: {
-            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
-          },
-          success: data => {
-            console.log("提醒：login获取的tokenKey", data.data);
-            if (data.data.data == null) {
-              console.error(
-                "错误提醒：login 失败。",
-                "data",
-                data,
-                "response",
-                data
-              );
-            }
-            fedToken = data.data.data;
-            // wx.setStorageSync(tokenKey, data.data.data);
-            resolve(data.data.data);
-          },
-          fail: res => {
-            reject(res);
-          }
-        });
-      }
-    });
-  });
-}
-//获取首页的显示提示语
-function getNotice(cb) {
-  wx.request({
-    url: baseURLNotice,
-    method: "get",
-    success: function(res) {
-      return typeof cb == "function" && cb(res);
-    },
-    fail: function(res) {
-      return typeof cb == "function" && cb(res);
-    }
-  });
-}
-/**
- *获取用户录入的信息
- *
- * @param {*} [data={
- *     openid: fedToken.openid
- *   }]
- * @returns userFilledInfo 用户录入信息
- */
-async function getUserInfo(
-  data = {
-    openid: fedToken.openid
-  }
-) {
-  return new Promise((resolve, reject) => {
-    wx.request({
-      url: baseURL + "/user/exist",
-      data: data,
-      success: data => {
-        userFilledInfo = data.data.data;
-        userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
-
-        // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
-        resolve(userFilledInfo);
-      },
-      fail: res => {
-        reject(res);
-      }
-    });
-  });
-}
-
-/**
- *检查session有效性
- *
- * @returns true/false
- */
-async function checkSessionKey() {
-  return new Promise((resolve, reject) => {
-    wx.checkSession({
-      success() {
-        console.log("checkSessionKey success");
-        //session_key 未过期，并且在本生命周期一直有效
-        resolve(true);
-      },
-      fail() {
-        console.log("checkSessionKey fail");
-        // session_key 已经失效，需要重新执行登录流程
-        // wx.login() //重新登录
-        resolve(false);
-      }
-    });
-  });
-}
-
-/**
- * 获取存的openID
- *
- * @returns
- */
-function getTokenStorage() {
-  return wx.getStorageSync(tokenKey);
-}
-function getUserStorage() {
-  return wx.getStorageSync(userFilledInfofoKey);
-}
+let fedToken = {};
+let userFilledInfo = {};
 
 // 封装网络请求开始
 const Request = async ({
@@ -168,8 +19,7 @@ const Request = async ({
   ...other
 } = {}) => {
   // 先取localstorage里面openid,userid,
-  // let token = getTokenStorage();
-  // let userInfo = getUserStorage();
+
   const sessionValidate = await checkSessionKey();
   if (
     !fedToken ||
@@ -177,25 +27,22 @@ const Request = async ({
     fedToken.openid == undefined ||
     !sessionValidate
   ) {
-    console.log(
-      "提醒：storage读取openID、sessionkey失败，正在重新获取openID、sessionkey..."
-    );
+    console.log("提醒：request, 正在重新获取openID、sessionkey...");
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
   }
-  // console.log("userFilledInfo", userFilledInfo);
-  if (
-    url != "/user/exist" &&
-    (userFilledInfo == null ||
-      typeof userFilledInfo != "object" ||
-      !userFilledInfo.id)
-  ) {
-    console.log(
-      "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
-    );
-    userFilledInfo = await getUserInfo({ openid: fedToken.openid });
-    console.log("返回数据：获取的用户", userFilledInfo);
-  }
+  // if (
+  //   (url != "/user/exist" || url == "/wx/user/token") &&
+  //   (userFilledInfo == null ||
+  //     typeof userFilledInfo != "object" ||
+  //     !userFilledInfo.id)
+  // ) {
+  //   console.log(
+  //     "提醒：request, 正在重新获取用户录入信息..."
+  //   );
+  //   userFilledInfo = await getUserInfo({ openid: fedToken.openid });
+  //   console.log("返回数据：获取的用户", userFilledInfo);
+  // }
 
   // params放在后面，避免覆盖参数中的openid,判断参数中userId是否有效
   let reqData = Object.assign({}, data, {
@@ -210,12 +57,12 @@ const Request = async ({
     };
     url = urlParameterAppend(url, params);
   }
+  wx.showNavigationBarLoading();
 
   // 添加请求加载等待
   // wx.showLoading({
   //   title: "加载中..."
   // });
-  wx.showNavigationBarLoading();
   // Promise封装处理
   return new Promise((resolve, reject) => {
     wx.request({
@@ -248,7 +95,7 @@ const Request = async ({
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
           } else {
-            console.log(url + "-" + res.statusCode);
+            console.error(url + "-" + res.statusCode);
             console.error(
               "request请求错误，URL:",
               url,
@@ -363,6 +210,195 @@ const _postParams = (url, params = {}) => {
   });
 };
 
+/**
+ *获取用户openID & token信息
+ *
+ * @returns
+ */
+async function getOpenId() {
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        let data = {
+          appid: appId,
+          code: res.code
+        };
+        wx.request({
+          url: baseURL + "/wx/user/login",
+          data: data,
+          header: {
+            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
+          },
+          success: data => {
+            console.log("提醒：login获取的tokenKey", data.data);
+            if (data.data.data == null) {
+              console.error(
+                "错误提醒：login 失败。",
+                "data",
+                data,
+                "response",
+                data
+              );
+            }
+            fedToken = data.data.data;
+            // wx.setStorageSync(tokenKey, data.data.data);
+            resolve(data.data.data);
+          },
+          fail: res => {
+            reject(res);
+          }
+        });
+      }
+    });
+  });
+}
+
+/**
+ *获取用户openID & token信息
+ *
+ * @returns
+ */
+async function getServerToken() {
+  return _get("/wx/user/token", { openid: fedToken.openid });
+}
+//获取首页的显示提示语
+function getNotice(cb) {
+  wx.request({
+    url: baseURLNotice,
+    method: "get",
+    success: function(res) {
+      return typeof cb == "function" && cb(res);
+    },
+    fail: function(res) {
+      return typeof cb == "function" && cb(res);
+    }
+  });
+}
+/**
+ *获取用户录入的信息
+ *
+ * @param {*} [data={
+ *     openid: fedToken.openid
+ *   }]
+ * @returns userFilledInfo 用户录入信息
+ */
+async function getUserInfo(
+  data = {
+    openid: fedToken.openid
+  }
+) {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: baseURL + "/user/exist",
+      data: data,
+      header: {
+        ...getAuth()
+      },
+      success: data => {
+        userFilledInfo = data.data.data;
+        userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
+
+        // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
+        resolve(userFilledInfo);
+      },
+      fail: res => {
+        console.error("错误提醒：获取身份信息失败。", error);
+        reject(res);
+      }
+    });
+  });
+}
+
+/**
+ *检查session有效性
+ *
+ * @returns true/false
+ */
+async function checkSessionKey() {
+  return new Promise((resolve, reject) => {
+    wx.checkSession({
+      success() {
+        console.log("checkSessionKey success");
+        //session_key 未过期，并且在本生命周期一直有效
+        resolve(true);
+      },
+      fail() {
+        console.log("checkSessionKey fail");
+        // session_key 已经失效，需要重新执行登录流程
+        // wx.login() //重新登录
+        resolve(false);
+      }
+    });
+  });
+}
+
+/**
+ * 获取存的openID
+ *
+ * @returns
+ */
+function getTokenStorage() {
+  return wx.getStorageSync(tokenKey);
+}
+function getUserStorage() {
+  return wx.getStorageSync(userFilledInfofoKey);
+}
+
+/**
+ *获取拼接的header数据
+ *
+ * @param {*} [token=fedToken]
+ * @returns
+ */
+function getAuth(token = fedToken) {
+  return {
+    "Blade-Auth": token.tokenType + " " + token.accessToken
+  };
+}
+
+/**
+ *APP初始化请求，优先请求openID、token，之后开始请求用户信息，
+ *
+ * @returns {fedToken, userFilledInfo}
+ */
+async function appInit() {
+  // 本来到这里初始化结束，但是必须要有请求的userId
+  console.log("提醒：请求token,userFilledInfo");
+  fedToken = await getOpenId();
+  console.log("init返回：token值是:", fedToken);
+  try {
+    userFilledInfo = await getUserInfo({
+      openid: fedToken.openid
+    });
+  } catch (e) {
+    console.error("userInfo失败", e);
+  }
+  // console.log("init返回：userInfo值是:", userFilledInfo);
+  return {
+    fedToken: fedToken,
+    userFilledInfo: userFilledInfo
+  };
+  // if (!fedToken.tokenType) {
+  //   return {
+  //     fedToken: fedToken,
+  //     userFilledInfo: { userRegisted: false }
+  //   };
+  // } else {
+  //   try {
+  //     userFilledInfo = await getUserInfo({
+  //       openid: fedToken.openid
+  //     });
+  //   } catch (e) {
+  //     console.error("userInfo失败", e);
+  //   }
+  //   console.log("init返回：userInfo值是:", userFilledInfo);
+  //   return {
+  //     fedToken: fedToken,
+  //     userFilledInfo: userFilledInfo
+  //   };
+  // }
+}
+
 module.exports = {
   baseURL,
   refreshToken,
@@ -381,5 +417,6 @@ module.exports = {
   appInit,
   getOpenId,
   getUserInfo,
-  getNotice
+  getNotice,
+  getServerToken
 };
