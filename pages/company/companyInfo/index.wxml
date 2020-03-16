@@ -16,7 +16,7 @@
     </view> -->
     <view class="title-value-code" bind:tap="pasteCode">
       <view class="code-text">{{data.groupCode}}</view>
-      <image style="width:27rpx;height:27rpx;margin-left:8rpx;margin-top:8rpx;" src="../../../static/images/fuzhi.png" />
+      <image style="width:26rpx;height:26rpx;margin-left:8rpx;margin-top:9rpx;" src="../../../static/images/fuzhi.png" />
    </view>
   </view>
   <view class='devide-content' />

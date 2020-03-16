@@ -162,7 +162,7 @@ line-height: 104rpx;
 .title-scroll-1{
   flex-shrink:0;
 }
-::-webkit-scrollbar{
+srcoll-item::-webkit-scrollbar{
 width: 0;
 height: 0;
 color: transparent;
