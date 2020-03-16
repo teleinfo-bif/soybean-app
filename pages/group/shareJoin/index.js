@@ -187,7 +187,7 @@ Page({
       })
     }
   },
-  //弹窗跳转 加入一、二级群
+  //弹窗跳转 加入非末级群
   joinGroupChoiceModal: function () {
     const _this = this;
     const { groupId, groupName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
@@ -202,7 +202,7 @@ Page({
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {
-            console.log("跳转");
+            console.log("跳转", groupId);
             wx.showLoading({
               title: "加载中..."
             });
@@ -458,6 +458,21 @@ Page({
       } else {
         let quitId = data.id
         let quitName = data.name
+        if(quitId == groupId) {
+          wx.showToast({
+            title: "您已经加入该群！",
+            duration: 2000,
+            icon: "none",
+            success: result => {
+              setTimeout(function () {
+                wx.reLaunch({
+                  url: "/pages/index/index",
+                })
+              }, 1500)
+            },
+          });
+          return
+        }
         this.setData({
           alreadJoinName: quitName,
           alreadJoinId: quitId,
