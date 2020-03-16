@@ -8,7 +8,7 @@
       <!--       <view class="btn"
             data-index="{{0}}"
             bindtap="toPath">{{firstFloorTxt}}</view> -->
-      <scroll-view scroll-x class='srcoll-item' scroll-left="{{toEnd}}" scrollbars="none">
+      <scroll-view scroll-x class='srcoll-item' scroll-left="{{toEnd}}" >
         <view class='title-scroll'>
         <block wx:key="index" wx:for="{{currentPath}}" >
             <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}
