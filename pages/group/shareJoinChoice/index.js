@@ -11,7 +11,8 @@ Page({
     groupId: "",
     groupName: "",
     alreadJoin: false, //是否已加过群
-    alreadJoinId: ""
+    alreadJoinId: "",
+    canJoin:false,
   },
 
   /**
@@ -94,7 +95,15 @@ Page({
     }
   ) {
     console.log("发起请求", params);
-    const { userId, alreadJoin, alreadJoinId } = this.data;
+    const { userId, alreadJoin, alreadJoinId, canJoin } = this.data;
+    if(!canJoin) {
+      wx.showToast({
+        title: "请选择末级部门！",
+        duration: 1500,
+        icon: "none"
+      });
+      return;
+    }
     if (alreadJoin) {
       if (alreadJoinId == params.groupId) {
         wx.showToast({
@@ -167,9 +176,11 @@ Page({
   },
   selThis(e) {
     console.log('=====chooseItem===',e.detail);
+    let canJoin = e.detail.groupType==1?true:false
     this.setData({
       chooseItem: e.detail,
-      joinGroupId: e.detail.id
+      joinGroupId: e.detail.id,
+      canJoin
     })
   },
   /**
