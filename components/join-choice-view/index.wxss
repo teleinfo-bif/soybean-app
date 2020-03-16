@@ -172,3 +172,7 @@ line-height: 104rpx;
 .title-scroll-1{
   flex-shrink:0;
 }
+
+.color {
+  color: rgba(66,118,255,1);
+}

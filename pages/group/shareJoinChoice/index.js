@@ -73,7 +73,7 @@ Page({
     let groupId = joinGroupId;
     if (joinGroupId == 0) {
       wx.showToast({
-        title: `请选择您要加入的部门！`,
+        title: `请选择末级部门！`,
         icon: "none"
       });
       return;
@@ -184,13 +184,21 @@ Page({
     })
   },
   selThis(e) {
-    console.log('=====chooseItem===',e.detail);
-    let canJoin = e.detail.groupType==1?true:false
-    this.setData({
-      chooseItem: e.detail,
-      joinGroupId: e.detail.id,
-      canJoin
-    })
+    console.log('=====chooseItem===', e.detail);
+    if (e.detail.id !== 0) {
+      let canJoin = e.detail.groupType == 1 ? true : false
+      this.setData({
+        chooseItem: e.detail,
+        joinGroupId: e.detail.id,
+        canJoin
+      })
+    } else {
+      this.setData({
+        chooseItem: e.detail,
+        joinGroupId: 0,
+        canJoin: false
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

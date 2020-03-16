@@ -116,17 +116,25 @@ Component({
       const currentIndex = e.currentTarget.dataset.index;
       const currentText = e.currentTarget.dataset.text;
       // 如果当前点击的标签还有下一级，就将路径改变
-      //if (this.data.outValue[currentIndex].children.length != 0) {
       if (this.data.outValue[currentIndex].children) {
+        if (this.data.outValue[currentIndex].children.length == 0) {
+          let newData = this.data.outValue.map((obj, index) => index == currentIndex ?
+            Object.assign({}, obj, { choice: true }) : Object.assign({}, obj, { choice: false }));
+          this.setData({
+            outValue: newData
+          });
+        }
         // 添加索引如路径
-        this.setData({
-          currentPath: [
-            ...this.data.currentPath,
-            { text: currentText, index: currentIndex }
-          ],
-          toEnd:9999
-        });
-        this.selPath();
+        else {
+          this.setData({
+            currentPath: [
+              ...this.data.currentPath,
+              { text: currentText, index: currentIndex }
+            ],
+            toEnd: 9999
+          });
+          this.selPath();
+        }
       }
       this.setData({
         isChange: false
@@ -181,10 +189,10 @@ Component({
       this.setData({
         isChange: false
       });
+      //返回上级，向父组件传一个空值
+      var myEventDetail = {id:0}
+      this.triggerEvent('tapBtn', myEventDetail);
 
-    },
-    tapBtn(e) {
-      this.triggerEvent('tapBtn', e.currentTarget.dataset.item);
     },
     // 将非标准值标准化
     normalizeValue() {
