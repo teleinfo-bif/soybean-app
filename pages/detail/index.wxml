@@ -53,8 +53,8 @@
               </block>
             </block>
             <block wx:else="{{item.clockInId == 0}}">
-              <view wx:if="{{clockInTime==now && item.message<=0}}" class="reminder-clock un-clock}}">未开启</view>
-              <view wx:if="{{clockInTime==now && item.message>0}}" class="reminder-clock {{item.isSendSubscribeMsg==1?'un-clock':''}}" bind:tap="sendSingleUserMsg" data-oid="{{item.wechatId}}" data-gid="{{index}}">提醒</view>
+              <view wx:if="{{clockInTime==now && item.isSendSubscribeMsg==0 && item.message<=0}}" class="reminder-clock un-clock}}">未开启</view>
+              <view wx:if="{{clockInTime==now && !(item.isSendSubscribeMsg==0 && item.message<=0)}}" class="reminder-clock {{item.isSendSubscribeMsg==1?'un-clock':''}}" bind:tap="sendSingleUserMsg" data-oid="{{item.wechatId}}" data-gid="{{index}}">提醒</view>
               <view wx:if="{{clockInTime!=now}}" class="status-circle status-circle-gray"></view>
               <view wx:if="{{clockInTime!=now}}">--</view>
             </block>
