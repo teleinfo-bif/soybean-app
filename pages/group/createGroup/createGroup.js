@@ -12,7 +12,14 @@ Page({
   data: {
     disabled: true,
     groupAvatarShow: '',
-    groupNotAvatarShow: '../../../static/images/group_name.png',
+    groupNotAvatarShow: '../../../static/images/group_logo.png',
+    groupNameIcon: '../../../static/images/group_name.png',
+    groupAddressIcon: '../../../static/images/group_address.png',
+    groupAddressDetailIcon: '../../../static/images/group_address_detail.png',
+    groupIntroIcon: '../../../static/images/group_intro.png',
+    groupStruIcon: '../../../static/images/group_stru.png',
+    groupPersonIcon: '../../../static/images/group_person.png',
+    groupPhoneIcon: '../../../static/images/group_phone.png',
     groupDownloadIcon: '../../../static/images/group_download.png',
     groupLogo: '', //logo地址
     excelFile: '',//execel地址
@@ -21,7 +28,8 @@ Page({
     uploadFileName: '',//上传的文件名
     // uploadFilePath: '',//上传的文件路径，备用
     placeholder_group_name: '请输入机构名称',
-    placeholder_group_address: '请选择您的机构地址',
+    placeholder_group_address: '请选择机构所在城市及区',
+    placeholder_group_address_detail: '请输入机构详细地址',
     placeholder_group_introduce: '请输入机构介绍信息，10-200字',
     placeholder_group_strucure: '请在此处粘贴您的架构文件链接',
     placeholder_group_apply_name: '请输入您的名字',
@@ -165,6 +173,8 @@ Page({
       warn = "机构介绍的字数应为10-200!"
     } else if (e.detail.value.group_address == "") {
       warn = "请选择您的机构地址!"
+    } else if (e.detail.value.group_address_detail == "") {
+      warn = "请填写机构详细地址!"
     } else if (e.detail.value.group_file == "") {
       warn = "请导入机构架构!"
     } else if (e.detail.value.group_applicant == "") {
@@ -184,6 +194,7 @@ Page({
         e.detail.value.group_phone, e.detail.value.group_introduce, this.data.globalData.userId)
       createGroup({
         addressName: e.detail.value.group_address,
+        detailAddress: e.detail.value.group_address_detail,
         contact: e.detail.value.group_applicant,
         excelFile: this.data.excelFile,
         logo: this.data.groupLogo,
