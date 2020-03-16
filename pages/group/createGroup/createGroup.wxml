@@ -1,82 +1,104 @@
 <!-- pages/createGroup/createGroup.wxml -->
 <view class="page">
   <view class="personal">
-    <view class="tip-tip">提示：先准备好您的机构架构文件，再完善以下信息</view>
-    <view class='divide-1'/>
+    <!-- <view class="tip-tip">提示：先准备好您的机构架构文件，再完善以下信息</view> -->
     <!-- 报表 -->
-    <form class="personal-form" bindsubmit="submitUserInfo">
-      <view class="personal-view">
+    <form bindsubmit="submitUserInfo">
+      <view>
         <!-- 头像 -->
-        <view class="personal-info-hd">
-          <view class="info-label one">步骤1 上传机构头像</view>
-        </view>
-        <view class="add-img" bind:tap="chooseImage">
-          <image wx:if="{{!groupAvatarShow}}" src="{{groupNotAvatarShow}}"></image>
-          <image wx:if="{{groupAvatarShow}}" src="{{groupAvatarShow}}"></image>
-        </view>
-        <view class="personal-divide"></view>
-        <!-- 组织名称 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤2 请输入机构名称</text>
-        </view>
-        <view class="personal-info-td">
-          <input class="info-input" name="group_name" placeholder-class="placeholder-style" placeholder="{{placeholder_group_name}}" maxlength="20"></input>
-        </view>
-        <view class="personal-divide"></view>
-        <!-- 组织介绍 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤3 请输入机构介绍信息</text>
-        </view>
-        <view class="personal-info-td">
-          <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
-        </view>
-        <view class="personal-divide"></view>
-        <!-- 组织地址 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤4 请选择机构地址</text>
-        </view>
-        <!-- <view class="personal-info-td">
-          <input class="info-input" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" maxlength="30"></input>
-        </view> -->
-        <view class="download-info-mail-item">
-            <picker class="choose-address" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}" class="choice">
-               <button class="file-input-button">选择</button>
-            </picker>
-            <view class="picker">
-              <input class="info-input" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" value="{{group_address_picker}}" disabled="{{true}}"></input>
+        <view class="logo">
+            <view class="add-img" bind:tap="chooseImage">
+              <image wx:if="{{!groupAvatarShow}}" src="{{groupNotAvatarShow}}"></image>
+              <image wx:if="{{groupAvatarShow}}" src="{{groupAvatarShow}}"></image>
             </view>
-        </view>       
-        <view class="personal-divide"></view>
-
-        <!-- 导入架构 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤5 导入机构架构</text>         
-          <view style="display:inline-block" bindtap="downloadStructure">
-            (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
-            <text class="download-info">下载模板)</text>
+            <view class="one">点击头像上传</view>
+        </view>     
+        <!-- 组织名称 -->
+        <view class="name">
+          <view class="name-title">
+            <image class="icon" src="{{groupNameIcon}}"></image>
+            <view class="name-info">请输入机构名称</view>
+          </view>
+          <view class="name-input">
+             <input class="info-input" name="group_name" placeholder-class="placeholder-style" placeholder="{{placeholder_group_name}}" maxlength="20"></input>
           </view>
         </view>
-        <view class="download-info-mail-item">
-          <input class="file-input" name="group_file" value="{{uploadFileName}}" placeholder-class="placeholder-style" placeholder="{{placeholder_group_file}}" disabled="{{true}}"></input>        
-          <button class="file-input-button" bindtap="chooseFile">选择</button>
+        <!-- 组织地址 -->
+        <view class="address">
+          <view class="address-title">
+            <image class="icon" src="{{groupAddressIcon}}"></image>
+            <view class="name-info">请选择机构地址</view>
+            <picker class="choose-address" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+               选择
+            </picker>
+          </view> 
+          <view class="name-input">
+              <input class="info-picker" name="group_address" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address}}" value="{{group_address_picker}}" disabled="{{true}}"></input>
+            </view>         
         </view>
+
+        <!-- 详细地址 -->
+        <view class="address">
+          <view class="address-title">
+            <image class="icon" src="{{groupAddressDetailIcon}}"></image>
+            <view class="name-info">详细地址</view>
+          </view> 
+          <view class="name-input">
+              <input class="info-picker" name="group_address_detail" placeholder-class="placeholder-style" placeholder="{{placeholder_group_address_detail}}" maxlength="50"></input>
+            </view>         
+        </view>
+        <!-- 组织介绍 -->
+        <view class="org-intro">
+          <view class="address-title">
+            <image class="icon" src="{{groupIntroIcon}}"></image>
+            <view class="name-info">请输入机构介绍信息</view>
+          </view> 
+          <view class="">
+            <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
+          </view>
+        </view>
+        
         <view class="personal-divide"></view>
+     
+        <!-- 导入架构 -->
+        <view class="file">
+          <view class="address-title">
+            <image class="icon" src="{{groupStruIcon}}"></image>
+            <view class="name-info">导入架构</view>
+            <view class="download-info-item" bindtap="downloadStructure">
+              (点击<image class="info-label-img" src="{{groupDownloadIcon}}" />
+              下载模板)
+            </view>
+            <view class="choose-file" bindtap="chooseFile">选择</view>              
+          </view> 
+          <view class="">
+            <input class="info-picker" name="group_file" value="{{uploadFileName}}" placeholder-class="placeholder-style" placeholder="{{placeholder_group_file}}" disabled="{{true}}"></input>            
+          </view>       
+        </view>
+
+         <view class="personal-divide"></view>
+
+
         <!-- 姓名 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤6 请输入您的姓名</text>
-        </view>
-        <view class="personal-info-td">
-          <input class="info-input" name="group_applicant" maxlength="5" placeholder-class="placeholder-style" placeholder="{{placeholder_group_apply_name}}" value="{{applicant}}"></input>
-        </view>
-        <view class="personal-divide"></view>
+        <view class="name">
+          <view class="name-title">
+            <image class="icon" src="{{groupPersonIcon}}"></image>
+            <view class="name-info">请输入您的姓名</view>
+          </view>
+          <view class="name-input">
+             <input class="info-input" name="group_applicant" maxlength="5" placeholder-class="placeholder-style" placeholder="{{placeholder_group_apply_name}}" value="{{applicant}}"></input>
+          </view>
+        </view>       
         <!-- 联系方式 -->
-        <view class="personal-info-hd">
-          <text class="info-label">步骤7 请输入您的联系方式</text>
-        </view>
-        <view class="personal-info-td">
-          <input class="info-input" type="number" name="group_phone" placeholder-class="placeholder-style" maxlength="11" placeholder="{{placeholder_group_apply_phone}}" value="{{phone}}"></input>
-        </view>
-        <view class="personal-divide"></view>
+        <view class="name">
+          <view class="name-title">
+            <image class="icon" src="{{groupPhoneIcon}}"></image>
+            <view class="name-info">请输入您的联系方式</view>
+          </view>
+          <view class="name-input">
+             <input class="info-input" type="number" name="group_phone" placeholder-class="placeholder-style" maxlength="11" placeholder="{{placeholder_group_apply_phone}}" value="{{phone}}"></input>
+          </view>
+        </view> 
       </view>
       <view class="personal-buttons">
         <button class="button-submit" form-type="submit" >提交</button>
