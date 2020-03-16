@@ -13,7 +13,8 @@
         <block wx:key="index" wx:for="{{currentPath}}" >
             <view  class='title-scroll-1'bindtap="toPath" data-index="{{index+1}}">{{item.text}}
             </view>
-            <view  wx:if="{{index < currentPath.length}}" class='right-arrow' />
+           <view  wx:if="{{index < currentPath.length}}" class='right-arrow' />
+        
         </block>
         </view>
       </scroll-view>
@@ -26,31 +27,20 @@
 </view>
 <!--内容-->
 </block>
-<!--   <block wx:elif="{{pathMode === 'mode2'}}">
-    <view class="path">
-      <view class="btn" wx:if="{{currentPath.length !==0}}" bindtap="toPath">返回上级</view>
-      <view class="btn" bindtap="toPath" data-index="{{index}}" wx:key="{{index}}" wx:for="{{currentPath}}">{{item.text}}</view>
-    </view>
-  </block> -->
   <view class='divide-head' />
   <view class="list-view"  >
     <block wx:for="{{outValue}}" wx:key="index" >
       <view class="list-view-item" bindtap="tapItem" data-text="{{item[contentKey]}}" data-index="{{index}}" >
-        <view class="list-view-item-title">{{item[contentKey]}}</view>
-        <!--       <text wx:if="{{item.children}}"
-            class="tip">（进入下一级）</text> -->
-          
+        <view wx:if="{{item.children.length == 0}}" class="list-view-item-title">{{item[contentKey]}}</view>
+        <view  wx:if="{{item.children.length != 0}}"  style="color:#4276FF"class="list-view-item-title">{{item[contentKey]}}</view>
+     <!--  <view class="right-arrow-2" wx:if="{{item.children.length != 0}}"></view> -->
+
+    <!-- <view class="zhanwei" wx:if="{{item.children.length == 0}}"></view> -->
       <view class="list-view-item-btn" hidden="{{pageType == 'otherPage' && item.children !='' }}"
             catchtap="tapBtn"
             data-item="{{item}}">{{btnTxt}}</view>
        <!--  <view class='right-arrow-item' /> -->
       </view>
-       <view wx:if='{{index == 0}}'class='divide-item' />
-      <!-- <view class='divide-item' /> -->
     </block>
   </view>
-<!--   <view class='group-button'>
-      <view class='group-button-quit'>取消</view>
-      <view class='group-button-confirm' catchtap="tapBtn" >确定</view>
-  </view> -->
 </view>
