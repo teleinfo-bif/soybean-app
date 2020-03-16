@@ -17,7 +17,6 @@
       <!-- <image class='del' hidden="true" bindtap="delManagerBtn" src='../../../static/images/del.png' data-type='0'></image> -->
       <image class='add' bindtap="addManager" src='../../../static/images/add.png' data-type='0'></image>
     </view>
-    <view class='content-devide' />
     <block wx:for='{{managers}}' wx:key='index'>
       <view class='adimin-user'>
         <view class='adimin-user-1'>
@@ -28,7 +27,6 @@
            删除
         </view>
       </view>
-      <view class='content-devide' wx:if="{{index != managers.length-1}}"/>
     </block>
     <view class='devide-item' />
 
@@ -49,7 +47,6 @@
            删除
         </view>
       </view>
-      <view class='content-devide' wx:if="{{index != dataManagers.length-1}}"/>
     </block>
 
   </view>
