@@ -20,7 +20,7 @@
   <!-- 统计数字 -->
   <view class="statistic-box">
     <view class="statistic-box_row">
-      <view class="statistic-box_item">
+      <view class="statistic-box_item" bind:tap="touchHandler">
         <view class="statistic-box_item_value">{{data.totality.total}}</view>
         <view class="statistic-box_item_label">应打卡</view>
       </view>

@@ -1,5 +1,7 @@
 // pages/status/index.js
 const app = getApp();
+import { userSubscribe, userUnSubscribe } from "../../../api/api.js";
+
 Page({
   /**
    * 页面的初始数据
@@ -28,16 +30,29 @@ Page({
   },
   reminder: function() {
     const { tmplId } = this.data
+    console.log(this.data)
     return new Promise((resolve, reject) => {
       wx.requestSubscribeMessage({
         tmplIds: [tmplId],
         success: (res) => {
           console.log(res)
           if (res[tmplId] === 'accept') {
-            wx.showToast({
-              title: '开启打卡提醒成功!',
-              icon: 'none',
-            })
+            userSubscribe({
+              id: this.data.data.userId
+            }).then(result=>{
+              console.log('订阅数据写入数据库',result)
+              wx.showToast({
+                title: '开启打卡提醒成功!',
+                icon: 'none',
+              })
+            })            
+          }
+          if(res[tmplId] === 'reject') {
+            userUnSubscribe({
+              id: this.data.data.userId
+            }).then(result=>{
+              console.log('取消订阅数据写入数据库',result)
+            }) 
           }
         },
         fail(err) {

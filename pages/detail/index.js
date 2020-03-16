@@ -67,7 +67,7 @@ Page({
             groupId,
             clockInTime: clockInTime
           }).then(res => {
-            // console.log('res',res)
+            console.log('res',res)
             if (clockData.total != undefined && current == res.data.current) {
             let newData = isClickYijian?
                         res.data.records.map((obj)=>Object.assign({},obj,{isSendSubscribeMsg:noSubPeople.indexOf(obj.wechatId) == -1 ? 1 : 0})):

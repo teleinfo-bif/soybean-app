@@ -40,7 +40,7 @@ Component({
       wx.showModal({
         //弹窗提示
         title: "位置授权",
-        content: "请授权获取您的地理位置，否则健康打卡无法提交哦",
+        content: "请允许微信使用您的位置信息后进行打卡",
         success: function(tip) {
           if (tip.confirm) {
             wx.openSetting({

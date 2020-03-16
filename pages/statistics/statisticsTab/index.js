@@ -98,6 +98,16 @@ Page({
           name: "其他",
           type: 4
         }
+      ],
+      list : [
+        {
+          name: "未打卡",
+          type: 1
+        },
+        {
+          name: "已打卡",
+          type: 2
+        }
       ]
     }
   },
@@ -138,32 +148,76 @@ Page({
     } = this.data;
     let { current, pages } = allData[activeIndex];
     this.setData({
-      flag:false
+      flag: false
     })
+
     if (current == 0 || current < pages) {
       let params = {};
-      if(type=='job'){
+      if (type == 'job') {
         params['jobstatus'] = currentTab[activeIndex].type;
-      }else{
+      } else {
         params[type] = currentTab[activeIndex].type;
       }
-      getGroupCensusList({
-        url,
-        groupId,
-        current: ++current,
-        clockInTime,
-        ...params
-      }).then(data => {
-          console.log("data====",data);
+      if (type == "list" && currentTab[activeIndex].type==1) {
+        let r = 'unClockIn'
+        getGroupCensusList({
+          url: r,
+          groupId,
+          current: ++current,
+          clockInTime,
+          ...params
+        }).then(data => {
+          console.log("未打卡 list data====", data);
+          allData[activeIndex] = {
+            // ...data,
+            records: allData[activeIndex].records.concat(data),
+            total: data.length,
+            clockInId: 0
+          };
+          this.setData({ 
+            allData,
+            flag: true
+           });
+        });
+      } else if(type == "list" && currentTab[activeIndex].type==2) {
+        let r = 'clockIn'
+        getGroupCensusList({
+          url: r,
+          groupId,
+          current: ++current,
+          clockInTime,
+          ...params
+        }).then(data => {
+          console.log("已打卡 data====", data);
+          allData[activeIndex] = {
+            ...data,
+            records: allData[activeIndex].records.concat(data.records),
+            clockInId: 1
+          };
+          this.setData({ allData });
+          this.setData({
+            flag: true
+          })
+        });
+      } else {
+        getGroupCensusList({
+          url,
+          groupId,
+          current: ++current,
+          clockInTime,
+          ...params
+        }).then(data => {
+          console.log("data====", data);
           allData[activeIndex] = {
             ...data,
             records: allData[activeIndex].records.concat(data.records)
           };
           this.setData({ allData });
           this.setData({
-            flag:true
+            flag: true
           })
-      });
+        });
+      }
     }
   },
 
@@ -213,6 +267,22 @@ Page({
       },
       this.getData
     );
+  },
+
+  pasteCode: function () {
+    const {activeIndex, allData } = this.data;
+    // console.log(allData[activeIndex].records)
+    let names = allData[activeIndex].records.map(obj=>obj.name).join('@')
+    let data = `@${names}请您尽快完成健康打卡，谢谢配合。`
+    wx.setClipboardData({
+      data: data,
+      success: function (res) {
+        wx.showToast({
+          icon: 'none',
+          title: "姓名复制成功"
+        });
+      }
+    })
   },
 
   /**

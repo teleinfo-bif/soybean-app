@@ -21,9 +21,9 @@
             </picker>
           </view>
         </view>
-        <view wx:if="{{permission=='true' && clockInTime==now}}" class="reminder-clock-batch {{isYiJianTiXing==1?'un-clock':''}}" bindtap="{{unClockInCount!=0?'sendGroupUserMsg':''}}">一键提醒</view>
+        <view wx:if="{{permission=='true' && clockInTime==now}}" class="reminder-clock-batch {{isYiJianTiXing==1 || unClockInCount==0?'un-clock':''}}" bindtap="{{unClockInCount!=0?'sendGroupUserMsg':''}}">一键提醒</view>
       </view>
-      <view class="prompt-information">由于微信限制，每日只可向各用户发送一次打卡提醒</view>
+      <view class="prompt-information" wx:if="{{permission=='true'}}">由于微信限制，每日只可向各用户发送一次打卡提醒</view>
       <block wx:if="{{clockData.total> 0}}">
         <view class="people-item" wx:for="{{ clockData.records }}" wx:key="index">
           <view class="people-item_name">{{item.name || "-"}}</view>
@@ -53,7 +53,8 @@
               </block>
             </block>
             <block wx:else="{{item.clockInId == 0}}">
-              <view wx:if="{{clockInTime==now}}" class="reminder-clock {{item.isSendSubscribeMsg==1?'un-clock':''}}" bind:tap="sendSingleUserMsg" data-oid="{{item.wechatId}}" data-gid="{{index}}">提醒</view>
+              <view wx:if="{{clockInTime==now && item.message<=0}}" class="reminder-clock un-clock}}">未开启</view>
+              <view wx:if="{{clockInTime==now && item.message>0}}" class="reminder-clock {{item.isSendSubscribeMsg==1?'un-clock':''}}" bind:tap="sendSingleUserMsg" data-oid="{{item.wechatId}}" data-gid="{{index}}">提醒</view>
               <view wx:if="{{clockInTime!=now}}" class="status-circle status-circle-gray"></view>
               <view wx:if="{{clockInTime!=now}}">--</view>
             </block>

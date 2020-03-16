@@ -191,5 +191,15 @@ Page({
         });
       }
     });
-  }
+  },
+
+  touchHandler() {
+    const { groupId, clockInTime } = this.data;
+    let title = "打卡";
+    let type = "list";
+    let series = [{"name":"未打卡","value":0,"percent":0},{"name":"已打卡","value":0,"percent":100}]
+    wx.navigateTo({
+      url: `/pages/statistics/statisticsTab/index?title=${title}&groupId=${groupId}&type=${type}&clockInTime=${clockInTime}&series=${JSON.stringify(series)}`
+    });
+  },
 });
