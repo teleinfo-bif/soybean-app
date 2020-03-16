@@ -129,9 +129,9 @@ Page({
               mask: false,
               success: result => {},
               fail: () => {},
-              complete: () => {//此处不要用reLanch，防止页面闪动
+              complete: () => {//暂时改成reLaunch。。。此处不要用reLanch，防止页面闪动
                 setTimeout(function () {
-                  wx.navigateTo({
+                  wx.reLaunch({
                     url: "/pages/index/index"
                   });
                 }, 1500)                
@@ -148,9 +148,9 @@ Page({
             title: "加入部门成功",
             duration: 1500,
             mask: false,
-            success: result => {//此处不要用reLanch，防止页面闪动
+            success: result => {//暂时改成reLaunch。。。此处不要用reLanch，防止页面闪动
               setTimeout(function () {
-                wx.navigateTo({
+                wx.reLaunch({
                   url: "/pages/index/index"
                 });
               }, 1500)
