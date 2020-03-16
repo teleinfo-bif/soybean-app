@@ -219,26 +219,42 @@ Page({
       };
       // console.log(formData);
       if (!this.data.userFilledInfo.userRegisted) {
-        saveOrUpdateUserInfo(formData).then(async data => {
-          await app.refreshUserInfo();
-          if (this.data.groupId && this.data.groupName) {
-            wx.navigateTo({
-              url: `/pages/group/shareJoin/index?zc=1&groupName=${this.data.groupName}&groupId=${this.data.groupId}`
+        saveOrUpdateUserInfo(formData)
+          .then(async data => {
+            await app.refreshUserInfo(true);
+            if (this.data.groupId && this.data.groupName) {
+              wx.navigateTo({
+                url: `/pages/group/shareJoin/index?zc=1&groupName=${this.data.groupName}&groupId=${this.data.groupId}`
+              });
+            } else {
+              wx.navigateTo({
+                url: "/pages/status/index?msg=注册成功&jigou=1"
+              });
+            }
+          })
+          .catch(error => {
+            console.error("错误提醒：注册失败", error);
+            wx.showToast({
+              title: "注册失败",
+              icon: "none"
             });
-          } else {
-            wx.navigateTo({
-              url: "/pages/status/index?msg=注册成功&jigou=1"
-            });
-          }
-        });
+          });
       } else {
         formData["id"] = formData.id;
-        saveOrUpdateUserInfo(formData).then(async data => {
-          await app.refreshUserInfo();
-          wx.navigateTo({
-            url: "/pages/status/index?msg=更新成功&jigou=1"
+        saveOrUpdateUserInfo(formData)
+          .then(async data => {
+            await app.refreshUserInfo();
+            wx.navigateTo({
+              url: "/pages/status/index?msg=更新成功&jigou=1"
+            });
+          })
+          .catch(error => {
+            console.error("错误提醒：注册失败", error);
+            wx.showToast({
+              title: "注册失败",
+              icon: "none"
+            });
           });
-        });
       }
     }
   },
@@ -380,7 +396,7 @@ Page({
    */
   onLoad: async function(options) {
     const { groupId, groupName } = options;
-    console.log(this.data.fields[3].props.validate);
+    // console.log(this.data.fields[3].props.validate);
     const { globalData } = app;
     if (!globalData.appInit) {
       app.init(globalData => {
@@ -432,11 +448,11 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    if(this.data.groupId) {
+    if (this.data.groupId) {
       wx.reLaunch({
-       url: '/pages/index/index',
-     });
-    }   
+        url: "/pages/index/index"
+      });
+    }
   },
 
   createGroup: function(e) {
