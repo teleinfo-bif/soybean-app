@@ -79,13 +79,21 @@ page {
   color: #999999;
   letter-spacing: 0.58px;
   text-align: right;
-  width:300rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.title-value-code{
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  color: #999999;
+  letter-spacing: 0.58px;
+  text-align: right;
+  
+  display: flex;
 }
 .title-value-addr{
   font-family: PingFangSC-Regular;

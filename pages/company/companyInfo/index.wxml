@@ -11,9 +11,13 @@
       <image class='logo-head-img' src='../../../static/images/comUniq.png'></image>
       <view class='logo-head-name'>机构唯一码</view>
     </view>
-    <view class='title-value' bindtap="pasteCode">
+<!--     <view class='title-value' bindtap="pasteCode">
         <text selectable="true">{{data.groupCode}}</text> 
-    </view>
+    </view> -->
+    <view class="title-value-code" bind:tap="pasteCode">
+      <view class="code-text">{{data.groupCode}}</view>
+      <image style="width:27rpx;height:27rpx;margin-left:8rpx;margin-top:8rpx;" src="../../../static/images/fuzhi.png" />
+   </view>
   </view>
   <view class='devide-content' />
   <view class='title-2'>
