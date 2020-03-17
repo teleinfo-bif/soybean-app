@@ -1,6 +1,6 @@
 <!--pages/company/companyInfo/index.wxml-->
 
-<view calss='content'>
+<view class='content'>
   <view class='logo' style="background: #FFFFFF;">
     <image class='logoImg' src="{{data.logo == '' ?'../../../static/images/companyDefault.png' :data.logo}}" />
     <view class='title-value-name'>{{data.name}}</view>
@@ -11,15 +11,14 @@
       <image class='logo-head-img' src='../../../static/images/comUniq.png'></image>
       <view class='logo-head-name'>机构唯一码</view>
     </view>
-<!--     <view class='title-value' bindtap="pasteCode">
+    <!--     <view class='title-value' bindtap="pasteCode">
         <text selectable="true">{{data.groupCode}}</text> 
     </view> -->
     <view class="title-value-code" bind:tap="pasteCode">
       <view class="code-text">{{data.groupCode}}</view>
       <image style="width:26rpx;height:26rpx;margin-left:8rpx;margin-top:9rpx;" src="../../../static/images/fuzhi.png" />
-   </view>
+    </view>
   </view>
-  <view class='devide-content' />
   <view class='title-2'>
     <view class='logo-head'>
       <image class='logo-head-img' src='../../../static/images/comAddr.png'></image>
@@ -27,7 +26,6 @@
     </view>
     <view class='title-value-addr'>{{address}}</view>
   </view>
-  <view class='devide-content' />
   <view class='title'>
     <view class='logo-head'>
       <image class='logo-head-img-3' src='../../../static/images/comPeo.png'></image>
@@ -36,7 +34,7 @@
     <view class='title-value'>{{data.createrName}}</view>
   </view>
   <view class='devide-content-2' />
-<!--   <view class='title'>
+  <!--   <view class='title'>
     <view class='logo-head'>
       <image class='logo-head-img-5' src='../../../static/images/comVerify.png'></image>
       <view class='logo-head-name'>机构认证</view>
@@ -48,7 +46,7 @@
       <view wx:else class='title-value'>异常</view>
   </view>
   <view class='devide-2' /> -->
-<!--   <block wx:if="{{permision == 'true'}}">
+  <!--   <block wx:if="{{permision == 'true'}}">
     <view class='title'>
       <view class='logo-head'>
         <image class='logo-head-img-3' src='../../../static/images/comNewAdd.png'></image>
@@ -66,11 +64,26 @@
         <image class='logo-head-img' src='../../../static/images/comManage.png'></image>
         <view class='logo-head-name'>权限管理</view>
       </view>
-      <view class='title-value-index' >
+      <view class='title-value-index'>
         <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
       </view>
     </view>
-    <view class='devide-content-4' />
+    <view class='devide-content' />
+  </block>
+
+
+  <!--创建者转让-->
+  <block wx:if="{{transferComapnyBtn == true}}">
+    <view class='title' bindtap='toTransferPage'>
+      <view class='logo-head'>
+        <image class='logo-head-img' src='../../../static/images/comTransfer.png'></image>
+        <view class='logo-head-name'>创建者转让</view>
+      </view>
+      <view class='title-value-index'>
+        <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+      </view>
+    </view>
+
   </block>
   <!-- <block wx:if="{{permision == 'true'}}">
     <view class='title'>
@@ -83,8 +96,11 @@
     <view class='devide-2' />
   </block> -->
 </view>
-
-
-<view class='quit' bindtap='quitCompany' hidden="{{quitbtn}}"> 
+<view class='devide-content-4' />
+<view class='quit' bindtap='delFirstComany' hidden="{{delFirstComapnyBtn}}">
+  移除机构
+</view>
+<view class='devide-content-2' />
+<view class='quit' bindtap='quitCompany' hidden="{{quitbtn}}">
   退出机构
 </view>

@@ -1,6 +1,6 @@
 // pages/group/shareJoin/index.js
 // import { encode } from "../../../utils/code";
-import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup } from "../../../api/api";
+import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist } from "../../../api/api";
 const app = getApp();
 Page({
   /**
@@ -414,46 +414,51 @@ Page({
       })
       return
     }
-    //链接有效，注册用户可以加群，开始加群
-    if (userFilledInfo.userRegisted) {
-      console.log('groupId', groupId)
-      // this.tree2array(groupId)
-      // 注册过来的  也要判断是否加过去其他群
-      // if(zc=='1') {
-      //   this.joinDifferentGroup(groupId)
-      // } else {
-      //   this.isCanJoinGroup()
-      // }   
-      this.isCanJoinGroup()
-    } else {
-      console.log('没有注册')
-      wx.showModal({
-        title: "",
-        content: `您还没有注册，确认加入该机构吗？`,
-        showCancel: true,
-        cancelColor: "#000000",
-        confirmText: "确认注册",
-        confirmColor: "#3CC51F",
-        success(res) {
-          if (res.confirm) {
-            wx.reLaunch({
-              url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
-              success: result => {
-              },
-              fail: () => { },
-              complete: () => { }
-            });
-          } else if (res.cancel) {
-            wx.redirectTo({//防止用户后退返回分享页
-              url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
-            });
+    isGroupExist({
+      groupId: groupId
+    }).then(data => {
+      console.log('群有效，可加',data)
+      //链接有效，注册用户可以加群，开始加群
+      if (userFilledInfo.userRegisted) {
+        console.log('groupId', groupId)
+        this.isCanJoinGroup()
+      } else {
+        console.log('没有注册')
+        wx.showModal({
+          title: "",
+          content: `您还没有注册，确认加入该机构吗？`,
+          showCancel: true,
+          cancelColor: "#000000",
+          confirmText: "确认注册",
+          confirmColor: "#3CC51F",
+          success(res) {
+            if (res.confirm) {
+              wx.reLaunch({
+                url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
+                success: result => {
+                },
+                fail: () => { },
+                complete: () => { }
+              });
+            } else if (res.cancel) {
+              wx.reLaunch({//防止用户后退返回分享页
+                url: "/pages/index/index",
+                success: result => { },
+                fail: () => { },
+                complete: () => { }
+              });
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    }).catch(e => {
+      console.log("群不存在 ", e)
+      setTimeout(function () {
+        wx.reLaunch({
+          url: "/pages/index/index",
+        })
+      }, 1500)
+    });
   },
   //查询是否已经加过群
   isCanJoinGroup: function () {

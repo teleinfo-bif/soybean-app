@@ -1,3 +1,4 @@
+/* pages/company/companyTransfer/index.wxss */
 /* pages/company/companyAuth/companyAuthAdd/index.wxss */
 page{
   background-color: rgba(249, 249, 249, 1); 

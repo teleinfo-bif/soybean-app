@@ -1,5 +1,5 @@
 // pages/company/companyInfo/index.js
-import { getGroup, quitGroup, existCompany} from "../../../api/api";
+import { getGroup, quitGroup, existCompany, delFirstCompanyAct} from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -8,27 +8,9 @@ Page({
    */
   data: {
     groupId:'',
-    quitbtn:true
-  },
-  copyTBL: function (e) {
-    var self = this;
-    wx.setClipboardData({
-      data: self.data.taokouling,
-      success: function (res) {
-        // self.setData({copyTip:true}),
-        wx.showModal({
-          title: '提示',
-          content: '复制成功',
-          success: function (res) {
-            if (res.confirm) {
-              console.log('确定')
-            } else if (res.cancel) {
-              console.log('取消')
-            }
-          }
-        })
-      }
-    });
+    quitbtn:true,
+    delFirstComapnyBtn:true,
+    transferComapnyBtn:false
   },
   pasteCode: function () {
     const { groupCode } = this.data.data
@@ -57,6 +39,24 @@ Page({
             address = items[0] + items[1] + items[2] + data.detailAddress
           }
       }
+      if (data.createUser == app.globalData.userFilledInfo.id){
+        this.setData({
+          transferComapnyBtn: true
+        })
+      }else{
+        this.setData({
+          transferComapnyBtn: false
+        })
+      }
+      if (data.createUser == app.globalData.userFilledInfo.id && data.groupIdentify === data.groupCode){
+        this.setData({
+          delFirstComapnyBtn: false
+        })
+      }else{
+        this.setData({
+          delFirstComapnyBtn: true
+        })
+      }
       this.setData({
         data: data,
         address: address
@@ -67,6 +67,11 @@ Page({
     console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
       url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
+    }); 
+  },
+  toTransferPage(){
+    wx.navigateTo({
+      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}`,
     }); 
   },
   existCompanyAct(groupId){
@@ -86,6 +91,39 @@ Page({
      }
     })
   },
+  delFirstComany(){
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '移除机构会将机构下的人员移除，是否继续',
+      confirmText: '继续',
+      success(res) {
+        if (res.confirm) {
+          delFirstCompanyAct({
+            groupId: that.data.groupId,
+            creatorId: app.globalData.userFilledInfo.id
+          }).then((data) => {
+            wx.showToast({
+              title: '移除成功',
+              icon: 'none',
+              duration: 2000,
+              success: function () {
+                setTimeout(function () {
+                  wx.reLaunch({
+                    url: '/pages/index/index'
+                  })
+                }, 1000) //延迟时间
+              }
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -97,8 +135,7 @@ Page({
       groupId: options.groupId,
       permision: options.permision
     })
-    this.getGroupDetail(options.groupId)
-    this.existCompanyAct(options.groupId)
+
   },
 /*   pageBack() {
     let that = this
@@ -157,7 +194,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getGroupDetail(this.data.groupId)
+    this.existCompanyAct(this.data.groupId)
   },
 
   /**

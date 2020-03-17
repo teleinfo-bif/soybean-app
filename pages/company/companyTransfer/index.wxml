@@ -1,0 +1,13 @@
+<!--pages/company/companyTransfer/index.wxml-->
+<view class='addCont'>
+       <view class="personal-info-hd">
+          <text class="info-label">创建者手机号</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="phone" type="number" placeholder-class="placeholder-style" placeholder="请输入手机号"  bindinput="bindKeyInput" value='{{inputValue}}' maxlength="11" ></input>
+        </view>
+</view>
+<view class="quit-join-group">
+    <view class="quit-group" bindtap="quit">取消</view>
+    <view class="join-group" bindtap="join">转让</view>
+</view>
