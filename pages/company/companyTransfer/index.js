@@ -10,7 +10,7 @@ Page({
    */
   data: {
     groupId: "",
-    transferId: ''
+    transferId: '',
   },
   bindKeyInput: function (e) {
     this.setData({
@@ -23,6 +23,7 @@ Page({
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       groupId: that.data.groupId,
+      fromTransferPage:true
     })
     wx.navigateBack({
       delta: 1,
@@ -77,26 +78,36 @@ Page({
       if (Object.keys(data).length === 0) {
         console.log("======sisisissi====")
         wx.showToast({
-          title: "此用户不存在，请先邀请该用户加入您的机构",
+          title: "此用户不存在，请先邀请该用户注册",
           icon: "none",
           duration: 2000
         });
         return
-      } else {
+      } 
+      else {
         this.setData({
           transferId: data.id
         });
-        wx.showModal({
-          title: '提示',
-          content: "确定要转让给" + data.name + "吗？",
-          success(res) {
-            if (res.confirm) {
-              that.transferAct(that.data.transferId);
-            } else if (res.cancel) {
-              console.log('用户点击取消')
+        if (data.id == app.globalData.userFilledInfo.id){
+          wx.showToast({
+            title: "您已是创建者",
+            icon: "none",
+            duration: 2000
+          });
+          return
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: "确定要转让给" + data.name + "吗？",
+            success(res) {
+              if (res.confirm) {
+                that.transferAct(that.data.transferId);
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
             }
-          }
-        })
+          })
+        }
 
       }
     });

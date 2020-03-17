@@ -10,7 +10,8 @@ Page({
     groupId:'',
     quitbtn:true,
     delFirstComapnyBtn:true,
-    transferComapnyBtn:false
+    transferComapnyBtn:false,
+    fromTransferPage: false
   },
   pasteCode: function () {
     const { groupCode } = this.data.data
@@ -209,7 +210,15 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    if (this.data.fromTransferPage){
+      this.setData({
+        fromTransferPage:false
+      })
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
 
+    }
   },
 
   /**
