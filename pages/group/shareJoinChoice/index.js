@@ -218,7 +218,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    // console.log('join choice onUnload')
+    console.log('join choice onUnload')
     if(!this.data.joinSuccess){
       wx.reLaunch({
         url: "/pages/index/index"

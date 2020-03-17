@@ -444,7 +444,7 @@ Page({
               complete: () => { }
             });
           } else if (res.cancel) {
-            wx.redirectTo({//防止用户后退返回分享页
+            wx.reLaunch({//防止用户后退返回分享页
               url: "/pages/index/index",
               success: result => { },
               fail: () => { },
