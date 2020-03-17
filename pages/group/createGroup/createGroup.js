@@ -136,10 +136,7 @@ Page({
         const tempFile = res.tempFiles[0]
         let name = tempFile.name
         let path = tempFile.path
-        // that.setData({
-        //   uploadFileName: name,
-        //   uploadFilePath: path
-        // })
+
         UploadFile({
           filePath: path,
           name: 'file',
@@ -184,10 +181,10 @@ Page({
     } else {
       flag = true
       
-      wx.showLoading({
-        title: '信息提交中',
-        mask: true
-      })
+      // wx.showLoading({
+      //   title: '信息提交中',
+      //   mask: true
+      // })
       console.log("add group info to database")
       console.log(e.detail.value.group_address,
         e.detail.value.group_applicant,
@@ -203,34 +200,25 @@ Page({
         phone: e.detail.value.group_phone,
         remarks: e.detail.value.group_introduce,
         userId: this.data.globalData.userId,
+        loading: true
       }).then(data => {
-           wx.hideLoading()
            console.log('1', data)
            let code = data;
            wx.navigateTo({
               url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
-           });
-          //  wx.showModal({
-          //   showCancel: true,
-          //   title: '创建成功',
-          //   content: "是否加入该机构？",
-          //   success(res) {
-          //     if (res.confirm) {
-          //       _this.joinCodeGroup(code)
-          //     } else if (res.cancel) {
-          //       wx.navigateTo({
-          //         url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
-          //       });
-          //     }
-          //   }
-          // })              
+           });           
       }).catch(e => {
-        wx.hideLoading()
         console.log(e)
-        wx.showModal({
-          title: '创建失败',
-          content: "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
-        })
+        if(e.errMsg=="request:fail ") {
+          wx.showToast({
+            title: "创建失败",
+            icon: "none"
+          });
+        }       
+        // wx.showModal({
+        //   title: '创建失败',
+        //   content: "如需帮助，发送邮件到service@teleinfo.cn，我们会尽快与您联系！"
+        // })
       })
     }
 
@@ -249,37 +237,6 @@ Page({
     }
   },
 
-  // joinCodeGroup: function (code) {
-  //   if (code) {
-  //     console.log('code', code);
-  //     fromGroupCodetoId({
-  //       groupCode: code
-  //     }).then(data => {
-  //       console.log('根据唯一码查看群信息', data)
-  //       if (JSON.stringify(data) == "{}") {
-  //         wx.showToast({
-  //           title: `机构唯一码有误，请联系管理员确认！`,
-  //           icon: 'none',
-  //         })
-  //       } else {
-  //         let groupName = data.name
-  //         let groupId = data.id
-  //         let timeStamp = new Date().getTime();
-  //         wx.navigateTo({
-  //           url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}&timeStamp=${timeStamp}`,
-  //         });
-  //       }
-  //     }).catch(e => {
-  //       console.log(e);
-  //     })
-  //   } else {
-  //     wx.showToast({
-  //       title: `机构唯一码有误，请联系管理员确认！`,
-  //       icon: 'none',
-  //     })
-  //   }
-  // },
-
   //需要修改成现有的
   queryUserInfo: function (e) {
     this.setData({
@@ -288,21 +245,6 @@ Page({
     })
   },
 
-  /**
-   * 获取当前时间
-   */
-
-  getCurrentDateTime: function (e) {
-    var date = new Date();
-    var Y = date.getFullYear();
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
-    var h = (date.getHours()) < 10 ? '0' + date.getHours : date.getHours()
-    var m = (date.getMinutes()) < 10 ? '0' + date.getMinutes() : + date.getMinutes()
-    var s = (date.getSeconds()) < 10 ? '0' + date.getSeconds() : date.getSeconds()
-
-    return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s
-  },
 
   downloadStructure: function () {
     console.log('下载模板',`${baseURLDownload}/download/group.xlsx`)
