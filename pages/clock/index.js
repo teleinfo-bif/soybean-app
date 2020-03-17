@@ -552,11 +552,20 @@ Page({
       // if (!atBeijing && this.data.data["leave"] == null) {
       //   formData["leave"] = 2;
       // }
-      saveClock(formData).then(res => {
-        wx.navigateTo({
-          url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
+      formData["loading"] = true;
+      saveClock(formData)
+        .then(res => {
+          wx.navigateTo({
+            url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
+          });
+        })
+        .catch(error => {
+          console.error("错误提醒：打卡错误,", error);
+          wx.showToast({
+            title: "打卡失败，请再次尝试",
+            icon: "none"
+          });
         });
-      });
     }
   },
   // 初始化this.data.data,赋值
