@@ -28,7 +28,6 @@ Page({
     this.setData({
       scroll_height: windowHeight * 750 / windowWidth - 188
     })
-    app.globalData.join = null;
     if (!app.globalData.appInit) {
       app.init(globalData => {
         this.setData({

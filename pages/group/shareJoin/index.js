@@ -345,11 +345,22 @@ Page({
      */
     // console.log()
     const { groupId, timeStamp, groupName, zc } = options;
-    console.log("======share options=====", options);
-    //不要放在app.init里，注意清除掉，onUnload清除，下一个页面shareJoinChoice清除
-    app.globalData.join = 1
-    // 这里需要先判断再调用app.init 如果有状态就直接用
+    console.log("======share options=====", options,app.globalData, !app.globalData.appInit);
+    // 这里需要先判断再调用app.init 如果有状态就直接用  //点击链接进来，开发过程中
     if (!app.globalData.appInit) {
+      app.init(globalData => {
+        this.setData({
+          globalData: globalData,
+          userFilledInfo: globalData.userFilledInfo,
+          groupId: groupId,
+          timeStamp: timeStamp,
+          groupName: groupName,
+          zc: zc
+        });
+        this.userPrompt()
+        return
+      });
+    } else if(zc && !app.globalData.userFilledInfo.userRegisted) { //注册好之后进来，创建机构、机构码进来
       app.init(globalData => {
         this.setData({
           globalData: globalData,
@@ -381,8 +392,6 @@ Page({
     const userful = Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
     console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
     const _this = this;
-    //防止回调跳转
-    if(!app.globalData.join){return}
     //注册过来的不判断时间有效性
     if (!zc && !userful) {
       wx.showModal({
@@ -427,7 +436,7 @@ Page({
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {
-            wx.navigateTo({
+            wx.reLaunch({
               url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
               success: result => {
               },
@@ -535,8 +544,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('onUnload')
-    app.globalData.join = null
+    console.log('share join onUnload')
+    //防止没执行完的回调 
+    app.callbackList = []
    },
 
 });
