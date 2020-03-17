@@ -56,7 +56,8 @@ const Request = async ({
   // 添加请求加载等待
   if (data.loading) {
     wx.showLoading({
-      title: "加载中..."
+      title: "加载中...",
+      mask: true
     });
   }
 
