@@ -1,9 +1,8 @@
 // 获取当前帐号信息
 const accountInfo = wx.getAccountInfoSync();
 
-export const env = accountInfo.miniProgram.envVersion;
+export const env = accountInfo.miniProgram.envVersion || "release";
 console.log("提示：当前环境-" + env);
-
 const baseApi = {
   // 开发版
   develop: "https://test.bidspace.cn",
@@ -27,5 +26,5 @@ export const baseURLNotice =
 export const uploadUrl =
   baseApi.release + "/bid-blockchain/front/ipfs/upload-photo";
 
-// 统计导出导出文件的下载链接 
+// 统计导出导出文件的下载链接
 export const baseURLDownload = baseApi[env] + "/bid-soybean";

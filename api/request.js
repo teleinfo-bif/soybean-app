@@ -19,7 +19,6 @@ const Request = async ({
   ...other
 } = {}) => {
   // 先取localstorage里面openid,userid,
-
   const sessionValidate = await checkSessionKey();
   if (
     !fedToken ||
@@ -27,18 +26,20 @@ const Request = async ({
     fedToken.openid == undefined ||
     !sessionValidate
   ) {
-    console.log("提醒：request, 正在重新获取openID、sessionkey...");
+    console.log(
+      "提醒：storage读取openID、sessionkey失败，正在重新获取openID、sessionkey..."
+    );
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
   }
+  // console.log("userFilledInfo", userFilledInfo);
   // if (
   //   (url != "/user/exist" || url == "/wx/user/token") &&
-  //   (userFilledInfo == null ||
-  //     typeof userFilledInfo != "object" ||
-  //     !userFilledInfo.id)
+  //   (userFilledInfo == null || typeof userFilledInfo != "object") // ||
+  //   // !userFilledInfo.id)
   // ) {
   //   console.log(
-  //     "提醒：request, 正在重新获取用户录入信息..."
+  //     "提醒：storage读取用户录入信息失败，正在重新获取用户录入信息..."
   //   );
   //   userFilledInfo = await getUserInfo({ openid: fedToken.openid });
   //   console.log("返回数据：获取的用户", userFilledInfo);
@@ -83,6 +84,7 @@ const Request = async ({
         // 关闭等待
         // wx.hideLoading();
         wx.hideNavigationBarLoading();
+
         // 进行状态码判断并处理
         if (res.statusCode === 204) {
           resolve(res);
@@ -95,7 +97,7 @@ const Request = async ({
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
           } else {
-            console.error(url + "-" + res.statusCode);
+            // console.log(url + "-" + res.statusCode);
             console.error(
               "request请求错误，URL:",
               url,
@@ -366,37 +368,25 @@ async function appInit() {
   console.log("提醒：请求token,userFilledInfo");
   fedToken = await getOpenId();
   console.log("init返回：token值是:", fedToken);
-  try {
-    userFilledInfo = await getUserInfo({
-      openid: fedToken.openid
-    });
-  } catch (e) {
-    console.error("userInfo失败", e);
+  if (!fedToken.tokenType) {
+    return {
+      fedToken: fedToken,
+      userFilledInfo: { userRegisted: false }
+    };
+  } else {
+    try {
+      userFilledInfo = await getUserInfo({
+        openid: fedToken.openid
+      });
+    } catch (e) {
+      console.error("userInfo失败", e);
+    }
+    console.log("init返回：userInfo值是:", userFilledInfo);
+    return {
+      fedToken: fedToken,
+      userFilledInfo: userFilledInfo
+    };
   }
-  // console.log("init返回：userInfo值是:", userFilledInfo);
-  return {
-    fedToken: fedToken,
-    userFilledInfo: userFilledInfo
-  };
-  // if (!fedToken.tokenType) {
-  //   return {
-  //     fedToken: fedToken,
-  //     userFilledInfo: { userRegisted: false }
-  //   };
-  // } else {
-  //   try {
-  //     userFilledInfo = await getUserInfo({
-  //       openid: fedToken.openid
-  //     });
-  //   } catch (e) {
-  //     console.error("userInfo失败", e);
-  //   }
-  //   console.log("init返回：userInfo值是:", userFilledInfo);
-  //   return {
-  //     fedToken: fedToken,
-  //     userFilledInfo: userFilledInfo
-  //   };
-  // }
 }
 
 module.exports = {
