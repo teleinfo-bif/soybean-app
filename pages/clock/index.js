@@ -562,7 +562,7 @@ Page({
         .catch(error => {
           console.error("错误提醒：打卡错误,", error);
           wx.showToast({
-            title: "打卡错误，请重新尝试",
+            title: "打卡失败，请再次尝试",
             icon: "none"
           });
         });
