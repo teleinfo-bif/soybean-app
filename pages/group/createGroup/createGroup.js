@@ -184,9 +184,10 @@ Page({
     } else {
       flag = true
       
-      // wx.showLoading({
-      //   title: '信息提交中',
-      // })
+      wx.showLoading({
+        title: '信息提交中',
+        mask: true
+      })
       console.log("add group info to database")
       console.log(e.detail.value.group_address,
         e.detail.value.group_applicant,
@@ -203,6 +204,7 @@ Page({
         remarks: e.detail.value.group_introduce,
         userId: this.data.globalData.userId,
       }).then(data => {
+           wx.hideLoading()
            console.log('1', data)
            let code = data;
            wx.navigateTo({
@@ -223,6 +225,7 @@ Page({
           //   }
           // })              
       }).catch(e => {
+        wx.hideLoading()
         console.log(e)
         wx.showModal({
           title: '创建失败',
@@ -246,36 +249,36 @@ Page({
     }
   },
 
-  joinCodeGroup: function (code) {
-    if (code) {
-      console.log('code', code);
-      fromGroupCodetoId({
-        groupCode: code
-      }).then(data => {
-        console.log('根据唯一码查看群信息', data)
-        if (JSON.stringify(data) == "{}") {
-          wx.showToast({
-            title: `机构唯一码有误，请联系管理员确认！`,
-            icon: 'none',
-          })
-        } else {
-          let groupName = data.name
-          let groupId = data.id
-          let timeStamp = new Date().getTime();
-          wx.navigateTo({
-            url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}&timeStamp=${timeStamp}`,
-          });
-        }
-      }).catch(e => {
-        console.log(e);
-      })
-    } else {
-      wx.showToast({
-        title: `机构唯一码有误，请联系管理员确认！`,
-        icon: 'none',
-      })
-    }
-  },
+  // joinCodeGroup: function (code) {
+  //   if (code) {
+  //     console.log('code', code);
+  //     fromGroupCodetoId({
+  //       groupCode: code
+  //     }).then(data => {
+  //       console.log('根据唯一码查看群信息', data)
+  //       if (JSON.stringify(data) == "{}") {
+  //         wx.showToast({
+  //           title: `机构唯一码有误，请联系管理员确认！`,
+  //           icon: 'none',
+  //         })
+  //       } else {
+  //         let groupName = data.name
+  //         let groupId = data.id
+  //         let timeStamp = new Date().getTime();
+  //         wx.navigateTo({
+  //           url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}&timeStamp=${timeStamp}`,
+  //         });
+  //       }
+  //     }).catch(e => {
+  //       console.log(e);
+  //     })
+  //   } else {
+  //     wx.showToast({
+  //       title: `机构唯一码有误，请联系管理员确认！`,
+  //       icon: 'none',
+  //     })
+  //   }
+  // },
 
   //需要修改成现有的
   queryUserInfo: function (e) {
