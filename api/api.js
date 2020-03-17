@@ -200,3 +200,9 @@ export const userSubscribe = async params => {
 export const userUnSubscribe = async params => {
   return Request._postParams(`/user/unsubscribe`, params);
 };
+
+//群组是否存在
+export const isGroupExist = async params => {
+  return Request._get(`/wx/group/exist`, params);
+};
+
