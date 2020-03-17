@@ -200,9 +200,21 @@ export const userSubscribe = async params => {
 export const userUnSubscribe = async params => {
   return Request._postParams(`/user/unsubscribe`, params);
 };
-
 //群组是否存在
 export const isGroupExist = async params => {
   return Request._get(`/wx/group/exist`, params);
+};
+
+//移除机构
+export const delFirstCompanyAct = async params => {
+  return Request._postParams(`/wx/group/close`, params);
+};
+//根据手机号找用户
+export const findUserByPhoneAct = async params => {
+  return Request._get(`/wx/user/findUserByPhone`, params);
+};
+//群转让
+export const transferCompanyAct = async params => {
+  return Request._postParams(`/wx/group/transfer`, params);
 };
 
