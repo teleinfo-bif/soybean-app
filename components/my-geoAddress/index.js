@@ -89,16 +89,10 @@ Component({
       // console.log(value.length);
       const prop = e.currentTarget.dataset.prop;
       // console.log(this);
-      // debugger;
       this.triggerEvent("change", value);
     },
-    // onChange(e) {
-    //   console.log("test", e);
-    //   this.triggerEvent("change", e.detail);
-    // },
+
     test() {
-      // console.log(JSON.parse(this.data.value));
-      // console.log(this.data);
       this.triggerEvent("test", "value");
     },
     bindGetLoation() {
@@ -161,6 +155,8 @@ Component({
                 baseAddress = province + city;
               }
               _this.triggerEvent("baseAddress", {
+                location,
+                address: location.result,
                 baseAddress,
                 city: province + "，" + city
               });

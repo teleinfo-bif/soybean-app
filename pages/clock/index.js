@@ -756,10 +756,12 @@ Page({
   },
   // 修改打卡地点
   onChangeBaseAddress(e) {
-    this.setData({
-      baseAddress: e.detail.baseAddress,
-      city: e.detail.city
-    });
+    const { location, address, baseAddress, city } = e.detail;
+    this.onAddressChange(location);
+    // this.setData({
+    //   address: address,
+    //   city: city
+    // });
   },
   /**
    * 获取单位省市信息
@@ -1069,7 +1071,7 @@ Page({
   onLoad: async function(options) {
     // debugger;
     console.log("clock onload options:", options);
-    const { userId, clockInTime = getTodayClock() } = options;
+    const { userId = null, clockInTime = getTodayClock() } = options;
     this.setData({
       otherId: userId
     });
