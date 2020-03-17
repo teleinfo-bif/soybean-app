@@ -18,16 +18,10 @@ const Request = async ({
   header,
   ...other
 } = {}) => {
-  // 先取localstorage里面openid,userid,
-  const sessionValidate = await checkSessionKey();
-  if (
-    !fedToken ||
-    fedToken == "" ||
-    fedToken.openid == undefined ||
-    !sessionValidate
-  ) {
+  // const sessionValidate = await checkSessionKey();
+  if (!fedToken || fedToken == "" || fedToken.openid == undefined) {
     console.log(
-      "提醒：storage读取openID、sessionkey失败，正在重新获取openID、sessionkey..."
+      "提醒：openID、sessionkey失败，正在重新获取openID、sessionkey..."
     );
     fedToken = await getOpenId();
     console.log("返回数据：获取的用户", fedToken);
