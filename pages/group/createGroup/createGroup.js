@@ -209,9 +209,9 @@ Page({
            });           
       }).catch(e => {
         console.log(e)
-        if(e.errMsg=="request:fail ") {
+        if(e.errMsg && e.errMsg.substr(0,12)=="request:fail") {
           wx.showToast({
-            title: "创建失败",
+            title: "创建失败，请再次尝试",
             icon: "none"
           });
         }       
