@@ -157,17 +157,20 @@ Page({
   exportExcel: function() {
     const { groupId, clockInTime } = this.data;
     console.log("导出数据", clockInTime, groupId);
-    let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`;
-    wx.setClipboardData({
-      data: url,
-      success: function(res) {
-        wx.showToast({
-          icon: "none",
-          title: "导出文件下载链接已复制到您的剪贴板，请到浏览器中粘贴下载",
-          duration: 3000
-        });
-      }
-    });
+    wx.navigateTo({
+      url: `/pages/statistics/status/index?groupId=${groupId}&clockInTime=${clockInTime}`,
+   }); 
+    // let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`;
+    // wx.setClipboardData({
+    //   data: url,
+    //   success: function(res) {
+    //     wx.showToast({
+    //       icon: "none",
+    //       title: "导出文件下载链接已复制到您的剪贴板，请到浏览器中粘贴下载",
+    //       duration: 3000
+    //     });
+    //   }
+    // });
   },
 
   showExcel: function(data, res) {

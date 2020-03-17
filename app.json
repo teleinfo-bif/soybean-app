@@ -23,7 +23,8 @@
     "pages/company/companyAuth/index",
     "pages/company/companyInfo/index",
     "pages/company/companyAuth/companyAuthAdd/index",
-    "pages/company/companySelect/index"
+    "pages/company/companySelect/index",
+    "pages/statistics/status/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
