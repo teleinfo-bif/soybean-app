@@ -59,20 +59,19 @@ const Request = async ({
     url = urlParameterAppend(url, params);
   }
   wx.showNavigationBarLoading();
-
   // 添加请求加载等待
-  // wx.showLoading({
-  //   title: "加载中..."
-  // });
+  if (data.loading) {
+    wx.showLoading({
+      title: "加载中..."
+    });
+  }
+
   // Promise封装处理
   return new Promise((resolve, reject) => {
     wx.request({
       // 请求地址拼接
       url: baseURL + url,
       data: reqData,
-      // 获取请求头配置
-      // header: getHeader(),
-      // header: Object.assign(getHeader(), header),
       method: method,
       header: {
         ...getAuth(fedToken),
@@ -82,7 +81,11 @@ const Request = async ({
       // 成功或失败处理
       complete: res => {
         // 关闭等待
-        // wx.hideLoading();
+        try {
+          wx.hideLoading();
+        } catch (error) {
+          console.error("wx.hideLoading error");
+        }
         wx.hideNavigationBarLoading();
 
         // 进行状态码判断并处理
@@ -90,12 +93,22 @@ const Request = async ({
           resolve(res);
         } else if (res.statusCode === 401) {
           // 检测到状态码401，进行token刷新并重新请求等操作
-          refreshToken()
-            .then(() => _refetch(url, data, method))
+          getServerToken()
+            .then(() =>
+              _refetch({
+                url,
+                data,
+                method,
+                params,
+                ...then.others
+              })
+            )
             .then(resolve);
-        } else if (res.data.code !== 200) {
+        } else if (res.statusCode == 200) {
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
+          } else if (res.data.code === 200) {
+            resolve(res.data.data);
           } else {
             // console.log(url + "-" + res.statusCode);
             console.error(
@@ -110,9 +123,8 @@ const Request = async ({
             let title = res.data.msg || "请求错误";
             // 调用全局toast方法
             showToast(title);
+            reject(res.data.data);
           }
-        } else if (res.data.code === 200) {
-          resolve(res.data.data);
         } else {
           reject(res);
         }
@@ -152,11 +164,13 @@ const refreshToken = () => {
       });
   });
 };
-const _refetch = (url, data, method) => {
+const _refetch = ({ url, data, method, params, ...others }) => {
   return Request({
     url,
     data,
-    method
+    method,
+    params,
+    others
   });
 };
 
@@ -169,7 +183,6 @@ const _get = (url, data = {}) => {
   });
 };
 const _post = (url, data = {}) => {
-  data.size = 20;
   return Request({
     url,
     data,
@@ -365,9 +378,8 @@ function getAuth(token = fedToken) {
  */
 async function appInit() {
   // 本来到这里初始化结束，但是必须要有请求的userId
-  console.log("提醒：请求token,userFilledInfo");
   fedToken = await getOpenId();
-  console.log("init返回：token值是:", fedToken);
+  console.log("提醒：请求token返回值", fedToken);
   if (!fedToken.tokenType) {
     return {
       fedToken: fedToken,
@@ -381,7 +393,7 @@ async function appInit() {
     } catch (e) {
       console.error("userInfo失败", e);
     }
-    console.log("init返回：userInfo值是:", userFilledInfo);
+    console.log("提醒：请求userFilledInfo返回值", userFilledInfo);
     return {
       fedToken: fedToken,
       userFilledInfo: userFilledInfo

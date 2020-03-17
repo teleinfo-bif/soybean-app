@@ -215,7 +215,8 @@ Page({
         : "";
       formData = {
         ...formData,
-        ...app.globalData.userInfo
+        ...app.globalData.userInfo,
+        loading: true
       };
       // console.log(formData);
       if (!this.data.userFilledInfo.userRegisted) {
@@ -235,7 +236,7 @@ Page({
           .catch(error => {
             console.error("错误提醒：注册失败", error);
             wx.showToast({
-              title: "注册失败",
+              title: "注册失败，请再次尝试",
               icon: "none"
             });
           });
@@ -251,7 +252,7 @@ Page({
           .catch(error => {
             console.error("错误提醒：注册失败", error);
             wx.showToast({
-              title: "注册失败",
+              title: "注册失败，请再次尝试",
               icon: "none"
             });
           });
