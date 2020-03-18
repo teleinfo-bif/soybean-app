@@ -136,7 +136,6 @@ const Request = async ({
             let title = res.data.msg || "请求错误";
             // 调用全局toast方法
             showToast(title);
-            debugger;
             reject(res.data.data);
           }
         } else {

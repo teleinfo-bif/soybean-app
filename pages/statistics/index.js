@@ -177,7 +177,8 @@ Page({
     const { groupId, clockInTime } = this.data;
     let url = `${baseURLDownload}/download/annex.xlsx?groupid=${groupId}&from=${clockInTime}`;
     wx.showLoading({
-      title: "加载中..."
+      title: "加载中...",
+      mask: true
     });
     wx.downloadFile({
       url: url,
