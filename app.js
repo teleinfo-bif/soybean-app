@@ -15,7 +15,13 @@ App({
   async refreshUserInfo(init = false) {
     return new Promise(async (resolve, reject) => {
       if (init) {
-        await this.onLaunch();
+        const initData = await appInit();
+
+        this.globalData = {
+          ...this.globalData,
+          ...initData
+        };
+        await this.setGloableUserInfo(initData.userFilledInfo);
         resolve(this.globalData.userFilledInfo);
       } else {
         let userFilledInfo = await getUserInfo();
@@ -29,18 +35,21 @@ App({
 
   // 设置app global 用户录入信息
   async setGloableUserInfo(userFilledInfo) {
-    this.globalData.userFilledInfo = userFilledInfo;
-    this.globalData.userRegisted = userFilledInfo.userRegisted;
+    return new Promise(resolve => {
+      this.globalData.userFilledInfo = userFilledInfo;
+      this.globalData.userRegisted = userFilledInfo.userRegisted;
 
-    this.globalData.userId = userFilledInfo.id;
-    this.globalData.appInit = true;
-    // 请求完成之后，执行回调队列中的任务
-    this.callbackList.forEach(callback => {
-      // console.log(callback);
-      callback(this.globalData);
+      this.globalData.userId = userFilledInfo.id;
+      this.globalData.appInit = true;
+      // 请求完成之后，执行回调队列中的任务
+      this.callbackList.forEach(callback => {
+        // console.log(callback);
+        callback(this.globalData);
+      });
+      this.callback = [];
+      console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
+      resolve();
     });
-    this.callback = [];
-    console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
   },
 
   onLaunch: async function() {

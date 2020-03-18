@@ -397,25 +397,27 @@ async function appInit() {
   // 本来到这里初始化结束，但是必须要有请求的userId
   fedToken = await getOpenId();
   console.log("提醒：请求token返回值", fedToken);
-  if (!fedToken.tokenType) {
-    return {
-      fedToken: fedToken,
-      userFilledInfo: { userRegisted: false }
-    };
-  } else {
-    try {
-      userFilledInfo = await getUserInfo({
-        openid: fedToken.openid
+  return new Promise(async resolve => {
+    if (!fedToken.tokenType) {
+      resolve({
+        fedToken: fedToken,
+        userFilledInfo: { userRegisted: false }
       });
-    } catch (e) {
-      console.error("userInfo失败", e);
+    } else {
+      try {
+        userFilledInfo = await getUserInfo({
+          openid: fedToken.openid
+        });
+      } catch (e) {
+        console.error("userInfo失败", e);
+      }
+      console.log("提醒：请求userFilledInfo返回值", userFilledInfo);
+      resolve({
+        fedToken: fedToken,
+        userFilledInfo: userFilledInfo
+      });
     }
-    console.log("提醒：请求userFilledInfo返回值", userFilledInfo);
-    return {
-      fedToken: fedToken,
-      userFilledInfo: userFilledInfo
-    };
-  }
+  });
 }
 
 module.exports = {
