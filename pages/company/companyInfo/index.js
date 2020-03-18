@@ -116,10 +116,10 @@ Page({
                 }, 1000) //延迟时间
               }
             })
-            }).catch(error => {
+            }).catch(e => {
               console.error("错误提醒", error);
               wx.showToast({
-                title: "网络异常，请重新操作",
+                title: "连接超时，请重新操作",
                 icon: "none",
                 duration: 2000
               });
@@ -127,6 +127,13 @@ Page({
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
+      },
+      fail(res){
+        wx.showToast({
+          title: "网络异常，请重新操作",
+          icon: "none",
+          duration: 2000
+        });
       }
     })
 
