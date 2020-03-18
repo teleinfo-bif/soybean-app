@@ -28,7 +28,6 @@ Page({
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       groupId: that.data.groupId,
-      fromTransferPage:true
     })
     wx.navigateBack({
       delta: 1,
@@ -49,14 +48,15 @@ Page({
         success: function () {
           console.log('haha');
           setTimeout(function () {
-            if (that.data.isJoin == true){
+            if (that.data.isJoin == 'true'){
+              console.log("========啊啊啊啊为什么======", that.data.isJoin)
               that.pageBack()
-            } else {
+            } else{
+              console.log("===toIndexPage======", that.data.isJoin)
               wx.reLaunch({
                 url: '/pages/index/index'
               })
-            }
-           
+            }  
           }, 1000) //延迟时间
         }
       });

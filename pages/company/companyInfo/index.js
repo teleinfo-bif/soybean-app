@@ -72,7 +72,7 @@ Page({
   },
   toTransferPage(){
     wx.navigateTo({
-      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}&isJoin=${!this.data.quitbtn}`,
+      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}&isJoin=${this.data.isJoin}`,
     }); 
   },
   existCompanyAct(groupId){
@@ -82,12 +82,13 @@ Page({
     }).then((data) => {
      if(data == false){
        this.setData({
-         quitbtn: true
-       })
-      
+         quitbtn: true,
+         isJoin:false
+       })  
      }else{
        this.setData({
-         quitbtn: false
+         quitbtn: false,
+         isJoin: true
        })
      }
     })
@@ -224,7 +225,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    if (this.data.fromTransferPage){
+/*     if (this.data.fromTransferPage ){
       this.setData({
         fromTransferPage:false
       })
@@ -232,7 +233,7 @@ Page({
         url: '/pages/index/index',
       })
 
-    }
+    } */
   },
 
   /**
