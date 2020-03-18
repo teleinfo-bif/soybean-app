@@ -72,7 +72,7 @@ Page({
   },
   toTransferPage(){
     wx.navigateTo({
-      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}`,
+      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}&isJoin=${!this.data.quitbtn}`,
     }); 
   },
   existCompanyAct(groupId){
