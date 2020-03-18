@@ -18,6 +18,7 @@ const Request = async ({
   header,
   ...others
 } = {}) => {
+  console.log("request url:", url);
   // const sessionValidate = await checkSessionKey();
   if (!fedToken || fedToken == "" || fedToken.openid == undefined) {
     console.log(
@@ -111,7 +112,9 @@ const Request = async ({
             resolve(res.data.data);
           } else if (code === 401) {
             // 检测到状态码401，进行token刷新并重新请求等操作
+            console.log("提醒：token过期，正在重新获取token");
             const token = await getServerToken();
+            console.log("提醒：重新获取token", token);
             fedToken = Object.assign(fedToken, token);
             _refetch({
               url,
@@ -300,15 +303,20 @@ async function getServerToken() {
 }
 //获取首页的显示提示语
 function getNotice(cb) {
-  wx.request({
-    url: baseURLNotice,
-    method: "get",
-    success: function(res) {
-      return typeof cb == "function" && cb(res);
-    },
-    fail: function(res) {
-      return typeof cb == "function" && cb(res);
-    }
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: baseURLNotice,
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 200) {
+          resolve(res.data.data);
+        } else {
+          reject(res.data.data);
+        }
+      },
+      fail: function(res) {
+        reject(res.data.data);
+      }
+    });
   });
 }
 /**
@@ -325,14 +333,24 @@ async function getUserInfo(
   }
 ) {
   return new Promise((resolve, reject) => {
+    // _get("/user/exist",)
     wx.request({
       url: baseURL + "/user/exist",
       data: data,
       header: {
         ...getAuth()
       },
-      success: data => {
-        userFilledInfo = data.data.data;
+      success: async data => {
+        if (data.data.code == 401) {
+          console.log("提醒：token过期，正在重新获取token");
+          const token = await getServerToken();
+          fedToken = Object.assign(fedToken, token);
+          console.log("提醒：重新获取token", token);
+          userFilledInfo = await getUserInfo();
+        } else {
+          userFilledInfo = data.data.data;
+        }
+
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
 
         // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
