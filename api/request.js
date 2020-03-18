@@ -111,7 +111,9 @@ const Request = async ({
             resolve(res.data.data);
           } else if (code === 401) {
             // 检测到状态码401，进行token刷新并重新请求等操作
+            console.log("提醒：token过期，正在重新获取token");
             const token = await getServerToken();
+            console.log("提醒：重新获取token", token);
             fedToken = Object.assign(fedToken, token);
             _refetch({
               url,
@@ -331,8 +333,17 @@ async function getUserInfo(
       header: {
         ...getAuth()
       },
-      success: data => {
-        userFilledInfo = data.data.data;
+      success: async data => {
+        if (data.data.code == 401) {
+          console.log("提醒：token过期，正在重新获取token");
+          const token = await getServerToken();
+          fedToken = Object.assign(fedToken, token);
+          console.log("提醒：重新获取token", token);
+          userFilledInfo = await getUserInfo();
+        } else {
+          userFilledInfo = data.data.data;
+        }
+
         userFilledInfo["userRegisted"] = Object.keys(userFilledInfo).length > 0;
 
         // wx.setStorageSync(userFilledInfofoKey, userFilledInfo);
