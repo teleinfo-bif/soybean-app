@@ -46,8 +46,8 @@ Page({
           isGroupExist({
             groupId: data.id,
             loading: true
-          }).then(data => {
-            console.log('机构有效', data)
+          }).then(res => {
+            console.log('机构有效', res)
             let groupName = data.name
             let groupId = data.id
             let groupType = data.groupType
@@ -123,7 +123,8 @@ Page({
   shareJoniGroup(
     params = {
       groupId: "",
-      userId: ""
+      userId: "",
+      loading: true
     }
   ) {
     console.log("发起请求", params);
@@ -132,6 +133,7 @@ Page({
       quitGroup({
         userId: userId,
         groupId: alreadJoinId,
+        loading: true
       }).then(data => {
         console.log('退群', data)
         joinGroup(params)
