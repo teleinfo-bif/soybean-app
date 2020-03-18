@@ -103,7 +103,8 @@ Page({
         if (res.confirm) {
           delFirstCompanyAct({
             groupId: that.data.groupId,
-            creatorId: app.globalData.userFilledInfo.id
+            creatorId: app.globalData.userFilledInfo.id,
+            loading: true
           }).then((data) => {
             wx.showToast({
               title: '移除成功',

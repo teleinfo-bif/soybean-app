@@ -39,7 +39,8 @@ Page({
     transferCompanyAct({
       groupId: this.data.groupId,
       transferId: transferId,
-      userId: app.globalData.userFilledInfo.id
+      userId: app.globalData.userFilledInfo.id,
+      loading: true
     }).then(data => {
       console.log('====delRes=====', data)
       wx.showToast({
