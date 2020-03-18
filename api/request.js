@@ -98,12 +98,33 @@ const Request = async ({
                 ...then.others
               })
             )
-            .then(resolve);
+            .then(resolve)
+            .catch(reject);
         } else if (res.statusCode == 200) {
+          const { code } = res.data;
           if (url == "/wx/clockln/census/census") {
             resolve(res.data);
-          } else if (res.data.code === 200) {
+          } else if (url == "/wx/user/token" && code === 400) {
+            // 请求token400错误直接reject返回
+            // debugger;
+            reject(res.data);
+          } else if (code === 200) {
             resolve(res.data.data);
+          } else if (code === 401) {
+            // debugger;
+            // 检测到状态码401，进行token刷新并重新请求等操作
+            getServerToken()
+              .then(() =>
+                _refetch({
+                  url,
+                  data,
+                  method,
+                  params,
+                  ...then.others
+                })
+              )
+              .then(resolve)
+              .catch(reject);
           } else {
             // console.log(url + "-" + res.statusCode);
             console.error(
@@ -118,6 +139,7 @@ const Request = async ({
             let title = res.data.msg || "请求错误";
             // 调用全局toast方法
             showToast(title);
+            debugger;
             reject(res.data.data);
           }
         } else {
