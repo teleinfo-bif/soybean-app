@@ -360,19 +360,6 @@ Page({
         this.userPrompt()
         return
       });
-    } else if(zc && !app.globalData.userFilledInfo.userRegisted) { //注册好之后进来，创建机构、机构码进来
-      app.init(globalData => {
-        this.setData({
-          globalData: globalData,
-          userFilledInfo: globalData.userFilledInfo,
-          groupId: groupId,
-          timeStamp: timeStamp,
-          groupName: groupName,
-          zc: zc
-        });
-        this.userPrompt()
-        return
-      });
     } else {
       this.setData({
         globalData: app.globalData,
@@ -453,6 +440,10 @@ Page({
       }
     }).catch(e => {
       console.log("群不存在 ", e)
+      wx.showToast({
+        title: `机构不存在!`,
+        icon: 'none',
+      })
       setTimeout(function () {
         wx.reLaunch({
           url: "/pages/index/index",

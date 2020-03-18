@@ -1,5 +1,5 @@
 // pages/organizationCode/index.js
-import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup } from "../../../api/api";
+import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup, isGroupExist } from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -31,7 +31,8 @@ Page({
     if (code) {
       console.log('code', code);
       fromGroupCodetoId({
-        groupCode: code
+        groupCode: code,
+        loading: true
       }).then(data => {
         // wx.hideLoading()   
         console.log('根据唯一码查看群信息', data);
@@ -42,15 +43,28 @@ Page({
           })
           return
         } else {
-          let groupName = data.name
-          let groupId = data.id
-          let groupType = data.groupType
-          this.setData({
-            joinId: groupId, 
-            joinName: groupName,
-            joinType: groupType
+          isGroupExist({
+            groupId: data.id,
+            loading: true
+          }).then(data => {
+            console.log('机构有效', data)
+            let groupName = data.name
+            let groupId = data.id
+            let groupType = data.groupType
+            this.setData({
+              joinId: groupId,
+              joinName: groupName,
+              joinType: groupType
+            })
+            this.isCanJoinGroup()
+          }).catch(e => {
+            console.log('机构不存在', e)
+            wx.showToast({
+              title: `机构不存在!`,
+              icon: 'none',
+            })
           })
-          this.isCanJoinGroup()
+
 
           //！！！直接处理，不向加群页面跳转了
           // let timeStamp = new Date().getTime();
