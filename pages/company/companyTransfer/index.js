@@ -28,6 +28,7 @@ Page({
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       groupId: that.data.groupId,
+      fromTransferPage:true
     })
     wx.navigateBack({
       delta: 1,

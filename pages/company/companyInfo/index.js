@@ -67,7 +67,7 @@ Page({
   toSetManage(){
     console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
-      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
+      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}&creatUserId=${this.data.data.createUser}`,
     }); 
   },
   toTransferPage(){
@@ -225,15 +225,16 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-/*     if (this.data.fromTransferPage ){
+    if (this.data.fromTransferPage == true){
       this.setData({
         fromTransferPage:false
       })
+      console.log("=====unloadComInfo====", this.data.fromTransferPage)
       wx.reLaunch({
         url: '/pages/index/index',
       })
 
-    } */
+    }
   },
 
   /**
