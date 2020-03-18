@@ -16,7 +16,7 @@ const Request = async ({
   data = {},
   method,
   header,
-  ...other
+  ...others
 } = {}) => {
   // const sessionValidate = await checkSessionKey();
   if (!fedToken || fedToken == "" || fedToken.openid == undefined) {
@@ -72,9 +72,9 @@ const Request = async ({
         ...getAuth(fedToken),
         ...header
       },
-      ...other,
+      ...others,
       // 成功或失败处理
-      complete: res => {
+      complete: async res => {
         // 关闭等待
         try {
           wx.hideLoading();
@@ -88,16 +88,15 @@ const Request = async ({
           resolve(res);
         } else if (res.statusCode === 401) {
           // 检测到状态码401，进行token刷新并重新请求等操作
-          getServerToken()
-            .then(() =>
-              _refetch({
-                url,
-                data,
-                method,
-                params,
-                ...then.others
-              })
-            )
+          const token = await getServerToken();
+          fedToken = Object.assign(fedToken, token);
+          _refetch({
+            url,
+            data,
+            method,
+            params,
+            ...others
+          })
             .then(resolve)
             .catch(reject);
         } else if (res.statusCode == 200) {
@@ -111,18 +110,16 @@ const Request = async ({
           } else if (code === 200) {
             resolve(res.data.data);
           } else if (code === 401) {
-            // debugger;
             // 检测到状态码401，进行token刷新并重新请求等操作
-            getServerToken()
-              .then(() =>
-                _refetch({
-                  url,
-                  data,
-                  method,
-                  params,
-                  ...then.others
-                })
-              )
+            const token = await getServerToken();
+            fedToken = Object.assign(fedToken, token);
+            _refetch({
+              url,
+              data,
+              method,
+              params,
+              ...others
+            })
               .then(resolve)
               .catch(reject);
           } else {
@@ -192,11 +189,12 @@ const _refetch = ({ url, data, method, params, ...others }) => {
 };
 
 //除开上面的调用方式之外，你也可以使用下面的这些方法，只需要关注是否传入method
-const _get = (url, data = {}) => {
+const _get = (url, data = {}, header = {}) => {
   data.size = 20;
   return Request({
     url,
-    data
+    data,
+    header
   });
 };
 const _post = (url, data = {}) => {
@@ -291,7 +289,15 @@ async function getOpenId() {
  * @returns
  */
 async function getServerToken() {
-  return _get("/wx/user/token", { openid: fedToken.openid });
+  return _get(
+    "/wx/user/token",
+    {
+      openid: fedToken.openid
+    },
+    {
+      Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
+    }
+  );
 }
 //获取首页的显示提示语
 function getNotice(cb) {
