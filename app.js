@@ -13,16 +13,18 @@ App({
 
   // 更新用户信息
   async refreshUserInfo(init = false) {
-    if (init) {
-      await this.onLaunch();
-      return this.globalData.userFilledInfo;
-    } else {
-      let userFilledInfo = await getUserInfo();
-      console.log("app.js refreshUserInfo()更新用户信息成功", userFilledInfo);
-      this.setGloableUserInfo(userFilledInfo);
-      console.log("app init 完成初始化");
-      return userFilledInfo;
-    }
+    return new Promise(async (resolve, reject) => {
+      if (init) {
+        await this.onLaunch();
+        resolve(this.globalData.userFilledInfo);
+      } else {
+        let userFilledInfo = await getUserInfo();
+        console.log("app.js refreshUserInfo()更新用户信息成功", userFilledInfo);
+        this.setGloableUserInfo(userFilledInfo);
+        console.log("app init 完成初始化");
+        resolve(userFilledInfo);
+      }
+    });
   },
 
   // 设置app global 用户录入信息
