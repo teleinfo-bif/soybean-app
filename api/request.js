@@ -18,6 +18,7 @@ const Request = async ({
   header,
   ...others
 } = {}) => {
+  console.log("request url:", url);
   // const sessionValidate = await checkSessionKey();
   if (!fedToken || fedToken == "" || fedToken.openid == undefined) {
     console.log(
@@ -302,15 +303,20 @@ async function getServerToken() {
 }
 //获取首页的显示提示语
 function getNotice(cb) {
-  wx.request({
-    url: baseURLNotice,
-    method: "get",
-    success: function(res) {
-      return typeof cb == "function" && cb(res);
-    },
-    fail: function(res) {
-      return typeof cb == "function" && cb(res);
-    }
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: baseURLNotice,
+      success: function(res) {
+        if (res.statusCode == 200 && res.data.code == 200) {
+          resolve(res.data.data);
+        } else {
+          reject(res.data.data);
+        }
+      },
+      fail: function(res) {
+        reject(res.data.data);
+      }
+    });
   });
 }
 /**
@@ -327,6 +333,7 @@ async function getUserInfo(
   }
 ) {
   return new Promise((resolve, reject) => {
+    // _get("/user/exist",)
     wx.request({
       url: baseURL + "/user/exist",
       data: data,

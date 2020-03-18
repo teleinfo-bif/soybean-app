@@ -24,14 +24,16 @@ Page({
     });
   },
   onLoad: async function() {
-    getNotice(data => {
-      console.log("data===", data);
-      if (data.data.success) {
+    getNotice()
+      .then(data => {
         this.setData({
-          notification: data.data.data.title
+          notification: data.title
         });
-      }
-    });
+      })
+      .catch(error => {
+        console.log("错误提醒：首页footer-getNotice()错误", error);
+      });
+
     this.setBarHeight();
     // let { userFilledInfo } = app.globalData;
     if (!app.globalData.appInit) {
@@ -58,9 +60,7 @@ Page({
       hasUserInfo: true
     });
   },
-  onShow() {
-    
-  },
+  onShow() {},
   /**
    * 用户点击右上角分享
    */
