@@ -261,7 +261,8 @@ Page({
       return
     }
     sendSingleUserMsg({
-      openId: openId
+      openId: openId,
+      loading: true
     }).then(data => {
       // console.log('ok', data, data.length == 0, typeof data)
       if (JSON.stringify(data) != "{}") {
@@ -291,7 +292,8 @@ Page({
     };
     console.log(groupId)
     sendGroupUserMsg({
-      groupId: groupId
+      groupId: groupId,
+      loading: true
     }).then(data => {
       console.log('ok', data, typeof data)
       if (JSON.stringify(data) == "{}") {
