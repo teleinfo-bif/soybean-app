@@ -119,9 +119,9 @@ Page({
               }
             })
             }).catch(e => {
-              console.error("错误提醒", error);
+              console.log("====移除异常=====", e);
               wx.showToast({
-                title: "连接超时，请重新操作",
+                title: "网络异常，请重新操作",
                 icon: "none",
                 duration: 2000
               });
@@ -177,6 +177,7 @@ Page({
           quitGroup({
             userId: app.globalData.userFilledInfo.id,
             groupId: tmp,
+            loading:true
           }).then(data => {
             console.log('退群', data)
             wx.showToast({
@@ -191,8 +192,14 @@ Page({
                 }, 1000) //延迟时间
               }
             })
-
-          }) 
+            }).catch(e => {
+              console.log("====移除异常=====", e);
+              wx.showToast({
+                title: "网络异常，请重新操作",
+                icon: "none",
+                duration: 2000
+              })
+            })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
