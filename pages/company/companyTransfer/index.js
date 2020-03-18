@@ -17,6 +17,11 @@ Page({
       inputValue: e.detail.value
     });
   },
+  bindNameInput: function (e) {
+    this.setData({
+      inputNameValue: e.detail.value
+    });
+  },
   pageBack() {
     let that = this
     let pages = getCurrentPages();
@@ -44,18 +49,40 @@ Page({
         success: function () {
           console.log('haha');
           setTimeout(function () {
-            that.pageBack()
+            if (that.data.isJoin == true){
+              that.pageBack()
+            } else {
+              wx.reLaunch({
+                url: '/pages/index/index'
+              })
+            }
+           
           }, 1000) //延迟时间
         }
       });
       this.setData({
         inputValue: ''
       })
-    })
+      }).catch(e => {
+        console.error("错误提醒", error);
+        wx.showToast({
+          title: "连接超时，请重新操作",
+          icon: "none",
+          duration: 2000
+        });
+      });
   },
   join() {
     //this.data.inputValue = '13552157026'
     var that = this
+    if (this.data.inputNameValue == "") {
+      wx.showToast({
+        title: "请填写姓名!",
+        icon: "none",
+        duration: 2000
+      });
+      return;
+    }
     if (this.data.inputValue == "") {
       wx.showToast({
         title: "请填写手机号!",
@@ -88,6 +115,14 @@ Page({
         this.setData({
           transferId: data.id
         });
+        if (data.name != this.data.inputNameValue){
+            wx.showToast({
+              title: "姓名和电话不一致,请重新输入",
+              icon: "none",
+              duration: 2000
+            });
+            return
+          }
         if (data.id == app.globalData.userFilledInfo.id){
           wx.showToast({
             title: "您已是创建者",
@@ -101,10 +136,17 @@ Page({
             content: "确定要转让给" + data.name + "吗？",
             success(res) {
               if (res.confirm) {
-                that.transferAct(that.data.transferId);
+               that.transferAct(that.data.transferId);
               } else if (res.cancel) {
                 console.log('用户点击取消')
               }
+            },
+            fail(res) {
+              wx.showToast({
+                title: "网络异常，请重新操作",
+                icon: "none",
+                duration: 2000
+              });
             }
           })
         }
@@ -135,7 +177,8 @@ Page({
   onLoad: function (options) {
 
     this.setData({
-      groupId: options.groupId
+      groupId: options.groupId,
+      isJoin: options.isJoin
     });
   },
 

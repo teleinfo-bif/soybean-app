@@ -1,7 +1,13 @@
 <!--pages/company/companyTransfer/index.wxml-->
 <view class='addCont'>
        <view class="personal-info-hd">
-          <text class="info-label">创建者手机号</text>
+          <text class="info-label">受让者姓名</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="phone" placeholder-class="placeholder-style" placeholder="请输入姓名"  bindinput="bindNameInput" value='{{inputNameValue}}' maxlength="15" ></input>
+        </view>
+       <view class="personal-info-hd">
+          <text class="info-label">受让者手机号</text>
         </view>
         <view class="personal-info-td">
           <input class="info-input" name="phone" type="number" placeholder-class="placeholder-style" placeholder="请输入手机号"  bindinput="bindKeyInput" value='{{inputValue}}' maxlength="11" ></input>
