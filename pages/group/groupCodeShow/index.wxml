@@ -14,9 +14,9 @@
     <text>您可以通过机构唯一码邀请成员加入,\n 也可以点击上方分享链接快速邀请。</text>
   </view>
 </view>
-<view class="tip-text">
+<!-- <view class="tip-text">
   返回首页，点击机构头像，可以继续完善机构架构。
-</view>
+</view> -->
 <view class="item">
   <view class="btn-item">
     <button bind:tap="quitCodeGroup" class="quit-btn" block>返回首页</button>

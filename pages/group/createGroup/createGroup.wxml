@@ -1,5 +1,5 @@
 <!-- pages/createGroup/createGroup.wxml -->
-<van-dialog
+<!-- <van-dialog
   use-slot
   show="{{ show }}"
   show-cancel-button
@@ -15,7 +15,7 @@
     您可以选择导入机构架构一次完成机构创建，也可以选择先注册，再完善机构架构。\n\n 如选择一次完成，请先按模板填写，发送到微信后再补充注册信息。
     </text>
     </view>
-</van-dialog>
+</van-dialog> -->
 
 <view class="page">
   <view class="personal">
@@ -72,7 +72,7 @@
             <view class="name-info">请输入机构介绍信息</view>
           </view> 
           <view class="">
-            <textarea wx:if="{{ !show }}" class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
+            <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
           </view>
         </view>
         
