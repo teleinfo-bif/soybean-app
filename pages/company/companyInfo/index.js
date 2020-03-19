@@ -67,12 +67,12 @@ Page({
   toSetManage(){
     console.log('====tonextPage=====',this.data.groupId)
     wx.navigateTo({
-      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
+      url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}&creatUserId=${this.data.data.createUser}`,
     }); 
   },
   toTransferPage(){
     wx.navigateTo({
-      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}&isJoin=${!this.data.quitbtn}`,
+      url: `/pages/company/companyTransfer/index?groupId=${this.data.groupId}&isJoin=${this.data.isJoin}`,
     }); 
   },
   existCompanyAct(groupId){
@@ -82,12 +82,13 @@ Page({
     }).then((data) => {
      if(data == false){
        this.setData({
-         quitbtn: true
-       })
-      
+         quitbtn: true,
+         isJoin:false
+       })  
      }else{
        this.setData({
-         quitbtn: false
+         quitbtn: false,
+         isJoin: true
        })
      }
     })
@@ -102,7 +103,8 @@ Page({
         if (res.confirm) {
           delFirstCompanyAct({
             groupId: that.data.groupId,
-            creatorId: app.globalData.userFilledInfo.id
+            creatorId: app.globalData.userFilledInfo.id,
+            loading: true
           }).then((data) => {
             wx.showToast({
               title: '移除成功',
@@ -117,9 +119,9 @@ Page({
               }
             })
             }).catch(e => {
-              console.error("错误提醒", error);
+              console.log("====移除异常=====", e);
               wx.showToast({
-                title: "连接超时，请重新操作",
+                title: "网络异常，请重新操作",
                 icon: "none",
                 duration: 2000
               });
@@ -175,6 +177,7 @@ Page({
           quitGroup({
             userId: app.globalData.userFilledInfo.id,
             groupId: tmp,
+            loading:true
           }).then(data => {
             console.log('退群', data)
             wx.showToast({
@@ -189,8 +192,14 @@ Page({
                 }, 1000) //延迟时间
               }
             })
-
-          }) 
+            }).catch(e => {
+              console.log("====移除异常=====", e);
+              wx.showToast({
+                title: "网络异常，请重新操作",
+                icon: "none",
+                duration: 2000
+              })
+            })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -224,10 +233,11 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    if (this.data.fromTransferPage){
+    if (this.data.fromTransferPage == true){
       this.setData({
         fromTransferPage:false
       })
+      console.log("=====unloadComInfo====", this.data.fromTransferPage)
       wx.reLaunch({
         url: '/pages/index/index',
       })

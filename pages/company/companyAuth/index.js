@@ -276,7 +276,8 @@ Page({
       orginGroupName: options.groupName,
       groupId: options.groupId,
       //joinGroupId: options.groupId,
-      groupName:options.groupName
+      groupName:options.groupName,
+      creatUserId: options.creatUserId
     })
     //this.tree2array(this.data.joinGroupId)
   },
