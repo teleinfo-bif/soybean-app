@@ -432,7 +432,6 @@ Page({
   },
   async setOtherFieldsHide(data, prop) {
     let { fields, otherFieldsList, clocked } = this.data;
-    // debugger;
     let status = data[prop] == "0";
     const liveSelf = data["roomPerson"] == "3";
     console.log(liveSelf);
@@ -614,7 +613,6 @@ Page({
       companyCity,
       locationCity
     } = await this.getAtWorkPlaceState(formData);
-    // debugger;
     fields.forEach(item => {
       // 是否离开公司所在地
       if (item.prop === "leave") {
@@ -650,7 +648,6 @@ Page({
       }
     });
 
-    // debugger;
     this.setData({
       fields
     });
@@ -760,10 +757,6 @@ Page({
   onChangeBaseAddress(e) {
     const { location, address, baseAddress, city } = e.detail;
     this.onAddressChange(location);
-    // this.setData({
-    //   address: address,
-    //   city: city
-    // });
   },
   /**
    * 获取单位省市信息
@@ -830,86 +823,91 @@ Page({
   },
   // 初始化位置信息
   initAddress() {
-    const _this = this;
-    wx.getSetting({
-      success: res => {
-        // 判断用户是否授权了位置信息
-        if (res.authSetting["scope.userLocation"]) {
-          wx.getLocation({
-            isHighAccuracy: true,
-            success: location => {
-              this.setData({ location });
-              reverseAddressFromLocation(location)
-                .then(res => {
-                  this.onAddressChange(res);
-                })
-                .catch(error => {
-                  wx.hideLoading();
-                  wx.showToast({
-                    title: "获取地址失败",
-                    icon: "none"
+    return new Promise(resolve => {
+      const _this = this;
+      wx.getSetting({
+        success: res => {
+          // 判断用户是否授权了位置信息
+          if (res.authSetting["scope.userLocation"]) {
+            wx.getLocation({
+              isHighAccuracy: true,
+              success: location => {
+                this.setData({ location });
+                reverseAddressFromLocation(location)
+                  .then(async res => {
+                    await this.onAddressChange(res);
+                    resolve();
+                  })
+                  .catch(error => {
+                    wx.hideLoading();
+                    wx.showToast({
+                      title: "获取地址失败",
+                      icon: "none"
+                    });
+                    console.error("腾讯地址逆解析接口 error", error);
                   });
-                  console.error("腾讯地址逆解析接口 error", error);
-                });
-            }
-          });
-        } else {
-          console.log("未授权位置信息");
-          wx.authorize({
-            scope: "scope.userLocation",
-            success() {
-              _this.initAddress();
-            },
-            fail(e) {
-              console.log("用户拒绝授权位置信息");
-            }
-          });
+              }
+            });
+          } else {
+            console.log("未授权位置信息");
+            wx.authorize({
+              scope: "scope.userLocation",
+              success() {
+                _this.initAddress();
+              },
+              fail(e) {
+                console.log("用户拒绝授权位置信息");
+              }
+            });
+          }
         }
-      }
+      });
     });
   },
   // 地址选项变化
   onAddressChange(location) {
-    const { fields } = this.data;
+    return new Promise(resolve => {
+      const { fields } = this.data;
 
-    const {
-      province,
-      district,
-      city,
-      street_number
-    } = location.result.address_component;
-    let baseAddress;
-    // 打卡省市拼接给server
-    const locationCity = province + "，" + city;
-    if (province == city) {
-      baseAddress = province;
-    } else {
-      baseAddress = province + city;
-    }
-    fields.forEach(item => {
-      if (item.prop == "address") {
-        item.props["location"] = location;
-        item.props["baseAddress"] = baseAddress;
+      const {
+        province,
+        district,
+        city,
+        street_number
+      } = location.result.address_component;
+      let baseAddress;
+      // 打卡省市拼接给server
+      const locationCity = province + "，" + city;
+      if (province == city) {
+        baseAddress = province;
+      } else {
+        baseAddress = province + city;
       }
-    });
-
-    const formData = {
-      ...this.data.data,
-      address: district + street_number,
-      city: locationCity
-    };
-    this.setData(
-      {
-        fields,
-        data: formData,
-        address: location.result,
-        baseAddress,
+      fields.forEach(item => {
+        if (item.prop == "address") {
+          item.props["location"] = location;
+          item.props["baseAddress"] = baseAddress;
+        }
+      });
+      const formData = {
+        ...this.data.data,
+        address: district + street_number,
         city: locationCity
-      },
-      () => {
-        this.setFieldsFromAddress(formData);
-      }
-    );
+      };
+      this.setData(
+        {
+          fields,
+          data: formData,
+          address: location.result,
+          baseAddress,
+          city: locationCity
+        },
+        () => {
+          resolve();
+          this.setFieldsFromAddress(formData);
+        }
+      );
+    });
   },
   // 根据位置信息修改显示的表单field
 
@@ -923,7 +921,6 @@ Page({
       /^(\d{3})\d{4}(\d{4})$/,
       "$1****$2"
     );
-
     this.setData({
       userFilledInfo,
       data
@@ -968,7 +965,7 @@ Page({
   // 获取用户今日打卡信息
   getUserTodyClockData(params = {}) {
     getTodayClock(params)
-      .then(data => {
+      .then(async data => {
         const resData = data;
         // 打卡数据合并到data中，今日未打卡返回的数据在是{}
         let formData = {
@@ -993,7 +990,7 @@ Page({
         } else {
           // 未打卡开始获取位置信息，获取之前的打卡记录
           if (!params.userId) {
-            this.initAddress();
+            await this.initAddress();
             this.getUserClockListData();
             this.setData({
               clocked: false
@@ -1042,12 +1039,18 @@ Page({
           previousLockData["name"] = previousLockData.userName;
           data["phoneComplete"] = data.phone;
           data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
-          // debugger;
+
           this.setData({
-            data
+            data: {
+              ...this.data.data,
+              ...data
+            }
           });
+          // debugger;
+
           previousLockData["temperatureRadio"] =
             previousLockData.temperature >= 37.3 ? 2 : 1;
+          previousLockData.address = this.data.data.address;
           this.setFieldsFromPreviousClockData(previousLockData);
         } else {
           console.log("提醒：没有打卡数据，无需自动填写");
@@ -1086,7 +1089,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // debugger;
     console.log("clock onload options:", options);
     const { userId = null, clockInTime = getTodayClock() } = options;
     this.setData({

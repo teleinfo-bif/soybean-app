@@ -315,6 +315,8 @@ Page({
     // 需要把服务端存的province-city-district字符串拆分成picker显示的数组
     if (resData && typeof resData.homeAddress === "string") {
       resData.homeAddress = resData.homeAddress.split("-");
+    }
+    if (resData && typeof resData.companyAddress === "string") {
       resData.companyAddress = resData.companyAddress.split("-");
     }
 

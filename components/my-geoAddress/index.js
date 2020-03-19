@@ -27,11 +27,7 @@ Component({
 
         if (location) {
           let baseAddress;
-          const {
-            province,
-            city,
-            district
-          } = location.result.address_component;
+          const { province, city } = location.result.address_component;
           if (province == city) {
             baseAddress = province;
           } else {
