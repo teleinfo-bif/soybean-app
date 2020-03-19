@@ -39,7 +39,7 @@ let fields = [
     prop: "idType",
     require: false,
     props: {
-      placeholder: "证件类型",
+      placeholder: "请选择证件类型",
       itemKey: "id",
       itemLabelKey: "name",
       options: [
@@ -221,7 +221,30 @@ Page({
         ...app.globalData.userInfo,
         loading: true
       };
-      // console.log(formData);
+
+      // 限制身份证类型和好吗必须同时填写
+      if (
+        (formData.idType == null || formData.idType < 0) &&
+        formData.idNumber &&
+        formData.idNumber.length > 0
+      ) {
+        wx.showToast({
+          title: "请选择正确证件类型",
+          icon: "none"
+        });
+        return;
+      }
+      if (
+        formData.idType != null &&
+        formData.idType > 0 &&
+        (!formData.idNumber || formData.idNumber.length == 0)
+      ) {
+        wx.showToast({
+          title: "请填写正确证件号",
+          icon: "none"
+        });
+        return;
+      }
       if (!this.data.userFilledInfo.userRegisted) {
         saveOrUpdateUserInfo(formData)
           .then(async data => {
@@ -269,17 +292,17 @@ Page({
     let tempData = Object.assign({}, data, {
       homeAddress: null,
       detailAddress: "",
-      idType: 4,
+      idType: null,
       idNumber: null,
       companyName: null,
       companyAddress: null,
       companyDetailAddress: null
     });
-    fields[3].props.placeholder = "请输入员工号";
-    fields[3].props.idType = 4;
-    fields[3].props.validate = function(value) {
-      return yuangongka.test(value);
-    };
+    // fields[3].props.placeholder = "请输入员工号";
+    // fields[3].props.idType = 4;
+    // fields[3].props.validate = function(value) {
+    //   return yuangongka.test(value);
+    // };
     // let tempFields = Object.assign({}, fields, {
 
     // })
