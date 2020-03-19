@@ -9,7 +9,7 @@
   .my-form_item-independent {
     margin-top: 10rpx;
     border-top: 1rpx solid #f2f2f2;
-    padding: 20rpx 30rpx 30rpx; }
+    padding: 20rpx 30rpx 30rpx 35rpx; }
   .my-form_item .van-cell {
     padding-right: 30rpx !important; }
     .my-form_item .van-cell::after {
@@ -41,7 +41,6 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 10rpx 0rpx 10rpx;
-    padding-left: 5rpx;
     margin-bottom: 10rpx;
     font-size: 32rpx;
     line-height: 40rpx; }
