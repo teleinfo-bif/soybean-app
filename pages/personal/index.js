@@ -37,6 +37,7 @@ let fields = [
     title: "证件类型",
     type: "select",
     prop: "idType",
+    require: false,
     props: {
       placeholder: "证件类型",
       itemKey: "id",
@@ -51,6 +52,7 @@ let fields = [
     title: "证件号码",
     type: "input",
     prop: "idNumber",
+    require: false,
     props: {
       placeholder: "请输入证件号码",
       idType: 1,
