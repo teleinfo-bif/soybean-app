@@ -65,14 +65,14 @@ let fields = [
     prop: "bidAddress",
     hide: true,
     props: {
-      placeholder: "永久数字ID",
-      require: false
+      placeholder: "永久数字ID"
     }
   },
   {
     title: "单位名称",
     type: "input",
     prop: "companyName",
+    require: false,
     props: {
       placeholder: "请输入单位名称"
     }
@@ -89,6 +89,7 @@ let fields = [
     title: "单位详细地址",
     type: "input",
     prop: "companyDetailAddress",
+    require: false,
     props: {
       placeholder: "请输入单位详细地址",
       addressKey: ""
