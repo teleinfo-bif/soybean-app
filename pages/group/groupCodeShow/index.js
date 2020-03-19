@@ -10,19 +10,21 @@ Page({
     groupCode: '',
     groupName: '',
     groupId: '', 
+    confirmText: '加入机构'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const { groupCode } = options;
+    const { groupCode,finished } = options;
     if (!app.globalData.appInit) {
       app.init(globalData => {
         this.setData({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo,
           groupCode: groupCode,
+          confirmText: finished?'加入机构':'确定'
         });
         fromGroupCodetoId({
           groupCode: groupCode
@@ -40,6 +42,7 @@ Page({
         globalData: app.globalData,
         userFilledInfo: app.globalData.userFilledInfo,
         groupCode: groupCode,
+        confirmText: finished?'加入机构':'确定'
       });
       fromGroupCodetoId({
         groupCode: groupCode
@@ -68,8 +71,14 @@ Page({
   },
 
   joinCodeGroup: function (code) {
-    const {groupName, groupId } = this.data
+    const {groupName, groupId, confirmText } = this.data
     let timeStamp = new Date().getTime();
+    if(confirmText=='确定') {
+      wx.navigateTo({
+        url: `/pages/index/index`,
+      });
+      return
+    }
     wx.navigateTo({
       url: `/pages/group/shareJoin/index?zc=1&groupName=${groupName}&groupId=${groupId}&timeStamp=${timeStamp}`,
     });

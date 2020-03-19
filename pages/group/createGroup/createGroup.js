@@ -38,6 +38,8 @@ Page({
     region: [],
     group_address_picker: '',
     // customItem: '全部',
+    show: true,
+    dialogPicture: '../../../static/images/create_dialog.png'
   },
 
   /**
@@ -64,8 +66,6 @@ Page({
       });
       this.queryUserInfo()
     }
-
-
   },
 
   /**
@@ -172,8 +172,6 @@ Page({
       warn = "请选择您的机构地址!"
     } else if (e.detail.value.group_address_detail == "") {
       warn = "请填写机构详细地址!"
-    } else if (e.detail.value.group_file == "") {
-      warn = "请导入机构架构!"
     } else if (e.detail.value.group_applicant == "") {
       warn = "请填写您的姓名!"
     } else if (e.detail.value.group_phone == "") {
@@ -205,7 +203,7 @@ Page({
            console.log('1', data)
            let code = data;
            wx.navigateTo({
-              url: `/pages/group/groupCodeShow/index?groupCode=${code}`,
+              url: `/pages/group/groupCodeShow/index?groupCode=${code}&finished=${e.detail.value.group_file}`,
            });           
       }).catch(e => {
         console.log(e)
@@ -268,6 +266,9 @@ Page({
       region: e.detail.value,
       group_address_picker: `${region[0]}，${region[1]}，${region[2]}`
     })
+  },
+  
+  onClose() {
+    this.setData({ show: false });
   }
-
 })

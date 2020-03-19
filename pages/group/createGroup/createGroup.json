@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-dialog": "vant-weapp/dialog"
+  },
   "navigationBarTitleText": "注册新机构"
 }

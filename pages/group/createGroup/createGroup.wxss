@@ -114,16 +114,23 @@ page {
     color:rgba(66,118,255,1);
 }
 .download-info-item {
+    margin-left: 20rpx;
+    padding-left: 20rpx;
+    border-left: 1rpx solid #D8D8D8;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 .info-label-img {
     display: block;
-    width: 40rpx;
-    height: 40rpx;
+    width: 44rpx;
+    height: 35rpx;
 }
-
+.download-info-item-text {
+    color:#4276FF;
+    text-decoration:underline;
+    padding-left: 8rpx;
+}
 .add-img {
     display: flex;
     justify-content: center;
@@ -203,4 +210,23 @@ page {
     text-align: center;
     margin-top: 28rpx;
     margin-bottom: 40rpx;
+}
+
+.dialog-pic {
+    width: 100%;
+    height: 274rpx;
+}
+
+.dialog-text {
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    padding-bottom: 50rpx;
+    font-size:28rpx;
+    font-family:FZLTXHK--GBK1-0,FZLTXHK--GBK1;
+    font-weight:normal;
+    color:rgba(51,51,51,1);
+    line-height:50rpx;
+}
+.van-button--default {
+    color: #1989fa !important;
 }
