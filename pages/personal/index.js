@@ -207,7 +207,7 @@ Page({
     if ((!userRegisted || (userRegisted && edit)) && validate) {
       let formData = this.data.data;
       formData.idType =
-        typeof formData.idType == "object"
+        typeof formData.idType == "object" && formData.idType
           ? formData.idType.id
           : formData.idType;
       formData.homeAddress = Array.isArray(formData.homeAddress)
