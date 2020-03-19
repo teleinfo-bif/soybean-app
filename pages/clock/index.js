@@ -917,7 +917,6 @@ Page({
   setUserFilledInfo() {
     const { userFilledInfo } = app.globalData;
     let { data } = this.data;
-    // debugger;
     data["name"] = userFilledInfo.name || "";
     data["phoneComplete"] = userFilledInfo.phone || "";
     data["phone"] = userFilledInfo.phone.replace(
@@ -1013,20 +1012,6 @@ Page({
   async getUserClockListData() {
     getUserClockList({})
       .then(resData => {
-        // let formData = resData.records[0];
-        // formData["name"] = formData.userName;
-        // formData["phoneComplete"] = formData.phoe;
-        // formData["temperatureRadio"] = formData.temperature >= 37.3 ? 2 : 1;
-        // formData.phone = formData.phone.replace(
-        //   /^(\d{3})\d{4}(\d{4})$/,
-        //   "$1****$2"
-        // );
-        // this.setData({
-        //   // clocked: true,
-        //   data: formData
-        // });
-        // this.setFieldsFromClockData(formData);
-        // return;
         // 需要自动填写的字段
         if (resData.total > 0) {
           const autoFilledProps = [
@@ -1053,7 +1038,9 @@ Page({
           autoFilledProps.forEach(prop => {
             data[prop] = previousLockData[prop];
           });
-          data["phoneComplete"] = data.phoe;
+          data["name"] = previousLockData.userName;
+          previousLockData["name"] = previousLockData.userName;
+          data["phoneComplete"] = data.phone;
           data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
           // debugger;
           this.setData({
