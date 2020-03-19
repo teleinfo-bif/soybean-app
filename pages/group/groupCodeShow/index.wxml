@@ -1,25 +1,27 @@
-<!--pages/group/groupCodeShow/index.wxml-->
+<!-- pages/group/groupCodeShow/index.wxml -->
 <view class="container">
   <view class="con">
     <view class="text">您的机构唯一码</view>
     <button open-type='share' hover-class="btn-hover">
-      <image style="width:54rpx;height:54rpx;" src="../../../static/images/fenxiang.png" />
+      <image style="width:44rpx;height:44rpx;" src="../../../static/images/group_share.png" />
     </button>
   </view>
   <view class="code" bind:tap="pasteCode">
     <view class="code-text">{{groupCode}}</view>
-    <image style="width:40rpx;height:40rpx;" src="../../../static/images/fuzhi.png" />
+    <image style="width:45rpx;height:45rpx;" src="../../../static/images/group_copy.png" />
   </view>
   <view class="pro">
     <text>您可以通过机构唯一码邀请成员加入,\n 也可以点击上方分享链接快速邀请。</text>
   </view>
 </view>
-
+<view class="tip-text">
+  返回首页，点击机构头像，可以继续完善机构架构。
+</view>
 <view class="item">
   <view class="btn-item">
     <button bind:tap="quitCodeGroup" class="quit-btn" block>返回首页</button>
   </view>
   <view class="btn-item">
-    <button bind:tap="joinCodeGroup" class="join-btn" block>加入机构</button>
+    <button bind:tap="joinCodeGroup" class="join-btn" block>{{confirmText}}</button>
   </view>
 </view>
