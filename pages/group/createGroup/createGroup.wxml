@@ -72,7 +72,7 @@
             <view class="name-info">请输入机构介绍信息</view>
           </view> 
           <view class="">
-            <textarea class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
+            <textarea wx:if="{{ !show }}" class="introduce-input" name="group_introduce" placeholder-class="placeholder-style" placeholder="{{placeholder_group_introduce}}" maxlength="200" />
           </view>
         </view>
         

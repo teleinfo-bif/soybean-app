@@ -245,6 +245,7 @@ Page({
 
 
   downloadStructure: function () {
+    this.setData({ show: false });
     console.log('下载模板',`${baseURLDownload}/download/group.xlsx`)
     let tempFileURL = `${baseURLDownload}/download/group.xlsx`
     wx.setClipboardData({
