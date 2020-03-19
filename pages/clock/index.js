@@ -823,7 +823,7 @@ Page({
   },
   // 初始化位置信息
   initAddress() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const _this = this;
       wx.getSetting({
         success: res => {
@@ -857,6 +857,7 @@ Page({
               },
               fail(e) {
                 console.log("用户拒绝授权位置信息");
+                resolve();
               }
             });
           }
