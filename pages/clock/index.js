@@ -690,13 +690,12 @@ Page({
         离开： 显示(nobackreason gobacktime leavetime flight transport ) 隐藏()
         未离开：显示(nobackreason gobacktime) 隐藏(leavetime flight transport)
       */
-    // debugger;
     console.log("leavve start");
     const { atWorkPlace } = this.data;
     console.log("atWorkPlace", atWorkPlace);
     let hideList = [];
     let showList = [];
-    // debugger;
+
     if (atWorkPlace) {
       if (formData["leave"] == "2") {
         showList = ["leavetime", "flight", "transport"];
@@ -730,14 +729,10 @@ Page({
     return this.setFieldsHide(hideList, showList);
   },
   async setFieldsFromTemperature(formData) {
-    // let disable;
     if (formData.temperatureRadio == 1) {
-      // disable = false;
       this.setFieldsHide(["temperature"], []);
     } else {
       this.setFieldsHide([], ["temperature"]);
-
-      // disable = true;
     }
     // const { fields } = this.data;
     // fields.forEach((item, index) => {
@@ -759,8 +754,6 @@ Page({
    * @param {*} data userfilledData
    */
   setFields(formData) {
-    // this.setFieldsFromAddress(formData);
-    // this.setFieldsFromLeave(formData);
     this.setFieldsFromTemperature(formData);
   },
   // 修改打卡地点
@@ -779,61 +772,61 @@ Page({
    * @returns {atWorkPlace, companyProvince, companyCity}
    */
   async getAtWorkPlaceState(formData) {
-    console.log("getAtWorkPlaceState 开始执行");
-    let { clocked, address, userFilledInfo } = this.data;
-    const { companyAddress = "" } = clocked ? formData : userFilledInfo;
+    return new Promise((resolve, reject) => {
+      console.log("getAtWorkPlaceState 开始执行");
+      let { clocked, address, userFilledInfo } = this.data;
+      const { companyAddress = "" } = clocked ? formData : userFilledInfo;
 
-    if (!companyAddress || companyAddress.length == 0) {
-      console.error("提醒：用户没有录入单位位置");
-      return;
-    }
-    // debugger;
-    // 已打卡从返回数据中分离省市信息，未打卡从定位信息中分离数据
-    let [companyProvince, companyCity] = Array.isArray(companyAddress)
-      ? companyAddress
-      : companyAddress.split("-");
-    console.log("获取的公司地址:", companyProvince, companyCity);
-    let locationProvince, locationCity;
-    // 是否在工作地
-    let atWorkPlace;
-    // 判断省份和城市相同，则位置在工作地
-    console.log("今日打卡情况clocked:", clocked);
-    if (clocked) {
-      const result = formData.city.split("，");
-      console.log("已打卡，根据使用city当做打卡地判断");
-      locationProvince = result[0];
-      locationCity = result[1];
-      // [(locationProvince, locationCity)] = result;
-      atWorkPlace =
-        companyProvince == locationProvince && companyCity == locationCity;
-    } else {
-      console.log("已打卡，根据使用location当做打卡地判断");
-      // debugger;
-      let locationed = Object.keys(address).length > 0;
-      console.log("判断是否已经定位成功：locationed", locationed);
-      locationProvince = locationed ? address.address_component.province : "";
-      locationCity = locationed ? address.address_component.city : "";
-      atWorkPlace =
-        companyProvince == locationProvince && companyCity == locationCity;
-      console.log(
-        "定位省市县：locationed",
-        "locationProvince",
+      if (!companyAddress || companyAddress.length == 0) {
+        console.error("提醒：用户没有录入单位位置");
+        resolve();
+      }
+      // 已打卡从返回数据中分离省市信息，未打卡从定位信息中分离数据
+      let [companyProvince, companyCity] = Array.isArray(companyAddress)
+        ? companyAddress
+        : companyAddress.split("-");
+      console.log("获取的公司地址:", companyProvince, companyCity);
+      let locationProvince, locationCity;
+      // 是否在工作地
+      let atWorkPlace;
+      // 判断省份和城市相同，则位置在工作地
+      console.log("今日打卡情况clocked:", clocked);
+      if (clocked) {
+        const result = formData.city.split("，");
+        console.log("已打卡，根据使用city当做打卡地判断");
+        locationProvince = result[0];
+        locationCity = result[1];
+        // [(locationProvince, locationCity)] = result;
+        atWorkPlace =
+          companyProvince == locationProvince && companyCity == locationCity;
+      } else {
+        console.log("已打卡，根据使用location当做打卡地判断");
+        let locationed = Object.keys(address).length > 0;
+        console.log("判断是否已经定位成功：locationed", locationed);
+        locationProvince = locationed ? address.address_component.province : "";
+        locationCity = locationed ? address.address_component.city : "";
+        atWorkPlace =
+          companyProvince == locationProvince && companyCity == locationCity;
+        console.log(
+          "定位省市县：locationed",
+          "locationProvince",
+          locationProvince,
+          "locationCity",
+          locationCity
+        );
+      }
+      const workData = {
+        atWorkPlace,
+        companyProvince,
+        companyCity,
         locationProvince,
-        "locationCity",
         locationCity
-      );
-    }
-    const workData = {
-      atWorkPlace,
-      companyProvince,
-      companyCity,
-      locationProvince,
-      locationCity
-    };
-    this.setData({
-      ...workData
+      };
+      this.setData({
+        ...workData
+      });
+      resolve(workData);
     });
-    return workData;
   },
   // 初始化位置信息
   initAddress() {
@@ -945,6 +938,7 @@ Page({
     fields.pop();
     this.setData({ fields });
   },
+  // 根据今天打卡记录显示表单
   async setFieldsFromClockData(formData) {
     await this.setFieldsDisableFromClockData();
     await this.setFieldsFromAddress(formData);
@@ -952,15 +946,19 @@ Page({
     this.setFieldsFromLeave(formData);
     const { otherFieldsList } = this.data;
     for (let prop in otherFieldsList) {
-      // let value = formData[prop];
-      // debugger;
       this.setOtherFieldsHide(formData, prop);
     }
   },
+  // 根据以前打卡数据自动填充表单
   async setFieldsFromPreviousClockData(formData) {
+    // await this.setFieldsDisableFromClockData();
     await this.setFieldsFromAddress(formData);
     await this.setFieldsFromTemperature(formData);
     await this.setFieldsFromLeave(formData);
+    const { otherFieldsList } = this.data;
+    for (let prop in otherFieldsList) {
+      this.setOtherFieldsHide(formData, prop);
+    }
     // const { otherFieldsList } = this.data;
     // for (let prop in otherFieldsList) {
     //   let value = formData[prop];
@@ -1015,6 +1013,20 @@ Page({
   async getUserClockListData() {
     getUserClockList({})
       .then(resData => {
+        // let formData = resData.records[0];
+        // formData["name"] = formData.userName;
+        // formData["phoneComplete"] = formData.phoe;
+        // formData["temperatureRadio"] = formData.temperature >= 37.3 ? 2 : 1;
+        // formData.phone = formData.phone.replace(
+        //   /^(\d{3})\d{4}(\d{4})$/,
+        //   "$1****$2"
+        // );
+        // this.setData({
+        //   // clocked: true,
+        //   data: formData
+        // });
+        // this.setFieldsFromClockData(formData);
+        // return;
         // 需要自动填写的字段
         if (resData.total > 0) {
           const autoFilledProps = [
@@ -1024,7 +1036,17 @@ Page({
             "gobacktime",
             "transport",
             "flight",
-            "nobackreason"
+            "nobackreason",
+            "temperature",
+            "healthy",
+            "comfirmed",
+            "admitting",
+            "roomPerson",
+            "roomPersonOther",
+            "roomCompany",
+            "roomCompanyOther",
+            "wuhan",
+            "jobstatus"
           ];
           const previousLockData = resData.records[0];
           let { data } = this.data;
@@ -1040,7 +1062,6 @@ Page({
           previousLockData["temperatureRadio"] =
             previousLockData.temperature >= 37.3 ? 2 : 1;
           this.setFieldsFromPreviousClockData(previousLockData);
-          // this.setFieldsFromAddress()
         } else {
           console.log("提醒：没有打卡数据，无需自动填写");
         }
