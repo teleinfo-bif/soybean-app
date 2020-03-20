@@ -99,13 +99,14 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: data.name
     // });
+    let temp = children.filter(obj=>!(obj.name=="变动人员" && obj.userAccount==0))
     getServerTime()
       .then(data => {
         let now = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
         let clockInTime = typeof data == "string" ? data.split(' ')[0] : getyyyyMMdd(new Date());
         this.setData(
           {
-            children: children,
+            children: temp,
             groupId: id,
             groupName: name,
             managers: "" ? "" : managers.split(","),
