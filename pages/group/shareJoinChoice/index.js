@@ -179,8 +179,10 @@ Page({
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
+      let temp = data.filter(obj=>obj.name!=="变动人员")
+      // console.log(data, temp)
       this.setData({
-          companyArray:data
+        companyArray:temp
         })
     })
   },
