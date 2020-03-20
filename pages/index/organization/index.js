@@ -1,5 +1,5 @@
 // pages/index/organization/index.js
-import { getUserGroupTree } from "../../../api/api";
+import { getUserGroupTree, getUserCurrentGroup, fromGroupCodetoId } from "../../../api/api";
 const app = getApp();
 Component({
   /**
@@ -42,36 +42,57 @@ Component({
       const { userFilledInfo } = app.globalData;
 
       if (userFilledInfo.userRegisted) {
+        getUserCurrentGroup({
+          groupId: app.globalData.userFilledInfo.userId
+        }).then(data => {
+          console.log('查询用户已加入的群', data)
+          let groupCode = data.groupCode
+          let groupIdentify = data.groupIdentify
+          let alreadJoin = data.name
+          let alreadJoinId = data.id
+          if(groupCode && groupCode.substring(groupCode.length-8)=="_NO_DEPT") {
+            fromGroupCodetoId({
+              groupCode: groupIdentify,
+            }).then(res => {
+              console.log('根据唯一码查看群信息', res);
+              if (JSON.stringify(res) == "{}") {
+                wx.showToast({
+                  title: `您所在的一级机构已经不存在！`,
+                  icon: 'none',
+                })
+                return
+              } else {
+                let groupName = res.name
+                let groupId = res.id
+                wx.showModal({
+                  title: "提示",
+                  content: `您所在机构发生架构调整，请重新选择所在部门！`,
+                  showCancel: true,
+                  success(res) {
+                    if (res.confirm) {
+                      wx.navigateTo({
+                        url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
+                      });
+                    } 
+                  }
+                });
+              }
+            })          
+          } else {
+            console.log("用户所没加群或者所在群没有变动");
+          }
+        }).catch(e=>{
+          console.log('查询用户已加入的群出错', e)
+        })
         getUserGroupTree({}).then(data => {
           console.log(
             "===============用户管理部门：===============\n",
             data.length,
             data
           );
-          // var dataNew=[] //保存过滤之后的二级部门
-          // var ids = '';//既有一级又有二级部门的id
-          //重组data,去除二级部门的权限
-          // data.map((val,index)=>{
-          //   if(val.children.length > 0){
-          //     val.children.map((value,index)=>{
-          //       if (value.managers.indexOf(app.globalData.userFilledInfo.id>-1))
-          //       {
-          //         ids+=value.id+","
-          //       }
-          //     })
-          //   }
-          // })
-          // data.map((val,index)=>{
-          //   if (val.children.length == 0 && ids.indexOf(val.id) ==-1){
-          //     dataNew.push(val)
-          //   }
-          //   if (val.children.length> 0){
-          //     dataNew.push(val)
-          //   }
-          // })
-
+          let temp = data.filter(obj=>obj.name!=="变动人员")
           this.setData({
-            groupList: data
+            groupList: temp
           });
         });
       }
