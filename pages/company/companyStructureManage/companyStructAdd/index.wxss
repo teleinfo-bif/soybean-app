@@ -1,4 +1,4 @@
-/* pages/company/companyTransfer/index.wxss */
+/* pages/company/companyAuth/companyAuthAdd/index.wxss */
 page{
   background-color: rgba(249, 249, 249, 1); 
 }
@@ -31,7 +31,6 @@ page{
 .personal-info-td {
   padding-bottom:20rpx;
   margin-left:30rpx;
-  border-bottom: 1rpx solid rgba(249, 249, 249, 1);
 }
 .quit-join-group {
     width: 750rpx;

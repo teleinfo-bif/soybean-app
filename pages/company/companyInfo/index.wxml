@@ -68,11 +68,22 @@
         <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
       </view>
     </view>
-    <view class='devide-content' />
+  </block>
+    <block wx:if="{{comapnyStructBtn == true}}">
+    <view class='title' bindtap='toSetStruct'>
+      <view class='logo-head'>
+        <image class='logo-head-img' src='../../../static/images/comStruct.png'></image>
+        <view class='logo-head-name'>机构架构管理</view>
+      </view>
+      <view class='title-value-index'>
+        <image class='arrowImg' src='../../../static/images/dayuhao.png'></image>
+      </view>
+    </view>
   </block>
 
 
   <!--创建者转让-->
+  <view class='devide-content-2' />
   <block wx:if="{{transferComapnyBtn == true}}">
     <view class='title' bindtap='toTransferPage'>
       <view class='logo-head'>

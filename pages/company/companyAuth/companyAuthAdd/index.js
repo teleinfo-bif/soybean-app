@@ -1,11 +1,8 @@
 // pages/company/companyAuth/companyAuthAdd/index.js
 const app = getApp();
-// import { getGroupAddManager, addDataManager, addManager } from "../../../../api/api";
-import { getGroupAddManager, addManager, addDataManager, } from "../../../../api/api";
-import { baseURL } from "../../../../config/index";
+import { getGroupAddManager, addManager, addDataManager } from "../../../../api/api";
 var pages = getCurrentPages();   //当前页面
 
-console.log("======currentPage=====")
 Page({
   /**
    * 页面的初始数据

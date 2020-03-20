@@ -25,7 +25,9 @@
     "pages/company/companyAuth/companyAuthAdd/index",
     "pages/company/companySelect/index",
     "pages/statistics/status/index",
-    "pages/company/companyTransfer/index"
+    "pages/company/companyTransfer/index",
+    "pages/company/companyStructureManage/index",
+    "pages/company/companyStructureManage/companyStructAdd/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

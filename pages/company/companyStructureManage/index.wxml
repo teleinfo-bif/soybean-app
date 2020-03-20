@@ -1,0 +1,70 @@
+<view class='head'>架构管理</view>
+<view class='dataCent'>
+  <block wx:for="{{arrayMenu}}" wx:key='index' wx:for-item='item1'>
+    <view class='item'  bindtap='' style="width:750rpx;padding-left:30rpx;" >
+       <view class='item-name' style="width:480rpx;"> {{item1.name}} </view>
+       <image class='add-img' data-id="{{item1.id}}" src="/static/images/add.png" style="margin-left:164rpx;" bindtap="toAddPage"></image>
+    </view>
+        <block wx:if="{{item1.children.length != 0}}" wx:key='index'  wx:for="{{item1.children}}" wx:for-item='item2' >
+          <view class='item'  bindtap=''  style="width:auto;margin-left:50rpx;" >
+            <view class='item-name'style="width:460rpx;"> {{item2.name}} </view>
+            <image class='del-img' data-id="{{item2.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"  wx:if="{{item2.name != '变动人员'}}"></image>
+            <image class='add-img' data-id="{{item2.id}}" src="/static/images/add.png" bindtap="toAddPage" wx:if="{{item2.name != '变动人员'}}"></image>
+          </view>
+          <block wx:if="{{item2.children.length != 0}}" wx:key='index'  wx:for="{{item2.children}}" wx:for-item='item3'>
+            <view class='item'  bindtap=''  style="width:auto;margin-left:70rpx;">
+              <view class='item-name' style="width:440rpx;"> {{item3.name}} </view>
+              <image class='del-img' data-id="{{item3.id}} " bindtap="delDepartConfirm"  src="/static/images/del.png"></image>
+              <image class='add-img' data-id="{{item3.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+            </view>
+             <block wx:if="{{item3.children.length != 0}}"wx:key='index'  wx:for="{{item3.children}}" wx:for-item='item4'>
+                <view class='item'  bindtap='' style="width:auto;margin-left:90rpx;">
+                  <view class='item-name'style="width:420rpx;"> {{item4.name}} </view>
+                  <image class='del-img' data-id="{{item4.id}}" src="/static/images/del.png"  bindtap="delDepartConfirm"></image>
+                  <image class='add-img' data-id="{{item4.id}}"src="/static/images/add.png" bindtap="toAddPage"></image>
+                </view>
+                <block wx:if="{{item4.children.length != 0}}" wx:key='index' wx:for="{{item4.children}}" wx:for-item='item5'>
+                    <view class='item'  bindtap='' style="width:auto;margin-left:110rpx;" >
+                      <view class='item-name' style="width:400rpx;"> {{item5.name}} </view>
+                      <image class='del-img' data-id="{{item5.id}}"  src="/static/images/del.png"  bindtap="delDepartConfirm"></image>
+                      <image class='add-img' data-id="{{item5.id}}"  src="/static/images/add.png" bindtap="toAddPage"></image>
+                    </view>
+                    <block wx:if="{{item5.children.length != 0}}"wx:key='index'  wx:for="{{item5.children}}" wx:for-item='item6'>
+                        <view class='item'  bindtap='' style="width:auto;margin-left:130rpx;">
+                          <view class='item-name' style="width:380rpx;"> {{item6.name}} </view>
+                          <image class='del-img' data-id="{{item6.id}}"  src="/static/images/del.png"  bindtap="delDepartConfirm"></image>
+                          <image class='add-img' data-id="{{item6.id}}"  src="/static/images/add.png" bindtap="toAddPage"></image>
+                        </view>
+                        <block wx:if="{{item6.children.length != 0}}" wx:key='index' wx:for="{{item6.children}}" wx:for-item='item7'>
+                        <view class='item'  bindtap='' style="width:auto;margin-left:150rpx;" >
+                          <view class='item-name' style="width:360rpx;"> {{item7.name}} </view>
+                          <image class='del-img' data-id="{{item7.id}}" src="/static/images/del.png"  bindtap="delDepartConfirm"></image>
+                          <image class='add-img' data-id="{{item7.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+                        </view>
+                        </block>
+                   </block>
+               </block>
+             </block>
+          </block>
+        </block>
+
+  </block>
+</view>
+<!-- <view class='dataCent'>
+  <view class='MenuDiv' wx:for="{{arrayMenu}}" data-id="{{item.id}}" bindtap='clickMenu'>
+    <view class='leftimg'>
+      <image src="https://jiqiren.icehot.cc/wxtest/img2.png"></image>
+    </view>
+    <view  class='rightimg'>
+      <view  class='rightimg-top'>
+        {{item.topcent}}
+      </view>
+      <view  class='rightimg-bot'>
+      {{item.botcent}}
+      </view>
+      <view class='bottomImages' hidden='{{item.hideHidden}}'>
+        <view wx:for="{{item.menu}}">{{item.cent}}</view>
+      </view>
+    </view>
+  </view>
+</view> -->

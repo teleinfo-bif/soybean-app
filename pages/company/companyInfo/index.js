@@ -58,6 +58,15 @@ Page({
           delFirstComapnyBtn: true
         })
       }
+      if (data.createUser == app.globalData.userFilledInfo.id) {
+        this.setData({
+          comapnyStructBtn: true
+        })
+      } else {
+        this.setData({
+          comapnyStructBtn: false
+        })
+      }
       this.setData({
         data: data,
         address: address
@@ -69,6 +78,11 @@ Page({
     wx.navigateTo({
       url: `/pages/company/companyAuth/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}&creatUserId=${this.data.data.createUser}`,
     }); 
+  },
+  toSetStruct() {
+    wx.navigateTo({
+      url: `/pages/company/companyStructureManage/index?groupId=${this.data.groupId}&groupName=${this.data.data.name}`,
+    });
   },
   toTransferPage(){
     wx.navigateTo({
