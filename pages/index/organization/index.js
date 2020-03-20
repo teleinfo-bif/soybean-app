@@ -17,8 +17,24 @@ Component({
     groupData: {}
   },
   lifetimes: {
-    async attached() {
-      // console.log("-----管理组织-----");
+    // async attached() {
+    //   let { globalData } = app;
+    //   if (app.globalData.userFilledInfo.userRegisted == null) {
+    //     app.init(globalData => {
+    //       this.setData({
+    //         globalData,
+    //         userFilledInfo: globalData.userFilledInfo
+    //       });
+    //       this.getData();
+    //     });
+    //   } else {
+    //     this.getData();
+    //   }
+    // }
+  },
+  pageLifetimes: {
+    show: function () {
+      // 页面被展示
       let { globalData } = app;
       if (app.globalData.userFilledInfo.userRegisted == null) {
         app.init(globalData => {
@@ -33,7 +49,6 @@ Component({
       }
     }
   },
-
   /**
    * 组件的方法列表
    */
