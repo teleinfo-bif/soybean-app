@@ -83,7 +83,8 @@ Page({
   delStructDepart(delId){
     delCompanyStructAct({
       groupId: delId,
-      userId: app.globalData.userFilledInfo.id
+      userId: app.globalData.userFilledInfo.id,
+      loading: true
     }).then(data => {
       console.log('====delRes=====', data)
       this.treeArray(this.data.groupId, this.data.groupName)

@@ -33,7 +33,8 @@ Page({
     addCompanyStructAct({
       name: this.data.inputValue,
       parentId: this.data.parentId,
-      userId: app.globalData.userFilledInfo.id
+      userId: app.globalData.userFilledInfo.id,
+      loading:true
     }).then(data => {
       wx.showToast({
         title: "添加成功",
