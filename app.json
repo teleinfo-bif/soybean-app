@@ -27,7 +27,8 @@
     "pages/statistics/status/index",
     "pages/company/companyTransfer/index",
     "pages/company/companyStructureManage/index",
-    "pages/company/companyStructureManage/companyStructAdd/index"
+    "pages/company/companyStructureManage/companyStructAdd/index",
+    "pages/help/service/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

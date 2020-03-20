@@ -1,0 +1,13 @@
+<!--pages/help/service/index.wxml-->
+<view class="info">
+    <view class="service">
+        <view class="title" bind:tap="toHelp">
+            使用帮助
+        </view>
+    </view>
+    <view class="service">
+        <view class="title">
+            <button open-type="contact" bindcontact="handleContact">在线客服</button>
+        </view>
+    </view>
+</view>
