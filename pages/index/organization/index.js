@@ -42,7 +42,6 @@ Component({
       const { userFilledInfo } = app.globalData;
 
       if (userFilledInfo.userRegisted) {
-        // debugger
         getUserGroupTree({}).then(data => {
           console.log(
             "===============用户管理部门：===============\n",
@@ -60,7 +59,7 @@ Component({
           //         ids+=value.id+","
           //       }
           //     })
-          //   } 
+          //   }
           // })
           // data.map((val,index)=>{
           //   if (val.children.length == 0 && ids.indexOf(val.id) ==-1){
@@ -93,7 +92,6 @@ Component({
           url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
         });
       }
-    },
-
+    }
   }
 });

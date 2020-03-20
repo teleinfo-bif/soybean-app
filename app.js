@@ -44,9 +44,16 @@ App({
       // 请求完成之后，执行回调队列中的任务
       this.callbackList.forEach(callback => {
         // console.log(callback);
-        callback(this.globalData);
+        try {
+          callback(this.globalData);
+        } catch (error) {
+          console.error(
+            `错误提醒：app.js callbackList ${callback} error`,
+            error
+          );
+        }
       });
-      this.callback = [];
+      this.callbackList = [];
       console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
       resolve();
     });
