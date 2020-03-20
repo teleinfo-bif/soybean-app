@@ -9,6 +9,7 @@ Page({
    */
   data: {
     groupId: "",
+    inputValue:'',
   },
   bindKeyInput: function (e) {
     this.setData({
