@@ -8,8 +8,8 @@
         <block wx:if="{{item1.children.length != 0}}" wx:key='index'  wx:for="{{item1.children}}" wx:for-item='item2' >
           <view class='item'  bindtap=''  style="width:auto;margin-left:50rpx;" >
             <view class='item-name'style="width:460rpx;"> {{item2.name}} </view>
-            <image class='del-img' data-id="{{item2.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"  ></image>
-            <image class='add-img' data-id="{{item2.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+            <image class='del-img' data-id="{{item2.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"  wx:if="{{item2.name != '变动人员'}}"></image>
+            <image class='add-img' data-id="{{item2.id}}" src="/static/images/add.png" bindtap="toAddPage" wx:if="{{item2.name != '变动人员'}}"></image>
           </view>
           <block wx:if="{{item2.children.length != 0}}" wx:key='index'  wx:for="{{item2.children}}" wx:for-item='item3'>
             <view class='item'  bindtap=''  style="width:auto;margin-left:70rpx;">
