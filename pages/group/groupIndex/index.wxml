@@ -60,7 +60,10 @@
       <view style='margin-right:50rpx;'>
        {{item.userAccount}}人
       </view>
-        <navigator class="" target="" url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
+        <navigator wx:if="{{item.name=='变动人员'}}" class="" target="" url="" hover-class="navigator-hover" open-type="navigate">
+          <image class="btn-statistic" style="background:#A9A9A9;border-radius:50%;width:60rpx;height:60rpx;margin-right:5rpx;" src="../../../static/images/stastic@3x.png" />
+        </navigator>
+        <navigator wx:else="{{item.name=='变动人员'}}" class="" target="" url="/pages/statistics/index?groupId={{item.id}}&groupName={{item.name}}" hover-class="navigator-hover" open-type="navigate">
           <image class="btn-statistic" src="../../../static/images/stastic@3x.png" />
         </navigator>
          <view class="" wx:if='{{(item.permission || item.dataPermission==true) && item.groupType==0}}'  data-data="{{item}}" bind:tap="navigateToGroupIndex" >
