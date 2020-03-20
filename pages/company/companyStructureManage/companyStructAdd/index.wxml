@@ -1,0 +1,13 @@
+<!--pages/company/companyAuth/companyAuthAdd/index.wxml-->
+<view class='addCont'>
+       <view class="personal-info-hd">
+          <text class="info-label">机构架构管理</text>
+        </view>
+        <view class="personal-info-td">
+          <input class="info-input" name="phone" placeholder-class="placeholder-style" placeholder="请输入架构名称"  bindinput="bindKeyInput" value='{{inputValue}}' maxlength="11" ></input>
+        </view>
+</view>
+<view class="quit-join-group">
+    <view class="quit-group" bindtap="quit">取消</view>
+    <view class="join-group" bindtap="join">添加</view>
+</view>

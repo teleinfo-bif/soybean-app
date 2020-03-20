@@ -217,4 +217,11 @@ export const findUserByPhoneAct = async params => {
 export const transferCompanyAct = async params => {
   return Request._postParams(`/wx/group/transfer`, params);
 };
-
+//机构架构管理新增部门
+export const addCompanyStructAct = async params => {
+  return Request._post(`/wx/group/save`, params);
+};
+//机构架构管理删除部门
+export const delCompanyStructAct = async params => {
+  return Request._postParams(`/wx/group/remove`, params);
+};
