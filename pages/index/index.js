@@ -92,7 +92,7 @@ Page({
 
   toHelp: function() {
     wx.navigateTo({
-      url: "pages/help/service/index"
+      url: "/pages/help/service/index"
     });
   }
 });
