@@ -225,3 +225,10 @@ export const addCompanyStructAct = async params => {
 export const delCompanyStructAct = async params => {
   return Request._postParams(`/wx/group/remove`, params);
 };
+
+//获取当前部门所在的一级机构
+export const getFirstGroup = async params => {
+  return Request._get(`/wx/group/firstGroup`, params);
+};
+
+

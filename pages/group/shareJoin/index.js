@@ -1,6 +1,6 @@
 // pages/group/shareJoin/index.js
 // import { encode } from "../../../utils/code";
-import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, getGroup, fromGroupCodetoId } from "../../../api/api";
+import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, getGroup, getFirstGroup } from "../../../api/api";
 const app = getApp();
 Page({
   /**
@@ -477,10 +477,10 @@ Page({
           return
         }
         //判断用户是否已加入该一级机构,加入后需要先退出后加入
-        getGroup({
-          id: groupId
+        getFirstGroup({
+          groupId: groupId
         }).then(res => {
-          console.log('group data', res)
+          console.log('group data', res);
           const groupIdentify = res.groupIdentify
           const tempGroup = data.filter(obj => obj.groupIdentify == groupIdentify)
           if (tempGroup.length !== 0) {
