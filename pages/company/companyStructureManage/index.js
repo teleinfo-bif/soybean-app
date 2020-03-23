@@ -53,9 +53,10 @@ Page({
         'id': groupId,
         "children": data
       }
-      console.log('===res====', obj)
+      //console.log('===res====', obj)
       var tmpMenu = [obj]
       if (hideIds != '' && hideIds != '-1' ){
+        tmpMenu[0].hidden = true
         var hideArray = hideIds.split(',');
         var endIndex = hideArray.length - 1
         console.log('===treehideId====', hideArray)
@@ -64,7 +65,7 @@ Page({
             // do some ...
             if (hideArray.indexOf(item.id) != endIndex ) {
               //console.log("===finde====",item.id)
-              item.hidden = true
+              item.hidden = !item.hidden
             }
            // console.log('item: ', item)
             if (Array.isArray(item.children)) {
@@ -164,9 +165,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-/*     options.groupId = 1
+/*     options.groupId = 3053
     options.type = 'managerPage'
-    options.groupName = '信通院'  */
+    options.groupName = '海口集团'  */
     this.setData({
       groupId: options.groupId,
       groupName: options.groupName
