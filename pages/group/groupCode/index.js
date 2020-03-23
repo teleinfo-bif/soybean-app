@@ -1,5 +1,5 @@
 // pages/organizationCode/index.js
-import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup, isGroupExist } from "../../../api/api";
+import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup, isGroupExist, getGroup } from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -51,10 +51,12 @@ Page({
             let groupName = data.name
             let groupId = data.id
             let groupType = data.groupType
+            let groupIdentify = data.groupIdentify
             this.setData({
               joinId: groupId,
               joinName: groupName,
-              joinType: groupType
+              joinType: groupType,
+              joinGroupIdentify: groupIdentify
             })
             this.isCanJoinGroup()
           }).catch(e => {
@@ -83,29 +85,38 @@ Page({
 
   //查询是否已经加过群
   isCanJoinGroup: function () {
-    const { joinId, userId, joinName, joinType } = this.data
+    const { joinId, userId, joinName, joinType, joinGroupIdentify } = this.data
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
-      console.log('查询用户已加入的群接口', data)
-      if (JSON.stringify(data) == "{}") {
+      console.log('查询用户加入的群接口', data)
+      if (JSON.stringify(data) == "[]") {
         this.joinDifferentGroup()
       } else {
-        let quitId = data.id
-        let quitName = data.name
-        if(quitId == joinId) {
+        //判断是否加过该机构
+        let joined = data.filter(obj=>obj.id.toString()==joinId).length
+        if(joined != 0) {
           wx.showToast({
-            title: "您已经加入该群！",
+            title: "您已经在该机构中！",
             duration: 2000,
             icon: "none",
           });
           return
         }
-        this.setData({
-          alreadJoinName: quitName,
-          alreadJoinId: quitId,
-          alreadJoin: true,
-        })
+        //判断用户是否已加入该一级机构,加入后需要先退出后加入
+        let tempGroup = data.filter(obj => obj.groupIdentify == joinGroupIdentify)
+        // console.log('tempGroup',tempGroup)
+        if (tempGroup.length !== 0) {
+          let quitId = tempGroup[0].id
+          let quitName = tempGroup[0].name
+          this.setData({
+            alreadJoinName: quitName,
+            alreadJoinId: quitId,
+            alreadJoin: true, //alreadJoin: true, 3月23日更改后，alreadJoin代表已加入同一一级机构中某个部门
+          })
+          this.joinDifferentGroup()
+          return
+        }         
         this.joinDifferentGroup()
       }
     })

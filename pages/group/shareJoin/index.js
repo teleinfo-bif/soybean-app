@@ -1,6 +1,6 @@
 // pages/group/shareJoin/index.js
 // import { encode } from "../../../utils/code";
-import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, fromGroupCodetoId } from "../../../api/api";
+import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, getGroup, fromGroupCodetoId } from "../../../api/api";
 const app = getApp();
 Page({
   /**
@@ -16,7 +16,7 @@ Page({
     array: [],
     index: 0,
     lastClass: true,  //最底层部门
-    lowestClass: false,  //倒数第二级部们
+    
     alreadJoinName: "", //以加入群的名字
     alreadJoin: false, // 是否已加入其他部门
     alreadJoinId: "",
@@ -101,26 +101,13 @@ Page({
       //根据返回值判断是否是最底层部门，分别做不同处理
       if (data.length == 0) {
         //最底层部门
-        this.setData({
-          lowestClass: true
-        })
         if (this.data.zc == '1') {
-          // this.shareJoniGroup({
-          //   groupId,
-          //   userId: this.data.userFilledInfo.id
-          // });
           this.joinGroupLowFromRegister()
         } else {
           this.joinGroupModal()
         }
       } else {
-        this.setData({
-          lowestClass: false
-        })
         if (this.data.zc == '1') {
-          // wx.navigateTo({
-          //   url: `/pages/group/shareJoinChoice/index?groupName=${this.data.groupName}&groupId=${groupId}`,
-          // });
           this.joinGroupHighFromRegister()
         } else {
           this.joinGroupChoiceModal()
@@ -129,7 +116,7 @@ Page({
     })
   },
 
-  //弹窗加群 加入三级群
+  //弹窗加群 加入末级群
   joinGroupModal: function () {
     const _this = this;
     const { groupId, groupName, userFilledInfo, alreadJoin, alreadJoinName } = this.data
@@ -455,28 +442,28 @@ Page({
   },
   //查询是否已经加过群
   isCanJoinGroup: function () {
-    const { groupId, userId } = this.data
+    const { groupId, userId } = this.data  //此处的groupId是用户要加入的群
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
-      console.log('查询用户已加入的群接口', data)
+      console.log('查询用户加入的群', data)
       //没有加过群，去加群
-      if (JSON.stringify(data) == "{}") {
+      if (JSON.stringify(data) == "[]") {
         this.joinDifferentGroup(groupId)
       } else {
-        let quitId = data.id
-        let quitName = data.name
-        let groupCode = data.groupCode
-        let groupIdentify = data.groupIdentify
-        //加过群，判断一下群是否调整过
-        if(this.isGroupAdjust(groupCode)){          
-          this.joinGroupAfterAdjust(groupIdentify, quitName, quitId);
+        //加过群，判断一下群是否调整过,调整过跳到首页
+        let temp = this.isGroupAdjust(data)
+        if(temp.length!==0){          
+          wx.redirectTo({
+            url: "/pages/index/index",
+          })
           return
         }
         //判断是否加过该群
-        if(quitId == groupId) {
+        let joined = data.filter(obj => obj.id.toString() == groupId).length
+        if (joined != 0) {
           wx.showToast({
-            title: "您已经加入该群！",
+            title: "您已经在该机构中！",
             duration: 2000,
             icon: "none",
             success: result => {
@@ -489,13 +476,28 @@ Page({
           });
           return
         }
-        this.setData({
-          alreadJoinName: quitName,
-          alreadJoinId: quitId,
-          alreadJoin: true,
-        })
-        this.joinDifferentGroup(groupId)
-        // this.quitGroupTest(quitId) 
+        //判断用户是否已加入该一级机构,加入后需要先退出后加入
+        getGroup({
+          id: groupId
+        }).then(res => {
+          console.log('group data', res)
+          const groupIdentify = res.groupIdentify
+          const tempGroup = data.filter(obj => obj.groupIdentify == groupIdentify)
+          if (tempGroup.length !== 0) {
+            let quitId = tempGroup[0].id
+            let quitName = tempGroup[0].name
+            this.setData({
+              alreadJoinName: quitName,
+              alreadJoinId: quitId,
+              alreadJoin: true, //alreadJoin: true, 3月23日更改后，alreadJoin代表已加入同一一级机构中某个部门
+            })
+            this.joinDifferentGroup(groupId)
+            return
+          } else {
+            //可以加入多个一级机构        
+            this.joinDifferentGroup(groupId)
+          }
+        });
       }
     })
   },
@@ -511,50 +513,24 @@ Page({
   },
 
   //判断机构调整
-  isGroupAdjust: function (groupCode) {
-    if(groupCode && groupCode.substring(groupCode.length-8)=="_NO_DEPT") {
-      return true         
-    } else {
-      console.log("用户所没加群或者所在群没有变动");
-      return false
-    }
+  isGroupAdjust: function (groups) {
+    let changeGroupList = []
+    groups.forEach((item, index) => {
+      let groupCode = item.groupCode
+      if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
+        let temp = {
+          ...item,
+          topName: item.fullName.split('_')[0]
+        }
+        changeGroupList.push(temp)  
+      } else {
+        console.log("用户所在群没有变动");
+      }
+    });
+    return changeGroupList
   },
 
-  //机构调整后根据唯一码加群
-  joinGroupAfterAdjust: function(groupIdentify, alreadJoin, alreadJoinId) {
-    fromGroupCodetoId({
-      groupCode: groupIdentify,
-    }).then(res => {
-      console.log('根据唯一码查看群信息', res);
-      if (JSON.stringify(res) == "{}") {
-        wx.showToast({
-          title: `您所在的一级机构已经不存在！`,
-          icon: 'none',
-        })
-        return
-      } else {
-        let groupName = res.name
-        let groupId = res.id
-        wx.showModal({
-          title: "提示",
-          content: `您所在机构发生架构调整，请重新选择所在部门！`,
-          showCancel: true,
-          success(res) {
-            if (res.confirm) {
-              wx.navigateTo({
-                url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              });
-            }else if(res.cancel) {
-              wx.reLaunch({
-                url: "/pages/index/index",
-              })
-            }
-          }
-        });
-      }
-    })
-    
-  },
+
 
   // join: function() {
   //   const { joinGroupId, userFilledInfo } = this.data
