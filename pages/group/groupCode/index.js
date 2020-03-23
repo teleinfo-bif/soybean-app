@@ -9,6 +9,7 @@ Page({
   data: {
     code: '',
     userId: '',
+    userCurrentGroups: {},//用户当前所在群组
   },
 
   onChange: function(e) {
@@ -83,18 +84,43 @@ Page({
     }
   },
 
-  //查询是否已经加过群
-  isCanJoinGroup: function () {
-    const { joinId, userId, joinName, joinType, joinGroupIdentify } = this.data
+  getUserCurrentGroup: function () {
+    const { userId } = this.data
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
       console.log('查询用户加入的群接口', data)
-      if (JSON.stringify(data) == "{}") {
+      this.setData({
+        userCurrentGroups: data
+      })
+      if (JSON.stringify(data) != "{}") {
+        let changeGroupList = []
+        data.forEach((item, index) => {
+          let groupCode = item.groupCode
+          if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
+            changeGroupList.push(item)
+          } else {
+            console.log("用户所在群没有变动");
+          }
+        });
+        if(changeGroupList.length!==0){          
+          wx.reLaunch({
+            url: "/pages/index/index",
+          })
+          return
+        }
+      };
+    })
+  },
+
+  //查询是否已经加过群
+  isCanJoinGroup: function () {
+    const { joinId, userId, joinName, joinType, joinGroupIdentify, userCurrentGroups } = this.data
+      if (JSON.stringify(userCurrentGroups) == "{}") {
         this.joinDifferentGroup()
       } else {
         //判断是否加过该机构
-        let joined = data.filter(obj=>obj.id.toString()==joinId).length
+        let joined = userCurrentGroups.filter(obj=>obj.id.toString()==joinId).length
         if(joined != 0) {
           wx.showToast({
             title: "您已经在该机构中！",
@@ -104,7 +130,7 @@ Page({
           return
         }
         //判断用户是否已加入该一级机构,加入后需要先退出后加入
-        let tempGroup = data.filter(obj => obj.groupIdentify == joinGroupIdentify)
+        let tempGroup = userCurrentGroups.filter(obj => obj.groupIdentify == joinGroupIdentify)
         // console.log('tempGroup',tempGroup)
         if (tempGroup.length !== 0) {
           let quitId = tempGroup[0].id
@@ -119,7 +145,7 @@ Page({
         }         
         this.joinDifferentGroup()
       }
-    })
+  
   },
 
   joinDifferentGroup: function () {
@@ -277,6 +303,7 @@ Page({
           userFilledInfo: globalData.userFilledInfo,
           userId: app.globalData.userFilledInfo.id
         });
+        this.getUserCurrentGroup()
       });
     } else {
       this.setData({
@@ -284,6 +311,7 @@ Page({
         userFilledInfo: app.globalData.userFilledInfo,
         userId: app.globalData.userFilledInfo.id
       });
+      this.getUserCurrentGroup()
     }
   },
 

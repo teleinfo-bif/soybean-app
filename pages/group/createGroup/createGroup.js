@@ -203,7 +203,7 @@ Page({
            console.log('1', data)
            let code = data;
            wx.navigateTo({
-              url: `/pages/group/groupCodeShow/index?groupCode=${code}&finished=${e.detail.value.group_file}`,
+              url: `/pages/group/groupCodeShow/index?groupCode=${code}&finished=${'true'}`,
            });           
       }).catch(e => {
         console.log(e)
