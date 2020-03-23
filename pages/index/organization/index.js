@@ -131,14 +131,15 @@ Component({
   
     onClick(event) {
       // console.log('radio onClick', event.currentTarget.dataset)
-      const { name } = event.currentTarget.dataset;
+      const { name, id } = event.currentTarget.dataset;
       this.setData({
         radio: name,
-        preparedGroup: name
+        preparedGroup: name,
+        alreadJoinId: id
       });
     },
     goToChoiceGroup() {
-      const { preparedGroup } = this.data
+      const { preparedGroup, alreadJoinId } = this.data
       // console.log('goToChoiceGroup', preparedGroup)
       if (!preparedGroup) {
         this.setData({
@@ -161,7 +162,7 @@ Component({
           let groupName = res.name
           let groupId = res.id
           wx.navigateTo({
-            url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}`,
+            url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoinId}&alreadJoinId=${alreadJoinId}`,
           });
         }
       })

@@ -90,7 +90,7 @@
   <view class="title-change">提示：您所在机构发生架构调整，请重新选择所在部门！</view>
   <van-radio-group value="{{ radio }}" bind:change="onChange">
     <van-cell-group>
-      <van-cell wx:for="{{changeGroups}}" wx:key="index" title="{{item.topName}}" clickable data-name="{{item.groupIdentify}}" bind:click="onClick">
+      <van-cell wx:for="{{changeGroups}}" wx:key="index" title="{{item.topName}}" clickable data-name="{{item.groupIdentify}}" data-id="{{item.id}}" bind:click="onClick">
         <van-radio slot="right-icon" name="{{item.groupIdentify}}" />
       </van-cell>
     </van-cell-group>
