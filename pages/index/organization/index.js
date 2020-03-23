@@ -98,7 +98,7 @@ Component({
           data
         );
         let temp = data.filter(obj => obj.name !== "变动人员").slice(0, 2)
-        let moreShow = temp.length > 2 ? true : false
+        let moreShow = data.filter(obj => obj.name !== "变动人员").length > 2 ? true : false
         this.setData({
           groupList: temp,
           moreShow: moreShow
