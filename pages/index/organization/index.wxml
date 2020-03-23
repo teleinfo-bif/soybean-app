@@ -3,7 +3,7 @@
   <view class="organization">
     <view class="organization_head van-hairline--bottom">
       <view class="organization_head-text">今日数据</view>
-      <view class="organization_head-btn"></view>
+      <view class="organization_head-btn" bind:tap="moreShow" wx:if="{{moreShow}}">更多</view>
     </view>
     <view class="organization_content">
       <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
@@ -77,3 +77,22 @@
     </view>
   </view>
 </block>
+
+<van-dialog
+ use-slot
+ title="" 
+ show="{{ show }}" 
+ show-cancel-button 
+ bind:confirm="goToChoiceGroup" 
+ bind:close="onClose" 
+ bind:getuserinfo="getUserInfo"
+ >
+  <view class="title-change">提示：您所在机构发生架构调整，请重新选择所在部门！</view>
+  <van-radio-group value="{{ radio }}" bind:change="onChange">
+    <van-cell-group>
+      <van-cell wx:for="{{changeGroups}}" wx:key="index" title="{{item.topName}}" clickable data-name="{{item.groupIdentify}}" bind:click="onClick">
+        <van-radio slot="right-icon" name="{{item.groupIdentify}}" />
+      </van-cell>
+    </van-cell-group>
+  </van-radio-group>
+</van-dialog>
