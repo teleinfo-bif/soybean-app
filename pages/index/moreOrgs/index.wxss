@@ -1,0 +1,114 @@
+/* pages/index/moreOrgs/index.wxss */
+.organization {
+    box-sizing: border-box;
+    margin: 0 30rpx;
+    padding: 0 30rpx;
+    font-size: 30rpx;
+    background: #ffffff;
+}
+  
+  .organization_head {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rpx; }
+  
+  .organization_head::after {
+    position: absolute;
+    bottom: 0;
+    left: -30rpx;
+    right: 0;
+    content: "";
+    display: block;
+    height: 5px;
+    background-color: #f2f2f2;
+    transform: scale(1); }
+  
+  .organization_content {
+    padding-bottom: 30rpx; }
+  
+  .organization_item {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 25rpx 0;
+    font-size: 30rpx; }
+  
+  .organization_item::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #f2f2f2;
+    transform: scale(1); }
+  
+  .organization_item image {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: 50%; }
+  
+  .organization_item-name {
+    flex: 1;
+    padding-left: 15rpx;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 30rpx; }
+  
+  .organization_item-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  
+  .organization_item-btn view,
+  .organization_item-btn .btn {
+    width: 72rpx;
+    height: 72rpx; }
+  
+  .organization_item-logo {
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 20rpx;
+    border-radius: 50%; }
+  
+  .logo {
+    width: 120rpx;
+    height: 120rpx; }
+  
+  .organization_item_right {
+    position: relative;
+    width: 490rpx;
+    height: 120rpx; }
+  
+  .organization_item-name-1 {
+    font-size: 32rpx;
+    font-family: PingFangSC-Regular,PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; }
+  
+  .organization_item_name_new {
+    flex: 1;
+    padding-left: 15rpx;
+    text-align: left;
+    font-size: 30rpx;
+    line-height: 150%; }
+  
+  .title-change {
+    padding: 40rpx 40rpx;
+    font-size: 32rpx;
+    line-height: 180%;
+    text-align: center;
+  }
+  
