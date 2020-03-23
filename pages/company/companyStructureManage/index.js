@@ -64,7 +64,7 @@ Page({
             // do some ...
             if (hideArray.indexOf(item.id) != endIndex ) {
               //console.log("===finde====",item.id)
-              item.hidden = !item.hidden
+              item.hidden = true
             }
            // console.log('item: ', item)
             if (Array.isArray(item.children)) {
