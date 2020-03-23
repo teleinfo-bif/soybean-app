@@ -554,13 +554,13 @@ Page({
       formData["loading"] = true;
       saveClock(formData)
         .then(res => {
-          wx.navigateTo({
+          wx.redirectTo({
             url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
           });
         })
         .catch(error => {
           console.error("错误提醒：打卡错误,", error);
-          wx.showToast({
+          wx.redirectTo({
             title: "打卡失败，请再次尝试",
             icon: "none"
           });
@@ -956,6 +956,11 @@ Page({
     for (let prop in otherFieldsList) {
       this.setOtherFieldsHide(formData, prop);
     }
+    wx.showToast({
+      title: "已为您记忆上次打卡数据，如有变化，请更新后再提交",
+      icon: "none",
+      duration: 2000
+    });
     // const { otherFieldsList } = this.data;
     // for (let prop in otherFieldsList) {
     //   let value = formData[prop];
@@ -991,11 +996,11 @@ Page({
         } else {
           // 未打卡开始获取位置信息，获取之前的打卡记录
           if (!params.userId) {
-            await this.initAddress();
-            this.getUserClockListData();
             this.setData({
               clocked: false
             });
+            await this.initAddress();
+            this.getUserClockListData();
           }
         }
       })
@@ -1047,7 +1052,6 @@ Page({
               ...data
             }
           });
-          // debugger;
 
           previousLockData["temperatureRadio"] =
             previousLockData.temperature >= 37.3 ? 2 : 1;

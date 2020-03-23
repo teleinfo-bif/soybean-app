@@ -1,45 +1,45 @@
 <view class='head'>架构管理</view>
 <view class='dataCent'>
   <view wx:for="{{arrayMenu}}" catchtap='hiddenDepartChild' data-id="{{item1.id}}"  wx:key='index' wx:for-item='item1' >
-    <view class='item'  style="width:750rpx;padding-left:30rpx;" >
+    <view class='item'  style="width:750rpx;padding-left:30rpx;color:{{item1.children.length != 0 ? '#4276FF':'#333333'}}" >
       <view class='item-name' style="width:480rpx;"> {{item1.name}} </view>
-      <image class='add-img' data-id="{{item1.id}}" src="/static/images/add.png" style="margin-left:164rpx;" bindtap="toAddPage"></image>
+      <image class='add-img' data-id="{{item1.id}}" data-name="{{item1.name}}"src="/static/images/add.png" style="margin-left:164rpx;" bindtap="toAddPage"></image>
     </view>
-    <view wx:if="{{item1.children.length != 0}}" wx:key='index' wx:for="{{item1.children}}" wx:for-item='item2' catchtap='hiddenDepartChild' data-id="{{item2.id}}" hidden="{{!item1.hidden}}" >
-      <view class='item'  style="width:auto;margin-left:50rpx;" wx:if="{{ !(item2.name =='变动人员' && item2.userAccount == 0) }}" >
+    <view wx:if="{{item1.children.length != 0}}" wx:key='index' wx:for="{{item1.children}}" wx:for-item='item2' catchtap='hiddenDepartChild' data-id="{{item2.id}}" hidden="{{!item1.hidden && !item2.hidden && !item3.hidden && !item4.hidden && !item5.hidden && !item6.hidden && !item7.hidden }}" >
+      <view class='item'  style="width:auto;margin-left:50rpx;color:{{item2.children.length != 0 ? '#4276FF':'#333333'}}" wx:if="{{ !(item2.name =='变动人员' && item2.userAccount == 0) }}" >
         <view class='item-name' style="width:460rpx;"> {{item2.name}} </view>
-        <image class='del-img' data-id="{{item2.id}}" src="/static/images/del.png" bindtap="delDepartConfirm" wx:if="{{item2.name != '变动人员'}}"></image>
-        <image class='add-img' data-id="{{item2.id}}" src="/static/images/add.png" bindtap="toAddPage" wx:if="{{item2.name != '变动人员'}}"></image>
+        <image class='del-img' data-id="{{item2.id}}" data-hideid="{{item1.id}}"  src="/static/images/del.png" bindtap="delDepartConfirm" wx:if="{{item2.name != '变动人员'}}"></image>
+        <image class='add-img' data-id="{{item2.id}}" data-name="{{item2.name}}"src="/static/images/add.png" bindtap="toAddPage" wx:if="{{item2.name != '变动人员'}}" ></image>
       </view>
-      <view wx:if="{{item2.children.length != 0}}" wx:key='index' wx:for="{{item2.children}}" wx:for-item='item3'  catchtap='hiddenDepartChild' data-id="{{item3.id}}"  hidden="{{!item2.hidden}}">
-        <view class='item'  style="width:auto;margin-left:70rpx;" >
+      <view wx:if="{{item2.children.length != 0}}" wx:key='index' wx:for="{{item2.children}}" wx:for-item='item3'  catchtap='hiddenDepartChild' data-id="{{item3.id}}"  hidden="{{!item2.hidden  && !item3.hidden && !item4.hidden && !item5.hidden && !item6.hidden && !item7.hidden }}">
+        <view class='item'  style="width:auto;margin-left:70rpx;color:{{item3.children.length != 0 ? '#4276FF':'#333333'}}" >
           <view class='item-name' style="width:440rpx;"> {{item3.name}} </view>
-          <image class='del-img' data-id="{{item3.id}}" bindtap="delDepartConfirm" src="/static/images/del.png"></image>
-          <image class='add-img' data-id="{{item3.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+          <image class='del-img' data-id="{{item3.id}}" data-hideid="{{item2.id}}" bindtap="delDepartConfirm" src="/static/images/del.png"></image>
+          <image class='add-img' data-id="{{item3.id}}" data-name="{{item3.name}}"src="/static/images/add.png" bindtap="toAddPage"></image>
         </view>
-        <view wx:if="{{item3.children.length != 0}}" wx:key='index' wx:for="{{item3.children}}" wx:for-item='item4'  catchtap='hiddenDepartChild' data-id="{{item4.id}}"  hidden="{{!item3.hidden}}">
-          <view class='item' data-id="{{item4.id}}" style="width:auto;margin-left:90rpx;" >
+        <view wx:if="{{item3.children.length != 0}}" wx:key='index' wx:for="{{item3.children}}" wx:for-item='item4'  catchtap='hiddenDepartChild' data-id="{{item4.id}}"  hidden="{{!item3.hidden && !item4.hidden && !item5.hidden && !item6.hidden && !item7.hidden }}">
+          <view class='item' data-id="{{item4.id}}"   data-hideid="{{item3.id}}" style="width:auto;margin-left:90rpx;color:{{item4.children.length != 0 ? '#4276FF':'#333333'}}" >
             <view class='item-name' style="width:420rpx;"> {{item4.name}} </view>
-            <image class='del-img' data-id="{{item4.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
-            <image class='add-img' data-id="{{item4.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+            <image class='del-img' data-id="{{item4.id}}" data-hideid="{{item3.id}}"src="/static/images/del.png" bindtap="delDepartConfirm"></image>
+            <image class='add-img' data-id="{{item4.id}}" data-name="{{item4.name}}"src="/static/images/add.png" bindtap="toAddPage"></image>
           </view>
-          <view wx:if="{{item4.children.length != 0}}" wx:key='index' wx:for="{{item4.children}}" wx:for-item='item5' catchtap='hiddenDepartChild' data-id="{{item5.id}}"  hidden="{{!item4.hidden}}">
-            <view class='item' bindtap='' style="width:auto;margin-left:110rpx;">
+          <view wx:if="{{item4.children.length != 0}}" wx:key='index' wx:for="{{item4.children}}" wx:for-item='item5' catchtap='hiddenDepartChild' data-id="{{item5.id}}"  hidden="{{!item4.hidden && !item5.hidden && !item6.hidden && !item7.hidden}}">
+            <view class='item' bindtap='' style="width:auto;margin-left:110rpx;color:{{item5.children.length != 0 ? '#4276FF':'#333333'}}">
               <view class='item-name' style="width:400rpx;"> {{item5.name}} </view>
-              <image class='del-img' data-id="{{item5.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
-              <image class='add-img' data-id="{{item5.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+              <image class='del-img' data-id="{{item5.id}}"  data-hideid="{{item4.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
+              <image class='add-img' data-id="{{item5.id}}" data-name="{{item5.name}}"src="/static/images/add.png" bindtap="toAddPage"></image>
             </view>
-            <view wx:if="{{item5.children.length != 0}}" wx:key='index' wx:for="{{item5.children}}" wx:for-item='item6' catchtap='hiddenDepartChild' data-id="{{item6.id}}"  hidden="{{!item5.hidden}}">
-              <view class='item' bindtap='' style="width:auto;margin-left:130rpx;">
+            <view wx:if="{{item5.children.length != 0}}" wx:key='index' wx:for="{{item5.children}}" wx:for-item='item6' catchtap='hiddenDepartChild' data-id="{{item6.id}}"  hidden="{{!item5.hidden && !item6.hidden && !item7.hidden}}">
+              <view class='item' bindtap='' style="width:auto;margin-left:130rpx;color:{{item6.children.length != 0 ? '#4276FF':'#333333'}}">
                 <view class='item-name' style="width:380rpx;"> {{item6.name}} </view>
-                <image class='del-img' data-id="{{item6.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
-                <image class='add-img' data-id="{{item6.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+                <image class='del-img' data-id="{{item6.id}}" data-hideid="{{item5.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
+                <image class='add-img' data-id="{{item6.id}}"  data-name="{{item6.name}}"src="/static/images/add.png" bindtap="toAddPage"></image>
               </view>
               <view wx:if="{{item6.children.length != 0}}" wx:key='index' wx:for="{{item6.children}}" wx:for-item='item7' catchtap='hiddenDepartChild' data-id="{{item7.id}}"  hidden="{{!item6.hidden}}">
-                <view class='item' bindtap='' style="width:auto;margin-left:150rpx;">
+                <view class='item' bindtap='' style="width:auto;margin-left:150rpx;color:{{item7.children.length != 0 ? '#4276FF':'#333333'}}">
                   <view class='item-name' style="width:360rpx;"> {{item7.name}} </view>
-                  <image class='del-img' data-id="{{item7.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
-                  <image class='add-img' data-id="{{item7.id}}" src="/static/images/add.png" bindtap="toAddPage"></image>
+                  <image class='del-img' data-id="{{item7.id}}" data-hideid="{{item6.id}}" src="/static/images/del.png" bindtap="delDepartConfirm"></image>
+                  <image class='add-img' data-id="{{item7.id}}" data-name="{{item7.name}}" src="/static/images/add.png" bindtap="toAddPage"></image>
                 </view>
               </view>
             </view>
