@@ -77,11 +77,14 @@ const Request = async ({
       // 成功或失败处理
       complete: async res => {
         // 关闭等待
-        try {
-          wx.hideLoading();
-        } catch (error) {
-          console.error("wx.hideLoading error");
+        if (data.loading) {
+          try {
+            wx.hideLoading();
+          } catch (error) {
+            console.error("wx.hideLoading error");
+          }
         }
+
         wx.hideNavigationBarLoading();
 
         // 进行状态码判断并处理
