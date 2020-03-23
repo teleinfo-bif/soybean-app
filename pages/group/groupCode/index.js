@@ -90,7 +90,7 @@ Page({
       groupId: userId
     }).then(data => {
       console.log('查询用户加入的群接口', data)
-      if (JSON.stringify(data) == "[]") {
+      if (JSON.stringify(data) == "{}") {
         this.joinDifferentGroup()
       } else {
         //判断是否加过该机构
