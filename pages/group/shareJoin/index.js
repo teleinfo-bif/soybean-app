@@ -448,7 +448,7 @@ Page({
     }).then(data => {
       console.log('查询用户加入的群', data)
       //没有加过群，去加群
-      if (JSON.stringify(data) == "[]") {
+      if (JSON.stringify(data) == "{}") {
         this.joinDifferentGroup(groupId)
       } else {
         //加过群，判断一下群是否调整过,调整过跳到首页

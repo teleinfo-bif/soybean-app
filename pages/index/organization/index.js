@@ -67,25 +67,27 @@ Component({
           groupId: app.globalData.userFilledInfo.userId
         }).then(data => {
           console.log('查询用户已加入的群', data)
-          data.forEach((item, index) => {
-            let groupCode = item.groupCode
-            if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
-              this.setData({
-                show: true
-              })
-              let temp = {
-                ...item,
-                topName: item.fullName.split('_')[0]
+          if (JSON.stringify(data) != "{}") {
+            data.forEach((item, index) => {
+              let groupCode = item.groupCode
+              if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
+                this.setData({
+                  show: true
+                })
+                let temp = {
+                  ...item,
+                  topName: item.fullName.split('_')[0]
+                }
+                changeGroupList.push(temp)
+              } else {
+                console.log("用户所没加群或者所在群没有变动");
               }
-              changeGroupList.push(temp)
-            } else {
-              console.log("用户所没加群或者所在群没有变动");
-            }
-          });
-          this.setData({
-            changeGroups: changeGroupList
-          })
-          // console.log('变动部门', this.data.changeGroups)        
+            });
+            this.setData({
+              changeGroups: changeGroupList
+            })
+            // console.log('变动部门', this.data.changeGroups)   
+          };
         });
       };
 
@@ -95,8 +97,8 @@ Component({
           data.length,
           data
         );
-        let temp = data.filter(obj => obj.name !== "变动人员").slice(0,2)
-        let moreShow = temp.length>=2?true:false
+        let temp = data.filter(obj => obj.name !== "变动人员").slice(0, 2)
+        let moreShow = temp.length > 2 ? true : false
         this.setData({
           groupList: temp,
           moreShow: moreShow
