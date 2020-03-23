@@ -41,10 +41,10 @@ Page({
     }
     ],
     arrayMenu:[],
-    hideId:'',
+    hideIds:'',
   },
   //查询机构树
-  treeArray: function (groupId, groupName, hideId) {
+  treeArray: function (groupId, groupName, hideIds) {
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
@@ -55,16 +55,18 @@ Page({
       }
       console.log('===res====', obj)
       var tmpMenu = [obj]
-      if(hideId != ''){
-        tmpMenu[0].hidden = true
-        console.log('===treehideId====', hideId)
+      if (hideIds != '' && hideIds != '-1' ){
+        var hideArray = hideIds.split(',');
+        var endIndex = hideArray.length - 1
+        console.log('===treehideId====', hideArray)
         let parse = arr => {
           arr.forEach(item => {
             // do some ...
-            if (item.id == hideId) {
-              item.hidden = true
+            if (hideArray.indexOf(item.id) != endIndex ) {
+              //console.log("===finde====",item.id)
+              item.hidden = !item.hidden
             }
-            //console.log('item: ', item)
+           // console.log('item: ', item)
             if (Array.isArray(item.children)) {
               parse(item.children)
             }
@@ -72,6 +74,10 @@ Page({
         }
         parse(tmpMenu)
       } 
+      if (hideIds == '-1' ){
+        console.log("++++++tmp++++",hideIds)
+        tmpMenu[0].hidden = true
+      }
       this.setData({
         arrayMenu: tmpMenu
       })
@@ -80,28 +86,28 @@ Page({
   // 添加机构
   toAddPage(e) {
     wx.navigateTo({
-      url: `../companyStructureManage/companyStructAdd/index?groupId=${this.data.groupId}&groupName=${this.data.groupName}&parentId=${e.currentTarget.dataset.id}&parentName=${e.currentTarget.dataset.name}`,
+      url: `../companyStructureManage/companyStructAdd/index?groupId=${this.data.groupId}&groupName=${this.data.groupName}&parentId=${e.currentTarget.dataset.id}&hideIds=${e.currentTarget.dataset.ids}`,
     }); 
   },
   delDepartConfirm(e){
     var delId = e.currentTarget.dataset.id
-    var hideId = e.currentTarget.dataset.hideid
+    var hideIds = e.currentTarget.dataset.ids
     console.log("======del====", delId)
-    console.log("======hideId====", hideId)
+    console.log("======hideIds====", hideIds)
     var that = this
     wx.showModal({
       title: '提示',
       content: '确定要删除吗？',
       success(res) {
         if (res.confirm) {
-          that.delStructDepart(delId,hideId)
+          that.delStructDepart(delId,hideIds)
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
   },
-  delStructDepart(delId, hideId){
+  delStructDepart(delId, hideIds){
     var that = this
     delCompanyStructAct({
       groupId: delId,
@@ -109,7 +115,7 @@ Page({
       loading: true
     }).then(data => {
       console.log('====delRes=====', data)
-      this.treeArray(this.data.groupId, this.data.groupName, hideId)
+      this.treeArray(this.data.groupId, this.data.groupName, hideIds)
       wx.showToast({
         title: '已删除',
         icon: 'none',
@@ -178,7 +184,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.treeArray(this.data.groupId,this.data.groupName,this.data.hideId)
+    this.treeArray(this.data.groupId,this.data.groupName,this.data.hideIds)
   },
 
   /**

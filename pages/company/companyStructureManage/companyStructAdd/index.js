@@ -23,7 +23,7 @@ Page({
     prevPage.setData({
       groupId: that.data.groupId,
       groupName:that.data.groupName,
-      hideId: that.data.parentId
+      hideIds: that.data.hideIds
     })
     wx.navigateBack({
       delta: 1,
@@ -107,7 +107,7 @@ Page({
       groupId: options.groupId,
       groupName:options.groupName,
       parentId: options.parentId,
-      parentName: options.parentName,
+      hideIds: options.hideIds,
     });
   },
 
