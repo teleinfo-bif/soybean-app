@@ -1,0 +1,14 @@
+<!--pages/help/service/index.wxml-->
+
+<view class="service one"  bind:tap="toHelp">
+    <image class="item-image" src="../../../static/images/help_bz.png"></image>
+    <view class="title">使用帮助</view>
+    <image class="pic-right" src="../../../static/images/helptapright.png"></image> 
+</view>
+<label for="btn" class="service">
+    <image class="item-image" src="../../../static/images/help_kf.png"></image>
+    <view class="title">
+        <button id="btn" open-type="contact" bindcontact="handleContact">在线客服</button>
+    </view>
+    <image class="pic-right" src="../../../static/images/helptapright.png"></image> 
+</label>

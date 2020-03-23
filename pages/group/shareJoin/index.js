@@ -1,6 +1,6 @@
 // pages/group/shareJoin/index.js
 // import { encode } from "../../../utils/code";
-import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist } from "../../../api/api";
+import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, fromGroupCodetoId } from "../../../api/api";
 const app = getApp();
 Page({
   /**
@@ -460,11 +460,20 @@ Page({
       groupId: userId
     }).then(data => {
       console.log('查询用户已加入的群接口', data)
+      //没有加过群，去加群
       if (JSON.stringify(data) == "{}") {
         this.joinDifferentGroup(groupId)
       } else {
         let quitId = data.id
         let quitName = data.name
+        let groupCode = data.groupCode
+        let groupIdentify = data.groupIdentify
+        //加过群，判断一下群是否调整过
+        if(this.isGroupAdjust(groupCode)){          
+          this.joinGroupAfterAdjust(groupIdentify, quitName, quitId);
+          return
+        }
+        //判断是否加过该群
         if(quitId == groupId) {
           wx.showToast({
             title: "您已经加入该群！",
@@ -500,6 +509,53 @@ Page({
       console.log('退群', data)
     })
   },
+
+  //判断机构调整
+  isGroupAdjust: function (groupCode) {
+    if(groupCode && groupCode.substring(groupCode.length-8)=="_NO_DEPT") {
+      return true         
+    } else {
+      console.log("用户所没加群或者所在群没有变动");
+      return false
+    }
+  },
+
+  //机构调整后根据唯一码加群
+  joinGroupAfterAdjust: function(groupIdentify, alreadJoin, alreadJoinId) {
+    fromGroupCodetoId({
+      groupCode: groupIdentify,
+    }).then(res => {
+      console.log('根据唯一码查看群信息', res);
+      if (JSON.stringify(res) == "{}") {
+        wx.showToast({
+          title: `您所在的一级机构已经不存在！`,
+          icon: 'none',
+        })
+        return
+      } else {
+        let groupName = res.name
+        let groupId = res.id
+        wx.showModal({
+          title: "提示",
+          content: `您所在机构发生架构调整，请重新选择所在部门！`,
+          showCancel: true,
+          success(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
+              });
+            }else if(res.cancel) {
+              wx.reLaunch({
+                url: "/pages/index/index",
+              })
+            }
+          }
+        });
+      }
+    })
+    
+  },
+
   // join: function() {
   //   const { joinGroupId, userFilledInfo } = this.data
   //   let groupId = joinGroupId

@@ -83,7 +83,8 @@ Page({
   delStructDepart(delId){
     delCompanyStructAct({
       groupId: delId,
-      userId: app.globalData.userFilledInfo.id
+      userId: app.globalData.userFilledInfo.id,
+      loading: true
     }).then(data => {
       console.log('====delRes=====', data)
       this.treeArray(this.data.groupId, this.data.groupName)
@@ -101,26 +102,29 @@ Page({
         })
       })
   },
-  clickMenu: function (e) {
-    var that = this;
-    console.log("打印索引值", e.currentTarget.dataset.index);
-    // 获取索引值
-    var index = e.currentTarget.dataset.index;
-    // 获取当前的状态，是否隐藏的值
-    var staues = that.data.arrayMenu[index].hideHidden;
-    console.log("111", staues);
-    // 第几个状态
-    var stauesval = "arrayMenu[" + index + "].hideHidden";
-    if (staues == true) {
-      that.setData({
-        [stauesval]: false
-      })
-    } else {
-      that.setData({
-        [stauesval]: true
+  hiddenDepartChild(e){
+    var hideId = e.currentTarget.dataset.id
+    console.log("=====hideId====",hideId)
+    let parse = arr => {
+      arr.forEach(item => {
+        // do some ...
+        if (item.id == hideId) {
+          item.hidden = !item.hidden
+          return
+        }
+        //console.log('item: ', item)
+        if (Array.isArray(item.children)) {
+          parse(item.children)
+        }
       })
     }
+    parse(this.data.arrayMenu)
+    //console.log("====res====", this.data.arrayMenu)
+    this.setData({
+      arrayMenu:this.data.arrayMenu
+    })
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -175,51 +179,6 @@ Page({
   onReachBottom: function () {
 
   },
-
-  callback_func(val) {
-    var i, j, len;
-    var results = [];
-    for (j = 0, len = val.length; j < len; j++) {
-      i = val[j];
-      if (i['children'].length !== 0) {
-        this.callback_func(i['children']);
-      } else {
-        this.data.op_needed.push(i['id']);
-      }
-    }
-    console.log('===tmp===', this.data.op_needed)
-  },
-  callback_func2(val, delId) {
-    var i, j, len
-    var flag = false
-    for (i = 0, len = val.length; i < len; i++) {
-      var tmp = val[i]
-      if (val[i].id == delId) {
-        val[i].children = []
-        flag = true
-      }
-    }
-
-  },
-  delDepartObj(delId) {
-    var _this = this;
-    var _menu = _this.data.arrayMenu;
-    var menuId = [];
-    var len = _menu.length;
-    console.log("===getMenuBefore====", _menu)
-    for (var i = 0; i < len; i++) {
-      var item = _menu[i];
-      if (item.children && item.children.length != 0) {
-        var children = item.children;
-        for (var j = 0; j < children.length; j++) {
-          _menu[len + j] = children[j];
-        }
-        len = _menu.length;
-      }
-    }
-    console.log("===getAllId====", menuId)
-  },
-
 
   /**
    * 用户点击右上角分享

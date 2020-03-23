@@ -4,7 +4,7 @@
           <text class="info-label">机构架构管理</text>
         </view>
         <view class="personal-info-td">
-          <input class="info-input" name="phone" placeholder-class="placeholder-style" placeholder="请输入架构名称"  bindinput="bindKeyInput" value='{{inputValue}}' maxlength="11" ></input>
+          <input class="info-input" name="phone" placeholder-class="placeholder-style" placeholder="请输入架构名称"  bindinput="bindKeyInput" value='{{inputValue}}' maxlength="20" ></input>
         </view>
 </view>
 <view class="quit-join-group">
