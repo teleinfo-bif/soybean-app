@@ -554,13 +554,13 @@ Page({
       formData["loading"] = true;
       saveClock(formData)
         .then(res => {
-          wx.navigateTo({
+          wx.redirectTo({
             url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
           });
         })
         .catch(error => {
           console.error("错误提醒：打卡错误,", error);
-          wx.showToast({
+          wx.redirectTo({
             title: "打卡失败，请再次尝试",
             icon: "none"
           });
