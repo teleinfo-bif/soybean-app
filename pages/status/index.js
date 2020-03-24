@@ -48,13 +48,13 @@ Page({
   onUnload: function() {},
 
   toCode: function() {
-    wx.reLaunch({
+    wx.navigateTo({
       url: `/pages/group/groupCode/index`,
     });
   },
 
   toCreateGroup: function() {
-    wx.reLaunch({
+    wx.navigateTo({
       url: `/pages/group/createGroup/createGroup`,
     });
   },
