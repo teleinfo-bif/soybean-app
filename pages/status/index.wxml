@@ -25,7 +25,5 @@
 <!-- 注册新机构链接 -->
 <view wx:if="{{jigou=='1'}}" class="group-create-location">
   <view bind:tap="redirectTo" style="display:inline-block">返回首页></view>
-  <navigator url="/pages/group/createGroup/createGroup" style="display:inline-block;">
-    注册新机构>
-  </navigator>
+  <view bind:tap="toCreateGroup" style="display:inline-block">注册新机构></view>
 </view>
