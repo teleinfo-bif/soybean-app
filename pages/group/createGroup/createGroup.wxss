@@ -215,6 +215,7 @@ page {
 .dialog-pic {
     width: 100%;
     height: 274rpx;
+    background:rgba(0, 0, 0, 0.7);
 }
 
 .dialog-text {
@@ -229,4 +230,28 @@ page {
 }
 .van-button--default {
     color: #1989fa !important;
+}
+.round-top {
+    padding:8rpx 0 15rpx;
+    background:rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.round-x {
+    height: 40rpx;
+    width: 40rpx;
+    line-height: 40rpx;
+    background-color: none;
+    font-size: 30rpx;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.incorrect:before {
+    content: '\2715';
+    color: #fff;
 }
