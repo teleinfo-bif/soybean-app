@@ -163,16 +163,14 @@ Page({
               title: "加入部门成功",
               duration: 1500,
               mask: false,
-              success: result => {
-                wx.reLaunch({
-                  url: "/pages/index/index",
-                })
-              },
-              fail: () => { },
-              complete: () => { }
             });
           })
-          .catch(e => { });
+          .catch(e => { console.log(e); });
+          setTimeout(function () {
+            wx.reLaunch({
+              url: "/pages/index/index",
+            })
+          }, 2000)
       })
     } else {
       joinGroup(params)
@@ -182,13 +180,9 @@ Page({
             title: "加入部门成功",
             duration: 1500,
             mask: false,
-            success: result => {
-            },
-            fail: () => { },
-            complete: () => { }
           });
         })
-        .catch(e => { });
+        .catch(e => { console.log(e); });
       setTimeout(function () {
         wx.reLaunch({
           url: "/pages/index/index",
