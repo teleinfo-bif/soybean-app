@@ -228,9 +228,9 @@ Page({
         success(res) {
           if (res.confirm) {
             console.log("执行this.joinGroup");
-            this.shareJoniGroup({
+            _this.shareJoniGroup({
               groupId: joinId,
-              userId: this.data.userFilledInfo.id
+              userId: userFilledInfo.id
             });
           }
         }
