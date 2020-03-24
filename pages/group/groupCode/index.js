@@ -89,28 +89,10 @@ Page({
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
-      console.log('查询用户加入的群接口', data)
+      console.log('用户加入的群组：', data)
       this.setData({
         userCurrentGroups: data
       })
-      if (JSON.stringify(data) != "{}") {
-        let changeGroupList = []
-        let unChangeGroupList = []
-        data.forEach((item, index) => {
-          let groupCode = item.groupCode
-          if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
-            changeGroupList.push(item)
-          } else {
-            unChangeGroupList.push(item)
-          }
-        });
-        // if(changeGroupList.length!==0){          
-        //   wx.reLaunch({
-        //     url: "/pages/index/index",
-        //   })
-        //   return
-        // }
-      };
     })
   },
 
