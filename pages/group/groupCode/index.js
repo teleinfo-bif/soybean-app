@@ -233,21 +233,28 @@ Page({
               groupId: joinId,
               userId: userFilledInfo.id
             });
-          } else if (res.cancel) {
-            wx.redirectTo({
-              url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
-            });
           }
         }
       })
     } else {
-      this.shareJoniGroup({
-        groupId: joinId,
-        userId: this.data.userFilledInfo.id
-      });
+      wx.showModal({
+        title: "提示",
+        content: `确认加入 ${joinName} 吗？`,
+        showCancel: true,
+        cancelText: "取消",
+        cancelColor: "#000000",
+        confirmText: "确认",
+        confirmColor: "#3CC51F",
+        success(res) {
+          if (res.confirm) {
+            console.log("执行this.joinGroup");
+            this.shareJoniGroup({
+              groupId: joinId,
+              userId: this.data.userFilledInfo.id
+            });
+          }
+        }
+      })
     }
   },
 
@@ -275,14 +282,7 @@ Page({
               fail: () => { },
               complete: () => { }
             });
-          } else if (res.cancel) {
-            wx.redirectTo({
-              url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
-            });
-          }
+          } 
         }
       })
     } else {
