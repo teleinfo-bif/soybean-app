@@ -58,25 +58,26 @@ Page({
       if (hideIds != '' && hideIds != '-1' ){
         tmpMenu[0].hidden = true
         var hideArray = hideIds.split(',');
+        var pos = 0
         var endIndex = hideArray.length - 1
-        console.log('===treehideId====', hideArray)
+        console.log('===treehideIdAraay====', hideArray)
         let parse = arr => {
           arr.forEach(item => {
             // do some ...
-            if (hideArray.indexOf(item.id) != endIndex ) {
-              //console.log("===finde====",item.id)
-              item.hidden = !item.hidden
+            if (hideArray.indexOf(item.id.toString()) != -1) {
+              console.log("====hiddenId====", item.id)
+              item.hidden = true
             }
-           // console.log('item: ', item)
+            console.log('item: ', pos++, item)
             if (Array.isArray(item.children)) {
               parse(item.children)
             }
+
           })
         }
         parse(tmpMenu)
       } 
       if (hideIds == '-1' ){
-        console.log("++++++tmp++++",hideIds)
         tmpMenu[0].hidden = true
       }
       this.setData({
@@ -137,7 +138,7 @@ Page({
     this.hiddenDepart(hideId)
   },
   hiddenDepart(hideId){
-    console.log("=====hideIdDepart====", hideId)
+    //console.log("=====hideIdDepart====", hideId)
     if(hideId == ''){
       return
     }
