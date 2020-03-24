@@ -195,12 +195,16 @@ Page({
     const _this = this;
     const { joinId, joinName, userFilledInfo, alreadJoin, alreadJoinName } = this.data
     if (alreadJoin) {
-      let tip = alreadJoinName!=="变动人员"?
-        `您已经加入了${alreadJoinName}，确定要切换加入${joinName}？`:
-        `确认加入 ${joinName} 吗？`
+      if(alreadJoinName=="变动人员"){
+        _this.shareJoniGroup({
+          groupId: joinId,
+          userId: userFilledInfo.id
+        });
+        return
+      }        
       wx.showModal({
         title: "提示",
-        content: tip,
+        content: `确认加入 ${joinName} 吗？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
@@ -242,12 +246,15 @@ Page({
     const _this = this;
     const { joinId, joinName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
     if (alreadJoin) {
-      let tip = alreadJoinName!=="变动人员"?
-        `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`:
-        `您所在的机构发生架构调整,确定重新加入 ${joinName} 下属部门吗？`
+      if(alreadJoinName=="变动人员"){
+        wx.navigateTo({
+          url: `/pages/group/shareJoinChoice/index?groupName=${joinName}&groupId=${joinId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
+        });
+        return
+      }
       wx.showModal({
         title: "提示",
-        content: tip,
+        content: `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
