@@ -48,7 +48,7 @@ Page({
   onUnload: function() {},
 
   toCode: function() {
-    wx.navigateTo({
+    wx.reLaunch({
       url: `/pages/group/groupCode/index`,
     });
   },
