@@ -1,5 +1,5 @@
 // pages/organizationCode/index.js
-import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup, isGroupExist, getGroup } from "../../../api/api";
+import { fromGroupCodetoId, getUserCurrentGroup, quitGroup, joinGroup, isGroupExist, getUserTreeGroup, getGroup } from "../../../api/api";
 const app = getApp();
 Page({
 
@@ -246,35 +246,62 @@ Page({
     const _this = this;
     const { joinId, joinName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
     if (alreadJoin) {
-      if(alreadJoinName=="变动人员"){
+      if (alreadJoinName == "变动人员") {
         wx.navigateTo({
           url: `/pages/group/shareJoinChoice/index?groupName=${joinName}&groupId=${joinId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
         });
         return
       }
-      wx.showModal({
-        title: "提示",
-        content: `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`,
-        showCancel: true,
-        cancelText: "取消",
-        cancelColor: "#000000",
-        confirmText: "确定",
-        confirmColor: "#3CC51F",
-        success(res) {
-          if (res.confirm) {
-            console.log("跳转");
-            wx.showLoading({
-              title: "加载中..."
-            });
-            wx.navigateTo({
-              url: `/pages/group/shareJoinChoice/index?groupName=${joinName}&groupId=${joinId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              success: result => { wx.hideLoading(); },
-              fail: () => { },
-              complete: () => { }
-            });
-          } 
+      //2020年3月24日加入
+      getUserTreeGroup({
+        groupId: joinId
+      }).then(data => {
+        console.log('data', data)
+        //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断
+        if (data.filter(obj => obj.name !== "变动人员").length == 1) {
+          wx.showModal({
+            title: "提示",
+            content: `您已经加入${this.data.alreadJoinName}！`,
+            showCancel: false,
+            confirmText: "查看",
+            success(res) {
+              if (res.confirm) {
+                wx.reLaunch({
+                  url: `/pages/index/index`,
+                });
+              }
+            }
+          });
+        } else {
+
+          wx.showModal({
+            title: "提示",
+            content: `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`,
+            showCancel: true,
+            cancelText: "取消",
+            cancelColor: "#000000",
+            confirmText: "确定",
+            confirmColor: "#3CC51F",
+            success(res) {
+              if (res.confirm) {
+                console.log("跳转");
+                wx.showLoading({
+                  title: "加载中..."
+                });
+                wx.navigateTo({
+                  url: `/pages/group/shareJoinChoice/index?groupName=${joinName}&groupId=${joinId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
+                  success: result => { wx.hideLoading(); },
+                  fail: () => { },
+                  complete: () => { }
+                });
+              }
+            }
+          })
+
         }
       })
+
+
     } else {
       wx.navigateTo({
         url: `/pages/group/shareJoinChoice/index?groupName=${this.data.joinName}&groupId=${joinId}`,

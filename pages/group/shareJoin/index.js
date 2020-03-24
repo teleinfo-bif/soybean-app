@@ -110,6 +110,24 @@ Page({
         if (this.data.zc == '1') {
           this.joinGroupHighFromRegister()
         } else {
+          //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断
+          if (this.data.alreadJoin && data.filter(obj => obj.name !== "变动人员").length == 1) {
+            wx.showModal({
+              title: "提示",
+              content: `您已经加入${this.data.alreadJoinName}！`,
+              showCancel: false,
+              confirmText: "查看",
+              success(res) {
+                if (res.confirm) {
+                  wx.reLaunch({
+                    url: `/pages/index/index`,
+                  });
+                }
+              }
+            });
+            return
+          }
+
           this.joinGroupChoiceModal()
         }
       }
