@@ -18,9 +18,12 @@ Page({
     })
   },
   joinCodeReturn(){
-    wx.navigateBack({
-      delta: 1
-    })
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    wx.reLaunch({
+      url: `/pages/index/index`,
+    });
 
   },
   //根据唯一码判断，查看群信息，跳转
