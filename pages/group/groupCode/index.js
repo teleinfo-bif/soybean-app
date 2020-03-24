@@ -95,20 +95,21 @@ Page({
       })
       if (JSON.stringify(data) != "{}") {
         let changeGroupList = []
+        let unChangeGroupList = []
         data.forEach((item, index) => {
           let groupCode = item.groupCode
           if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
             changeGroupList.push(item)
           } else {
-            console.log("用户所在群没有变动");
+            unChangeGroupList.push(item)
           }
         });
-        if(changeGroupList.length!==0){          
-          wx.reLaunch({
-            url: "/pages/index/index",
-          })
-          return
-        }
+        // if(changeGroupList.length!==0){          
+        //   wx.reLaunch({
+        //     url: "/pages/index/index",
+        //   })
+        //   return
+        // }
       };
     })
   },
@@ -218,9 +219,12 @@ Page({
     const _this = this;
     const { joinId, joinName, userFilledInfo, alreadJoin, alreadJoinName } = this.data
     if (alreadJoin) {
+      let tip = alreadJoinName!=="变动人员"?
+        `您已经加入了${alreadJoinName}，确定要切换加入${joinName}？`:
+        `确认加入 ${joinName} 吗？`
       wx.showModal({
         title: "提示",
-        content: `您已经加入了${alreadJoinName}，确定要切换加入${joinName}？`,
+        content: tip,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
@@ -262,13 +266,16 @@ Page({
     const _this = this;
     const { joinId, joinName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
     if (alreadJoin) {
+      let tip = alreadJoinName!=="变动人员"?
+        `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`:
+        `您所在的机构发生架构调整,确定重新加入 ${joinName} 下属部门吗？`
       wx.showModal({
         title: "提示",
-        content: `您已经加入了${alreadJoinName}，确定要切换加入 ${joinName} 下属部门吗？`,
+        content: tip,
         showCancel: true,
         cancelText: "取消",
         cancelColor: "#000000",
-        confirmText: "确认",
+        confirmText: "确定",
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {
