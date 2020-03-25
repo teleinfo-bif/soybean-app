@@ -24,7 +24,7 @@
 </view>
 
 <!-- 注册新机构链接 -->
-<view wx:if="{{userFilledInfo.userRegisted && !edit}}" class="group-create-location" style="margin-top:30rpx">
+<view wx:if="{{!userFilledInfo.userRegisted || !edit}}" class="group-create-location" style="margin-top:30rpx">
   <view bindtap="{{userFilledInfo.userRegisted?'toCode':''}}" style="display:inline-block;{{!userFilledInfo.userRegisted?'color: #A9A9A9':''}}">绑定机构唯一码></view>
   <view bindtap="{{userFilledInfo.userRegisted?'createGroup':''}}" style="display:inline-block;margin-left:220rpx; {{!userFilledInfo.userRegisted?'color: #A9A9A9':''}}">注册新机构></view>
 </view>
