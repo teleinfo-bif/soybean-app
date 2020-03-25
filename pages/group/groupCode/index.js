@@ -261,7 +261,9 @@ Page({
       }).then(data => {
         console.log('data', data)
         //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断
-        if (data.filter(obj => obj.name !== "变动人员").length == 1) {
+        if (data.filter(obj => obj.name !== "变动人员").length == 1 &&
+            data.filter(obj => obj.id == this.data.alreadJoinId).length == 1
+        ) {
           wx.showModal({
             title: "提示",
             content: `您已经加入${this.data.alreadJoinName}！`,
