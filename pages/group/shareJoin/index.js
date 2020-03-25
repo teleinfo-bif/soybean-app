@@ -92,7 +92,7 @@ Page({
   },
 
   //判断是否是最低级的部门,调用不同函数
-  joinDifferentGroup: function (groupId) {
+  joinDifferentGroup(groupId) {
     console.log('是否注册页、输机构码、创建群过来的，1就是：zc=', this.data.zc)
     getUserTreeGroup({
       groupId: groupId
@@ -110,10 +110,12 @@ Page({
         if (this.data.zc == '1') {
           this.joinGroupHighFromRegister()
         } else {
-          //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断
+          //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断       
+          let judge = this.judgeChildren(data.filter(obj => obj.name !== "变动人员")[0])
           if (this.data.alreadJoin && 
             data.filter(obj => obj.name !== "变动人员").length == 1 &&
-            data.filter(obj => obj.id == this.data.alreadJoinId).length == 1
+            // data.filter(obj => obj.id == this.data.alreadJoinId).length == 1
+            judge
             ) {
             wx.showModal({
               title: "提示",
@@ -136,6 +138,18 @@ Page({
       }
     })
   },
+
+  //递归判断树中的children是否只有一个值
+  judgeChildren(data) {
+      if(data.children.length == 1) {
+        return this.judgeChildren(data.children[0])
+      } else if(data.children.length > 1) {
+        return false
+      }else {
+        return true
+      }
+  },
+
 
   //弹窗加群 加入末级群
   joinGroupModal: function () {

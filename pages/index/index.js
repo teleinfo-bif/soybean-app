@@ -1,4 +1,6 @@
 import { getNotice } from "../../api/request";
+import { getUserNotices, readNotice } from "../../api/api"
+import Notify from '../../vant-weapp/notify/notify';
 //index.js
 //获取应用实例
 const app = getApp();
@@ -12,7 +14,9 @@ Page({
     userFilledInfo: app.globalData.userFilledInfo,
     hasUserInfo: false,
     notification: "",
-    canIUse: wx.canIUse("button.open-type.getUserInfo")
+    canIUse: wx.canIUse("button.open-type.getUserInfo"),
+   
+    time: 0,
   },
   setBarHeight() {
     wx.getSystemInfo({
@@ -50,7 +54,28 @@ Page({
       });
     }
 
-    // 动态设置小程序的顶部标题
+    getUserNotices({
+      userId: app.globalData.userFilledInfo.id,
+      status: 0,
+      category: 0,
+      size: 10,
+    }).then(data => {
+      const records = data.records;
+      console.log('records', data, app.globalData.userFilledInfo.id)
+      if (records.length > 0) {
+        const text = records.map(obj => obj.content).join("\n")
+        const ids = records.map(obj => obj.id).join(",")
+        this.notifyUser(text)
+        console.log(ids)
+        readNotice({
+          noticeIds: ids
+        }).then(res => {
+          console.log(res)
+        })
+      }
+
+    })
+    
   },
   getUserInfo: function(e) {
     // console.log(e);
@@ -94,5 +119,55 @@ Page({
     wx.navigateTo({
       url: "/pages/help/service/index"
     });
+  },
+  notifyUser(text) {
+    Notify({
+      backgroundColor: '#07c160',
+      // backgroundColor: '#f5f5f5',
+      text: text,
+      duration: 3000,
+      selector: '#van-notify',
+      safeAreaInsetTop: true
+    })
+  },
+
+  //废弃
+  async notify(list, total) {
+    for(let i=0;i<list.length;i++){
+      await this.start(list[i].content);
+      this.setData({
+        time: this.data.time + 1
+      })
+      // readNotice({
+      //   noticeIds: list[i].id
+      // }).then(res=>{
+      //   console.log(res)
+      // })
+      if(this.data.time > total){
+        return
+      }
+    }  
+  },
+  //废弃
+  start: function (text) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        Notify({
+          backgroundColor: '#07c160',
+          // backgroundColor: '#f5f5f5',
+          text: text,
+          duration: 2000,
+          selector: '#van-notify',
+          safeAreaInsetTop: true
+        })
+        resolve('done');
+      }, 3500);
+    }) 
+  },
+
+  onHide() {
+    this.setData({
+      time: 100
+    })
   }
 });

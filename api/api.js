@@ -232,3 +232,15 @@ export const getFirstGroup = async params => {
 };
 
 
+//查询用户通知
+export const getUserNotices = async params => {
+  return Request._get(`/wx/notice/list`, params);
+};
+
+//读取通知
+export const readNotice = async params => {
+  return Request._postParams(`/wx/notice/read`, params);
+};
+
+
+
