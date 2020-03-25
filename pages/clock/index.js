@@ -958,8 +958,7 @@ Page({
     }
     wx.showToast({
       title: "已为您记忆上次打卡数据，如有变化，请更新后再提交",
-      icon: "none",
-      duration: 2000
+      icon: "none"
     });
     // const { otherFieldsList } = this.data;
     // for (let prop in otherFieldsList) {
