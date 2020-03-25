@@ -2,7 +2,12 @@
   "usingComponents": {
     "banner": "../../index/banner/banner",
     "van-icon": "vant-weapp/icon",
-    "clock": "../../index/clock/index"
+    "clock": "../../index/clock/index",
+    "van-dialog": "vant-weapp/dialog",
+    "van-radio": "vant-weapp/radio",
+    "van-radio-group": "vant-weapp/radio-group",
+    "van-cell": "vant-weapp/cell",
+    "van-cell-group": "vant-weapp/cell-group"
   },
   "navigationBarTitleText": "信本聪",
   "navigationStyle": "custom",

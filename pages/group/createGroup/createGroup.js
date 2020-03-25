@@ -51,7 +51,7 @@ Page({
     if (!globalData.appInit) {
       // await app.init();
       app.init(globalData => {
-        console.log('globalData', globalData);
+        // console.log('globalData', globalData);
         this.setData({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo
@@ -59,7 +59,7 @@ Page({
         this.queryUserInfo()
       });
     } else {
-      console.log('globalData', globalData);
+      // console.log('globalData', globalData);
       this.setData({
         globalData: globalData,
         userFilledInfo: globalData.userFilledInfo
@@ -203,7 +203,7 @@ Page({
            console.log('1', data)
            let code = data;
            wx.navigateTo({
-              url: `/pages/group/groupCodeShow/index?groupCode=${code}&finished=${e.detail.value.group_file}`,
+              url: `/pages/group/groupCodeShow/index?groupCode=${code}&finished=${'true'}`,
            });           
       }).catch(e => {
         console.log(e)

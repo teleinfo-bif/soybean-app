@@ -8,12 +8,12 @@
       <text style='font-size:40rpx;'>{{msg}}</text>
     </view>
   </view>
-  <view wx:if="{{jigou=='1'}}" class="btn-item" style="width:350rpx">
+  <!-- <view wx:if="{{jigou=='1'}}" class="btn-item" style="width:350rpx">
     <view bind:tap="toCode">
       <van-button type="primary" color="#1759EF" block>绑定机构唯一码</van-button>
     </view>
-  </view>
-  <view wx:else class="btn-item">
+  </view> -->
+  <view class="btn-item">
     <van-button bind:click="redirectTo" type="primary" color="#1759EF" block>返回首页</van-button>
   </view>
   <!-- <view class="btn-item">
@@ -23,9 +23,7 @@
   </view> -->
 </view>
 <!-- 注册新机构链接 -->
-<view wx:if="{{jigou=='1'}}" class="group-create-location">
+<!-- <view wx:if="{{jigou=='1'}}" class="group-create-location">
   <view bind:tap="redirectTo" style="display:inline-block">返回首页></view>
-  <navigator url="/pages/group/createGroup/createGroup" style="display:inline-block;">
-    注册新机构>
-  </navigator>
-</view>
+  <view bind:tap="toCreateGroup" style="display:inline-block">注册新机构></view>
+</view> -->

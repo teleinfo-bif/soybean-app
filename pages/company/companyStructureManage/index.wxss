@@ -39,12 +39,14 @@ page{
 .add-img{
   width:45rpx;
   height:45rpx;
+  z-index:9999;
 }
 .del-img{
   width:45rpx;
   height:45rpx;
   margin-right: 30rpx;
   margin-left:90rpx;
+  z-index:9999;
 }
 .MenuDiv{overflow: hidden;}
 .MenuDiv:first-child{border-bottom: 1px solid #ccc;}

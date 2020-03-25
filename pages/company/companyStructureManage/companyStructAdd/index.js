@@ -22,7 +22,8 @@ Page({
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       groupId: that.data.groupId,
-      groupName:that.data.groupName
+      groupName:that.data.groupName,
+      hideIds: that.data.hideIds
     })
     wx.navigateBack({
       delta: 1,
@@ -61,6 +62,14 @@ Page({
       });
       return;
     } 
+    if (this.data.inputValue == this.data.parentName ){
+      wx.showToast({
+        title: "已经存在此机构名，请重新填写!",
+        icon: "none",
+        duration: 2000
+      });
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: "确定要添加" + this.data.inputValue + "吗？",
@@ -97,7 +106,8 @@ Page({
     this.setData({
       groupId: options.groupId,
       groupName:options.groupName,
-      parentId: options.parentId
+      parentId: options.parentId,
+      hideIds: options.hideIds,
     });
   },
 

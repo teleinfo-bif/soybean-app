@@ -52,3 +52,10 @@
     margin-right:50rpx;
     color: #1759EF;
   }
+
+  .title-change {
+    padding: 40rpx 40rpx;
+    font-size: 32rpx;
+    line-height: 180%;
+    text-align: center;
+  }

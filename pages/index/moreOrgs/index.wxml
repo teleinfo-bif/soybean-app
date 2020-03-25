@@ -1,10 +1,8 @@
-<!-- pages/index/organization/index.wxml -->
-<block wx:if="{{groupList.length > 0}}">
-  <view class="organization">
-    <view class="organization_head van-hairline--bottom">
-      <view class="organization_head-text">今日数据</view>
-      <view class="organization_head-btn" bind:tap="moreShow" wx:if="{{moreShow}}">更多</view>
+<!--pages/index/moreOrgs/index.wxml-->
+ <view class="organization_head van-hairline--bottom">
     </view>
+  <view class="organization">
+   
     <view class="organization_content">
       <view wx:for="{{groupList}}" wx:key="index" class="organization_item">
         <!-- 公司Logo -->
@@ -13,15 +11,9 @@
             <image style="width: 80rpx;height:80rpx" src="{{item.logo != '' ?item.logo:'../../../static/images/companyDefault.png'}}" />
           </navigator>
         </view>
-        <!-- <view class="organization_item_right"> -->
+        
           <!-- 中间部门名称 -->
           <view class="organization_item_name_new" style="padding-left:0rpx;" data-data="{{item}}">
-            <!-- <view wx:if="{{item.permission || item.dataPermission}}" class="organization_item-name-1" target="" data-data="{{item}}" bind:tap="navigateToGroupIndex">
-              {{item.name}}
-            </view>
-            <navigator wx:else url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}&permission={{item.permission|| item.dataPermission}}" class="organization_item-name-1">
-              {{item.name}}
-            </navigator> -->
             
             <view wx:if="{{(item.permission || item.dataPermission==true) && item.children.length > 0}}" class="organization_item-name-1" target="" data-data="{{item}}" bind:tap="navigateToGroupIndex">
               {{item.name}}
@@ -48,11 +40,6 @@
               <view class="organization_item-name" data-data="{{item}}" bind:tap="navigateToGroupIndex">
                 <image class="btn" src="../../../static/images/detail.png" />
               </view>
-              <!-- <view class="organization_item-name">
-                <navigator class="" target="" url="/pages/detail/index?groupId={{item.id}}&groupName={{item.name}}&permission=true" hover-class="navigator-hover" open-type="navigate">
-                  <image class="btn-statistic" src="../../../static/images/detail.png" />
-                </navigator>
-              </view> -->
             </view>
             <view class="organization_item-btn" wx:if="{{(item.permission || item.dataPermission==true) && item.children.length === 0}}">
               <view>
@@ -72,27 +59,8 @@
               </navigator>
             </view>
           </view>
-        <!-- </view> -->
+       
       </view>
     </view>
   </view>
-</block>
 
-<van-dialog
- use-slot
- title="" 
- show="{{ show }}" 
- show-cancel-button 
- bind:confirm="goToChoiceGroup" 
- bind:close="onClose" 
- bind:getuserinfo="getUserInfo"
- >
-  <view class="title-change">提示：您所在机构发生架构调整，请重新选择所在部门！</view>
-  <van-radio-group value="{{ radio }}" bind:change="onChange">
-    <van-cell-group>
-      <van-cell wx:for="{{changeGroups}}" wx:key="index" title="{{item.topName}}" clickable data-name="{{item.groupIdentify}}" data-id="{{item.id}}" bind:click="onClick">
-        <van-radio slot="right-icon" name="{{item.groupIdentify}}" />
-      </van-cell>
-    </van-cell-group>
-  </van-radio-group>
-</van-dialog>

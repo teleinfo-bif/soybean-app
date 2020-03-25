@@ -86,7 +86,7 @@ Page({
 
   quitCodeGroup: function (code) {
     const {groupName, groupId } = this.data
-    wx.navigateTo({
+    wx.reLaunch({
       url: `/pages/index/index`,
     });
   },

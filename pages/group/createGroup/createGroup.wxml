@@ -5,10 +5,13 @@
   show-cancel-button
   bind:close="onClose"
   bind:confirm="downloadStructure"
-  customStyle="border-radius: 14px"
+  customStyle="border-radius: 0 0 14px 14px"
   confirm-button-text="下载模板"
   cancel-button-text="先注册"
 >
+  <view class="round-top">
+    <view class="round-x incorrect" bind:tap="onClose"></view>
+  </view> 
   <image class="dialog-pic" src="{{dialogPicture}}" />
   <view class="dialog-text">
     <text>

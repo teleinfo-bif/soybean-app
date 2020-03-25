@@ -14,7 +14,12 @@ Component({
     userFilledInfo: {},
     globalData: {},
     groupList: [],
-    groupData: {}
+    groupData: {},
+    show: false, //弹窗是否显示
+    radio: '1',
+    changeGroups: [],
+    preparedGroup: '', //准备加入的机构唯一码
+    moreShow: false //是否显示更多按钮
   },
   lifetimes: {
     // async attached() {
@@ -57,60 +62,49 @@ Component({
       const { userFilledInfo } = app.globalData;
 
       if (userFilledInfo.userRegisted) {
+        const changeGroupList = []
         getUserCurrentGroup({
           groupId: app.globalData.userFilledInfo.userId
         }).then(data => {
           console.log('查询用户已加入的群', data)
-          let groupCode = data.groupCode
-          let groupIdentify = data.groupIdentify
-          let alreadJoin = data.name
-          let alreadJoinId = data.id
-          if(groupCode && groupCode.substring(groupCode.length-8)=="_NO_DEPT") {
-            fromGroupCodetoId({
-              groupCode: groupIdentify,
-            }).then(res => {
-              console.log('根据唯一码查看群信息', res);
-              if (JSON.stringify(res) == "{}") {
-                wx.showToast({
-                  title: `您所在的一级机构已经不存在！`,
-                  icon: 'none',
+          if (JSON.stringify(data) != "{}") {
+            data.forEach((item, index) => {
+              let groupCode = item.groupCode
+              if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
+                this.setData({
+                  show: true
                 })
-                return
+                let temp = {
+                  ...item,
+                  topName: item.fullName.split('_')[0]
+                }
+                changeGroupList.push(temp)
               } else {
-                let groupName = res.name
-                let groupId = res.id
-                wx.showModal({
-                  title: "提示",
-                  content: `您所在机构发生架构调整，请重新选择所在部门！`,
-                  showCancel: true,
-                  success(res) {
-                    if (res.confirm) {
-                      wx.navigateTo({
-                        url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-                      });
-                    } 
-                  }
-                });
+                console.log("用户所没加群或者所在群没有变动");
               }
-            })          
-          } else {
-            console.log("用户所没加群或者所在群没有变动");
-          }
-        }).catch(e=>{
-          console.log('查询用户已加入的群出错', e)
-        })
-        getUserGroupTree({}).then(data => {
-          console.log(
-            "===============用户管理部门：===============\n",
-            data.length,
-            data
-          );
-          let temp = data.filter(obj=>obj.name!=="变动人员")
-          this.setData({
-            groupList: temp
-          });
+            });
+            this.setData({
+              changeGroups: changeGroupList
+            })
+            // console.log('变动部门', this.data.changeGroups)   
+          };
         });
-      }
+      };
+
+      getUserGroupTree({}).then(data => {
+        console.log(
+          "===============用户管理部门：===============\n",
+          data.length,
+          data
+        );
+        let temp = data.filter(obj => obj.name !== "变动人员").slice(0, 2)
+        let moreShow = data.filter(obj => obj.name !== "变动人员").length > 2 ? true : false
+        this.setData({
+          groupList: temp,
+          moreShow: moreShow
+        });
+      });
+
     },
     tap() {
       // console.log(this.data);
@@ -128,6 +122,64 @@ Component({
           url: `/pages/group/groupIndex/index?data=${JSON.stringify(data)}`
         });
       }
+    },
+
+    onChange(event) {
+      // console.log('radio onchange', event.detail)
+      this.setData({
+        radio: event.detail
+      });
+    },
+  
+    onClick(event) {
+      // console.log('radio onClick', event.currentTarget.dataset)
+      const { name, id } = event.currentTarget.dataset;
+      this.setData({
+        radio: name,
+        preparedGroup: name,
+        alreadJoinId: id
+      });
+    },
+    goToChoiceGroup() {
+      const { preparedGroup, alreadJoinId } = this.data
+      // console.log('goToChoiceGroup', preparedGroup)
+      if (!preparedGroup) {
+        this.setData({
+          show: true
+        })
+        return
+      }
+      fromGroupCodetoId({
+        groupCode: preparedGroup,
+        loading: true
+      }).then(res => {
+        console.log('根据唯一码查看群信息', res);
+        if (JSON.stringify(res) == "{}") {
+          wx.showToast({
+            title: `您所在的一级机构已经不存在！`,
+            icon: 'none',
+          })
+          return
+        } else {
+          let groupName = res.name
+          let groupId = res.id
+          wx.navigateTo({
+            url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoinId}&alreadJoinId=${alreadJoinId}`,
+          });
+        }
+      })
+    },
+    onClose: function () {
+      console.log('onClose')
+      this.setData({
+        show: false
+      })
+    },
+    moreShow: function() {
+      wx.navigateTo({
+        url: `/pages/index/moreOrgs/index`
+      });
     }
+
   }
 });

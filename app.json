@@ -28,7 +28,8 @@
     "pages/company/companyTransfer/index",
     "pages/company/companyStructureManage/index",
     "pages/company/companyStructureManage/companyStructAdd/index",
-    "pages/help/service/index"
+    "pages/help/service/index",
+    "pages/index/moreOrgs/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

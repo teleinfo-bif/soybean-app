@@ -107,3 +107,15 @@
   text-align: left;
   font-size: 30rpx;
   line-height: 150%; }
+
+.title-change {
+  padding: 40rpx 40rpx;
+  font-size: 32rpx;
+  line-height: 180%;
+  text-align: center;
+}
+
+.organization_head-btn {
+  color: #4276FF;
+  font-size: 26rpx;
+}
