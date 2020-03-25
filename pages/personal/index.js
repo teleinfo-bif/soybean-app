@@ -482,5 +482,10 @@ Page({
     wx.navigateTo({
       url: "/pages/group/createGroup/createGroup"
     });
-  }
+  },
+  toCode: function() {
+    wx.navigateTo({
+      url: `/pages/group/groupCode/index`,
+    });
+  },
 });

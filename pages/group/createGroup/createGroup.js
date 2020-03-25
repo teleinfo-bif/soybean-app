@@ -51,7 +51,7 @@ Page({
     if (!globalData.appInit) {
       // await app.init();
       app.init(globalData => {
-        console.log('globalData', globalData);
+        // console.log('globalData', globalData);
         this.setData({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo
@@ -59,7 +59,7 @@ Page({
         this.queryUserInfo()
       });
     } else {
-      console.log('globalData', globalData);
+      // console.log('globalData', globalData);
       this.setData({
         globalData: globalData,
         userFilledInfo: globalData.userFilledInfo
