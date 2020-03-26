@@ -1,4 +1,6 @@
 import { getNotice } from "../../api/request";
+import { getUserNotices, readNotice } from "../../api/api"
+import Notify from '../../vant-weapp/notify/notify';
 //index.js
 //获取应用实例
 const app = getApp();
@@ -12,7 +14,7 @@ Page({
     userFilledInfo: app.globalData.userFilledInfo,
     hasUserInfo: false,
     notification: "",
-    canIUse: wx.canIUse("button.open-type.getUserInfo")
+    canIUse: wx.canIUse("button.open-type.getUserInfo"),
   },
   setBarHeight() {
     wx.getSystemInfo({
@@ -50,7 +52,28 @@ Page({
       });
     }
 
-    // 动态设置小程序的顶部标题
+    getUserNotices({
+      userId: app.globalData.userFilledInfo.id,
+      status: 0,
+      category: 0,
+      size: 10,
+    }).then(data => {
+      const records = data.records.slice(0, 2);
+      console.log('records', data, app.globalData.userFilledInfo.id)
+      if (records.length > 0) {
+        const text = records.map(obj => obj.content).join("\r\n")
+        const ids = records.map(obj => obj.id).join(",")
+        this.notifyUser(text)
+        console.log(text, ids)
+        readNotice({
+          noticeIds: ids
+        }).then(res => {
+          console.log(res)
+        })
+      }
+
+    })
+    
   },
   getUserInfo: function(e) {
     // console.log(e);
@@ -94,5 +117,21 @@ Page({
     wx.navigateTo({
       url: "/pages/help/service/index"
     });
-  }
+  },
+  notifyUser(text) {
+    // Notify({
+    //   backgroundColor: '#07c160',
+    //   // backgroundColor: '#f5f5f5',
+    //   text: text,
+    //   duration: 3000,
+    //   selector: '#van-notify',
+    //   safeAreaInsetTop: true
+    // })
+    wx.showToast({
+      title: text,
+      icon: "none",
+      duration: 3000,
+      mask: true
+    });
+  },
 });

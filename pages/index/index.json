@@ -3,7 +3,8 @@
     "banner": "./banner/banner",
     "personalLogin": "./personalLogin/index",
     "clock": "./clock/index",
-    "organization": "./organization/index"
+    "organization": "./organization/index",
+    "van-notify": "vant-weapp/notify"
   },
   "navigationBarTitleText": "信鄂通",
   "navigationStyle": "custom",
