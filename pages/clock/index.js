@@ -1036,6 +1036,8 @@ Page({
             "jobstatus"
           ];
           const previousLockData = resData.records[0];
+          // 去掉查询返回数据的ID字段，不然会覆盖
+          delete previousLockData.id;
           let { data } = this.data;
           autoFilledProps.forEach(prop => {
             data[prop] = previousLockData[prop];
