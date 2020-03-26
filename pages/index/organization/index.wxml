@@ -1,4 +1,5 @@
 <!-- pages/index/organization/index.wxml -->
+<van-toast id="van-toast" />
 <block wx:if="{{groupList.length > 0}}">
   <view class="organization">
     <view class="organization_head van-hairline--bottom">

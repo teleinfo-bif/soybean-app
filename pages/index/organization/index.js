@@ -1,5 +1,6 @@
 // pages/index/organization/index.js
 import { getUserGroupTree, getUserCurrentGroup, fromGroupCodetoId, getUserNotices, readNotice } from "../../../api/api";
+import Toast from '../../../vant-weapp/toast/toast';
 const app = getApp();
 Component({
   /**
@@ -206,17 +207,23 @@ Component({
         category: 0,
         size: 10,
       }).then(data => {
-        const records = data.records.slice(0, 2);
+        const records = data.records.slice(0, 5);
         console.log('records', data, app.globalData.userFilledInfo.id)
         if (records.length > 0) {
-          const text = records.map(obj => obj.content).join("\r\n")
+          const text = records.map(obj => obj.content).join("\r\n\r\n")
           const ids = records.map(obj => obj.id).join(",")
-          wx.showToast({
-            title: text,
-            icon: "none",
+          Toast({
+            message:text,
+            context: this,
             duration: 3000,
-            mask: true
+            mask: false
           });
+          // wx.showToast({
+          //   title: text,
+          //   icon: "none",
+          //   duration: 3000,
+          //   mask: true
+          // });
           console.log(text, ids)
           readNotice({
             noticeIds: ids

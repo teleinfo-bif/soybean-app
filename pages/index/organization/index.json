@@ -4,6 +4,7 @@
     "van-radio": "vant-weapp/radio",
     "van-radio-group": "vant-weapp/radio-group",
     "van-cell": "vant-weapp/cell",
-    "van-cell-group": "vant-weapp/cell-group"
+    "van-cell-group": "vant-weapp/cell-group",
+    "van-toast": "vant-weapp/toast"
   }
 }
