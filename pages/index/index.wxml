@@ -26,4 +26,4 @@
     </view>
   </view>
 </view>
-<van-notify id="van-notify" />
+<!-- <van-notify id="van-notify" /> -->
