@@ -52,27 +52,27 @@ Page({
       });
     }
 
-    getUserNotices({
-      userId: app.globalData.userFilledInfo.id,
-      status: 0,
-      category: 0,
-      size: 10,
-    }).then(data => {
-      const records = data.records.slice(0, 2);
-      console.log('records', data, app.globalData.userFilledInfo.id)
-      if (records.length > 0) {
-        const text = records.map(obj => obj.content).join("\r\n")
-        const ids = records.map(obj => obj.id).join(",")
-        this.notifyUser(text)
-        console.log(text, ids)
-        readNotice({
-          noticeIds: ids
-        }).then(res => {
-          console.log(res)
-        })
-      }
+    // getUserNotices({
+    //   userId: app.globalData.userFilledInfo.id,
+    //   status: 0,
+    //   category: 0,
+    //   size: 10,
+    // }).then(data => {
+    //   const records = data.records.slice(0, 2);
+    //   console.log('records', data, app.globalData.userFilledInfo.id)
+    //   if (records.length > 0) {
+    //     const text = records.map(obj => obj.content).join("\r\n")
+    //     const ids = records.map(obj => obj.id).join(",")
+    //     this.notifyUser(text)
+    //     console.log(text, ids)
+    //     readNotice({
+    //       noticeIds: ids
+    //     }).then(res => {
+    //       console.log(res)
+    //     })
+    //   }
 
-    })
+    // })
     
   },
   getUserInfo: function(e) {

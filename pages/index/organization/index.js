@@ -1,5 +1,5 @@
 // pages/index/organization/index.js
-import { getUserGroupTree, getUserCurrentGroup, fromGroupCodetoId } from "../../../api/api";
+import { getUserGroupTree, getUserCurrentGroup, fromGroupCodetoId, getUserNotices, readNotice } from "../../../api/api";
 const app = getApp();
 Component({
   /**
@@ -19,7 +19,8 @@ Component({
     radio: '1',
     changeGroups: [],
     preparedGroup: '', //准备加入的机构唯一码
-    moreShow: false //是否显示更多按钮
+    moreShow: false, //是否显示更多按钮
+    showToast: false,
   },
   lifetimes: {
     // async attached() {
@@ -79,15 +80,21 @@ Component({
                   topName: item.fullName.split('_')[0]
                 }
                 changeGroupList.push(temp)
+                console.log("群有变动");
               } else {
-                console.log("用户所没加群或者所在群没有变动");
+                console.log("用户没加群或者所在群没有变动");                
               }
             });
             this.setData({
               changeGroups: changeGroupList
             })
+            if(changeGroupList.length==0) {
+              this.notify()
+            }
             // console.log('变动部门', this.data.changeGroups)   
-          };
+          } else {
+            this.notify()
+          }
         });
       };
 
@@ -142,13 +149,17 @@ Component({
     },
     goToChoiceGroup() {
       const { preparedGroup, alreadJoinId } = this.data
-      // console.log('goToChoiceGroup', preparedGroup)
+      //点击确认后不弹toast消息
+      this.setData({
+        showToast: true
+      })
       if (!preparedGroup) {
         this.setData({
-          show: true
+          show: true,
         })
         return
       }
+      
       fromGroupCodetoId({
         groupCode: preparedGroup,
         loading: true
@@ -169,17 +180,51 @@ Component({
         }
       })
     },
+
     onClose: function () {
-      console.log('onClose')
+      console.log('onClose',this.data.showToast)
       this.setData({
         show: false
       })
+      setTimeout(()=> {
+        if(!this.data.showToast){
+         this.notify()
+        }       
+      }, 1500)        
     },
+
     moreShow: function() {
       wx.navigateTo({
         url: `/pages/index/moreOrgs/index`
       });
-    }
-
+    },
+    
+    async notify() {
+      await getUserNotices({
+        userId: app.globalData.userFilledInfo.id,
+        status: 0,
+        category: 0,
+        size: 10,
+      }).then(data => {
+        const records = data.records.slice(0, 2);
+        console.log('records', data, app.globalData.userFilledInfo.id)
+        if (records.length > 0) {
+          const text = records.map(obj => obj.content).join("\r\n")
+          const ids = records.map(obj => obj.id).join(",")
+          wx.showToast({
+            title: text,
+            icon: "none",
+            duration: 3000,
+            mask: true
+          });
+          console.log(text, ids)
+          readNotice({
+            noticeIds: ids
+          }).then(res => {
+            console.log(res)
+          })
+        }
+      })
+    },
   }
 });
