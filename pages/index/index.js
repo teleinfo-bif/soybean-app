@@ -4,7 +4,7 @@ import { env } from "../../config/index";
 //获取应用实例
 const app = getApp();
 // const chooseLocation = requirePlugin("chooseLocation");
-
+let pageInit = false;
 Page({
   data: {
     globalData: app.globalData,
@@ -14,7 +14,7 @@ Page({
     hasUserInfo: false,
     notification: "",
     canIUse: wx.canIUse("button.open-type.getUserInfo"),
-    migrateVisible: false
+    init: false
   },
   setBarHeight() {
     wx.getSystemInfo({
@@ -26,6 +26,8 @@ Page({
     });
   },
   migrate() {
+    if (pageInit) return;
+    pageInit = true;
     wx.showModal({
       title: "温馨提示",
       content: "随着疫情防控取得阶段性胜利，即日起信鄂通暂停使用，升级为有象。",
@@ -51,15 +53,19 @@ Page({
             },
             error(error) {
               console.error("跳转失败:", error);
+            },
+            complete(res) {
+              console.log(res);
+              // 用户点击取消
+              if (res.errMsg === "navigateToMiniProgram:fail cancel") {
+              }
             }
           });
         }
       },
       fail: () => {},
       complete: () => {
-        this.setData({
-          migrateVisible: true
-        });
+        pageInit = false;
       }
     });
   },
@@ -101,7 +107,7 @@ Page({
     });
   },
   onShow() {
-    // this.migrate();
+    this.migrate();
   },
   /**
    * 用户点击右上角分享
@@ -138,14 +144,6 @@ Page({
     });
   },
   notifyUser(text) {
-    // Notify({
-    //   backgroundColor: '#07c160',
-    //   // backgroundColor: '#f5f5f5',
-    //   text: text,
-    //   duration: 3000,
-    //   selector: '#van-notify',
-    //   safeAreaInsetTop: true
-    // })
     wx.showToast({
       title: text,
       icon: "none",
