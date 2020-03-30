@@ -39,7 +39,7 @@ Page({
           console.log(env, this.data.userFilledInfo.phone);
           wx.navigateToMiniProgram({
             appId: "wx71d2b39033c14591",
-            path: "",
+            path: "/pages/index/index",
             extraData: {
               phone: this.data.userFilledInfo.phone
               // foo: "bar"
