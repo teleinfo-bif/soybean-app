@@ -1,6 +1,9 @@
 //app.js
+import { findUserByPhoneAct } from "./api/api";
+import { saveOrUpdateUserInfo } from "./api/api.js";
 import { appInit, getUserInfo } from "./api/request";
 import { env } from "./config/index";
+
 // import { getUnionId } from "./utils/unionId/demo";
 App({
   initRequest: false,
@@ -59,16 +62,70 @@ App({
     });
   },
 
+  // 根据电话号更新用户信息
+  async updateUserInfoByPhone(phone, loginFromPhone = false) {
+    return new Promise(async (resolve, reject) => {
+      const phoneUserInfo = await findUserByPhoneAct({
+        phone,
+        loading: true
+      });
+      const phoneRegisted = Object.keys(phoneUserInfo).length > 0;
+      console.log(
+        "提醒：手机号phone-",
+        phone,
+        "注册状态是:",
+        phoneRegisted,
+        "更新用户openId"
+      );
+      // TODO: 如果用户信息存在，且未注册，提交更新
+      if (phoneRegisted) {
+        try {
+          await saveOrUpdateUserInfo(phoneUserInfo);
+          const initData = await appInit();
+          resolve(initData);
+        } catch (error) {
+          reject(error);
+        }
+      } else if (loginFromPhone) {
+        reject(new Error(phone + "用户未注册"));
+        wx.showToast({
+          title: phone + "用户未注册",
+          icon: "none",
+          duration: 3000,
+          mask: true,
+          success: result => {},
+          fail: () => {},
+          complete: () => {}
+        });
+      }
+    });
+  },
+
   onLaunch: async function(options) {
-    console.log("options", options);
     // 环境判断
     this.globalData.release = env == "release";
-    const initData = await appInit();
 
+    // 获取传入的phone
+    const { phone } = options.referrerInfo.extraData;
+
+    // APP初始化
+    let initData = await appInit();
+
+    // 设置值
     this.globalData = {
       ...this.globalData,
       ...initData
     };
+
+    // 从其他小程序携带phone参数跳转过来，而且没有注册
+    if (phone && !initData.userFilledInfo.userRegisted) {
+      try {
+        initData = await this.updateUserInfoByPhone(phone);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // XXX: 执行初始化结束的回调，需要等待老用户更新完个人信息之后
     await this.setGloableUserInfo(initData.userFilledInfo);
 
     // 获取用户信息

@@ -11,9 +11,9 @@ const baseApi = {
   // 正式版
   release: "https://admin.bidspace.cn"
 };
-// debugger;
+
 // 小程序appId
-export const appId = "wx9f50de1f1b6b94c6";
+export const appId = "wx71d2b39033c14591";
 
 // request请求baseURL
 export const baseURL = baseApi[env] + "/bid-truth";

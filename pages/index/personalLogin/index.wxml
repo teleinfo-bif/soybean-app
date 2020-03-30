@@ -20,5 +20,8 @@
       <image class="dayuhao" src="../../../static/images/dayuhao.png" />
     </view>
   </view>
+  <view wx:if="{{!userFilledInfo.userRegisted}}" class="btn-getUserPhone ">
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">老用户登录</button>
+  </view>
 </view>
 <!-- <button bindtap="test">test</button> -->

@@ -1,4 +1,6 @@
 // pages/index/EnteringInfo/EnteringInfo.js
+import { getUserPhone } from "../../../api/api.js";
+import { checkSessionKey } from "../../../api/request.js";
 const app = getApp();
 Component({
   lifetimes: {
@@ -62,6 +64,50 @@ Component({
       wx.navigateTo({
         url: "/pages/personal/index"
       });
+    },
+    getPhoneNumberFromServer(data = {}) {
+      // this.triggerEvent("change", 10010010011);
+      getUserPhone(data)
+        .then(res => {
+          console.log(res);
+          app.updateUserInfoByPhone(res.phoneNumber, true);
+          // this.triggerEvent("change", res.phoneNumber);
+        })
+        .catch(e => {
+          console.error("错误：获取手机号码失败", e);
+          wx.showToast({
+            title: "获取手机号码失败",
+            icon: "none"
+          });
+          // this.triggerEvent("change", 13888888888);
+        })
+        .finally(() => {
+          // console.error("complete");
+        });
+    },
+    async getPhoneNumber(e) {
+      if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
+        wx.showModal({
+          content: "不能获取手机号码",
+          showCancel: false
+        });
+        return;
+      }
+      let { fedToken } = app.globalData;
+      const sessionState = await checkSessionKey();
+      console.log("点击获取手机号按钮，session状态是", sessionState);
+      if (!sessionState) {
+        console.log("sessionKey无效重新获取sessionKey");
+        fedToken = await getOpenId();
+        app.globalData.fedToken = fedToken;
+      }
+      // 此处没有判断token的有效状态
+      let requestData = {
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv,
+        sessionKey: fedToken.sessionKey
+      };
+      this.getPhoneNumberFromServer(requestData);
     }
   }
 });

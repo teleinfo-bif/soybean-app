@@ -1,48 +1,8 @@
+import { appId as appid } from "../config/index";
 import Request from "./request.js";
-const tokenKey = "fedToken";
-
-const appid = "wx9f50de1f1b6b94c6";
-// const appid = "wx5b2106519f2fb6c6";
-
-// 获取用户openId
-/**
-export const getOpenId = () => {
-  return new Promise((resolve, reject) => {
-    wx.login({
-      success: res => {
-        let params = {
-          appid,
-          code: res.code,
-          header: {
-            Authorization: "Basic c2FiZXI6c2FiZXJfc2VjcmV0"
-          }
-        };
-        Request._get("/wx/user/login", params)
-          .then(data => {
-            wx.setStorageSync("tokenKey", data);
-            // wx.setStorageSync("tokenKey", data.openid);
-            // wx.setStorageSync("section_key", data.section_key);
-            resolve(data);
-          })
-          .catch(e => {
-            reject(e);
-          });
-      }
-    });
-  });
-}; 
- */
 
 // 获取用户获取的个人信息
 export const getUserPhone = async params => {
-  // const sessionState = await Request.checkSessionKey();
-  // console.log("发送获取手机之前验证session：", sessionState);
-
-  // if (!sessionState) {
-  //   console.log("重新获取sessionkey");
-  //   await Request.getOpenId();
-  //   params.sessionKey = data.sessionKey;
-  // }
   params = Object.assign({}, params, { appid });
   return Request._get("/wx/user/phone", params);
 };
@@ -190,7 +150,6 @@ export const existCompany = async params => {
   return Request._get(`/wx/usergroup/exist`, params);
 };
 
-
 //订阅消息
 export const userSubscribe = async params => {
   return Request._postParams(`/user/subscribe`, params);
@@ -231,7 +190,6 @@ export const getFirstGroup = async params => {
   return Request._get(`/wx/group/firstGroup`, params);
 };
 
-
 //查询用户通知
 export const getUserNotices = async params => {
   return Request._get(`/wx/notice/list`, params);
@@ -241,6 +199,3 @@ export const getUserNotices = async params => {
 export const readNotice = async params => {
   return Request._postParams(`/wx/notice/read`, params);
 };
-
-
-
