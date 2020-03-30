@@ -1,5 +1,10 @@
 <!-- index.wxml -->
 <view>
+
+  <view class="noclick-shade" bindtap="onShow">
+    
+  </view>
+
   <!-- 首页banner -->
   <banner statusBarHeight="{{statusBarHeight}}"></banner>
   <!-- 录入个人信息 -->
@@ -17,6 +22,7 @@
   <!-- 统计信息 -->
   <!-- <Statistics></Statistics> -->
   <!-- <view class="footer-copy-right">中国信息通信研究院</view> -->
+    
   <view class="logo">   
     <!-- <view class="copyright-view">中国信息通信研究院</view> -->
     <view class="page__title">{{notification}}</view>

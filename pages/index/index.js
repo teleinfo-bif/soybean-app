@@ -1,6 +1,5 @@
 import { getNotice } from "../../api/request";
-import { getUserNotices, readNotice } from "../../api/api"
-import Notify from '../../vant-weapp/notify/notify';
+import { env } from "../../config/index";
 //index.js
 //获取应用实例
 const app = getApp();
@@ -15,12 +14,53 @@ Page({
     hasUserInfo: false,
     notification: "",
     canIUse: wx.canIUse("button.open-type.getUserInfo"),
+    migrateVisible: false
   },
   setBarHeight() {
     wx.getSystemInfo({
       success: res => {
         this.setData({
           statusBarHeight: res.statusBarHeight
+        });
+      }
+    });
+  },
+  migrate() {
+    if (this.data.migrateVisible) retrun;
+
+    wx.showModal({
+      title: "温馨提示",
+      content: "随着疫情防控取得阶段性胜利，即日起信鄂通暂停使用，升级为有象。",
+      showCancel: false,
+      cancelColor: "#000000",
+      confirmText: "移步有象",
+      confirmColor: "#3CC51F",
+      success: result => {
+        if (result.confirm) {
+          // _this.test();
+          console.log(env, this.data.userFilledInfo.phone);
+          wx.navigateToMiniProgram({
+            appId: "wx71d2b39033c14591",
+            path: "",
+            extraData: {
+              phone: this.data.userFilledInfo.phone
+              // foo: "bar"
+            },
+            envVersion: env,
+            success(res) {
+              // 打开成功
+              console.log("跳转成功");
+            },
+            error(error) {
+              console.error("跳转失败:", error);
+            }
+          });
+        }
+      },
+      fail: () => {},
+      complete: () => {
+        this.setData({
+          migrateVisible: true
         });
       }
     });
@@ -44,36 +84,15 @@ Page({
           globalData: globalData,
           userFilledInfo: globalData.userFilledInfo
         });
+        this.migrate();
       });
     } else {
       this.setData({
         globalData: app.globalData,
         userFilledInfo: app.globalData.userFilledInfo
       });
+      this.migrate();
     }
-
-    // getUserNotices({
-    //   userId: app.globalData.userFilledInfo.id,
-    //   status: 0,
-    //   category: 0,
-    //   size: 10,
-    // }).then(data => {
-    //   const records = data.records.slice(0, 2);
-    //   console.log('records', data, app.globalData.userFilledInfo.id)
-    //   if (records.length > 0) {
-    //     const text = records.map(obj => obj.content).join("\r\n")
-    //     const ids = records.map(obj => obj.id).join(",")
-    //     this.notifyUser(text)
-    //     console.log(text, ids)
-    //     readNotice({
-    //       noticeIds: ids
-    //     }).then(res => {
-    //       console.log(res)
-    //     })
-    //   }
-
-    // })
-    
   },
   getUserInfo: function(e) {
     // console.log(e);
@@ -83,7 +102,9 @@ Page({
       hasUserInfo: true
     });
   },
-  onShow() {},
+  onShow() {
+    // this.migrate();
+  },
   /**
    * 用户点击右上角分享
    */
@@ -133,5 +154,5 @@ Page({
       duration: 3000,
       mask: true
     });
-  },
+  }
 });

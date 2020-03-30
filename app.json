@@ -1,36 +1,5 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/status/index",
-    "pages/clock/index",
-    "pages/clock/status/index",
-    "pages/statistics/statisticsTab/index",
-    "pages/personal/index",
-    "pages/clockRecords/index",
-    "pages/detail/index",
-    "pages/statistics/index",
-    "pages/index/organization/index",
-    "pages/group/groupIndex/index",
-    "pages/group/shareJoin/index",
-    "pages/healthQR/healthQR",
-    "pages/group/createGroup/createGroup",
-    "pages/group/shareJoinChoice/index",
-    "pages/agreement/index",
-    "pages/group/groupCode/index",
-    "pages/group/groupCodeShow/index",
-    "pages/webview/index",
-    "pages/help/index",
-    "pages/company/companyAuth/index",
-    "pages/company/companyInfo/index",
-    "pages/company/companyAuth/companyAuthAdd/index",
-    "pages/company/companySelect/index",
-    "pages/statistics/status/index",
-    "pages/company/companyTransfer/index",
-    "pages/company/companyStructureManage/index",
-    "pages/company/companyStructureManage/companyStructAdd/index",
-    "pages/help/service/index",
-    "pages/index/moreOrgs/index"
-  ],
+  "pages": ["pages/index/index"],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
@@ -48,5 +17,6 @@
       "version": "1.0.2",
       "provider": "wx76a9a06e5b4e693e"
     }
-  }
+  },
+  "navigateToMiniProgramAppIdList": ["wx71d2b39033c14591"]
 }
