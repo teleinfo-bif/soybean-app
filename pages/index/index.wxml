@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <view>
 
-  <view class="noclick-shade" bindtap="onShow">
+  <view class="noclick-shade" bindtap="migrate">
     
   </view>
 

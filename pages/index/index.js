@@ -26,8 +26,6 @@ Page({
     });
   },
   migrate() {
-    if (this.data.migrateVisible) retrun;
-
     wx.showModal({
       title: "温馨提示",
       content: "随着疫情防控取得阶段性胜利，即日起信鄂通暂停使用，升级为有象。",
