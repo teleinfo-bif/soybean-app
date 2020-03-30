@@ -8,6 +8,7 @@ import { env } from "./config/index";
 App({
   initRequest: false,
   callbackList: [],
+  migrateCallbackList: [],
   // 需要依赖openid，用户录入信息的页面，判断如果页面没有完成初始化，调用此函数
   async init(callback) {
     this.callbackList.push(callback);
@@ -37,7 +38,8 @@ App({
   },
 
   // 设置app global 用户录入信息
-  async setGloableUserInfo(userFilledInfo) {
+  async setGloableUserInfo(userFilledInfo, migrateCallBack = false) {
+    debugger;
     return new Promise(resolve => {
       this.globalData.userFilledInfo = userFilledInfo;
       this.globalData.userRegisted = userFilledInfo.userRegisted;
@@ -45,7 +47,11 @@ App({
       this.globalData.userId = userFilledInfo.id;
       this.globalData.appInit = true;
       // 请求完成之后，执行回调队列中的任务
-      this.callbackList.forEach(callback => {
+      // 老用户录入后需要重新执行一次队列中的函数
+      let callbackList = migrateCallBack
+        ? this.migrateCallbackList
+        : this.callbackList;
+      callbackList.forEach(callback => {
         // console.log(callback);
         try {
           callback(this.globalData);
@@ -56,6 +62,7 @@ App({
           );
         }
       });
+      this.migrateCallbackList = this.callbackList;
       this.callbackList = [];
       console.warn(`用户${userFilledInfo.userRegisted ? "已" : "未"}注册`);
       resolve();
@@ -79,9 +86,20 @@ App({
       );
       // TODO: 如果用户信息存在，且未注册，提交更新
       if (phoneRegisted) {
+        debugger;
         try {
+          phoneUserInfo.loading = true;
           await saveOrUpdateUserInfo(phoneUserInfo);
           const initData = await appInit();
+          // // 设置值
+          this.globalData = {
+            ...this.globalData,
+            ...initData
+          };
+          await this.setGloableUserInfo(
+            initData.userFilledInfo,
+            loginFromPhone
+          );
           resolve(initData);
         } catch (error) {
           reject(error);
@@ -104,13 +122,19 @@ App({
   onLaunch: async function(options) {
     // 环境判断
     this.globalData.release = env == "release";
-
-    // 获取传入的phone
-    const { phone } = options.referrerInfo.extraData;
+    // const options = wx.getLaunchOptionsSync();
+    console.log(options);
+    debugger;
+    // console.log();
+    // 获取传入的phone)
+    const { phone } =
+      options.scene === 1037
+        ? options.referrerInfo && options.referrerInfo.extraData
+        : "";
+    debugger;
 
     // APP初始化
     let initData = await appInit();
-
     // 设置值
     this.globalData = {
       ...this.globalData,
@@ -120,13 +144,23 @@ App({
     // 从其他小程序携带phone参数跳转过来，而且没有注册
     if (phone && !initData.userFilledInfo.userRegisted) {
       try {
+        debugger;
         initData = await this.updateUserInfoByPhone(phone);
+        debugger;
       } catch (error) {
         console.error(error);
       }
+    } else {
+      // XXX: 执行初始化结束的回调，需要等待老用户更新完个人信息之后
+      await this.setGloableUserInfo(initData.userFilledInfo);
     }
-    // XXX: 执行初始化结束的回调，需要等待老用户更新完个人信息之后
-    await this.setGloableUserInfo(initData.userFilledInfo);
+    // this.onLaunch();
+    // wx.reLaunch({
+    //   url: "/pages/index/index",
+    //   success: result => {},
+    //   fail: () => {},
+    //   complete: () => {}
+    // });
 
     // 获取用户信息
     wx.getSetting({
