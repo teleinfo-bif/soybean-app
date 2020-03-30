@@ -1,13 +1,13 @@
 <van-checkbox wx:if="{{props.needCheck}}" label-disabled="{{true}}" my-radio shape="square" value="{{ value && checked }}" bind:change="onChange">
   <navigator url="/pages/agreement/index" class="secret-view">
-    已阅读信鄂通
+    已阅读有象
     <text class="color">《用户服务条款及隐私协议》</text>
     ，本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询。
   </navigator>
 </van-checkbox>
 <view wx:else class="" hover-class="none" hover-stop-propagation="false">
   <navigator url="/pages/agreement/index" class="secret-view">
-    若提交打卡即视为同意信鄂通
+    若提交打卡即视为同意有象
     <text class="color">《用户服务条款及隐私协议》</text>
     ，本次操作遵守国家相关法律法规，采集的信息仅用于防疫相关健康状态查询。
   </navigator>

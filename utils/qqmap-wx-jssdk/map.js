@@ -3,7 +3,7 @@
 const QQMapWX = require("./qqmap-wx-jssdk.min.js");
 
 //腾讯位置服务申请的key
-const key = "2YLBZ-FJS64-RINUP-XWG5O-JC5U3-ALBXJ";
+const key = "PSDBZ-3OUCP-WKGDN-V6VI7-56GT3-BCFJK";
 
 const wxMapSdk = new QQMapWX({
   key

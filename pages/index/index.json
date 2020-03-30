@@ -6,7 +6,7 @@
     "organization": "./organization/index",
     "van-notify": "vant-weapp/notify"
   },
-  "navigationBarTitleText": "信鄂通",
+  "navigationBarTitleText": "有象",
   "navigationStyle": "custom",
   "backgroundColor": "#F5F5F5"
 }

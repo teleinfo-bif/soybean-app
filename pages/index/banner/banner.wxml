@@ -1,4 +1,4 @@
 <view class="container">
   <image class="home-bannner" mode="scaleToFill" src="../../../static/images/home_banner@3x.png" style="width:100%;height:500rpx;"></image>
-  <view class="title" style="top: {{statusBarHeight}}px">信鄂通</view>
+  <view class="title" style="top: {{statusBarHeight}}px">有象</view>
 </view>

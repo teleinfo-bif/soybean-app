@@ -59,7 +59,8 @@ App({
     });
   },
 
-  onLaunch: async function() {
+  onLaunch: async function(options) {
+    console.log("options", options);
     // 环境判断
     this.globalData.release = env == "release";
     const initData = await appInit();

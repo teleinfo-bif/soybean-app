@@ -16,7 +16,7 @@ const baseApi = {
 export const appId = "wx9f50de1f1b6b94c6";
 
 // request请求baseURL
-export const baseURL = baseApi[env] + "/bid-soybean";
+export const baseURL = baseApi[env] + "/bid-truth";
 
 // 获取首页footer信息 -- 开发、体验、正式没有区别
 export const baseURLNotice =
@@ -27,4 +27,4 @@ export const uploadUrl =
   baseApi.release + "/bid-blockchain/front/ipfs/upload-photo";
 
 // 统计导出导出文件的下载链接
-export const baseURLDownload = baseApi[env] + "/bid-soybean";
+export const baseURLDownload = baseApi[env] + "/bid-truth";
