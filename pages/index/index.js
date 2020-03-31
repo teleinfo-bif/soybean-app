@@ -26,6 +26,7 @@ Page({
     });
   },
   migrate() {
+    debugger;
     if (pageInit) return;
     pageInit = true;
     wx.showModal({
