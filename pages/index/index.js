@@ -30,10 +30,11 @@ Page({
     pageInit = true;
     wx.showModal({
       title: "温馨提示",
-      content: "随着疫情防控取得阶段性胜利，即日起信鄂通暂停使用，升级为有象。",
+      content:
+        "尊敬的用户您好，即日起“信鄂通”品牌全面升级为“有象”,请点击按钮打开有象，我们将带给您更优质的服务。",
       showCancel: false,
       cancelColor: "#000000",
-      confirmText: "移步有象",
+      confirmText: "打开有象",
       confirmColor: "#3CC51F",
       success: result => {
         if (result.confirm) {
