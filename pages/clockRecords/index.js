@@ -81,16 +81,17 @@ Page({
           userId: this.data.otherUserId || app.globalData.userFilledInfo.id
         }).then(data => {
           // 判断是不是第一次请求,current已经加一，处理iOS滑到底部可以频繁请求多次出发的问题
+          console.log("==");
           if (
             clockData.total != undefined &&
-            clockData.current == data.current
+            clockData.current + 1 == data.current
           ) {
-            let clockData = clockData.records.concat(data.records);
+            let clockDataRecords = clockData.records.concat(data.records);
             this.setData({
               requestStutus: false,
               clockData: {
                 ...data,
-                records: clockData
+                records: clockDataRecords
               }
             });
           } else {

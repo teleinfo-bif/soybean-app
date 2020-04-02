@@ -86,7 +86,8 @@ let fields = [
     props: {
       placeholder: "请选择单位所在城市及区",
       validate(value) {
-        return Array.isArray(value) && value.length === 3;
+        let reg = /([\u4e00-\u9fa5]+)-([\u4e00-\u9fa5]+)-([\u4e00-\u9fa5]+)/;
+        return reg.test(value) || (Array.isArray(value) && value.length === 3);
       }
     }
   },

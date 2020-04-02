@@ -830,7 +830,7 @@ Page({
           // 判断用户是否授权了位置信息
           if (res.authSetting["scope.userLocation"]) {
             wx.getLocation({
-              isHighAccuracy: true,
+              // isHighAccuracy: true,
               success: location => {
                 this.setData({ location });
                 reverseAddressFromLocation(location)
