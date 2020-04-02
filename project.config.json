@@ -89,6 +89,13 @@
 						"appId": "333",
 						"extraData": "{\"phone\":\"18518135987\"}"
 					}
+				},
+				{
+					"id": -1,
+					"name": "pages/group/shareJoin/index",
+					"pathName": "pages/group/shareJoin/index",
+					"query": "groupId=1",
+					"scene": null
 				}
 			]
 		}

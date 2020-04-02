@@ -46,7 +46,6 @@ Component({
       if (!fieldSetting || !fieldSetting.props) return;
       const { options = [] } = fieldSetting.props;
       const option = options[index];
-      // debugger;
       this.triggerChange(prop, option);
     },
     onRadioChange(e) {
@@ -75,7 +74,6 @@ Component({
       this.triggerChange(prop, value);
     },
     onChangeBaseAddress(e) {
-      // debugger
       const value = e.detail;
       this.triggerEvent("baseAddress", value);
     },
@@ -132,7 +130,6 @@ Component({
         const type = field.type;
         switch (type) {
           case "select":
-            // debugger;
             const value = formData[prop] || {};
             const { itemKey = "", options, itemLabelKey = "" } =
               field.props || {};
@@ -141,6 +138,11 @@ Component({
               item =>
                 item[itemKey] === (typeof value == "object" ? value.id : value)
             );
+            break;
+          case "area":
+            _formData[prop] = Array.isArray(formData[prop])
+              ? formData[prop]
+              : (formData[prop] && formData[prop].split("-")) || [];
             break;
           default:
             _formData[prop] = formData[prop];

@@ -84,7 +84,10 @@ let fields = [
     type: "area",
     prop: "companyAddress",
     props: {
-      placeholder: "请选择单位所在城市及区"
+      placeholder: "请选择单位所在城市及区",
+      validate(value) {
+        return Array.isArray(value) && value.length === 3;
+      }
     }
   },
   {
@@ -210,12 +213,13 @@ Page({
         typeof formData.idType == "object" && formData.idType
           ? formData.idType.id
           : formData.idType;
+      // 如果是字符串直接使用字符串
       formData.homeAddress = Array.isArray(formData.homeAddress)
         ? formData.homeAddress.join("-")
-        : "";
+        : formData.homeAddress || "";
       formData.companyAddress = Array.isArray(formData.companyAddress)
         ? formData.companyAddress.join("-")
-        : "";
+        : formData.companyAddress || "";
       formData = {
         ...formData,
         ...app.globalData.userInfo,
@@ -485,7 +489,7 @@ Page({
   },
   toCode: function() {
     wx.navigateTo({
-      url: `/pages/group/groupCode/index`,
+      url: `/pages/group/groupCode/index`
     });
-  },
+  }
 });

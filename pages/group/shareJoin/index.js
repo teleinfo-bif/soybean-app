@@ -1,6 +1,13 @@
 // pages/group/shareJoin/index.js
 // import { encode } from "../../../utils/code";
-import { joinGroup, getUserTreeGroup, getUserCurrentGroup, quitGroup, isGroupExist, getGroup, getFirstGroup } from "../../../api/api";
+import {
+  getFirstGroup,
+  getUserCurrentGroup,
+  getUserTreeGroup,
+  isGroupExist,
+  joinGroup,
+  quitGroup
+} from "../../../api/api";
 const app = getApp();
 Page({
   /**
@@ -15,11 +22,11 @@ Page({
     // multiIndex: [0, 0],
     array: [],
     index: 0,
-    lastClass: true,  //最底层部门
-    
+    lastClass: true, //最底层部门
+
     alreadJoinName: "", //以加入群的名字
     alreadJoin: false, // 是否已加入其他部门
-    alreadJoinId: "",
+    alreadJoinId: ""
   },
 
   shareJoniGroup(
@@ -30,14 +37,14 @@ Page({
     }
   ) {
     console.log("发起请求", params);
-    const { userId, alreadJoin, alreadJoinId } = this.data
+    const { userId, alreadJoin, alreadJoinId } = this.data;
     if (alreadJoin) {
       quitGroup({
         userId: userId,
         groupId: alreadJoinId,
         loading: true
       }).then(data => {
-        console.log('退群', data)
+        console.log("退群", data);
         joinGroup(params)
           .then(data => {
             console.log("=====joinGroup-data====", data);
@@ -47,15 +54,15 @@ Page({
               mask: false,
               success: result => {
                 wx.reLaunch({
-                  url: "/pages/index/index",
-                })
+                  url: "/pages/index/index"
+                });
               },
-              fail: () => { },
-              complete: () => { }
+              fail: () => {},
+              complete: () => {}
             });
           })
-          .catch(e => { });
-      })
+          .catch(e => {});
+      });
     } else {
       joinGroup(params)
         .then(data => {
@@ -72,8 +79,8 @@ Page({
               //   complete: () => {}
               // });
             },
-            fail: () => { },
-            complete: () => { }
+            fail: () => {},
+            complete: () => {}
           });
           // wx.showToast
           // wx.showToast({
@@ -82,41 +89,44 @@ Page({
           //   success:
           // })
         })
-        .catch(e => { });
-      setTimeout(function () {
+        .catch(e => {});
+      setTimeout(function() {
         wx.reLaunch({
-          url: "/pages/index/index",
-        })
-      }, 2000)
+          url: "/pages/index/index"
+        });
+      }, 2000);
     }
   },
 
   //判断是否是最低级的部门,调用不同函数
   joinDifferentGroup(groupId) {
-    console.log('是否注册页、输机构码、创建群过来的，1就是：zc=', this.data.zc)
+    console.log("是否注册页、输机构码、创建群过来的，1就是：zc=", this.data.zc);
     getUserTreeGroup({
       groupId: groupId
     }).then(data => {
-      console.log('data', data)
+      console.log("data", data);
       //根据返回值判断是否是最底层部门，分别做不同处理
       if (data.length == 0) {
         //最底层部门
-        if (this.data.zc == '1') {
-          this.joinGroupLowFromRegister()
+        if (this.data.zc == "1") {
+          this.joinGroupLowFromRegister();
         } else {
-          this.joinGroupModal()
+          this.joinGroupModal();
         }
       } else {
-        if (this.data.zc == '1') {
-          this.joinGroupHighFromRegister()
+        if (this.data.zc == "1") {
+          this.joinGroupHighFromRegister();
         } else {
-          //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断       
-          let judge = this.judgeChildren(data.filter(obj => obj.name !== "变动人员")[0])
-          if (this.data.alreadJoin && 
+          //如果该一级机构只有一个部门，且用户已在末级部门,提示已加入. 3月24日加入该判断
+          let judge = this.judgeChildren(
+            data.filter(obj => obj.name !== "变动人员")[0]
+          );
+          if (
+            this.data.alreadJoin &&
             data.filter(obj => obj.name !== "变动人员").length == 1 &&
             // data.filter(obj => obj.id == this.data.alreadJoinId).length == 1
             judge
-            ) {
+          ) {
             wx.showModal({
               title: "提示",
               content: `您已经加入${this.data.alreadJoinName}！`,
@@ -125,36 +135,41 @@ Page({
               success(res) {
                 if (res.confirm) {
                   wx.reLaunch({
-                    url: `/pages/index/index`,
+                    url: `/pages/index/index`
                   });
                 }
               }
             });
-            return
+            return;
           }
 
-          this.joinGroupChoiceModal()
+          this.joinGroupChoiceModal();
         }
       }
-    })
+    });
   },
 
   //递归判断树中的children是否只有一个值
   judgeChildren(data) {
-      if(data.children.length == 1) {
-        return this.judgeChildren(data.children[0])
-      } else if(data.children.length > 1) {
-        return false
-      }else {
-        return true
-      }
+    if (data.children.length == 1) {
+      return this.judgeChildren(data.children[0]);
+    } else if (data.children.length > 1) {
+      return false;
+    } else {
+      return true;
+    }
   },
 
-
   //弹窗加群 加入末级群
-  joinGroupModal: function () {
+  joinGroupModal: function() {
     const _this = this;
-    const { groupId, groupName, userFilledInfo, alreadJoin, alreadJoinName } = this.data
+    const {
+      groupId,
+      groupName,
+      userFilledInfo,
+      alreadJoin,
+      alreadJoinName
+    } = this.data;
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
@@ -175,13 +190,13 @@ Page({
           } else if (res.cancel) {
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     } else {
       wx.showModal({
         title: "提示",
@@ -202,19 +217,25 @@ Page({
           } else if (res.cancel) {
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     }
   },
   //弹窗跳转 加入非末级群
-  joinGroupChoiceModal: function () {
+  joinGroupChoiceModal: function() {
     const _this = this;
-    const { groupId, groupName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
+    const {
+      groupId,
+      groupName,
+      alreadJoinId,
+      alreadJoin,
+      alreadJoinName
+    } = this.data;
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
@@ -232,20 +253,22 @@ Page({
             });
             wx.navigateTo({
               url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              success: result => { wx.hideLoading(); },
-              fail: () => { },
-              complete: () => { }
+              success: result => {
+                wx.hideLoading();
+              },
+              fail: () => {},
+              complete: () => {}
             });
           } else if (res.cancel) {
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     } else {
       wx.showModal({
         title: "提示",
@@ -260,28 +283,33 @@ Page({
             console.log("跳转");
             wx.navigateTo({
               url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}`,
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           } else if (res.cancel) {
             console.log("跳出一二级加群");
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     }
   },
 
-
-  joinGroupLowFromRegister: function () {
+  joinGroupLowFromRegister: function() {
     const _this = this;
-    const { groupId, groupName, userFilledInfo, alreadJoin, alreadJoinName } = this.data
+    const {
+      groupId,
+      groupName,
+      userFilledInfo,
+      alreadJoin,
+      alreadJoinName
+    } = this.data;
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
@@ -302,13 +330,13 @@ Page({
           } else if (res.cancel) {
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     } else {
       this.shareJoniGroup({
         groupId,
@@ -317,9 +345,15 @@ Page({
     }
   },
 
-  joinGroupHighFromRegister: function () {
+  joinGroupHighFromRegister: function() {
     const _this = this;
-    const { groupId, groupName, alreadJoinId, alreadJoin, alreadJoinName } = this.data
+    const {
+      groupId,
+      groupName,
+      alreadJoinId,
+      alreadJoin,
+      alreadJoinName
+    } = this.data;
     if (alreadJoin) {
       wx.showModal({
         title: "提示",
@@ -337,23 +371,25 @@ Page({
             });
             wx.navigateTo({
               url: `/pages/group/shareJoinChoice/index?groupName=${groupName}&groupId=${groupId}&alreadJoin=${alreadJoin}&alreadJoinId=${alreadJoinId}`,
-              success: result => { wx.hideLoading(); },
-              fail: () => { },
-              complete: () => { }
+              success: result => {
+                wx.hideLoading();
+              },
+              fail: () => {},
+              complete: () => {}
             });
           } else if (res.cancel) {
             wx.redirectTo({
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
+      });
     } else {
       wx.navigateTo({
-        url: `/pages/group/shareJoinChoice/index?groupName=${this.data.groupName}&groupId=${groupId}`,
+        url: `/pages/group/shareJoinChoice/index?groupName=${this.data.groupName}&groupId=${groupId}`
       });
     }
   },
@@ -361,7 +397,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
+  onLoad: async function(options) {
     /**
      * 判断传入参数的有效性，时间有效性
      * 判断用户是否注册 未注册 存参数在storage，引导注册后重新加入
@@ -369,7 +405,12 @@ Page({
      */
     // console.log()
     const { groupId, timeStamp, groupName, zc } = options;
-    console.log("======share options=====", options,app.globalData, !app.globalData.appInit);
+    console.log(
+      "======share options=====",
+      options,
+      app.globalData,
+      !app.globalData.appInit
+    );
     // 这里需要先判断再调用app.init 如果有状态就直接用  //点击链接进来，开发过程中
     if (!app.globalData.appInit) {
       app.init(globalData => {
@@ -381,8 +422,8 @@ Page({
           groupName: groupName,
           zc: zc
         });
-        this.userPrompt()
-        return
+        this.userPrompt();
+        return;
       });
     } else {
       this.setData({
@@ -393,15 +434,15 @@ Page({
         groupName: groupName,
         zc: zc
       });
-      this.userPrompt()
+      this.userPrompt();
     }
   },
 
-  userPrompt: function () {
-    console.log('prompt')
-    const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data
+  userPrompt: function() {
+    console.log("prompt");
+    const { groupId, timeStamp, groupName, userFilledInfo, zc } = this.data;
     const userful = Date.now() - timeStamp * 1 < 24 * 60 * 60 * 1000;
-    console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful)
+    console.log(groupId, timeStamp, groupName, userFilledInfo, zc, userful);
     const _this = this;
     //注册过来的不判断时间有效性
     if (!zc && !userful) {
@@ -414,158 +455,164 @@ Page({
         confirmColor: "#3CC51F",
         success(res) {
           if (res.confirm) {
-            wx.reLaunch({//这个用reLaunch还算合理
+            wx.reLaunch({
+              //这个用reLaunch还算合理
               url: "/pages/index/index",
-              success: result => { },
-              fail: () => { },
-              complete: () => { }
+              success: result => {},
+              fail: () => {},
+              complete: () => {}
             });
           }
         }
-      })
-      return
+      });
+      return;
     }
     isGroupExist({
       groupId: groupId
-    }).then(data => {
-      console.log('群有效，可加',data)
-      //链接有效，注册用户可以加群，开始加群
-      if (userFilledInfo.userRegisted) {
-        console.log('groupId', groupId)
-        this.isCanJoinGroup()
-      } else {
-        console.log('没有注册')
-        wx.showModal({
-          title: "",
-          content: `您还没有注册，确认加入该机构吗？`,
-          showCancel: true,
-          cancelColor: "#000000",
-          confirmText: "确认注册",
-          confirmColor: "#3CC51F",
-          success(res) {
-            if (res.confirm) {
-              wx.reLaunch({
-                url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
-                success: result => {
-                },
-                fail: () => { },
-                complete: () => { }
-              });
-            } else if (res.cancel) {
-              wx.reLaunch({//防止用户后退返回分享页
-                url: "/pages/index/index",
-                success: result => { },
-                fail: () => { },
-                complete: () => { }
-              });
+    })
+      .then(data => {
+        console.log("群有效，可加", data);
+        //链接有效，注册用户可以加群，开始加群
+        if (userFilledInfo.userRegisted) {
+          console.log("groupId", groupId);
+          this.isCanJoinGroup();
+        } else {
+          console.log("没有注册");
+          wx.showModal({
+            title: "",
+            content: `您还没有注册，请先进行注册，然后再加入该机构。`,
+            showCancel: true,
+            cancelColor: "#000000",
+            confirmText: "确认注册",
+            confirmColor: "#3CC51F",
+            success(res) {
+              if (res.confirm) {
+                wx.reLaunch({
+                  url: `/pages/personal/index?groupId=${groupId}&groupName=${groupName}`,
+                  success: result => {},
+                  fail: () => {},
+                  complete: () => {}
+                });
+              } else if (res.cancel) {
+                wx.reLaunch({
+                  //防止用户后退返回分享页
+                  url: "/pages/index/index",
+                  success: result => {},
+                  fail: () => {},
+                  complete: () => {}
+                });
+              }
             }
-          }
-        });
-      }
-    }).catch(e => {
-      console.log("群不存在 ", e)
-      wx.showToast({
-        title: `机构不存在!`,
-        icon: 'none',
+          });
+        }
       })
-      setTimeout(function () {
-        wx.reLaunch({
-          url: "/pages/index/index",
-        })
-      }, 1500)
-    });
+      .catch(e => {
+        console.log("群不存在 ", e);
+        wx.showToast({
+          title: `机构不存在!`,
+          icon: "none"
+        });
+        setTimeout(function() {
+          wx.reLaunch({
+            url: "/pages/index/index"
+          });
+        }, 1500);
+      });
   },
   //查询是否已经加过群
-  isCanJoinGroup: function () {
-    const { groupId, userId } = this.data  //此处的groupId是用户要加入的群
+  isCanJoinGroup: function() {
+    const { groupId, userId } = this.data; //此处的groupId是用户要加入的群
     getUserCurrentGroup({
       groupId: userId
     }).then(data => {
-      console.log('查询用户加入的群', data)
+      console.log("查询用户加入的群", data);
       //没有加过群，去加群
       if (JSON.stringify(data) == "{}") {
-        this.joinDifferentGroup(groupId)
+        this.joinDifferentGroup(groupId);
       } else {
         //加过群，判断一下群是否调整过,调整过跳到首页
-        let temp = this.isGroupAdjust(data)
-        if(temp.length!==0){          
+        let temp = this.isGroupAdjust(data);
+        if (temp.length !== 0) {
           wx.redirectTo({
-            url: "/pages/index/index",
-          })
-          return
+            url: "/pages/index/index"
+          });
+          return;
         }
         //判断是否加过该群
-        let joined = data.filter(obj => obj.id.toString() == groupId).length
+        let joined = data.filter(obj => obj.id.toString() == groupId).length;
         if (joined != 0) {
           wx.showToast({
             title: "您已经在该机构中！",
             duration: 2000,
             icon: "none",
             success: result => {
-              setTimeout(function () {
+              setTimeout(function() {
                 wx.reLaunch({
-                  url: "/pages/index/index",
-                })
-              }, 1500)
-            },
+                  url: "/pages/index/index"
+                });
+              }, 1500);
+            }
           });
-          return
+          return;
         }
         //判断用户是否已加入该一级机构,加入后需要先退出后加入
         getFirstGroup({
           groupId: groupId
         }).then(res => {
-          console.log('group data', res);
-          const groupIdentify = res.groupIdentify
-          const tempGroup = data.filter(obj => obj.groupIdentify == groupIdentify)
+          console.log("group data", res);
+          const groupIdentify = res.groupIdentify;
+          const tempGroup = data.filter(
+            obj => obj.groupIdentify == groupIdentify
+          );
           if (tempGroup.length !== 0) {
-            let quitId = tempGroup[0].id
-            let quitName = tempGroup[0].name
+            let quitId = tempGroup[0].id;
+            let quitName = tempGroup[0].name;
             this.setData({
               alreadJoinName: quitName,
               alreadJoinId: quitId,
-              alreadJoin: true, //alreadJoin: true, 3月23日更改后，alreadJoin代表已加入同一一级机构中某个部门
-            })
-            this.joinDifferentGroup(groupId)
-            return
+              alreadJoin: true //alreadJoin: true, 3月23日更改后，alreadJoin代表已加入同一一级机构中某个部门
+            });
+            this.joinDifferentGroup(groupId);
+            return;
           } else {
-            //可以加入多个一级机构        
-            this.joinDifferentGroup(groupId)
+            //可以加入多个一级机构
+            this.joinDifferentGroup(groupId);
           }
         });
       }
-    })
+    });
   },
   //退群 测试
-  quitGroupTest: function (quitId) {
-    const { userId } = this.data
+  quitGroupTest: function(quitId) {
+    const { userId } = this.data;
     quitGroup({
       userId: userId,
-      groupId: quitId,
+      groupId: quitId
     }).then(data => {
-      console.log('退群', data)
-    })
+      console.log("退群", data);
+    });
   },
 
   //判断机构调整
-  isGroupAdjust: function (groups) {
-    let changeGroupList = []
+  isGroupAdjust: function(groups) {
+    let changeGroupList = [];
     groups.forEach((item, index) => {
-      let groupCode = item.groupCode
-      if (groupCode && groupCode.substring(groupCode.length - 8) == "_NO_DEPT") {
+      let groupCode = item.groupCode;
+      if (
+        groupCode &&
+        groupCode.substring(groupCode.length - 8) == "_NO_DEPT"
+      ) {
         let temp = {
           ...item,
-          topName: item.fullName.split('_')[0]
-        }
-        changeGroupList.push(temp)  
+          topName: item.fullName.split("_")[0]
+        };
+        changeGroupList.push(temp);
       } else {
         console.log("用户所在群没有变动");
       }
     });
-    return changeGroupList
+    return changeGroupList;
   },
-
-
 
   // join: function() {
   //   const { joinGroupId, userFilledInfo } = this.data
@@ -575,43 +622,42 @@ Page({
   //     userId: userFilledInfo.id
   //   });
   // },
-  join_0: function () {
-    const { groupId, userFilledInfo } = this.data
+  join_0: function() {
+    const { groupId, userFilledInfo } = this.data;
     this.shareJoniGroup({
       groupId,
       userId: userFilledInfo.id
     });
   },
-  quit: function () {
+  quit: function() {
     wx.navigateTo({
       url: "/pages/index/index",
-      success: result => { },
-      fail: () => { },
-      complete: () => { }
+      success: result => {},
+      fail: () => {},
+      complete: () => {}
     });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () { },
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { },
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () { },
- 
+  onHide: function() {},
+
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-    console.log('share join onUnload')
-    //防止没执行完的回调 
-    app.callbackList = []
-   },
-
+  onUnload: function() {
+    console.log("share join onUnload");
+    //防止没执行完的回调
+    app.callbackList = [];
+  }
 });

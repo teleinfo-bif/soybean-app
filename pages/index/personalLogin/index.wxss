@@ -1,6 +1,6 @@
 /* pages/index/EnteringInfo/EnteringInfo.wxss */
 
-.container {
+.flex-container {
   display: flex;
 }
 

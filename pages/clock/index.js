@@ -1046,7 +1046,6 @@ Page({
           previousLockData["name"] = previousLockData.userName;
           data["phoneComplete"] = data.phone;
           data.phone = data.phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2");
-
           this.setData({
             data: {
               ...this.data.data,
