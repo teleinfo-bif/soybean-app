@@ -1,6 +1,8 @@
 import urlParameterAppend from "url-parameter-append";
 import { appId, baseURL, baseURLNotice } from "../config/index";
 
+console.log("api请求-baseURL：", baseURL);
+
 // 存在localstorage中的变量
 const tokenKey = "fedToken";
 const userFilledInfofoKey = "userFilledInfo";

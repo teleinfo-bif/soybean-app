@@ -4,7 +4,8 @@ const chooseLocation = requirePlugin("chooseLocation");
 const app = getApp();
 
 // import Notify from "vant-weapp/dist/notify/notify";
-import { saveOrUpdateUserInfo } from "../../api/api.js";
+import { findUserByPhoneAct, saveOrUpdateUserInfo } from "../../api/api.js";
+import { appInit } from "../../api/request.js";
 const idNumberReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const huzhao = /^([a-zA-z]|[0-9]){5,17}$/;
 const junguan = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/;
@@ -179,6 +180,50 @@ Page({
           //   "fields[3].props.placeholder":
           //     value.id == 1 ? `请输入${value.name}号` : `请输入员工号`
           // });
+        }
+      });
+    } else if (prop == "phone") {
+      console.log(value);
+      findUserByPhoneAct({ phone: value }).then(phoneUserData => {
+        if (Object.keys(phoneUserData).length > 0) {
+          wx.showModal({
+            title: "微信提示",
+            content: `手机号${value}已经注册`,
+            showCancel: false,
+            cancelText: "取消",
+            cancelColor: "#000000",
+            confirmText: "登录",
+            confirmColor: "#3CC51F",
+            success: result => {
+              if (result.confirm) {
+                saveOrUpdateUserInfo(phoneUserData)
+                  .then(async data => {
+                    const initData = await appInit();
+                    // 设置值
+                    app.globalData = {
+                      ...app.globalData,
+                      ...initData
+                    };
+                    await app.setGloableUserInfo(initData.userFilledInfo);
+                    wx.reLaunch({
+                      url: "/pages/index/index",
+                      success: result => {},
+                      fail: () => {},
+                      complete: () => {}
+                    });
+                  })
+                  .catch(error => {
+                    console.error("登录失败", error);
+                    wx.showToast({
+                      title: "登录失败",
+                      icon: "none"
+                    });
+                  });
+              }
+            },
+            fail: () => {},
+            complete: () => {}
+          });
         }
       });
     }

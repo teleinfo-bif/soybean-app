@@ -39,7 +39,7 @@ App({
   },
 
   // 设置app global 用户录入信息
-  async setGloableUserInfo(userFilledInfo, migrateCallBack = false) {
+  async setGloableUserInfo(userFilledInfo) {
     return new Promise(resolve => {
       this.globalData.userFilledInfo = userFilledInfo;
       this.globalData.userRegisted = userFilledInfo.userRegisted;
@@ -71,7 +71,7 @@ App({
   },
 
   // 根据电话号更新用户信息
-  async updateUserInfoByPhone(phone, loginFromPhone = false) {
+  async updateUserInfoByPhone(phone) {
     return new Promise(async (resolve, reject) => {
       const phoneUserInfo = await findUserByPhoneAct({
         phone,
@@ -96,15 +96,12 @@ App({
             ...this.globalData,
             ...initData
           };
-          await this.setGloableUserInfo(
-            initData.userFilledInfo,
-            loginFromPhone
-          );
+          await this.setGloableUserInfo(initData.userFilledInfo);
           resolve(initData);
         } catch (error) {
           reject(error);
         }
-      } else if (loginFromPhone) {
+      } else {
         reject(new Error(phone + "用户未注册"));
         wx.showToast({
           title: phone + "用户未注册",
@@ -123,9 +120,6 @@ App({
     this.initState = true;
     // 环境判断
     this.globalData.release = env == "release";
-    console.log(options);
-    console.log(options.referrerInfo);
-    console.log(options.referrerInfo.extraData);
     // APP初始化
     let initData = await appInit();
     this.globalData = {
