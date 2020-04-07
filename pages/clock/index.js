@@ -1,7 +1,7 @@
 // pages/block/index.js
 function getyyyyMMdd(date) {
   var d = date || new Date();
-  var curr_date = d.getDate();
+  import { tmplId } from "../../../config/index";
   var curr_month = d.getMonth() + 1;
   var curr_year = d.getFullYear();
   String(curr_month).length < 2 ? (curr_month = "0" + curr_month) : curr_month;
@@ -20,8 +20,8 @@ let fields = [
     prop: "name",
     props: {
       placeholder: "请输入姓名",
-      disable: true
-    }
+      disable: true,
+    },
   },
   {
     title: "手机号码",
@@ -29,8 +29,8 @@ let fields = [
     prop: "phone",
     props: {
       placeholder: "请输入手机号码",
-      disable: true
-    }
+      disable: true,
+    },
   },
   {
     title: "打卡地点",
@@ -38,12 +38,12 @@ let fields = [
     prop: "address",
     props: {
       placeholder: "请输入打卡地点",
-      maxlength: "15"
+      maxlength: "15",
       // validate(value) {
       //   return value.length >= 5 && value.length <= 15;
       // },
       // errorMsg: "请输入5-15个字的地址"
-    }
+    },
   },
   {
     title: "是否14天内到达工作地",
@@ -55,9 +55,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
-    }
+        { id: 2, name: "是" },
+      ],
+    },
   },
   {
     title: "是否14天内到达打卡城市",
@@ -69,9 +69,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
-    }
+        { id: 2, name: "是" },
+      ],
+    },
   },
 
   {
@@ -81,8 +81,8 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入到达日期",
-      end: ""
-    }
+      end: "",
+    },
   },
   {
     title: "交通工具",
@@ -102,9 +102,9 @@ let fields = [
         // { id: 6, name: "公交" },
         // { id: 7, name: "出租车" },
         { id: 8, name: "轮船" },
-        { id: 0, name: "其他" }
-      ]
-    }
+        { id: 0, name: "其他" },
+      ],
+    },
   },
   {
     title: "返回所乘车次/航班/车牌",
@@ -112,8 +112,8 @@ let fields = [
     prop: "flight",
     hide: true,
     props: {
-      placeholder: "请输入所乘车次/航班/车牌"
-    }
+      placeholder: "请输入所乘车次/航班/车牌",
+    },
   },
   {
     title: "未返回工作地原因 ",
@@ -126,9 +126,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "身体原因" },
-        { id: 2, name: "当地未放行" }
-      ]
-    }
+        { id: 2, name: "当地未放行" },
+      ],
+    },
   },
   {
     title: "计划返回工作地日期",
@@ -137,8 +137,8 @@ let fields = [
     hide: true,
     props: {
       placeholder: "请输入返京日期",
-      end: ""
-    }
+      end: "",
+    },
   },
   {
     title: "当天体温",
@@ -149,9 +149,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "正常(37.3以下)" },
-        { id: 2, name: "37.3及以上" }
-      ]
-    }
+        { id: 2, name: "37.3及以上" },
+      ],
+    },
   },
   {
     // title: "具体温度",
@@ -165,8 +165,8 @@ let fields = [
       validate(value) {
         return /^\d+(\.\d+)?$/.test(value) && value >= 37.3;
       },
-      errorMsg: "异常温度应不低于37.3度"
-    }
+      errorMsg: "异常温度应不低于37.3度",
+    },
   },
   {
     title: "目前健康状况",
@@ -178,9 +178,9 @@ let fields = [
       options: [
         { id: 1, name: "健康" },
         { id: 2, name: "有发烧、咳嗽等症状" },
-        { id: 0, name: "其他症状" }
-      ]
-    }
+        { id: 0, name: "其他症状" },
+      ],
+    },
   },
   {
     // title: "其他症状",
@@ -190,8 +190,8 @@ let fields = [
     props: {
       placeholder: "请输入其他症状",
       independent: false,
-      errorMsg: "健康项其他症状不能为空"
-    }
+      errorMsg: "健康项其他症状不能为空",
+    },
   },
   {
     title: "是否就诊住院",
@@ -202,9 +202,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
-    }
+        { id: 2, name: "是" },
+      ],
+    },
   },
   {
     title: "是否确诊",
@@ -215,9 +215,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 1, name: "否" },
-        { id: 2, name: "是" }
-      ]
-    }
+        { id: 2, name: "是" },
+      ],
+    },
   },
   {
     title: "共同居住人员/亲属（含合租人员）健康状况",
@@ -230,9 +230,9 @@ let fields = [
         { id: 1, name: "健康" },
         { id: 2, name: "有发热、咳嗽等" },
         { id: 0, name: "其他症状" },
-        { id: 3, name: "独自居住" }
-      ]
-    }
+        { id: 3, name: "独自居住" },
+      ],
+    },
   },
   {
     // title: "共同居住人员/亲属（含合租人员）健康状况为其他的原因",
@@ -242,8 +242,8 @@ let fields = [
     props: {
       placeholder: "请输入其他症状",
       independent: false,
-      errorMsg: "共同居住人员/亲属（含合租人员）健康状况为其他不能为空"
-    }
+      errorMsg: "共同居住人员/亲属（含合租人员）健康状况为其他不能为空",
+    },
   },
   {
     title: "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例",
@@ -256,9 +256,9 @@ let fields = [
         { id: 1, name: "有确诊病例" },
         { id: 2, name: "有疑似病例" },
         { id: 3, name: "都无" },
-        { id: 0, name: "其他" }
-      ]
-    }
+        { id: 0, name: "其他" },
+      ],
+    },
   },
   {
     // title:
@@ -270,8 +270,8 @@ let fields = [
       placeholder: "请输入其他详情",
       independent: false,
       errorMsg:
-        "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他不能为空"
-    }
+        "共同居住人员/亲属（含合租人员）所在单位是否有疑似病例、确诊病例为其他不能为空",
+    },
   },
   {
     title: "近14天是否有接触过疑似病患、接待过来自湖北的亲戚朋友、或途经湖北",
@@ -282,9 +282,9 @@ let fields = [
       itemLabelKey: "name",
       options: [
         { id: 0, name: "否" },
-        { id: 1, name: "是" }
-      ]
-    }
+        { id: 1, name: "是" },
+      ],
+    },
   },
   {
     title: "个人状态 ",
@@ -299,9 +299,9 @@ let fields = [
         { id: 2, name: "居家办公" },
         { id: 3, name: "居家隔离" },
         { id: 4, name: "监督隔离" },
-        { id: 5, name: "居家休息" }
-      ]
-    }
+        { id: 5, name: "居家休息" },
+      ],
+    },
   },
   {
     title: "其他说明",
@@ -309,17 +309,17 @@ let fields = [
     prop: "remarks",
     require: false,
     props: {
-      placeholder: "如有其他情况，请在此说明"
-    }
+      placeholder: "如有其他情况，请在此说明",
+    },
   },
   {
     type: "agreement",
     prop: "agreement",
     require: false,
     props: {
-      needCheck: false
-    }
-  }
+      needCheck: false,
+    },
+  },
 ];
 
 Page({
@@ -334,20 +334,20 @@ Page({
     address: {},
     fields: fields,
     data: {
-      address: ""
+      address: "",
     },
     city: "",
     baseAddress: "",
     otherFieldsList: {
       healthy: "otherhealthy",
       roomPerson: "roomPersonOther",
-      roomCompany: "roomCompanyOther"
+      roomCompany: "roomCompanyOther",
     },
     atWorkPlace: true,
     companyProvince: "",
     companyCity: "",
     locationProvince: "",
-    locationCity: ""
+    locationCity: "",
   },
   async onFormChange(e) {
     console.log("onFormChange", e);
@@ -369,7 +369,7 @@ Page({
       // 确诊、入院、温度修改健康项
       this.setData(
         {
-          data
+          data,
         },
         this.setHealthyDisabled
       );
@@ -394,7 +394,7 @@ Page({
 
     // this.data.data = data;
     this.setData({
-      data
+      data,
     });
   },
   // 温度大于37.3设置健康是禁选中
@@ -511,7 +511,7 @@ Page({
       }
     }
     this.setData({
-      data
+      data,
     });
   },
   // 提交按钮
@@ -528,19 +528,19 @@ Page({
         if (temperature && Number(temperature) >= 37.3) {
           wx.showToast({
             title: "体温不低于37.3不能选择健康",
-            icon: "none"
+            icon: "none",
           });
           return;
         } else if (comfirmed != null && comfirmed == "2") {
           wx.showToast({
             title: "确诊不能选择健康",
-            icon: "none"
+            icon: "none",
           });
           return;
         } else if (admitting != null && admitting == "2") {
           wx.showToast({
             title: "就诊不能选择健康",
-            icon: "none"
+            icon: "none",
           });
           return;
         }
@@ -553,16 +553,16 @@ Page({
       // }
       formData["loading"] = true;
       saveClock(formData)
-        .then(res => {
+        .then((res) => {
           wx.redirectTo({
-            url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`
+            url: `/pages/clock/status/index?data=${JSON.stringify(formData)}`,
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("错误提醒：打卡错误,", error);
           wx.redirectTo({
             title: "打卡失败，请再次尝试",
-            icon: "none"
+            icon: "none",
           });
         });
     }
@@ -570,18 +570,18 @@ Page({
   // 初始化this.data.data,赋值
   initFormData() {
     let data = {};
-    this.data.fields.forEach(item => {
+    this.data.fields.forEach((item) => {
       data[item.prop] = null;
     });
     this.setData({
-      data
+      data,
     });
   },
   // 设置部分选项隐藏
   async setFieldsHide(hideList = [], showList = []) {
     return new Promise((resolve, reject) => {
       let { fields } = this.data;
-      fields.forEach(item => {
+      fields.forEach((item) => {
         // if (showOtherCity && item.prop == "leave") {
         //   item.hide = false;
         //   item.value = otherCith;
@@ -594,7 +594,7 @@ Page({
       });
       this.setData(
         {
-          fields
+          fields,
         },
         resolve
       );
@@ -611,9 +611,9 @@ Page({
     let {
       atWorkPlace,
       companyCity,
-      locationCity
+      locationCity,
     } = await this.getAtWorkPlaceState(formData);
-    fields.forEach(item => {
+    fields.forEach((item) => {
       // 是否离开公司所在地
       if (item.prop === "leave") {
         // item.hide = !atWorkPlace;
@@ -649,7 +649,7 @@ Page({
     });
 
     this.setData({
-      fields
+      fields,
     });
     // 在工作地隐藏是否离开打卡地，返回时间，显示是否离开工作地
     if (atWorkPlace) {
@@ -661,7 +661,7 @@ Page({
           "nobackreason",
           "leaveCity",
           "flight",
-          "transport"
+          "transport",
         ],
         ["leave"]
       );
@@ -704,7 +704,7 @@ Page({
           "nobackreason",
           "gobacktime",
           "flight",
-          "transport"
+          "transport",
         ];
       }
     } else {
@@ -714,7 +714,7 @@ Page({
           "nobackreason",
           "gobacktime",
           "flight",
-          "transport"
+          "transport",
         ];
         hideList = [];
       } else {
@@ -813,10 +813,10 @@ Page({
         companyProvince,
         companyCity,
         locationProvince,
-        locationCity
+        locationCity,
       };
       this.setData({
-        ...workData
+        ...workData,
       });
       resolve(workData);
     });
@@ -826,27 +826,27 @@ Page({
     return new Promise((resolve, reject) => {
       const _this = this;
       wx.getSetting({
-        success: res => {
+        success: (res) => {
           // 判断用户是否授权了位置信息
           if (res.authSetting["scope.userLocation"]) {
             wx.getLocation({
               // isHighAccuracy: true,
-              success: location => {
+              success: (location) => {
                 this.setData({ location });
                 reverseAddressFromLocation(location)
-                  .then(async res => {
+                  .then(async (res) => {
                     await this.onAddressChange(res);
                     resolve();
                   })
-                  .catch(error => {
+                  .catch((error) => {
                     wx.hideLoading();
                     wx.showToast({
                       title: "获取地址失败",
-                      icon: "none"
+                      icon: "none",
                     });
                     console.error("腾讯地址逆解析接口 error", error);
                   });
-              }
+              },
             });
           } else {
             console.log("未授权位置信息");
@@ -858,23 +858,23 @@ Page({
               fail(e) {
                 console.log("用户拒绝授权位置信息");
                 resolve();
-              }
+              },
             });
           }
-        }
+        },
       });
     });
   },
   // 地址选项变化
   onAddressChange(location) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const { fields } = this.data;
 
       const {
         province,
         district,
         city,
-        street_number
+        street_number,
       } = location.result.address_component;
       let baseAddress;
       // 打卡省市拼接给server
@@ -884,7 +884,7 @@ Page({
       } else {
         baseAddress = province + city;
       }
-      fields.forEach(item => {
+      fields.forEach((item) => {
         if (item.prop == "address") {
           item.props["location"] = location;
           item.props["baseAddress"] = baseAddress;
@@ -893,7 +893,7 @@ Page({
       const formData = {
         ...this.data.data,
         address: district + street_number,
-        city: locationCity
+        city: locationCity,
       };
       this.setData(
         {
@@ -901,7 +901,7 @@ Page({
           data: formData,
           address: location.result,
           baseAddress,
-          city: locationCity
+          city: locationCity,
         },
         () => {
           resolve();
@@ -924,12 +924,12 @@ Page({
     );
     this.setData({
       userFilledInfo,
-      data
+      data,
     });
   },
   async setFieldsDisableFromClockData() {
     let { fields } = this.data;
-    fields.forEach(item => {
+    fields.forEach((item) => {
       item.props.disable = true;
     });
     fields.pop();
@@ -958,7 +958,7 @@ Page({
     }
     wx.showToast({
       title: "已为您记忆上次打卡数据，如有变化，请更新后再提交",
-      icon: "none"
+      icon: "none",
     });
     // const { otherFieldsList } = this.data;
     // for (let prop in otherFieldsList) {
@@ -970,12 +970,12 @@ Page({
   // 获取用户今日打卡信息
   getUserTodyClockData(params = {}) {
     getTodayClock(params)
-      .then(async data => {
+      .then(async (data) => {
         const resData = data;
         // 打卡数据合并到data中，今日未打卡返回的数据在是{}
         let formData = {
           ...this.data.data,
-          ...resData.records[0]
+          ...resData.records[0],
         };
         // 判断打过卡
         if (resData.total > 0) {
@@ -988,7 +988,7 @@ Page({
           );
           this.setData({
             clocked: true,
-            data: formData
+            data: formData,
           });
           // 设置表单显示的字段 -todo
           this.setFieldsFromClockData(formData);
@@ -996,24 +996,24 @@ Page({
           // 未打卡开始获取位置信息，获取之前的打卡记录
           if (!params.userId) {
             this.setData({
-              clocked: false
+              clocked: false,
             });
             await this.initAddress();
             this.getUserClockListData();
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("错误提醒：获取今日打卡数据失败", error);
         this.setData({
-          clocked: false
+          clocked: false,
         });
       });
   },
   // 获取用户打卡记录
   async getUserClockListData() {
     getUserClockList({})
-      .then(resData => {
+      .then((resData) => {
         // 需要自动填写的字段
         if (resData.total > 0) {
           const autoFilledProps = [
@@ -1033,13 +1033,13 @@ Page({
             "roomCompany",
             "roomCompanyOther",
             "wuhan",
-            "jobstatus"
+            "jobstatus",
           ];
           const previousLockData = resData.records[0];
           // 去掉查询返回数据的ID字段，不然会覆盖
           delete previousLockData.id;
           let { data } = this.data;
-          autoFilledProps.forEach(prop => {
+          autoFilledProps.forEach((prop) => {
             data[prop] = previousLockData[prop];
           });
           data["name"] = previousLockData.userName;
@@ -1049,8 +1049,8 @@ Page({
           this.setData({
             data: {
               ...this.data.data,
-              ...data
-            }
+              ...data,
+            },
           });
 
           previousLockData["temperatureRadio"] =
@@ -1061,7 +1061,7 @@ Page({
           console.log("提醒：没有打卡数据，无需自动填写");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("错误提醒：获取历史打卡数据失败", error);
       });
   },
@@ -1075,7 +1075,7 @@ Page({
   initPage(params = {}) {
     this.setData(
       {
-        userFilledInfo: app.globalData.userFilledInfo
+        userFilledInfo: app.globalData.userFilledInfo,
       },
       () => {
         if (Object.keys(params).length > 0) {
@@ -1093,18 +1093,18 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     console.log("clock onload options:", options);
     const { userId = null, clockInTime = getTodayClock() } = options;
     this.setData({
-      otherId: userId
+      otherId: userId,
     });
     if (!app.globalData.appInit) {
       app.init(() => {
         if (userId) {
           this.initPage({
             time: clockInTime,
-            userId
+            userId,
           });
         } else {
           this.initPage();
@@ -1114,7 +1114,7 @@ Page({
       if (userId) {
         this.initPage({
           time: clockInTime,
-          userId
+          userId,
         });
       } else {
         this.initPage();
@@ -1125,7 +1125,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -1137,25 +1137,25 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {},
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function () {},
 });

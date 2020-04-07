@@ -96,6 +96,12 @@
 					"pathName": "pages/group/shareJoin/index",
 					"query": "groupId=1",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/clock/status/index",
+					"pathName": "pages/clock/status/index",
+					"scene": null
 				}
 			]
 		}

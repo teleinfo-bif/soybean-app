@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-04-02 16:29:40
+ * @LastEditTime: 2020-04-07 11:57:42
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /v1/config/index.js
+ */
 // 获取当前帐号信息
 const accountInfo = wx.getAccountInfoSync();
 
@@ -9,7 +17,7 @@ const baseApi = {
   // 体验版
   trial: "https://test.bidspace.cn",
   // 正式版
-  release: "https://admin.bidspace.cn"
+  release: "https://admin.bidspace.cn",
 };
 
 // 小程序appId
@@ -28,3 +36,6 @@ export const uploadUrl =
 
 // 统计导出导出文件的下载链接
 export const baseURLDownload = baseApi[env] + "/bid-truth";
+
+// 订阅消息模板ID
+export const tmplId = "GK8oxRDrZezmHkR-wZRqdvsdil7SKqQBCfNs109YXQs";
