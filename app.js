@@ -106,7 +106,7 @@ App({
         wx.showToast({
           title: phone + "用户未注册",
           icon: "none",
-          duration: 3000,
+          duration: 2500,
           mask: true,
           success: result => {},
           fail: () => {},
