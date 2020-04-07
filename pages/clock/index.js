@@ -1,7 +1,7 @@
 // pages/block/index.js
 function getyyyyMMdd(date) {
   var d = date || new Date();
-  import { tmplId } from "../../../config/index";
+  var curr_date = d.getDate();
   var curr_month = d.getMonth() + 1;
   var curr_year = d.getFullYear();
   String(curr_month).length < 2 ? (curr_month = "0" + curr_month) : curr_month;
