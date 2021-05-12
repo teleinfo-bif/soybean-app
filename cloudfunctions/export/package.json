@@ -9,7 +9,7 @@
     "node-uuid": "^1.4.1",
     "node-xlsx": "^0.15.0",
     "node-zip": "1.x",
-    "nodemailer": "^6.4.3",
+    "nodemailer": "^6.4.16",
     "wx-server-sdk": "latest"
   }
 }
